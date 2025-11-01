@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- Main Site -->
+  <url>
+    <loc>https://munetios.com/</loc>
+    <lastmod>2025-09-25</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Apps -->
+    <url>
+    <loc>https://api.munetios.com/</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.9</priority>
+  </url>
+    <url>
+    <loc>https://www.munetios.com/policies</loc>
+    <lastmod>2025-10-04</lastmod>
+    <priority>0.9</priority>
+  </url>
+   <url>
+    <loc>https://notebook.munetios.com/</loc>
+    <lastmod>2025-10-07</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+    <loc>https://calendar.munetios.com/new</loc>
+    <lastmod>2025-09-25</lastmod>
+    <priority>0.9</priority>
+  </url>
+   <url>
+    <loc>https://video.munetios.com</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://notes.munetios.com/</loc>
+    <lastmod>2025-09-25</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://tasks.munetios.com/</loc>
+    <lastmod>2025-09-25</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://weather.munetios.com/</loc>
+    <lastmod>2025-09-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://calculator.munetios.com/</loc>
+    <lastmod>2025-09-28</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://tetris.munetios.com/</loc>
+    <lastmod>2025-09-25</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://docs.munetios.com/</loc>
+    <lastmod>2025-09-25</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+</urlset>
+
+
+
+
+

@@ -1,0 +1,14 @@
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  Upgrade-Insecure-Requests: 1
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), fullscreen=*, payment=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Resource-Policy: same-origin
+  X-DNS-Prefetch-Control: off
+  X-Download-Options: noopen
+  Access-Control-Allow-Origin: *
+  Cache-Control: no-store, no-cache, must-revalidate
