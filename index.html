@@ -15,14 +15,15 @@
 
         <meta name="google-site-verification" content="eNlW8gDjbwlEBSfYIkyc8N60d64cbCYkYydrbDoeYi8" />
     <meta name="msvalidate.01" content="BF44E33561FDFF8178BDA1E527F81862" />
-        <script>
-     
-if (window.top !== window.self) {
-  // If the page is inside an iframe, break out
-  window.top.location = window.location.href;
-    console.warn('Refused to display https://www.munetios.com because it is blocked from iframe embeding')
-}
-</script>
+     <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      if (window.top !== window.self) {
+        // Hide everything (html + body)
+        document.documentElement.style.display = "none";  
+              console.warn('Refused to display https://www.munetios.com because it is blocked from iframe embeding')
+      }
+    });
+  </script>
 
         </script>
       <meta name="keywords" content="Munetios, search, calendar, notes, tasks, weather, calculator, tetris, docs, productivity, web apps">
