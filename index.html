@@ -20,7 +20,7 @@
       if (window.top !== window.self) {
         // Hide everything (html + body)
         document.documentElement.style.display = "none";  
-              console.warn('Refused to display https://www.munetios.com because it is blocked from iframe embeding')
+        console.warn('Refused to display https://www.munetios.com because it is blocked from iframe embeding')
       }
     });
   </script>
@@ -49,7 +49,7 @@
 }
 </script>
 
-    <!-- Poppins Font link -->
+    <!-- Lexend Font link -->
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style> 
         * {
@@ -71,6 +71,10 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            
 
         }
         .logo {
@@ -80,6 +84,12 @@
             font-weight: 600;
             color: white;
             gap: 10px;
+            background-color: rgba(30, 0, 80, 0.35);
+            border-radius: 48px;
+            padding: 6px 12px;
+            box-shadow: 0 2px 16px 0 rgba(0,0,0,0.12);
+            border: 1.5px solid rgba(120, 60, 200, 0.18);
+            backdrop-filter: blur(5px);
         }
         a{
             color: white;
@@ -91,6 +101,12 @@
             display: flex;
             align-items: center;
             gap: 20px;
+            background-color: rgba(30, 0, 80, 0.35);
+            border-radius: 48px;
+            padding: 6px 12px;
+            box-shadow: 0 2px 16px 0 rgba(0,0,0,0.12);
+            border: 1.5px solid rgba(120, 60, 200, 0.18);
+            backdrop-filter: blur(5px);
         }
         .apps-icon {
             cursor: pointer;
@@ -110,6 +126,80 @@
         }
         .munetios-logo {
             margin-bottom: 20px;
+        }
+        /* Language selector wrapper */
+        .footer .actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            background: rgba(30, 0, 80, 0.35);
+            border-radius: 18px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: 0 2px 16px 0 rgba(0,0,0,0.12);
+            padding: 14px 22px;
+            /* Add border for glass effect */
+            border: 1.5px solid rgba(120, 60, 200, 0.18);
+        }
+
+        /* Custom select styling */
+        .footer .actions #languageSelect,
+        select#languageSelect {
+            appearance: none !important;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            background: rgba(26,0,77,0.85) url('data:image/svg+xml;utf8,<svg fill="white" height="16" viewBox="0 0 20 20" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 7l3 3 3-3" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/></svg>') no-repeat right 14px center/18px 18px !important;
+            color: #fff !important;
+            border: 1.5px solid #5f0ca3 !important;
+            border-radius: 12px !important;
+            padding: 8px 40px 8px 14px !important;
+            font-size: 16px !important;
+            font-family: inherit !important;
+            outline: none !important;
+            transition: border-color 0.2s, box-shadow 0.2s !important;
+            min-width: 140px !important;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.10) !important;
+            cursor: pointer !important;
+            backdrop-filter: blur(5px) !important;
+            -webkit-backdrop-filter: blur(5px) !important;
+        }
+        .footer .actions #languageSelect:focus,
+        select#languageSelect:focus {
+            border-color: #a36fff !important;
+            box-shadow: 0 0 0 2px #a36fff33 !important;
+        }
+        .footer .actions #languageSelect option,
+        select#languageSelect option {
+            background: #1a004d !important;
+            color: #fff !important;
+        }
+            @media (prefers-color-scheme: light) {
+            .footer .actions {
+            background: rgba(255,255,255,0.7);
+            }
+            #languageSelect {
+            background: #f0f0f0 url('data:image/svg+xml;utf8,<svg fill="black" height="16" viewBox="0 0 20 20" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 7l3 3 3-3" stroke="black" stroke-width="2" fill="none" stroke-linecap="round"/></svg>') no-repeat right 12px center/18px 18px;
+            color: #130036;
+            border: 1.5px solid #ccc;
+            }
+            #languageSelect:focus {
+            border-color: #5f0ca3;
+            box-shadow: 0 0 0 2px #5f0ca333;
+            }
+        }
+        @media (max-width: 500px) {
+            .footer .actions {
+            flex-direction: column;
+            gap: 8px;
+            align-items: stretch;
+            padding: 10px 8px;
+            }
+            #languageSelect {
+            width: 100%;
+            min-width: 0;
+            }
         }
         .search-bar {
             display: flex;
@@ -147,7 +237,7 @@
             border: none;
             border-radius: 63px;
             padding: 25px 40px;
-            width: 400px;
+            width: 100%;
             font-size: 16px;
             cursor: pointer;
             margin-bottom: 20px;
@@ -256,12 +346,73 @@
             <img src="Munetios-Logo.png" height="150" alt="Munetios Logo">
         </div>
         <button class="btn" onclick="window.location.href='/maze/maze.html'">Maze</button>
+        <button class="btn" onclick="showCustomizeModal()">Customize</button>
         <div class="search-bar">
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24">
                 <circle cx="11" cy="11" r="7" stroke="white" stroke-width="2"/>
                 <line x1="16.5" y1="16.5" x2="21" y2="21" stroke="white" stroke-width="2" stroke-linecap="round"/>
             </svg>
             <input type="text" placeholder="Search" id="searchResult">
+            <!-- Microphone Icon Button -->
+            <button id="micBtn" type="button" aria-label="Speak" style="background: none; border: none; cursor: pointer; margin-left: 8px; display: flex; align-items: center;">
+                <svg id="micIcon" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 15a3 3 0 0 0 3-3V7a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3z" stroke="currentColor" stroke-width="2" fill="none"/>
+                    <path d="M19 11v1a7 7 0 0 1-14 0v-1" stroke="currentColor" stroke-width="2" fill="none"/>
+                    <line x1="12" y1="19" x2="12" y2="22" stroke="currentColor" stroke-width="2"/>
+                    <line x1="9" y1="22" x2="15" y2="22" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </button>
+            <script>
+            (function() {
+                const micBtn = document.getElementById('micBtn');
+                const micIcon = document.getElementById('micIcon');
+                const searchInput = document.getElementById('searchResult');
+                let recognizing = false;
+                let recognition;
+                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    recognition = new SpeechRecognition();
+                    recognition.lang = localStorage.getItem('munetiosLang') || navigator.language || 'en-US';
+                    recognition.interimResults = false;
+                    recognition.maxAlternatives = 1;
+                    recognition.onstart = function() {
+                        recognizing = true;
+                        micIcon.style.color = '#5f0ca3';
+                    };
+                    recognition.onend = function() {
+                        recognizing = false;
+                        micIcon.style.color = '';
+                    };
+                    recognition.onerror = function(e) {
+                        recognizing = false;
+                        micIcon.style.color = '';
+                    };
+                    recognition.onresult = function(e) {
+                        if (e.results && e.results[0] && e.results[0][0]) {
+                            searchInput.value = e.results[0][0].transcript;
+                            searchInput.focus();
+                            // Optionally auto-search:
+                            const query = searchInput.value.trim();
+                            if (query) {
+                                const encodedQuery = encodeURIComponent(query);
+                                window.location.href = `/search/search.html?q=${encodedQuery}`;
+                            }
+                        }
+                    };
+                    micBtn.onclick = function(e) {
+                        e.preventDefault();
+                        if (recognizing) {
+                            recognition.stop();
+                        } else {
+                            recognition.lang = localStorage.getItem('munetiosLang') || navigator.language || 'en-US';
+                            recognition.start();
+                        }
+                    };
+                } else {
+                    micBtn.style.display = 'none';
+                }
+            })();
+            </script>
         </div>
   
        <div class="shortcuts">
@@ -321,7 +472,6 @@
                         { id: "microsoft", href: "https://www.microsoft.com", img: "https://www.microsoft.com/favicon.ico", alt: "Microsoft", label: "Microsoft" },
                         { id: "maps", href: "https://maps.google.com", img: "https://maps.google.com/favicon.ico", alt: "Google Maps", label: "Maps" },
                         { id: "yahoo", href: "https://www.yahoo.com", img: "https://s.yimg.com/rz/l/favicon.ico", alt: "Yahoo", label: "Yahoo" },
-                        { id: "ebay", href: "https://www.ebay.com", img: "https://ir.ebaystatic.com/rs/v/fxxj3ttftm5ltcqnto1o4baovyl.png", alt: "Ebay", label: "Ebay" },
                         { id: "amazon", href: "https://www.amazon.com", img: "https://www.amazon.com/favicon.ico", alt: "Amazon", label: "Amazon" },
                         { id: "walmart", href: "https://www.walmart.com", img: "https://www.walmart.com/favicon.ico", alt: "Walmart", label: "Walmart" }
                     ];
@@ -559,6 +709,435 @@
                     renderShortcuts();
                     // Expose removeShortcut for inline onclick
                     window.removeShortcut = removeShortcut;
+
+                    /* --- Customize Modal & Logic --- */
+                    (function() {
+                        // Helper: get all installed fonts (using FontFaceSet API if available, else fallback)
+                        async function getInstalledFonts() {
+                            // Try to use the Local Font Access API (Chromium-based browsers)
+                            if ('queryLocalFonts' in window) {
+                                try {
+                                    const fonts = await window.queryLocalFonts();
+                                    return Array.from(new Set(fonts.map(f => f.fullName))).sort();
+                                } catch {}
+                            }
+                            // Fallback: common web-safe fonts
+                            return [
+                                "Lexend", "Arial", "Verdana", "Tahoma", "Trebuchet MS", "Times New Roman", "Georgia", "Garamond",
+                                "Courier New", "Lucida Console", "Segoe UI", "Roboto", "Open Sans", "Lato", "Montserrat", "Oswald",
+                                "Comic Sans MS", "Impact", "Palatino", "Calibri", "Candara", "Franklin Gothic Medium", "Century Gothic"
+                            ];
+                        }
+
+                        // Modal HTML
+                        const customizeModal = document.createElement('div');
+                        customizeModal.id = 'customizeModal';
+                        customizeModal.style = 'display:none;position:fixed;z-index:2000;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;';
+                        customizeModal.innerHTML = `
+                            <div style="background:#fff;color:#222;padding:28px 24px 20px 24px;border-radius:16px;min-width:320px;max-width:98vw;box-shadow:0 8px 32px rgba(0,0,0,0.18);display:flex;flex-direction:column;gap:16px;position:relative;max-height:90vh;overflow:auto;">
+                                <button id="closeCustomizeModal" style="position:absolute;top:10px;right:14px;background:none;border:none;font-size:22px;color:#888;cursor:pointer;">&times;</button>
+                                <h2 style="margin:0 0 12px 0;font-size:22px;">Customize Home</h2>
+                                <label style="font-size:15px;">Background Color: <input type="color" id="bgColorPicker"></label>
+                                <label style="font-size:15px;">Background Image: <input type="file" id="bgImagePicker" accept="image/*"></label>
+                                <button id="removeBgImageBtn" style="display:none;background:#eee;color:#222;border:none;border-radius:6px;padding:5px 10px;font-size:14px;cursor:pointer;">Remove Image</button>
+                                <label style="font-size:15px;">Text Color: <input type="color" id="textColorPicker"></label>
+                                <label style="font-size:15px;">Search Bar Color: <input type="color" id="searchBarColorPicker"></label>
+                                <label style="font-size:15px;">Font Family: <select id="fontFamilySelect" style="min-width:180px;"></select></label>
+                                <label style="font-size:15px;">Liquid Glass: <input type="checkbox" id="liquidGlassToggle"> <span id="liquidGlassLabel">On</span></label>
+                                <label style="font-size:15px;">Shortcuts Position:
+                                    <select id="shortcutsPositionSelect">
+                                        <option value="center">Center</option>
+                                        <option value="left">Left</option>
+                                        <option value="right">Right</option>
+                                        <option value="top">Top</option>
+                                        <option value="bottom">Bottom</option>
+                                    </select>
+                                </label>
+                                <label style="font-size:15px;">Move Buttons:
+                                    <select id="buttonsPositionSelect">
+                                        <option value="top">Top</option>
+                                        <option value="middle">Middle</option>
+                                        <option value="bottom">Bottom</option>
+                                    </select>
+                                </label>
+                                <label style="font-size:15px;">Search Bar Position:
+                                    <select id="searchBarPositionSelect">
+                                        <option value="middle">Middle</option>
+                                        <option value="top">Top</option>
+                                    </select>
+                                </label>
+                                <label style="font-size:15px;">Topbar Icons Order:
+                                    <ul id="topbarIconsOrderList" style="list-style:none;padding:0;margin:0;min-width:120px;">
+                                        <li draggable="true" data-value="terms" style="padding:6px 10px;border:1px solid #ccc;border-radius:6px;margin-bottom:4px;cursor:grab;background:#f8f8f8;">Terms</li>
+                                        <li draggable="true" data-value="privacy" style="padding:6px 10px;border:1px solid #ccc;border-radius:6px;margin-bottom:4px;cursor:grab;background:#f8f8f8;">Privacy</li>
+                                        <li draggable="true" data-value="apps" style="padding:6px 10px;border:1px solid #ccc;border-radius:6px;margin-bottom:4px;cursor:grab;background:#f8f8f8;">Apps</li>
+                                    </ul>
+                                    <small style="display:block;font-size:12px;color:#666;">(Drag to reorder)</small>
+                                </label>
+                                <label style="font-size:15px;">Topbar Icons Side:
+                                    <select id="topbarIconsSideSelect">
+                                        <option value="right">Right</option>
+                                        <option value="left">Left</option>
+                                    </select>
+                                </label>
+                                <button id="resetCustomizeBtn" style="background:#e74c3c;color:#fff;border:none;border-radius:6px;padding:8px 0;font-size:15px;cursor:pointer;margin-top:10px;">Reset to Default</button>
+                            </div>
+                        `;
+                        document.body.appendChild(customizeModal);
+
+                        // State
+                        let customizeState = {};
+                        const defaultState = {
+                            bgColor: "#130036",
+                            bgImage: "",
+                            textColor: "#ffffff",
+                            searchBarColor: "#1a004d",
+                            fontFamily: "Lexend",
+                            liquidGlass: true,
+                            shortcutsPosition: "center",
+                            buttonsPosition: "middle",
+                            searchBarPosition: "middle",
+                            topbarIconsOrder: ["terms", "privacy", "apps"],
+                            topbarIconsSide: "right"
+                        };
+
+                        // Load state from localStorage
+                        function loadCustomizeState() {
+                            try {
+                                const s = JSON.parse(localStorage.getItem('munetiosCustomize') || '{}');
+                                customizeState = Object.assign({}, defaultState, s);
+                            } catch {
+                                customizeState = Object.assign({}, defaultState);
+                            }
+                        }
+                        // Save state to localStorage
+                        function saveCustomizeState() {
+                            localStorage.setItem('munetiosCustomize', JSON.stringify(customizeState));
+                        }
+
+                        // Apply all customizations to the page
+                        function applyCustomizations() {
+                            // Background color & image
+                            document.body.style.backgroundColor = customizeState.bgColor;
+                            if (customizeState.bgImage) {
+                                document.body.style.backgroundImage = `url('${customizeState.bgImage}')`;
+                                document.body.style.backgroundSize = 'cover';
+                                document.body.style.backgroundRepeat = 'no-repeat';
+                                document.body.style.backgroundPosition = 'center center';
+                            } else {
+                                document.body.style.backgroundImage = '';
+                            }
+                            // Text color
+                            document.body.style.color = customizeState.textColor;
+                            document.querySelectorAll('a, .footer, .logo, .logo-text, .shortcuts span, .btn, .topbar a, .search-bar input, .search-bar svg, .apps-icon, .app-launcher').forEach(el => {
+                                el.style.color = customizeState.textColor;
+                            });
+                            // Search bar color
+                            document.querySelectorAll('.search-bar').forEach(el => {
+                                el.style.backgroundColor = customizeState.searchBarColor;
+                                // Also update input background for full effect
+                                const input = el.querySelector('input');
+                                if (input) input.style.backgroundColor = customizeState.searchBarColor;
+                                // Update SVG stroke/fill color for icons
+                                el.querySelectorAll('svg').forEach(svg => {
+                                    svg.style.color = customizeState.textColor;
+                                    svg.querySelectorAll('circle, line, rect, path').forEach(shape => {
+                                        if (shape.hasAttribute('stroke')) shape.setAttribute('stroke', customizeState.textColor);
+                                        if (shape.hasAttribute('fill')) shape.setAttribute('fill', customizeState.textColor);
+                                    });
+                                });
+                            });
+                            // Font family
+                            document.body.style.fontFamily = customizeState.fontFamily + ",sans-serif";
+                            document.querySelectorAll('*').forEach(el => {
+                                el.style.fontFamily = customizeState.fontFamily + ",sans-serif";
+                            });
+                            // Liquid glass
+                            const glassEls = document.querySelectorAll('.logo, .top-right, .footer .actions, .app-launcher, .search-bar, .btn, .shortcuts > div, .footer');
+                            glassEls.forEach(el => {
+                                if (customizeState.liquidGlass) {
+                                    el.style.background = '';
+                                    el.style.backdropFilter = 'blur(5px)';
+                                    el.style.webkitBackdropFilter = 'blur(5px)';
+                                    el.style.boxShadow = '';
+                                    el.style.border = '';
+                                    el.style.opacity = '';
+                                } else {
+                                    el.style.background = 'none';
+                                    el.style.backdropFilter = 'none';
+                                    el.style.webkitBackdropFilter = 'none';
+                                    el.style.boxShadow = 'none';
+                                    el.style.border = 'none';
+                                    el.style.opacity = '1';
+                                }
+                            });
+                            // Shortcuts position
+                            const shortcutsDiv = document.querySelector('.shortcuts > div');
+                            if (shortcutsDiv) {
+                                shortcutsDiv.style.justifyContent =
+                                    customizeState.shortcutsPosition === "center" ? "center" :
+                                    customizeState.shortcutsPosition === "left" ? "flex-start" :
+                                    customizeState.shortcutsPosition === "right" ? "flex-end" : "center";
+                                shortcutsDiv.style.flexDirection =
+                                    (customizeState.shortcutsPosition === "top" || customizeState.shortcutsPosition === "bottom") ? "column" : "row";
+                                shortcutsDiv.parentElement.style.alignItems =
+                                    customizeState.shortcutsPosition === "left" ? "flex-start" :
+                                    customizeState.shortcutsPosition === "right" ? "flex-end" : "center";
+                                if (customizeState.shortcutsPosition === "top") {
+                                    shortcutsDiv.parentElement.style.order = "-1";
+                                } else if (customizeState.shortcutsPosition === "bottom") {
+                                    shortcutsDiv.parentElement.style.order = "2";
+                                } else {
+                                    shortcutsDiv.parentElement.style.order = "1";
+                                }
+                            }
+                            // Buttons position (Maze/Customize)
+                            const btns = Array.from(document.querySelectorAll('.btn'));
+                            const container = document.querySelector('.container');
+                            btns.forEach(btn => btn.style.margin = "0 0 20px 0");
+                            btns.forEach(btn => btn.style.display = "block");
+                            if (container) {
+                                btns.forEach(btn => btn.remove());
+                                if (customizeState.buttonsPosition === "top") {
+                                    container.insertBefore(btns[0], container.firstChild);
+                                    container.insertBefore(btns[1], container.firstChild.nextSibling);
+                                } else if (customizeState.buttonsPosition === "bottom") {
+                                    container.appendChild(btns[0]);
+                                    container.appendChild(btns[1]);
+                                } else {
+                                    // middle: after logo
+                                    const logo = container.querySelector('.munetios-logo');
+                                    if (logo) {
+                                        logo.after(btns[0]);
+                                        btns[0].after(btns[1]);
+                                    }
+                                }
+                            }
+                            // Search bar position
+                            const searchBar = document.querySelector('.search-bar');
+                            if (searchBar && container) {
+                                searchBar.remove();
+                                if (customizeState.searchBarPosition === "top") {
+                                    container.insertBefore(searchBar, container.firstChild.nextSibling);
+                                } else {
+                                    // middle: after buttons
+                                    const btns = container.querySelectorAll('.btn');
+                                    if (btns.length) {
+                                        btns[btns.length - 1].after(searchBar);
+                                    } else {
+                                        container.appendChild(searchBar);
+                                    }
+                                }
+                            }
+                            // Topbar icons order and side
+                            const topbar = document.querySelector('.topbar');
+                            const topRight = document.querySelector('.top-right');
+                            const terms = Array.from(topRight.querySelectorAll('a')).find(a => /terms/i.test(a.textContent));
+                            const privacy = Array.from(topRight.querySelectorAll('a')).find(a => /privacy/i.test(a.textContent));
+                            const apps = topRight.querySelector('.apps-icon');
+                            // Remove all
+                            [terms, privacy, apps].forEach(el => el && el.remove());
+                            // Re-add in order
+                            const order = customizeState.topbarIconsOrder;
+                            order.forEach(key => {
+                                if (key === "terms" && terms) topRight.appendChild(terms);
+                                if (key === "privacy" && privacy) topRight.appendChild(privacy);
+                                if (key === "apps" && apps) topRight.appendChild(apps);
+                            });
+                            // Move to left if needed
+                            if (customizeState.topbarIconsSide === "left") {
+                                if (topRight.parentNode) topRight.parentNode.removeChild(topRight);
+                                topbar.insertBefore(topRight, topbar.firstChild.nextSibling);
+                            } else {
+                                if (topRight.parentNode) topRight.parentNode.removeChild(topRight);
+                                topbar.appendChild(topRight);
+                            }
+                        }
+
+                        // Modal open/close logic
+                        window.showCustomizeModal = function() {
+                            loadCustomizeState();
+                            // Set modal fields
+                            document.getElementById('bgColorPicker').value = customizeState.bgColor;
+                            document.getElementById('textColorPicker').value = customizeState.textColor;
+                            document.getElementById('searchBarColorPicker').value = customizeState.searchBarColor;
+                            document.getElementById('liquidGlassToggle').checked = !!customizeState.liquidGlass;
+                            document.getElementById('liquidGlassLabel').textContent = customizeState.liquidGlass ? "On" : "Off";
+                            document.getElementById('shortcutsPositionSelect').value = customizeState.shortcutsPosition;
+                            document.getElementById('buttonsPositionSelect').value = customizeState.buttonsPosition;
+                            document.getElementById('searchBarPositionSelect').value = customizeState.searchBarPosition;
+                            document.getElementById('topbarIconsSideSelect').value = customizeState.topbarIconsSide;
+                            // Topbar icons order (drag list)
+                            const orderList = document.getElementById('topbarIconsOrderList');
+                            if (orderList) {
+                                // Remove all children
+                                while (orderList.firstChild) orderList.removeChild(orderList.firstChild);
+                                // Add in saved order
+                                customizeState.topbarIconsOrder.forEach(key => {
+                                    let text = key === "terms" ? "Terms" : key === "privacy" ? "Privacy" : "Apps";
+                                    const li = document.createElement('li');
+                                    li.draggable = true;
+                                    li.dataset.value = key;
+                                    li.textContent = text;
+                                    li.style = "padding:6px 10px;border:1px solid #ccc;border-radius:6px;margin-bottom:4px;cursor:grab;background:#f8f8f8;";
+                                    orderList.appendChild(li);
+                                });
+                            }
+                            // Font family
+                            const fontSel = document.getElementById('fontFamilySelect');
+                            fontSel.value = customizeState.fontFamily;
+                            // Bg image
+                            document.getElementById('removeBgImageBtn').style.display = customizeState.bgImage ? '' : 'none';
+                            // Show modal
+                            customizeModal.style.display = 'flex';
+                            setTimeout(() => customizeModal.querySelector('h2').focus(), 100);
+                        };
+                        document.getElementById('closeCustomizeModal').onclick = function() {
+                            customizeModal.style.display = 'none';
+                        };
+                        customizeModal.onclick = function(e) {
+                            if (e.target === customizeModal) customizeModal.style.display = 'none';
+                        };
+
+                        // Modal field events
+                        document.getElementById('bgColorPicker').oninput = function() {
+                            customizeState.bgColor = this.value;
+                            saveCustomizeState();
+                            applyCustomizations();
+                        };
+                        document.getElementById('textColorPicker').oninput = function() {
+                            customizeState.textColor = this.value;
+                            saveCustomizeState();
+                            applyCustomizations();
+                        };
+                        document.getElementById('searchBarColorPicker').oninput = function() {
+                            customizeState.searchBarColor = this.value;
+                            saveCustomizeState();
+                            applyCustomizations();
+                        };
+                        document.getElementById('liquidGlassToggle').onchange = function() {
+                            customizeState.liquidGlass = this.checked;
+                            document.getElementById('liquidGlassLabel').textContent = this.checked ? "On" : "Off";
+                            saveCustomizeState();
+                            applyCustomizations();
+                        };
+                        document.getElementById('shortcutsPositionSelect').onchange = function() {
+                            customizeState.shortcutsPosition = this.value;
+                            saveCustomizeState();
+                            applyCustomizations();
+                        };
+                        document.getElementById('buttonsPositionSelect').onchange = function() {
+                            customizeState.buttonsPosition = this.value;
+                            saveCustomizeState();
+                            applyCustomizations();
+                        // Drag-and-drop for topbar icons order
+                        (function() {
+                            const orderList = document.getElementById('topbarIconsOrderList');
+                            let dragSrcEl = null;
+                            if (orderList) {
+                                orderList.addEventListener('dragstart', function(e) {
+                                    dragSrcEl = e.target;
+                                    e.dataTransfer.effectAllowed = 'move';
+                                    e.dataTransfer.setData('text/plain', e.target.dataset.value);
+                                    e.target.style.opacity = '0.5';
+                                });
+                                orderList.addEventListener('dragend', function(e) {
+                                    e.target.style.opacity = '';
+                                });
+                                orderList.addEventListener('dragover', function(e) {
+                                    e.preventDefault();
+                                    e.dataTransfer.dropEffect = 'move';
+                                });
+                                orderList.addEventListener('drop', function(e) {
+                                    e.preventDefault();
+                                    if (dragSrcEl && dragSrcEl !== e.target && e.target.tagName === 'LI') {
+                                        const nodes = Array.from(orderList.children);
+                                        const srcIdx = nodes.indexOf(dragSrcEl);
+                                        const tgtIdx = nodes.indexOf(e.target);
+                                        if (srcIdx > -1 && tgtIdx > -1) {
+                                            orderList.removeChild(dragSrcEl);
+                                            if (srcIdx < tgtIdx) {
+                                                orderList.insertBefore(dragSrcEl, e.target.nextSibling);
+                                            } else {
+                                                orderList.insertBefore(dragSrcEl, e.target);
+                                            }
+                                            // Save new order
+                                            const newOrder = Array.from(orderList.children).map(li => li.dataset.value);
+                                            if (newOrder.length === 3) {
+                                                customizeState.topbarIconsOrder = newOrder;
+                                                saveCustomizeState();
+                                                applyCustomizations();
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        })();
+                            applyCustomizations();
+                        };
+                        // document.getElementById('topbarIconsOrderSelect').onchange = function() {
+                        //     // Save selected order
+                        //     const sel = Array.from(this.selectedOptions).map(o => o.value);
+                        //     if (sel.length === 3) {
+                        //         customizeState.topbarIconsOrder = sel;
+                        //         saveCustomizeState();
+                        //         applyCustomizations();
+                        //     }
+                        // };
+                        document.getElementById('resetCustomizeBtn').onclick = function() {
+                            localStorage.removeItem('munetiosCustomize');
+                            loadCustomizeState();
+                            applyCustomizations();
+                            customizeModal.style.display = 'none';
+                        };
+
+                        // Font family select: populate with installed fonts
+                        getInstalledFonts().then(fonts => {
+                            const fontSel = document.getElementById('fontFamilySelect');
+                            fontSel.innerHTML = '';
+                            fonts.forEach(f => {
+                                const opt = document.createElement('option');
+                                opt.value = f;
+                                opt.textContent = f;
+                                fontSel.appendChild(opt);
+                            });
+                            fontSel.value = customizeState.fontFamily;
+                            fontSel.onchange = function() {
+                                customizeState.fontFamily = this.value;
+                                saveCustomizeState();
+                                applyCustomizations();
+                            };
+                        });
+
+                        // Background image picker
+                        document.getElementById('bgImagePicker').onchange = function(e) {
+                            const file = e.target.files[0];
+                            if (!file) return;
+                            const reader = new FileReader();
+                            reader.onload = function(ev) {
+                                customizeState.bgImage = ev.target.result;
+                                saveCustomizeState();
+                                applyCustomizations();
+                                document.getElementById('removeBgImageBtn').style.display = '';
+                            };
+                            reader.readAsDataURL(file);
+                        };
+                        document.getElementById('removeBgImageBtn').onclick = function() {
+                            customizeState.bgImage = "";
+                            saveCustomizeState();
+                            applyCustomizations();
+                            this.style.display = 'none';
+                        };
+
+                        // Keyboard: Escape to close
+                        customizeModal.addEventListener('keydown', function(e) {
+                            if (e.key === 'Escape') customizeModal.style.display = 'none';
+                        });
+
+                        // On page load, apply customizations
+                        loadCustomizeState();
+                        applyCustomizations();
+                    })();
             </script>
         </div>
        </div>
@@ -882,6 +1461,66 @@
                 }
             }
         });
+        (function() {
+            function isMobile() {
+            // Check for mobile user agent or small screen
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+                || window.innerWidth <= 500;
+            }
+            function applyMobileLayout() {
+            // Make buttons min 44x44px, padding 10px 20px, full width
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.style.minWidth = '44px';
+                btn.style.minHeight = '44px';
+                btn.style.width = '100%';
+                btn.style.padding = '10px 20px';
+                btn.style.fontSize = '18px';
+            });
+            // Hide logo text
+            const logoText = document.querySelector('.logo-text');
+            if (logoText) logoText.style.display = 'none';
+            // Move Terms/Privacy to footer, small text
+            const footer = document.querySelector('.footer');
+            if (footer && !footer.querySelector('.mobile-links')) {
+                let links = document.createElement('div');
+                links.className = 'mobile-links';
+                links.style.fontSize = '12px';
+                links.style.marginTop = '8px';
+                links.style.display = 'flex';
+                links.style.justifyContent = 'center';
+                links.style.gap = '16px';
+                // Find existing links
+                const terms = Array.from(document.querySelectorAll('a')).find(a => /terms/i.test(a.textContent));
+                const privacy = Array.from(document.querySelectorAll('a')).find(a => /privacy/i.test(a.textContent));
+                if (terms && privacy) {
+                // Remove from topbar
+                if (terms.parentNode) terms.parentNode.removeChild(terms);
+                if (privacy.parentNode) privacy.parentNode.removeChild(privacy);
+                // Add to footer
+                links.appendChild(terms);
+                links.appendChild(privacy);
+                footer.appendChild(links);
+                }
+            }
+            // Fix footer to always stay at bottom
+            footer.style.position = 'fixed';
+            footer.style.left = '0';
+            footer.style.right = '0';
+            footer.style.bottom = '0';
+            footer.style.width = '100vw';
+            footer.style.zIndex = '100';
+            footer.style.background = 'rgba(19,0,54,0.98)';
+            }
+            // If user is on mobile or requests mobile site
+            if (isMobile()) {
+            applyMobileLayout();
+            }
+            // Listen for resize to re-apply if needed
+            window.addEventListener('resize', function() {
+            if (isMobile()) applyMobileLayout();
+            });
+        })();
+        
     </script>
 </body>
 </html>
