@@ -10,25 +10,20 @@
     <link rel="icon" sizes="16x16" href="favicon-16x16.png" type="image/x-icon">
     <link rel="icon" sizes="32x32" href="favicon-32x32.png" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="Content-Security-Policy" content="frame-ancestors 'none';">
+
         <meta name="google-site-verification" content="eNlW8gDjbwlEBSfYIkyc8N60d64cbCYkYydrbDoeYi8" />
     <meta name="msvalidate.01" content="BF44E33561FDFF8178BDA1E527F81862" />
         <script>
-            window.addEventListener('DOMContentLoaded', function () {
-            const iframe = document.querySelector('iframe');
-            if (iframe) {
-                iframe.addEventListener('error', function (e) {
-                console.warn('Iframe failed to load:', e);
-                });
-                iframe.addEventListener('load', function () {
-                try {
-                    // Try accessing the iframe's contentWindow (will throw if cross-origin or X-Frame-Options DENY)
-                    const test = iframe.contentWindow.document;
-                } catch (e) {
-                    console.warn('Unable to access iframe content (possibly due to X-Frame-Options DENY or cross-origin):', e);
-                }
-                });
-            }
-            });
+     
+if (window.top !== window.self) {
+  // If the page is inside an iframe, break out
+  window.top.location = window.location.href;
+    console.warn('Refused to display https://www.munetios.com because it is blocked from iframe embeding')
+}
+</script>
+
         </script>
       <meta name="keywords" content="Munetios, search, calendar, notes, tasks, weather, calculator, tetris, docs, productivity, web apps">
     <meta name="robots" content="index, follow">
@@ -191,8 +186,21 @@
         }
         @media (prefers-color-scheme: light) {
             body {
-                background-color: #ffffff;
-                color: black;
+                background-color: #ffffff !important;
+                color: black !important;
+            }
+            a, .footer, .logo, .logo-text, .shortcuts span, .btn, .topbar a, .search-bar input, .search-bar svg, .topbar, .apps-icon, .app-launcher {
+                color: black !important;
+            }
+            .search-bar {
+                background-color: #f0f0f0 !important;
+            }
+            .btn {
+                background-color: #e0e0e0 !important;
+                color: #130036 !important;
+            }
+            .shortcuts span {
+                color: black !important;
             }
         }
 
@@ -602,18 +610,42 @@
                 function setDarkMode(on) {
                     const moonIcon = document.getElementById('moonIcon');
                     const sunIcon = document.getElementById('sunIcon');
+                    // Elements to update color
+                    const elementsToBlack = [
+                        ...document.querySelectorAll('a, .footer, .logo, .logo-text, .shortcuts span, .btn, .topbar a, .search-bar input, .search-bar svg, .apps-icon, .app-launcher')
+                    ];
                     if (on) {
                         document.body.style.backgroundColor = '#130036';
                         document.body.style.color = 'white';
                         if (moonIcon) moonIcon.style.display = 'inline';
                         if (sunIcon) sunIcon.style.display = 'none';
                         localStorage.setItem('munetiosDark', '1');
+                        // Set text color to white for dark mode
+                        elementsToBlack.forEach(el => {
+                            el.style.color = 'white';
+                        });
+                        // Special backgrounds
+                        document.querySelectorAll('.search-bar').forEach(el => el.style.backgroundColor = '#1a004d');
+                        document.querySelectorAll('.btn').forEach(el => {
+                            el.style.backgroundColor = '#5f0ca3';
+                            el.style.color = '#fff';
+                        });
                     } else {
                         document.body.style.backgroundColor = '#fff';
                         document.body.style.color = 'black';
                         if (moonIcon) moonIcon.style.display = 'none';
                         if (sunIcon) sunIcon.style.display = 'inline';
                         localStorage.setItem('munetiosDark', '0');
+                        // Set text color to black for light mode
+                        elementsToBlack.forEach(el => {
+                            el.style.color = 'black';
+                        });
+                        // Special backgrounds
+                        document.querySelectorAll('.search-bar').forEach(el => el.style.backgroundColor = '#f0f0f0');
+                        document.querySelectorAll('.btn').forEach(el => {
+                            el.style.backgroundColor = '#e0e0e0';
+                            el.style.color = '#130036';
+                        });
                     }
                 }
                 function getDarkPref() {
@@ -623,6 +655,7 @@
                 darkModeToggle.onclick = function() {
                     setDarkMode(!getDarkPref());
                 };
+                // On load, use system preference if no localStorage, else use stored
                 setDarkMode(getDarkPref());
                 // --- System Language & Theme Sync ---
                 // System theme: listen for OS changes and update
