@@ -1,4 +1,4 @@
-const CACHE_NAME = 'munetios-cache-v2';
+const CACHE_NAME = 'munetios-cache-v4';
 const URLS_TO_CACHE = [
   '/',
   '/index.html',
@@ -7,13 +7,13 @@ const URLS_TO_CACHE = [
   '/favicon-16x16.png',
   '/favicon-32x32.png',
   '/Munetios-Logo.png',
-  '/manifest.json',
   '/site.webmanifest',
   '/robots.txt',
   '/sitemap.xml',
+  '/404.html'
 ];
 
-// Install
+// Install: cache core assets
 self.addEventListener('install', event => {
   self.skipWaiting();
   event.waitUntil(
@@ -21,47 +21,45 @@ self.addEventListener('install', event => {
   );
 });
 
-// Activate
+// Activate: remove old caches
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(keys.map(k => k !== CACHE_NAME && caches.delete(k)))
+      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
     )
   );
   self.clients.claim();
 });
 
-// Fetch: Network-first for pages, cache fallback
+// Fetch: Network-first for navigation, cache-first for static assets
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
 
-  // Handle navigation (offline fallback)
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
-        .then(response => {
-          const clone = response.clone();
+        .then(resp => {
+          const clone = resp.clone();
           caches.open(CACHE_NAME).then(c => c.put(event.request, clone));
-          return response;
+          return resp;
         })
-        .catch(() => caches.match('/index.html'))
+        .catch(() => caches.match('/index.html') || caches.match('/404.html'))
     );
     return;
   }
 
-  // Handle static assets (cache-first)
   event.respondWith(
-    caches.match(event.request).then(cached => {
-      const fetchPromise = fetch(event.request)
-        .then(networkRes => {
-          if (networkRes && networkRes.status === 200) {
-            const clone = networkRes.clone();
+    caches.match(event.request).then(cached =>
+      cached ||
+      fetch(event.request)
+        .then(resp => {
+          if (resp.status === 200) {
+            const clone = resp.clone();
             caches.open(CACHE_NAME).then(c => c.put(event.request, clone));
           }
-          return networkRes;
+          return resp;
         })
-        .catch(() => cached);
-      return cached || fetchPromise;
-    })
+        .catch(() => cached)
+    )
   );
 });
