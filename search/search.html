@@ -624,21 +624,73 @@
         })();
         </script>
     </div>
-     <div class="modal" id="labsModal">
-                    <div class="modal-content">
-                        <h2 style="margin-top:0;">Labs <span style="font-size:13px;color:#b388ff;">(Experimental)</span></h2>
-                        <div style="display:flex;flex-direction:column;gap:18px;min-width:220px;">
-                            <label style="display:flex;align-items:center;gap:10px;">
-                                <input type="checkbox" id="aiOverviewToggle">
-                                Enable AI Overview
-                            </label>
-                            <p style="color:#ffb300;font-size:14px;">
-                                Labs are experimental features and may be unstable.<br>
-                                <b>AI Overview</b> is powered by AI and may make many mistakes or show inaccurate information.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+    <div class="modal" id="labsModal">
+       <div class="modal-content">
+          <h2 style="margin-top:0;">Labs <span style="font-size:13px;color:#b388ff;">(Experimental)</span></h2>
+          <div style="display:flex;flex-direction:column;gap:18px;min-width:220px;">
+             <label style="display:flex;align-items:center;gap:10px;">
+                <input type="checkbox" id="aiOverviewToggle">
+                Enable AI Overview
+             </label>
+             <label style="display:flex;align-items:center;gap:10px;">
+                <input type="checkbox" id="voiceSpeakerToggle">
+                Enable Voice Speaker
+             </label>
+             <p style="color:#ffb300;font-size:14px;">
+                Labs are experimental features and may be unstable.<br>
+                <b>AI Overview</b> is powered by AI and may make many mistakes or show inaccurate information.<br>
+                <b>Voice Speaker</b> lets you hear "Speak: Munetios" with a speaker icon if enabled.
+             </p>
+          </div>
+       </div>
+    </div>
+    <!-- Speaker icon for Speak: Munetios -->
+    <div id="voiceSpeakerBox" style="display:none;position:fixed;bottom:30px;right:30px;z-index:3000;">
+       <button id="voiceSpeakerBtn" title="Speak: Munetios" style="background:rgba(26,0,51,0.97);border:1px solid #3a1a70;border-radius:50%;width:54px;height:54px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(19,0,54,0.18);color:#b388ff;cursor:pointer;">
+          <svg id="voiceSpeakerIcon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+             <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+             <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+             <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+          </svg>
+       </button>
+    </div>
+    <script>
+    // Voice Speaker toggle logic
+    (function() {
+       const voiceSpeakerToggle = document.getElementById('voiceSpeakerToggle');
+       const voiceSpeakerBox = document.getElementById('voiceSpeakerBox');
+       const voiceSpeakerBtn = document.getElementById('voiceSpeakerBtn');
+       // Save/load toggle state
+       function updateVoiceSpeakerUI() {
+          const enabled = localStorage.getItem('voiceSpeaker') === '1';
+          voiceSpeakerToggle.checked = enabled;
+          voiceSpeakerBox.style.display = enabled ? '' : 'none';
+       }
+       if (voiceSpeakerToggle) {
+          voiceSpeakerToggle.checked = localStorage.getItem('voiceSpeaker') === '1';
+          voiceSpeakerToggle.addEventListener('change', () => {
+             localStorage.setItem('voiceSpeaker', voiceSpeakerToggle.checked ? '1' : '0');
+             updateVoiceSpeakerUI();
+          });
+       }
+       updateVoiceSpeakerUI();
+       // Show/hide speaker icon on page load
+       document.addEventListener('DOMContentLoaded', updateVoiceSpeakerUI);
+
+       // Speak the current search query when clicking the speaker
+       if (voiceSpeakerBtn) {
+          voiceSpeakerBtn.addEventListener('click', function() {
+             if ('speechSynthesis' in window) {
+                const searchInput = document.getElementById('searchInput');
+                const text = (searchInput && searchInput.value.trim()) ? searchInput.value.trim() : 'Munetios';
+                const utter = new window.SpeechSynthesisUtterance(text);
+                utter.lang = document.documentElement.lang || 'en-US';
+                window.speechSynthesis.speak(utter);
+             }
+          });
+       }
+    })();
+    </script>
     <div class="modal" id="settingsModal">
         <div class="modal-content">
             <h2 style="margin-top:0;">Settings</h2>
@@ -1683,11 +1735,38 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         let html = '';
+        // Helper: returns speaker icon HTML if needed
+        function getSpeakerIcon(desc) {
+            const enabled = localStorage.getItem('voiceSpeaker') === '1';
+            if (
+                enabled &&
+                typeof desc === 'string' &&
+                desc.includes('Speak: Munetios')
+            ) {
+                return `<button class="inline-voice-speaker" title="Speak: Munetios" style="background:none;border:none;cursor:pointer;vertical-align:middle;padding:0 0 0 6px;" onclick="(function(){
+                    if('speechSynthesis' in window){
+                        const utter=new window.SpeechSynthesisUtterance('Munetios');
+                        utter.lang=document.documentElement.lang||'en-US';
+                        window.speechSynthesis.speak(utter);
+                    }
+                })()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                        <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                    </svg>
+                </button>`;
+            }
+            return '';
+        }
         if (type === 'images') {
             html = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;">${results.map(img => `<a href="${escapeHTML(img.url)}" rel="noopener noreferrer" class="result" style="padding:0;background:none;border:none;"><img src="${escapeHTML(img.image)}" alt="${escapeHTML(img.title || '')}" class="thumbnail" loading="lazy"></a>`).join('')}</div>`;
         } else {
             html = results.map(r => {
                 const payload = JSON.stringify(sanitizeForAttr(r));
+                // Add speaker icon if needed in description
+                const desc = escapeHTML(r.description || "");
+                const speakerIcon = getSpeakerIcon(r.description);
                 return `
                 <div class="result">
                     <button class="more-btn" aria-label="More" onclick='openPanel(${payload})'>&#8942;</button>
@@ -1696,7 +1775,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <a href="${escapeHTML(r.url)}" rel="noopener noreferrer"><span style="font-size:14px;color:#ccc;display:block;">${escapeHTML(new URL(r.url).hostname)}</span></a>
                     </div>
                     <h3><a href="${escapeHTML(r.url)}" rel="noopener noreferrer">${escapeHTML(r.title)}</a></h3>
-                    <p>${escapeHTML(r.description || "")}</p>
+                    <p>${desc}${speakerIcon}</p>
                     ${(type === 'videos' && r.thumbnail) ? `<img src="${escapeHTML(r.thumbnail)}" alt="${escapeHTML(r.title)}" class="thumbnail" loading="lazy">` : ''}
                 </div>`;
             }).join('');
