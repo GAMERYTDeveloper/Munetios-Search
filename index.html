@@ -25,16 +25,16 @@
     });
   </script>
     
-     <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js').catch(function(e) {
-                    // Registration failed
-                    console.warn('ServiceWorker registration failed:', e);
-                });
-            });
-        }
-        </script>
+   <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').then(reg => {
+      console.log('Service Worker registered with scope:', reg.scope);
+    }).catch(err => console.error('SW registration failed:', err));
+  });
+}
+</script>
+
       <meta name="keywords" content="Munetios, search, calendar, notes, tasks, weather, calculator, tetris, docs, productivity, web apps">
     <meta name="robots" content="index, follow">
     <meta property="og:title" content="Munetios Search">
