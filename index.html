@@ -25,12 +25,13 @@
     });
   </script>
     
-   <script>
+ <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').then(reg => {
-      console.log('Service Worker registered with scope:', reg.scope);
-    }).catch(err => console.error('SW registration failed:', err));
+    navigator.serviceWorker
+      .register('/sw.js', { scope: '/' })  // 👈 Must be absolute
+      .then(reg => console.log('Munetios SW active:', reg.scope))
+      .catch(err => console.error('SW failed:', err));
   });
 }
 </script>
