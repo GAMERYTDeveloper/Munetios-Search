@@ -156,7 +156,7 @@
         <div class="top">
             <a href="/" class="logo">
                 <img src="favicon-32x32.png" alt="Munetios Logo" style="height:32px;width:32px;">
-                <h1 class="logo-text" style="white-space: nowrap;">Munetios (Beta search)</h1>
+                <h1 class="logo-text" style="white-space: nowrap;">Munetios</h1>
             </a>
             <div class="search-bar">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -784,7 +784,7 @@
                 // UI translations
                 const translations = {
                     en: {
-                        'Munetios (Beta search)': 'Munetios (Beta search)',
+                        'Munetios': 'Munetios',
                         'Search': 'Search',
                         'All': 'All',
                         'Popular': 'Popular',
@@ -848,7 +848,7 @@
                         'No AI Overview available for this query.': 'No AI Overview available for this query.'
                     },
                     es: {
-                        'Munetios (Beta search)': 'Munetios (Búsqueda Beta)',
+                        'Munetios': 'Munetios',
                         'Search': 'Buscar',
                         'All': 'Todo',
                         'Popular': 'Popular',
@@ -913,7 +913,7 @@
                     },
                     // Add similar extended keys for fr, de, zh, ja, ru, ar, hi...
                     fr: {
-                        'Munetios (Beta search)': 'Munetios (Recherche Bêta)',
+                        'Munetios': 'Munetios ',
                         'Search': 'Rechercher',
                         'All': 'Tout',
                         'Popular': 'Populaire',
@@ -977,7 +977,7 @@
                         'No AI Overview available for this query.': 'Aucune Vue IA disponible pour cette requête.'
                     },
                     de: {
-                        'Munetios (Beta search)': 'Munetios (Beta-Suche)',
+                        'Munetios': 'Munetios',
                         'Search': 'Suchen',
                         'All': 'Alle',
                         'Popular': 'Beliebt',
@@ -1042,7 +1042,7 @@
                     },
                     // You can add similar objects for zh, ja, ru, ar, hi, etc.
                     zh: {
-                        'Munetios (Beta search)': 'Munetios（测试版搜索）',
+                        'Munetios': 'Munetios（测试版搜索）',
                         'Search': '搜索',
                         'All': '全部',
                         'Popular': '热门',
@@ -1106,7 +1106,7 @@
                         'No AI Overview available for this query.': '此查询暂无AI总览。'
                     },
                     ja: {
-                        'Munetios (Beta search)': 'Munetios（ベータ検索）',
+                        'Munetios': 'Munetios',
                         'Search': '検索',
                         'All': 'すべて',
                         'Popular': '人気',
@@ -1170,7 +1170,7 @@
                         'No AI Overview available for this query.': 'このクエリにはAI概要がありません。'
                     },
                     ru: {
-                        'Munetios (Beta search)': 'Munetios (Бета-поиск)',
+                        'Munetios': 'Munetios',
                         'Search': 'Поиск',
                         'All': 'Все',
                         'Popular': 'Популярное',
@@ -1234,7 +1234,7 @@
                         'No AI Overview available for this query.': 'Нет AI-обзора для этого запроса.'
                     },
                     ar: {
-                        'Munetios (Beta search)': 'Munetios (بحث تجريبي)',
+                        'Munetios': 'Munetios',
                         'Search': 'بحث',
                         'All': 'الكل',
                         'Popular': 'الأكثر شيوعًا',
@@ -1298,7 +1298,7 @@
                         'No AI Overview available for this query.': 'لا توجد نظرة AI لهذا الاستعلام.'
                     },
                     hi: {
-                        'Munetios (Beta search)': 'Munetios (बीटा खोज)',
+                        'Munetios': 'Munetios',
                         'Search': 'खोजें',
                         'All': 'सभी',
                         'Popular': 'लोकप्रिय',
@@ -1372,7 +1372,7 @@
                 function translateUI() {
                     // Logo text
                     const logoText = document.querySelector('.logo-text');
-                    if (logoText) logoText.textContent = t('Munetios (Beta search)');
+                    if (logoText) logoText.textContent = t('Munetios');
 
                     // Search input
                     const searchInput = document.getElementById('searchInput');
@@ -1734,6 +1734,7 @@ document.addEventListener('DOMContentLoaded', () => {
             resultsDiv.textContent = 'No results found for your query.';
             return;
         }
+        
         let html = '';
         // Helper: returns speaker icon HTML if needed
         function getSpeakerIcon(desc) {
@@ -6511,7 +6512,775 @@ document.addEventListener('DOMContentLoaded', () => {
                         favicon: "https://tass.ru/favicon.ico",
                         image: "https://tass.ru/og-image.jpg",
                         type: "web"
-                    }
+                    },
+                    {
+                        title: "ClassLink",
+                        url: "https://www.classlink.com/",
+                        description: "ClassLink provides single sign-on access to apps and files for students and educators.",
+                        favicon: "https://www.classlink.com/favicon.ico",
+                        image: "https://www.classlink.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "BrainPOP",
+                        url: "https://www.brainpop.com/",
+                        description: "Animated educational videos, quizzes, and activities for K-12 students.",
+                        favicon: "https://www.brainpop.com/favicon.ico",
+                        image: "https://www.brainpop.com/images/og-image.png",
+                        type: "education"
+                    },
+                    {
+                        title: "IXL",
+                        url: "https://www.ixl.com/",
+                        description: "IXL is personalized learning in math and language arts for K-12 students.",
+                        favicon: "https://www.ixl.com/favicon.ico",
+                        image: "https://www.ixl.com/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "i-Ready",
+                        url: "https://www.i-ready.com/",
+                        description: "i-Ready provides personalized online instruction and assessment for K-8 students.",
+                        favicon: "https://www.i-ready.com/favicon.ico",
+                        image: "https://www.i-ready.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Kahoot!",
+                        url: "https://kahoot.com/",
+                        description: "Kahoot! is a game-based learning platform for quizzes and interactive lessons.",
+                        favicon: "https://kahoot.com/favicon.ico",
+                        image: "https://kahoot.com/files/2021/03/og-image.png",
+                        type: "education"
+                    },
+                    {
+                        title: "Quizlet",
+                        url: "https://quizlet.com/",
+                        description: "Quizlet helps students practice and master whatever they are learning.",
+                        favicon: "https://quizlet.com/favicon.ico",
+                        image: "https://quizlet.com/static/og-image.png",
+                        type: "education"
+                    },
+                    {
+                        title: "Edmodo",
+                        url: "https://new.edmodo.com/",
+                        description: "Edmodo is an educational network that helps connect all learners with the people and resources they need.",
+                        favicon: "https://new.edmodo.com/favicon.ico",
+                        image: "https://new.edmodo.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Nearpod",
+                        url: "https://nearpod.com/",
+                        description: "Nearpod is an interactive classroom tool for teachers to engage students with lessons.",
+                        favicon: "https://nearpod.com/favicon.ico",
+                        image: "https://nearpod.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Pear Deck",
+                        url: "https://www.peardeck.com/",
+                        description: "Pear Deck makes it easy to create interactive presentations and assessments.",
+                        favicon: "https://www.peardeck.com/favicon.ico",
+                        image: "https://www.peardeck.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Discovery Education",
+                        url: "https://www.discoveryeducation.com/",
+                        description: "Discovery Education offers digital textbooks, multimedia content, and professional development for K-12 education.",
+                        favicon: "https://www.discoveryeducation.com/favicon.ico",
+                        image: "https://www.discoveryeducation.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Scholastic",
+                        url: "https://www.scholastic.com/",
+                        description: "Scholastic provides books, resources, and educational materials for teachers and students.",
+                        favicon: "https://www.scholastic.com/favicon.ico",
+                        image: "https://www.scholastic.com/content/dam/teachers/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "ABCmouse",
+                        url: "https://www.abcmouse.com/",
+                        description: "ABCmouse is an early learning academy for children ages 2–8.",
+                        favicon: "https://www.abcmouse.com/favicon.ico",
+                        image: "https://www.abcmouse.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Prodigy Math Game",
+                        url: "https://www.prodigygame.com/",
+                        description: "Prodigy is a free, curriculum-aligned math game for students in grades 1–8.",
+                        favicon: "https://www.prodigygame.com/favicon.ico",
+                        image: "https://www.prodigygame.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "ReadWorks",
+                        url: "https://www.readworks.org/",
+                        description: "ReadWorks provides free reading comprehension resources for teachers and students.",
+                        favicon: "https://www.readworks.org/favicon.ico",
+                        image: "https://www.readworks.org/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Newsela",
+                        url: "https://newsela.com/",
+                        description: "Newsela offers news articles at different reading levels for classroom use.",
+                        favicon: "https://newsela.com/favicon.ico",
+                        image: "https://newsela.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Seesaw",
+                        url: "https://web.seesaw.me/",
+                        description: "Seesaw is a student-driven digital portfolio and simple parent communication platform.",
+                        favicon: "https://web.seesaw.me/favicon.ico",
+                        image: "https://web.seesaw.me/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Epic!",
+                        url: "https://www.getepic.com/",
+                        description: "Epic! is a digital library for kids 12 and under, with thousands of books and videos.",
+                        favicon: "https://www.getepic.com/favicon.ico",
+                        image: "https://www.getepic.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Renaissance myON",
+                        url: "https://www.myon.com/",
+                        description: "myON is a personalized digital reading platform for students.",
+                        favicon: "https://www.myon.com/favicon.ico",
+                        image: "https://www.myon.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Renaissance Accelerated Reader",
+                        url: "https://www.renaissance.com/products/accelerated-reader/",
+                        description: "Accelerated Reader motivates, monitors, and manages students’ independent reading practice.",
+                        favicon: "https://www.renaissance.com/favicon.ico",
+                        image: "https://www.renaissance.com/wp-content/uploads/2020/07/ar-og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Gizmos",
+                        url: "https://www.explorelearning.com/",
+                        description: "ExploreLearning Gizmos are interactive math and science simulations for grades 3–12.",
+                        favicon: "https://www.explorelearning.com/favicon.ico",
+                        image: "https://www.explorelearning.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Flocabulary",
+                        url: "https://www.flocabulary.com/",
+                        description: "Flocabulary uses educational hip-hop videos to engage students and increase achievement.",
+                        favicon: "https://www.flocabulary.com/favicon.ico",
+                        image: "https://www.flocabulary.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Edpuzzle",
+                        url: "https://edpuzzle.com/",
+                        description: "Edpuzzle lets teachers make any video interactive for students.",
+                        favicon: "https://edpuzzle.com/favicon.ico",
+                        image: "https://edpuzzle.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Sumdog",
+                        url: "https://www.sumdog.com/",
+                        description: "Sumdog provides engaging math and spelling practice for K-8 students.",
+                        favicon: "https://www.sumdog.com/favicon.ico",
+                        image: "https://www.sumdog.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "SplashLearn",
+                        url: "https://www.splashlearn.com/",
+                        description: "SplashLearn offers fun math and reading games for PreK–Grade 5.",
+                        favicon: "https://www.splashlearn.com/favicon.ico",
+                        image: "https://www.splashlearn.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Freckle",
+                        url: "https://www.freckle.com/",
+                        description: "Freckle provides differentiated math, ELA, social studies, and science practice for K-12.",
+                        favicon: "https://www.freckle.com/favicon.ico",
+                        image: "https://www.freckle.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "GoNoodle",
+                        url: "https://www.gonoodle.com/",
+                        description: "GoNoodle engages kids with movement and mindfulness videos.",
+                        favicon: "https://www.gonoodle.com/favicon.ico",
+                        image: "https://www.gonoodle.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "TypingClub",
+                        url: "https://www.typingclub.com/",
+                        description: "TypingClub is a free online touch typing tutorial for all ages.",
+                        favicon: "https://www.typingclub.com/favicon.ico",
+                        image: "https://www.typingclub.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Code.org",
+                        url: "https://code.org/",
+                        description: "Code.org provides free coding lessons and activities for students of all ages.",
+                        favicon: "https://code.org/favicon.ico",
+                        image: "https://code.org/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Scratch",
+                        url: "https://scratch.mit.edu/",
+                        description: "Scratch is a free programming language and online community for kids.",
+                        favicon: "https://scratch.mit.edu/favicon.ico",
+                        image: "https://scratch.mit.edu/images/og-image.png",
+                        type: "education"
+                    },
+                    {
+                        title: "PBS Kids",
+                        url: "https://pbskids.org/",
+                        description: "PBS Kids offers educational games and videos for children.",
+                        favicon: "https://pbskids.org/favicon.ico",
+                        image: "https://pbskids.org/images/og-image.png",
+                        type: "education"
+                    },
+                    {
+                        title: "National Geographic Kids",
+                        url: "https://kids.nationalgeographic.com/",
+                        description: "National Geographic Kids features educational games, videos, and articles.",
+                        favicon: "https://kids.nationalgeographic.com/favicon.ico",
+                        image: "https://kids.nationalgeographic.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Coolmath Games",
+                        url: "https://www.coolmathgames.com/",
+                        description: "Coolmath Games offers fun and educational games for all ages.",
+                        favicon: "https://www.coolmathgames.com/favicon.ico",
+                        image: "https://www.coolmathgames.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Khan Academy Kids",
+                        url: "https://learn.khanacademy.org/khan-academy-kids/",
+                        description: "Khan Academy Kids is a free, fun educational program for children ages 2–8.",
+                        favicon: "https://learn.khanacademy.org/favicon.ico",
+                        image: "https://learn.khanacademy.org/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Zearn",
+                        url: "https://www.zearn.org/",
+                        description: "Zearn offers a comprehensive math curriculum for elementary students.",
+                        favicon: "https://www.zearn.org/favicon.ico",
+                        image: "https://www.zearn.org/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Study Island",
+                        url: "https://www.studyisland.com/",
+                        description: "Study Island provides standards-based practice and assessments for K-12 students.",
+                        favicon: "https://www.studyisland.com/favicon.ico",
+                        image: "https://www.studyisland.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Edgenuity",
+                        url: "https://www.edgenuity.com/",
+                        description: "Edgenuity offers online and blended learning solutions for schools and districts.",
+                        favicon: "https://www.edgenuity.com/favicon.ico",
+                        image: "https://www.edgenuity.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "ALEKS",
+                        url: "https://www.aleks.com/",
+                        description: "ALEKS is an adaptive online math program for K-12 and higher education.",
+                        favicon: "https://www.aleks.com/favicon.ico",
+                        image: "https://www.aleks.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Big Ideas Math",
+                        url: "https://www.bigideasmath.com/",
+                        description: "Big Ideas Math provides a research-based math curriculum for students.",
+                        favicon: "https://www.bigideasmath.com/favicon.ico",
+                        image: "https://www.bigideasmath.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Houghton Mifflin Harcourt",
+                        url: "https://www.hmhco.com/",
+                        description: "HMH offers educational resources, textbooks, and digital solutions for K-12.",
+                        favicon: "https://www.hmhco.com/favicon.ico",
+                        image: "https://www.hmhco.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "McGraw Hill Education",
+                        url: "https://www.mheducation.com/",
+                        description: "McGraw Hill provides digital learning tools and textbooks for students and educators.",
+                        favicon: "https://www.mheducation.com/favicon.ico",
+                        image: "https://www.mheducation.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Savvas Learning Company",
+                        url: "https://www.savvas.com/",
+                        description: "Savvas offers K-12 curriculum, digital learning, and assessment solutions.",
+                        favicon: "https://www.savvas.com/favicon.ico",
+                        image: "https://www.savvas.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Renaissance Star Assessments",
+                        url: "https://www.renaissance.com/products/star-assessments/",
+                        description: "Star Assessments provide data to help educators guide instruction for K-12 students.",
+                        favicon: "https://www.renaissance.com/favicon.ico",
+                        image: "https://www.renaissance.com/wp-content/uploads/2020/07/star-og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "CommonLit",
+                        url: "https://www.commonlit.org/",
+                        description: "CommonLit offers free reading passages and literacy resources for grades 3–12.",
+                        favicon: "https://www.commonlit.org/favicon.ico",
+                        image: "https://www.commonlit.org/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Duolingo for Schools",
+                        url: "https://schools.duolingo.com/",
+                        description: "Duolingo for Schools provides free language learning tools for teachers and students.",
+                        favicon: "https://schools.duolingo.com/favicon.ico",
+                        image: "https://schools.duolingo.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "ClassDojo",
+                        url: "https://www.classdojo.com/",
+                        description: "ClassDojo connects teachers with students and parents to build classroom communities.",
+                        favicon: "https://www.classdojo.com/favicon.ico",
+                        image: "https://www.classdojo.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Remind",
+                        url: "https://www.remind.com/",
+                        description: "Remind is a communication platform for teachers, students, and parents.",
+                        favicon: "https://www.remind.com/favicon.ico",
+                        image: "https://www.remind.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Google Classroom",
+                        url: "https://classroom.google.com/",
+                        description: "Google Classroom helps educators create, distribute, and grade assignments in a paperless way.",
+                        favicon: "https://ssl.gstatic.com/classroom/favicon.png",
+                        image: "https://ssl.gstatic.com/images/branding/product/2x/classroom_96dp.png",
+                        type: "education"
+                    },
+                    {
+                        title: "Microsoft Teams for Education",
+                        url: "https://www.microsoft.com/en/microsoft-teams/group-chat-software",
+                        description: "Microsoft Teams for Education enables collaboration and communication for classrooms.",
+                        favicon: "https://statics.teams.cdn.office.net/hashedassets/favicon/favicon-32x32.png",
+                        image: "https://statics.teams.cdn.office.net/hashedassets/logo/teams-logo.png",
+                        type: "education"
+                    },
+                    {
+                        title: "Canvas LMS",
+                        url: "https://www.instructure.com/canvas/",
+                        description: "Canvas is a modern learning management system for K-12 and higher education.",
+                        favicon: "https://www.instructure.com/favicon.ico",
+                        image: "https://www.instructure.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Schoology",
+                        url: "https://www.schoology.com/",
+                        description: "Schoology is a learning management system for K-12 schools and districts.",
+                        favicon: "https://www.schoology.com/favicon.ico",
+                        image: "https://www.schoology.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Blackboard",
+                        url: "https://www.blackboard.com/",
+                        description: "Blackboard provides learning management and education technology solutions.",
+                        favicon: "https://www.blackboard.com/favicon.ico",
+                        image: "https://www.blackboard.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "PowerSchool",
+                        url: "https://www.powerschool.com/",
+                        description: "PowerSchool offers student information systems and education technology solutions.",
+                        favicon: "https://www.powerschool.com/favicon.ico",
+                        image: "https://www.powerschool.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Infinite Campus",
+                        url: "https://www.infinitecampus.com/",
+                        description: "Infinite Campus is a student information system for K-12 schools.",
+                        favicon: "https://www.infinitecampus.com/favicon.ico",
+                        image: "https://www.infinitecampus.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Skyward",
+                        url: "https://www.skyward.com/",
+                        description: "Skyward provides student information systems and school management software.",
+                        favicon: "https://www.skyward.com/favicon.ico",
+                        image: "https://www.skyward.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Clever",
+                        url: "https://clever.com/",
+                        description: "Clever is a single sign-on platform for K-12 education apps and resources.",
+                        favicon: "https://clever.com/favicon.ico",
+                        image: "https://clever.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Socrative",
+                        url: "https://www.socrative.com/",
+                        description: "Socrative is a classroom app for fun, effective student engagement.",
+                        favicon: "https://www.socrative.com/favicon.ico",
+                        image: "https://www.socrative.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Quizizz",
+                        url: "https://quizizz.com/",
+                        description: "Quizizz is a free tool to create and play interactive quizzes and lessons.",
+                        favicon: "https://quizizz.com/favicon.ico",
+                        image: "https://quizizz.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Blooket",
+                        url: "https://www.blooket.com/",
+                        description: "Blooket is a classroom review game platform for teachers and students.",
+                        favicon: "https://www.blooket.com/favicon.ico",
+                        image: "https://www.blooket.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Lumosity",
+                        url: "https://www.lumosity.com/",
+                        description: "Lumosity offers brain training games and activities for all ages.",
+                        favicon: "https://www.lumosity.com/favicon.ico",
+                        image: "https://www.lumosity.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "MobyMax",
+                        url: "https://www.mobymax.com/",
+                        description: "MobyMax provides personalized learning in math, ELA, science, and social studies.",
+                        favicon: "https://www.mobymax.com/favicon.ico",
+                        image: "https://www.mobymax.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Raz-Kids",
+                        url: "https://www.raz-kids.com/",
+                        description: "Raz-Kids offers hundreds of eBooks at 29 different levels of reading difficulty.",
+                        favicon: "https://www.raz-kids.com/favicon.ico",
+                        image: "https://www.raz-kids.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Starfall",
+                        url: "https://www.starfall.com/",
+                        description: "Starfall is a free public service to teach children to read and write.",
+                        favicon: "https://www.starfall.com/favicon.ico",
+                        image: "https://www.starfall.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Time for Kids",
+                        url: "https://www.timeforkids.com/",
+                        description: "Time for Kids provides news and educational resources for students.",
+                        favicon: "https://www.timeforkids.com/favicon.ico",
+                        image: "https://www.timeforkids.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Scholastic Learn at Home",
+                        url: "https://classroommagazines.scholastic.com/support/learnathome.html",
+                        description: "Scholastic Learn at Home offers free daily learning activities for students.",
+                        favicon: "https://classroommagazines.scholastic.com/favicon.ico",
+                        image: "https://classroommagazines.scholastic.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Funbrain",
+                        url: "https://www.funbrain.com/",
+                        description: "Funbrain offers free educational games, books, and videos for kids.",
+                        favicon: "https://www.funbrain.com/favicon.ico",
+                        image: "https://www.funbrain.com/images/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "IXL Science",
+                        url: "https://www.ixl.com/science/",
+                        description: "IXL Science offers interactive science practice for K-12 students.",
+                        favicon: "https://www.ixl.com/favicon.ico",
+                        image: "https://www.ixl.com/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "IXL Social Studies",
+                        url: "https://www.ixl.com/social-studies/",
+                        description: "IXL Social Studies provides interactive practice for K-12 students.",
+                        favicon: "https://www.ixl.com/favicon.ico",
+                        image: "https://www.ixl.com/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "IXL Spanish",
+                        url: "https://www.ixl.com/spanish/",
+                        description: "IXL Spanish offers interactive Spanish language practice for students.",
+                        favicon: "https://www.ixl.com/favicon.ico",
+                        image: "https://www.ixl.com/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "IXL Language Arts",
+                        url: "https://www.ixl.com/ela/",
+                        description: "IXL Language Arts provides interactive ELA practice for K-12 students.",
+                        favicon: "https://www.ixl.com/favicon.ico",
+                        image: "https://www.ixl.com/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "IXL Math",
+                        url: "https://www.ixl.com/math/",
+                        description: "IXL Math offers interactive math practice for K-12 students.",
+                        favicon: "https://www.ixl.com/favicon.ico",
+                        image: "https://www.ixl.com/og-image.jpg",
+                        type: "education"
+                    },
+                    {
+                        title: "Mozilla Firefox",
+                        url: "https://www.mozilla.org/firefox/download/",
+                        description: "Fast, private and secure browser from Mozilla. Download for Windows, macOS, Linux, Android, and iOS.",
+                        favicon: "https://www.mozilla.org/media/protocol/img/logos/firefox/browser/logo-md.2dcf2a36e4b2.svg",
+                        image: "https://www.mozilla.org/media/protocol/img/logos/firefox/browser/og.7c2d31e2e4b5.png",
+                        type: "web"
+                    },
+                    {
+                        title: "Google Chrome",
+                        url: "https://www.google.com/chrome/",
+                        description: "The fast, free browser from Google. Download for Windows, Mac, Linux, Android, and iOS.",
+                        favicon: "https://www.google.com/chrome/static/images/favicons/favicon-96x96.png",
+                        image: "https://www.google.com/chrome/static/images/chrome-logo-m100.svg",
+                        type: "web"
+                    },
+                    {
+                        title: "Microsoft Edge",
+                        url: "https://www.microsoft.com/edge",
+                        description: "Microsoft Edge is the fast and secure browser that helps you protect your data and save time and money.",
+                        favicon: "https://www.microsoft.com/favicon.ico",
+                        image: "https://cdn-dynmedia-1.microsoft.com/is/image/microsoftcorp/Edge-OG-Image:VP2-859x540",
+                        type: "web"
+                    },
+                    {
+                        title: "Brave Browser",
+                        url: "https://brave.com/download/",
+                        description: "Browse faster and privately with Brave. Download for Windows, Mac, Linux, Android, and iOS.",
+                        favicon: "https://brave.com/static-assets/images/brave-favicon.png",
+                        image: "https://brave.com/static-assets/images/brave-og.png",
+                        type: "web"
+                    },
+                    {
+                        title: "Opera Browser",
+                        url: "https://www.opera.com/download",
+                        description: "Opera is a fast, secure and innovative browser. Download for Windows, Mac, Linux, Android, and iOS.",
+                        favicon: "https://www.opera.com/favicon.ico",
+                        image: "https://www.opera.com/images/opera-og-image.png",
+                        type: "web"
+                    },
+                    {
+                        title: "Vivaldi Browser",
+                        url: "https://vivaldi.com/download/",
+                        description: "A highly customizable browser with advanced features. Download for Windows, Mac, Linux, and Android.",
+                        favicon: "https://vivaldi.com/favicon.ico",
+                        image: "https://vivaldi.com/wp-content/uploads/social/vivaldi-social.png",
+                        type: "web"
+                    },
+                    {
+                        title: "Tor Browser",
+                        url: "https://www.torproject.org/download/",
+                        description: "Browse privately and access the dark web with Tor Browser. Download for Windows, Mac, Linux, and Android.",
+                        favicon: "https://www.torproject.org/static/images/favicon.ico",
+                        image: "https://www.torproject.org/static/images/tor-logo-og.png",
+                        type: "web"
+                    },
+                    {
+                        title: "Chromium Browser",
+                        url: "https://www.chromium.org/getting-involved/download-chromium/",
+                        description: "Open-source browser project that forms the basis for Chrome and Edge.",
+                        favicon: "https://www.chromium.org/favicon.ico",
+                        image: "https://www.chromium.org/_/rsrc/1465240402327/config/customLogo.gif",
+                        type: "web"
+                    },
+                    {
+                        title: "Waterfox",
+                        url: "https://www.waterfox.net/download/",
+                        description: "A high performance browser based on Firefox, focused on privacy and user choice.",
+                        favicon: "https://www.waterfox.net/favicon.ico",
+                        image: "https://www.waterfox.net/img/og-image.png",
+                        type: "web"
+                    },
+                    {
+                        title: "Pale Moon",
+                        url: "https://www.palemoon.org/download.shtml",
+                        description: "Open-source web browser based on Firefox, optimized for efficiency and customization.",
+                        favicon: "https://www.palemoon.org/favicon.ico",
+                        image: "https://www.palemoon.org/images/palemoon-og.png",
+                        type: "web"
+                    },
+                    {
+                        title: "Midori Browser",
+                        url: "https://www.midori-browser.org/download/",
+                        description: "Lightweight, fast, and secure browser for privacy-conscious users.",
+                        favicon: "https://www.midori-browser.org/favicon.ico",
+                        image: "https://www.midori-browser.org/wp-content/uploads/2021/03/midori-og.png",
+                        type: "web"
+                    },
+                    {
+                        title: "GNOME Web (Epiphany)",
+                        url: "https://wiki.gnome.org/Apps/Web",
+                        description: "The simple, clean, and beautiful web browser for GNOME.",
+                        favicon: "https://wiki.gnome.org/favicon.ico",
+                        image: "https://wiki.gnome.org/Apps/Web?action=AttachFile&do=get&target=epiphany.png",
+                        type: "web"
+                    },
+                    {
+                        title: "Falkon Browser",
+                        url: "https://www.falkon.org/download/",
+                        description: "A lightweight Qt web browser formerly known as QupZilla.",
+                        favicon: "https://www.falkon.org/favicon.ico",
+                        image: "https://www.falkon.org/images/falkon-og.png",
+                        type: "web"
+                    },
+                    {
+                        title: "LibreWolf",
+                        url: "https://librewolf.net/installation/",
+                        description: "A privacy-focused, independent fork of Firefox.",
+                        favicon: "https://librewolf.net/favicon.ico",
+                        image: "https://librewolf.net/img/og-image.png",
+                        type: "web"
+                    },
+                    {
+                        title: "SRWare Iron",
+                        url: "https://www.srware.net/iron/",
+                        description: "A Chromium-based browser focused on privacy and security.",
+                        favicon: "https://www.srware.net/favicon.ico",
+                        image: "https://www.srware.net/iron/img/iron_og.png",
+                        type: "web"
+                    },
+                    {
+                        title: "Yandex Browser",
+                        url: "https://browser.yandex.com/",
+                        description: "A fast and secure browser from Yandex, available for Windows, Mac, Linux, Android, and iOS.",
+                        favicon: "https://browser.yandex.com/favicon.ico",
+                        image: "https://yastatic.net/s3/home-static/_/b/og-image.png",
+                        type: "web"
+                    },
+                    {
+                        title: "Maxthon Browser",
+                        url: "https://www.maxthon.com/mx6/download/",
+                        description: "A cloud-powered browser with unique features and cross-device sync.",
+                        favicon: "https://www.maxthon.com/favicon.ico",
+                        image: "https://www.maxthon.com/images/og-image.png",
+                        type: "web"
+                    },
+                    {
+                        title: "UC Browser",
+                        url: "https://www.ucweb.com/download/",
+                        description: "A fast, smart, and secure browser for mobile and desktop.",
+                        favicon: "https://www.ucweb.com/favicon.ico",
+                        image: "https://www.ucweb.com/images/og-image.png",
+                        type: "web"
+                    },
+                    {
+                        title: "Avant Browser",
+                        url: "https://www.avantbrowser.com/download.aspx",
+                        description: "A feature-rich browser with a tri-core rendering engine.",
+                        favicon: "https://www.avantbrowser.com/favicon.ico",
+                        image: "https://www.avantbrowser.com/images/avant-og.png",
+                        type: "web"
+                    },
+                    {
+                        title: "Slimjet Browser",
+                        url: "https://www.slimjet.com/en/dlpage.php",
+                        description: "A fast, smart, and powerful web browser based on Chromium.",
+                        favicon: "https://www.slimjet.com/favicon.ico",
+                        image: "https://www.slimjet.com/images/slimjet-og.png",
+                        type: "web"
+                    },
+                    {
+                        title: "Comodo Dragon Browser",
+                        url: "https://www.comodo.com/home/browsers-toolbars/browser.php",
+                        description: "A Chromium-based browser with enhanced security and privacy.",
+                        favicon: "https://www.comodo.com/favicon.ico",
+                        image: "https://www.comodo.com/images/dragon-og.png",
+                        type: "web"
+                    },
+                    {
+                        title: "SeaMonkey",
+                        url: "https://www.seamonkey-project.org/releases/",
+                        description: "An all-in-one internet suite including a web browser, email, and more.",
+                        favicon: "https://www.seamonkey-project.org/favicon.ico",
+                        image: "https://www.seamonkey-project.org/images/seamonkey-og.png",
+                        type: "web"
+                    },
+                    {
+                        title: "Otter Browser",
+                        url: "https://otter-browser.org/download.html",
+                        description: "A free and open source web browser aiming to recreate classic Opera.",
+                        favicon: "https://otter-browser.org/favicon.ico",
+                        image: "https://otter-browser.org/images/otter-og.png",
+                        type: "web"
+                    },
+                    {
+                        title: "QuteBrowser",
+                        url: "https://qutebrowser.org/download.html",
+                        description: "A keyboard-focused browser with a minimal GUI.",
+                        favicon: "https://qutebrowser.org/favicon.ico",
+                        image: "https://qutebrowser.org/static/img/qutebrowser-og.png",
+                        type: "web"
+                    },
+                    {
+                        title: "Lynx Browser",
+                        url: "https://lynx.invisible-island.net/",
+                        description: "A highly configurable text-based web browser for command-line users.",
+                        favicon: "",
+                        image: "",
+                        type: "web"
+                    },
+                    {
+                        title: "Wave Browser",
+                        url: "https://wavebrowser.co/",
+                        description: "Wave Browser is a fast, secure, and user-friendly web browser.",
+                        favicon: "https://wavebrowser.co/favicon.ico",
+                        image: "https://wavebrowser.co/assets/img/wavebrowser-og.png",
+                        type: "web"
+                    },
 
                 ];
                     
@@ -8199,6 +8968,198 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             {
                 keywords: [
+                    /is\s+chrome\s+safe/i,
+                    /is\s+chrome\s+safe\s+for\s+kids/i,
+                    /chrome\s+privacy/i
+                ],
+                answer: "Google Chrome is generally safe for most users and includes security features like sandboxing, phishing protection, and regular updates. For kids, parents should enable SafeSearch, supervise browsing, and consider using supervised accounts or parental controls."
+            },
+            {
+                keywords: [
+                    /is\s+firefox\s+safe/i,
+                    /is\s+firefox\s+safe\s+for\s+kids/i,
+                    /firefox\s+privacy/i
+                ],
+                answer: "Mozilla Firefox is considered safe and privacy-focused, with features like Enhanced Tracking Protection and regular security updates. For kids, enable parental controls and supervise browsing for added safety."
+            },
+            {
+                keywords: [
+                    /is\s+edge\s+safe/i,
+                    /is\s+edge\s+safe\s+for\s+kids/i,
+                    /edge\s+privacy/i
+                ],
+                answer: "Microsoft Edge is safe for most users and includes security features like SmartScreen and tracking prevention. Parents can use Kids Mode and set up family safety features for children."
+            },
+            {
+                keywords: [
+                    /is\s+brave\s+safe/i,
+                    /is\s+brave\s+safe\s+for\s+kids/i,
+                    /brave\s+privacy/i
+                ],
+                answer: "Brave is a privacy-focused browser that blocks ads and trackers by default. It is generally safe, but parents should supervise kids and enable safe search options."
+            },
+            {
+                keywords: [
+                    /is\s+opera\s+safe/i,
+                    /is\s+opera\s+safe\s+for\s+kids/i,
+                    /opera\s+privacy/i
+                ],
+                answer: "Opera is safe for most users and includes features like a built-in VPN and ad blocker. Parents should supervise children and enable safe browsing settings."
+            },
+            {
+                keywords: [
+                    /is\s+vivaldi\s+safe/i,
+                    /is\s+vivaldi\s+safe\s+for\s+kids/i,
+                    /vivaldi\s+privacy/i
+                ],
+                answer: "Vivaldi is a secure and customizable browser. It is generally safe, but parents should supervise kids and adjust privacy settings as needed."
+            },
+            {
+                keywords: [
+                    /is\s+tor\s+safe/i,
+                    /is\s+tor\s+safe\s+for\s+kids/i,
+                    /tor\s+privacy/i
+                ],
+                answer: "Tor Browser is designed for privacy and anonymity, but it can access the dark web and unfiltered content. It is not recommended for children. Use with caution and only if you understand the risks."
+            },
+            {
+                keywords: [
+                    /is\s+safari\s+safe/i,
+                    /is\s+safari\s+safe\s+for\s+kids/i,
+                    /safari\s+privacy/i
+                ],
+                answer: "Safari is safe for most users and includes privacy features like Intelligent Tracking Prevention. Parents can use Screen Time and parental controls to help keep kids safe."
+            },
+            {
+                keywords: [
+                    /is\s+chromium\s+safe/i,
+                    /is\s+chromium\s+safe\s+for\s+kids/i,
+                    /chromium\s+privacy/i
+                ],
+                answer: "Chromium is the open-source base for browsers like Chrome and Edge. It is generally safe, but may lack some security features found in official releases. Supervise kids and keep the browser updated."
+            },
+            {
+                keywords: [
+                    /is\s+waterfox\s+safe/i,
+                    /is\s+waterfox\s+safe\s+for\s+kids/i,
+                    /waterfox\s+privacy/i
+                ],
+                answer: "Waterfox is a privacy-focused browser based on Firefox. It is generally safe, but parents should supervise children and enable safe browsing features."
+            },
+            {
+                keywords: [
+                    /is\s+palemoon\s+safe/i,
+                    /is\s+palemoon\s+safe\s+for\s+kids/i,
+                    /palemoon\s+privacy/i
+                ],
+                answer: "Pale Moon is an open-source browser focused on efficiency and customization. It is generally safe, but may not receive security updates as quickly as mainstream browsers. Supervise kids and keep the browser updated."
+            },
+            {
+                keywords: [
+                    /is\s+midori\s+safe/i,
+                    /is\s+midori\s+safe\s+for\s+kids/i,
+                    /midori\s+privacy/i
+                ],
+                answer: "Midori is a lightweight browser with a focus on privacy. It is generally safe, but parents should supervise children and enable safe browsing options."
+            },
+            {
+                keywords: [
+                    /is\s+librewolf\s+safe/i,
+                    /is\s+librewolf\s+safe\s+for\s+kids/i,
+                    /librewolf\s+privacy/i
+                ],
+                answer: "LibreWolf is a privacy-focused fork of Firefox. It is generally safe, but parents should supervise children and adjust privacy settings as needed."
+            },
+            {
+                keywords: [
+                    /is\s+falkon\s+safe/i,
+                    /is\s+falkon\s+safe\s+for\s+kids/i,
+                    /falkon\s+privacy/i
+                ],
+                answer: "Falkon is a lightweight browser. It is generally safe, but may lack some advanced security features. Parents should supervise children and enable safe browsing."
+            },
+            {
+                keywords: [
+                    /is\s+maxthon\s+safe/i,
+                    /is\s+maxthon\s+safe\s+for\s+kids/i,
+                    /maxthon\s+privacy/i
+                ],
+                answer: "Maxthon is a cloud-powered browser. It is generally safe, but parents should supervise children and review privacy settings."
+            },
+            {
+                keywords: [
+                    /is\s+uc\s+browser\s+safe/i,
+                    /is\s+uc\s+browser\s+safe\s+for\s+kids/i,
+                    /uc\s+browser\s+privacy/i
+                ],
+                answer: "UC Browser has faced privacy and security concerns in the past. It is not recommended for sensitive browsing or for children. Consider using a mainstream browser with strong privacy controls."
+            },
+            {
+                keywords: [
+                    /is\s+avant\s+browser\s+safe/i,
+                    /is\s+avant\s+browser\s+safe\s+for\s+kids/i,
+                    /avant\s+browser\s+privacy/i
+                ],
+                answer: "Avant Browser is generally safe, but may not be as frequently updated as mainstream browsers. Parents should supervise children and enable safe browsing features."
+            },
+            {
+                keywords: [
+                    /is\s+slimjet\s+safe/i,
+                    /is\s+slimjet\s+safe\s+for\s+kids/i,
+                    /slimjet\s+privacy/i
+                ],
+                answer: "Slimjet is a Chromium-based browser. It is generally safe, but parents should supervise children and enable privacy settings."
+            },
+            {
+                keywords: [
+                    /is\s+comodo\s+dragon\s+safe/i,
+                    /is\s+comodo\s+dragon\s+safe\s+for\s+kids/i,
+                    /comodo\s+dragon\s+privacy/i
+                ],
+                answer: "Comodo Dragon is a Chromium-based browser focused on security. It is generally safe, but parents should supervise children and review privacy settings."
+            },
+            {
+                keywords: [
+                    /is\s+seamonkey\s+safe/i,
+                    /is\s+seamonkey\s+safe\s+for\s+kids/i,
+                    /seamonkey\s+privacy/i
+                ],
+                answer: "SeaMonkey is an all-in-one internet suite. It is generally safe, but may not receive security updates as quickly as other browsers. Parents should supervise children."
+            },
+            {
+                keywords: [
+                    /is\s+otter\s+browser\s+safe/i,
+                    /is\s+otter\s+browser\s+safe\s+for\s+kids/i,
+                    /otter\s+browser\s+privacy/i
+                ],
+                answer: "Otter Browser is open source and generally safe, but may lack some advanced security features. Parents should supervise children and enable safe browsing."
+            },
+            {
+                keywords: [
+                    /is\s+qutebrowser\s+safe/i,
+                    /is\s+qutebrowser\s+safe\s+for\s+kids/i,
+                    /qutebrowser\s+privacy/i
+                ],
+                answer: "QuteBrowser is a keyboard-focused browser for advanced users. It is generally safe, but not recommended for children without supervision."
+            },
+            {
+                keywords: [
+                    /is\s+lynx\s+safe/i,
+                    /is\s+lynx\s+safe\s+for\s+kids/i,
+                    /lynx\s+privacy/i
+                ],
+                answer: "Lynx is a text-based browser. It is generally safe, but not user-friendly for children. Supervise use as needed."
+            },
+            {
+                keywords: [
+                    /is\s+wave\s+browser\s+safe/i,
+                    /is\s+wave\s+browser\s+safe\s+for\s+kids/i,
+                    /wave\s+browser\s+privacy/i
+                ],
+                answer: "While wave browser claims to be secured and private, but most users report it as unsafe from couple years ago. While wave browser does not change default browser or homepage without permission, but malwarebytes flagged it as PUP (potentially unwanted program) but its because they add registry keys to make it start at startup. So, Wave browser maybe safe but always download it only from wavebrowser.co not from other sites.  "
+            },
+            {
+                keywords: [
                 /how\s+to\s+search\s+images/i,
                 /image\s+search/i,
                 /find\s+images/i,
@@ -9031,7 +9992,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     /does\s+munetios\s+cost\s+money/i,
                     /munetios\s+pricing/i
                 ],
-                answer: "Munetios apps are free to use. Some features may require a Munetios account, but there are no mandatory fees."
+                answer: "Munetios apps are free to use.  but there are no mandatory fees."
             },
             {
                 keywords: [
@@ -9061,7 +10022,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     /sign\s+up\s+for\s+munetios/i,
                     /register\s+munetios\s+account/i
                 ],
-                answer: "To create a Munetios account, visit any Munetios app and look for the Sign Up or Register option. Follow the instructions to set up your account."
+                answer: "Munetios accounts is coming soon so stay tuned."
             },
             {
                 keywords: [
@@ -9920,7 +10881,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.execCommand('copy');
                     copy.textContent = 'Copied!';
                     setTimeout(() => { copy.textContent = 'Copy'; }, 1200);
-                };
+                }; 
                 window.addEventListener('keydown', function esc(e) {
                     if (dialog.style.display === 'block' && e.key === 'Escape') {
                         dialog.style.display = 'none';
