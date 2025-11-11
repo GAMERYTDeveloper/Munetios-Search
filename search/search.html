@@ -9,6 +9,16 @@
     <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'none';">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; img-src 'self' https: data:; script-src 'self' https: 'unsafe-inline'; style-src 'self' https: 'unsafe-inline'; font-src 'self' https: data:; connect-src 'self' https:; frame-src 'self' https:;">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/sw.js', { scope: '/' })  // 👈 Must be absolute
+      .then(reg => console.log('Munetios SW active:', reg.scope))
+      .catch(err => console.error('SW failed:', err));
+  });
+}
+</script>
     <style>
         :root { --main-bg: #130036; --text-color: #fff; --card-bg: rgba(26, 0, 51, 0.7); --card-border: #25104d; --link-color: #7c4dff; --link-hover: #b388ff; }
         * {font-family: Lexend, Poppins, sans-serif;}
