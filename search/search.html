@@ -2103,7 +2103,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         title: "Google Calendar",
                         url: "https://calendar.google.com/",
                         description: "With Google Calendar, you can quickly schedule meetings and events and get reminders about upcoming activities.",
-                        favicon: "https://calendar.google.com/googlecalendar/images/favicons_2020q4/calendar_32.ico",
+                        favicon: "https://calendar.google.com/googlecalendar/images/favicons_2020q4/calendar_31.ico",
                         image: "https://ssl.gstatic.com/images/branding/product/2x/calendar_96dp.png",
                         type: "web"
                     },
@@ -2111,7 +2111,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         title: "Gmail",
                         url: "https://mail.google.com/",
                         description: "Gmail is email that's intuitive, efficient, and useful. 15 GB of storage, less spam, and mobile access.",
-                        favicon: "https://mail.google.com/favicon.ico",
+                        favicon: "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico",
                         image: "https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico",
                         type: "web"
                     },
@@ -2119,7 +2119,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         title: "Google News",
                         url: "https://news.google.com/",
                         description: "Comprehensive, up-to-date news coverage, aggregated from sources all over the world by Google News.",
-                        favicon: "https://news.google.com/favicon.ico",
+                        favicon: "https://lh3.googleusercontent.com/-DR60l-K8vnyi99NZovm9HlXyZwQ85GMDxiwJWzoasZYCUrPuUM_P_4Rb7ei03j-0nRs0c4F=w16",
                         image: "https://ssl.gstatic.com/images/branding/product/2x/news_96dp.png",
                         type: "web"
                     },
@@ -2185,6 +2185,22 @@ document.addEventListener('DOMContentLoaded', () => {
                         description: "Google Scholar provides a simple way to broadly search for scholarly literature.",
                         favicon: "https://scholar.google.com/favicon.ico",
                         image: "https://scholar.google.com/intl/en/scholar/images/1x/scholar_64dp.png",
+                        type: "web"
+                    },
+                    {
+                        title: "Google Gemini",
+                        url: "https://gemini.google.com/",
+                        description: "Meet Gemini, Google’s AI assistant. Get help with writing, planning, brainstorming, and more. Experience the power of generative AI.",
+                        favicon: "https://www.gstatic.com/lamda/images/gemini_sparkle_4g_512_lt_f94943af3be039176192d.png",
+                        image: "https://gemini.google.com/static/images/og-image.png",
+                        type: "web"
+                    },
+                    {
+                        title: "NotebookLM",
+                        url: "https://notebooklm.google.com/",
+                        description: "NotebookLM is an experimental AI-powered research and note-taking tool from Google, designed to help you organize and understand information.",
+                        favicon: "https://notebooklm.google.com/_/static/branding/v5/light_mode/favicon/favicon-32x32.png",
+                        image: "https://notebooklm.google.com/static/images/og-image.png",
                         type: "web"
                     },
                     {
@@ -7236,14 +7252,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         image: "https://www.maxthon.com/images/og-image.png",
                         type: "web"
                     },
-                    {
-                        title: "UC Browser",
-                        url: "https://www.ucweb.com/download/",
-                        description: "A fast, smart, and secure browser for mobile and desktop.",
-                        favicon: "https://www.ucweb.com/favicon.ico",
-                        image: "https://www.ucweb.com/images/og-image.png",
-                        type: "web"
-                    },
+                    /* UC Browser entry removed due to security concerns */
                     {
                         title: "Avant Browser",
                         url: "https://www.avantbrowser.com/download.aspx",
@@ -8547,8 +8556,976 @@ document.addEventListener('DOMContentLoaded', () => {
                     favicon: "https://www.coloringbookfun.com/favicon.ico",
                     image: "https://www.coloringbookfun.com/images/og-image.jpg",
                     type: "web"
-                }
-
+                },
+                
+                {
+                    title: "Wolfram Alpha",
+                    url: "https://www.wolframalpha.com/",
+                    description: "Computational knowledge engine for math, science, and more.",
+                    favicon: "https://www.wolframalpha.com/favicon.ico",
+                    image: "https://www.wolframalpha.com/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "Desmos Graphing Calculator",
+                    url: "https://www.desmos.com/calculator",
+                    description: "Free online graphing calculator for math students and teachers.",
+                    favicon: "https://www.desmos.com/favicon.ico",
+                    image: "https://www.desmos.com/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "GeoGebra",
+                    url: "https://www.geogebra.org/",
+                    description: "Dynamic mathematics software for geometry, algebra, and calculus.",
+                    favicon: "https://www.geogebra.org/favicon.ico",
+                    image: "https://www.geogebra.org/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "Archive.org",
+                    url: "https://archive.org/",
+                    description: "Internet Archive: digital library of websites, books, and media.",
+                    favicon: "https://archive.org/favicon.ico",
+                    image: "https://archive.org/images/og-image.jpg",
+                    type: "web"
+                },
+                {
+                    title: "Wayback Machine",
+                    url: "https://web.archive.org/",
+                    description: "Browse archived versions of websites from the past.",
+                    favicon: "https://web.archive.org/favicon.ico",
+                    image: "https://web.archive.org/images/og-image.jpg",
+                    type: "web"
+                },
+                {
+                    title: "OpenAI",
+                    url: "https://openai.com/",
+                    description: "AI research and deployment company.",
+                    favicon: "https://openai.com/favicon.ico",
+                    image: "https://openai.com/content/images/2023/05/openai-og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "ChatGPT",
+                    url: "https://chat.openai.com/",
+                    description: "AI-powered conversational assistant.",
+                    favicon: "https://chat.openai.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Hugging Face",
+                    url: "https://huggingface.co/",
+                    description: "AI models, datasets, and tools for machine learning.",
+                    favicon: "https://huggingface.co/favicon.ico",
+                    image: "https://huggingface.co/front/assets/huggingface_logo-noborder.svg",
+                    type: "web"
+                },
+                {
+                    title: "DeepL Translator",
+                    url: "https://www.deepl.com/translator",
+                    description: "AI-powered translation for multiple languages.",
+                    favicon: "https://www.deepl.com/favicon.ico",
+                    image: "https://www.deepl.com/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "Grammarly",
+                    url: "https://www.grammarly.com/",
+                    description: "AI writing assistant for grammar and style.",
+                    favicon: "https://www.grammarly.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Proton Mail",
+                    url: "https://proton.me/mail",
+                    description: "Secure email service with end-to-end encryption.",
+                    favicon: "https://proton.me/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Tutanota",
+                    url: "https://tutanota.com/",
+                    description: "Encrypted email service for privacy.",
+                    favicon: "https://tutanota.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Zoho Mail",
+                    url: "https://www.zoho.com/mail/",
+                    description: "Business email hosting and collaboration.",
+                    favicon: "https://www.zoho.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Nextcloud",
+                    url: "https://nextcloud.com/",
+                    description: "Self-hosted productivity platform for files, calendar, and more.",
+                    favicon: "https://nextcloud.com/favicon.ico",
+                    image: "https://nextcloud.com/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "CryptPad",
+                    url: "https://cryptpad.fr/",
+                    description: "End-to-end encrypted collaborative office suite.",
+                    favicon: "https://cryptpad.fr/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Joplin",
+                    url: "https://joplinapp.org/",
+                    description: "Open-source note-taking and to-do application.",
+                    favicon: "https://joplinapp.org/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Standard Notes",
+                    url: "https://standardnotes.com/",
+                    description: "Encrypted notes app for privacy-focused users.",
+                    favicon: "https://standardnotes.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Todoist",
+                    url: "https://todoist.com/",
+                    description: "Task manager and to-do list app for productivity.",
+                    favicon: "https://todoist.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "TickTick",
+                    url: "https://ticktick.com/",
+                    description: "To-do list and task manager with calendar integration.",
+                    favicon: "https://ticktick.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Habitica",
+                    url: "https://habitica.com/",
+                    description: "Gamified habit tracker and productivity app.",
+                    favicon: "https://habitica.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "RescueTime",
+                    url: "https://www.rescuetime.com/",
+                    description: "Time management and productivity analytics.",
+                    favicon: "https://www.rescuetime.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Forest",
+                    url: "https://www.forestapp.cc/",
+                    description: "Stay focused and plant virtual trees.",
+                    favicon: "https://www.forestapp.cc/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Pomofocus",
+                    url: "https://pomofocus.io/",
+                    description: "Online Pomodoro timer for productivity.",
+                    favicon: "https://pomofocus.io/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Focusmate",
+                    url: "https://www.focusmate.com/",
+                    description: "Virtual coworking for accountability and focus.",
+                    favicon: "https://www.focusmate.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Freedom",
+                    url: "https://freedom.to/",
+                    description: "Block distractions and stay focused online.",
+                    favicon: "https://freedom.to/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Pocket",
+                    url: "https://getpocket.com/",
+                    description: "Save articles and videos to view later.",
+                    favicon: "https://getpocket.com/favicon.ico",
+                    image: "https://getpocket.com/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "Feedly",
+                    url: "https://feedly.com/",
+                    description: "RSS reader for news and blogs.",
+                    favicon: "https://feedly.com/favicon.ico",
+                    image: "https://feedly.com/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "Raindrop.io",
+                    url: "https://raindrop.io/",
+                    description: "Bookmark manager for organizing web links.",
+                    favicon: "https://raindrop.io/favicon.ico",
+                    image: "https://raindrop.io/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "Pinboard",
+                    url: "https://pinboard.in/",
+                    description: "Fast, no-nonsense bookmarking site.",
+                    favicon: "https://pinboard.in/favicon.ico",
+                    image: "https://pinboard.in/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "Zotero",
+                    url: "https://www.zotero.org/",
+                    description: "Reference manager for research and citations.",
+                    favicon: "https://www.zotero.org/favicon.ico",
+                    image: "https://www.zotero.org/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "Mendeley",
+                    url: "https://www.mendeley.com/",
+                    description: "Academic reference manager and social network.",
+                    favicon: "https://www.mendeley.com/favicon.ico",
+                    image: "https://www.mendeley.com/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "Overleaf",
+                    url: "https://www.overleaf.com/",
+                    description: "Collaborative cloud-based LaTeX editor.",
+                    favicon: "https://www.overleaf.com/favicon.ico",
+                    image: "https://www.overleaf.com/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "ShareLaTeX",
+                    url: "https://www.sharelatex.com/",
+                    description: "Online LaTeX editor for collaborative writing.",
+                    favicon: "https://www.sharelatex.com/favicon.ico",
+                    image: "https://www.sharelatex.com/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "Draw.io",
+                    url: "https://app.diagrams.net/",
+                    description: "Free online diagram software for flowcharts and more.",
+                    favicon: "https://app.diagrams.net/favicon.ico",
+                    image: "https://app.diagrams.net/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "Lucidchart",
+                    url: "https://www.lucidchart.com/",
+                    description: "Visual communication and collaboration platform.",
+                    favicon: "https://www.lucidchart.com/favicon.ico",
+                    image: "https://www.lucidchart.com/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "MindMeister",
+                    url: "https://www.mindmeister.com/",
+                    description: "Online mind mapping tool for brainstorming.",
+                    favicon: "https://www.mindmeister.com/favicon.ico",
+                    image: "https://www.mindmeister.com/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "Miro",
+                    url: "https://miro.com/",
+                    description: "Collaborative online whiteboard platform.",
+                    favicon: "https://miro.com/favicon.ico",
+                    image: "https://miro.com/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "Coggle",
+                    url: "https://coggle.it/",
+                    description: "Collaborative mind-mapping tool.",
+                    favicon: "https://coggle.it/favicon.ico",
+                    image: "https://coggle.it/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "DrawPile",
+                    url: "https://drawpile.net/",
+                    description: "Free software collaborative drawing program.",
+                    favicon: "https://drawpile.net/favicon.ico",
+                    image: "https://drawpile.net/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "Krita",
+                    url: "https://krita.org/",
+                    description: "Professional free and open source painting program.",
+                    favicon: "https://krita.org/wp-content/uploads/2016/11/cropped-favicon-32x32.png",
+                    image: "https://krita.org/wp-content/uploads/2016/11/krita-hero.png",
+                    type: "web"
+                },
+                {
+                    title: "GIMP",
+                    url: "https://www.gimp.org/",
+                    description: "Cross-platform image editor for GNU/Linux, macOS, and Windows.",
+                    favicon: "https://www.gimp.org/images/favicon.ico",
+                    image: "https://www.gimp.org/images/frontpage/wilber-big.png",
+                    type: "web"
+                },
+                {
+                    title: "Inkscape",
+                    url: "https://inkscape.org/",
+                    description: "Professional quality vector graphics software.",
+                    favicon: "https://inkscape.org/static/images/inkscape-favicon.png",
+                    image: "https://inkscape.org/static/images/inkscape-og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "Blender",
+                    url: "https://www.blender.org/",
+                    description: "Free and open source 3D creation suite.",
+                    favicon: "https://www.blender.org/favicon.ico",
+                    image: "https://www.blender.org/wp-content/uploads/2019/07/blender_logo.png",
+                    type: "web"
+                },
+                {
+                    title: "Unity",
+                    url: "https://unity.com/",
+                    description: "Platform for creating and operating interactive, real-time 3D content.",
+                    favicon: "https://unity.com/favicon.ico",
+                    image: "https://unity.com/sites/default/files/styles/og_image/public/2021-03/unity-og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "Unreal Engine",
+                    url: "https://www.unrealengine.com/",
+                    description: "Open and advanced real-time 3D creation tool.",
+                    favicon: "https://www.unrealengine.com/favicon.ico",
+                    image: "https://cdn2.unrealengine.com/Unreal+Engine%2Fblog%2Fblog-og-image-1920x1080-1920x1080-2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e.png",
+                    type: "web"
+                },
+                {
+                    title: "Godot Engine",
+                    url: "https://godotengine.org/",
+                    description: "Cross-platform game engine for 2D and 3D games.",
+                    favicon: "https://godotengine.org/themes/godotengine/assets/ico/favicon.ico",
+                    image: "https://godotengine.org/themes/godotengine/assets/og_image.png",
+                    type: "web"
+                },
+                {
+                    title: "itch.io",
+                    url: "https://itch.io/",
+                    description: "Find, download and distribute indie games online.",
+                    favicon: "https://itch.io/favicon.ico",
+                    image: "https://itch.io/static/images/itchio-textless-black.png",
+                    type: "web"
+                },
+                {
+                    title: "Steam",
+                    url: "https://store.steampowered.com/",
+                    description: "Ultimate destination for playing, discussing, and creating games.",
+                    favicon: "https://store.steampowered.com/favicon.ico",
+                    image: "https://store.steampowered.com/public/shared/images/header/globalheader_logo.png",
+                    type: "web"
+                },
+                {
+                    title: "Epic Games Store",
+                    url: "https://www.epicgames.com/store/en-US/",
+                    description: "Buy and download PC games, mods, DLC and add-ons.",
+                    favicon: "https://static-assets-prod.epicgames.com/favicon.ico",
+                    image: "https://static-assets-prod.epicgames.com/epic-og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "GOG.com",
+                    url: "https://www.gog.com/",
+                    description: "Digital distribution platform with a curated selection of games.",
+                    favicon: "https://www.gog.com/favicon.ico",
+                    image: "https://www.gog.com/static/images/og-image.png",
+                    type: "web"
+                },
+                {
+                    title: "Stack Overflow",
+                    url: "https://stackoverflow.com/",
+                    description: "Programming Q&A site for developers.",
+                    favicon: "https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "GitHub",
+                    url: "https://github.com/",
+                    description: "Code hosting platform for version control and collaboration.",
+                    favicon: "https://github.githubassets.com/favicons/favicon.svg",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Reddit",
+                    url: "https://www.reddit.com/",
+                    description: "Social news aggregation and discussion website.",
+                    favicon: "https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Wikipedia",
+                    url: "https://www.wikipedia.org/",
+                    description: "Free online encyclopedia with millions of articles.",
+                    favicon: "https://www.wikipedia.org/static/favicon/wikipedia.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "YouTube",
+                    url: "https://www.youtube.com/",
+                    description: "Video sharing and streaming platform.",
+                    favicon: "https://www.youtube.com/favicon.ico",
+                    image: "",
+                    type: "videos"
+                },
+                {
+                    title: "Google",
+                    url: "https://www.google.com/",
+                    description: "Search the world's information, including webpages, images, videos and more.",
+                    favicon: "https://www.google.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Amazon",
+                    url: "https://www.amazon.com/",
+                    description: "Online shopping for electronics, apparel, computers, books, DVDs, and more.",
+                    favicon: "https://www.amazon.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "eBay",
+                    url: "https://www.ebay.com/",
+                    description: "Buy and sell electronics, cars, clothes, collectibles & more.",
+                    favicon: "https://www.ebay.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Netflix",
+                    url: "https://www.netflix.com/",
+                    description: "Watch TV shows and movies online.",
+                    favicon: "https://www.netflix.com/favicon.ico",
+                    image: "",
+                    type: "videos"
+                },
+                {
+                    title: "Twitch",
+                    url: "https://www.twitch.tv/",
+                    description: "Live streaming platform for gamers and creators.",
+                    favicon: "https://static.twitchcdn.net/assets/favicon-32-e29e246c157142c94346.png",
+                    image: "",
+                    type: "videos"
+                },
+                {
+                    title: "Spotify",
+                    url: "https://www.spotify.com/",
+                    description: "Music streaming service for millions of songs.",
+                    favicon: "https://www.scdn.co/i/_global/favicon.png",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "SoundCloud",
+                    url: "https://soundcloud.com/",
+                    description: "Music sharing and streaming platform.",
+                    favicon: "https://soundcloud.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Apple Music",
+                    url: "https://music.apple.com/",
+                    description: "Stream and download music from Apple.",
+                    favicon: "https://www.apple.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "BBC News",
+                    url: "https://www.bbc.com/news",
+                    description: "Latest news, breaking news and current affairs coverage from BBC.",
+                    favicon: "https://www.bbc.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "CNN",
+                    url: "https://www.cnn.com/",
+                    description: "Breaking news, latest news and current news.",
+                    favicon: "https://www.cnn.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "The New York Times",
+                    url: "https://www.nytimes.com/",
+                    description: "News, analysis and opinion from The New York Times.",
+                    favicon: "https://www.nytimes.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "The Guardian",
+                    url: "https://www.theguardian.com/international",
+                    description: "News, sport and opinion from The Guardian's global edition.",
+                    favicon: "https://www.theguardian.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Reuters",
+                    url: "https://www.reuters.com/",
+                    description: "International news agency providing news and analysis.",
+                    favicon: "https://www.reuters.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Bloomberg",
+                    url: "https://www.bloomberg.com/",
+                    description: "Business and markets news, data, analysis, and video.",
+                    favicon: "https://www.bloomberg.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Yahoo Mail",
+                    url: "https://mail.yahoo.com/",
+                    description: "Free email with spam protection and more.",
+                    favicon: "https://mail.yahoo.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Yahoo News",
+                    url: "https://news.yahoo.com/",
+                    description: "Latest news and headlines from Yahoo News.",
+                    favicon: "https://news.yahoo.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Yahoo Sports",
+                    url: "https://sports.yahoo.com/",
+                    description: "Sports news, scores, and fantasy games.",
+                    favicon: "https://sports.yahoo.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Yahoo Finance",
+                    url: "https://finance.yahoo.com/",
+                    description: "Business news, financial information, and stock quotes.",
+                    favicon: "https://finance.yahoo.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Yahoo Weather",
+                    url: "https://www.yahoo.com/news/weather",
+                    description: "Weather forecasts, maps, and news.",
+                    favicon: "https://www.yahoo.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "CoinMarketCap",
+                    url: "https://coinmarketcap.com/",
+                    description: "Cryptocurrency prices, charts and market capitalizations.",
+                    favicon: "https://coinmarketcap.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "CoinGecko",
+                    url: "https://www.coingecko.com/",
+                    description: "Cryptocurrency prices, charts, and market data.",
+                    favicon: "https://www.coingecko.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "OpenStreetMap",
+                    url: "https://www.openstreetmap.org/",
+                    description: "Free editable map of the whole world.",
+                    favicon: "https://www.openstreetmap.org/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Google Maps",
+                    url: "https://maps.google.com/",
+                    description: "Find local businesses, view maps and get driving directions.",
+                    favicon: "https://maps.google.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Bing Maps",
+                    url: "https://www.bing.com/maps",
+                    description: "Maps, directions, and traffic information from Bing.",
+                    favicon: "https://www.bing.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "DuckDuckGo",
+                    url: "https://duckduckgo.com/",
+                    description: "Privacy-focused search engine.",
+                    favicon: "https://duckduckgo.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Startpage",
+                    url: "https://www.startpage.com/",
+                    description: "Private search engine with Google results.",
+                    favicon: "https://www.startpage.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Qwant",
+                    url: "https://www.qwant.com/",
+                    description: "European privacy-focused search engine.",
+                    favicon: "https://www.qwant.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Brave Search",
+                    url: "https://search.brave.com/",
+                    description: "Private search engine from Brave.",
+                    favicon: "https://search.brave.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Ecosia",
+                    url: "https://www.ecosia.org/",
+                    description: "Search engine that plants trees.",
+                    favicon: "https://www.ecosia.org/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Swisscows",
+                    url: "https://swisscows.com/",
+                    description: "Family-friendly, privacy-focused search engine.",
+                    favicon: "https://swisscows.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Yandex",
+                    url: "https://yandex.com/",
+                    description: "Russian search engine and web portal.",
+                    favicon: "https://yandex.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Baidu",
+                    url: "https://www.baidu.com/",
+                    description: "Chinese search engine and web portal.",
+                    favicon: "https://www.baidu.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Naver",
+                    url: "https://www.naver.com/",
+                    description: "South Korean search engine and web portal.",
+                    favicon: "https://www.naver.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Sogou",
+                    url: "https://www.sogou.com/",
+                    description: "Chinese search engine and web portal.",
+                    favicon: "https://www.sogou.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Seznam",
+                    url: "https://www.seznam.cz/",
+                    description: "Czech search engine and web portal.",
+                    favicon: "https://www.seznam.cz/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Ask.com",
+                    url: "https://www.ask.com/",
+                    description: "Question answering-focused search engine.",
+                    favicon: "https://www.ask.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Dogpile",
+                    url: "https://www.dogpile.com/",
+                    description: "Meta search engine for web results.",
+                    favicon: "https://www.dogpile.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Metacrawler",
+                    url: "https://www.metacrawler.com/",
+                    description: "Meta search engine for web results.",
+                    favicon: "https://www.metacrawler.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "BoardGameGeek",
+                    url: "https://boardgamegeek.com/",
+                    description: "Database and community for board games.",
+                    favicon: "https://boardgamegeek.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Chess.com",
+                    url: "https://www.chess.com/",
+                    description: "Play chess online, solve puzzles, and learn.",
+                    favicon: "https://www.chess.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Duolingo",
+                    url: "https://www.duolingo.com/",
+                    description: "Learn languages online with bite-size lessons.",
+                    favicon: "https://d35aaqx5ub95lt.cloudfront.net/favicon.ico",
+                    image: "https://d35aaqx5ub95lt.cloudfront.net/images/og/og-image.png",
+                    type: "education"
+                },
+                {
+                    title: "Rosetta Stone",
+                    url: "https://www.rosettastone.com/",
+                    description: "Language learning software and courses.",
+                    favicon: "https://www.rosettastone.com/favicon.ico",
+                    image: "https://www.rosettastone.com/content/dam/rosetta-stone/images/og-image.png",
+                    type: "education"
+                },
+                {
+                    title: "Brilliant",
+                    url: "https://brilliant.org/",
+                    description: "Interactive problem solving in math and science.",
+                    favicon: "https://brilliant.org/favicon.ico",
+                    image: "https://brilliant.org/site_media/version-1/images/brilliant-meta-image.png",
+                    type: "education"
+                },
+                {
+                    title: "OpenStax",
+                    url: "https://openstax.org/",
+                    description: "Free textbooks and educational resources.",
+                    favicon: "https://openstax.org/favicon.ico",
+                    image: "https://assets.openstax.org/og-image.png",
+                    type: "education"
+                },
+                {
+                    title: "FutureLearn",
+                    url: "https://www.futurelearn.com/",
+                    description: "Free online courses from top universities.",
+                    favicon: "https://www.futurelearn.com/favicon.ico",
+                    image: "https://ugc.futurelearn.com/uploads/images/1e/2e/1e2e1e2e-1e2e-1e2e-1e2e-1e2e1e2e1e2e.jpg",
+                    type: "education"
+                },
+                {
+                    title: "Saylor Academy",
+                    url: "https://www.saylor.org/",
+                    description: "Free and open online courses for anyone.",
+                    favicon: "https://www.saylor.org/favicon.ico",
+                    image: "https://www.saylor.org/wp-content/uploads/2019/08/saylor-og-image.png",
+                    type: "education"
+                },
+                {
+                    title: "Academic Earth",
+                    url: "https://academicearth.org/",
+                    description: "Free online courses from top universities.",
+                    favicon: "https://academicearth.org/favicon.ico",
+                    image: "https://academicearth.org/wp-content/uploads/2018/10/ae-og-image.png",
+                    type: "education"
+                },
+                {
+                    title: "MIT OpenCourseWare",
+                    url: "https://ocw.mit.edu/",
+                    description: "Web-based publication of virtually all MIT course content.",
+                    favicon: "https://ocw.mit.edu/favicon.ico",
+                    image: "https://ocw.mit.edu/images/ocw-og-image.png",
+                    type: "education"
+                },
+                {
+                    title: "Codecademy",
+                    url: "https://www.codecademy.com/",
+                    description: "Learn to code interactively, for free.",
+                    favicon: "https://www.codecademy.com/favicon.ico",
+                    image: "https://www.codecademy.com/resources/blog/content/images/2022/03/Codecademy-og-image.png",
+                    type: "education"
+                },
+                {
+                    title: "freeCodeCamp",
+                    url: "https://www.freecodecamp.org/",
+                    description: "Learn to code for free. Build projects. Earn certifications.",
+                    favicon: "https://www.freecodecamp.org/favicon.ico",
+                    image: "https://www.freecodecamp.org/news/content/images/2022/01/fcc-og-image.png",
+                    type: "education"
+                },
+                {
+                    title: "Stanford Online",
+                    url: "https://online.stanford.edu/",
+                    description: "Free online courses, degrees, and certificates.",
+                    favicon: "https://online.stanford.edu/themes/custom/stanfordonline/favicon.ico",
+                    image: "https://online.stanford.edu/sites/g/files/sbiybj9961/f/stanfordonline-og-image.jpg",
+                    type: "education"
+                },
+                {
+                    title: "Harvard Online Learning",
+                    url: "https://online-learning.harvard.edu/",
+                    description: "Open learning opportunities from Harvard.",
+                    favicon: "https://online-learning.harvard.edu/sites/all/themes/harvardonline/favicon.ico",
+                    image: "https://online-learning.harvard.edu/sites/default/files/styles/og_image/public/harvardonline-og-image.jpg",
+                    type: "education"
+                },
+                {
+                    title: "OpenLearn",
+                    url: "https://www.open.edu/openlearn/",
+                    description: "Free learning from The Open University.",
+                    favicon: "https://www.open.edu/openlearn/favicon.ico",
+                    image: "https://www.open.edu/openlearn/sites/all/themes/openlearn_theme/images/openlearn-og-image.jpg",
+                    type: "education"
+                },
+                {
+                    title: "Alison",
+                    url: "https://alison.com/",
+                    description: "Free online courses with certificates and diplomas.",
+                    favicon: "https://alison.com/favicon.ico",
+                    image: "https://alison.com/html/site/img/alison-og-image.png",
+                    type: "education"
+                },
+                {
+                    title: "TED-Ed",
+                    url: "https://ed.ted.com/",
+                    description: "Animated educational videos and lessons.",
+                    favicon: "https://ed.ted.com/favicon.ico",
+                    image: "https://ed.ted.com/images/ted-ed-og-image.png",
+                    type: "education"
+                },
+                {
+                    title: "Open Culture",
+                    url: "https://www.openculture.com/",
+                    description: "High-quality cultural & educational media for lifelong learners.",
+                    favicon: "https://www.openculture.com/favicon.ico",
+                    image: "https://www.openculture.com/wp-content/uploads/2016/09/openculture-og-image.png",
+                    type: "education"
+                },
+                {
+                    title: "The Weather Channel",
+                    url: "https://weather.com/",
+                    description: "Weather forecasts, maps, and severe weather alerts from The Weather Channel.",
+                    favicon: "https://weather.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "AccuWeather",
+                    url: "https://www.accuweather.com/",
+                    description: "Accurate weather forecasts, local conditions, and severe weather alerts.",
+                    favicon: "https://www.accuweather.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Weather Underground",
+                    url: "https://www.wunderground.com/",
+                    description: "Hyper-local weather forecasts, radar, and severe weather alerts.",
+                    favicon: "https://www.wunderground.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "National Weather Service",
+                    url: "https://www.weather.gov/",
+                    description: "Official U.S. government weather forecasts, warnings, and information.",
+                    favicon: "https://www.weather.gov/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "BBC Weather",
+                    url: "https://www.bbc.com/weather",
+                    description: "Weather forecasts and reports from BBC.",
+                    favicon: "https://www.bbc.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Met Office",
+                    url: "https://www.metoffice.gov.uk/",
+                    description: "UK weather forecasts, warnings, and climate information.",
+                    favicon: "https://www.metoffice.gov.uk/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "WeatherBug",
+                    url: "https://www.weatherbug.com/",
+                    description: "Live weather conditions, forecasts, and alerts.",
+                    favicon: "https://www.weatherbug.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Windy",
+                    url: "https://www.windy.com/",
+                    description: "Live wind, weather, and radar maps.",
+                    favicon: "https://www.windy.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Yahoo Weather",
+                    url: "https://www.yahoo.com/news/weather",
+                    description: "Weather forecasts, maps, and news from Yahoo.",
+                    favicon: "https://www.yahoo.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
+                {
+                    title: "Google Weather",
+                    url: "https://www.google.com/search?q=weather",
+                    description: "Weather search and forecasts from Google.",
+                    favicon: "https://www.google.com/favicon.ico",
+                    image: "",
+                    type: "web"
+                },
                 ];
                     
 
@@ -10125,6 +11102,1662 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             {
                 keywords: [
+                    /how\s+to\s+order\s+food\s+online/i,
+                    /order\s+food\s+app/i,
+                    /food\s+delivery\s+service/i
+                ],
+                answer: "To order food online, use apps like Uber Eats, DoorDash, Grubhub, or your local restaurant's website. Browse the menu, add items to your cart, enter your address, and pay online. Your food will be delivered to your door."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+pizza/i,
+                    /pizza\s+recipe/i,
+                    /homemade\s+pizza/i
+                ],
+                answer: "To make pizza: (1) Prepare dough or use store-bought. (2) Spread tomato sauce on the dough. (3) Add cheese and toppings. (4) Bake in a preheated oven at 220°C (425°F) for 12-15 minutes. Enjoy!"
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+cake/i,
+                    /cake\s+recipe/i,
+                    /bake\s+cake/i
+                ],
+                answer: "To make a simple cake: (1) Mix flour, sugar, eggs, butter, and baking powder. (2) Pour into a greased pan. (3) Bake at 180°C (350°F) for 30-35 minutes. (4) Let cool and add frosting if desired."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+coffee/i,
+                    /brew\s+coffee/i,
+                    /coffee\s+recipe/i
+                ],
+                answer: "To make coffee: (1) Add ground coffee to a filter or French press. (2) Pour hot water over the grounds. (3) Let steep for 3-5 minutes. (4) Serve and add milk or sugar as desired."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+tea/i,
+                    /brew\s+tea/i,
+                    /tea\s+recipe/i
+                ],
+                answer: "To make tea: (1) Boil water. (2) Pour over a tea bag or loose leaves. (3) Steep for 3-5 minutes. (4) Remove tea bag/leaves and add milk, lemon, or sugar if desired."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+download\s+an\s+app/i,
+                    /install\s+app/i,
+                    /get\s+app/i
+                ],
+                answer: "To download an app, open your device's app store (Google Play for Android, App Store for iOS), search for the app, and tap 'Install' or 'Get.'"
+            },
+            {
+                keywords: [
+                    /how\s+to\s+delete\s+an\s+app/i,
+                    /uninstall\s+app/i,
+                    /remove\s+app/i
+                ],
+                answer: "To delete an app, long-press its icon and select 'Uninstall' or 'Remove.' You can also uninstall from your device's settings under 'Apps.'"
+            },
+            {
+                keywords: [
+                    /how\s+to\s+update\s+an\s+app/i,
+                    /update\s+app/i,
+                    /app\s+update/i
+                ],
+                answer: "To update an app, open your app store, go to 'Updates' or 'My apps,' and tap 'Update' next to the app."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+salad/i,
+                    /salad\s+recipe/i,
+                    /prepare\s+salad/i
+                ],
+                answer: "To make a salad: (1) Chop vegetables like lettuce, tomato, cucumber. (2) Add toppings such as cheese, nuts, or chicken. (3) Toss with dressing and serve."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+omelette/i,
+                    /omelette\s+recipe/i,
+                    /cook\s+omelette/i
+                ],
+                answer: "To make an omelette: (1) Beat eggs and pour into a hot, greased pan. (2) Add fillings like cheese, vegetables, or ham. (3) Cook until set, fold, and serve."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+pasta/i,
+                    /pasta\s+recipe/i,
+                    /cook\s+pasta/i
+                ],
+                answer: "To make pasta: (1) Boil water and add pasta. (2) Cook for 8-12 minutes until tender. (3) Drain and add sauce or toppings."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+smoothie/i,
+                    /smoothie\s+recipe/i,
+                    /blend\s+smoothie/i
+                ],
+                answer: "To make a smoothie: (1) Add fruit, yogurt, and milk or juice to a blender. (2) Blend until smooth. (3) Pour into a glass and enjoy."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+rice/i,
+                    /cook\s+rice/i,
+                    /rice\s+recipe/i
+                ],
+                answer: "To cook rice: (1) Rinse rice. (2) Add to a pot with water (about 2 cups water per cup rice). (3) Bring to a boil, cover, and simmer for 15-20 minutes. (4) Fluff and serve."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+soup/i,
+                    /soup\s+recipe/i,
+                    /cook\s+soup/i
+                ],
+                answer: "To make soup: (1) Sauté vegetables in a pot. (2) Add broth and seasonings. (3) Simmer until vegetables are tender. (4) Add cooked meat or noodles if desired."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+cookies/i,
+                    /cookie\s+recipe/i,
+                    /bake\s+cookies/i
+                ],
+                answer: "To make cookies: (1) Mix flour, sugar, butter, eggs, and chocolate chips. (2) Drop spoonfuls onto a baking sheet. (3) Bake at 180°C (350°F) for 10-12 minutes."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+ice\s+cream/i,
+                    /ice\s+cream\s+recipe/i,
+                    /homemade\s+ice\s+cream/i
+                ],
+                answer: "To make ice cream: (1) Mix cream, milk, sugar, and flavorings. (2) Freeze in an ice cream maker or stir every 30 minutes in the freezer until set."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+guacamole/i,
+                    /guacamole\s+recipe/i,
+                    /prepare\s+guacamole/i
+                ],
+                answer: "To make guacamole: (1) Mash avocados. (2) Mix in chopped onion, tomato, cilantro, lime juice, and salt. (3) Serve with chips or as a topping."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+french\s+toast/i,
+                    /french\s+toast\s+recipe/i,
+                    /cook\s+french\s+toast/i
+                ],
+                answer: "To make French toast: (1) Dip bread slices in beaten eggs and milk. (2) Cook on a hot, greased pan until golden on both sides. (3) Serve with syrup."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+pancakes/i,
+                    /pancake\s+recipe/i,
+                    /cook\s+pancakes/i
+                ],
+                answer: "To make pancakes: (1) Mix flour, eggs, milk, and baking powder. (2) Pour batter onto a hot pan. (3) Flip when bubbles form and cook until golden."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+scrambled\s+eggs/i,
+                    /scrambled\s+eggs\s+recipe/i,
+                    /cook\s+scrambled\s+eggs/i
+                ],
+                answer: "To make scrambled eggs: (1) Beat eggs and pour into a hot, greased pan. (2) Stir gently until cooked but still soft. (3) Season and serve."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+mac\s+and\s+cheese/i,
+                    /mac\s+and\s+cheese\s+recipe/i,
+                    /cook\s+mac\s+and\s+cheese/i
+                ],
+                answer: "To make mac and cheese: (1) Cook macaroni. (2) Make a cheese sauce with butter, flour, milk, and cheese. (3) Mix with macaroni and bake if desired."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+burger/i,
+                    /burger\s+recipe/i,
+                    /cook\s+burger/i
+                ],
+                answer: "To make a burger: (1) Shape ground beef into patties. (2) Cook on a grill or pan until done. (3) Serve on buns with toppings."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+sandwich/i,
+                    /sandwich\s+recipe/i,
+                    /prepare\s+sandwich/i
+                ],
+                answer: "To make a sandwich: (1) Place fillings like meat, cheese, and vegetables between slices of bread. (2) Add condiments and serve."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+fruit\s+salad/i,
+                    /fruit\s+salad\s+recipe/i,
+                    /prepare\s+fruit\s+salad/i
+                ],
+                answer: "To make fruit salad: (1) Chop assorted fruits. (2) Mix in a bowl. (3) Add lemon juice or honey if desired."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+chocolate\s+milk/i,
+                    /chocolate\s+milk\s+recipe/i,
+                    /prepare\s+chocolate\s+milk/i
+                ],
+                answer: "To make chocolate milk: (1) Mix cocoa powder or chocolate syrup with milk. (2) Stir until smooth and serve chilled."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+lemonade/i,
+                    /lemonade\s+recipe/i,
+                    /prepare\s+lemonade/i
+                ],
+                answer: "To make lemonade: (1) Mix lemon juice, water, and sugar. (2) Stir until sugar dissolves. (3) Serve over ice."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+popcorn/i,
+                    /popcorn\s+recipe/i,
+                    /cook\s+popcorn/i
+                ],
+                answer: "To make popcorn: (1) Heat oil in a pan. (2) Add popcorn kernels and cover. (3) Shake until popping stops. (4) Season and serve."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+hot\s+chocolate/i,
+                    /hot\s+chocolate\s+recipe/i,
+                    /prepare\s+hot\s+chocolate/i
+                ],
+                answer: "To make hot chocolate: (1) Heat milk. (2) Stir in cocoa powder and sugar. (3) Whisk until smooth and serve hot."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+mashed\s+potatoes/i,
+                    /mashed\s+potatoes\s+recipe/i,
+                    /prepare\s+mashed\s+potatoes/i
+                ],
+                answer: "To make mashed potatoes: (1) Boil peeled potatoes until soft. (2) Mash with butter, milk, and salt. (3) Serve warm."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+grilled\s+cheese/i,
+                    /grilled\s+cheese\s+recipe/i,
+                    /cook\s+grilled\s+cheese/i
+                ],
+                answer: "To make grilled cheese: (1) Place cheese between bread slices. (2) Butter the outside and cook in a pan until golden and melted."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+spaghetti/i,
+                    /spaghetti\s+recipe/i,
+                    /cook\s+spaghetti/i
+                ],
+                answer: "To make spaghetti: (1) Boil spaghetti noodles. (2) Heat tomato sauce and add cooked noodles. (3) Top with cheese and serve."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+fried\s+rice/i,
+                    /fried\s+rice\s+recipe/i,
+                    /cook\s+fried\s+rice/i
+                ],
+                answer: "To make fried rice: (1) Cook rice and let cool. (2) Stir-fry vegetables and meat. (3) Add rice and soy sauce, stir-fry until heated."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+chicken\s+noodle\s+soup/i,
+                    /chicken\s+noodle\s+soup\s+recipe/i,
+                    /cook\s+chicken\s+noodle\s+soup/i
+                ],
+                answer: "To make chicken noodle soup: (1) Boil chicken in broth. (2) Add chopped vegetables and noodles. (3) Simmer until cooked."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+lasagna/i,
+                    /lasagna\s+recipe/i,
+                    /cook\s+lasagna/i
+                ],
+                answer: "To make lasagna: (1) Layer cooked noodles, meat sauce, and cheese in a baking dish. (2) Bake at 180°C (350°F) for 45 minutes."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+quiche/i,
+                    /quiche\s+recipe/i,
+                    /bake\s+quiche/i
+                ],
+                answer: "To make quiche: (1) Mix eggs, milk, cheese, and fillings. (2) Pour into a pie crust. (3) Bake at 180°C (350°F) for 35-40 minutes."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+banana\s+bread/i,
+                    /banana\s+bread\s+recipe/i,
+                    /bake\s+banana\s+bread/i
+                ],
+                answer: "To make banana bread: (1) Mash ripe bananas. (2) Mix with flour, sugar, eggs, and baking powder. (3) Bake at 180°C (350°F) for 50-60 minutes."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+chili/i,
+                    /chili\s+recipe/i,
+                    /cook\s+chili/i
+                ],
+                answer: "To make chili: (1) Brown ground meat. (2) Add beans, tomatoes, and spices. (3) Simmer for 30-60 minutes."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+stir\s+fry/i,
+                    /stir\s+fry\s+recipe/i,
+                    /cook\s+stir\s+fry/i
+                ],
+                answer: "To make stir fry: (1) Heat oil in a pan. (2) Add chopped vegetables and meat. (3) Stir-fry with soy sauce until cooked."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+brownies/i,
+                    /brownie\s+recipe/i,
+                    /bake\s+brownies/i
+                ],
+                answer: "To make brownies: (1) Mix chocolate, butter, sugar, eggs, and flour. (2) Pour into a pan. (3) Bake at 180°C (350°F) for 25-30 minutes."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+waffles/i,
+                    /waffle\s+recipe/i,
+                    /cook\s+waffles/i
+                ],
+                answer: "To make waffles: (1) Mix flour, eggs, milk, and baking powder. (2) Pour into a preheated waffle iron. (3) Cook until golden."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+meatloaf/i,
+                    /meatloaf\s+recipe/i,
+                    /bake\s+meatloaf/i
+                ],
+                answer: "To make meatloaf: (1) Mix ground meat, breadcrumbs, eggs, and seasonings. (2) Shape into a loaf and bake at 180°C (350°F) for 1 hour."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+coleslaw/i,
+                    /coleslaw\s+recipe/i,
+                    /prepare\s+coleslaw/i
+                ],
+                answer: "To make coleslaw: (1) Shred cabbage and carrots. (2) Mix with mayonnaise, vinegar, and sugar. (3) Chill before serving."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+deviled\s+eggs/i,
+                    /deviled\s+eggs\s+recipe/i,
+                    /prepare\s+deviled\s+eggs/i
+                ],
+                answer: "To make deviled eggs: (1) Boil eggs and halve them. (2) Mix yolks with mayonnaise and mustard. (3) Fill egg whites with mixture."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+chicken\s+salad/i,
+                    /chicken\s+salad\s+recipe/i,
+                    /prepare\s+chicken\s+salad/i
+                ],
+                answer: "To make chicken salad: (1) Mix cooked chicken, mayonnaise, celery, and seasonings. (2) Serve chilled."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+potato\s+salad/i,
+                    /potato\s+salad\s+recipe/i,
+                    /prepare\s+potato\s+salad/i
+                ],
+                answer: "To make potato salad: (1) Boil potatoes and chop. (2) Mix with mayonnaise, mustard, and chopped vegetables. (3) Chill before serving."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+cornbread/i,
+                    /cornbread\s+recipe/i,
+                    /bake\s+cornbread/i
+                ],
+                answer: "To make cornbread: (1) Mix cornmeal, flour, eggs, milk, and baking powder. (2) Pour into a pan and bake at 200°C (400°F) for 20-25 minutes."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+chicken\s+fingers/i,
+                    /chicken\s+fingers\s+recipe/i,
+                    /cook\s+chicken\s+fingers/i
+                ],
+                answer: "To make chicken fingers: (1) Cut chicken into strips. (2) Dip in egg and breadcrumbs. (3) Fry until golden and cooked through."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+sloppy\s+joes/i,
+                    /sloppy\s+joes\s+recipe/i,
+                    /cook\s+sloppy\s+joes/i
+                ],
+                answer: "To make sloppy joes: (1) Brown ground beef. (2) Add tomato sauce, onions, and seasonings. (3) Serve on buns."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+chicken\s+parmesan/i,
+                    /chicken\s+parmesan\s+recipe/i,
+                    /cook\s+chicken\s+parmesan/i
+                ],
+                answer: "To make chicken parmesan: (1) Bread and fry chicken breasts. (2) Top with tomato sauce and cheese. (3) Bake until cheese melts."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+apple\s+pie/i,
+                    /apple\s+pie\s+recipe/i,
+                    /bake\s+apple\s+pie/i
+                ],
+                answer: "To make apple pie: (1) Fill pie crust with sliced apples, sugar, and cinnamon. (2) Cover with top crust. (3) Bake at 200°C (400°F) for 45-50 minutes."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+chicken\s+alfredo/i,
+                    /chicken\s+alfredo\s+recipe/i,
+                    /cook\s+chicken\s+alfredo/i
+                ],
+                answer: "To make chicken alfredo: (1) Cook pasta. (2) Sauté chicken. (3) Make Alfredo sauce with cream, butter, and cheese. (4) Mix together and serve."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+garlic\s+bread/i,
+                    /garlic\s+bread\s+recipe/i,
+                    /bake\s+garlic\s+bread/i
+                ],
+                answer: "To make garlic bread: (1) Spread garlic butter on bread slices. (2) Bake at 180°C (350°F) for 10 minutes."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+chicken\s+stir\s+fry/i,
+                    /chicken\s+stir\s+fry\s+recipe/i,
+                    /cook\s+chicken\s+stir\s+fry/i
+                ],
+                answer: "To make chicken stir fry: (1) Sauté chicken pieces. (2) Add vegetables and stir-fry sauce. (3) Cook until done."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+chicken\s+quesadilla/i,
+                    /chicken\s+quesadilla\s+recipe/i,
+                    /cook\s+chicken\s+quesadilla/i
+                ],
+                answer: "To make chicken quesadilla: (1) Fill tortillas with cooked chicken and cheese. (2) Cook on a pan until golden and cheese melts."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+chicken\s+fajitas/i,
+                    /chicken\s+fajitas\s+recipe/i,
+                    /cook\s+chicken\s+fajitas/i
+                ],
+                answer: "To make chicken fajitas: (1) Sauté chicken strips with peppers and onions. (2) Serve in tortillas with toppings."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+chicken\s+pot\s+pie/i,
+                    /chicken\s+pot\s+pie\s+recipe/i,
+                    /bake\s+chicken\s+pot\s+pie/i
+                ],
+                answer: "To make chicken pot pie: (1) Mix cooked chicken, vegetables, and gravy. (2) Pour into a pie crust and cover. (3) Bake at 200°C (400°F) for 30-35 minutes."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+chicken\s+shawarma/i,
+                    /chicken\s+shawarma\s+recipe/i,
+                    /cook\s+chicken\s+shawarma/i
+                ],
+                answer: "To make chicken shawarma: (1) Marinate chicken in spices. (2) Grill or roast. (3) Serve in pita bread with toppings."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+falafel/i,
+                    /falafel\s+recipe/i,
+                    /cook\s+falafel/i
+                ],
+                answer: "To make falafel: (1) Blend chickpeas, herbs, and spices. (2) Shape into balls and fry until golden."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+hummus/i,
+                    /hummus\s+recipe/i,
+                    /prepare\s+hummus/i
+                ],
+                answer: "To make hummus: (1) Blend chickpeas, tahini, lemon juice, garlic, and olive oil. (2) Serve as a dip."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+shawarma/i,
+                    /shawarma\s+recipe/i,
+                    /cook\s+shawarma/i
+                ],
+                answer: "To make shawarma: (1) Marinate meat in spices. (2) Grill or roast. (3) Serve in pita bread with toppings."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+tabbouleh/i,
+                    /tabbouleh\s+recipe/i,
+                    /prepare\s+tabbouleh/i
+                ],
+                answer: "To make tabbouleh: (1) Mix chopped parsley, tomatoes, bulgur, mint, and lemon juice."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+baklava/i,
+                    /baklava\s+recipe/i,
+                    /bake\s+baklava/i
+                ],
+                answer: "To make baklava: (1) Layer phyllo dough with nuts and syrup. (2) Bake until golden."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+sushi/i,
+                    /sushi\s+recipe/i,
+                    /prepare\s+sushi/i
+                ],
+                answer: "To make sushi: (1) Cook and season rice. (2) Place rice and fillings on seaweed. (3) Roll and slice."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+ramen/i,
+                    /ramen\s+recipe/i,
+                    /cook\s+ramen/i
+                ],
+                answer: "To make ramen: (1) Boil noodles. (2) Add broth and toppings like meat, eggs, and vegetables."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+pad\s+thai/i,
+                    /pad\s+thai\s+recipe/i,
+                    /cook\s+pad\s+thai/i
+                ],
+                answer: "To make pad thai: (1) Stir-fry rice noodles with eggs, tofu, and sauce. (2) Add peanuts and lime."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+spring\s+rolls/i,
+                    /spring\s+rolls\s+recipe/i,
+                    /prepare\s+spring\s+rolls/i
+                ],
+                answer: "To make spring rolls: (1) Fill rice paper with vegetables and meat. (2) Roll and serve with dipping sauce."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+dim\s+sum/i,
+                    /dim\s+sum\s+recipe/i,
+                    /prepare\s+dim\s+sum/i
+                ],
+                answer: "To make dim sum: (1) Fill dough with meat or vegetables. (2) Steam until cooked."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+paella/i,
+                    /paella\s+recipe/i,
+                    /cook\s+paella/i
+                ],
+                answer: "To make paella: (1) Cook rice with saffron, seafood, and vegetables in a wide pan."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+ratatouille/i,
+                    /ratatouille\s+recipe/i,
+                    /cook\s+ratatouille/i
+                ],
+                answer: "To make ratatouille: (1) Sauté eggplant, zucchini, peppers, and tomatoes. (2) Simmer until tender."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+crepes/i,
+                    /crepes\s+recipe/i,
+                    /cook\s+crepes/i
+                ],
+                answer: "To make crepes: (1) Mix flour, eggs, milk, and butter. (2) Pour thin batter into a hot pan. (3) Cook until set and fill with sweet or savory fillings."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+risotto/i,
+                    /risotto\s+recipe/i,
+                    /cook\s+risotto/i
+                ],
+                answer: "To make risotto: (1) Sauté rice in butter. (2) Add broth gradually, stirring until creamy. (3) Add cheese and vegetables."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+gnocchi/i,
+                    /gnocchi\s+recipe/i,
+                    /prepare\s+gnocchi/i
+                ],
+                answer: "To make gnocchi: (1) Mix mashed potatoes with flour and egg. (2) Shape into small dumplings and boil until they float."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+gazpacho/i,
+                    /gazpacho\s+recipe/i,
+                    /prepare\s+gazpacho/i
+                ],
+                answer: "To make gazpacho: (1) Blend tomatoes, cucumber, peppers, onion, and garlic. (2) Chill and serve cold."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+bruschetta/i,
+                    /bruschetta\s+recipe/i,
+                    /prepare\s+bruschetta/i
+                ],
+                answer: "To make bruschetta: (1) Toast bread slices. (2) Top with chopped tomatoes, garlic, basil, and olive oil."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+frittata/i,
+                    /frittata\s+recipe/i,
+                    /cook\s+frittata/i
+                ],
+                answer: "To make frittata: (1) Beat eggs and mix with vegetables and cheese. (2) Cook in a pan and finish in the oven."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+ratatouille/i,
+                    /ratatouille\s+recipe/i,
+                    /cook\s+ratatouille/i
+                ],
+                answer: "To make ratatouille: (1) Sauté eggplant, zucchini, peppers, and tomatoes. (2) Simmer until tender."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+croissant/i,
+                    /croissant\s+recipe/i,
+                    /bake\s+croissant/i
+                ],
+                answer: "To make croissants: (1) Layer dough with butter and fold several times. (2) Shape into crescents and bake until golden."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+cheesecake/i,
+                    /cheesecake\s+recipe/i,
+                    /bake\s+cheesecake/i
+                ],
+                answer: "To make cheesecake: (1) Mix cream cheese, sugar, eggs, and vanilla. (2) Pour into a crust and bake until set."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+tiramisù/i,
+                    /tiramisù\s+recipe/i,
+                    /prepare\s+tiramisù/i
+                ],
+                answer: "To make tiramisù: (1) Layer ladyfingers soaked in coffee with mascarpone cream. (2) Chill and dust with cocoa."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+mochi/i,
+                    /mochi\s+recipe/i,
+                    /prepare\s+mochi/i
+                ],
+                answer: "To make mochi: (1) Mix glutinous rice flour with water and sugar. (2) Steam and shape into balls."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+kimchi/i,
+                    /kimchi\s+recipe/i,
+                    /prepare\s+kimchi/i
+                ],
+                answer: "To make kimchi: (1) Ferment cabbage with chili, garlic, ginger, and salt."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+paneer/i,
+                    /paneer\s+recipe/i,
+                    /prepare\s+paneer/i
+                ],
+                answer: "To make paneer: (1) Boil milk and add lemon juice. (2) Strain curds and press into a block."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+dal/i,
+                    /dal\s+recipe/i,
+                    /cook\s+dal/i
+                ],
+                answer: "To make dal: (1) Boil lentils with spices. (2) Sauté onions and tomatoes, add to lentils, and simmer."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+naan/i,
+                    /naan\s+recipe/i,
+                    /bake\s+naan/i
+                ],
+                answer: "To make naan: (1) Mix flour, yogurt, and yeast. (2) Roll out and cook on a hot pan or oven."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+butter\s+chicken/i,
+                    /butter\s+chicken\s+recipe/i,
+                    /cook\s+butter\s+chicken/i
+                ],
+                answer: "To make butter chicken: (1) Cook chicken in tomato sauce with butter and spices."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+gulab\s+jamun/i,
+                    /gulab\s+jamun\s+recipe/i,
+                    /prepare\s+gulab\s+jamun/i
+                ],
+                answer: "To make gulab jamun: (1) Fry dough balls and soak in sugar syrup."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+churros/i,
+                    /churros\s+recipe/i,
+                    /cook\s+churros/i
+                ],
+                answer: "To make churros: (1) Pipe dough into hot oil and fry. (2) Roll in sugar and serve with chocolate sauce."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+empanadas/i,
+                    /empanadas\s+recipe/i,
+                    /bake\s+empanadas/i
+                ],
+                answer: "To make empanadas: (1) Fill dough with meat or vegetables. (2) Fold and bake or fry until golden."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+tamales/i,
+                    /tamales\s+recipe/i,
+                    /cook\s+tamales/i
+                ],
+                answer: "To make tamales: (1) Fill corn dough with meat or beans. (2) Wrap in corn husks and steam."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+ceviche/i,
+                    /ceviche\s+recipe/i,
+                    /prepare\s+ceviche/i
+                ],
+                answer: "To make ceviche: (1) Marinate raw fish in lime juice with onions, cilantro, and peppers."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+arepas/i,
+                    /arepas\s+recipe/i,
+                    /cook\s+arepas/i
+                ],
+                answer: "To make arepas: (1) Mix cornmeal with water and salt. (2) Shape into patties and cook on a griddle."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+banh\s+mi/i,
+                    /banh\s+mi\s+recipe/i,
+                    /prepare\s+banh\s+mi/i
+                ],
+                answer: "To make banh mi: (1) Fill a baguette with meat, pickled vegetables, and herbs."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+pho/i,
+                    /pho\s+recipe/i,
+                    /cook\s+pho/i
+                ],
+                answer: "To make pho: (1) Simmer beef broth with spices. (2) Add rice noodles and toppings."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+shawarma/i,
+                    /shawarma\s+recipe/i,
+                    /cook\s+shawarma/i
+                ],
+                answer: "To make shawarma: (1) Marinate meat in spices. (2) Grill or roast. (3) Serve in pita bread with toppings."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+tzatziki/i,
+                    /tzatziki\s+recipe/i,
+                    /prepare\s+tzatziki/i
+                ],
+                answer: "To make tzatziki: (1) Mix yogurt with cucumber, garlic, and dill."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+gyros/i,
+                    /gyros\s+recipe/i,
+                    /cook\s+gyros/i
+                ],
+                answer: "To make gyros: (1) Grill seasoned meat. (2) Serve in pita with vegetables and sauce."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+spanakopita/i,
+                    /spanakopita\s+recipe/i,
+                    /bake\s+spanakopita/i
+                ],
+                answer: "To make spanakopita: (1) Fill phyllo dough with spinach and cheese. (2) Bake until golden."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+baklava/i,
+                    /baklava\s+recipe/i,
+                    /bake\s+baklava/i
+                ],
+                answer: "To make baklava: (1) Layer phyllo dough with nuts and syrup. (2) Bake until golden."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+ratatouille/i,
+                    /ratatouille\s+recipe/i,
+                    /cook\s+ratatouille/i
+                ],
+                answer: "To make ratatouille: (1) Sauté eggplant, zucchini, peppers, and tomatoes. (2) Simmer until tender."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+gazpacho/i,
+                    /gazpacho\s+recipe/i,
+                    /prepare\s+gazpacho/i
+                ],
+                answer: "To make gazpacho: (1) Blend tomatoes, cucumber, peppers, onion, and garlic. (2) Chill and serve cold."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+paella/i,
+                    /paella\s+recipe/i,
+                    /cook\s+paella/i
+                ],
+                answer: "To make paella: (1) Cook rice with saffron, seafood, and vegetables in a wide pan."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+empanadas/i,
+                    /empanadas\s+recipe/i,
+                    /bake\s+empanadas/i
+                ],
+                answer: "To make empanadas: (1) Fill dough with meat or vegetables. (2) Fold and bake or fry until golden."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+churros/i,
+                    /churros\s+recipe/i,
+                    /cook\s+churros/i
+                ],
+                answer: "To make churros: (1) Pipe dough into hot oil and fry. (2) Roll in sugar and serve with chocolate sauce."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+tamales/i,
+                    /tamales\s+recipe/i,
+                    /cook\s+tamales/i
+                ],
+                answer: "To make tamales: (1) Fill corn dough with meat or beans. (2) Wrap in corn husks and steam."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+ceviche/i,
+                    /ceviche\s+recipe/i,
+                    /prepare\s+ceviche/i
+                ],
+                answer: "To make ceviche: (1) Marinate raw fish in lime juice with onions, cilantro, and peppers."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+arepas/i,
+                    /arepas\s+recipe/i,
+                    /cook\s+arepas/i
+                ],
+                answer: "To make arepas: (1) Mix cornmeal with water and salt. (2) Shape into patties and cook on a griddle."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+banh\s+mi/i,
+                    /banh\s+mi\s+recipe/i,
+                    /prepare\s+banh\s+mi/i
+                ],
+                answer: "To make banh mi: (1) Fill a baguette with meat, pickled vegetables, and herbs."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+pho/i,
+                    /pho\s+recipe/i,
+                    /cook\s+pho/i
+                ],
+                answer: "To make pho: (1) Simmer beef broth with spices. (2) Add rice noodles and toppings."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+shawarma/i,
+                    /shawarma\s+recipe/i,
+                    /cook\s+shawarma/i
+                ],
+                answer: "To make shawarma: (1) Marinate meat in spices. (2) Grill or roast. (3) Serve in pita bread with toppings."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+tzatziki/i,
+                    /tzatziki\s+recipe/i,
+                    /prepare\s+tzatziki/i
+                ],
+                answer: "To make tzatziki: (1) Mix yogurt with cucumber, garlic, and dill."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+gyros/i,
+                    /gyros\s+recipe/i,
+                    /cook\s+gyros/i
+                ],
+                answer: "To make gyros: (1) Grill seasoned meat. (2) Serve in pita with vegetables and sauce."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+spanakopita/i,
+                    /spanakopita\s+recipe/i,
+                    /bake\s+spanakopita/i
+                ],
+                answer: "To make spanakopita: (1) Fill phyllo dough with spinach and cheese. (2) Bake until golden."
+            },
+            {
+                keywords: [
+                    /how\s+to\s+make\s+baklava/i,
+                    /baklava\s+recipe/i,
+                    /bake\s+baklava/i
+                ],
+                answer: "To make baklava: (1) Layer phyllo dough with nuts and syrup. (2) Bake until golden."
+            },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+python/i,
+                            /learn\s+python/i,
+                            /python\s+tutorial/i
+                        ],
+                        answer: "To learn Python, start with free resources like Python.org, Codecademy, or freeCodeCamp. Practice writing code, build small projects, and read documentation. Join online communities for support."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+javascript/i,
+                            /learn\s+javascript/i,
+                            /javascript\s+tutorial/i
+                        ],
+                        answer: "Learn JavaScript by using sites like MDN Web Docs, freeCodeCamp, or Codecademy. Practice in online editors like CodePen or JSFiddle, and build interactive web pages."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+html/i,
+                            /learn\s+html/i,
+                            /html\s+tutorial/i
+                        ],
+                        answer: "Start learning HTML with W3Schools, MDN Web Docs, or freeCodeCamp. Practice by creating simple web pages and experimenting with tags and structure."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+css/i,
+                            /learn\s+css/i,
+                            /css\s+tutorial/i
+                        ],
+                        answer: "Learn CSS by reading guides on MDN Web Docs or W3Schools. Practice styling web pages and try out frameworks like Bootstrap or Tailwind CSS."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+java/i,
+                            /learn\s+java/i,
+                            /java\s+tutorial/i
+                        ],
+                        answer: "Use resources like Oracle's Java Tutorials, Codecademy, or Udemy to learn Java. Practice writing programs and understand object-oriented concepts."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+c\+\+/i,
+                            /learn\s+c\+\+/i,
+                            /c\+\+\s+tutorial/i
+                        ],
+                        answer: "Learn C++ using tutorials from CPlusPlus.com, Codecademy, or YouTube. Practice by writing small programs and understanding syntax and memory management."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+c#/i,
+                            /learn\s+c#/i,
+                            /c#\s+tutorial/i
+                        ],
+                        answer: "Learn C# with Microsoft Learn, Codecademy, or Pluralsight. Practice building apps with Visual Studio and explore .NET documentation."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+go/i,
+                            /learn\s+go\s+language/i,
+                            /golang\s+tutorial/i
+                        ],
+                        answer: "Start learning Go at golang.org, use tutorials on freeCodeCamp or YouTube, and practice by building command-line tools."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+ruby/i,
+                            /learn\s+ruby/i,
+                            /ruby\s+tutorial/i
+                        ],
+                        answer: "Learn Ruby with resources like RubyMonk, Codecademy, or The Odin Project. Practice by building small scripts and web apps with Ruby on Rails."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+swift/i,
+                            /learn\s+swift/i,
+                            /swift\s+tutorial/i
+                        ],
+                        answer: "Use Apple's Swift Playgrounds, freeCodeCamp, or Hacking with Swift to learn Swift. Practice by building iOS apps and experimenting with code."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+kotlin/i,
+                            /learn\s+kotlin/i,
+                            /kotlin\s+tutorial/i
+                        ],
+                        answer: "Learn Kotlin with JetBrains Academy, Kotlinlang.org, or Udemy. Practice by building Android apps and exploring language features."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+typescript/i,
+                            /learn\s+typescript/i,
+                            /typescript\s+tutorial/i
+                        ],
+                        answer: "Learn TypeScript using the official docs, freeCodeCamp, or Codecademy. Practice by converting JavaScript projects to TypeScript."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+php/i,
+                            /learn\s+php/i,
+                            /php\s+tutorial/i
+                        ],
+                        answer: "Start with PHP.net tutorials, W3Schools, or freeCodeCamp. Practice by building dynamic web pages and connecting to databases."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+sql/i,
+                            /learn\s+sql/i,
+                            /sql\s+tutorial/i
+                        ],
+                        answer: "Learn SQL with SQLZoo, W3Schools, or LeetCode. Practice writing queries and managing databases like MySQL or PostgreSQL."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+shell\s+script/i,
+                            /learn\s+shell\s+scripting/i,
+                            /bash\s+tutorial/i
+                        ],
+                        answer: "Use resources like ShellCheck, LinuxCommand.org, or Codecademy to learn shell scripting. Practice automating tasks in Linux or macOS."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+react/i,
+                            /learn\s+react/i,
+                            /react\s+tutorial/i
+                        ],
+                        answer: "Learn React with the official docs, freeCodeCamp, or Scrimba. Build interactive UIs and practice with small projects."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+vue/i,
+                            /learn\s+vue/i,
+                            /vue\s+tutorial/i
+                        ],
+                        answer: "Use Vue.js official docs, Vue Mastery, or freeCodeCamp to learn Vue. Practice by building simple web apps."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+angular/i,
+                            /learn\s+angular/i,
+                            /angular\s+tutorial/i
+                        ],
+                        answer: "Learn Angular with the official docs, freeCodeCamp, or Udemy. Practice by building single-page applications."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+svelte/i,
+                            /learn\s+svelte/i,
+                            /svelte\s+tutorial/i
+                        ],
+                        answer: "Use Svelte.dev tutorials, freeCodeCamp, or YouTube to learn Svelte. Practice by building reactive web apps."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+django/i,
+                            /learn\s+django/i,
+                            /django\s+tutorial/i
+                        ],
+                        answer: "Learn Django with the official docs, DjangoGirls, or freeCodeCamp. Practice by building web apps and APIs."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+flask/i,
+                            /learn\s+flask/i,
+                            /flask\s+tutorial/i
+                        ],
+                        answer: "Use Flask's official docs, freeCodeCamp, or Real Python to learn Flask. Build small web apps and REST APIs."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+node\.js/i,
+                            /learn\s+node\.js/i,
+                            /node\.js\s+tutorial/i
+                        ],
+                        answer: "Learn Node.js with Nodejs.dev, freeCodeCamp, or The Odin Project. Practice by building backend services and APIs."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+express/i,
+                            /learn\s+express/i,
+                            /express\s+tutorial/i
+                        ],
+                        answer: "Use Express.js official docs, freeCodeCamp, or YouTube tutorials to learn Express. Build REST APIs and web servers."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+mongodb/i,
+                            /learn\s+mongodb/i,
+                            /mongodb\s+tutorial/i
+                        ],
+                        answer: "Learn MongoDB with MongoDB University, freeCodeCamp, or W3Schools. Practice by building CRUD apps and managing data."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+git/i,
+                            /learn\s+git/i,
+                            /git\s+tutorial/i
+                        ],
+                        answer: "Learn Git with GitHub Learning Lab, freeCodeCamp, or Atlassian tutorials. Practice version control by managing code repositories."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+docker/i,
+                            /learn\s+docker/i,
+                            /docker\s+tutorial/i
+                        ],
+                        answer: "Use Docker's official docs, freeCodeCamp, or YouTube to learn Docker. Practice containerizing applications and managing images."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+machine\s+learning/i,
+                            /learn\s+machine\s+learning/i,
+                            /machine\s+learning\s+tutorial/i
+                        ],
+                        answer: "Learn machine learning with freeCodeCamp, Coursera, or scikit-learn docs. Practice by building models and analyzing datasets."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+ai/i,
+                            /learn\s+artificial\s+intelligence/i,
+                            /ai\s+tutorial/i
+                        ],
+                        answer: "Start learning AI with freeCodeCamp, Coursera, or Google's AI resources. Practice building simple models and understanding algorithms."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+use\s+ai\s+assistant/i,
+                            /use\s+ai\s+assistant/i,
+                            /ai\s+assistant\s+tips/i
+                        ],
+                        answer: "To use an AI assistant, type your question or command clearly. Try asking for help with tasks, summaries, or explanations. Explore features like reminders, scheduling, and code generation."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+data\s+science/i,
+                            /learn\s+data\s+science/i,
+                            /data\s+science\s+tutorial/i
+                        ],
+                        answer: "Learn data science with freeCodeCamp, Coursera, or Kaggle. Practice analyzing data, building models, and visualizing results."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+sql\s+database/i,
+                            /learn\s+database/i,
+                            /database\s+tutorial/i
+                        ],
+                        answer: "Start with SQL tutorials on W3Schools or Khan Academy. Practice creating tables, writing queries, and managing data."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+web\s+development/i,
+                            /learn\s+web\s+development/i,
+                            /web\s+development\s+tutorial/i
+                        ],
+                        answer: "Learn web development with freeCodeCamp, The Odin Project, or MDN Web Docs. Practice building websites with HTML, CSS, and JavaScript."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+mobile\s+app\s+development/i,
+                            /learn\s+mobile\s+development/i,
+                            /mobile\s+app\s+tutorial/i
+                        ],
+                        answer: "Use resources like Android Developers, Apple Developer, or freeCodeCamp to learn mobile app development. Practice building apps for Android or iOS."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+game\s+development/i,
+                            /learn\s+game\s+development/i,
+                            /game\s+dev\s+tutorial/i
+                        ],
+                        answer: "Learn game development with Unity Learn, Unreal Engine docs, or freeCodeCamp. Practice by building simple games and exploring engines."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+cybersecurity/i,
+                            /learn\s+cybersecurity/i,
+                            /cybersecurity\s+tutorial/i
+                        ],
+                        answer: "Start with freeCodeCamp, Cybrary, or Coursera to learn cybersecurity basics. Practice safe computing and explore security tools."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+cloud\s+computing/i,
+                            /learn\s+cloud\s+computing/i,
+                            /cloud\s+computing\s+tutorial/i
+                        ],
+                        answer: "Learn cloud computing with AWS, Azure, or Google Cloud training. Practice deploying apps and managing cloud resources."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+devops/i,
+                            /learn\s+devops/i,
+                            /devops\s+tutorial/i
+                        ],
+                        answer: "Use resources like freeCodeCamp, Udemy, or DevOps.com to learn DevOps. Practice automating deployments and managing CI/CD pipelines."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+blockchain/i,
+                            /learn\s+blockchain/i,
+                            /blockchain\s+tutorial/i
+                        ],
+                        answer: "Learn blockchain with freeCodeCamp, Coursera, or Ethereum.org. Practice building smart contracts and decentralized apps."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+rust/i,
+                            /learn\s+rust/i,
+                            /rust\s+tutorial/i
+                        ],
+                        answer: "Use Rust-lang.org, freeCodeCamp, or The Book to learn Rust. Practice by building command-line tools and exploring language features."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+scala/i,
+                            /learn\s+scala/i,
+                            /scala\s+tutorial/i
+                        ],
+                        answer: "Learn Scala with Scala-lang.org, Coursera, or Udemy. Practice by building functional and object-oriented programs."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+perl/i,
+                            /learn\s+perl/i,
+                            /perl\s+tutorial/i
+                        ],
+                        answer: "Use Perl.org, freeCodeCamp, or TutorialsPoint to learn Perl. Practice by writing scripts and automating tasks."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+matlab/i,
+                            /learn\s+matlab/i,
+                            /matlab\s+tutorial/i
+                        ],
+                        answer: "Learn MATLAB with MathWorks tutorials, Coursera, or YouTube. Practice by analyzing data and building simulations."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+assembly/i,
+                            /learn\s+assembly/i,
+                            /assembly\s+tutorial/i
+                        ],
+                        answer: "Use resources like TutorialsPoint, YouTube, or Assembly Language for x86 Processors to learn assembly. Practice by writing low-level programs."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+fortran/i,
+                            /learn\s+fortran/i,
+                            /fortran\s+tutorial/i
+                        ],
+                        answer: "Learn Fortran with FortranWiki, TutorialsPoint, or YouTube. Practice by writing scientific and numerical programs."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+dart/i,
+                            /learn\s+dart/i,
+                            /dart\s+tutorial/i
+                        ],
+                        answer: "Use Dart.dev, freeCodeCamp, or YouTube to learn Dart. Practice by building Flutter apps and exploring language features."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+flutter/i,
+                            /learn\s+flutter/i,
+                            /flutter\s+tutorial/i
+                        ],
+                        answer: "Learn Flutter with Flutter.dev, freeCodeCamp, or YouTube. Practice by building cross-platform mobile apps."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+react\s+native/i,
+                            /learn\s+react\s+native/i,
+                            /react\s+native\s+tutorial/i
+                        ],
+                        answer: "Use React Native docs, freeCodeCamp, or YouTube to learn React Native. Practice by building mobile apps for Android and iOS."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+graphql/i,
+                            /learn\s+graphql/i,
+                            /graphql\s+tutorial/i
+                        ],
+                        answer: "Learn GraphQL with GraphQL.org, Apollo docs, or freeCodeCamp. Practice by building APIs and querying data."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+firebase/i,
+                            /learn\s+firebase/i,
+                            /firebase\s+tutorial/i
+                        ],
+                        answer: "Use Firebase docs, freeCodeCamp, or YouTube to learn Firebase. Practice by building real-time apps and managing authentication."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+wordpress/i,
+                            /learn\s+wordpress/i,
+                            /wordpress\s+tutorial/i
+                        ],
+                        answer: "Learn WordPress with WordPress.org, freeCodeCamp, or WPBeginner. Practice by building websites and customizing themes."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+linux/i,
+                            /learn\s+linux/i,
+                            /linux\s+tutorial/i
+                        ],
+                        answer: "Use Linux.org, freeCodeCamp, or The Linux Command Line book to learn Linux. Practice by using the terminal and managing files."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+powershell/i,
+                            /learn\s+powershell/i,
+                            /powershell\s+tutorial/i
+                        ],
+                        answer: "Learn PowerShell with Microsoft Docs, freeCodeCamp, or YouTube. Practice by automating Windows tasks and writing scripts."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+excel\s+formulas/i,
+                            /learn\s+excel\s+formulas/i,
+                            /excel\s+tutorial/i
+                        ],
+                        answer: "Use Microsoft Learn, ExcelJet, or YouTube to learn Excel formulas. Practice by creating spreadsheets and analyzing data."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+regex/i,
+                            /learn\s+regular\s+expressions/i,
+                            /regex\s+tutorial/i
+                        ],
+                        answer: "Learn regular expressions with Regex101, freeCodeCamp, or MDN Web Docs. Practice by matching patterns and validating data."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+api\s+development/i,
+                            /learn\s+api\s+development/i,
+                            /api\s+tutorial/i
+                        ],
+                        answer: "Use freeCodeCamp, Postman docs, or YouTube to learn API development. Practice by building RESTful APIs and testing endpoints."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+testing\s+in\s+code/i,
+                            /learn\s+software\s+testing/i,
+                            /testing\s+tutorial/i
+                        ],
+                        answer: "Learn software testing with freeCodeCamp, Jest docs, or Mocha tutorials. Practice by writing unit and integration tests."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+object-oriented\s+programming/i,
+                            /learn\s+oop/i,
+                            /object-oriented\s+tutorial/i
+                        ],
+                        answer: "Learn object-oriented programming with freeCodeCamp, Codecademy, or YouTube. Practice by building classes and understanding inheritance."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+functional\s+programming/i,
+                            /learn\s+functional\s+programming/i,
+                            /functional\s+tutorial/i
+                        ],
+                        answer: "Learn functional programming with freeCodeCamp, YouTube, or Functional Programming in JavaScript guides. Practice by writing pure functions and using higher-order functions."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+algorithms/i,
+                            /learn\s+algorithms/i,
+                            /algorithms\s+tutorial/i
+                        ],
+                        answer: "Learn algorithms with freeCodeCamp, LeetCode, or Khan Academy. Practice by solving coding challenges and understanding data structures."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+data\s+structures/i,
+                            /learn\s+data\s+structures/i,
+                            /data\s+structures\s+tutorial/i
+                        ],
+                        answer: "Use freeCodeCamp, GeeksforGeeks, or Coursera to learn data structures. Practice by implementing arrays, lists, trees, and graphs."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+networking/i,
+                            /learn\s+computer\s+networking/i,
+                            /networking\s+tutorial/i
+                        ],
+                        answer: "Learn networking with Cisco Networking Academy, freeCodeCamp, or YouTube. Practice by understanding protocols and configuring networks."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+operating\s+systems/i,
+                            /learn\s+operating\s+systems/i,
+                            /os\s+tutorial/i
+                        ],
+                        answer: "Use freeCodeCamp, Coursera, or Operating Systems: Three Easy Pieces to learn OS concepts. Practice by exploring process management and file systems."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+robotics/i,
+                            /learn\s+robotics/i,
+                            /robotics\s+tutorial/i
+                        ],
+                        answer: "Learn robotics with freeCodeCamp, Coursera, or Arduino tutorials. Practice by building simple robots and programming sensors."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+internet\s+of\s+things/i,
+                            /learn\s+iot/i,
+                            /iot\s+tutorial/i
+                        ],
+                        answer: "Learn IoT with freeCodeCamp, Coursera, or Arduino guides. Practice by connecting devices and building smart projects."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+quantum\s+computing/i,
+                            /learn\s+quantum\s+computing/i,
+                            /quantum\s+computing\s+tutorial/i
+                        ],
+                        answer: "Learn quantum computing with Qiskit, freeCodeCamp, or IBM Quantum Experience. Practice by running quantum circuits and understanding qubits."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+ethical\s+hacking/i,
+                            /learn\s+ethical\s+hacking/i,
+                            /ethical\s+hacking\s+tutorial/i
+                        ],
+                        answer: "Use freeCodeCamp, Cybrary, or Hack The Box to learn ethical hacking. Practice by exploring penetration testing and security tools."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+embedded\s+systems/i,
+                            /learn\s+embedded\s+systems/i,
+                            /embedded\s+systems\s+tutorial/i
+                        ],
+                        answer: "Learn embedded systems with freeCodeCamp, Coursera, or Arduino guides. Practice by programming microcontrollers and building hardware projects."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+bioinformatics/i,
+                            /learn\s+bioinformatics/i,
+                            /bioinformatics\s+tutorial/i
+                        ],
+                        answer: "Use freeCodeCamp, Coursera, or NCBI resources to learn bioinformatics. Practice by analyzing biological data and using specialized software."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+statistics/i,
+                            /learn\s+statistics/i,
+                            /statistics\s+tutorial/i
+                        ],
+                        answer: "Learn statistics with Khan Academy, freeCodeCamp, or Coursera. Practice by analyzing data and understanding probability."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+mathematics\s+for\s+programming/i,
+                            /learn\s+math\s+for\s+coding/i,
+                            /math\s+for\s+programming\s+tutorial/i
+                        ],
+                        answer: "Use Khan Academy, freeCodeCamp, or YouTube to learn math for programming. Practice by solving problems in logic, algebra, and discrete math."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+design\s+patterns/i,
+                            /learn\s+software\s+design\s+patterns/i,
+                            /design\s+patterns\s+tutorial/i
+                        ],
+                        answer: "Learn design patterns with freeCodeCamp, Refactoring Guru, or YouTube. Practice by implementing patterns in your projects."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+api\s+integration/i,
+                            /learn\s+api\s+integration/i,
+                            /api\s+integration\s+tutorial/i
+                        ],
+                        answer: "Use freeCodeCamp, Postman docs, or YouTube to learn API integration. Practice by connecting apps and exchanging data."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+software\s+architecture/i,
+                            /learn\s+software\s+architecture/i,
+                            /software\s+architecture\s+tutorial/i
+                        ],
+                        answer: "Learn software architecture with freeCodeCamp, Coursera, or YouTube. Practice by designing scalable systems and understanding architectural patterns."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+version\s+control/i,
+                            /learn\s+version\s+control/i,
+                            /version\s+control\s+tutorial/i
+                        ],
+                        answer: "Use freeCodeCamp, GitHub Learning Lab, or Atlassian tutorials to learn version control. Practice by managing code changes and collaborating with others."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+continuous\s+integration/i,
+                            /learn\s+ci\s+cd/i,
+                            /continuous\s+integration\s+tutorial/i
+                        ],
+                        answer: "Learn CI/CD with freeCodeCamp, GitHub Actions docs, or YouTube. Practice by automating builds and deployments."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+software\s+deployment/i,
+                            /learn\s+deployment/i,
+                            /deployment\s+tutorial/i
+                        ],
+                        answer: "Use freeCodeCamp, Netlify docs, or Vercel guides to learn software deployment. Practice by publishing web apps and managing releases."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+open\s+source\s+contribution/i,
+                            /learn\s+open\s+source/i,
+                            /open\s+source\s+contribution\s+tutorial/i
+                        ],
+                        answer: "Learn open source contribution with GitHub docs, freeCodeCamp, or First Timers Only. Practice by finding issues and submitting pull requests."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+documentation\s+writing/i,
+                            /learn\s+documentation/i,
+                            /documentation\s+tutorial/i
+                        ],
+                        answer: "Use freeCodeCamp, Write the Docs, or YouTube to learn documentation writing. Practice by documenting your projects and using Markdown."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+software\s+project\s+management/i,
+                            /learn\s+project\s+management/i,
+                            /project\s+management\s+tutorial/i
+                        ],
+                        answer: "Learn project management with freeCodeCamp, Coursera, or Trello guides. Practice by planning tasks and tracking progress."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+agile\s+development/i,
+                            /learn\s+agile\s+development/i,
+                            /agile\s+tutorial/i
+                        ],
+                        answer: "Use freeCodeCamp, Scrum.org, or YouTube to learn agile development. Practice by working in sprints and using agile tools."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+ui\/ux\s+design/i,
+                            /learn\s+ui\s+ux\s+design/i,
+                            /ui\s+ux\s+tutorial/i
+                        ],
+                        answer: "Learn UI/UX design with freeCodeCamp, Coursera, or Figma guides. Practice by designing interfaces and gathering user feedback."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+accessibility\s+in\s+web\s+development/i,
+                            /learn\s+web\s+accessibility/i,
+                            /accessibility\s+tutorial/i
+                        ],
+                        answer: "Use W3C Web Accessibility Initiative, freeCodeCamp, or MDN Web Docs to learn accessibility. Practice by making websites usable for everyone."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+responsive\s+web\s+design/i,
+                            /learn\s+responsive\s+design/i,
+                            /responsive\s+web\s+design\s+tutorial/i
+                        ],
+                        answer: "Learn responsive web design with freeCodeCamp, MDN Web Docs, or YouTube. Practice by building layouts that adapt to different devices."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+mobile\s+first\s+design/i,
+                            /learn\s+mobile\s+first\s+design/i,
+                            /mobile\s+first\s+tutorial/i
+                        ],
+                        answer: "Use freeCodeCamp, MDN Web Docs, or YouTube to learn mobile-first design. Practice by designing for small screens first and scaling up."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+performance\s+optimization/i,
+                            /learn\s+web\s+performance/i,
+                            /performance\s+optimization\s+tutorial/i
+                        ],
+                        answer: "Learn performance optimization with freeCodeCamp, Google Web Fundamentals, or YouTube. Practice by improving page speed and reducing load times."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+security\s+best\s+practices/i,
+                            /learn\s+security\s+best\s+practices/i,
+                            /security\s+tutorial/i
+                        ],
+                        answer: "Use OWASP, freeCodeCamp, or Coursera to learn security best practices. Practice by securing your code and following guidelines."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+software\s+refactoring/i,
+                            /learn\s+refactoring/i,
+                            /refactoring\s+tutorial/i
+                        ],
+                        answer: "Learn refactoring with freeCodeCamp, Refactoring Guru, or YouTube. Practice by improving code structure and readability."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+debugging\s+techniques/i,
+                            /learn\s+debugging/i,
+                            /debugging\s+tutorial/i
+                        ],
+                        answer: "Use freeCodeCamp, MDN Web Docs, or YouTube to learn debugging techniques. Practice by using browser dev tools and fixing errors."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+software\s+deployment\s+automation/i,
+                            /learn\s+deployment\s+automation/i,
+                            /deployment\s+automation\s+tutorial/i
+                        ],
+                        answer: "Learn deployment automation with freeCodeCamp, GitHub Actions docs, or YouTube. Practice by automating builds and releases."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+software\s+localization/i,
+                            /learn\s+localization/i,
+                            /localization\s+tutorial/i
+                        ],
+                        answer: "Use freeCodeCamp, MDN Web Docs, or YouTube to learn software localization. Practice by translating apps and managing language files."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+software\s+internationalization/i,
+                            /learn\s+internationalization/i,
+                            /internationalization\s+tutorial/i
+                        ],
+                        answer: "Learn internationalization with freeCodeCamp, MDN Web Docs, or YouTube. Practice by building apps that support multiple languages and regions."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+software\s+licensing/i,
+                            /learn\s+software\s+licensing/i,
+                            /software\s+licensing\s+tutorial/i
+                        ],
+                        answer: "Use ChooseALicense.com, freeCodeCamp, or GitHub docs to learn software licensing. Practice by selecting appropriate licenses for your projects."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+software\s+distribution/i,
+                            /learn\s+software\s+distribution/i,
+                            /software\s+distribution\s+tutorial/i
+                        ],
+                        answer: "Learn software distribution with freeCodeCamp, GitHub docs, or YouTube. Practice by packaging and sharing your applications."
+                    },
+                    {
+                        keywords: [
+                            /how\s+to\s+learn\s+software\s+maintenance/i,
+                            /learn\s+software\s+maintenance/i,
+                            /software\s+maintenance\s+tutorial/i
+                        ],
+                        answer: "Use freeCodeCamp, Coursera, or YouTube to learn software maintenance. Practice by updating, fixing, and improving your projects over time."
+                    },
+            {
+                keywords: [
                 /how\s+to\s+reset\s+my\s+password/i,
                 /forgot\s+password/i,
                 /reset\s+password/i,
@@ -10359,7 +12992,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     /is\s+uc\s+browser\s+safe\s+for\s+kids/i,
                     /uc\s+browser\s+privacy/i
                 ],
-                answer: "UC Browser has faced privacy and security concerns in the past. It is not recommended for sensitive browsing or for children. Consider using a mainstream browser with strong privacy controls."
+                answer: "No, UC Browser is not considered safe. It has faced multiple security and privacy concerns, including reports of leaking user data, weak encryption, and vulnerabilities that could expose browsing activity to third parties. UC Browser has also been flagged by security researchers for sending sensitive information to remote servers without proper protection. Because of these risks, UC Browser is not recommended for children or privacy-conscious users. Parents should choose more secure browsers such as Chrome, Firefox, Edge, or Safari, and supervise children's browsing activity. Always use browsers that receive regular security updates and have strong privacy protections."
             },
             {
                 keywords: [
@@ -11750,20 +14383,20 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             {
                 keywords: [
-                    /what\s+is\s+youvidplay/i,
-                    /about\s+youvidplay/i,
-                    /youvidplay\s+platform/i,
-                    /youvidplay\s+release/i
+                    /what\s+is\s+SuperVidPlayer/i,
+                    /about\s+SuperVidPlayer/i,
+                    /SuperVidPlayer\s+platform/i,
+                    /SuperVidPlayer\s+release/i
                 ],
-                answer: "YouVidPlay is an upcoming next-generation video platform announced by Munetios, planned for launch in January 2026."
+                answer: "SuperVidPlayer is an upcoming next-generation video platform announced by Munetios, planned for launch in January 2026."
             },
             {
                 keywords: [
-                    /when\s+will\s+youvidplay\s+launch/i,
-                    /youvidplay\s+release\s+date/i,
-                    /when\s+is\s+youvidplay\s+coming/i
+                    /when\s+will\s+SuperVidPlayer\s+launch/i,
+                    /SuperVidPlayer\s+release\s+date/i,
+                    /when\s+is\s+SuperVidPlayer\s+coming/i
                 ],
-                answer: "YouVidPlay is expected to launch in January 2026."
+                answer: "SuperVidPlayer is expected to launch in January 2026."
             },
             {
                 keywords: [
@@ -11876,6 +14509,357 @@ document.addEventListener('DOMContentLoaded', () => {
             {
                 keywords: [/is\s+disney\+\s+safe\s+for\s+kids/i, /is\s+disney\+\s+safe/i],
                 answer: "Disney+ is generally safe for kids with a wide range of family-friendly content. Parents can create Kids profiles to restrict access to age-appropriate shows and movies."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+github/i,
+                    /github\s+definition/i,
+                    /about\s+github/i,
+                    /github\s+platform/i
+                ],
+                answer: "GitHub is a web-based platform for version control and collaboration, allowing developers to host, review, and manage code projects using Git. It is widely used for open source and private software development."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+google\s+gemini/i,
+                    /google\s+gemini\s+definition/i,
+                    /about\s+google\s+gemini/i,
+                    /google\s+gemini\s+platform/i
+                ],
+                answer: "Google Gemini is a family of advanced AI models developed by Google, designed for tasks such as text generation, code completion, and multimodal understanding. Gemini powers Google's AI features in products like Bard and other generative AI tools."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+chatgpt/i,
+                    /chatgpt\s+definition/i,
+                    /about\s+chatgpt/i,
+                    /chatgpt\s+platform/i
+                ],
+                answer: "ChatGPT is an AI chatbot developed by OpenAI, based on the GPT language model. It can answer questions, generate text, assist with coding, and hold conversations on a wide range of topics."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+notebooklm/i,
+                    /notebooklm\s+definition/i,
+                    /about\s+notebooklm/i,
+                    /notebooklm\s+platform/i
+                ],
+                answer: "NotebookLM is an AI-powered research and note-taking tool from Google. It helps users organize information, summarize documents, and generate insights using large language models."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+youtube/i,
+                    /youtube\s+definition/i,
+                    /about\s+youtube/i,
+                    /youtube\s+platform/i
+                ],
+                answer: "YouTube is a free online video-sharing platform owned by Google. It allows users to upload, view, share, and comment on videos. YouTube hosts a vast range of content, including music videos, tutorials, vlogs, educational material, live streams, and more."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+google/i,
+                    /google\s+definition/i,
+                    /about\s+google/i,
+                    /google\s+platform/i
+                ],
+                answer: "Google is a multinational technology company best known for its search engine. It also offers services like Gmail, Google Drive, Maps, YouTube, and Android."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+facebook/i,
+                    /facebook\s+definition/i,
+                    /about\s+facebook/i,
+                    /facebook\s+platform/i
+                ],
+                answer: "Facebook is a social networking platform where users can connect, share updates, photos, and videos, and join groups and events. It is owned by Meta Platforms."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+twitter/i,
+                    /twitter\s+definition/i,
+                    /about\s+twitter/i,
+                    /twitter\s+platform/i
+                ],
+                answer: "Twitter (now X) is a social media platform for sharing short messages called tweets. Users can follow others, post updates, and engage in real-time conversations."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+instagram/i,
+                    /instagram\s+definition/i,
+                    /about\s+instagram/i,
+                    /instagram\s+platform/i
+                ],
+                answer: "Instagram is a photo and video sharing social networking service owned by Meta. Users can post images, stories, and short videos, and follow other accounts."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+reddit/i,
+                    /reddit\s+definition/i,
+                    /about\s+reddit/i,
+                    /reddit\s+platform/i
+                ],
+                answer: "Reddit is an online community platform where users share news, links, and discussions in topic-based forums called subreddits."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+stack\s*overflow/i,
+                    /stack\s*overflow\s+definition/i,
+                    /about\s+stack\s*overflow/i,
+                    /stack\s*overflow\s+platform/i
+                ],
+                answer: "Stack Overflow is a question-and-answer website for programmers. Users ask coding questions and get answers from the community."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+wikipedia/i,
+                    /wikipedia\s+definition/i,
+                    /about\s+wikipedia/i,
+                    /wikipedia\s+platform/i
+                ],
+                answer: "Wikipedia is a free, collaborative online encyclopedia with articles written and edited by volunteers worldwide."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+notion/i,
+                    /notion\s+definition/i,
+                    /about\s+notion/i,
+                    /notion\s+platform/i
+                ],
+                answer: "Notion is a productivity app for note-taking, project management, and collaboration. It allows users to organize information in databases, pages, and boards."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+slack/i,
+                    /slack\s+definition/i,
+                    /about\s+slack/i,
+                    /slack\s+platform/i
+                ],
+                answer: "Slack is a messaging and collaboration platform for teams, offering channels, direct messages, file sharing, and integrations with other tools."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+discord/i,
+                    /discord\s+definition/i,
+                    /about\s+discord/i,
+                    /discord\s+platform/i
+                ],
+                answer: "Discord is a communication platform for voice, video, and text chat, popular among gamers and online communities."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+zoom/i,
+                    /zoom\s+definition/i,
+                    /about\s+zoom/i,
+                    /zoom\s+platform/i
+                ],
+                answer: "Zoom is a video conferencing platform for online meetings, webinars, and virtual collaboration."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+dropbox/i,
+                    /dropbox\s+definition/i,
+                    /about\s+dropbox/i,
+                    /dropbox\s+platform/i
+                ],
+                answer: "Dropbox is a cloud storage service that lets users save, sync, and share files online."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+figma/i,
+                    /figma\s+definition/i,
+                    /about\s+figma/i,
+                    /figma\s+platform/i
+                ],
+                answer: "Figma is a web-based design and prototyping tool for UI/UX designers, supporting real-time collaboration."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+canva/i,
+                    /canva\s+definition/i,
+                    /about\s+canva/i,
+                    /canva\s+platform/i
+                ],
+                answer: "Canva is an online graphic design platform for creating presentations, social media graphics, posters, and more."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+whatsapp/i,
+                    /whatsapp\s+definition/i,
+                    /about\s+whatsapp/i,
+                    /whatsapp\s+platform/i
+                ],
+                answer: "WhatsApp is a messaging app for sending texts, voice messages, photos, videos, and making calls over the internet."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+telegram/i,
+                    /telegram\s+definition/i,
+                    /about\s+telegram/i,
+                    /telegram\s+platform/i
+                ],
+                answer: "Telegram is a cloud-based messaging app known for its speed, security, and support for large group chats and channels."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+outlook/i,
+                    /outlook\s+definition/i,
+                    /about\s+outlook/i,
+                    /outlook\s+platform/i
+                ],
+                answer: "Outlook is an email and calendar service from Microsoft, available as a web app and desktop client."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+onedrive/i,
+                    /onedrive\s+definition/i,
+                    /about\s+onedrive/i,
+                    /onedrive\s+platform/i
+                ],
+                answer: "OneDrive is Microsoft's cloud storage service for saving, syncing, and sharing files online."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+office\s*365/i,
+                    /office\s*365\s+definition/i,
+                    /about\s+office\s*365/i,
+                    /office\s*365\s+platform/i
+                ],
+                answer: "Office 365 (now Microsoft 365) is a subscription service offering access to Microsoft Office apps and cloud services."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+gmail/i,
+                    /gmail\s+definition/i,
+                    /about\s+gmail/i,
+                    /gmail\s+platform/i
+                ],
+                answer: "Gmail is Google's free email service, offering web and mobile access, spam filtering, and integration with other Google services."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+amazon/i,
+                    /amazon\s+definition/i,
+                    /about\s+amazon/i,
+                    /amazon\s+platform/i
+                ],
+                answer: "Amazon is a global e-commerce company offering online shopping, cloud computing (AWS), streaming, and more."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+ebay/i,
+                    /ebay\s+definition/i,
+                    /about\s+ebay/i,
+                    /ebay\s+platform/i
+                ],
+                answer: "eBay is an online marketplace for buying and selling goods, including auctions and fixed-price listings."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+spotify/i,
+                    /spotify\s+definition/i,
+                    /about\s+spotify/i,
+                    /spotify\s+platform/i
+                ],
+                answer: "Spotify is a music streaming service offering millions of songs, playlists, and podcasts on demand."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+netflix/i,
+                    /netflix\s+definition/i,
+                    /about\s+netflix/i,
+                    /netflix\s+platform/i
+                ],
+                answer: "Netflix is a subscription-based streaming service for movies, TV shows, documentaries, and original content."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+tiktok/i,
+                    /tiktok\s+definition/i,
+                    /about\s+tiktok/i,
+                    /tiktok\s+platform/i
+                ],
+                answer: "TikTok is a social media app for creating and sharing short-form videos, popular for trends and entertainment."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+roblox/i,
+                    /roblox\s+definition/i,
+                    /about\s+roblox/i,
+                    /roblox\s+platform/i
+                ],
+                answer: "Roblox is an online platform for creating and playing games made by users. It is popular among children and teens."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+minecraft/i,
+                    /minecraft\s+definition/i,
+                    /about\s+minecraft/i,
+                    /minecraft\s+platform/i
+                ],
+                answer: "Minecraft is a sandbox video game where players build, explore, and survive in block-based worlds."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+paypal/i,
+                    /paypal\s+definition/i,
+                    /about\s+paypal/i,
+                    /paypal\s+platform/i
+                ],
+                answer: "PayPal is an online payment service for sending and receiving money, shopping, and managing transactions securely."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+stripe/i,
+                    /stripe\s+definition/i,
+                    /about\s+stripe/i,
+                    /stripe\s+platform/i
+                ],
+                answer: "Stripe is a technology company providing payment processing software and APIs for online businesses."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+calendar/i,
+                    /calendar\s+definition/i,
+                    /about\s+calendar/i,
+                    /calendar\s+platform/i
+                ],
+                answer: "A calendar app helps you schedule events, set reminders, and manage your time. Examples include Google Calendar, Outlook Calendar, and Munetios Calendar."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+notebook/i,
+                    /notebook\s+definition/i,
+                    /about\s+notebook/i,
+                    /notebook\s+platform/i
+                ],
+                answer: "A notebook app lets you take notes, organize ideas, and store information digitally. Examples include Munetios Notebook, Evernote, and OneNote."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+tasks/i,
+                    /tasks\s+definition/i,
+                    /about\s+tasks/i,
+                    /tasks\s+platform/i
+                ],
+                answer: "A tasks app helps you create to-do lists, track progress, and manage your daily activities. Examples include Munetios Tasks, Todoist, and Microsoft To Do."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+calculator/i,
+                    /calculator\s+definition/i,
+                    /about\s+calculator/i,
+                    /calculator\s+platform/i
+                ],
+                answer: "A calculator app performs mathematical calculations, from basic arithmetic to advanced functions. Examples include Munetios Calculator, Windows Calculator, and Google Calculator."
+            },
+            {
+                keywords: [
+                    /what\s+is\s+munetios/i,
+                    /munetios\s+definition/i,
+                    /about\s+munetios/i,
+                    /munetios\s+platform/i
+                ],
+                answer: "Munetios is a privacy-focused productivity platform offering tools such as search, notebook, calendar, and task management."
             },
             {
                 keywords: [
