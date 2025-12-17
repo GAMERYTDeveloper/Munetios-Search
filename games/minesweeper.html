@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Minesweeper - Coming Soon</title>
+    <!-- Google Fonts: Google Sans Flex -->
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Beautiful CSS for .liquid-glass -->
+    <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css">
+    <style>
+        * {
+            font-family:'Google Sans Flex', sans-serif !important;
+        }
+        body {
+            background: #181c20;
+            color: #fff;
+            font-family: 'Google Sans Flex', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 32px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            font-size: 2.5rem;
+        }
+        .minesweeper-board {
+            display: grid;
+            grid-template-columns: repeat(10, 36px);
+            grid-gap: 4px;
+            margin: 32px 0;
+            background: rgba(255,255,255,0.04);
+            padding: 16px;
+            border-radius: 16px;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.2);
+        }
+        .cell {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: rgba(255,255,255,0.08);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.15s;
+            user-select: none;
+            outline: none;
+        }
+        .cell.revealed {
+            background: #e3e9f0;
+            color: #222;
+            cursor: default;
+        }
+        .cell.flagged {
+            color: #e74c3c;
+        }
+        .cell.mine {
+            background: #e74c3c;
+            color: #fff;
+        }
+        .liquid-glass {
+            margin-top: 16px;
+            padding: 12px 32px;
+            font-size: 1.1rem;
+            border-radius: 12px;
+            color: white;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .status {
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        @media (max-width: 500px) {
+            .minesweeper-board {
+                grid-template-columns: repeat(10, 28px);
+                padding: 6px;
+            }
+            .cell {
+                width: 28px;
+                height: 28px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Minesweeper</h1>
+    <div class="status" id="status">Good luck!</div>
+    <div class="minesweeper-board" id="board"></div>
+    <button class="liquid-glass" onclick="restartGame()">Restart</button>
+
+    <!-- Tone.js for sound -->
+    <script src="https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.min.js"></script>
+    <script>
+        // Game settings
+        const ROWS = 10, COLS = 10, MINES = 15;
+
+        // Sound setup
+        const synth = new Tone.Synth({ oscillator: { type: "triangle" } }).toDestination();
+        const mineSynth = new Tone.MembraneSynth().toDestination();
+        const flagSynth = new Tone.Synth({ oscillator: { type: "square" } }).toDestination();
+
+        function playRevealSound(num) {
+            if (num === 0) synth.triggerAttackRelease("C5", "8n", undefined, 0.2);
+            else synth.triggerAttackRelease(["D5","E5","F5","G5","A5","B5","C6"][num-1], "8n", undefined, 0.3);
+        }
+        function playMineSound() {
+            mineSynth.triggerAttackRelease("C2", "16n", undefined, 0.7);
+        }
+        function playFlagSound(flagged) {
+            flagSynth.triggerAttackRelease(flagged ? "G4" : "E4", "16n", undefined, 0.4);
+        }
+
+        // Board state
+        let board = [], revealed = [], flagged = [], gameOver = false, cellsRevealed = 0;
+
+        function initBoard() {
+            board = Array.from({length: ROWS}, () => Array(COLS).fill(0));
+            revealed = Array.from({length: ROWS}, () => Array(COLS).fill(false));
+            flagged = Array.from({length: ROWS}, () => Array(COLS).fill(false));
+            gameOver = false;
+            cellsRevealed = 0;
+
+            // Place mines
+            let minesPlaced = 0;
+            while (minesPlaced < MINES) {
+                let r = Math.floor(Math.random() * ROWS);
+                let c = Math.floor(Math.random() * COLS);
+                if (board[r][c] === "M") continue;
+                board[r][c] = "M";
+                minesPlaced++;
+            }
+            // Calculate numbers
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    if (board[r][c] === "M") continue;
+                    let count = 0;
+                    for (let dr = -1; dr <= 1; dr++) {
+                        for (let dc = -1; dc <= 1; dc++) {
+                            let nr = r + dr, nc = c + dc;
+                            if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && board[nr][nc] === "M") count++;
+                        }
+                    }
+                    board[r][c] = count;
+                }
+            }
+        }
+
+        function renderBoard() {
+            const boardDiv = document.getElementById('board');
+            boardDiv.innerHTML = '';
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    const btn = document.createElement('button');
+                    btn.className = 'cell';
+                    btn.dataset.r = r;
+                    btn.dataset.c = c;
+                    if (revealed[r][c]) {
+                        btn.classList.add('revealed');
+                        if (board[r][c] === "M") {
+                            btn.classList.add('mine');
+                            btn.innerHTML = "💣";
+                        } else if (board[r][c] > 0) {
+                            btn.style.color = ["#1976d2","#388e3c","#fbc02d","#d32f2f","#7b1fa2","#00838f","#5d4037","#455a64"][board[r][c]-1];
+                            btn.textContent = board[r][c];
+                        }
+                    } else if (flagged[r][c]) {
+                        btn.classList.add('flagged');
+                        btn.innerHTML = "🚩";
+                    }
+                    btn.addEventListener('click', cellClick);
+                    btn.addEventListener('contextmenu', cellRightClick);
+                    boardDiv.appendChild(btn);
+                }
+            }
+        }
+
+        function cellClick(e) {
+            if (gameOver) return;
+            const r = +this.dataset.r, c = +this.dataset.c;
+            if (flagged[r][c] || revealed[r][c]) return;
+            revealCell(r, c);
+            renderBoard();
+            checkWin();
+        }
+
+        function cellRightClick(e) {
+            e.preventDefault();
+            if (gameOver) return;
+            const r = +this.dataset.r, c = +this.dataset.c;
+            if (revealed[r][c]) return;
+            flagged[r][c] = !flagged[r][c];
+            playFlagSound(flagged[r][c]);
+            renderBoard();
+        }
+
+        function revealCell(r, c) {
+            if (r < 0 || r >= ROWS || c < 0 || c >= COLS || revealed[r][c] || flagged[r][c]) return;
+            revealed[r][c] = true;
+            cellsRevealed++;
+            if (board[r][c] === "M") {
+                playMineSound();
+                revealAllMines();
+                setStatus("Game Over! 💥");
+                gameOver = true;
+                return;
+            }
+            playRevealSound(board[r][c]);
+            if (board[r][c] === 0) {
+                // Reveal neighbors
+                for (let dr = -1; dr <= 1; dr++) {
+                    for (let dc = -1; dc <= 1; dc++) {
+                        if (dr !== 0 || dc !== 0) revealCell(r + dr, c + dc);
+                    }
+                }
+            }
+        }
+
+        function revealAllMines() {
+            for (let r = 0; r < ROWS; r++)
+                for (let c = 0; c < COLS; c++)
+                    if (board[r][c] === "M") revealed[r][c] = true;
+            renderBoard();
+        }
+
+        function checkWin() {
+            if (gameOver) return;
+            if (cellsRevealed === ROWS * COLS - MINES) {
+                setStatus("You Win! 🎉");
+                gameOver = true;
+                revealAllMines();
+            }
+        }
+
+        function setStatus(msg) {
+            document.getElementById('status').textContent = msg;
+        }
+
+        function restartGame() {
+            initBoard();
+            renderBoard();
+            setStatus("Good luck!");
+        }
+
+        // Initialize
+        window.onload = () => {
+            initBoard();
+            renderBoard();
+        };
+    </script>
+</body>
+</html>

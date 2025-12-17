@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flappy Bird - Munetios Games Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Beautiful CSS -->
+    <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css">
+    <!-- Google Sans Flex font -->
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Google Sans Flex', Arial, sans-serif;
+            background: #181c20;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            justify-content: flex-start;
+        }
+        .liquid-glass {
+            margin-top: 32px;
+            padding: 32px;
+            max-width: 920px;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #game-canvas {
+            background: linear-gradient(#87ceeb 70%, #e0f7fa 100%);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            display: block;
+            margin: 0 auto 16px auto;
+        }
+        .controls, .cheats {
+            margin: 16px 0 0 0;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+        .cheats-options {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .hidden {
+            display: none;
+        }
+        .score {
+            font-size: 1.5rem;
+
+            margin: 12px 0;
+            color: #ffffff;
+            text-shadow: 0 2px 8px #fff8;
+        }
+        .level-label {
+            font-weight: bold;
+            margin-right: 8px;
+            color: white;
+        }
+        .btn {
+            font-family: 'Google Sans Flex', Arial, sans-serif;
+            font-size: 1rem;
+            padding: 8px 18px;
+            border-radius: 8px;
+            border: none;
+            background: #6300d4;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background: #410777;
+        }
+        .cheats-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .cheats-options label {
+            font-size: 0.98rem;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="liquid-glass">
+        <h1 style="font-family:'Google Sans Flex',Arial,sans-serif;text-align:center;">Flappy Bird</h1>
+        <div class="controls">
+            <div>
+                <span class="level-label">Level:</span>
+                <select id="level-select" class="btn">
+                    <option value="easy">Easy</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+            <button id="restart-btn" class="btn">Restart</button>
+        </div>
+        <div class="cheats">
+            <span class="cheats-toggle" id="cheats-toggle">
+                <input type="checkbox" id="cheats-checkbox">
+                <label for="cheats-checkbox">Cheats</label>
+            </span>
+        </div>
+        <div class="cheats-options hidden" id="cheats-options">
+            <label>
+                <input type="checkbox" id="never-lose">
+                Never lose
+            </label>
+            <label>
+                <input type="checkbox" id="pass-through-walls">
+                Pass through walls
+            </label>
+        </div>
+        <div class="score" id="score">Score: 0</div>
+        <canvas id="game-canvas" width="800" height="540"></canvas>
+    </div>
+
+    <!-- Tone.js for sound effects -->
+    <script src="https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.min.js"></script>
+    <!-- Background music (autoplay) -->
+    <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" loop></audio>
+    <script>
+        // Autoplay background music with user gesture fallback
+        const bgMusic = document.getElementById('bg-music');
+        function tryPlayMusic() {
+            bgMusic.volume = 1;
+            bgMusic.play().catch(() => {
+                // Wait for user gesture
+                document.body.addEventListener('pointerdown', () => {
+                    bgMusic.play();
+                }, { once: true });
+            });
+        }
+        window.addEventListener('DOMContentLoaded', tryPlayMusic);
+    </script>
+    <script>
+        // Game constants
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d');
+        const gravity = 0.38;
+        const jumpStrength = -6.5;
+        const birdSize = 36;
+        const pipeWidth = 60;
+        const pipeGapEasy = 160;
+        const pipeGapNormal = 120;
+        const pipeGapHard = 90;
+        const pipeSpeedEasy = 2.2;
+        const pipeSpeedNormal = 2.9;
+        const pipeSpeedHard = 3.7;
+        const pipeInterval = 1200; // ms
+
+        // Game state
+        let pipes = [];
+        let bird = { x: 80, y: 240, vy: 0 };
+        let score = 0;
+        let highScore = 0;
+        let running = false;
+        let lastPipeTime = 0;
+        let level = 'normal';
+        let neverLose = false;
+        let passThroughWalls = false;
+        let gameOver = false;
+        let animationFrameId = null;
+
+        // DOM elements
+        const scoreEl = document.getElementById('score');
+        const restartBtn = document.getElementById('restart-btn');
+        const levelSelect = document.getElementById('level-select');
+        const cheatsToggle = document.getElementById('cheats-toggle');
+        const cheatsCheckbox = document.getElementById('cheats-checkbox');
+        const cheatsOptions = document.getElementById('cheats-options');
+        const neverLoseCheckbox = document.getElementById('never-lose');
+        const passThroughWallsCheckbox = document.getElementById('pass-through-walls');
+
+        // Tone.js sound effects
+        const jumpSynth = new Tone.Synth({ oscillator: { type: 'triangle' }, envelope: { attack: 0.01, decay: 0.1, sustain: 0.1, release: 0.2 } }).toDestination();
+        const pointSynth = new Tone.MembraneSynth().toDestination();
+        const hitSynth = new Tone.MetalSynth({ frequency: 120, envelope: { attack: 0.001, decay: 0.2, release: 0.2 }, harmonicity: 5.1, modulationIndex: 32 }).toDestination();
+
+        function playJump() {
+            jumpSynth.triggerAttackRelease('C5', '8n', Tone.now());
+        }
+        function playPoint() {
+            pointSynth.triggerAttackRelease('C2', '8n', Tone.now());
+        }
+        function playHit() {
+            hitSynth.triggerAttackRelease('C4', '16n', Tone.now());
+        }
+
+        // Level settings
+        function getLevelSettings() {
+            if (level === 'easy') return { gap: pipeGapEasy, speed: pipeSpeedEasy };
+            if (level === 'hard') return { gap: pipeGapHard, speed: pipeSpeedHard };
+            return { gap: pipeGapNormal, speed: pipeSpeedNormal };
+        }
+
+        // Game logic
+        function resetGame() {
+            // Cancel any previous animation frame to prevent multiple loops
+            if (animationFrameId !== null) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
+            bird = { x: 80, y: 240, vy: 0 };
+            pipes = [];
+            score = 0;
+            lastPipeTime = performance.now();
+            running = true;
+            gameOver = false;
+            scoreEl.textContent = 'Score: 0';
+            // Reset cheats to current checkbox state
+            neverLose = neverLoseCheckbox.checked;
+            passThroughWalls = passThroughWallsCheckbox.checked;
+            animationFrameId = window.requestAnimationFrame(gameLoop);
+        }
+
+        function spawnPipe() {
+            const { gap } = getLevelSettings();
+            const minY = 60;
+            const maxY = canvas.height - gap - 60;
+            const topY = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+            pipes.push({
+                x: canvas.width,
+                top: topY,
+                gap: gap,
+                passed: false
+            });
+        }
+
+        function update(dt) {
+            if (!running) return;
+            // Bird physics
+            bird.vy += gravity;
+            bird.y += bird.vy;
+
+            // Pipes
+            const { speed } = getLevelSettings();
+            for (let pipe of pipes) {
+                pipe.x -= speed;
+            }
+            // Remove off-screen pipes
+            pipes = pipes.filter(pipe => pipe.x + pipeWidth > 0);
+
+            // Spawn pipes
+            if (performance.now() - lastPipeTime > pipeInterval) {
+                spawnPipe();
+                lastPipeTime = performance.now();
+            }
+
+            // Collision detection
+            let collided = false;
+            for (let pipe of pipes) {
+                // Pass through walls cheat
+                if (passThroughWalls) continue;
+                // Top pipe
+                if (
+                    bird.x + birdSize > pipe.x && bird.x < pipe.x + pipeWidth &&
+                    (bird.y < pipe.top || bird.y + birdSize > pipe.top + pipe.gap)
+                ) {
+                    collided = true;
+                }
+            }
+            // Floor/ceiling collision
+            if (!neverLose && !passThroughWalls) {
+                if (bird.y < 0 || bird.y + birdSize > canvas.height) {
+                    collided = true;
+                }
+            }
+            if (collided && !neverLose) {
+                playHit();
+                running = false;
+                gameOver = true;
+                setTimeout(() => {
+                    scoreEl.textContent = `Game Over! Score: ${score}`;
+                }, 100);
+            }
+
+            // Score
+            for (let pipe of pipes) {
+                if (!pipe.passed && pipe.x + pipeWidth < bird.x) {
+                    pipe.passed = true;
+                    score++;
+                    playPoint();
+                    scoreEl.textContent = `Score: ${score}`;
+                }
+            }
+        }
+
+        function draw() {
+            // Clear
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw pipes
+            ctx.save();
+            for (let pipe of pipes) {
+                // Top pipe
+                ctx.fillStyle = "#4caf50";
+                ctx.fillRect(pipe.x, 0, pipeWidth, pipe.top);
+                ctx.strokeStyle = "#388e3c";
+                ctx.lineWidth = 3;
+                ctx.strokeRect(pipe.x, 0, pipeWidth, pipe.top);
+
+                // Bottom pipe
+                ctx.fillStyle = "#4caf50";
+                ctx.fillRect(pipe.x, pipe.top + pipe.gap, pipeWidth, canvas.height - pipe.top - pipe.gap);
+                ctx.strokeStyle = "#388e3c";
+                ctx.strokeRect(pipe.x, pipe.top + pipe.gap, pipeWidth, canvas.height - pipe.top - pipe.gap);
+            }
+            ctx.restore();
+
+            // Draw bird
+            ctx.save();
+            ctx.translate(bird.x + birdSize/2, bird.y + birdSize/2);
+            ctx.rotate(Math.min(Math.PI/4, bird.vy/12));
+            ctx.beginPath();
+            ctx.arc(0, 0, birdSize/2, 0, 2 * Math.PI);
+            ctx.fillStyle = "#ffeb3b";
+            ctx.shadowColor = "#fffde7";
+            ctx.shadowBlur = 8;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            // Eye
+            ctx.beginPath();
+            ctx.arc(birdSize/6, -birdSize/8, birdSize/8, 0, 2 * Math.PI);
+            ctx.fillStyle = "#222";
+            ctx.fill();
+            // Beak
+            ctx.beginPath();
+            ctx.moveTo(birdSize/2, 0);
+            ctx.lineTo(birdSize/2 + 10, -5);
+            ctx.lineTo(birdSize/2 + 10, 5);
+            ctx.closePath();
+            ctx.fillStyle = "#ff9800";
+            ctx.fill();
+            ctx.restore();
+
+            // Draw ground
+            ctx.save();
+            ctx.fillStyle = "#795548";
+            ctx.fillRect(0, canvas.height - 18, canvas.width, 18);
+            ctx.restore();
+        }
+
+        function gameLoop() {
+            if (!running) return;
+            update();
+            draw();
+            if (running) {
+                animationFrameId = window.requestAnimationFrame(gameLoop);
+            }
+        }
+
+        // Controls
+        function jump() {
+            if (!running) {
+                if (gameOver) resetGame();
+                return;
+            }
+            bird.vy = jumpStrength;
+            playJump();
+        }
+        document.addEventListener('keydown', e => {
+            if (e.code === 'Space' || e.code === 'ArrowUp') {
+                e.preventDefault();
+                jump();
+            }
+        });
+        canvas.addEventListener('pointerdown', jump);
+
+        restartBtn.addEventListener('click', resetGame);
+
+        levelSelect.addEventListener('change', e => {
+            level = e.target.value;
+            resetGame();
+        });
+
+        // Cheats UI
+        cheatsToggle.addEventListener('click', () => {
+            cheatsCheckbox.checked = !cheatsCheckbox.checked;
+            cheatsOptions.classList.toggle('hidden', !cheatsCheckbox.checked);
+        });
+        cheatsCheckbox.addEventListener('change', () => {
+            cheatsOptions.classList.toggle('hidden', !cheatsCheckbox.checked);
+        });
+        neverLoseCheckbox.addEventListener('change', () => {
+            neverLose = neverLoseCheckbox.checked;
+        });
+        passThroughWallsCheckbox.addEventListener('change', () => {
+            passThroughWalls = passThroughWallsCheckbox.checked;
+        });
+
+        // Start game
+        resetGame();
+    </script>
+</body>
+</html>

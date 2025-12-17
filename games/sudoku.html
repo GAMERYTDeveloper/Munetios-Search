@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sudoku - Munetios Games Hub</title>
+    <!-- Google Sans Flex font -->
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Liquid glass effects -->
+    <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css">
+    <style>
+        body {
+            font-family: 'Google Sans Flex', Arial, sans-serif;
+            background: #181c24;
+            color: #fff;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        h1 {
+            margin-bottom: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .sudoku-board {
+            display: grid;
+            grid-template-columns: repeat(9, 40px);
+            grid-template-rows: repeat(9, 40px);
+            gap: 2px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+            padding: 12px;
+            margin-bottom: 32px;
+        }
+        .sudoku-cell {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.15);
+            border: none;
+            outline: none;
+            text-align: center;
+            font-size: 1.3rem;
+            font-family: inherit;
+            color: #fff;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .sudoku-cell:focus {
+            background: rgba(255,255,255,0.25);
+        }
+        /* Thicker borders for 3x3 boxes */
+        .sudoku-cell.box-right { border-right: 2px solid #fff3; }
+        .sudoku-cell.box-bottom { border-bottom: 2px solid #fff3; }
+        .controls {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .btn {
+            font-family: inherit;
+            background: rgba(255,255,255,0.18);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            padding: 10px 24px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .btn:hover {
+            background: rgba(255,255,255,0.28);
+        }
+        .music-player {
+            margin-top: 24px;
+            opacity: 0.7;
+        }
+        /* Toast styles */
+        .liquid-toast {
+            position: fixed;
+            left: 50%;
+            bottom: 40px;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            padding: 16px 32px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+            font-size: 1.1rem;
+            z-index: 9999;
+            backdrop-filter: blur(2px);
+           
+            animation: fadein 0.3s, fadeout 0.3s 2.2s;
+        }
+        @keyframes fadein {
+            from { opacity: 0; transform: translateX(-50%) translateY(30px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        @keyframes fadeout {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Sudoku</h1>
+    <div class="controls">
+        <button class="btn" onclick="resetBoard()">Reset</button>
+        <button class="btn" onclick="solveBoard()">Solve</button>
+    </div>
+    <div class="sudoku-board" id="sudoku-board"></div>
+    <audio class="music-player" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" autoplay loop controls></audio>
+    <script>
+        // Toast function using liquid glass style
+        function showToast(message) {
+            // Remove existing toast if present
+            const oldToast = document.querySelector('.liquid-toast');
+            if (oldToast) oldToast.remove();
+            // Create new toast
+            const toast = document.createElement('div');
+            toast.className = 'liquid-toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 2200);
+        }
+
+        // Generate empty sudoku board
+        function createBoard() {
+            const board = document.getElementById('sudoku-board');
+            board.innerHTML = '';
+            for (let row = 0; row < 9; row++) {
+                for (let col = 0; col < 9; col++) {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.maxLength = 1;
+                    input.className = 'sudoku-cell';
+                    input.dataset.row = row;
+                    input.dataset.col = col;
+                    // Add thicker borders for 3x3 boxes
+                    if ((col + 1) % 3 === 0 && col !== 8) input.classList.add('box-right');
+                    if ((row + 1) % 3 === 0 && row !== 8) input.classList.add('box-bottom');
+                    input.oninput = function() {
+                        this.value = this.value.replace(/[^1-9]/g, '');
+                        validateBoard();
+                    };
+                    board.appendChild(input);
+                }
+            }
+        }
+
+        function resetBoard() {
+            document.querySelectorAll('.sudoku-cell').forEach(cell => cell.value = '');
+        }
+
+        // Simple backtracking solver with board validation
+        function solveBoard() {
+            const cells = Array.from(document.querySelectorAll('.sudoku-cell'));
+            const board = [];
+            for (let i = 0; i < 9; i++) {
+                board.push([]);
+                for (let j = 0; j < 9; j++) {
+                    const val = cells[i * 9 + j].value;
+                    board[i][j] = val ? parseInt(val) : 0;
+                }
+            }
+            function isValid(board, row, col, num) {
+                for (let x = 0; x < 9; x++) {
+                    if (x !== col && board[row][x] === num) return false;
+                    if (x !== row && board[x][col] === num) return false;
+                }
+                const startRow = row - row % 3, startCol = col - col % 3;
+                for (let i = 0; i < 3; i++)
+                    for (let j = 0; j < 3; j++)
+                        if ((i + startRow !== row || j + startCol !== col) && board[i + startRow][j + startCol] === num) return false;
+                return true;
+            }
+            // Validate initial board for duplicates
+            for (let row = 0; row < 9; row++) {
+                for (let col = 0; col < 9; col++) {
+                    const num = board[row][col];
+                    if (num && !isValid(board, row, col, num)) {
+                        showToast('Invalid board: duplicate numbers!');
+                        return;
+                    }
+                }
+            }
+            function solve() {
+                for (let row = 0; row < 9; row++) {
+                    for (let col = 0; col < 9; col++) {
+                        if (board[row][col] === 0) {
+                            for (let num = 1; num <= 9; num++) {
+                                if (isValid(board, row, col, num)) {
+                                    board[row][col] = num;
+                                    if (solve()) return true;
+                                    board[row][col] = 0;
+                                }
+                            }
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+            if (solve()) {
+                for (let i = 0; i < 9; i++)
+                    for (let j = 0; j < 9; j++)
+                        cells[i * 9 + j].value = board[i][j] ? board[i][j] : '';
+            } else {
+                showToast('No solution found!');
+            }
+        }
+
+        // Real-time validation to highlight duplicate numbers
+        function validateBoard() {
+            const cells = Array.from(document.querySelectorAll('.sudoku-cell'));
+            // Remove previous error highlights
+            cells.forEach(cell => cell.style.background = '');
+            const board = [];
+            for (let i = 0; i < 9; i++) {
+                board.push([]);
+                for (let j = 0; j < 9; j++) {
+                    const val = cells[i * 9 + j].value;
+                    board[i][j] = val ? parseInt(val) : 0;
+                }
+            }
+            // Highlight duplicates
+            for (let row = 0; row < 9; row++) {
+                for (let col = 0; col < 9; col++) {
+                    const num = board[row][col];
+                    if (!num) continue;
+                    // Check row, col, and box for duplicates
+                    for (let k = 0; k < 9; k++) {
+                        if (k !== col && board[row][k] === num) {
+                            cells[row * 9 + col].style.background = '#ff4d4d';
+                            cells[row * 9 + k].style.background = '#ff4d4d';
+                        }
+                        if (k !== row && board[k][col] === num) {
+                            cells[row * 9 + col].style.background = '#ff4d4d';
+                            cells[k * 9 + col].style.background = '#ff4d4d';
+                        }
+                    }
+                    const startRow = row - row % 3, startCol = col - col % 3;
+                    for (let i = 0; i < 3; i++)
+                        for (let j = 0; j < 3; j++) {
+                            const r = startRow + i, c = startCol + j;
+                            if ((r !== row || c !== col) && board[r][c] === num) {
+                                cells[row * 9 + col].style.background = '#ff4d4d';
+                                cells[r * 9 + c].style.background = '#ff4d4d';
+                            }
+                        }
+                }
+            }
+        }
+
+        createBoard();
+    </script>
+</body>
+</html>

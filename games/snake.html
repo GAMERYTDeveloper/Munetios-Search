@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Snake Game - Munetios Style</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;700&display=swap">
+    <!-- Munetios Beautiful CSS (Assumed to be available) -->
+    <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css">
+    <style>
+        * {
+            font-family: Poppins, 'Google Sans Flex', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #232526 0%, #414345 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .liquid-glass {
+            padding: 2rem;
+            margin: 1rem;
+        }
+        #game-board {
+            background: rgba(0,0,0,0.7);
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+            display: block;
+            margin: 0 auto 1rem auto;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .control-btn {
+            font-size: 1.5rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            border: none;
+            background: #fff3;
+            color: #222;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .control-btn:active {
+            background: #fff6;
+        }
+        .score {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 8px #0008;
+        }
+        .reset-btn {
+            display: block;
+            margin: 1rem auto 0 auto;
+            padding: 0.5rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: none;
+            background: #00ff99cc;
+            color: #222;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .reset-btn:active {
+            background: #00ff99ee;
+        }
+    </style>
+</head>
+<body>
+    <div class="liquid-glass" style="max-width: 400px;">
+        <div class="score" id="score">Score: 0</div>
+        <canvas id="game-board" width="320" height="320"></canvas>
+        <div class="controls">
+            <button class="control-btn" id="up" aria-label="Up">▲</button>
+            <button class="control-btn" id="left" aria-label="Left">◀</button>
+            <button class="control-btn" id="down" aria-label="Down">▼</button>
+            <button class="control-btn" id="right" aria-label="Right">▶</button>
+        </div>
+        <button class="reset-btn" id="reset-game">Reset Game</button>
+    </div>
+    <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3" loop></audio>
+    <script>
+        // Game constants
+        const boardSize = 16;
+        const tileSize = 20;
+        const canvas = document.getElementById('game-board');
+        const ctx = canvas.getContext('2d');
+        const scoreElem = document.getElementById('score');
+        let snake, direction, nextDirection, food, score, gameInterval, gameOver;
+
+        function resetGame() {
+            snake = [{x: 8, y: 8}];
+            direction = {x: 0, y: -1};
+            nextDirection = direction;
+            food = spawnFood();
+            score = 0;
+            gameOver = false;
+            scoreElem.textContent = 'Score: 0';
+            drawBoard();
+            clearInterval(gameInterval);
+            gameInterval = setInterval(gameLoop, 120);
+        }
+
+        function spawnFood() {
+            let pos;
+            do {
+                pos = {
+                    x: Math.floor(Math.random() * boardSize),
+                    y: Math.floor(Math.random() * boardSize)
+                };
+            } while (snake.some(seg => seg.x === pos.x && seg.y === pos.y));
+            return pos;
+        }
+
+        function drawBoard() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Draw snake
+            ctx.fillStyle = '#00ff99';
+            snake.forEach((seg, i) => {
+                ctx.globalAlpha = i === 0 ? 1 : 0.8;
+                ctx.fillRect(seg.x * tileSize, seg.y * tileSize, tileSize, tileSize);
+            });
+            ctx.globalAlpha = 1;
+            // Draw food
+            ctx.fillStyle = '#ff3366';
+            ctx.beginPath();
+            ctx.arc(
+                food.x * tileSize + tileSize / 2,
+                food.y * tileSize + tileSize / 2,
+                tileSize / 2.5, 0, 2 * Math.PI
+            );
+            ctx.fill();
+        }
+
+        function moveSnake() {
+            direction = nextDirection;
+            const head = {x: snake[0].x + direction.x, y: snake[0].y + direction.y};
+            // Check collision
+            if (
+                head.x < 0 || head.x >= boardSize ||
+                head.y < 0 || head.y >= boardSize ||
+                snake.some(seg => seg.x === head.x && seg.y === head.y)
+            ) {
+                gameOver = true;
+                clearInterval(gameInterval);
+                scoreElem.textContent = `Game Over! Final Score: ${score}`;
+                return;
+            }
+            snake.unshift(head);
+            // Eat food
+            if (head.x === food.x && head.y === food.y) {
+                score++;
+                scoreElem.textContent = `Score: ${score}`;
+                food = spawnFood();
+            } else {
+                snake.pop();
+            }
+        }
+
+        function gameLoop() {
+            if (!gameOver) {
+                moveSnake();
+                drawBoard();
+            }
+        }
+
+        function setDirection(dx, dy) {
+            // Prevent reverse
+            if (direction.x + dx === 0 && direction.y + dy === 0) return;
+            nextDirection = {x: dx, y: dy};
+        }
+
+        // Keyboard controls
+        document.addEventListener('keydown', e => {
+            switch (e.key) {
+                case 'ArrowUp': setDirection(0, -1); break;
+                case 'ArrowDown': setDirection(0, 1); break;
+                case 'ArrowLeft': setDirection(-1, 0); break;
+                case 'ArrowRight': setDirection(1, 0); break;
+            }
+        });
+
+        // Button controls
+        document.getElementById('up').onclick = () => setDirection(0, -1);
+        document.getElementById('down').onclick = () => setDirection(0, 1);
+        document.getElementById('left').onclick = () => setDirection(-1, 0);
+        document.getElementById('right').onclick = () => setDirection(1, 0);
+
+        // Reset game button
+        document.getElementById('reset-game').onclick = () => {
+            resetGame();
+        };
+
+        // Start game and music on load
+        window.onload = () => {
+            resetGame();
+            drawBoard();
+            // Play music (with user interaction fallback)
+            const music = document.getElementById('bg-music');
+            music.volume = 1.0;
+            music.play().catch(() => {
+                // If autoplay fails, play on first user interaction
+                const playMusic = () => {
+                    music.play();
+                    document.removeEventListener('keydown', playMusic);
+                    document.removeEventListener('mousedown', playMusic);
+                    document.removeEventListener('touchstart', playMusic);
+                };
+                document.addEventListener('keydown', playMusic);
+                document.addEventListener('mousedown', playMusic);
+                document.addEventListener('touchstart', playMusic);
+            });
+        };
+    </script>
+</body>
+</html>
