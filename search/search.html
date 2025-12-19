@@ -4137,6 +4137,25 @@
         document.getElementById('menuSection').style.display = 'block';
     }
 
+    // On page load, handle hash for tab selection (fix: run before any default tab logic)
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash.startsWith('#/')) {
+            // Parse hash and trigger correct tab
+            const hash = window.location.hash;
+            const match = hash.match(/^#\/(\w+)(\?q=(.*))?/);
+            if (match) {
+                const tab = match[1];
+                const query = match[3] ? decodeURIComponent(match[3]) : '';
+                if (query) searchInput.value = query;
+                // Only trigger the tab's click if it exists
+                const tabBtn = document.getElementById(tab + 'Result');
+                if (tabBtn) {
+                    tabBtn.click();
+                }
+            }
+        }
+    });
+
         document.getElementById('appsIcon').addEventListener('click', function () {
             // Remove existing modal if any
             document.getElementById('appsModal')?.remove();
@@ -5118,6 +5137,76 @@
                     const q = document.getElementById('mapSearchInput').value.trim();
                     searchLocation(q);
                 };
+            }
+        });
+        function setCustomHash(tab, query) {
+            let hash = `#/` + tab;
+            if (query) hash += `?q=${encodeURIComponent(query)}`;
+            window.location.hash = hash;
+        }
+
+        document.getElementById('allResult').addEventListener('click', () => {
+            setCustomHash('all', searchInput.value.trim());
+            performSearch();
+        });
+        document.getElementById('popularResult').addEventListener('click', () => {
+            setCustomHash('popular', searchInput.value.trim());
+        });
+        document.getElementById('recommendedResult').addEventListener('click', () => {
+            setCustomHash('recommended', searchInput.value.trim());
+        });
+        document.getElementById('imagesResult').addEventListener('click', () => {
+            setCustomHash('images', searchInput.value.trim());
+        });
+        document.getElementById('videosResult').addEventListener('click', () => {
+            setCustomHash('videos', searchInput.value.trim());
+        });
+        document.getElementById('mapsResult').addEventListener('click', () => {
+            setCustomHash('maps', searchInput.value.trim());
+        });
+        document.getElementById('blogsResult').addEventListener('click', () => {
+            setCustomHash('blogs', searchInput.value.trim());
+        });
+
+        // On hashchange, auto-select tab and fill query
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash;
+            const match = hash.match(/^#\/(\w+)(\?q=(.*))?/);
+            if (!match) return;
+            const tab = match[1];
+            const query = match[3] ? decodeURIComponent(match[3]) : '';
+            if (query) searchInput.value = query;
+            switch (tab) {
+                case 'all': document.getElementById('allResult').click(); break;
+                case 'popular': document.getElementById('popularResult').click(); break;
+                case 'recommended': document.getElementById('recommendedResult').click(); break;
+                case 'images': document.getElementById('imagesResult').click(); break;
+                case 'videos': document.getElementById('videosResult').click(); break;
+                case 'maps': document.getElementById('mapsResult').click(); break;
+                case 'blogs': document.getElementById('blogsResult').click(); break;
+            }
+        });
+
+        // On page load, handle hash
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.location.hash.startsWith('#/')) {
+                // Parse hash and trigger correct tab
+                const hash = window.location.hash;
+                const match = hash.match(/^#\/(\w+)(\?q=(.*))?/);
+                if (match) {
+                    const tab = match[1];
+                    const query = match[3] ? decodeURIComponent(match[3]) : '';
+                    if (query) searchInput.value = query;
+                    switch (tab) {
+                        case 'all': document.getElementById('allResult').click(); break;
+                        case 'popular': document.getElementById('popularResult').click(); break;
+                        case 'recommended': document.getElementById('recommendedResult').click(); break;
+                        case 'images': document.getElementById('imagesResult').click(); break;
+                        case 'videos': document.getElementById('videosResult').click(); break;
+                        case 'maps': document.getElementById('mapsResult').click(); break;
+                        case 'blogs': document.getElementById('blogsResult').click(); break;
+                    }
+                }
             }
         });
         document.getElementById('videosResult').addEventListener('click', async () => {
