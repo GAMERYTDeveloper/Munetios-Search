@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="image.png" type="image/png">
     <link rel="apple-touch-icon" href="image.png">
+    <meta name="referrer" content="no-referrer">
     <link rel="icon" sizes="32x32" href="image.png" type="image/png">
     <link rel="icon" sizes="192x192" href="image.png" type="image/png">
     <link rel="icon" sizes="16x16" href="image.png" type="image/png">
@@ -550,7 +551,12 @@
         <div class="content-menu">
             <h2>Settings</h2>
             <div class="settings-options">
-               
+               <!-- Settings: Use Cookies -->
+                <div style="margin-bottom:18px;">
+                    <input type="checkbox" id="useCookies" style="transform:scale(1.2);margin-right:8px;">
+                    <label for="useCookies" style="font-weight:600;">Use Cookies</label>
+                    
+                </div>
                 <!-- Settings: Language -->
                 <div style="margin-bottom:18px;">
                     <label for="searchLanguage" style="font-weight:600;">Language:</label>
@@ -1177,7 +1183,12 @@
                     <input type="file" id="bgImage" accept="image/*" style="margin-left:8px;">
                     <button id="removeBgImage" class="btn liquid-glass" style="margin-left:8px;padding:4px 12px;font-size:0.95em;">Remove</button>
                 </div>
-
+  <!-- Settings: School Mode -->
+                <div style="margin-bottom:18px; display: block;">
+                    <label for="schoolMode" style="font-weight:600;">School Mode:</label>
+                    <input type="checkbox" id="schoolMode" style="margin-left:8px;">
+                </div>
+                <p>School Mode is designed to block inappropriate content for educational environments.</p>
                 <!-- Settings: Text color -->
                 <div style="margin-bottom:18px;">
                     <label for="textColor" style="font-weight:600;">Text color:</label>
@@ -1237,6 +1248,7 @@
                     <input type="range" id="liquidGlassBrightness" min="80" max="900" step="1" value="125" style="margin-left:8px;width:120px;">
                     <span id="liquidGlassBrightnessVal">125%</span>
                 </div>
+              
                 <!-- Settings: Reset all settings -->
                 <div style="margin-bottom:18px;">
                     <button id="resetAllSettings" class="btn liquid-glass" style="background:#e34133;color:#fff;padding:8px 22px;font-size:1em;">Reset all settings</button>
@@ -1375,7 +1387,7 @@
                 });
                 </script>
                 <script>
-
+                    
                     
                 // --- Custom Dropdown Component ---
                 function createDropdown({ id, options, value, onChange, disabledOptions = [] }) {
@@ -1745,7 +1757,278 @@
                         setTextColor(textColor.value);
                     });
                     obs.observe(document.getElementById('results'), { childList: true, subtree: true });
+                    // --- Use Cookies logic for Search History ---
+                    const useCookies = document.getElementById('useCookies');
+                    // Search history wrapper
+                    let searchHistoryWrapper = document.createElement('div');
+                    searchHistoryWrapper.id = 'searchHistoryWrapper';
+                    searchHistoryWrapper.style.marginBottom = '18px';
+                    searchHistoryWrapper.style.display = 'none';
+                    searchHistoryWrapper.innerHTML = `
+                        <label style="font-weight:600;display:block;margin-bottom:6px;">Search History:</label>
+                        <div id="searchHistoryList" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+                        <button id="clearSearchHistory" class="btn liquid-glass" style="margin-top:8px;padding:4px 12px;font-size:0.95em;">Clear History</button>
+                        <div style="font-size:0.92em;color:#aaa;margin-top:4px;">Search history is stored in cookies (or localStorage if cookies are unavailable) and is never used for tracking or analytics.</div>
+                    `;
+                    // Insert after Use Cookies checkbox
+                    useCookies.parentNode.parentNode.insertBefore(searchHistoryWrapper, useCookies.parentNode.nextSibling);
 
+                    // Helper: Cookie functions
+                    function setCookie(name, value, days) {
+                        try {
+                            let expires = "";
+                            if (days) {
+                                const date = new Date();
+                                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                                expires = "; expires=" + date.toUTCString();
+                            }
+                            document.cookie = name + "=" + encodeURIComponent(value) + expires + "; path=/";
+                        } catch (e) {}
+                    }
+                    function getCookie(name) {
+                        try {
+                            const nameEQ = name + "=";
+                            const ca = document.cookie.split(';');
+                            for (let i = 0; i < ca.length; i++) {
+                                let c = ca[i];
+                                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                                if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+                            }
+                        } catch (e) {}
+                        return null;
+                    }
+                    function delCookie(name) {
+                        setCookie(name, "", -1);
+                    }
+
+                    // Helper: Search history storage (cookie or localStorage fallback)
+                    function getSearchHistory() {
+                        let history = [];
+                        try {
+                            const cookieVal = getCookie('munetios_search_history');
+                            if (cookieVal) {
+                                history = JSON.parse(cookieVal);
+                            } else if (localStorage.getItem('munetios_search_history')) {
+                                history = JSON.parse(localStorage.getItem('munetios_search_history'));
+                            }
+                        } catch (e) {}
+                        return Array.isArray(history) ? history : [];
+                    }
+                    function setSearchHistory(arr) {
+                        try {
+                            setCookie('munetios_search_history', JSON.stringify(arr), 365);
+                        } catch (e) {
+                            try {
+                                localStorage.setItem('munetios_search_history', JSON.stringify(arr));
+                            } catch (e2) {}
+                        }
+                    }
+                    function clearSearchHistory() {
+                        delCookie('munetios_search_history');
+                        try { localStorage.removeItem('munetios_search_history'); } catch (e) {}
+                    }
+
+                    // Render search history
+                    function renderSearchHistory() {
+                        const list = document.getElementById('searchHistoryList');
+                        if (!list) return;
+                        const history = getSearchHistory();
+                        list.innerHTML = '';
+                        if (!history.length) {
+                            list.innerHTML = '<span style="color:#aaa;">No search history.</span>';
+                            return;
+                        }
+                        history.slice(-20).reverse().forEach(q => {
+                            const btn = document.createElement('button');
+                            btn.className = 'btn liquid-glass';
+                            btn.style.padding = '4px 12px';
+                            btn.style.fontSize = '0.97em';
+                            btn.textContent = q;
+                            btn.onclick = () => {
+                                // Fill search input and trigger search
+                                const searchInput = document.getElementById('searchInput');
+                                searchInput.value = q;
+                                if (typeof performSearch === 'function') performSearch();
+                            };
+                            list.appendChild(btn);
+                        });
+                    }
+
+                    // Show/hide search history wrapper based on Use Cookies
+                    function updateSearchHistoryVisibility() {
+                        if (useCookies.checked) {
+                            searchHistoryWrapper.style.display = '';
+                            renderSearchHistory();
+                        } else {
+                            searchHistoryWrapper.style.display = 'none';
+                        }
+                    }
+
+                    // On Use Cookies toggle
+                    useCookies.addEventListener('change', function () {
+                        localStorage.setItem('useCookies', this.checked);
+                        updateSearchHistoryVisibility();
+                        if (!this.checked) {
+                            clearSearchHistory();
+                        }
+                    });
+
+                    // On clear history button
+                    searchHistoryWrapper.querySelector('#clearSearchHistory').onclick = function () {
+                        clearSearchHistory();
+                        renderSearchHistory();
+                    };
+
+                    // On page load, set Use Cookies from localStorage (default off)
+                    (function () {
+                        let val = localStorage.getItem('useCookies');
+                        useCookies.checked = val === 'true';
+                        updateSearchHistoryVisibility();
+                    })();
+
+                    // Patch performSearch to save history if Use Cookies is on
+                    const origPerformSearchWithCookies = window.performSearch;
+                    window.performSearch = async function () {
+                        const searchInput = document.getElementById('searchInput');
+                        const q = searchInput.value.trim();
+                        if (useCookies.checked && q) {
+                            let history = getSearchHistory();
+                            // Avoid duplicates, keep most recent
+                            history = history.filter(item => item !== q);
+                            history.push(q);
+                            // Limit to 50 entries
+                            if (history.length > 50) history = history.slice(history.length - 50);
+                            setSearchHistory(history);
+                            renderSearchHistory();
+                        }
+                        await origPerformSearchWithCookies.apply(this, arguments);
+                    };
+                    // --- School Mode logic ---
+                    const schoolMode = document.getElementById('schoolMode');
+                    function applySchoolMode(on) {
+                        // Disable Labs (sidebar and icon)
+                        document.getElementById('labsSidebar').style.pointerEvents = on ? 'none' : '';
+                        document.getElementById('labsSidebar').style.opacity = on ? '0.5' : '';
+                        document.getElementById('labsIcon').style.pointerEvents = on ? 'none' : '';
+                        // Hide Labs icon in topbar
+                        const labsIcon = document.getElementById('labsIcon');
+                        if (labsIcon) labsIcon.style.display = on ? 'none' : '';
+                        document.getElementById('labsIcon').style.opacity = on ? '0.5' : '';
+                        // Hide Labs modal if open
+                        const labsModal = document.getElementById('labsModal');
+                        if (labsModal && on) {
+                            labsModal.style.display = 'none';
+                            document.body.style.overflow = '';
+                            labsSidebar.style.display = 'none';
+                        }
+                        // Hide certain results in School Mode
+                        function hideSchoolModeResults() {
+                            // List of keywords/domains to hide in school mode
+                            const blockedKeywords = [
+                                "facebook", "instagram", "twitter", "x.com", "tiktok", "snapchat", "reddit", "discord",
+                                "chatgpt", "openai", "gemini.google.com", "bard.google.com", "sora", "sora by openai",
+                                "onlyfans", "porn", "adult", "18+", "bypass", "killer", "kill", "nsfw", "roblox.com", "fortnite", "epicgames.com", "steam", "twitch",
+                                "kick.com", "omegle", "badoo", "tinder", "grindr", "hinge", "bumble", "match.com", "okcupid",
+                                "sora.openai.com", "sora by openai", "sora video", "sora ai", "sora ai video", "sora ai generator"
+                            ];
+                            document.querySelectorAll('.result').forEach(result => {
+                                const title = result.querySelector('.result-title')?.textContent?.toLowerCase() || "";
+                                const desc = result.querySelector('.result-description')?.textContent?.toLowerCase() || "";
+                                const link = result.querySelector('.result-link')?.getAttribute('href')?.toLowerCase() || "";
+                                // Hide if any blocked keyword/domain is found
+                                if (blockedKeywords.some(kw =>
+                                    title.includes(kw) ||
+                                    desc.includes(kw) ||
+                                    link.includes(kw)
+                                )) {
+                                    result.style.display = "none";
+                                }
+                            });
+                        }
+                        if (on) {
+                            // Hide results immediately and after each search
+                            hideSchoolModeResults();
+                            // Patch renderResults to always hide blocked results
+                            if (!window._schoolModePatched) {
+                                const origRenderResults = window.renderResults;
+                                window.renderResults = function(results) {
+                                    origRenderResults(results);
+                                    hideSchoolModeResults();
+                                };
+                                window._schoolModePatched = true;
+                            }
+                        }
+                        // Disable AI Overview share button
+                        const aiOverviewBox = document.getElementById('aiOverviewBox');
+                        if (aiOverviewBox) {
+                            const shareBtn = aiOverviewBox.querySelector('#aiOverviewShareBtn');
+                            if (shareBtn) {
+                                shareBtn.disabled = on;
+                                shareBtn.style.pointerEvents = on ? 'none' : '';
+                                shareBtn.style.opacity = on ? '0.5' : '';
+                            }
+                        }
+                        // Disable School Mode toggle itself
+                        if (schoolMode) {
+                            schoolMode.disabled = on;
+                        }
+// Enable or disable "Use Cookies" and Commands sidebar based on School Mode
+                    const useCookies = document.getElementById('useCookies');
+                    const commandsSidebar = document.getElementById('commandsSidebar');
+                    if (on) {
+                        // School Mode ON: disable
+                        if (useCookies) {
+                            useCookies.checked = false;
+                            useCookies.disabled = true;
+                        }
+                        if (commandsSidebar) {
+                            commandsSidebar.style.pointerEvents = 'none';
+                            commandsSidebar.style.opacity = '0.5';
+                            commandsSidebar.style.display = 'none';
+                        }
+                    } else {
+                        // School Mode OFF: enable
+                        if (useCookies) {
+                            useCookies.disabled = false;
+                        }
+                        if (commandsSidebar) {
+                            commandsSidebar.style.pointerEvents = '';
+                            commandsSidebar.style.opacity = '';
+                            commandsSidebar.style.display = '';
+                        }
+                    }
+                        // Hide Image Research icon and floating button
+                        const imageResearchIcon = document.getElementById('imageResearchIcon');
+                        if (imageResearchIcon) imageResearchIcon.style.display = on ? 'none' : '';
+                        const floatingBtn = document.getElementById('floatingImageResearchBtn');
+                        if (floatingBtn) floatingBtn.style.display = on ? 'none' : '';
+                        // Remove image research buttons in images tab
+                        document.querySelectorAll('.image-research-btn').forEach(btn => {
+                            if (on) btn.style.display = 'none';
+                            else btn.style.display = '';
+                        });
+                        // Hide AI Overview if in school mode
+                        if (on && aiOverviewBox) {
+                            aiOverviewBox.style.display = 'none';
+                        }
+                    }
+                    // Save/load school mode from localStorage
+                    idbGet('schoolMode').then(val => {
+                        const enabled = val === true || val === 'true';
+                        schoolMode.checked = enabled;
+                        applySchoolMode(enabled);
+                    });
+                    schoolMode.addEventListener('change', function() {
+                        idbSet('schoolMode', this.checked);
+                        applySchoolMode(this.checked);
+                    });
+                    // On page load, re-apply school mode after DOM changes
+                    document.addEventListener('DOMContentLoaded', function() {
+                        idbGet('schoolMode').then(val => {
+                            applySchoolMode(val === true || val === 'true');
+                        });
+                    });
+                    
                     // --- Initial load ---
                     loadSettings();
 
@@ -3947,6 +4230,12 @@
                 <div>Open the menu (☰), go to Settings, and choose your background or picture theme.</div>
             </div>
             <div style="margin-bottom:18px;">
+                <strong>What is "Use Cookies"?</strong>
+                <div>
+                    The "Use Cookies" setting allows Munetios Search to store your recent search history in your browser using cookies (or localStorage if cookies are unavailable). This history is only used to help you quickly revisit previous searches and is never sent to any server or used for tracking or analytics. You can clear your search history at any time in Settings.
+                </div>
+            </div>
+            <div style="margin-bottom:18px;">
                 <strong>How do I hide favicons or use compact mode?</strong>
                 <div>In Settings, toggle "Hide favicon" or "Compact mode".</div>
             </div>
@@ -3972,6 +4261,10 @@
                 <li><b>Q:</b> Can I use voice search?<br><b>A:</b> Yes, click the microphone icon in the search bar.</li>
                 <li><b>Q:</b> How do I reset all settings?<br><b>A:</b> Clear your browser's localStorage for this site.</li>
                 </ul>
+            </div>
+            <div style="margin-top:18px;font-size:0.97em;color:#aaa;">
+                <a href="https://www.munetios.com/policies/#/terms" target="_self" rel="noopener" style="color:#a259f7;text-decoration:underline;margin-right:18px;">Terms of Service</a>
+                <a href="https://www.munetios.com/policies/#/privacy" target="_self" rel="noopener" style="color:#a259f7;text-decoration:underline;">Privacy Policy</a>
             </div>
             </div>
         </div>
