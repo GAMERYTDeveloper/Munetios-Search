@@ -7,12 +7,25 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="image.png" type="image/png">
     <link rel="apple-touch-icon" href="image.png">
-    <meta name="referrer" content="no-referrer">
+   <meta name="referrer" content="strict-origin-when-cross-origin">
+
     <link rel="icon" sizes="32x32" href="image.png" type="image/png">
     <link rel="icon" sizes="192x192" href="image.png" type="image/png">
     <link rel="icon" sizes="16x16" href="image.png" type="image/png">
     <link rel="manifest" href="site.webmanifest">
-    <meta http-equiv="Content-Security-Policy" content="img-src https: data: file:; media-src https: data: file:; object-src 'none'; frame-src https: data:;">
+    <meta http-equiv="Content-Security-Policy"
+content="
+  default-src 'self';
+  img-src 'self' https: data:;
+  style-src 'self' https: 'unsafe-inline';
+  script-src 'self' https: 'unsafe-inline';
+  connect-src 'self' https:;
+  font-src 'self' https: data:;
+  frame-src https:;
+  worker-src 'self' blob:;
+  object-src 'none';
+">
+
     <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
