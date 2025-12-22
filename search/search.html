@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+       <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Munetios Search (New)</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
@@ -18,7 +18,7 @@ content="
   default-src 'self';
   img-src 'self' https: data:;
   style-src 'self' https: 'unsafe-inline';
-  script-src 'self' https: 'unsafe-inline';
+  script-src 'self' https:  'nonce-rjighegujregergrejge';
   connect-src 'self' https:;
   font-src 'self' https: data:;
   frame-src https:;
@@ -586,7 +586,7 @@ content="
                         <option value="ar">العربية</option>
                     </select>
                 </div>
-                <script>
+                <script nonce="rjighegujregergrejge">
                 document.addEventListener('DOMContentLoaded', function() {
                     // Language
                     const searchLanguage = document.getElementById('searchLanguage');
@@ -1276,7 +1276,7 @@ content="
                         </div>
                     </div>
                 </div>
-                <script>
+                <script  nonce="rjighegujregergrejge">
                 document.addEventListener('DOMContentLoaded', function() {
                     const resetBtn = document.getElementById('resetAllSettings');
                     const modal = document.getElementById('resetSettingsModal');
@@ -1312,7 +1312,7 @@ content="
                 });
                 </script>
             
-                <script>
+                <script  nonce="rjighegujregergrejge">
                     
                 document.addEventListener('DOMContentLoaded', function() {
                     // Elements
@@ -1399,7 +1399,7 @@ content="
                     loadLGSettings();
                 });
                 </script>
-                <script>
+                <script  nonce="rjighegujregergrejge">
                     
                     
                 // --- Custom Dropdown Component ---
@@ -2199,7 +2199,7 @@ content="
 </div>
 
 </div>
-    <script>
+    <script nonce="rjighegujregergrejge">
         (function () {
             // --- AI Overview Toggle ---
             function isAIOverviewEnabled() {
@@ -5843,7 +5843,7 @@ content="
 
       
     </script>
-    <script>
+    <script nonce="rjighegujregergrejge">
         /* Results and crawler rendering */
         window.results = [
             {
@@ -7962,6 +7962,13 @@ content="
                 "link": "https://proton.me/mail"
             },
             {
+                "title": "Proton Calendar",
+                "description": "A secure, privacy-focused online calendar service from Proton.",
+                "url": "https://calendar.proton.me",
+                "favicon": "",
+                "link": "https://calendar.proton.me"
+            },
+            {
                 "title": "Proton Drive",
                 "description": "Encrypted cloud storage from Proton.",
                 "url": "https://proton.me/drive",
@@ -7974,6 +7981,34 @@ content="
                 "url": "https://protonvpn.com",
                 "favicon": "",
                 "link": "https://protonvpn.com"
+            },
+            {
+                "title": "Proton Docs",
+                "description": "Proton Docs is a secure, privacy-focused online document editor from Proton, offering encrypted collaboration and editing.",
+                "url": "https://proton.me/drive/docs",
+                "favicon": "",
+                "link": "https://proton.me/drive/docs"
+            },
+            {
+                "title": "Proton Sheets",
+                "description": "Proton Sheets is an encrypted spreadsheet editor by Proton, designed for privacy and secure collaboration.",
+                "url": "https://proton.me/drive/sheets",
+                "favicon": "",
+                "link": "https://proton.me/drive/sheets"
+                    },
+            {
+                "title": "Lumo AI",
+                "description": "Lumo AI is Proton's privacy-first AI assistant, integrated into Proton services for secure productivity and writing help.",
+                "url": "https://lumo.proton.me",
+                "favicon": "",
+                "link": "https://lumo.proton.me"
+            },
+            {
+                "title": "Proton Meet",
+                "description": "Proton Meet is a secure, end-to-end encrypted video meeting platform from Proton, focused on privacy and ease of use.",
+                "url": "https://proton.me/meet",
+                "favicon": "",
+                "link": "https://proton.me/meet"
             },
             {
                 "title": "Tutanota",
@@ -12068,10 +12103,80 @@ content="
     url: "https://www.youtube.com/channel/UCXV40VDYr1noJ0PkqjkPhwA",
     favicon: "",
     link: "https://www.youtube.com/channel/UCXV40VDYr1noJ0PkqjkPhwA"
+},
+{
+    "title": "GoDaddy",
+    "description": "Domain registration, web hosting, and website builder services.",
+    "url": "https://www.godaddy.com",
+    "favicon": "",
+    "link": "https://www.godaddy.com"
+},
+{
+    "title": "Namecheap",
+    "description": "Affordable domain registration, web hosting, and SSL certificates.",
+    "url": "https://www.namecheap.com",
+    "favicon": "",
+    "link": "https://www.namecheap.com"
+},
+{
+    "title": "Bluehost",
+    "description": "Web hosting, domain names, and WordPress hosting solutions.",
+    "url": "https://www.bluehost.com",
+    "favicon": "",
+    "link": "https://www.bluehost.com"
+},
+{
+    "title": "HostGator",
+    "description": "Web hosting, VPS, dedicated servers, and domain registration.",
+    "url": "https://www.hostgator.com",
+    "favicon": "",
+    "link": "https://www.hostgator.com"
+},
+{
+    "title": "DreamHost",
+    "description": "Web hosting, domain names, and cloud services.",
+    "url": "https://www.dreamhost.com",
+    "favicon": "",
+    "link": "https://www.dreamhost.com"
+},
+{
+    "title": "Google Domains",
+    "description": "Register and manage domain names with Google Domains.",
+    "url": "https://domains.google",
+    "favicon": "",
+    "link": "https://domains.google"
+},
+{
+    "title": "Cloudflare Registrar",
+    "description": "Domain registration with security and privacy from Cloudflare.",
+    "url": "https://www.cloudflare.com/products/registrar/",
+    "favicon": "",
+    "link": "https://www.cloudflare.com/products/registrar/"
+},
+{
+    "title": "IONOS by 1&1",
+    "description": "Domains, web hosting, and cloud solutions for businesses.",
+    "url": "https://www.ionos.com",
+    "favicon": "",
+    "link": "https://www.ionos.com"
+},
+{
+    "title": "Gandi.net",
+    "description": "Domain name registration, SSL, and web hosting services.",
+    "url": "https://www.gandi.net",
+    "favicon": "",
+    "link": "https://www.gandi.net"
+},
+{
+    "title": "Hover",
+    "description": "Simple domain registration and email services.",
+    "url": "https://www.hover.com",
+    "favicon": "",
+    "link": "https://www.hover.com"
 }
         ]
     </script>
-    <script>
+    <script  nonce="rjighegujregergrejge">
         /*
         Rate limit and custom quiz CAPTCHA for search requests (per browser/profile)
         - Prevent bots from solving: randomize question order, option order, and add a simple time delay before allowing submit.
