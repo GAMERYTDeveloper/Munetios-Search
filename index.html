@@ -15,19 +15,21 @@
     <link rel="icon" sizes="32x32" href="favicon-32x32.png" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <meta http-equiv="X-Frame-Options" content="DENY">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://api.munetios.com 'nonce-IKDjefjewhCujHJeuji3jhekowdijzizkcej'; style-src 'self' https://fonts.googleapis.com https://api.munetios.com 'unsafe-inline'; img-src *; font-src 'self' https://fonts.gstatic.com; frame-src https://www.munetios.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://api.munetios.com 'nonce-IKDjefjewhCujHJeuji3jhekowdijzizkcej'; style-src 'self' https://fonts.googleapis.com https://api.munetios.com 'unsafe-inline'; img-src *; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://www.munetios.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
 <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'none';">
 <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Munetios Search">
         <meta name="google-site-verification" content="eNlW8gDjbwlEBSfYIkyc8N60d64cbCYkYydrbDoeYi8" />
     <meta name="msvalidate.01" content="BF44E33561FDFF8178BDA1E527F81862" />
-        <script nonce="IKDjefjewhCujHJeuji3jhekowdijzizkcej">
+     <script>
     document.addEventListener("DOMContentLoaded", function() {
       if (window.top !== window.self) {
         // Hide everything (html + body)
-        document.documentElement.style.display = "none"; 
+        document.documentElement.style.display = "none";  
+        console.warn('Refused to display https://www.munetios.com because it is blocked from iframe embeding')
       }
     });
   </script>
+
       <script nonce="IKDjefjewhCujHJeuji3jhekowdijzizkcej">
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -377,6 +379,20 @@ if ('serviceWorker' in navigator) {
                 border-color: #999;
             }
         }
+        .floating-left-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            border-radius: 50px;
+            padding: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: background 0.3s, box-shadow 0.3s;
+            z-index: 1000;
+        }
     </style>
 </head>
 <body>
@@ -394,9 +410,8 @@ if ('serviceWorker' in navigator) {
          <a class="liquid-glass hide-450" href="https://blog.munetios.com" style="padding: 10px 15px;">Blog</a>
     </div>
     <div class="top-right liquid-glass">
-        <a href="https://discord.gg/GXRK3pDfR3">Discord Server</a>
         <a class="hide-450" href="/search/classic.html">Classic Search</a>
-        <a href="/games/">Games</a>
+        <a href="/games/games.html">Games</a>
         <div class="apps-icon" id="apps-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
             <div class="apps-dropdown">
@@ -432,6 +447,9 @@ if ('serviceWorker' in navigator) {
                
              </div> <div class="label">Add</div>
         </div>
+    </div>
+    <div class="floating-left-button liquid-glass" id="discordServerButton">
+                <a href="https://discord.gg/GXRK3pDfR3">Discord Server</a>
     </div>
     <div class="floating-button liquid-glass" id="customizeBtn">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
@@ -644,10 +662,11 @@ if ('serviceWorker' in navigator) {
                     'Available in:<ul style="margin:8px 0 0 18px;text-align:left;font-size:0.98em;">' +
                     '<li>Google Chrome (desktop &amp; Android)</li>' +
                     '<li>Microsoft Edge (desktop &amp; Android)</li>' +
+                    '<li> Safari (iOS &amp; macOS)</li>' +
                     '<li>Opera (some versions)</li>' +
                     '<li>Samsung Internet (Android)</li>' +
                     '</ul>' +
-                    'Not supported in Firefox, Safari, or most iOS browsers.</span>',
+                    'Not supported in Firefox</span>',
                     false
                 );
                 playBeep('error');
@@ -668,11 +687,11 @@ if ('serviceWorker' in navigator) {
         let customizeModal = null;
 
         const safeFonts = [
-            "Arial", "Calibri", "Times New Roman", "Georgia", "Lexend", "Poppins",
-            "Tahoma", "Verdana", "Comic Sans MS", "Impact", "Open Sans", "Comic Neue", "Google Sans", "Google Sans Flex"
+           "Google Sans Flex", "Arial", "Calibri", "Times New Roman", "Georgia", "Lexend", "Poppins",
+            "Tahoma", "Verdana", "Comic Sans MS", "Impact", "Open Sans", "Comic Neue", "Google Sans",  "Roboto", "Lato", "Montserrat", "Oswald", "Raleway", "Merriweather", "Nunito", "Ubuntu", "Playfair Display", "Source Sans Pro", "Fira Sans", "Work Sans", "DM Sans", "Hind Siliguri"
         ];
         const googleFonts = [
-            "Lexend", "Poppins", "Open Sans", "Comic Neue", "Google Sans", "Google Sans Flex"
+            "Lexend", "Poppins", "Open Sans", "Comic Neue", "Google Sans", "Google Sans Flex", "Roboto", "Lato", "Montserrat", "Oswald", "Raleway", "Merriweather", "Nunito", "Ubuntu", "Playfair Display", "Source Sans Pro", "Fira Sans", "Work Sans", "DM Sans", "Hind Siliguri"
         ];
 
         function getStoredSettings() {
@@ -1239,7 +1258,50 @@ if ('serviceWorker' in navigator) {
                 }
             });
         });
-        
+        (function() {
+            // Check if today is between Dec 22 and Dec 26 (inclusive)
+            const now = new Date();
+            const isChristmas = (
+                (now.getMonth() === 11) && // December (0-based)
+                (now.getDate() >= 22 && now.getDate() <= 26)
+            );
+            if (isChristmas) {
+                // Change logo to christmas.png
+                const logoImg = document.querySelector('.munetios-logo img');
+                if (logoImg) logoImg.src = 'christmas.png';
+
+                // Make logo clickable
+                const logoDiv = document.querySelector('.munetios-logo');
+                if (logoDiv) {
+                    logoDiv.style.cursor = 'pointer';
+                    logoDiv.onclick = function() {
+                        if (document.getElementById('christmasModal')) return;
+                        const modal = document.createElement('div');
+                        modal.id = 'christmasModal';
+                        modal.style.position = 'fixed';
+                        modal.style.top = '0';
+                        modal.style.left = '0';
+                        modal.style.width = '100vw';
+                        modal.style.height = '100vh';
+                        modal.style.background = 'rgba(0,0,0,0.4)';
+                        modal.style.display = 'flex';
+                        modal.style.alignItems = 'center';
+                        modal.style.justifyContent = 'center';
+                        modal.style.zIndex = '100002';
+                        modal.innerHTML = `
+                            <div style="background:#fff; border-radius:18px; box-shadow:0 8px 32px rgba(0,0,0,0.18); max-width:800px; max-height:900px; width:95vw; height:95vh; display:flex; flex-direction:column; position:relative; overflow:hidden;">
+                                <button id="closeChristmasModal" style="position:absolute;top:8px;right:12px;background:none;border:none;font-size:1.5em;cursor:pointer;color:#888;z-index:2;">&times;</button>
+                                <iframe src="christmas.html" style="border:none; width:100%; height:100%; border-radius:18px;" allowfullscreen></iframe>
+                            </div>
+                        `;
+                        document.body.appendChild(modal);
+                        document.getElementById('closeChristmasModal').onclick = function() {
+                            modal.remove();
+                        };
+                    };
+                }
+            }
+        })();
     (function() {
         // Detect Europe by country code or browser language
         function isEurope() {
