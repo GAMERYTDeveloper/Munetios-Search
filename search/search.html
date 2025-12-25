@@ -13,15 +13,15 @@
     <link rel="icon" sizes="192x192" href="image.png" type="image/png">
     <link rel="icon" sizes="16x16" href="image.png" type="image/png">
     <link rel="manifest" href="site.webmanifest">
-    <meta http-equiv="Content-Security-Policy"
+<meta http-equiv="Content-Security-Policy"
 content="
   default-src 'self';
   img-src 'self' https: data:;
   style-src 'self' https: 'unsafe-inline';
-  script-src 'self' https:  'nonce-rjighegujregergrejge';
+  script-src 'self'  'nonce-rjighegujregergrejge' https://api.munetios.com https://cdnjs.cloudflare.com https://unpkg.com https://cdn.jsdelivr.net;
   connect-src 'self' https:;
   font-src 'self' https: data:;
-  frame-src https:;
+  frame-src https://www.munetios.com;
   worker-src 'self' blob:;
   object-src 'none';
 ">
@@ -291,7 +291,7 @@ content="
         }
         /* Zoom control container */
 .leaflet-control-zoom {
-  background: rgba(90, 40, 160, 0.25) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
   backdrop-filter: blur(2px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(2px) saturate(180%) !important;
   border-radius: 163px !important;
@@ -1898,20 +1898,45 @@ content="
                         useCookies.checked = val === 'true';
                         updateSearchHistoryVisibility();
                     })();
-
                     // Patch performSearch to save history if Use Cookies is on
                     const origPerformSearchWithCookies = window.performSearch;
                     window.performSearch = async function () {
                         const searchInput = document.getElementById('searchInput');
                         const q = searchInput.value.trim();
                         if (useCookies.checked && q) {
-                            let history = getSearchHistory();
+                            // Always use document.cookie for history
+                            function setCookie(name, value, days) {
+                                let expires = "";
+                                if (days) {
+                                    const date = new Date();
+                                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                                    expires = "; expires=" + date.toUTCString();
+                                }
+                                document.cookie = name + "=" + encodeURIComponent(value) + expires + "; path=/";
+                            }
+                            function getCookie(name) {
+                                const nameEQ = name + "=";
+                                const ca = document.cookie.split(';');
+                                for (let i = 0; i < ca.length; i++) {
+                                    let c = ca[i];
+                                    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                                    if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+                                }
+                                return null;
+                            }
+                            let history = [];
+                            try {
+                                const cookieVal = getCookie('munetios_search_history');
+                                if (cookieVal) {
+                                    history = JSON.parse(cookieVal);
+                                }
+                            } catch (e) {}
                             // Avoid duplicates, keep most recent
                             history = history.filter(item => item !== q);
                             history.push(q);
-                            // Limit to 50 entries
-                            if (history.length > 50) history = history.slice(history.length - 50);
-                            setSearchHistory(history);
+                            // Limit to 90 entries
+                            if (history.length > 90) history = history.slice(history.length - 90);
+                            setCookie('munetios_search_history', JSON.stringify(history), 365);
                             renderSearchHistory();
                         }
                         await origPerformSearchWithCookies.apply(this, arguments);
@@ -1942,7 +1967,7 @@ content="
                                 "chatgpt", "openai", "gemini.google.com", "bard.google.com", "sora", "sora by openai",
                                 "onlyfans", "porn", "adult", "18+", "bypass", "killer", "kill", "nsfw", "roblox.com", "fortnite", "epicgames.com", "steam", "twitch",
                                 "kick.com", "omegle", "badoo", "tinder", "grindr", "hinge", "bumble", "match.com", "okcupid",
-                                "sora.openai.com", "sora by openai", "sora video", "sora ai", "sora ai video", "sora ai generator"
+                                "sora.chatgpt.com", "sora by openai", "sora video", "sora ai", "sora ai video", "sora ai generator"
                             ];
                             document.querySelectorAll('.result').forEach(result => {
                                 const title = result.querySelector('.result-title')?.textContent?.toLowerCase() || "";
@@ -1970,6 +1995,13 @@ content="
                                 };
                                 window._schoolModePatched = true;
                             }
+                        }
+                        // Disable Reset All Settings button in School Mode
+                        const resetAllSettingsBtn = document.getElementById('resetAllSettings');
+                        if (resetAllSettingsBtn) {
+                            resetAllSettingsBtn.disabled = on;
+                            resetAllSettingsBtn.style.pointerEvents = on ? 'none' : '';
+                            resetAllSettingsBtn.style.opacity = on ? '0.5' : '';
                         }
                         // Disable AI Overview share button
                         const aiOverviewBox = document.getElementById('aiOverviewBox');
@@ -2076,11 +2108,222 @@ content="
                  {
                     display: none !important;
                 }
+                .menu-btn:hover {
+                    background: rgba(255, 255, 255, 0.2) !important;
+                }
                 </style>
             </div>
         </div>
     </div>
-    <div class="search-app">
+    <style class="voice-assistant-styles">
+        .voice-assistant {
+            width: 100vw;
+            height: 100vh;
+            display: none;
+        }
+        .voice-assistant .topbar {
+            flex-wrap: nowrap !important;
+        }
+        .bottom-chat-prompt-container {
+            position: fixed;
+            left: 260px;
+            box-sizing: border-box;
+            bottom: 20px;
+            width: calc(100% - 260px);
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+            align-items: center;
+            gap: 10px;
+            padding: 0 12px;
+            z-index: 10010;
+        }
+        @media (max-width: 600px) {
+            .bottom-chat-prompt-container {
+                left: 0;
+                right: 0;
+                width: 100vw;
+                max-width: 100vw;
+                padding: 0 4px;
+            }
+        }
+        .chat-prompt-input {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 12px;
+            border-radius: 30px;
+        }
+        .chat-prompt-input input {
+           width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 1em;
+            color: #e3e3e3;
+        }
+        #mobileSidebarToggle {
+            display: none;
+        }
+      .voice-assistant  .content-menu {
+            padding-left: 250px !important;
+            box-sizing: border-box;
+            display: block;
+      }
+        #voiceChatApp {
+            padding-left: 250px !important;
+            box-sizing: border-box;
+            display: block;
+        }
+        @media (max-width: 890px) {
+            #mobileSidebarToggle {
+                display: flex;
+            }
+          .voice-assistant  .sidebar {
+                position: fixed;
+                top: 0;
+                left: -2540px;
+                width: 250px;
+                height: 100%;
+                z-index: 1000;
+                transition: left 0.3s ease;
+            }
+          .voice-assistant  .sidebar.open {
+                left: 0;
+            }
+            .voice-assistant  .content-menu {
+                padding-left: 0 !important;
+            }
+            #voiceChatApp {
+                padding-left: 0 !important;
+                left: 0;
+                width: 100%;
+            }
+        }
+        .chat-messages {
+            padding: 20px;
+            padding-bottom: 100px;
+            box-sizing: border-box;
+            width: 100%;
+            margin: 0 auto;
+        }
+    </style>
+    <munetios-voice-assistant class="voice-assistant" id="voiceAssistant" database-voiceAssistant>
+        <h2>Voice Assistant is coming soon</h2>
+        <header class="topbar" id="voiceAssistantTopbar">
+            <div class="topbar-left">
+                <div class="menu-btn liquid-glass" id="mobileSidebarToggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </div>
+            <div class="top-left">
+                <div class="logo liquid-glass" style="padding: 4px;  gap:10px;">
+                    <a href="https://www.munetios.com">
+                        <img src="image.png" alt="Munetios Logo" style="height:30px;">
+                        <div class="logo-text">Munetios</div>
+                    </a>
+                </div>
+            </div>
+            </div>
+            <div class="top-right liquid-glass">
+                <div class="topbar-item" id="shareChatBtn" style="display: none;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share-2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                </div>
+                <div class="topbar-item" id="newChatBtn" title="New Chat" style="padding:8px;cursor:pointer;">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/></svg>
+                </div>
+                <div class="topbar-item" id="closeVoiceAssistantBtn" title="Close Voice Assistant" style="padding:8px;cursor:pointer;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </div>
+            </div>
+        </header>
+        <div class="sidebar liquid-glass">
+            <div class="sidebar-items">
+                <div class="sidebar-item" id="searchChatsBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <span class="menu-text">Search Chats</span>
+                </div>
+                <div class="sidebar-item" id="commandsVoiceChatBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-terminal">
+                        <polyline points="4 17 10 11 4 5"></polyline>
+                        <line x1="12" y1="19" x2="20" y2="19"></line>
+                    </svg>
+                    <span class="menu-text">Commands</span>
+                </div>
+            </div>
+            <chat-history-sidebar id="voiceAssistantChatHistorySidebar" class="chat-history-sidebar">
+                <h3>History:</h3>
+                <div id="voiceAssistantChatHistoryList"></div>
+            </chat-history-sidebar>
+        </div>
+        <voice-chat-app id="voiceChatApp" class="voice-chat-app content-menu">
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="bottom-chat-prompt-container">
+                <div class="menu-btn liquid-glass" id="plusIcon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </div>
+                <div class="chat-prompt-input liquid-glass">
+                    <input type="text" id="voiceChatInput" placeholder="Ask Anything" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                    <svg id="voiceBtn" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mic" style="cursor: pointer;">
+                        <rect x="9" y="2" width="6" height="12" rx="3"></rect>
+                        <path d="M5 10v2a7 7 0 0 0 14 0v-2"></path>
+                        <line x1="12" y1="22" x2="12" y2="16"></line>
+                        <line x1="8" y1="22" x2="16" y2="22"></line>
+                    </svg>
+                </div>
+            </div>
+        </voice-chat-app>
+    </munetios-voice-assistant>
+    <script nonce="rjighegujregergrejge">
+        document.addEventListener('DOMContentLoaded', function () {
+            var voiceAssistantBtn = document.getElementById('voiceAssistantBtn');
+            var searchApp = document.querySelector('.search-app');
+            var voiceAssistant = document.getElementById('voiceAssistant');
+            var closeVoiceAssistantBtn = document.getElementById('closeVoiceAssistantBtn');
+            // Handle close button in voice assistant
+            if (closeVoiceAssistantBtn && searchApp && voiceAssistant) {
+                closeVoiceAssistantBtn.addEventListener('click', function () {
+                    voiceAssistant.style.display = 'none';
+                    searchApp.style.display = '';
+                    window.location.hash = '';
+                });
+            }
+            if (voiceAssistantBtn && searchApp && voiceAssistant) {
+                voiceAssistantBtn.addEventListener('click', function () {
+                    searchApp.style.display = 'none';
+                    voiceAssistant.style.display = 'block';
+                    window.location.hash = '#/voice-assistant';
+                });
+            }
+
+            // Handle hash change for voice assistant
+            window.addEventListener('hashchange', function () {
+                if (window.location.hash === '#/voice-assistant') {
+                    if (searchApp && voiceAssistant) {
+                        searchApp.style.display = 'none';
+                        voiceAssistant.style.display = 'block';
+                    }
+                } else {
+                    if (searchApp && voiceAssistant) {
+                        voiceAssistant.style.display = 'none';
+                        searchApp.style.display = '';
+                    }
+                }
+            });
+
+            // On page load, show voice assistant if hash is #/voice-assistant
+            if (window.location.hash === '#/voice-assistant') {
+                if (searchApp && voiceAssistant) {
+                    searchApp.style.display = 'none';
+                    voiceAssistant.style.display = 'block';
+                }
+            }
+        });
+    </script>
+    <munetios-app id="app" class="search-app">
     <header class="topbar">
         <div class="top">
         <div class="topbar-left">
@@ -2100,6 +2343,7 @@ content="
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
         <input type="text" placeholder="Search" id="searchInput">
         <div style="display: flex; align-items: center; gap: 8px;">
+        
             <svg id="imageResearchIcon" style="display: none; cursor:pointer;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image">
                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                 <circle cx="8.5" cy="8.5" r="1.5"></circle>
@@ -2113,7 +2357,13 @@ content="
                 <line x1="8" y1="22" x2="16" y2="22"></line>
             </svg>
 </div>
+
     </div>
+    <!-- Coming Soon
+    <div class="menu-btn liquid-glass" id="voiceAssistantBtn">
+     <svg id="voiceAssistantIcon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M240-520h60v-80h-60v80Zm100 80h60v-240h-60v240Zm110 80h60v-400h-60v400Zm110-80h60v-240h-60v240Zm100-80h60v-80h-60v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"/></svg>
+</div>
+-->
     <div class="top-right liquid-glass">
     <!-- Labs icon -->
      <div class="topbar-item" id="labsIcon" title="Labs" style="padding:8px;cursor:pointer;">
@@ -2160,7 +2410,7 @@ content="
             <!-- Search results will be displayed here -->
         </div>
     </div>
-</div>
+</munetios-app>
 <div id="labsModal" style="
     background: rgba(0, 0, 0, 0.6);
     position: fixed;
@@ -2209,6 +2459,16 @@ content="
             // Listen for Labs modal checkbox
             document.getElementById('enableAIOverview').addEventListener('change', function () {
                 localStorage.setItem('enableAIOverview', this.checked);
+            });
+            // Set AI Overview default ON if not set
+            document.addEventListener('DOMContentLoaded', function () {
+                const aiOverviewCheckbox = document.getElementById('enableAIOverview');
+                if (localStorage.getItem('enableAIOverview') === null) {
+                    localStorage.setItem('enableAIOverview', 'true');
+                    if (aiOverviewCheckbox) aiOverviewCheckbox.checked = true;
+                } else {
+                    if (aiOverviewCheckbox) aiOverviewCheckbox.checked = localStorage.getItem('enableAIOverview') === 'true';
+                }
             });
 
             // --- AI Overview Logic ---
@@ -2448,7 +2708,7 @@ content="
                         /can\s+children\s+use\s+proton\s+mail\s+app/i,
                         /is\s+proton\s+mail\s+safe\s+for\s+children/i
                     ],
-                    answer: "Proton Mail is designed for users 16 and older. It is not intended for children under 16, and accounts for minors are not supported."
+                    answer: "Proton Mail is designed for users 13 and older. It is not intended for children under 13, and accounts for minors are not supported."
                 },
                 {
                     keywords: [
@@ -2715,7 +2975,7 @@ content="
                 },
                 {
                     keywords: [/how\s+to\s+upload\s+a\s+video\s+to\s+youtube/i, /upload\s+video\s+youtube/i],
-                    answer: "Click the camera icon with a plus sign on YouTube, select 'Upload video', choose your file, add details, and publish."
+                    answer: "Click the create button on YouTube, select 'Upload video', choose your file, add details, and publish."
                 },
                 {
                     keywords: [/how\s+to\s+edit\s+photos/i, /edit\s+photos/i],
@@ -3509,10 +3769,8 @@ content="
                                 <button class="btn liquid-glass" style="background:#a259f7;color:#fff;" id="aiCopyBtn">Copy</button>
                                 <button class="btn liquid-glass" style="background:#e34133;color:#fff;" id="aiGmailBtn">Gmail</button>
                                 <button class="btn liquid-glass" style="background:#4285f4;color:#fff;" id="aiDriveBtn">Google Drive</button>
-                                <button class="btn liquid-glass" style="background:#34a853;color:#fff;" id="aiChatBtn">Google Chat</button>
                                 <button class="btn liquid-glass" style="background:#ffb300;color:#fff;" id="aiGeminiBtn">Google Gemini</button>
                                 <button class="btn liquid-glass" style="background:#1877f2;color:#fff;" id="aiFacebookBtn">Facebook</button>
-                                <button class="btn liquid-glass" style="background:#e1306c;color:#fff;" id="aiInstagramBtn">Instagram</button>
                                 <button class="btn liquid-glass" style="background:#25d366;color:#fff;" id="aiWhatsAppBtn">WhatsApp</button>
                                 <button class="btn liquid-glass" style="background:#000;color:#fff;" id="aiXBtn">X</button>
                                 <button class="btn liquid-glass" style="background:#ff4500;color:#fff;" id="aiRedditBtn">Reddit</button>
@@ -3582,7 +3840,7 @@ content="
                 modal.querySelector('#aiLinkedInBtn').onclick = function () {
                     window.location.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
                 };
-                // ChatGPT (open chat.openai.com)
+                // ChatGPT 
                 modal.querySelector('#aiChatGPTBtn').onclick = function () {
                     window.location.href = `https://chatgpt.com/?q=${encodeURIComponent(text)}`;
                 };
@@ -4826,6 +5084,29 @@ content="
                     )
                 );
             }
+            // Fetch Reddit search results (hide explicit content)
+            let redditResults = [];
+            if (query !== '@all') {
+                try {
+                    const redditRes = await fetch(`https://www.reddit.com/search.json?q=${encodeURIComponent(query)}&limit=20&sort=relevance&type=link`);
+                    const redditData = await redditRes.json();
+                    if (redditData.data && Array.isArray(redditData.data.children)) {
+                        redditResults = redditData.data.children
+                            .map(item => item.data)
+                            .filter(item => !item.over_18 && !item.spoiler && !item.thumbnail?.includes('nsfw'))
+                            .map(item => ({
+                                title: item.title,
+                                description: item.selftext ? item.selftext.substring(0, 120) : '',
+                                link: `https://www.reddit.com${item.permalink}`,
+                                favicon: "https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png"
+                            }));
+                    }
+                } catch (err) {
+                    
+                    // Reddit fetch failed, ignore
+                    console.log('Reddit fetch error:', err);
+                }
+            }
             // Fetch Stack Overflow search results
             let stackResults = [];
             if (query !== '@all') {
@@ -4887,7 +5168,7 @@ content="
             }
 
             // Combine all results
-            let filtered = [...filteredLocal, ...stackResults,  ...wikiResults, ...githubResults];
+            let filtered = [...filteredLocal, ...redditResults, ...stackResults,   ...wikiResults, ...githubResults];
             renderResults(filtered);
         } catch (e) {
             clearResults();
@@ -5120,6 +5401,32 @@ content="
             } else {
                 imageResults = imageResults.concat(staticImages);
             }
+        // Reddit images
+        try {
+            const redditRes = await fetch(`https://www.reddit.com/search.json?q=${encodeURIComponent(query)}&limit=50&sort=relevance&type=link`);
+            const redditData = await redditRes.json();
+            if (redditData.data && Array.isArray(redditData.data.children)) {
+                redditData.data.children.forEach(item => {
+                    const post = item.data;
+                    // Only allow images that are not over_18, not spoiler, and not marked as NSFW
+                    if (
+                        !post.over_18 &&
+                        !post.spoiler &&
+                        post.post_hint === "image" &&
+                        post.url &&
+                        !/nsfw|explicit|18\+|porn|sex|nude|xxx|erotic/i.test(post.title + " " + (post.subreddit || ""))
+                    ) {
+                        imageResults.push({
+                            title: post.title,
+                            description: `Reddit - r/${post.subreddit}`,
+                            link: `https://www.reddit.com${post.permalink}`,
+                            image: post.url,
+                            favicon: "https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png"
+                        });
+                    }
+                });
+            }
+        } catch (err) {}
         // Stack Overflow images
         try {
             const stackRes = await fetch(`https://api.stackexchange.com/2.3/search/advanced?order=desc&sort=relevance&q=${encodeURIComponent(query)}&site=stackoverflow&pagesize=20`);
@@ -5176,7 +5483,88 @@ content="
                 });
             }
         } catch (err) {}
+        // Add click event to open image modal viewer
+        function showImageModal(img) {
+            // Remove any existing modal
+            document.getElementById('imageViewModal')?.remove();
+            const modal = document.createElement('div');
+            modal.id = 'imageViewModal';
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.width = '100vw';
+            modal.style.height = '100vh';
+            modal.style.background = 'rgba(0,0,0,0.55)';
+            modal.style.display = 'flex';
+            modal.style.alignItems = 'center';
+            modal.style.justifyContent = 'center';
+            modal.style.zIndex = '10060';
+            modal.innerHTML = `
+                <div class="liquid-glass" style="max-width:900px;width:100%;max-height:96vh;overflow:auto;border-radius:22px;position:relative;padding:0;">
+                    <button id="imageViewModalClose" style="position:absolute;top:10px;right:10px;z-index:2;background:#a259f7;color:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:1.3em;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+                        &times;
+                    </button>
+                    <div style="padding:0 0 0 0;">
+                        <img src="${img.image}" alt="${img.title}" style="display:block;width:100%;max-width:100%;max-height:800px;object-fit:contain;border-radius:22px 22px 0 0;background:#fff;">
+                    </div>
+                    <div style="padding:24px 32px 24px 32px;">
+                        <div style="font-size:1.18em;font-weight:700;margin-bottom:8px;word-break:break-word;">${img.title || ''}</div>
+                        <div style="font-size:1em;color:#aaa;margin-bottom:18px;word-break:break-word;">${img.description || ''}</div>
+                        <div style="display:flex;gap:14px;">
+                            <a href="${img.link}" target="_self" rel="noopener" class="btn liquid-glass" style="background:#a259f7;color:#fff;">Visit</a>
+                            <button class="btn liquid-glass" id="imageViewReportBtn" style="background:#e34133;color:#fff;">Report</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+            modal.querySelector('#imageViewModalClose').onclick = function () {
+                modal.remove();
+                document.body.style.overflow = '';
+            };
+            modal.addEventListener('mousedown', function (e) {
+                if (e.target === modal) {
+                    modal.remove();
+                    document.body.style.overflow = '';
+                }
+            });
+            // Report button logic
+            modal.querySelector('#imageViewReportBtn').onclick = function () {
+                // Remove modal before showing report
+                modal.remove();
+                document.body.style.overflow = '';
+                showReportModal({
+                    title: img.title || '',
+                    description: img.description || '',
+                    link: img.link || '',
+                    favicon: img.favicon || ''
+                });
+            };
+        }
 
+        // Attach click event to each image card
+        function attachImageModalEvents() {
+            resultsContainer.querySelectorAll('.result img').forEach(imgEl => {
+                // Prevent duplicate listeners
+                imgEl.onclick = function (e) {
+                    e.preventDefault();
+                    // Find parent .result div and extract info
+                    const resultDiv = imgEl.closest('.result');
+                    if (!resultDiv) return;
+                    // Try to get info from DOM
+                    const aTag = resultDiv.querySelector('a');
+                    const titleTag = resultDiv.querySelector('a[style*="font-size"]');
+                    const imgObj = {
+                        image: imgEl.src,
+                        title: titleTag ? titleTag.textContent : (aTag ? aTag.textContent : ''),
+                        description: '', // No description in grid, could be improved if needed
+                        link: aTag ? aTag.href : ''
+                    };
+                    showImageModal(imgObj);
+                };
+            });
+        }
             // Render images with pagination (limit 100, show more button)
             clearResults();
             const filteredImages = imageResults.filter(img => img.image && typeof img.image === 'string' && img.image.trim() !== '');
@@ -5224,15 +5612,19 @@ content="
                     div.style.width = '100%';
                     div.style.maxWidth = '340px';
                     div.style.minWidth = '0';
-
                     div.innerHTML = `
-                    <a href="${img.link}" rel="noopener" target="_self" style="display:block;width:100%;text-align:center;">
-                    <img src="${img.image}" alt="${img.title}" style="width:100%;max-width:340px;max-height:240px;min-height:120px;object-fit:cover;border-radius:12px;box-shadow:0 2px 8px #0002;background:#fff;">
+                    <a href="#" rel="noopener" style="display:block;width:100%;text-align:center;">
+                        <img src="${img.image}" alt="${img.title}" style="width:100%;max-width:340px;max-height:240px;min-height:120px;object-fit:cover;border-radius:12px;box-shadow:0 2px 8px #0002;background:#fff;">
                     </a>
                     <div style="width:100%;padding:4px 0 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-                    <a href="${img.link}" rel="noopener" target="_self" style="font-size:0.98em;color:#a259f7;text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;max-width:100%;">${img.title}</a>
+                        <a href="${img.link}" rel="noopener" target="_self" style="font-size:0.98em;color:#a259f7;text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;max-width:100%;">${img.title}</a>
                     </div>
                     `;
+                    // Show image viewer modal on image click
+                    div.querySelector('img').onclick = function(e) {
+                        e.preventDefault();
+                        showImageModal(img);
+                    };
                     grid.appendChild(div);
                 });
                 resultsContainer.appendChild(grid);
