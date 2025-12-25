@@ -2359,7 +2359,7 @@ content="
 </div>
 
     </div>
-    <!-- Coming Soon
+<!--  Voice Assistant Button
     <div class="menu-btn liquid-glass" id="voiceAssistantBtn">
      <svg id="voiceAssistantIcon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M240-520h60v-80h-60v80Zm100 80h60v-240h-60v240Zm110 80h60v-400h-60v400Zm110-80h60v-240h-60v240Zm100-80h60v-80h-60v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"/></svg>
 </div>
@@ -2377,6 +2377,15 @@ content="
             <polyline points="12 6 12 12 16 14"></polyline>
         </svg>
     </div>
+    <script nonce="rjighegujregergrejge">
+        // Tooltip for Classic Icon
+        document.addEventListener('DOMContentLoaded', function () {
+            const classicIcon = document.getElementById('classicIcon').onclick = function () {
+                window.location.href = 'classic.html';
+            };
+            
+        });
+    </script>
     <div class="topbar-item" id="appsIcon">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid" style="cursor:pointer;">
         <rect x="3" y="3" width="7" height="7"></rect>
@@ -2397,6 +2406,7 @@ content="
         <button class="btn type liquid-glass" id="videosResult">Videos</button>
     <!--   <button class="btn type liquid-glass" id="newsResult">News</button> coming soon  --> 
        <button class="btn type liquid-glass" id="mapsResult">Maps</button>
+              <button class="btn type liquid-glass" id="wikiResult">Wiki (Coming Soon)</button>
       <!--   <button class="btn type liquid-glass" id="sportsResult">Sports</button> coming soon -->
         <button class="btn type liquid-glass" id="blogsResult">Blogs</button>
 
@@ -5084,29 +5094,7 @@ content="
                     )
                 );
             }
-            // Fetch Reddit search results (hide explicit content)
-            let redditResults = [];
-            if (query !== '@all') {
-                try {
-                    const redditRes = await fetch(`https://www.reddit.com/search.json?q=${encodeURIComponent(query)}&limit=20&sort=relevance&type=link`);
-                    const redditData = await redditRes.json();
-                    if (redditData.data && Array.isArray(redditData.data.children)) {
-                        redditResults = redditData.data.children
-                            .map(item => item.data)
-                            .filter(item => !item.over_18 && !item.spoiler && !item.thumbnail?.includes('nsfw'))
-                            .map(item => ({
-                                title: item.title,
-                                description: item.selftext ? item.selftext.substring(0, 120) : '',
-                                link: `https://www.reddit.com${item.permalink}`,
-                                favicon: "https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png"
-                            }));
-                    }
-                } catch (err) {
-                    
-                    // Reddit fetch failed, ignore
-                    console.log('Reddit fetch error:', err);
-                }
-            }
+         
             // Fetch Stack Overflow search results
             let stackResults = [];
             if (query !== '@all') {
@@ -5168,7 +5156,7 @@ content="
             }
 
             // Combine all results
-            let filtered = [...filteredLocal, ...redditResults, ...stackResults,   ...wikiResults, ...githubResults];
+            let filtered = [...filteredLocal, ...stackResults,   ...wikiResults, ...githubResults];
             renderResults(filtered);
         } catch (e) {
             clearResults();
@@ -5401,32 +5389,7 @@ content="
             } else {
                 imageResults = imageResults.concat(staticImages);
             }
-        // Reddit images
-        try {
-            const redditRes = await fetch(`https://www.reddit.com/search.json?q=${encodeURIComponent(query)}&limit=50&sort=relevance&type=link`);
-            const redditData = await redditRes.json();
-            if (redditData.data && Array.isArray(redditData.data.children)) {
-                redditData.data.children.forEach(item => {
-                    const post = item.data;
-                    // Only allow images that are not over_18, not spoiler, and not marked as NSFW
-                    if (
-                        !post.over_18 &&
-                        !post.spoiler &&
-                        post.post_hint === "image" &&
-                        post.url &&
-                        !/nsfw|explicit|18\+|porn|sex|nude|xxx|erotic/i.test(post.title + " " + (post.subreddit || ""))
-                    ) {
-                        imageResults.push({
-                            title: post.title,
-                            description: `Reddit - r/${post.subreddit}`,
-                            link: `https://www.reddit.com${post.permalink}`,
-                            image: post.url,
-                            favicon: "https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png"
-                        });
-                    }
-                });
-            }
-        } catch (err) {}
+        
         // Stack Overflow images
         try {
             const stackRes = await fetch(`https://api.stackexchange.com/2.3/search/advanced?order=desc&sort=relevance&q=${encodeURIComponent(query)}&site=stackoverflow&pagesize=20`);
