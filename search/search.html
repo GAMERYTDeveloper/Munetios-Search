@@ -1226,7 +1226,11 @@ content="
                     <label for="minimalMode" style="font-weight:600;">Minimal mode:</label>
                     <input type="checkbox" id="minimalMode" style="margin-left:8px;">
                 </div>
-
+                  <!-- Settings: Toggle Liquid glass effect -->
+                <div style="margin-bottom:18px;">
+                    <label for="liquidGlass1" style="font-weight:600;">Liquid Glass:</label>
+                    <input type="checkbox" id="liquidGlass1" style="margin-left:8px;" checked>
+                </div>
                 <!-- Settings: Liquid glass -->
                 <div style="margin-bottom:18px;">
                     <label for="liquidGlass" style="font-weight:600;">Increase Brightness:</label>
@@ -1941,6 +1945,30 @@ content="
                         }
                         await origPerformSearchWithCookies.apply(this, arguments);
                     };
+                    const liquidGlass1 = document.getElementById('liquidGlass1');
+                    function setLiquidGlass1(on, persist = true) {
+                        if (on) {
+                            document.body.classList.remove('liquid-glass-disabled');
+                        } else {
+                            document.body.classList.add('liquid-glass-disabled');
+                        }
+
+                        if (persist) {
+                            try { localStorage.setItem('liquidGlass1', String(on)); } catch (e) {}
+                            if (typeof idbSet === 'function') {
+                                idbSet('liquidGlass1', on).catch(() => {});
+                            }
+                        }
+                    }
+                    // Load setting on page load (default ON when missing)
+                    idbGet('liquidGlass1').then(val => {
+                        const enabled = (val === undefined || val === null) ? true : (val === true || val === 'true');
+                        liquidGlass1.checked = enabled;
+                        setLiquidGlass1(enabled, true);
+                    });
+                    liquidGlass1.addEventListener('change', function() {
+                        setLiquidGlass1(this.checked, true);
+                    });
                     // --- School Mode logic ---
                     const schoolMode = document.getElementById('schoolMode');
                     function applySchoolMode(on) {
@@ -2091,6 +2119,10 @@ content="
                 });
                 </script>
                 <style>
+                 .liquid-glass-disabled  .liquid-glass {
+                        backdrop-filter: none !important;
+                        background-color: rgb(38, 0, 99) !important;
+                    }
                 /* Compact mode */
                 body.compact-mode .result {
                     padding: 10px 14px !important;
@@ -2240,25 +2272,6 @@ content="
                 </div>
             </div>
         </header>
-        <div class="sidebar liquid-glass">
-            <div class="sidebar-items">
-                <div class="sidebar-item" id="searchChatsBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    <span class="menu-text">Search Chats</span>
-                </div>
-                <div class="sidebar-item" id="commandsVoiceChatBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-terminal">
-                        <polyline points="4 17 10 11 4 5"></polyline>
-                        <line x1="12" y1="19" x2="20" y2="19"></line>
-                    </svg>
-                    <span class="menu-text">Commands</span>
-                </div>
-            </div>
-            <chat-history-sidebar id="voiceAssistantChatHistorySidebar" class="chat-history-sidebar">
-                <h3>History:</h3>
-                <div id="voiceAssistantChatHistoryList"></div>
-            </chat-history-sidebar>
-        </div>
         <voice-chat-app id="voiceChatApp" class="voice-chat-app content-menu">
             <div class="chat-messages" id="chatMessages"></div>
             <div class="bottom-chat-prompt-container">
@@ -2323,7 +2336,7 @@ content="
             }
         });
     </script>
-    <munetios-app id="app" class="search-app">
+    <munetios-app  class="search-app">
     <header class="topbar">
         <div class="top">
         <div class="topbar-left">
@@ -2406,7 +2419,7 @@ content="
         <button class="btn type liquid-glass" id="videosResult">Videos</button>
     <!--   <button class="btn type liquid-glass" id="newsResult">News</button> coming soon  --> 
        <button class="btn type liquid-glass" id="mapsResult">Maps</button>
-              <button class="btn type liquid-glass" id="wikiResult">Wiki (Coming Soon)</button>
+              <button class="btn type liquid-glass" id="wikiResult">Wiki</button>
       <!--   <button class="btn type liquid-glass" id="sportsResult">Sports</button> coming soon -->
         <button class="btn type liquid-glass" id="blogsResult">Blogs</button>
 
@@ -5199,7 +5212,49 @@ content="
                 renderResults(filtered);
             }, 300);
         });
-
+        // --- Wiki Tab: Show Wikipedia results ---
+        document.getElementById('wikiResult').addEventListener('click', async () => {
+            const query = searchInput.value.trim();
+            updateQueryParam(query);
+            showSkeletonLoading();
+            setTimeout(async () => {
+            let wikiResults = [];
+            if (query) {
+                try {
+                const wikiRes = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&utf8=&format=json&origin=*`);
+                const wikiData = await wikiRes.json();
+                if (wikiData.query && wikiData.query.search) {
+                    wikiResults = wikiData.query.search.map(item => ({
+                    title: item.title,
+                    description: item.snippet.replace(/<\/?[^>]+(>|$)/g, ""), // Remove HTML tags
+                    link: `https://en.wikipedia.org/wiki/${encodeURIComponent(item.title)}`,
+                    favicon: "https://en.wikipedia.org/static/favicon/wikipedia.ico"
+                    }));
+                }
+                } catch (err) {
+                wikiResults = [];
+                }
+            }
+            clearResults();
+            if (!wikiResults.length) {
+                resultsContainer.innerHTML = '<div style="padding:32px 0;text-align:center;color:#aaa;">No Wikipedia results found.</div>';
+            } else {
+                wikiResults.forEach(r => {
+                const div = document.createElement('div');
+                div.className = 'result';
+                div.innerHTML = `
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                    <img class="result-favicon" src="${r.favicon}" alt="favicon">
+                    <a class="result-link" href="${r.link}" rel="noopener" target="_blank">${r.link}</a>
+                    </div>
+                    <a class="result-title" href="${r.link}" rel="noopener" target="_blank" style="font-size:1.3em;font-weight:700;display:inline-block;text-decoration:none;color:inherit;margin-bottom:8px;">${r.title}</a>
+                    <div class="result-description">${r.description}</div>
+                `;
+                resultsContainer.appendChild(div);
+                });
+            }
+            }, 300);
+        });
         document.getElementById('recommendedResult').addEventListener('click', () => {
             const query = searchInput.value.trim();
             updateQueryParam(query);
@@ -5642,8 +5697,10 @@ content="
             // Set up OpenStreetMap with Leaflet.js (privacy-friendly)
             resultsContainer.innerHTML = `
                 <div id="munetiosMap" style="width:100%;height:420px;border-radius:16px;box-shadow:0 2px 16px #0002;margin-bottom:18px;"></div>
+                Map data by <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>
+                <br><br>
                 <form id="mapSearchForm" style="display:flex;gap:8px;margin-bottom:18px;">
-                    <input id="mapSearchInput" type="text" placeholder="Search for a place or address" value="${query}" style="flex:1;padding:8px 14px;border-radius:8px;font-size:1em;">
+                    <input id="mapSearchInput" type="text" class="liquid-glass" placeholder="Search for a place or address" value="${query}" style="flex:1;padding:8px 14px;font-size:1em;color:white;">
                     <button class="btn liquid-glass" style="padding:8px 18px;" type="submit">Search</button>
                 </form>
                 <button id="useLocationBtn" class="btn liquid-glass" style="margin:0 0 18px 0;padding:8px 18px;display:block;" type="button">Use my location</button>
@@ -5708,7 +5765,7 @@ content="
                 const map = L.map('munetiosMap', {
                     zoomControl: true,
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                    attributionControl: true,
+                    attributionControl: false,
                 }).setView([20, 0], 2);
                 window.munetiosMapInstance = map;
                 // Use OpenStreetMap tiles (no tracking)
@@ -6100,7 +6157,7 @@ content="
                 <textarea id="reportDetails" style="width:100%;min-height:60px;margin:8px 0 16px 0;padding:8px;border-radius:8px;resize:vertical;"></textarea>
                 <div style="display:flex;gap:12px;justify-content:flex-end;">
                 <button id="reportCancelBtn" class="btn liquid-glass" style="background:#aaa;color:#fff;">Cancel</button>
-                <button id="reportSubmitBtn" class="btn liquid-glass" style="background:#a259f7;color:#fff;">Submit</button>
+                <button id="reportSubmitBtn" class="btn liquid-glass" style="background:#a259f7;color:#fff;">Submit</button> 
                 </div>
             </div>
             `;
@@ -12528,7 +12585,92 @@ content="
     "url": "https://www.hover.com",
     "favicon": "",
     "link": "https://www.hover.com"
-}
+},
+{
+        title: "Google Stitch",
+        description: "AI UI design tool that turns prompts or sketches into responsive layouts and frontend code. Powered by Gemini 3.",
+        url: "https://stitch.withgoogle.com",
+        favicon: "",
+        link: "https://stitch.withgoogle.com"
+    },
+    {
+        title: "Project Mariner",
+        description: "Experimental universal AI agent designed to automate complex digital tasks and browse the web autonomously.",
+        url: "https://labs.google/mariner",
+        favicon: "",
+        link: "https://labs.google/mariner"
+    },
+    {
+        title: "Disco",
+        description: "A web-testing playground. Use GenTabs to remix open browser tabs into custom, AI-powered mini apps.",
+        url: "https://labs.google/disco",
+        favicon: "",
+        link: "https://labs.google/disco"
+    },
+    {
+        title: "NotebookLM",
+        description: "Your personalized AI research assistant for analyzing documents, creating summaries, and generating audio overviews.",
+        url: "https://notebooklm.google.com",
+        favicon: "https://www.gstatic.com/images/branding/product/1x/notebooklm_96dp.png",
+        link: "https://notebooklm.google.com"
+    },
+    {
+        title: "Flow (Veo 3.1)",
+        description: "Advanced cinematic storytelling tool. Generate and edit high-fidelity video using Google's Veo 3 model.",
+        url: "https://labs.google/fx/flow",
+        favicon: "",
+        link: "https://labs.google/fx/flow"
+    },
+    {
+        title: "Project Jarvis",
+        description: "A specialized Gemini-powered agent that takes over your browser to automate repetitive web tasks like shopping or booking.",
+        url: "https://labs.google/jarvis",
+        category: "Automation",
+        link: "https://labs.google/jarvis"
+    },
+    {
+        title: "ImageFX",
+        description: "Google's highest fidelity image generator featuring 'Expressive Chips' for fine-tuning styles and compositions.",
+        url: "https://aitestkitchen.withgoogle.com/tools/image-fx",
+        category: "Creative",
+        link: "https://aitestkitchen.withgoogle.com/tools/image-fx"
+    },
+    {
+        title: "Genie",
+        description: "A research experiment in generative AI that can create playable 2D environments from a single image or prompt.",
+        url: "https://deepmind.google/discover/blog/genie-generative-interactive-environments/",
+        category: "Gaming",
+        link: "https://deepmind.google/discover/blog/genie-generative-interactive-environments/"
+    },
+    {
+        title: "MusicLM / MusicFX",
+        description: "Transform text descriptions into high-fidelity music tracks. Now supporting multi-track stems.",
+        url: "https://musicfx.google.com",
+        category: "Audio",
+        link: "https://musicfx.google.com"
+    },
+    {
+        title: "SayTap",
+        description: "An AI experiment enabling robots to learn diverse locomotive patterns (like jumping or limping) via natural language.",
+        url: "https://saytap.github.io/",
+        category: "Robotics",
+        link: "https://saytap.github.io/"
+    },
+    {
+        title: "Chimera Painter",
+        description: "An AI tool that adds realistic textures to creature sketches, turning doodles into 3D-rendered monsters.",
+        url: "https://storage.googleapis.com/chimera-painter/index.html",
+        category: "Creative",
+        link: "https://storage.googleapis.com/chimera-painter/index.html"
+    },
+    {
+        title: "Talk to Books",
+        description: "Browse the world's books by asking questions. The AI finds passages that respond to your query conceptually.",
+        url: "https://books.google.com/talktobooks/",
+        category: "Education",
+        link: "https://books.google.com/talktobooks/"
+    }
+
         ]
     </script>
     <script  nonce="rjighegujregergrejge">
