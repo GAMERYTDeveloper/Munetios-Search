@@ -1,6 +1,6 @@
 User-agent: *
-Disallow: /search
-Disallow: /search/*
+Allow: /
 Crawl-delay: 5
 Sitemap: https://www.munetios.com/sitemap.xml
+
 # This site is safe site and official and verified
