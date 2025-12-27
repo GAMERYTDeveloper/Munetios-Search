@@ -24,7 +24,7 @@ if ('serviceWorker' in navigator) {
         :root { --main-bg: #130036; --text-color: #fff; --card-bg: rgba(26, 0, 51, 0.7); --card-border: #25104d; --link-color: #7c4dff; --link-hover: #b388ff; }
         * {font-family: Lexend, Poppins, sans-serif;}
         body { font-family: Lexend, Poppins, sans-serif; margin: 0; background-color: var(--main-bg); color: var(--text-color); overflow-x: hidden; }
-        .topbar { position: sticky; top: 0; width: 100%; padding: 10px 20px; display: flex; flex-direction: column; box-sizing: border-box; z-index: 1000; background-color: rgb(19, 0, 54);  }
+           .topbar { position: sticky; top: 0; width: 100%; padding: 10px 20px; display: flex; flex-direction: column; box-sizing: border-box; z-index: 1000; background-color: rgba(19, 0, 54, 0.5); backdrop-filter: blur(5px); }
         .topbar .top { display: flex; align-items: center; width: 100%; gap: 20px; }
         .toolbar { margin-top: 1px; width: 100%; border-bottom: 1px solid #52009e; display: flex; align-items: center; gap: 20px; height: 50px; }
         .tabs { display: flex; gap: 15px; align-items: center; padding-bottom: 8px; }
@@ -15854,4 +15854,5 @@ document.addEventListener('DOMContentLoaded', () => {
 </body>
 
 </html>
+
 
