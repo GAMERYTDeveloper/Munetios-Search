@@ -15704,6 +15704,55 @@ document.addEventListener('DOMContentLoaded', () => {
         })();
     </script>
         <script>
+               (function() {
+                // Detect Europe by country code or browser language
+                function isEurope() {
+                    // List of European country codes (ISO 3166-1 alpha-2)
+                    const europeCountries = [
+                        'al','ad','at','by','be','ba','bg','hr','cy','cz','dk','ee','fi','fr','de','gr','hu','is','ie','it','xk','lv','li','lt','lu','mt','md','mc','me','nl','mk','no','pl','pt','ro','ru','sm','rs','sk','si','es','se','ch','ua','gb','uk','va'
+                    ];
+                    // Try to get country from browser language
+                    const lang = (navigator.language || '').toLowerCase();
+                    for (const cc of europeCountries) {
+                        if (lang.endsWith('-' + cc) || lang === cc) return true;
+                    }
+                    // Try to get country from timezone offset (Europe is UTC+0 to UTC+3)
+                    const tz = new Date().getTimezoneOffset();
+                    if (tz <= -0 && tz >= -180) return true;
+                    // Try to get country from Intl API
+                    try {
+                        const region = new Intl.Locale(navigator.language).region;
+                        if (region && europeCountries.includes(region.toLowerCase())) return true;
+                    } catch {}
+                    return false;
+                }
+                if (isEurope()) {
+                    // Show modal
+                    const modal = document.createElement('div');
+                    modal.style.cssText = `
+                        position:fixed;z-index:4000;left:0;top:0;width:100vw;height:100vh;
+                        background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;
+                    `;
+                    const box = document.createElement('div');
+                    box.style.cssText = `
+                        background:rgba(26,0,51,0.98);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.25);
+                        padding:32px 28px;min-width:260px;max-width:90vw;text-align:center;color:#fff;
+                        border:1px solid #7c4dff;
+                    `;
+                    box.innerHTML = `
+                        <h2 style="margin-top:0;color:#7c4dff;">Munetios Classic Search</h2>
+                        <p style="font-size:17px;margin-bottom:18px;">
+                            Munetios Classic Search is no longer available in Europe.<br>
+                            Please use the new version of Munetios Search.
+                        </p>
+                        <a href="https://www.munetios.com/search/search.html" class="btn" style="font-size:16px;padding:8px 24px;background:#7c4dff;color:#fff;border-radius:8px;text-decoration:none;">Go to New Munetios Search</a>
+                    `;
+                    modal.appendChild(box);
+                    document.body.appendChild(modal);
+                    document.body.style.overflow = 'hidden';
+                }
+            })();
+
         (function() {
             // Simple bot/user-agent detection with OS check
             function isBot() {
@@ -15805,3 +15854,4 @@ document.addEventListener('DOMContentLoaded', () => {
 </body>
 
 </html>
+
