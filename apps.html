@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Munetios</title>
+    <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@8..144,100..700&display=swap">
+    <meta name="description" content="Explore the range of products offered by Munetios, including our private search engine and upcoming tools designed to enhance your online experience.">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Do favicon 16, 32-->
+    <link rel="icon" sizes="16x16" href="favicon-16x16.png" type="image/x-icon">
+    <link rel="icon" sizes="32x32" href="favicon-32x32.png" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="Content-Security-Policy" content="frame-ancestors 'none';
+"><link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Munetios Search">
+        <meta name="google-site-verification" content="eNlW8gDjbwlEBSfYIkyc8N60d64cbCYkYydrbDoeYi8" />
+    <meta name="msvalidate.01" content="BF44E33561FDFF8178BDA1E527F81862" />
+     <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      if (window.top !== window.self) {
+        // Hide everything (html + body)
+        document.documentElement.style.display = "none";  
+        console.warn('Refused to display https://www.munetios.com because it is blocked from iframe embeding')
+      }
+    });
+  </script>
+
+      <style>
+        body {
+            font-family: 'Google Sans Flex', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #190047;
+            color: white;
+        }
+        body.light-mode {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .topbar {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            height: 60px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        a {
+            color: #7c3aed;
+            text-decoration: none;
+        }
+        nav a {
+            color: inherit;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        @media (prefers-color-scheme: light) {
+            body {
+                background-color: #ffffff;
+                color: #000000;
+            }
+            .logo {
+                color: #000000;
+            }
+        }
+        .grid-apps-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .box-app-list {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .btn {
+            background-color: #7c3aed;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 36px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+      </style>
+</head>
+<body>
+    <div class="topbar liquid-glass">
+        <div class="logo">
+            <img src="apple-touch-icon.png" alt="Munetios Logo">
+            <div class="logo-text">Munetios</div>
+        </div>
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="apps.html">Products</a>
+            <a href="whats-new.html">What's New</a>
+        </nav>
+    </div>
+    <main>
+        <h1>Meet Munetios Search our private search engine</h1>
+        <p>Munetios Search is a private search engine that does not track you. We respect your privacy and do not collect any personal data from our users.</p>
+        <p>Lets compare other search engines</p>
+        <ul>
+            <li><strong>Munetios Search</strong> – No ads, respects privacy, does not track you, open source, no accounts needed</li>
+            <li><strong>Google Search</strong> – Has ads, tracks you, not open source, accounts optional (but needed for personalization)</li>
+            <li><strong>Bing Search</strong> – Has ads, tracks you, not open source, accounts optional (but needed for personalization)</li>
+            <li><strong>DuckDuckGo</strong> – No ads (in most regions), does not track you, not open source, no accounts needed</li>
+            <li><strong>Brave Search</strong> – Has ads (optional), does not track you, partially open source, no accounts needed</li>
+        </ul>
+        <br><br><br><br><br><br><br><br>
+    <section>
+        <h2>Products List</h2>
+        <div class="grid-apps-list">
+            <div class="box-app-list liquid-glass">
+                <h2>Munetios Search</h2>
+                <p>Munetios Search is a private search engine that does not track you. We respect your privacy and do not collect any personal data from our users.</p>
+                <button class="btn" onclick="window.location.href='https://www.munetios.com/search/search.html'">Try it out</button>
+            </div>
+            <div class="box-app-list liquid-glass">
+                <h2>Munetios Docs Suite</h2>
+                <p>Munetios Docs Suite is a early preview office suite that you can do documents, sheets, and journal</p>
+                <button class="btn" onclick="window.location.href='https://docs.munetios.com'">Try it out</button>
+            </div>
+            <div class="box-app-list liquid-glass">
+                <h2>Munetios Calendar</h2>
+                <p>Munetios Calendar is a advanced private calendar that you can make calendars, favorite dates and more.</p>
+                <button class="btn" onclick="window.location.href='https://calendar.munetios.com'">Try it out</button>
+            </div>
+            <div class="box-app-list liquid-glass">
+                <h2>Munetios Meet</h2>
+                <p>Munetios Meet is a upcoming service that meetings are encrypted and secure for everyone.</p>
+                <button class="btn">Coming Soon</button>
+            </div>
+            <div class="box-app-list liquid-glass">
+                <h2>Munetios Tasks</h2>
+                <p>Munetios Tasks is a private task manager that helps you organize your tasks and to-dos.</p>
+                <button class="btn" onclick="window.location.href='https://tasks.munetios.com'">Try it out</button>
+            </div>
+            <div class="box-app-list liquid-glass">
+                <h2>Munetios Notes</h2>
+                <p>Munetios Notes is a private note-taking app that helps you capture your ideas and thoughts securely.</p>
+                <button class="btn" onclick="window.location.href='https://notes.munetios.com'">Try it out</button>
+            </div>
+            <div class="box-app-list liquid-glass">
+                <h2>Munetios Photos</h2>
+                <p>Munetios Photos is a private photo storage that helps you keep your memories safe.</p>
+                <button class="btn" onclick="window.location.href='https://photos.munetios.com'">Try it out</button>
+            </div>
+            <div class="box-app-list liquid-glass">
+                <h2>Munetios Calculator</h2>
+                <p>Munetios Calculator is a advanced and private calculator for quick calculations without tracking.</p>
+                <button class="btn" onclick="window.location.href='https://calculator.munetios.com'">Try it out</button>
+            </div>
+            <div class="box-app-list liquid-glass">
+                <h2>Munetios Notebook</h2>
+                <p>Munetios Notebook is a secure and private notebook for organizing your notes and ideas.</p>
+                <button class="btn" onclick="window.location.href='https://notebook.munetios.com'">Try it out</button>
+            </div>
+            <div class="box-app-list liquid-glass">
+                <h2>Munetios Games Hub</h2>
+                <p>Munetios Games Hub is a collection of fun and engaging games that you can play online.</p>
+                <button class="btn" onclick="window.location.href='https://www.munetios.com/games'">Coming Soon</button>
+            </div>
+            <div class="box-app-list liquid-glass">
+                <h2>Munetios Weather</h2>
+                <p>Munetios Weather is a private weather app that provides accurate and up-to-date weather information.</p>
+                <button class="btn" onclick="window.location.href='https://weather.munetios.com'">Try it out</button>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>
