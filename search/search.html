@@ -1510,23 +1510,41 @@ content="
                     const bgThemeDropdown = createDropdown({
                         id: 'bgThemeDropdown',
                         options: bgThemeOptions,
-                        value: localStorage.getItem('bgTheme') || 'default',
-                        onChange: function(val) {
+                        value: ( idbGet('bgTheme')) || localStorage.getItem('bgTheme') || 'default',
+                        onChange: async function(val) {
                             if (val === 'custom') {
                                 bgCustomColor.style.display = '';
                                 setBgTheme('custom', bgCustomColor.value);
                                 localStorage.setItem('bgTheme', 'custom');
                                 localStorage.setItem('bgCustomColor', bgCustomColor.value);
+                                await idbSet('bgTheme', 'custom');
+                                await idbSet('bgCustomColor', bgCustomColor.value);
                             } else {
                                 bgCustomColor.style.display = 'none';
                                 setBgTheme(val);
                                 localStorage.setItem('bgTheme', val);
+                                await idbSet('bgTheme', val);
                             }
                         },
                         disabledOptions: []
                     });
                     bgThemeDropdown.style.marginLeft = '8px';
                     bgThemeParent.replaceChild(bgThemeDropdown, bgThemeSelect);
+
+                    // On page load, set theme from IndexedDB/localStorage
+                    (async function() {
+                        let bg = await idbGet('bgTheme') || localStorage.getItem('bgTheme') || 'default';
+                        let custom = await idbGet('bgCustomColor') || localStorage.getItem('bgCustomColor') || '#190047';
+                        bgThemeDropdown.value = bg;
+                        bgCustomColor.value = custom;
+                        if (bg === 'custom') {
+                            bgCustomColor.style.display = '';
+                            setBgTheme('custom', custom);
+                        } else {
+                            bgCustomColor.style.display = 'none';
+                            setBgTheme(bg);
+                        }
+                    })();
 
                     const bgCustomColor = document.getElementById('bgCustomColor');
                     const bgImage = document.getElementById('bgImage');
@@ -1712,10 +1730,11 @@ content="
                     bgThemeDropdown.addEventListener('click', function(e) {
                         // handled in component
                     });
-                    bgCustomColor.addEventListener('input', function() {
+                    bgCustomColor.addEventListener('input', async function() {
                         if (bgThemeDropdown.value === 'custom') {
                             setBgTheme('custom', this.value);
-                            idbSet('bgCustomColor', this.value);
+                            localStorage.setItem('bgCustomColor', this.value);
+                            await idbSet('bgCustomColor', this.value);
                         }
                     });
                     bgImage.addEventListener('change', function() {
@@ -2024,13 +2043,7 @@ content="
                                 window._schoolModePatched = true;
                             }
                         }
-                        // Disable Reset All Settings button in School Mode
-                        const resetAllSettingsBtn = document.getElementById('resetAllSettings');
-                        if (resetAllSettingsBtn) {
-                            resetAllSettingsBtn.disabled = on;
-                            resetAllSettingsBtn.style.pointerEvents = on ? 'none' : '';
-                            resetAllSettingsBtn.style.opacity = on ? '0.5' : '';
-                        }
+                      
                         // Disable AI Overview share button
                         const aiOverviewBox = document.getElementById('aiOverviewBox');
                         if (aiOverviewBox) {
@@ -2712,7 +2725,7 @@ content="
                         /proton\s+mail\s+parental\s+consent/i,
                         /proton\s+mail\s+COPPA/i
                     ],
-                    answer: "Proton Mail requires users to be at least 13 years old to create an account. Children under 13 are not permitted to sign up for Proton Mail, even with parental consent."
+                    answer: "Proton Mail requires users to be at least 13 years old or parental consent to create an account. Children under 13 can ask their parents to create and manage an account for them."
                 },
                 {
                     keywords: [
@@ -2874,7 +2887,7 @@ content="
                 },
                 {
                     keywords: [/can\s+i\s+use\s+proton\s+mail\s+under\s+13/i, /proton\s+mail\s+age\s+limit/i],
-                    answer: "Proton Mail requires users to be at least 13 years old."
+                    answer: "Proton Mail requires users to be at least 13 years old or have parental consent."
                 },
                 {
                     keywords: [/can\s+i\s+use\s+signal\s+under\s+13/i, /signal\s+age\s+limit/i],
@@ -12676,7 +12689,49 @@ content="
         url: "https://www.dropbox.com",
         favicon: "",
         link: "https://www.dropbox.com"
-    }
+    },
+    {
+        "title": "Dropbox Help Center",
+        "description": "Official Dropbox Help Center for FAQs, troubleshooting, and support articles.",
+        "url": "https://help.dropbox.com",
+        "favicon": "",
+        "link": "https://help.dropbox.com"
+    },
+    {
+        "title": "Dropbox Blog",
+        "description": "Official Dropbox Blog with news, updates, and tips for using Dropbox.",
+        "url": "https://blog.dropbox.com",
+        "favicon": "",
+        "link": "https://blog.dropbox.com"
+    },
+    {
+        "title": "Proton Wallet",
+        "description": "Proton Wallet is a secure, privacy-focused digital wallet for managing your Proton account and payments.",
+        "url": "https://proton.me/wallet",
+        "favicon": "",
+        "link": "https://proton.me/wallet"
+    },
+    {
+        "title": "Google AI",
+        "description": "Explore Google's latest AI research, tools, and news at ai.google.",
+        "url": "https://ai.google",
+        "favicon": "",
+        "link": "https://ai.google"
+    },
+    {
+        "title": "About Google",
+        "description": "Learn more about Google’s history, products, and mission.",
+        "url": "https://about.google",
+        "favicon": "",
+        "link": "https://about.google"
+    },
+    {
+        "title": "99 Restaurants",
+        "description": "Enjoy classic American fare including burgers, steaks, seafood, and more at 99 Restaurants. Find locations, view menus, and order online.",
+        "url": "https://www.99restaurants.com",
+        "favicon": "",
+        "link": "https://www.99restaurants.com"
+    },
 
         ]
     </script>
