@@ -3,7 +3,7 @@
 <head>
        <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Munetios Search 2.0</title>
+    <title>Munetios Search 2.1</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="image.png" type="image/png">
     <link rel="apple-touch-icon" href="image.png">
@@ -25,6 +25,7 @@ content="
   worker-src 'self' blob:;
   object-src 'none';
 ">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded">
 
     <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -84,7 +85,7 @@ content="
             display: flex;
             align-items: center;
             padding: 0 12px;
-            height: 60px;
+            height: 68px;
             position: sticky;
             top: 0;
             gap: 5px;
@@ -92,7 +93,7 @@ content="
         }
         .menu-btn {
             cursor: pointer;
-            padding: 12px 12px;
+            padding: 13px 13px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -101,11 +102,11 @@ content="
             display: flex;
             align-items: center;
             gap: 5px;
-            font-size: 1.2em;
+            font-size: 1.3em;
             font-weight: 600;
         }
         .logo img {
-            height: 30px;
+            height: 34px;
         }
         .logo-text {
             font-weight: 700;
@@ -129,7 +130,7 @@ content="
             display: flex;
             align-items: center;
             gap: 15px;
-            padding: 12px 0;
+            padding: 14px 0;
         }
         .topbar-left {
             display: flex;
@@ -148,7 +149,7 @@ content="
             align-items: center;
             gap: 5px;
             border-radius: 64px;
-            padding: 10px 20px;
+            padding: 14px 20px;
             width: 100%;
             max-width: 800px;
             transition: background 0.3s, border-color 0.3s;
@@ -287,7 +288,7 @@ content="
             display: flex;
             align-items: center;
             gap:5px;
-            padding: 0   8px;
+            padding: 4px 8px;
         }
         /* Zoom control container */
 .leaflet-control-zoom {
@@ -393,37 +394,18 @@ content="
             .top-left {
                 gap: 3px;
             }
+            .search-bar {
+                max-width: none;
+            }
+            .top {
+                gap: 5px;
+            }
             .topbar {
                 padding: 0 8px;
             }
         }
         @media (max-width: 505px) {
-            .topbar {
-                flex-direction: column;
-                align-items: stretch;
-                height: auto;
-                padding: 0 4px;
-            }
            
-            .topbar-left {
-                flex: 1 1 auto;
-                min-width: 0;
-            }
-           
-            #appsIcon, #classicIcon {
-                display: none;
-            }
-            .logo {
-                display: none;
-            }
-            .top-left {
-                gap: 3px;
-                padding: 8px 0;
-            }
-            .menu-btn {
-                align-self: flex-start;
-                margin-top: 6px;
-            }
             .result-link {
                 max-width: 120px;
                 overflow: hidden;
@@ -524,10 +506,7 @@ content="
         <div class="sidebar liquid-glass">
             <div class="sidebar-items">
                 <div class="sidebar-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.09a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                    </svg>
+                   <span class="material-symbols-rounded" style="font-size:24px;">settings</span>
                     <div class="menu-text">Settings</div>
                 </div>
                 <div class="sidebar-item" id="helpSidebar">
@@ -2083,20 +2062,6 @@ content="
                             commandsSidebar.style.display = '';
                         }
                     }
-                        // Hide Image Research icon and floating button
-                        const imageResearchIcon = document.getElementById('imageResearchIcon');
-                        if (imageResearchIcon) imageResearchIcon.style.display = on ? 'none' : '';
-                        const floatingBtn = document.getElementById('floatingImageResearchBtn');
-                        if (floatingBtn) floatingBtn.style.display = on ? 'none' : '';
-                        // Remove image research buttons in images tab
-                        document.querySelectorAll('.image-research-btn').forEach(btn => {
-                            if (on) btn.style.display = 'none';
-                            else btn.style.display = '';
-                        });
-                        // Hide AI Overview if in school mode
-                        if (on && aiOverviewBox) {
-                            aiOverviewBox.style.display = 'none';
-                        }
                     }
                     // Save/load school mode from localStorage
                     idbGet('schoolMode').then(val => {
@@ -2352,77 +2317,44 @@ content="
     <munetios-app  class="search-app">
     <header class="topbar">
         <div class="top">
-        <div class="topbar-left">
-            <div class="menu-btn liquid-glass" id="menu">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            <div class="topbar-left">
+                <div class="menu-btn liquid-glass" id="menu">
+                    <span class="material-symbols-rounded" style="font-size:24px;">menu</span>
+                </div>
+                <div class="top-left">
+                    <div class="logo liquid-glass" style="padding: 4px 12px; gap:10px;">
+                        <a href="https://www.munetios.com">
+                            <img src="image.png" alt="Munetios Logo" style="height:30px;">
+                            <div class="logo-text">Munetios</div>
+                        </a>
+                    </div>
+                </div>
             </div>
-        <div class="top-left">
-        <div class="logo liquid-glass" style="padding: 4px 12px; gap:10px;">
-            <a href="https://www.munetios.com">
-                <img src="image.png" alt="Munetios Logo" style="height:30px;">
-                <div class="logo-text">Munetios</div>
-            </a>
-        </div>
-    </div>
-    </div>
-    <div class="search-bar liquid-glass">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <input type="text" placeholder="Search" id="searchInput">
-        <div style="display: flex; align-items: center; gap: 8px;">
-        
-            <svg id="imageResearchIcon" style="display: none; cursor:pointer;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                <polyline points="21 15 16 10 5 21"></polyline>
-
-            </svg>
-            <svg id="micIcon" style="cursor: pointer;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mic">
-                <rect x="9" y="2" width="6" height="12" rx="3"></rect>
-                <path d="M5 10v2a7 7 0 0 0 14 0v-2"></path>
-                <line x1="12" y1="22" x2="12" y2="16"></line>
-                <line x1="8" y1="22" x2="16" y2="22"></line>
-            </svg>
-</div>
-
-    </div>
-<!--  Voice Assistant Button
-    <div class="menu-btn liquid-glass" id="voiceAssistantBtn">
-     <svg id="voiceAssistantIcon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M240-520h60v-80h-60v80Zm100 80h60v-240h-60v240Zm110 80h60v-400h-60v400Zm110-80h60v-240h-60v240Zm100-80h60v-80h-60v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"/></svg>
-</div>
--->
-    <div class="top-right liquid-glass">
-    <!-- Labs icon -->
-     <div class="topbar-item" id="labsIcon" title="Labs" style="padding:8px;cursor:pointer;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-flask">
-            <path d="M6.5 21h11a2 2 0 0 0 2-2v-1.5a4.5 4.5 0 0 0-3-4.24V6.5a2.5 2.5 0 0 0-2.5-2.5h-7A2.5 2.5 0 0 0 7 6.5v6.76A4.5 4.5 0 0 0 4 17.5V19a2 2 0 0 0 2.5 2z"></path>
-        </svg>
-     </div>
-    <div class="topbar-item" id="classicIcon" onclick="window.location.href='classic.html'" title="Use Classic Version">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock" style="cursor:pointer;">
-            <circle cx="12" cy="12" r="10"></circle>
-            <polyline points="12 6 12 12 16 14"></polyline>
-        </svg>
-    </div>
-    <script nonce="rjighegujregergrejge">
-        // Tooltip for Classic Icon
-        document.addEventListener('DOMContentLoaded', function () {
-            const classicIcon = document.getElementById('classicIcon').onclick = function () {
-                window.location.href = 'classic.html';
-            };
+            <div class="search-bar liquid-glass">
+                <span class="material-symbols-rounded" style="font-size:24px;">search</span>
+                <input type="text" placeholder="Search" id="searchInput">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span id="micIcon" style="cursor: pointer;" class="material-symbols-rounded" title="Voice Search">mic</span>
+                </div>
+            </div>
+            <div class="menu-btn liquid-glass" id="voiceModeBtn">
+                <span class="material-symbols-rounded" style="font-size:24px;">voice_chat</span>
+            </div>
             
-        });
-    </script>
-    <div class="topbar-item" id="appsIcon">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid" style="cursor:pointer;">
-        <rect x="3" y="3" width="7" height="7"></rect>
-        <rect x="14" y="3" width="7" height="7"></rect>
-        <rect x="14" y="14" width="7" height="7"></rect>
-        <rect x="3" y="14" width="7" height="7"></rect>
-    </svg>
-    </div>
-</div>
-</div>
-</header>
+            <div class="top-right liquid-glass">
+                <!-- Labs icon -->
+                <div class="topbar-item" id="labsIcon" title="Labs" style="padding:8px;cursor:pointer;">
+                    <span class="material-symbols-rounded" style="font-size:24px;">science</span>
+                </div>
+                <div class="topbar-item" id="bookmarksBtn"  title="Bookmarks">
+                    <span class="material-symbols-rounded" style="font-size:24px;">bookmark</span>
+                </div>
+                <div class="topbar-item" id="appsIcon">
+                    <span class="material-symbols-rounded" style="font-size:24px;">apps</span>
+                </div>
+            </div>
+        </div>
+    </header>
 <div class="toolbar">
     <div class="types">
         <button class="btn type liquid-glass" id="allResult">All</button>
@@ -2472,12 +2404,12 @@ content="
         <strong>Note:</strong> Labs features are experimental and may be unstable or change at any time. They are provided for testing and feedback purposes only. Functionality, appearance, and availability may change without notice. Use at your own risk—unexpected bugs, incomplete features, or data loss may occur.
     </p>
     <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 12px; align-items: center;">
-        <label>
-            <input type="checkbox" id="enableImageResearch" style="margin-right: 8px;">
-            Enable Image Research
-        </label>
-        <label>
-            <input type="checkbox" id="enableAIOverview" style="margin-right: 8px; margin-left:16px;">
+       <label>
+            <input type="checkbox" id="enableVoiceMode" style="margin-right: 8px;">
+            Enable Voice Mode
+       </label>
+        <label style="display:none;">
+            <input type="checkbox" id="enableAIOverview" style="margin-right: 8px; display: none; margin-left:16px;">
             Enable AI Overview
         </label>
         
@@ -2486,6 +2418,271 @@ content="
 
 </div>
     <script nonce="rjighegujregergrejge">
+        (function () {
+            // --- Voice Mode Toggle ---
+            let voiceModeEnabled = localStorage.getItem('enableVoiceMode') === 'true';
+            const voiceModeBtn = document.getElementById('voiceModeBtn');
+            const searchApp = document.querySelector('.search-app');
+            let voiceModeUI = null;
+
+            // Labs modal checkbox
+            const labsVoiceCheckbox = document.getElementById('enableVoiceMode');
+            if (labsVoiceCheckbox) {
+                labsVoiceCheckbox.checked = voiceModeEnabled;
+                labsVoiceCheckbox.addEventListener('change', function () {
+                    voiceModeEnabled = this.checked;
+                    localStorage.setItem('enableVoiceMode', voiceModeEnabled);
+                    updateVoiceModeUI();
+                });
+            }
+
+            // Show/hide voice mode button in topbar
+            function updateVoiceModeUI() {
+                if (!voiceModeEnabled) {
+                    if (voiceModeBtn) voiceModeBtn.style.display = 'none';
+                    if (voiceModeUI) voiceModeUI.remove();
+                    return;
+                }
+                if (voiceModeBtn) voiceModeBtn.style.display = '';
+            }
+
+            updateVoiceModeUI();
+
+            // --- Voice Mode Floating UI ---
+            function showVoiceModeUI() {
+                // Remove existing
+                document.getElementById('voiceModeFloating')?.remove();
+                // Floating container
+                voiceModeUI = document.createElement('div');
+                voiceModeUI.id = 'voiceModeFloating';
+                voiceModeUI.style.position = 'fixed';
+                voiceModeUI.style.bottom = '32px';
+                voiceModeUI.style.right = '32px';
+                voiceModeUI.style.zIndex = '10080';
+                voiceModeUI.style.display = 'flex';
+                voiceModeUI.style.flexDirection = 'column';
+                voiceModeUI.style.alignItems = 'flex-end';
+                voiceModeUI.innerHTML = `
+                    <div class="liquid-glass" id="voiceModeTopbar" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px 10px 18px;border-radius:18px 18px 0 0;min-width:220px; width: 100%;">
+                        <span style="font-weight:700;font-size:1.1em;">Voice Mode</span>
+                        <button id="voiceModeClose" style="background:none;border:none;color:#fff;font-size:1.5em;cursor:pointer;">&times;</button>
+                    </div>
+                    <div id="voiceHistoryWrapper" style="background:rgba(25,0,71,0.13);backdrop-filter:blur(2px) saturate(180%);border-radius:0 0 18px 18px;box-shadow:0 2px 16px #0002;padding:12px 18px 12px 18px;max-width:340px;min-width:220px;max-height:260px;overflow-y:auto;">
+                        <div style="font-size:0.97em;color:#aaa;margin-bottom:6px;">Voice History</div>
+                        <div id="voiceHistoryList" style="display:flex;flex-direction:column;gap:8px;"></div>
+                    </div>
+                    <button id="voiceMicBtn" class="liquid-glass" style="margin-top:12px;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+                        <span class="material-symbols-rounded" style="font-size:2.2em;color:#fff;">mic</span>
+                    </button>
+                `;
+                document.body.appendChild(voiceModeUI);
+
+                // Topbar close
+                voiceModeUI.querySelector('#voiceModeClose').onclick = function () {
+                    voiceModeUI.remove();
+                };
+
+                // Voice history
+                let voiceHistory = [];
+                function renderVoiceHistory() {
+                    const list = voiceModeUI.querySelector('#voiceHistoryList');
+                    list.innerHTML = '';
+                    if (!voiceHistory.length) {
+                        list.innerHTML = '<span style="color:#aaa;">No voice history.</span>';
+                        return;
+                    }
+                    voiceHistory.slice(-10).reverse().forEach((msg, i) => {
+                        const div = document.createElement('div');
+                        div.style.background = '#a259f722';
+                        div.style.borderRadius = '8px';
+                        div.style.padding = '6px 10px';
+                        div.style.fontSize = '1em';
+                        div.style.color = '#fff';
+                        div.style.cursor = msg.type === 'result' ? 'pointer' : 'default';
+                        div.textContent = msg.text;
+                        if (msg.type === 'result' && msg.link) {
+                            div.onclick = () => window.open(msg.link, '_blank');
+                            div.style.textDecoration = 'underline';
+                        }
+                        list.appendChild(div);
+                    });
+                }
+
+                // Mic button logic
+                const micBtn = voiceModeUI.querySelector('#voiceMicBtn');
+                let recognition = null;
+                let isListening = false;
+                micBtn.onclick = function () {
+                    if (isListening) {
+                        stopVoiceRecognition();
+                    } else {
+                        startVoiceRecognition();
+                    }
+                };
+
+                // Play sound
+                function playSound(type) {
+                    if (typeof Tone === "undefined") {
+                        const script = document.createElement('script');
+                        script.src = "https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.js";
+                        script.onload = () => playSound(type);
+                        document.head.appendChild(script);
+                        return;
+                    }
+                    let synth = window._voiceSynth;
+                    if (!synth) {
+                        synth = new Tone.PolySynth(Tone.Synth, {
+                            oscillator: { type: "triangle" },
+                            envelope: { attack: 0.01, decay: 0.1, sustain: 0.1, release: 0.2 }
+                        }).toDestination();
+                        window._voiceSynth = synth;
+                    }
+                    if (type === "listening") {
+                        synth.triggerAttackRelease("C5", "8n");
+                    } else if (type === "done") {
+                        synth.triggerAttackRelease("C3", "8n");
+                    } else if (type === "denied") {
+                        synth.triggerAttackRelease("C4", "8n");
+                    }
+                }
+
+                // Speak text
+                function speak(text) {
+                    if ('speechSynthesis' in window) {
+                        const utter = new SpeechSynthesisUtterance(text);
+                        utter.lang = localStorage.getItem('searchLanguage') || 'en';
+                        window.speechSynthesis.speak(utter);
+                    }
+                }
+
+                // Voice recognition logic
+                function startVoiceRecognition() {
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    if (!SpeechRecognition) {
+                        speak("Sorry, voice search is not supported in this browser.");
+                        playSound('denied');
+                        return;
+                    }
+                    if (recognition) {
+                        recognition.stop();
+                        recognition = null;
+                    }
+                    recognition = new SpeechRecognition();
+                    recognition.lang = localStorage.getItem('searchLanguage') || 'en';
+                    recognition.interimResults = false;
+                    recognition.continuous = true;
+                    isListening = true;
+                    playSound('listening');
+                    micBtn.style.boxShadow = "0 0 0 8px #a259f744";
+                    recognition.onresult = function (event) {
+                        let transcript = event.results[event.results.length - 1][0].transcript.trim();
+                        voiceHistory.push({ text: transcript, type: 'user' });
+                        renderVoiceHistory();
+                        handleVoiceCommand(transcript);
+                        playSound('done');
+                        // Don't stop listening; keep recognition running
+                    };
+                    recognition.onerror = function (event) {
+                        playSound('denied');
+                        micBtn.style.boxShadow = "0 2px 16px #a259f733";
+                        speak("Sorry, I could not get your microphone");
+                        voiceHistory.push({ text: "Sorry, I could not get your microphone", type: 'system' });
+                        renderVoiceHistory();
+                        stopVoiceRecognition();
+                    };
+                    recognition.onend = function () {
+                        if (isListening) {
+                            // Restart recognition for continuous listening
+                            try { recognition.start(); } catch {}
+                        } else {
+                            micBtn.style.boxShadow = "0 2px 16px #a259f733";
+                        }
+                    };
+                    recognition.start();
+                }
+
+                function stopVoiceRecognition() {
+                    isListening = false;
+                    if (recognition) {
+                        recognition.onend = null;
+                        recognition.stop();
+                        recognition = null;
+                    }
+                    micBtn.style.boxShadow = "0 2px 16px #a259f733";
+                }
+
+                                // Handle voice commands
+                                function handleVoiceCommand(text) {
+                                    // "search for ..." or "find ..." or "look up ..."
+                                    let searchMatch = text.match(/^(search for|find|look up)\s+(.+)/i);
+                                    if (searchMatch) {
+                                        let q = searchMatch[2];
+                                        document.getElementById('searchInput').value = q;
+                                        speak("Searching for " + q);
+                                        performSearch().then(() => {
+                                            // After results are rendered, speak which result to open
+                                            const results = document.querySelectorAll('.result-link');
+                                            if (results.length > 0) {
+                                                speak(`Say "open result 1" to open the first result, or "open result 2" for the second, and so on.`);
+                                            } else {
+                                                speak("No results found.");
+                                            }
+                                        });
+                                        voiceHistory.push({ text: "Searching for: " + q, type: 'system' });
+                                        renderVoiceHistory();
+                                        return;
+                                    }
+                                    // "choose result [number]" or "open result [number]"
+                                    let chooseMatch = text.match(/(choose|open) result (\d+)/i);
+                                    if (chooseMatch) {
+                                        let idx = parseInt(chooseMatch[2], 10) - 1;
+                                        let results = document.querySelectorAll('.result-link');
+                                        if (results[idx]) {
+                                            let link = results[idx].href;
+                                            speak("Opening result " + (idx + 1));
+                                            window.open(link, '_blank');
+                                            voiceHistory.push({ text: "Opened result " + (idx + 1), type: 'result', link });
+                                            renderVoiceHistory();
+                                            return;
+                                        } else {
+                                            speak("Sorry, I could not find that result.");
+                                            voiceHistory.push({ text: "Sorry, I could not find that result.", type: 'system' });
+                                            renderVoiceHistory();
+                                            return;
+                                        }
+                                    }
+                                    // "clear history"
+                                    if (/clear history/i.test(text)) {
+                                        voiceHistory = [];
+                                        renderVoiceHistory();
+                                        speak("Voice history cleared.");
+                                        return;
+                                    }
+                                    // Fallback: treat as search
+                                    document.getElementById('searchInput').value = text;
+                                    speak("Searching for " + text);
+                                    performSearch().then(() => {
+                                        const results = document.querySelectorAll('.result-link');
+                                        if (results.length > 0) {
+                                            speak(`Say "open result 1" to open the first result, or "open result 2" for the second, and so on.`);
+                                        } else {
+                                            speak("No results found.");
+                                        }
+                                    });
+                                    voiceHistory.push({ text: "Searching for: " + text, type: 'system' });
+                                    renderVoiceHistory();
+                                }
+
+                                renderVoiceHistory();
+            }
+
+            // Show floating UI when voice mode button is clicked
+            if (voiceModeBtn) {
+                voiceModeBtn.onclick = function () {
+                    showVoiceModeUI();
+                };
+            }
+        })();
         (function () {
             // --- AI Overview Toggle ---
             function isAIOverviewEnabled() {
@@ -3695,6 +3892,103 @@ content="
                     answer: "Yes, iOS 26 was released on September 15, 2025. <br> IOS 26 introduced several new features like <br> Liquid Glass Design (Note: Its Apple Liquid Glass) <br> New Games App <br> Create Polls in Messages <br> Enhanced Apple Intelligence <br> and more! <br> For more details, visit the official Apple iOS 26 page <a href='https://www.apple.com/ios/' target='_blank' rel='noopener'>here</a>."
                 },
                 {
+                    keywords: [/what\s+is\s+supervidplayer/i, /supervidplayer/i],
+                    answer: "SuperVidPlayer is an upcoming next-generation video platform planned for launch in March 2026. It will offer up to 8K video quality, free downloads for offline viewing, seamless discovery, easy sharing and uploading, and an optional ad toggle (default off) for a user-first experience. The planned domain is <a href='#' target='_blank' rel='noopener'>supervidplayer.net</a>."
+                },
+                {
+                    keywords: [/what\s+is\s+munetios\s+weather/i, /munetios\s+weather/i],
+                    answer: "Munetios Weather is a free weather app that uses the Open-Meteo API to provide accurate weather information for your location. Try it at <a href='https://weather.munetios.com/' target='_blank' rel='noopener'>weather.munetios.com</a>."
+                },
+                {
+                    keywords: [/what\s+is\s+munetios\s+office/i, /munetios\s+office/i],
+                    answer: "Munetios Office is an all-in-one productivity suite that includes Docs, Worksheets, and Journal. It is modern, fast, and easy to use. Try it at <a href='https://docs.munetios.com/' target='_blank' rel='noopener'>docs.munetios.com</a>."
+                },
+                {
+                    keywords: [/what\s+is\s+munetios\s+photos/i, /munetios\s+photos/i],
+                    answer: "Munetios Photos is a modern photo app that lets you upload, organize, and manage your photo collection with albums and a beautiful interface. Try it at <a href='https://photos.munetios.com/' target='_blank' rel='noopener'>photos.munetios.com</a>."
+                },
+                {
+                    keywords: [/what\s+is\s+munetios\s+notebook/i, /munetios\s+notebook/i],
+                    answer: "Munetios Notebook is a secure, local-first app for organizing your notes, ideas, and plans. Try it at <a href='https://notebook.munetios.com/' target='_blank' rel='noopener'>notebook.munetios.com</a>."
+                },
+                {
+                    keywords: [/what\s+is\s+munetios\s+tasks/i, /munetios\s+tasks/i],
+                    answer: "Munetios Tasks is a privacy-friendly, offline-capable task manager to help you organize and track your tasks. Try it at <a href='https://tasks.munetios.com/' target='_blank' rel='noopener'>tasks.munetios.com</a>."
+                },
+                {
+                    keywords: [/what\s+is\s+munetios\s+api/i, /munetios\s+api/i],
+                    answer: "Munetios API provides tools and documentation for building beautiful and functional web applications. Explore at <a href='https://api.munetios.com/' target='_blank' rel='noopener'>api.munetios.com</a>."
+                },
+                {
+                    keywords: [/what\s+is\s+munetios\s+blog/i, /munetios\s+blog/i],
+                    answer: "Munetios Blog is the official blog for Munetios, sharing news, updates, and articles about products and services. Visit <a href='https://blog.munetios.com/' target='_blank' rel='noopener'>blog.munetios.com</a>."
+                },
+                {
+                    keywords: [/what\s+is\s+munetios\s+calendar/i, /munetios\s+calendar/i],
+                    answer: "Munetios Calendar is a modern, user-friendly calendar app to help you manage your schedule. Try it at <a href='https://calendar.munetios.com/' target='_blank' rel='noopener'>calendar.munetios.com</a>."
+                },
+                {
+                    keywords: [/what\s+is\s+munetios\s+calculator/i, /munetios\s+calculator/i],
+                    answer: "Munetios Calculator is a fast, privacy-friendly calculator for quick math and conversions. Try it at <a href='https://calculator.munetios.com/' target='_blank' rel='noopener'>calculator.munetios.com</a>."
+                },
+                {
+                    keywords: [/what\s+is\s+munetios\s+games/i, /munetios\s+games/i],
+                    answer: "Munetios Games Hub is a platform for playing Munetios games. Visit <a href='https://www.munetios.com/games/' target='_blank' rel='noopener'>munetios.com/games</a>."
+                },
+                {
+                    keywords: [/what\s+is\s+munetios\s+classic\s+calendar/i, /munetios\s+classic\s+calendar/i],
+                    answer: "Munetios Classic Calendar is the legacy version of Munetios Calendar. It is being deprecated in favor of the new version at <a href='https://calendar.munetios.com/' target='_blank' rel='noopener'>calendar.munetios.com</a>."
+                },
+                {
+                    keywords: [/what\s+is\s+munetios\s+notes/i, /munetios\s+notes/i],
+                    answer: "Munetios Notes (Legacy) is a simple, fast note-taking app. Try it at <a href='https://notes.munetios.com/' target='_blank' rel='noopener'>notes.munetios.com</a>."
+                },
+                {
+                    keywords: [/what\s+is\s+liquid\s+glass\s+design/i, /liquid\s+glass\s+design/i],
+                    answer: "Liquid Glass Design is a visual theme developed by Munetios featuring blurry transparency effects and vibrant colors for a modern, premium look. It is used throughout Munetios products."
+                },
+                {
+                    keywords: [/who\s+founded\s+munetios/i, /who\s+is\s+the\s+founder\s+of\s+munetios/i],
+                    answer: "Munetios was founded by an independent developer in Abington, Massachusetts, with a focus on privacy and modern web experiences."
+                },
+                {
+                    keywords: [/when\s+was\s+munetios\s+launched/i, /munetios\s+launch\s+date/i],
+                    answer: "Munetios was founded on January 12, 2025, in Abington, Massachusetts."
+                },
+                {
+                    keywords: [/what\s+is\s+munetios\s+search/i, /munetios\s+search/i],
+                    answer: "Munetios Search is a privacy-friendly search engine with a modern liquid glass design. It provides fast, beautiful, and secure search results without tracking users."
+                },
+                {
+                    keywords: [/what\s+is\s+munetios\s+classic/i, /munetios\s+classic/i],
+                    answer: "Munetios Classic refers to the legacy versions of Munetios apps, such as Classic Calendar, which are being phased out in favor of new, improved versions."
+                },
+                {
+                    keywords: [/what\s+is\s+munetios\s+labs/i, /munetios\s+labs/i],
+                    answer: "Munetios Labs is an experimental section where you can try out new features and provide feedback. Labs features may be unstable or change at any time."
+                },
+                {
+                    keywords: [/what\s+is\s+munetios\s+api'?s/i, /munetios\s+api'?s/i],
+                    answer: "Munetios APIs allow developers to use components like Better HTML and Beautiful CSS for building modern web apps. See <a href='https://api.munetios.com/' target='_blank' rel='noopener'>api.munetios.com</a> for documentation."
+                },
+                {
+                    keywords: [/what\s+is\s+munetios\s+voice\s+assistant/i, /munetios\s+voice\s+assistant/i],
+                    answer: "Munetios Voice Assistant is an upcoming feature that will allow you to interact with Munetios apps using your voice. Stay tuned for updates."
+                },
+                {
+                    keywords: [/what\s+is\s+munetios\s+blog/i, /munetios\s+blog/i],
+                    answer: "Munetios Blog is the official blog for Munetios, sharing news, updates, and articles about products and services. Visit <a href='https://blog.munetios.com/' target='_blank' rel='noopener'>blog.munetios.com</a>."
+                },
+                {
+                    keywords: [/how\s+to\s+contact\s+munetios/i, /munetios\s+contact/i],
+                    answer: "You can contact Munetios by emailing <a href='mailto:minecraftgamer97529@gmail.com'>minecraftgamer97529@gmail.com</a>."
+                },
+                {
+                    keywords: [/what\s+is\s+munetios\s+tasks/i, /munetios\s+tasks/i],
+                    answer: "Munetios Tasks is a privacy-friendly, offline-capable task manager to help you organize and track your tasks. Try it at <a href='https://tasks.munetios.com/' target='_blank' rel='noopener'>tasks.munetios.com</a>."
+                },
+                
+                {
                     keywords: [/what\s+time\s+is\s+it/i, /current\s+time/i, /local\s+time/i, /what\s+is\s+the\s+date/i, /current\s+date/i, /today'?s?\s+date/i, /now\s+time/i],
                     answer: (() => {
                         const now = new Date();
@@ -3738,7 +4032,7 @@ content="
                     <div style="padding:28px 32px 18px 32px;display:flex;flex-direction:column;gap:12px;">
                         <div style="display:flex;align-items:center;gap:10px;">
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a259f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><circle cx="12" cy="12" r="10"/><path d="M8 15h8M8 12h8M8 9h8"/></svg>
-                            <span style="font-size:1.25em;font-weight:700;letter-spacing:0.2px;">AI Overview <span style="font-size:0.85em;color:#a259f7;font-weight:500;margin-left:6px;">Beta</span></span>
+                            <span style="font-size:1.25em;font-weight:700;letter-spacing:0.2px;">AI Overview</span>
                         </div>
                         <div style="font-size:1.13em;line-height:1.6;color:inherit;word-break:break-word;">${answer}</div>
                     </div>
@@ -3955,337 +4249,7 @@ content="
                 renderAIOverview(this.value.trim());
             });
         })();
-        (function () {
-            // --- Image Research Labs Toggle ---
-            function updateImageResearchIcon() {
-                const enabled = localStorage.getItem('enableImageResearch') === 'true' ||
-                    (document.getElementById('enableImageResearch') && document.getElementById('enableImageResearch').checked);
-                document.getElementById('imageResearchIcon').style.display = enabled ? '' : 'none';
-            }
-            // Listen for Labs modal checkbox
-            document.getElementById('enableImageResearch').addEventListener('change', function () {
-                localStorage.setItem('enableImageResearch', this.checked);
-                updateImageResearchIcon();
-            });
-            // On load, set icon visibility
-            updateImageResearchIcon();
-
-            // --- Image Research Modal ---
-            function showImageResearchModal(imageSrc) {
-                // Remove any existing modal
-                document.getElementById('imageResearchModal')?.remove();
-                // Modal HTML
-                const modal = document.createElement('div');
-                modal.id = 'imageResearchModal';
-                modal.style.position = 'fixed';
-                modal.style.top = '0';
-                modal.style.left = '0';
-                modal.style.width = '100vw';
-                modal.style.height = '100vh';
-                modal.style.background = 'rgba(0,0,0,0.55)';
-                modal.style.display = 'flex';
-                modal.style.alignItems = 'center';
-                modal.style.justifyContent = 'center';
-                modal.style.zIndex = '10050';
-                modal.innerHTML = `
-                    <div class="liquid-glass" style="max-width:900px;width:98vw;max-height:96vh;overflow:auto;border-radius:18px;position:relative;padding:0;">
-                        <button id="imageResearchModalClose" style="position:absolute;top:10px;right:10px;z-index:2;background:#a259f7;color:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:1.3em;cursor:pointer;display:flex;align-items:center;justify-content:center;">
-                            &times;
-                        </button>
-                        <div style="padding:32px 32px 24px 32px;">
-                            <h2 style="margin-top:0;">Image Research</h2>
-                            <div id="imageResearchDropZone" style="border:2px dashed #a259f7;border-radius:14px;padding:32px;text-align:center;cursor:pointer;background:rgba(162,89,247,0.06);margin-bottom:18px;">
-                                <div style="font-size:1.1em;margin-bottom:10px;">
-                                    <b>Drag and drop an image</b> or <label for="imageResearchFile" style="color:#a259f7;cursor:pointer;text-decoration:underline;">attach</label> or paste an image URL below.
-                                </div>
-                                <input type="file" id="imageResearchFile" accept="image/*" style="display:none;">
-                                <input type="text" id="imageResearchUrl" placeholder="Paste image URL here" style="width:80%;padding:8px 12px;border-radius:8px;border:1px solid #a259f7;margin-top:10px;">
-                                <button id="imageResearchUrlBtn" class="btn liquid-glass" style="margin-left:8px;padding:8px 18px;">Scan</button>
-                                <div id="imageResearchPreview" style="margin-top:18px;"></div>
-                            </div>
-                            <div id="imageResearchResults"></div>
-                        </div>
-                    </div>
-                `;
-                document.body.appendChild(modal);
-                document.body.style.overflow = 'hidden';
-
-                // Close logic
-                modal.querySelector('#imageResearchModalClose').onclick = function () {
-                    modal.remove();
-                    document.body.style.overflow = '';
-                };
-                modal.addEventListener('mousedown', function (e) {
-                    if (e.target === modal) {
-                        modal.remove();
-                        document.body.style.overflow = '';
-                    }
-                });
-
-                // Drag & drop
-                const dropZone = modal.querySelector('#imageResearchDropZone');
-                dropZone.addEventListener('dragover', function (e) { e.preventDefault(); dropZone.style.background = '#a259f722'; });
-                dropZone.addEventListener('dragleave', function (e) { dropZone.style.background = 'rgba(162,89,247,0.06)'; });
-                dropZone.addEventListener('drop', function (e) {
-                    e.preventDefault();
-                    dropZone.style.background = 'rgba(162,89,247,0.06)';
-                    const file = e.dataTransfer.files[0];
-                    if (file && file.type.startsWith('image/')) {
-                        handleImageFile(file);
-                    }
-                });
-                // File input
-                dropZone.querySelector('#imageResearchFile').addEventListener('change', function () {
-                    const file = this.files[0];
-                    if (file && file.type.startsWith('image/')) {
-                        handleImageFile(file);
-                    }
-                });
-                dropZone.querySelector('label[for="imageResearchFile"]').onclick = function () {
-                    dropZone.querySelector('#imageResearchFile').click();
-                };
-                // URL input
-                dropZone.querySelector('#imageResearchUrlBtn').onclick = function () {
-                    const url = dropZone.querySelector('#imageResearchUrl').value.trim();
-                    if (url) handleImageUrl(url);
-                };
-                dropZone.querySelector('#imageResearchUrl').addEventListener('keydown', function (e) {
-                    if (e.key === 'Enter') {
-                        const url = this.value.trim();
-                        if (url) handleImageUrl(url);
-                    }
-                });
-
-                // If imageSrc provided (from "image research this image"), show preview and scan
-                if (imageSrc) {
-                    showImagePreview(imageSrc);
-                    scanImage(imageSrc);
-                }
-
-                // Handle file
-                function handleImageFile(file) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        showImagePreview(e.target.result);
-                        scanImage(e.target.result);
-                    };
-                    reader.readAsDataURL(file);
-                }
-                // Handle URL
-                function handleImageUrl(url) {
-                    showImagePreview(url);
-                    scanImage(url);
-                }
-                // Show preview
-                function showImagePreview(src) {
-                    const preview = dropZone.querySelector('#imageResearchPreview');
-                    preview.innerHTML = `<img src="${src}" alt="preview" style="max-width:320px;max-height:220px;border-radius:10px;box-shadow:0 2px 8px #0002;">`;
-                }
-                // Scan image: find visually similar images from .results and Wikipedia/GitHub/StackOverflow images
-                async function scanImage(src) {
-                    const resultsDiv = modal.querySelector('#imageResearchResults');
-                    resultsDiv.innerHTML = '<div style="padding:24px 0;text-align:center;color:#aaa;">Searching for visually similar images...</div>';
-                    // Load all images from current .results (images tab) and external sources
-                    let allImages = [];
-                    // 1. Images in .results (images tab)
-                    document.querySelectorAll('.result img').forEach(function (img) {
-                        if (img.src) {
-                            allImages.push({
-                                src: img.src,
-                                title: img.closest('.result') && img.closest('.result').querySelector('a') ? img.closest('.result').querySelector('a').textContent : '',
-                                link: img.closest('.result') && img.closest('.result').querySelector('a') ? img.closest('.result').querySelector('a').href : ''
-                            });
-                        }
-                    });
-                    // If no images found, but src is provided, add it as a fallback
-                    if (allImages.length === 0 && src) {
-                        allImages.push({
-                            src: src,
-                            title: 'Selected Image',
-                            link: ''
-                        });
-                    }
-                    // 4. Compare images visually (pixel similarity)
-                    // We'll use a simple average hash (aHash) for comparison
-                    async function getImageHash(url) {
-                        return new Promise(function (resolve) {
-                            const img = new window.Image();
-                            img.crossOrigin = 'anonymous';
-                            img.onload = function () {
-                                try {
-                                    const canvas = document.createElement('canvas');
-                                    canvas.width = 8; canvas.height = 8;
-                                    const ctx = canvas.getContext('2d');
-                                    ctx.drawImage(img, 0, 0, 8, 8);
-                                    const data = ctx.getImageData(0, 0, 8, 8).data;
-                                    let gray = [];
-                                    for (let i = 0; i < 64; i++) {
-                                        const r = data[i * 4], g = data[i * 4 + 1], b = data[i * 4 + 2];
-                                        gray.push((r + g + b) / 3);
-                                    }
-                                    const avg = gray.reduce(function (a, b) { return a + b; }, 0) / 64;
-                                    let hash = '';
-                                    for (let i = 0; i < 64; i++) hash += gray[i] > avg ? '1' : '0';
-                                    resolve(hash);
-                                } catch (e) { resolve(''); }
-                            };
-                            img.onerror = function () { resolve(''); };
-                            img.src = url;
-                        });
-                    }
-                    // Hamming distance
-                    function hamming(a, b) {
-                        if (!a || !b || a.length !== b.length) return 64;
-                        let d = 0;
-                        for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) d++;
-                        return d;
-                    }
-                    // Get hash for input image
-                    const inputHash = await getImageHash(src);
-                    // Get hashes for all images
-                    let hashes = [];
-                    for (let i = 0; i < allImages.length; i++) {
-                        hashes.push(await getImageHash(allImages[i].src));
-                    }
-                    // Find best matches (lowest distance)
-                    let matches = [];
-                    // Increase threshold to 24 (was 16) for less strict matching
-                    const SIMILARITY_THRESHOLD = 24;
-                    for (let i = 0; i < allImages.length; i++) {
-                        const dist = hamming(inputHash, hashes[i]);
-                        if (dist < SIMILARITY_THRESHOLD) { // threshold: 24/64 bits
-                            matches.push(Object.assign({}, allImages[i], { distance: dist }));
-                        }
-                    }
-                    matches.sort(function (a, b) { return a.distance - b.distance; });
-                    // Always show at least the previewed image if no matches found
-                    if (matches.length === 0 && allImages.length > 0) {
-                        matches.push(Object.assign({}, allImages[0], { distance: 0 }));
-                    }
-                    // Show results
-                    if (matches.length) {
-                        resultsDiv.innerHTML = `<div style="font-weight:600;margin-bottom:10px;">Found similar images:</div>
-                            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;">` +
-                            matches.slice(0, 12).map(function (m) {
-                                return `<div style="text-align:center;">
-                                    <a href="${m.link}" target="_blank" rel="noopener">
-                                        <img src="${m.src}" style="max-width:160px;max-height:120px;border-radius:8px;box-shadow:0 2px 8px #0002;">
-                                    </a>
-                                    <div style="font-size:0.97em;color:#a259f7;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${m.title || ''}</div>
-                                </div>`;
-                            }).join('') +
-                            `</div>`;
-                    } else {
-                        // If no matches, but there are images, show a message with a sample of images
-                        if (allImages.length > 0) {
-                            resultsDiv.innerHTML = `<div style="padding:24px 0;text-align:center;color:#aaa;">No visually similar images found in current results.<br>Try searching for something else or use a different image.<br><br>Here are some images from the current results:</div>
-                            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:12px;">` +
-                            allImages.slice(0, 8).map(function (m) {
-                                return `<div style="text-align:center;">
-                                    <a href="${m.link}" target="_blank" rel="noopener">
-                                        <img src="${m.src}" style="max-width:100px;max-height:80px;border-radius:6px;box-shadow:0 2px 8px #0002;">
-                                    </a>
-                                    <div style="font-size:0.92em;color:#a259f7;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${m.title || ''}</div>
-                                </div>`;
-                            }).join('') +
-                            `</div>`;
-                        } else {
-                            resultsDiv.innerHTML = `<div style="padding:24px 0;text-align:center;color:#aaa;">No visually similar images found in current results.<br>Try searching for something else or use a different image.</div>`;
-                        }
-                    }
-                }
-            }
-
-            // --- Main Search Bar Icon ---
-            document.getElementById('imageResearchIcon').addEventListener('click', function () {
-                showImageResearchModal();
-            });
-
-            // --- Images Tab: Add "Image Research this image" icon to each image ---
-            function addImageResearchIconsToImagesTab() {
-                // Only run on Images tab
-                if (!document.getElementById('imagesResult').classList.contains('active')) return;
-                document.querySelectorAll('.result img').forEach(function (img) {
-                    if (img.parentNode.querySelector('.image-research-btn')) return;
-                    const btn = document.createElement('span');
-                    btn.className = 'image-research-btn';
-                    btn.title = 'Image Research this image';
-                    btn.style.position = 'absolute';
-                    btn.style.bottom = '10px';
-                    btn.style.right = '10px';
-                    btn.style.background = '#a259f7cc';
-                    btn.style.color = '#fff';
-                    btn.style.borderRadius = '50%';
-                    btn.style.width = '36px';
-                    btn.style.height = '36px';
-                    btn.style.display = 'flex';
-                    btn.style.alignItems = 'center';
-                    btn.style.justifyContent = 'center';
-                    btn.style.cursor = 'pointer';
-                    btn.style.zIndex = '10';
-                    btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><rect x="7" y="7" width="8" height="8" rx="2" ry="2"></rect></svg>`;
-                    btn.onclick = function (e) {
-                        e.stopPropagation();
-                        showImageResearchModal(img.src);
-                    };
-                    img.parentNode.style.position = 'relative';
-                    img.parentNode.appendChild(btn);
-                });
-            }
-            // Patch images tab render to add icons
-            const origImagesResultClick = document.getElementById('imagesResult').onclick;
-            document.getElementById('imagesResult').addEventListener('click', function () {
-                setTimeout(addImageResearchIconsToImagesTab, 500);
-                if (typeof origImagesResultClick === 'function') origImagesResultClick();
-            });
-            // Also run after images tab loads
-            document.addEventListener('DOMContentLoaded', function () {
-                setTimeout(addImageResearchIconsToImagesTab, 1000);
-            });
-
-            // --- Show icon in images tab bottom right ---
-            function addFloatingImageResearchBtn() {
-                if (document.getElementById('floatingImageResearchBtn')) return;
-                const btn = document.createElement('button');
-                btn.id = 'floatingImageResearchBtn';
-                btn.className = 'btn liquid-glass';
-                btn.style.position = 'fixed';
-                btn.style.bottom = '32px';
-                btn.style.right = '32px';
-                btn.style.zIndex = '10010';
-                btn.style.background = '#a259f7';
-                btn.style.color = '#fff';
-                btn.style.padding = '14px 22px';
-                btn.style.fontSize = '1.1em';
-                btn.style.borderRadius = '32px';
-                btn.style.boxShadow = '0 4px 24px #0002';
-                btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:8px;"><circle cx="11" cy="11" r="8"></circle><rect x="7" y="7" width="8" height="8" rx="2" ry="2"></rect></svg> Image Research`;
-                btn.onclick = function () {
-                    showImageResearchModal();
-                };
-                document.body.appendChild(btn);
-            }
-            // Show/hide floating button on images tab
-            function updateFloatingBtn() {
-                const enabled = localStorage.getItem('enableImageResearch') === 'true' ||
-                    (document.getElementById('enableImageResearch') && document.getElementById('enableImageResearch').checked);
-                if (document.getElementById('imagesResult').classList.contains('active') && enabled) {
-                    addFloatingImageResearchBtn();
-                } else {
-                    document.getElementById('floatingImageResearchBtn')?.remove();
-                }
-            }
-            // Listen for tab changes
-            document.querySelectorAll('.btn.type').forEach(function (btn) {
-                btn.addEventListener('click', function () {
-                    setTimeout(updateFloatingBtn, 400);
-                });
-            });
-            // On load
-            document.addEventListener('DOMContentLoaded', function () {
-                setTimeout(updateFloatingBtn, 1000);
-            });
-        })();
+      
                 document.getElementById('labsIcon').addEventListener('click', function () {
                     const labsModal = document.getElementById('labsModal');
                     if (labsModal) {
@@ -4755,7 +4719,263 @@ content="
             }
         }
     });
+    // --- Bookmarks Modal Logic ---
+    function showBookmarksModal() {
+        // Remove existing modal if any
+        document.getElementById('bookmarksModal')?.remove();
+        const modal = document.createElement('div');
+        modal.id = 'bookmarksModal';
+        modal.style.position = 'fixed';
+        modal.style.top = '0';
+        modal.style.left = '0';
+        modal.style.width = '100vw';
+        modal.style.height = '100vh';
+        modal.style.background = 'rgba(0,0,0,0.35)';
+        modal.style.display = 'flex';
+        modal.style.alignItems = 'center';
+        modal.style.justifyContent = 'center';
+        modal.style.zIndex = '10021';
+        modal.innerHTML = `
+        <div class="liquid-glass" style="padding:0;border-radius:18px;box-shadow:0 4px 32px #0002;position:relative;max-width:95vw;min-width:340px;">
+            <button id="bookmarksModalClose" style="position:absolute;top:10px;right:10px;z-index:2;background:#a259f7;color:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:1.3em;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            &times;
+            </button>
+            <div style="padding:32px 28px 24px 28px;max-width:540px;">
+            <h2 style="margin-top:0;">Bookmarks</h2>
+            <div id="bookmarksList" style="margin-bottom:18px;"></div>
+            <button id="clearBookmarksBtn" class="btn liquid-glass" style="background:#e34133;color:#fff;padding:6px 18px;font-size:1em;">Clear All Bookmarks</button>
+            </div>
+        </div>
+        `;
+        document.body.appendChild(modal);
+        document.body.style.overflow = 'hidden';
+        modal.querySelector('#bookmarksModalClose').onclick = function () {
+        modal.remove();
+        document.body.style.overflow = '';
+        };
+        modal.addEventListener('mousedown', function (e) {
+        if (e.target === modal) {
+            modal.remove();
+            document.body.style.overflow = '';
+        }
+        });
 
+        // Render bookmarks
+        function renderBookmarks() {
+        const list = modal.querySelector('#bookmarksList');
+        let bookmarks = [];
+        try {
+            bookmarks = JSON.parse(localStorage.getItem('munetiosBookmarks') || '[]');
+        } catch (e) { bookmarks = []; }
+        if (!bookmarks.length) {
+            list.innerHTML = '<div style="color:#aaa;">No bookmarks yet.</div>';
+            return;
+        }
+        list.innerHTML = '';
+        bookmarks.forEach((bm, i) => {
+            const div = document.createElement('div');
+            div.className = 'result';
+            div.style.marginBottom = '12px';
+            div.innerHTML = `
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                <img class="result-favicon" src="${bm.favicon || 'https://www.google.com/s2/favicons?domain=' + encodeURIComponent(bm.link)}" alt="favicon">
+                <a class="result-link" href="${bm.link}" rel="noopener" target="_blank">${bm.link}</a>
+            </div>
+            <a class="result-title" href="${bm.link}" rel="noopener" target="_blank" style="font-size:1.15em;font-weight:700;display:inline-block;text-decoration:none;color:inherit;margin-bottom:8px;">${bm.title}</a>
+            <div class="result-description">${bm.description}</div>
+            <button class="btn liquid-glass" style="background:#e34133;color:#fff;margin-top:8px;" data-index="${i}">Remove</button>
+            `;
+            div.querySelector('button').onclick = function () {
+            let bookmarks = [];
+            try {
+                bookmarks = JSON.parse(localStorage.getItem('munetiosBookmarks') || '[]');
+            } catch (e) { bookmarks = []; }
+            bookmarks.splice(i, 1);
+            localStorage.setItem('munetiosBookmarks', JSON.stringify(bookmarks));
+            renderBookmarks();
+            };
+            list.appendChild(div);
+        });
+        }
+        renderBookmarks();
+
+        // Clear all bookmarks
+        modal.querySelector('#clearBookmarksBtn').onclick = function () {
+        localStorage.removeItem('munetiosBookmarks');
+        renderBookmarks();       
+        };
+    }
+
+    // Bookmarks icon click
+    document.getElementById('bookmarksBtn').addEventListener('click', showBookmarksModal);
+
+    // --- Add Bookmark Button to More Options ---
+    // Patch details-panel logic to add Bookmark button
+    const origShowReportModal = typeof showReportModal === 'function' ? showReportModal : null;
+    function addBookmark(result) {
+        let bookmarks = [];
+        try {
+        bookmarks = JSON.parse(localStorage.getItem('munetiosBookmarks') || '[]');
+        } catch (e) { bookmarks = []; }
+        // Avoid duplicates by link
+        if (!bookmarks.some(bm => bm.link === result.link)) {
+        bookmarks.push({
+            title: result.title,
+            description: result.description,
+            link: result.link,
+            favicon: result.favicon
+        });
+        localStorage.setItem('munetiosBookmarks', JSON.stringify(bookmarks));
+        showToast('Bookmarked!');
+        } else {
+        showToast('Already bookmarked.');
+        }
+    }
+    // Patch the event listener for more icon to add Bookmark button
+    document.addEventListener('click', function (e) {
+        const moreIcon = e.target.closest('.result-more-icon');
+        if (moreIcon) {
+        // Remove any open details panels
+        document.querySelectorAll('.details-panel').forEach(p => p.remove());
+        const resultDiv = moreIcon.closest('.result');
+        // Find result data by link
+        const linkEl = resultDiv.querySelector('.result-link');
+        const link = linkEl ? linkEl.getAttribute('href') : '';
+        // Find the result object from all sources
+        let allResults = getResultsFromDOM();
+        let found = allResults.find(r => r.link === link);
+        // If not found, try to get from rendered DOM (for external results)
+        if (!found) {
+            found = {
+            title: resultDiv.querySelector('.result-title')?.textContent || '',
+            description: resultDiv.querySelector('.result-description')?.textContent || '',
+            link: link,
+            favicon: resultDiv.querySelector('.result-favicon')?.src || ''
+            };
+        }
+        // Build details panel with Bookmark button
+        const panel = document.createElement('div');
+        panel.className = 'details-panel liquid-glass';
+        panel.innerHTML = `
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 16px;">
+            <img src="${found.favicon || 'https://www.google.com/s2/favicons?domain=' + encodeURIComponent(found.link)}" alt="favicon" style="width:18px;height:18px;border-radius:4px;">
+            <span style="font-weight:600;font-size:1.05em;">${found.title}</span>
+            </div>
+            <div class="details-text">${found.description}</div>
+            <div class="details-buttons" style="padding:8px 16px;">
+            <a href="${found.link}" target="_blank" rel="noopener" class="btn liquid-glass" style="background:#6c2eb7;color:#fff;">Visit</a>
+            <button class="btn liquid-glass not-interested-btn" style="background:#a259f7;color:#fff;">Not interested</button>
+            <button class="btn liquid-glass bookmark-btn" style="background:#f7b500;color:#fff;">Bookmark</button>
+            <button class="btn liquid-glass report-btn" style="background:#3a1c71;color:#fff;">Report</button>
+            </div>
+        `;
+        // Position panel
+        panel.style.right = '0';
+        panel.style.top = '40px';
+        // Remove panel if click outside
+        function closePanel(ev) {
+            if (!panel.contains(ev.target) && !moreIcon.contains(ev.target)) {
+            panel.remove();
+            document.removeEventListener('mousedown', closePanel);
+            }
+        }
+        document.addEventListener('mousedown', closePanel);
+        // Add Not interested handler
+        panel.querySelector('.not-interested-btn').onclick = function () {
+            resultDiv.style.display = 'none';
+            panel.remove();
+            showToast('Result removed');
+            try {
+            if (localStorage.getItem('savingData') !== 'off') {
+                let removed = [];
+                try {
+                removed = JSON.parse(localStorage.getItem('removedResults') || '[]');
+                } catch (e) {}
+                removed.push(found.link);
+                localStorage.setItem('removedResults', JSON.stringify(removed));
+            }
+            } catch (err) {}
+        };
+        // Add Bookmark handler
+        panel.querySelector('.bookmark-btn').onclick = function () {
+            addBookmark(found);
+            panel.remove();
+        };
+        // Add Report handler
+        panel.querySelector('.report-btn').onclick = function () {
+            showReportModal(found);
+        };
+        // Remove any existing panel in this result
+        resultDiv.querySelectorAll('.details-panel').forEach(p => p.remove());
+        resultDiv.appendChild(panel);
+        e.stopPropagation();
+        }
+    }, true);
+        // Remove all browser confirm() calls and use a custom modal instead
+        // Custom confirm modal function
+        function customConfirm(message, onConfirm, onCancel) {
+            // Remove any existing modal
+            document.getElementById('customConfirmModal')?.remove();
+            const modal = document.createElement('div');
+            modal.id = 'customConfirmModal';
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.width = '100vw';
+            modal.style.height = '100vh';
+            modal.style.background = 'rgba(0,0,0,0.35)';
+            modal.style.display = 'flex';
+            modal.style.alignItems = 'center';
+            modal.style.justifyContent = 'center';
+            modal.style.zIndex = '10023';
+            modal.innerHTML = `
+            <div class="liquid-glass" style="padding:32px 28px 24px 28px;border-radius:18px;box-shadow:0 4px 32px #0002;max-width:95vw;min-width:320px;position:relative;">
+                <div style="font-size:1.2em;font-weight:600;margin-bottom:12px;">Confirm</div>
+                <div style="margin-bottom:18px;">${message}</div>
+                <div style="display:flex;gap:12px;justify-content:flex-end;">
+                <button id="customConfirmCancel" class="btn liquid-glass" style="background:#aaa;color:#fff;">Cancel</button>
+                <button id="customConfirmOk" class="btn liquid-glass" style="background:#e34133;color:#fff;">OK</button>
+                </div>
+            </div>
+            `;
+            document.body.appendChild(modal);
+            // Cancel
+            modal.querySelector('#customConfirmCancel').onclick = function () {
+            modal.remove();
+            if (onCancel) onCancel();
+            };
+            // OK
+            modal.querySelector('#customConfirmOk').onclick = function () {
+            modal.remove();
+            if (onConfirm) onConfirm();
+            };
+            // Close on click outside
+            modal.addEventListener('mousedown', function (ev) {
+            if (ev.target === modal) {
+                modal.remove();
+                if (onCancel) onCancel();
+            }
+            });
+        }
+
+        // Patch all usages of confirm() in this file
+        // 1. Clear All Bookmarks
+        document.addEventListener('DOMContentLoaded', function () {
+            const clearBtn = document.getElementById('clearBookmarksBtn');
+            if (clearBtn) {
+            clearBtn.onclick = function (e) {
+                e.preventDefault();
+                customConfirm('Are you sure you want to clear all bookmarks? This cannot be undone.', function () {
+                localStorage.removeItem('munetiosBookmarks');
+                // Re-render bookmarks list if present
+                const bookmarksList = document.getElementById('bookmarksList');
+                if (bookmarksList) {
+                    bookmarksList.innerHTML = '<div style="color:#aaa;">No bookmarks yet.</div>';
+                }
+                });
+            };
+            }
+        });
         document.getElementById('appsIcon').addEventListener('click', function () {
             // Remove existing modal if any
             document.getElementById('appsModal')?.remove();
@@ -5075,6 +5295,59 @@ content="
             }
             // fallback to local search
             performSearch();
+            }
+        });
+
+        // --- Modal confirm for Clear All Bookmarks ---
+        document.addEventListener('DOMContentLoaded', function () {
+            const clearBtn = document.getElementById('clearBookmarksBtn');
+            if (clearBtn) {
+                clearBtn.onclick = function (e) {
+                    e.preventDefault();
+                    // Remove any existing modal
+                    document.getElementById('clearBookmarksModal')?.remove();
+                    const modal = document.createElement('div');
+                    modal.id = 'clearBookmarksModal';
+                    modal.style.position = 'fixed';
+                    modal.style.top = '0';
+                    modal.style.left = '0';
+                    modal.style.width = '100vw';
+                    modal.style.height = '100vh';
+                    modal.style.background = 'rgba(0,0,0,0.35)';
+                    modal.style.display = 'flex';
+                    modal.style.alignItems = 'center';
+                    modal.style.justifyContent = 'center';
+                    modal.style.zIndex = '10022';
+                    modal.innerHTML = `
+                        <div class="liquid-glass" style="padding:32px 28px 24px 28px;border-radius:18px;box-shadow:0 4px 32px #0002;max-width:95vw;min-width:320px;position:relative;">
+                            <div style="font-size:1.2em;font-weight:600;margin-bottom:12px;">Clear All Bookmarks</div>
+                            <div style="margin-bottom:18px;">Are you sure you want to clear all bookmarks? This cannot be undone.</div>
+                            <div style="display:flex;gap:12px;justify-content:flex-end;">
+                                <button id="clearBookmarksCancel" class="btn liquid-glass" style="background:#aaa;color:#fff;">Cancel</button>
+                                <button id="clearBookmarksConfirm" class="btn liquid-glass" style="background:#e34133;color:#fff;">Clear</button>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(modal);
+                    // Cancel
+                    modal.querySelector('#clearBookmarksCancel').onclick = function () {
+                        modal.remove();
+                    };
+                    // Confirm
+                    modal.querySelector('#clearBookmarksConfirm').onclick = function () {
+                        localStorage.removeItem('munetiosBookmarks');
+                        // Re-render bookmarks list if present
+                        const bookmarksList = document.getElementById('bookmarksList');
+                        if (bookmarksList) {
+                            bookmarksList.innerHTML = '<div style="color:#aaa;">No bookmarks yet.</div>';
+                        }
+                        modal.remove();
+                    };
+                    // Close on click outside
+                    modal.addEventListener('mousedown', function (ev) {
+                        if (ev.target === modal) modal.remove();
+                    });
+                };
             }
         });
            
@@ -12732,6 +13005,21 @@ content="
         "favicon": "",
         "link": "https://www.99restaurants.com"
     },
+    {
+        "title": "OpenAI",
+        "description": "Artificial intelligence research and deployment company. Makers of ChatGPT, DALL·E, and more.",
+        "url": "https://openai.com",
+        "favicon": "",
+        "link": "https://openai.com"
+    },
+    {
+        "title": "DeepMind",
+        "description": "Google's AI research lab advancing science and solving intelligence.",
+        "url": "https://deepmind.com",
+        "favicon": "",
+        "link": "https://deepmind.com"
+    },
+  
 
         ]
     </script>
@@ -12847,7 +13135,7 @@ content="
                 },
                 {
                 question: "Which of these is a web browser?",
-                options: ["Banana", "Firefox", "Potato", "Car"],
+                options: ["NoChromium", "Firefox", "Electron", "Apple"],
                 answer: "Firefox"
                 },
                 {
@@ -13082,7 +13370,7 @@ content="
                 },
                 {
                     question: "Which is a type of encryption?",
-                    options: ["AES", "Banana", "Car", "Dog"],
+                    options: ["AES", "RSA", "Blowfish", "Twofish"],
                     answer: "AES"
                 },
                 {
@@ -13202,17 +13490,17 @@ content="
                 },
                 {
                     question: "Which is a type of JavaScript loop?",
-                    options: ["while", "Banana", "Car", "Dog"],
+                    options: ["while", "for", "do-while", "for-in"],
                     answer: "while"
                 },
                 {
                     question: "Which is a type of CSS position value?",
-                    options: ["absolute", "Potato", "Chair", "Milk"],
+                    options: ["absolute", "relative", "fixed", "sticky"],
                     answer: "absolute"
                 },
                 {
                     question: "Which is a type of HTML heading?",
-                    options: ["h1", "Banana", "Car", "Dog"],
+                    options: ["h1", "p", "span", "small"],
                     answer: "h1"
                 },
                 {
@@ -13222,7 +13510,7 @@ content="
                 },
                 {
                     question: "Which is a type of CSS selector?",
-                    options: ["ID", "Banana", "Car", "Dog"],
+                    options: ["ID", "Class", "Element", "Attribute"],
                     answer: "ID"
                 },
                 {
@@ -13237,7 +13525,7 @@ content="
                 },
                 {
                     question: "Which is a type of CSS color value?",
-                    options: ["#fff", "Potato", "Chair", "Milk"],
+                    options: ["#fff", "rgba(255, 255, 255, 1)", "rgb(255, 255, 255)", "white"],
                     answer: "#fff"
                 },
                 {
@@ -13643,7 +13931,7 @@ content="
             }
             }, 60 * 1000);
         })();
-        (function() {
+             (function() {
             // Detect Europe by country code or browser language
             function isEurope() {
                 // List of European country codes (ISO 3166-1 alpha-2)
@@ -13665,16 +13953,16 @@ content="
                 } catch {}
                 return false;
             }
-
-            function hideClassicSearchBtn() {
-                // Hide Classic Search button (icon)
-                var classicBtn = document.getElementById('classicIcon');
-                if (classicBtn) classicBtn.style.display = 'none';
-                // Also hide any classic search link in menu if present
-                var classicMenu = document.querySelector('a[href*="classic.html"]');
-                if (classicMenu) classicMenu.style.display = 'none';
+            // Disable voice search for privacy in Europe
+            if (isEurope()) {
+                const micIcon = document.getElementById('micIcon');
+                if (micIcon) {
+                    micIcon.style.pointerEvents = 'none';
+                    micIcon.style.opacity = '0.5';
+                    micIcon.title = 'Voice search is disabled for privacy in Europe';
+                }
             }
-
+            // Add privacy icon to top-right bar
             function addPrivacyIcon() {
                 // Only add if not already present
                 if (document.getElementById('privacyIcon')) return;
@@ -13817,7 +14105,6 @@ content="
             }
 
             if (isEurope()) {
-                hideClassicSearchBtn();
                 addPrivacyIcon();
             }
         })();
