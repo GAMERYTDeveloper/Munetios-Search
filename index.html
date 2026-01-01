@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+ <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Munetios</title>
     <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css">
@@ -15,7 +15,7 @@
     <link rel="icon" sizes="32x32" href="favicon-32x32.png" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <meta http-equiv="X-Frame-Options" content="DENY">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://api.munetios.com 'nonce-IKDjefjewhCujHJeuji3jhekowdijzizkcej'; style-src 'self' https://fonts.googleapis.com https://api.munetios.com 'unsafe-inline'; img-src *; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://www.munetios.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://api.munetios.com https://cdn.jsdelivr.net 'nonce-IKDjefjewhCujHJeuji3jhekowdijzizkcej'; style-src 'self' https://fonts.googleapis.com https://api.munetios.com 'unsafe-inline'; img-src *; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://www.munetios.com; connect-src 'self' https://cdn.jsdelivr.net; object-src 'none'; base-uri 'self'; form-action 'self';">
 <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'none';">
 <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Munetios Search">
         <meta name="google-site-verification" content="eNlW8gDjbwlEBSfYIkyc8N60d64cbCYkYydrbDoeYi8" />
@@ -62,6 +62,7 @@ if ('serviceWorker' in navigator) {
   "description": "Munetios is safe. It provides apps like Calendar, Notes, Tasks, Weather, Calculator, Tetris, Docs, and more."
 }
 </script>
+
 
 <!-- Skipping Lexend because I don't Like it -->
     <style> 
@@ -541,43 +542,44 @@ if ('serviceWorker' in navigator) {
             if (modal) modal.remove();
         }
         function playBeep(type) {
-            // type: 'start', 'end', 'error'
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-            const o = ctx.createOscillator();
-            const g = ctx.createGain();
-            o.type = type === 'error' ? 'triangle' : 'sine';
-            // More distinctive tones and durations
-            if (type === 'start') {
-            o.frequency.value = 1047; // C6, bright
-            g.gain.value = 0.13;
-            o.connect(g).connect(ctx.destination);
-            o.start();
-            o.stop(ctx.currentTime + 0.22);
-            } else if (type === 'end') {
-            o.frequency.value = 784; // G5, softer
-            g.gain.value = 0.11;
-            o.connect(g).connect(ctx.destination);
-            o.start();
-            o.stop(ctx.currentTime + 0.18);
-            } else {
-            // error
-            o.frequency.value = 220; // A3, low
-            g.gain.value = 0.16;
-            o.connect(g).connect(ctx.destination);
-            o.start();
-            // Add a quick double-beep for error
-            setTimeout(() => {
-                if (ctx.state !== 'closed') {
-                o.frequency.value = 180;
-                g.gain.value = 0.13;
-                }
-            }, 80);
-            o.stop(ctx.currentTime + 0.22);
+            // Always use Tone.js for sound
+            if (typeof Tone === "undefined") {
+                // Dynamically load Tone.js if not loaded
+                const script = document.createElement('script');
+                script.src = "https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.js";
+                script.onload = () => playBeep(type);
+                document.head.appendChild(script);
+                return;
             }
-            // Fade out for smoothness
-            g.gain.setValueAtTime(g.gain.value, ctx.currentTime);
-            g.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.18);
-            o.onended = () => ctx.close();
+            // Stop and dispose any previous synth to prevent lingering sound
+            if (window._voiceSynth && typeof window._voiceSynth.dispose === 'function') {
+                window._voiceSynth.dispose();
+                window._voiceSynth = null;
+            }
+            // Use a PolySynth for richer sound
+            let synth = new Tone.PolySynth(Tone.Synth, {
+                oscillator: { type: "triangle" },
+                envelope: { attack: 0.01, decay: 0.1, sustain: 0.1, release: 0.2 }
+            }).toDestination();
+            window._voiceSynth = synth;
+            // Define sound patterns for each type
+            if (type === "listening") {
+                synth.triggerAttackRelease("C5", "8n");
+            } else if (type === "done") {
+                synth.triggerAttackRelease("C3", "8n");
+            } else if (type === "denied") {
+                synth.triggerAttackRelease("C4", "8n");
+            }
+            // Schedule synth disposal after short delay to ensure sound stops
+            setTimeout(() => {
+                if (window._voiceSynth && typeof window._voiceSynth.dispose === 'function') {
+                    window._voiceSynth.dispose();
+                    window._voiceSynth = null;
+                }
+                if (typeof Tone !== "undefined" && Tone.Transport && typeof Tone.Transport.stop === "function") {
+                    Tone.Transport.stop();
+                }
+            }, 600);
         }
         if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
             micIcon.style.cursor = 'pointer';
@@ -592,7 +594,7 @@ if ('serviceWorker' in navigator) {
                         recognizing = true;
                         transcriptBuffer = '';
                         createVoiceModal('Listening...<br><span style="font-size:0.95em;color:#666;">Speak now</span>', true);
-                        playBeep('start');
+                        playBeep('listening');
                         micIcon.style.color = '#00e676';
                         animatePulse();
                     };
@@ -606,7 +608,12 @@ if ('serviceWorker' in navigator) {
                     recognition.onend = function () {
                         recognizing = false;
                         micIcon.style.color = '';
-                        playBeep('end');
+                        playBeep('done');
+                        // Stop and dispose synth to prevent lingering sound
+                        if (window._voiceSynth && typeof window._voiceSynth.dispose === 'function') {
+                            window._voiceSynth.dispose();
+                            window._voiceSynth = null;
+                        }
                         if (transcriptBuffer.trim()) {
                             document.getElementById('searchInput').value = transcriptBuffer.trim();
                             closeVoiceModal();
@@ -619,7 +626,12 @@ if ('serviceWorker' in navigator) {
                     recognition.onerror = function (e) {
                         recognizing = false;
                         micIcon.style.color = '';
-                        playBeep('error');
+                        playBeep('denied');
+                        // Stop and dispose synth to prevent lingering sound
+                        if (window._voiceSynth && typeof window._voiceSynth.dispose === 'function') {
+                            window._voiceSynth.dispose();
+                            window._voiceSynth = null;
+                        }
                         if (e.error === 'not-allowed' || e.error === 'denied') {
                             createVoiceModal('<b>Voice search is off</b><br><span style="font-size:0.95em;color:#666;">Microphone access denied</span>', false);
                         } else {
@@ -669,7 +681,7 @@ if ('serviceWorker' in navigator) {
                     'Not supported in Firefox</span>',
                     false
                 );
-                playBeep('error');
+                playBeep('denied');
                 setTimeout(closeVoiceModal, 2000);
             };
         }
@@ -1259,11 +1271,30 @@ if ('serviceWorker' in navigator) {
             });
         });
         (function() {
+            // Check if today is January 1
+            const now = new Date();
+            const isNewYear = (now.getMonth() === 0 && now.getDate() === 1);
+            if (isNewYear) {
+                // Change logo to newyears.png
+                const logoImg = document.querySelector('.munetios-logo img');
+                if (logoImg) logoImg.src = 'newyears.png';
+
+                // Make logo clickable to search "New Year's Day"
+                const logoDiv = document.querySelector('.munetios-logo');
+                if (logoDiv) {
+                    logoDiv.style.cursor = 'pointer';
+                    logoDiv.onclick = function() {
+                        window.location.href = '/search/search.html?q=' + encodeURIComponent("New Year's Day");
+                    };
+                }
+            }
+        })();
+        (function() {
             // Check if today is between Dec 22 and Dec 26 (inclusive)
             const now = new Date();
             const isChristmas = (
                 (now.getMonth() === 11) && // December (0-based)
-                (now.getDate() >= 22 && now.getDate() <= 25)
+                (now.getDate() >= 22 && now.getDate() <= 26)
             );
             if (isChristmas) {
                 // Change logo to christmas.png
