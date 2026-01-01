@@ -3713,6 +3713,74 @@ content="
                 {
                     keywords: [/is\s+two[- ]?factor\s+authentication\s+safe/i, /what\s+is\s+two[- ]?factor\s+authentication/i],
                     answer: "Two-factor authentication (2FA) is safe and adds an extra layer of security to your accounts. Always enable 2FA when available."
+                
+                },
+                {
+                    keywords: [/when\s+is\s+new\s+year'?s?\s+day/i, /what\s+day\s+is\s+new\s+year'?s?\s+day/i, /new\s+year'?s?\s+day/i],
+                    answer: (() => {
+                        const now = new Date();
+                        const year = now.getFullYear();
+                        const date = new Date(year, 0, 1);
+                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        return `New Year's Day is on <b>${date.toLocaleDateString(undefined, options)}</b>. New Years is a public holiday in many countries around the world.`;
+                    })()
+                },
+                {
+                    keywords: [/when\s+is\s+christmas/i, /what\s+day\s+is\s+christmas/i, /christmas\s+day/i],
+                    answer: (() => {
+                        const now = new Date();
+                        const year = now.getFullYear();
+                        const date = new Date(year, 11, 25);
+                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        return `Christmas Day is on <b>${date.toLocaleDateString(undefined, options)}</b>.`;
+                    })()
+                },
+                {
+                    keywords: [/when\s+is\s+independence\s+day/i, /what\s+day\s+is\s+independence\s+day/i, /independence\s+day/i],
+                    answer: (() => {
+                        const now = new Date();
+                        const year = now.getFullYear();
+                        const date = new Date(year, 6, 4);
+                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        return `Independence Day (USA) is on <b>${date.toLocaleDateString(undefined, options)}</b>.`;
+                    })()
+                },
+                {
+                    keywords: [/when\s+is\s+valentine'?s?\s+day/i, /valentine'?s?\s+day/i],
+                    answer: (() => {
+                        const now = new Date();
+                        const year = now.getFullYear();
+                        const date = new Date(year, 1, 14);
+                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        return `Valentine's Day is on <b>${date.toLocaleDateString(undefined, options)}</b>.`;
+                    })()
+                },
+                {
+                    keywords: [/when\s+is\s+halloween/i, /halloween/i],
+                    answer: (() => {
+                        const now = new Date();
+                        const year = now.getFullYear();
+                        const date = new Date(year, 9, 31);
+                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        return `Halloween is on <b>${date.toLocaleDateString(undefined, options)}</b>.`;
+                    })()
+                },
+                {
+                    keywords: [/when\s+is\s+thanksgiving/i, /thanksgiving\s+day/i],
+                    answer: (() => {
+                        // US Thanksgiving: fourth Thursday in November
+                        const now = new Date();
+                        const year = now.getFullYear();
+                        let date = new Date(year, 10, 1); // November 1
+                        let thursdays = [];
+                        for (let d = 1; d <= 30; d++) {
+                            let dt = new Date(year, 10, d);
+                            if (dt.getDay() === 4) thursdays.push(dt);
+                        }
+                        date = thursdays[3]; // fourth Thursday
+                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        return `Thanksgiving Day (USA) is on <b>${date.toLocaleDateString(undefined, options)}</b>.`;
+                    })()
                 },
                 {
                     keywords: [/is\s+password\s+manager\s+safe/i, /what\s+is\s+password\s+manager/i],
