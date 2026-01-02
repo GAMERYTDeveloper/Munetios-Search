@@ -16,7 +16,15 @@
     <meta http-equiv="X-Frame-Options" content="DENY">
 <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'none';"><link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Munetios Search">
     
-
+     <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      if (window.top !== window.self) {
+        // Hide everything (html + body)
+        document.documentElement.style.display = "none";  
+        console.warn('Refused to display https://www.munetios.com because it is blocked from iframe embeding')
+      }
+    });
+  </script>
   <STYLE>
         body {
             font-family: 'Google Sans Flex', sans-serif;
@@ -108,58 +116,57 @@
         </div>
         <nav>
             <a href="/">Home</a>
-            <a href="/apps1.html">Products</a>
+            <a href="/apps.html">Products</a>
             <a href="https://blog.munetios.com">Blog</a>
             <a href="/whats-new.html">What's New</a>
         </nav>
     </div>
     <main>
         <h2>What is New at Munetios</h2>
-        <p>Our Calendar 3.0 has been released. See video for details.</p>
-        <video src="video.mp4"></video>
+        <p>Our OmniWrite has been released. See <a href="https://docs.munetios.com/">Documentation</a> for details.</p>
         <div class="nav-links-1 liquid-glass" style="border-radius: 12px; padding: 10px 15px; margin-top: 20px;">
             <a href="#features">Features</a>
             <a href="#compare">Compare</a>
             <a href="#gdpr">GDPR</a>
             <a href="#try">Try it out</a>
         </div>
-        <p>Released at 12/22/2025</p>
+        <p>Released at 1/1/2026</p>
 
         <section id="features">
             <h3>Features</h3>
             <ul>
-                <li>Liquid Glass Design</li>
-                <li>Create Calendars</li>
-                <li>Search is better</li>
-                <li>More Holidays</li>
-                <li>Share Dates</li>
-                <li>Favorite Dates</li>
+               <li>Liquid Glass Design</li>
+               <li>Privacy Focused</li>
+               <li>Open Source</li>
+                <li>No Ads</li>
+                <li>No Account Needed</li>
+                <li>Insert Image/Video/Music</li>
             </ul>
         </section>
         <section id="compare">
-            <h3>Better than other calendars</h3>
-            <p>Munetios Calendar 3.0 is better than other calendars because it respects your privacy, has a modern design, and is free to use without ads.</p>
-            <p>Lets compare other calendars</p>
+            <h3>Better than other document apps</h3>
+            <p>Munetios OmniWrite is better than other document apps because it is privacy focused, open source, and has no ads. It also has a beautiful liquid glass design that makes it easy to use.</p>
+            <p>Lets compare other document apps</p>
             <ul>
-                <li>Munetios Calendar - No ads, respects privacy, open source, no accounts needed</li>
-                <li>Google Calendar - Has ads, tracks you, not open source, accounts needed</li>
-                <li>Apple Calendar - Only on Apple devices, not open source, accounts needed</li>
-                <li>Outlook Calendar - Has ads, tracks you, not open source, accounts needed</li>
-                <li>Proton Calendar - Focuses on privacy, open source, accounts needed</li>
+                    <li>Munetios OmniWrite - No ads, respects privacy, open source, no accounts needed</li>
+                    <li>Google Docs - No ads, tracks you, not open source, accounts needed</li>
+                    <li>Apple Pages - Only on Apple devices, not open source, accounts needed</li>
+                    <li>Microsoft Word - No ads, tracks you, not open source, accounts needed</li>
+                    <li>OnlyOffice - Focuses on privacy, open source, accounts needed</li>
                 
             </ul>
         </section>
         <section id="gdpr">
             <h3>GDPR</h3>
-            <p>Munetios Calendar 3.0 is GDPR compliant. We do not collect any personal data from our users. We respect your privacy and do not track you.</p>
+            <p>Munetios OmniWrite complies with GDPR regulations. We do not collect any personal data from our users. All documents are stored locally on your device and encrypted.</p>
         </section>
         <section id="try">
             <h3>Try it out</h3>
-            <p>Our url for Munetios Calendar 3.0 is <a href="https://calendar.munetios.com/new">https://calendar.munetios.com</a></p>
+            <p>Our url for Munetios OmniWrite is <a href="https://write.munetios.com/">https://write.munetios.com</a></p>
         </section>
     </main>
     <footer class="liquid-glass" style="border-radius: 0; padding: 12px 20px; text-align: center;">
-        &copy; 2025 Munetios. All rights reserved.
+        &copy; 2026 Munetios. All rights reserved.
     </footer>
 
     <script>
@@ -517,6 +524,4 @@
         document.head.appendChild(style);
     </script>
 </body>
-
 </html>
-
