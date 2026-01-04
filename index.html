@@ -1,522 +1,709 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
- <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Munetios</title>
-    <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css">
-    <meta name="description" content="Our Search engine so you can use it privately without being tracked.">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,90&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link
+      rel="stylesheet"
+      href="https://api.munetios.com/beautiful-css/beautiful.css"
+    />
+    <meta
+      name="description"
+      content="Our Search engine so you can use it privately without being tracked."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,90&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     <!-- Do favicon 16, 32-->
-    <link rel="icon" sizes="16x16" href="favicon-16x16.png" type="image/x-icon">
-    <link rel="icon" sizes="32x32" href="favicon-32x32.png" type="image/x-icon">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <meta http-equiv="X-Frame-Options" content="DENY">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://api.munetios.com https://cdn.jsdelivr.net 'nonce-IKDjefjewhCujHJeuji3jhekowdijzizkcej'; style-src 'self' https://fonts.googleapis.com https://api.munetios.com 'unsafe-inline'; img-src *; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://www.munetios.com; connect-src 'self' https://cdn.jsdelivr.net; object-src 'none'; base-uri 'self'; form-action 'self';">
-<meta http-equiv="Content-Security-Policy" content="frame-ancestors 'none';">
-<link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Munetios Search">
-        <meta name="google-site-verification" content="eNlW8gDjbwlEBSfYIkyc8N60d64cbCYkYydrbDoeYi8" />
+    <link
+      rel="icon"
+      sizes="16x16"
+      href="favicon-16x16.png"
+      type="image/x-icon"
+    />
+    <link
+      rel="icon"
+      sizes="32x32"
+      href="favicon-32x32.png"
+      type="image/x-icon"
+    />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://cdn.tailwindcss.com https://api.munetios.com https://cdn.jsdelivr.net 'nonce-IKDjefjewhCujHJeuji3jhekowdijzizkcej'; style-src 'self' https://fonts.googleapis.com https://api.munetios.com 'unsafe-inline'; img-src *; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://www.munetios.com; connect-src 'self' https://cdn.jsdelivr.net; object-src 'none'; base-uri 'self'; form-action 'self';"
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="frame-ancestors 'none';"
+    />
+    <link
+      rel="search"
+      type="application/opensearchdescription+xml"
+      href="/opensearch.xml"
+      title="Munetios Search"
+    />
+    <meta
+      name="google-site-verification"
+      content="eNlW8gDjbwlEBSfYIkyc8N60d64cbCYkYydrbDoeYi8"
+    />
     <meta name="msvalidate.01" content="D8522350541BC4DA893F9E8808FD2A9D" />
-     <script nonce="IKDjefjewhCujHJeuji3jhekowdijzizkcej">
-    document.addEventListener("DOMContentLoaded", function() {
-      if (window.top !== window.self) {
-        // Hide everything (html + body)
-        document.documentElement.style.display = "none";  
-        console.warn('Refused to display https://www.munetios.com because it is blocked from iframe embeding')
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script nonce="IKDjefjewhCujHJeuji3jhekowdijzizkcej">
+      document.addEventListener("DOMContentLoaded", function () {
+        if (window.top !== window.self) {
+          // Hide everything (html + body)
+          document.documentElement.style.display = "none";
+          console.warn(
+            "Refused to display https://www.munetios.com because it is blocked from iframe embeding"
+          );
+        }
+      });
+    </script>
+
+    <script nonce="IKDjefjewhCujHJeuji3jhekowdijzizkcej">
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js", { scope: "/" }) // 👈 Must be absolute
+            .then((reg) => console.log("Munetios SW active:", reg.scope))
+            .catch((err) => console.error("SW failed:", err));
+        });
       }
-    });
-  </script>
+    </script>
+    <meta
+      name="keywords"
+      content="Munetios, search, calendar, notes, tasks, weather, calculator, tetris, docs, productivity, web apps"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Munetios Search" />
+    <meta
+      property="og:description"
+      content="Munetios Search is a search engine that you can use privately without being tracked."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.munetios.com" />
+    <meta name="googlebot" content="index, follow" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Munetios",
+        "url": "https://munetios.com",
+        "logo": "https://munetios.com/favicon-32x32.png",
+        "sameAs": [
+          "https://wwe.youtube.com/@munetios",
+          "https://github.com/munetios"
+        ],
+        "description": "Munetios is safe. It provides apps like Calendar, Notes, Tasks, Weather, Calculator, Tetris, Docs, and more."
+      }
+    </script>
 
-      <script nonce="IKDjefjewhCujHJeuji3jhekowdijzizkcej">
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('/sw.js', { scope: '/' })  // 👈 Must be absolute
-      .then(reg => console.log('Munetios SW active:', reg.scope))
-      .catch(err => console.error('SW failed:', err));
-  });
-}
-</script>
-      <meta name="keywords" content="Munetios, search, calendar, notes, tasks, weather, calculator, tetris, docs, productivity, web apps">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Munetios Search">
-    <meta property="og:description" content="Munetios Search is a search engine that you can use privately without being tracked.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.munetios.com">
-<meta name="googlebot" content="index, follow">
-     <script type="application/ld+json">
-        
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Munetios",
-  "url": "https://munetios.com",
-  "logo": "https://munetios.com/favicon-32x32.png",
-  "sameAs": [
-    "https://wwe.youtube.com/@munetios",
-    "https://github.com/munetios"
-  ],
-  "description": "Munetios is safe. It provides apps like Calendar, Notes, Tasks, Weather, Calculator, Tetris, Docs, and more."
-}
-</script>
+    <!-- Skipping Lexend because I don't Like it -->
+    <style>
+      * {
+        font-family: "Google Sans Flex", sans-serif;
+        font-variation-settings: "wght" 480, "GRAD" 30, "ROND" 80, "opsz" 18;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #190047;
+        color: #ffffff;
+      }
+      body.light-mode {
+        background-color: #ffffff;
+        color: #000000;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      button {
+        background-color: #511bb49a !important;
+        border: 1px solid #ffffff2d !important;
+        border-radius: 85px !important;
+        color: white !important;
+        font-size: 1em !important;
+        transition: background 0.3s, box-shadow 0.3s !important;
+        backdrop-filter: blur(2px) saturate(180%) contrast(85%) brightness(115%) !important;
+        padding: 10px 16px !important;
+      }
+      select {
+        background-color: #511bb49a !important;
+        border: 1px solid #ffffff2d !important;
+        border-radius: 85px !important;
+        color: white !important;
+        font-size: 1em !important;
+        transition: background 0.3s, box-shadow 0.3s !important;
+        backdrop-filter: blur(2px) saturate(180%) contrast(85%) brightness(115%) !important;
+        padding: 10px 16px !important;
+      }
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        height: 60px;
+        position: sticky;
+        top: 0;
+        z-index: 100000;
+      }
+      .topbar .topbar-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .top-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 4px 12px;
+      }
+      .topbar .top-right {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 2px 10px;
+      }
 
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.2em;
+        font-weight: 600;
+      }
+      .logo img {
+        height: 30px;
+      }
+      .logo-text {
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
+      .apps-icon {
+        position: relative;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 6px;
+        transition: background 0.2s, color 0.2s;
+      }
+      .apps-icon:hover,
+      .apps-icon:focus {
+        background: #3a1c71;
+        color: #fff;
+      }
+      .apps-dropdown {
+        display: none;
+        position: absolute;
+        top: 110%;
+        right: 0;
+        background: rgba(25, 0, 71, 0.95);
+        border: 1px solid #6c2eb7;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        z-index: 200;
+      }
 
-<!-- Skipping Lexend because I don't Like it -->
-    <style> 
-        * {
-                       font-family: 'Google Sans Flex', sans-serif;
-                         font-variation-settings:
-  'wght' 480,
-  'GRAD' 30,
-  'ROND' 80,
-  'opsz' 18;
+      .content {
+        text-align: center;
+        margin-top: 80px;
+      }
+      .munetios-logo {
+        margin-bottom: 40px;
+      }
+      .search-bar {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 30px;
+        padding: 10px 20px;
+        width: 60%;
+        max-width: 800px;
+        gap: 5px;
+        transition: background 0.3s, border-color 0.3s;
+      }
+      .search-bar input {
+        width: 100%;
+        border: none;
+        background: transparent;
+        color: inherit;
+        font-size: 1em;
+        outline: none;
+      }
+      .floating-button {
+        position: fixed;
+        bottom: 30px;
+        right: 20px;
+        border-radius: 50px;
+        padding: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: background 0.3s, box-shadow 0.3s;
+        z-index: 1000;
+      }
+      .floating-button:hover {
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+      }
+      .floating-button .label-button {
+        font-size: 1em;
+        font-weight: 600;
+      }
+      .buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+      .shortcuts {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 20px;
+      }
+      .add-shortcut-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .add-shortcut {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border: 2px dashed rgba(255, 255, 255, 0.5);
+        border-radius: 16px;
+        cursor: pointer;
+        transition: background 0.2s, border-color 0.2s;
+      }
+      .add-shortcut:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.8);
+      }
+      .label {
+        margin-top: 1px;
+        font-size: 0.9em;
+        color: rgba(255, 255, 255, 0.8);
+        text-align: center;
+        display: block;
+        width: 100%;
+      }
+      /* Ensure each shortcut (icon + label) is a column */
+      .shortcut,
+      .add-shortcut-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
 
+      .dropdown-wrapper {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 44px;
+        min-height: 44px;
+        padding: 4px 8px;
+        border-radius: 8px;
+        background: rgba(58, 28, 113, 0.1);
+        backdrop-filter: blur(2px) saturate(180%) contrast(85%) brightness(115%);
+        transition: background 0.2s;
+      }
+
+      .dropdown-options {
+        display: none;
+        position: absolute;
+        background: rgba(25, 0, 71, 0.1);
+        border: 1px solid #6c2eb7;
+        backdrop-filter: blur(2px) saturate(180%) contrast(85%) brightness(115%);
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        z-index: 200;
+        min-width: 160px;
+      }
+      .dropdown-option {
+        padding: 10px 16px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .dropdown-option:hover {
+        background: #3a1c71;
+        color: #fff;
+      }
+      /* Responsive styles */
+      @media (max-width: 1200px) {
+        .search-bar {
+          width: 80%;
         }
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #190047;
-            color: #ffffff;
+        .apps-dropdown iframe {
+          width: 350px !important;
+          height: 600px !important;
         }
-        body.light-mode {
-            background-color: #ffffff;
-            color: #000000;
+      }
+      @media (max-width: 900px) {
+        .search-bar {
+          width: 95%;
+          max-width: 98vw;
         }
-        a {
-            text-decoration: none;
-            color: inherit;
+        .apps-dropdown iframe {
+          width: 280px !important;
+          height: 480px !important;
+        }
+      }
+      @media (max-width: 600px) {
+        .logo-text {
+          display: none;
         }
         .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            height: 60px;
-            position: sticky;
-            top: 0;
-            z-index: 100000;
+          padding: 0 10px;
         }
-        .topbar .topbar-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            
-        }
-        .top-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 4px 12px;
-        }
-        .topbar .top-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 2px 10px;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.2em;
-            font-weight: 600;
-        }
-        .logo img {
-            height: 30px;
-        }
-        .logo-text {
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-        .apps-icon {
-            position: relative;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 6px;
-            transition: background 0.2s, color 0.2s;
-        }
-        .apps-icon:hover, .apps-icon:focus {
-            background: #3a1c71;
-            color: #fff;
-        }
-        .apps-dropdown {
-            display: none;
-            position: absolute;
-            top: 110%;
-            right: 0;
-            background: rgba(25, 0, 71, 0.95);
-            border: 1px solid #6c2eb7;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            z-index: 200;
-        }
-       
-        .content {
-            text-align: center;
-            margin-top: 80px;
-
-        }
-        .munetios-logo {
-            margin-bottom: 40px;
+        .munetios-logo img {
+          height: 110px !important;
+          margin-top: 20px !important;
         }
         .search-bar {
-            display: inline-flex;
-            align-items: center;
-            border-radius: 30px;
-            padding: 10px 20px;
-            width: 60%;
-            max-width: 800px;
-            gap: 5px;
-            transition: background 0.3s, border-color 0.3s;
-        }
-        .search-bar input {
-            width: 100%;
-            border: none;
-            background: transparent;
-            color: inherit;
-            font-size: 1em;
-            outline: none;
-        }
-        .floating-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            border-radius: 50px;
-            padding: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: background 0.3s, box-shadow 0.3s;
-            z-index: 1000;
-        }
-        .floating-button:hover {
-            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-        }
-        .floating-button .label-button {
-            font-size: 1em;
-            font-weight: 600;
+          width: 99%;
+          min-width: 0;
+          padding: 8px 10px;
+          font-size: 0.98em;
         }
         .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
+          flex-direction: column;
+          gap: 10px;
         }
         .shortcuts {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 20px;
+          gap: 10px;
+          margin-top: 10px;
         }
-        .add-shortcut-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .shortcut img,
+        .add-shortcut svg {
+          width: 28px !important;
+          height: 28px !important;
         }
-        .add-shortcut {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            border: 2px dashed rgba(255, 255, 255, 0.5);
-            border-radius: 16px;
-            cursor: pointer;
-            transition: background 0.2s, border-color 0.2s;
+        .floating-button {
+          right: 10px;
+          bottom: 10px;
+          padding: 8px;
+          font-size: 0.95em;
         }
-        .add-shortcut:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.8);
+        .apps-dropdown iframe {
+          width: 95vw !important;
+          height: 60vh !important;
+          min-width: 180px !important;
         }
-        .label {
-            margin-top: 1px;
-            font-size: 0.9em;
-            color: rgba(255, 255, 255, 0.8);
-            text-align: center;
-            display: block;
-            width: 100%;
+        .label-button {
+          display: none;
         }
-        /* Ensure each shortcut (icon + label) is a column */
-        .shortcut, .add-shortcut-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+      }
+      @media (max-width: 472px) {
+        .munetios-logo img {
+          height: 70px !important;
         }
-
-        .dropdown-wrapper {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 44px;
-            min-height: 44px;
-            padding: 4px 8px;
-            border-radius: 8px;
-            background: rgba(58, 28, 113, 0.1);
-            backdrop-filter: blur(2px) saturate(180%) contrast(85%) brightness(115%);
-            transition: background 0.2s;
+        .search-bar {
+          font-size: 0.9em;
+          padding: 6px 4px;
         }
-      
-        .dropdown-options {
-            display: none;
-            position: absolute;
-            background: rgba(25, 0, 71, 0.1);
-            border: 1px solid #6c2eb7;
-            backdrop-filter: blur(2px) saturate(180%) contrast(85%) brightness(115%);
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            z-index: 200;
-            min-width: 160px;
+        .hide-450 {
+          display: none !important;
         }
-        .dropdown-option {
-            padding: 10px 16px;
-            cursor: pointer;
-            transition: background 0.2s;
+        .shortcut img,
+        .add-shortcut svg {
+          width: 22px !important;
+          height: 22px !important;
         }
-        .dropdown-option:hover {
-            background: #3a1c71;
-            color: #fff;
+        .label,
+        .label-button {
+          font-size: 0.8em;
         }
-        /* Responsive styles */
-        @media (max-width: 1200px) {
-            .search-bar {
-                width: 80%;
-            }
-            .apps-dropdown iframe {
-                width: 350px !important;
-                height: 600px !important;
-            }
+      }
+      @media (prefers-color-scheme: light) {
+        .search-bar {
+          background: rgba(255, 255, 255, 0.2);
+          border: 1px solid #ccc;
         }
-        @media (max-width: 900px) {
-            .search-bar {
-                width: 95%;
-                max-width: 98vw;
-            }
-            .apps-dropdown iframe {
-                width: 280px !important;
-                height: 480px !important;
-            }
-         
+        .search-bar:hover {
+          background: rgba(255, 255, 255, 0.3);
+          border-color: #999;
         }
-        @media (max-width: 600px) {
-            
-            .logo-text {
-                display: none;
-            }
-            .topbar {
-                padding: 0 10px;
-            }
-            .munetios-logo img {
-                height: 110px !important;
-                margin-top: 20px !important;
-            }
-            .search-bar {
-                width: 99%;
-                min-width: 0;
-                padding: 8px 10px;
-                font-size: 0.98em;
-            }
-            .buttons {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .shortcuts {
-                gap: 10px;
-                margin-top: 10px;
-            }
-            .shortcut img, .add-shortcut svg {
-                width: 28px !important;
-                height: 28px !important;
-            }
-            .floating-button {
-                right: 10px;
-                bottom: 10px;
-                padding: 8px;
-                font-size: 0.95em;
-            }
-            .apps-dropdown iframe {
-                width: 95vw !important;
-                height: 60vh !important;
-                min-width: 180px !important;
-            }
-            .label-button{
-                display: none;
-            } 
-        }
-        @media (max-width: 472px) {
-            .munetios-logo img {
-                height: 70px !important;
-            }
-            .search-bar {
-                font-size: 0.9em;
-                padding: 6px 4px;
-            }
-            .hide-450 {
-                display: none !important;
-            }
-            .shortcut img, .add-shortcut svg {
-                width: 22px !important;
-                height: 22px !important;
-            }
-            .label, .label-button {
-                font-size: 0.8em;
-            }
-        }
-        @media (prefers-color-scheme: light) {
-            .search-bar {
-                background: rgba(255, 255, 255, 0.2);
-                border: 1px solid #ccc;
-            }
-            .search-bar:hover {
-                background: rgba(255, 255, 255, 0.3);
-                border-color: #999;
-            }
-        }
-        .floating-left-button {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            border-radius: 50px;
-            padding: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: background 0.3s, box-shadow 0.3s;
-            z-index: 1000;
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header class="topbar">
-        <div class="topbar-left">
+      <div class="topbar-left">
         <div class="top-left liquid-glass">
-            <div class="logo">
-                <a href="https://www.munetios.com">
-                    <img src="favicon-32x32.png" alt="Munetios Logo" style="height:30px;">
-                </a>
-                <div class="logo-text">Munetios</div>
-            </div>
+          <div class="logo">
+            <a href="https://www.munetios.com">
+              <img
+                src="favicon-32x32.png"
+                alt="Munetios Logo"
+                style="height: 30px"
+              />
+            </a>
+            <div class="logo-text">Munetios</div>
+          </div>
         </div>
-        <a class="liquid-glass hide-450" href="about.html" style="padding: 10px 15px;">About</a>
-         <a class="liquid-glass hide-450" href="https://blog.munetios.com" style="padding: 10px 15px;">Blog</a>
-    </div>
-    <div class="top-right liquid-glass">
-        <a class="hide-450" href="/search/classic.html">Classic Search</a>
+        <a
+          class="liquid-glass hide-450"
+          href="about.html"
+          style="padding: 10px 15px"
+          >About</a
+        >
+        <a
+          class="liquid-glass hide-450"
+          href="https://blog.munetios.com"
+          style="padding: 10px 15px"
+          >Blog</a
+        >
+      </div>
+      <div class="top-right liquid-glass">
         <a href="/games/">Games</a>
         <div class="apps-icon" id="apps-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-            <div class="apps-dropdown">
-                <iframe src="https://www.munetios.com/apps/" width="500" height="768" frameborder="0"></iframe>
-            </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-grid"
+          >
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <div class="apps-dropdown">
+            <iframe
+              src="https://www.munetios.com/apps/"
+              width="500"
+              height="768"
+              frameborder="0"
+            ></iframe>
+          </div>
         </div>
-    </div>
+      </div>
     </header>
     <div class="content">
-        <div class="munetios-logo">
-            <img src="Munetios-Logo.png" alt="Munetios Logo" style="height:200px; margin-top:40px;">
+      <div class="munetios-logo text-center flex justify-center">
+        <img
+          src="Munetios-Logo.png"
+          alt="Munetios Logo"
+          style="height: 200px; margin-top: 40px"
+        />
+      </div>
+      <div class="search-bar liquid-glass">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-search"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" placeholder="Search" id="searchInput" />
+        <svg
+          id="micIcon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-mic"
+        >
+          <rect x="9" y="2" width="6" height="12" rx="3"></rect>
+          <path d="M5 10v2a7 7 0 0 0 14 0v-2"></path>
+          <line x1="12" y1="22" x2="12" y2="16"></line>
+          <line x1="8" y1="22" x2="16" y2="22"></line>
+        </svg>
+      </div>
+      <br /><br /><br />
+      <div class="buttons">
+        <button
+          class="liquid-glass"
+          onclick="performSearch()"
+          style="cursor: pointer; color: inherit; padding: 13px 16px"
+        >
+          Search
+        </button>
+        <button
+          class="liquid-glass"
+          onclick="randomizeQueries()"
+          style="cursor: pointer; color: inherit; padding: 13px 16px"
+        >
+          I'm Feeling Good
+        </button>
+      </div>
+      <br /><br />
+      <div class="shortcuts" id="shortcuts">
+        <!-- Shortcuts will be rendered here -->
+        <div class="add-shortcut" id="addshortcut">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-plus-circle"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="16"></line>
+            <line x1="8" y1="12" x2="16" y2="12"></line>
+          </svg>
         </div>
-        <div class="search-bar liquid-glass">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" placeholder="Search" id="searchInput">
-                <svg id="micIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mic">
-                    <rect x="9" y="2" width="6" height="12" rx="3"></rect>
-                    <path d="M5 10v2a7 7 0 0 0 14 0v-2"></path>
-                    <line x1="12" y1="22" x2="12" y2="16"></line>
-                    <line x1="8" y1="22" x2="16" y2="22"></line>
-                </svg>
-        </div>
-        <br><br><br>
-        <div class="buttons">
-            <button class="liquid-glass" onclick="performSearch()" style=" cursor: pointer; color: inherit; padding: 13px 16px;">Search</button>
-            <button class="liquid-glass" onclick="randomizeQueries()" style=" cursor: pointer; color: inherit; padding: 13px 16px;" >I'm Feeling Good</button>
-        </div>
-        <br><br>
-        <div class="shortcuts" id="shortcuts">
-            <!-- Shortcuts will be rendered here -->
-             <div class="add-shortcut" id="addshortcut">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-               
-             </div> <div class="label">Add</div>
-        </div>
+        <div class="label">Add</div>
+      </div>
     </div>
-    <div class="floating-left-button liquid-glass" id="discordServerButton">
-                <a href="https://discord.gg/GXRK3pDfR3">Discord Server</a>
-    </div>
+
     <div class="floating-button liquid-glass" id="customizeBtn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
-        <div class="label-button">Customize</div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-sliders"
+      >
+        <line x1="4" y1="21" x2="4" y2="14"></line>
+        <line x1="4" y1="10" x2="4" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12" y2="3"></line>
+        <line x1="20" y1="21" x2="20" y2="16"></line>
+        <line x1="20" y1="12" x2="20" y2="3"></line>
+        <line x1="1" y1="14" x2="7" y2="14"></line>
+        <line x1="9" y1="8" x2="15" y2="8"></line>
+        <line x1="17" y1="16" x2="23" y2="16"></line>
+      </svg>
+      <div class="label-button">Customize</div>
     </div>
+    <footer
+      class="flex justify-center items-center gap-2 flex-wrap p-4 text-center text-sm mt-12 mb-4 w-full liquid-glass"
+      style="left: 0; right: 0; bottom: 0; z-index: 10"
+    >
+      <a>&copy; 2026 Munetios</a>
+      |
+      <a href="https://www.munetios.com/about">About</a>
+      <a href="https://blog.munetios.com">Blog</a>
+      |
+      <a href="https://www.munetios.com/policies/#/terms">Terms</a>
+      <a href="https://www.munetios.com/policies/#/privacy">Privacy</a>
+      <a href="https://www.munetios.com/policies/#/cookies">Cookies</a>
+      |
+      <a href="https://www.munetios.com/search/search.html">Search</a>
+      <a href="https://www.munetios.com/search/classic.html">Classic Search</a>
+      <a href="https://write.munetios.com">OmniWrite</a>
+      <a href="https://calendar.munetios.com">Calendar</a>
+      <a href="https://photos.munetios.com">Photos</a>
+      <a href="https://tasks.munetios.com">Tasks</a>
+      <a href="https://notes.munetios.com">Notes</a>
+      <a href="https://notebook.munetios.com">Notebook</a>
+      <a href="https://calculator.munetios.com">Calculator</a>
+      <a href="https://tetris.munetios.com">Tetris</a>
+      <a href="https://docs.munetios.com">Docs</a>
+      <a href="https://www.munetios.com/games">Games</a>
+      <a href="https://weather.munetios.com">Weather</a>
+      |
+      <a href="https://www.youtube.com/@munetios">YouTube Channel</a>
+      <a href="https://discord.gg/sNgVNf9MdB">Discord Server</a>
+      <a href="https://www.munetios.com/whats-new">Whats New</a>
+      <a href="https://www.munetios.com/apps1">Products</a>
+    </footer>
     <script nonce="IKDjefjewhCujHJeuji3jhekowdijzizkcej">
-        const appsIcon = document.getElementById('apps-icon');
-        const appsDropdown = appsIcon.querySelector('.apps-dropdown');
+      const appsIcon = document.getElementById("apps-icon");
+      const appsDropdown = appsIcon.querySelector(".apps-dropdown");
 
-        let appsDropdownOpen = false;
+      let appsDropdownOpen = false;
 
-        function openAppsDropdown() {
-            appsDropdown.style.display = 'block';
-            appsDropdownOpen = true;
+      function openAppsDropdown() {
+        appsDropdown.style.display = "block";
+        appsDropdownOpen = true;
+      }
+
+      function closeAppsDropdown() {
+        appsDropdown.style.display = "none";
+        appsDropdownOpen = false;
+      }
+
+      // Toggle dropdown on icon click
+      appsIcon.addEventListener("click", function (e) {
+        e.stopPropagation();
+        if (appsDropdownOpen) {
+          closeAppsDropdown();
+        } else {
+          openAppsDropdown();
         }
+      });
 
-        function closeAppsDropdown() {
-            appsDropdown.style.display = 'none';
-            appsDropdownOpen = false;
+      // Close dropdown when clicking outside
+      document.addEventListener("click", function (e) {
+        if (appsDropdownOpen && !appsIcon.contains(e.target)) {
+          closeAppsDropdown();
         }
+      });
 
-        // Toggle dropdown on icon click
-        appsIcon.addEventListener('click', function (e) {
-            e.stopPropagation();
-            if (appsDropdownOpen) {
-                closeAppsDropdown();
-            } else {
-                openAppsDropdown();
-            }
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function (e) {
-            if (appsDropdownOpen && !appsIcon.contains(e.target)) {
-                closeAppsDropdown();
-            }
-        });
-
-        // Optional: close on Escape key
-        document.addEventListener('keydown', function (e) {
-            if (appsDropdownOpen && e.key === 'Escape') {
-                closeAppsDropdown();
-            }
-        });
-        const micIcon = document.getElementById('micIcon');
-        let recognition, recognizing = false, transcriptBuffer = '';
-        function createVoiceModal(content, listening = false) {
-            let modal = document.getElementById('voiceModal');
-            if (!modal) {
-                modal = document.createElement('div');
-                modal.id = 'voiceModal';
-                modal.style.position = 'fixed';
-                modal.style.top = '0';
-                modal.style.left = '0';
-                modal.style.width = '100vw';
-                modal.style.height = '100vh';
-                modal.style.background = 'rgba(25,0,71,0.25)';
-                modal.style.display = 'flex';
-                modal.style.alignItems = 'center';
-                modal.style.justifyContent = 'center';
-                modal.style.zIndex = '100001';
-                modal.innerHTML = `
+      // Optional: close on Escape key
+      document.addEventListener("keydown", function (e) {
+        if (appsDropdownOpen && e.key === "Escape") {
+          closeAppsDropdown();
+        }
+      });
+      const micIcon = document.getElementById("micIcon");
+      let recognition,
+        recognizing = false,
+        transcriptBuffer = "";
+      function createVoiceModal(content, listening = false) {
+        let modal = document.getElementById("voiceModal");
+        if (!modal) {
+          modal = document.createElement("div");
+          modal.id = "voiceModal";
+          modal.style.position = "fixed";
+          modal.style.top = "0";
+          modal.style.left = "0";
+          modal.style.width = "100vw";
+          modal.style.height = "100vh";
+          modal.style.background = "rgba(25,0,71,0.25)";
+          modal.style.display = "flex";
+          modal.style.alignItems = "center";
+          modal.style.justifyContent = "center";
+          modal.style.zIndex = "100001";
+          modal.innerHTML = `
                     <div style="background:rgba(255,255,255,0.95);backdrop-filter:blur(8px) saturate(180%) contrast(90%) brightness(110%);border-radius:18px;box-shadow:0 8px 32px rgba(58,28,113,0.18);padding:32px 28px;min-width:320px;display:flex;flex-direction:column;align-items:center;gap:18px;position:relative;">
                         <button id="closeVoiceModal" style="position:absolute;top:8px;right:12px;background:none;border:none;font-size:1.5em;cursor:pointer;color:#888;">&times;</button>
                         <div id="voiceModalContent" style="width:100%;text-align:center;font-size:1.1em;color:#222;">${content}</div>
-                        <div id="voiceListeningAnim" style="margin-top:12px;${listening ? '' : 'display:none;'}">
+                        <div id="voiceListeningAnim" style="margin-top:12px;${
+                          listening ? "" : "display:none;"
+                        }">
                             <svg width="48" height="48" viewBox="0 0 48 48">
                                 <circle cx="24" cy="24" r="20" fill="#3a1c71" opacity="0.12"/>
                                 <circle id="voicePulse" cx="24" cy="24" r="12" fill="#3a1c71" opacity="0.25"/>
@@ -526,672 +713,837 @@ if ('serviceWorker' in navigator) {
                         <div id="voiceTranscript" style="margin-top:10px;font-size:1.1em;color:#3a1c71;min-height:1.5em;"></div>
                     </div>
                 `;
-                document.body.appendChild(modal);
-                document.getElementById('closeVoiceModal').onclick = () => {
-                    if (recognition && recognizing) recognition.stop();
-                    modal.remove();
-                };
-            } else {
-                document.getElementById('voiceModalContent').innerHTML = content;
-                document.getElementById('voiceListeningAnim').style.display = listening ? '' : 'none';
-            }
-            document.getElementById('voiceTranscript').textContent = transcriptBuffer;
+          document.body.appendChild(modal);
+          document.getElementById("closeVoiceModal").onclick = () => {
+            if (recognition && recognizing) recognition.stop();
+            modal.remove();
+          };
+        } else {
+          document.getElementById("voiceModalContent").innerHTML = content;
+          document.getElementById("voiceListeningAnim").style.display =
+            listening ? "" : "none";
         }
-        function closeVoiceModal() {
-            const modal = document.getElementById('voiceModal');
-            if (modal) modal.remove();
+        document.getElementById("voiceTranscript").textContent =
+          transcriptBuffer;
+      }
+      function closeVoiceModal() {
+        const modal = document.getElementById("voiceModal");
+        if (modal) modal.remove();
+      }
+      function playBeep(type) {
+        // Always use Tone.js for sound
+        if (typeof Tone === "undefined") {
+          // Dynamically load Tone.js if not loaded
+          const script = document.createElement("script");
+          script.src =
+            "https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.js";
+          script.onload = () => playBeep(type);
+          document.head.appendChild(script);
+          return;
         }
-        function playBeep(type) {
-            // Always use Tone.js for sound
-            if (typeof Tone === "undefined") {
-                // Dynamically load Tone.js if not loaded
-                const script = document.createElement('script');
-                script.src = "https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.js";
-                script.onload = () => playBeep(type);
-                document.head.appendChild(script);
-                return;
-            }
-            // Stop and dispose any previous synth to prevent lingering sound
-            if (window._voiceSynth && typeof window._voiceSynth.dispose === 'function') {
+        // Stop and dispose any previous synth to prevent lingering sound
+        if (
+          window._voiceSynth &&
+          typeof window._voiceSynth.dispose === "function"
+        ) {
+          window._voiceSynth.dispose();
+          window._voiceSynth = null;
+        }
+        // Use a PolySynth for richer sound
+        let synth = new Tone.PolySynth(Tone.Synth, {
+          oscillator: { type: "triangle" },
+          envelope: { attack: 0.01, decay: 0.1, sustain: 0.1, release: 0.2 },
+        }).toDestination();
+        window._voiceSynth = synth;
+        // Define sound patterns for each type
+        if (type === "listening") {
+          synth.triggerAttackRelease("C5", "8n");
+        } else if (type === "done") {
+          synth.triggerAttackRelease("C3", "8n");
+        } else if (type === "denied") {
+          synth.triggerAttackRelease("C4", "8n");
+        }
+        // Schedule synth disposal after short delay to ensure sound stops
+        setTimeout(() => {
+          if (
+            window._voiceSynth &&
+            typeof window._voiceSynth.dispose === "function"
+          ) {
+            window._voiceSynth.dispose();
+            window._voiceSynth = null;
+          }
+          if (
+            typeof Tone !== "undefined" &&
+            Tone.Transport &&
+            typeof Tone.Transport.stop === "function"
+          ) {
+            Tone.Transport.stop();
+          }
+        }, 600);
+      }
+      if (
+        "webkitSpeechRecognition" in window ||
+        "SpeechRecognition" in window
+      ) {
+        micIcon.style.cursor = "pointer";
+        micIcon.onclick = function () {
+          if (!recognition) {
+            const SpeechRecognition =
+              window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.lang = "en-US";
+            recognition.interimResults = true;
+            recognition.maxAlternatives = 1;
+            recognition.onstart = function () {
+              recognizing = true;
+              transcriptBuffer = "";
+              createVoiceModal(
+                'Listening...<br><span style="font-size:0.95em;color:#666;">Speak now</span>',
+                true
+              );
+              playBeep("listening");
+              micIcon.style.color = "#00e676";
+              animatePulse();
+            };
+            recognition.onresult = function (event) {
+              transcriptBuffer = "";
+              for (let i = event.resultIndex; i < event.results.length; ++i) {
+                transcriptBuffer += event.results[i][0].transcript;
+              }
+              document.getElementById("voiceTranscript").textContent =
+                transcriptBuffer;
+            };
+            recognition.onend = function () {
+              recognizing = false;
+              micIcon.style.color = "";
+              playBeep("done");
+              // Stop and dispose synth to prevent lingering sound
+              if (
+                window._voiceSynth &&
+                typeof window._voiceSynth.dispose === "function"
+              ) {
                 window._voiceSynth.dispose();
                 window._voiceSynth = null;
-            }
-            // Use a PolySynth for richer sound
-            let synth = new Tone.PolySynth(Tone.Synth, {
-                oscillator: { type: "triangle" },
-                envelope: { attack: 0.01, decay: 0.1, sustain: 0.1, release: 0.2 }
-            }).toDestination();
-            window._voiceSynth = synth;
-            // Define sound patterns for each type
-            if (type === "listening") {
-                synth.triggerAttackRelease("C5", "8n");
-            } else if (type === "done") {
-                synth.triggerAttackRelease("C3", "8n");
-            } else if (type === "denied") {
-                synth.triggerAttackRelease("C4", "8n");
-            }
-            // Schedule synth disposal after short delay to ensure sound stops
-            setTimeout(() => {
-                if (window._voiceSynth && typeof window._voiceSynth.dispose === 'function') {
-                    window._voiceSynth.dispose();
-                    window._voiceSynth = null;
-                }
-                if (typeof Tone !== "undefined" && Tone.Transport && typeof Tone.Transport.stop === "function") {
-                    Tone.Transport.stop();
-                }
-            }, 600);
-        }
-        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-            micIcon.style.cursor = 'pointer';
-            micIcon.onclick = function () {
-                if (!recognition) {
-                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                    recognition = new SpeechRecognition();
-                    recognition.lang = 'en-US';
-                    recognition.interimResults = true;
-                    recognition.maxAlternatives = 1;
-                    recognition.onstart = function () {
-                        recognizing = true;
-                        transcriptBuffer = '';
-                        createVoiceModal('Listening...<br><span style="font-size:0.95em;color:#666;">Speak now</span>', true);
-                        playBeep('listening');
-                        micIcon.style.color = '#00e676';
-                        animatePulse();
-                    };
-                    recognition.onresult = function (event) {
-                        transcriptBuffer = '';
-                        for (let i = event.resultIndex; i < event.results.length; ++i) {
-                            transcriptBuffer += event.results[i][0].transcript;
-                        }
-                        document.getElementById('voiceTranscript').textContent = transcriptBuffer;
-                    };
-                    recognition.onend = function () {
-                        recognizing = false;
-                        micIcon.style.color = '';
-                        playBeep('done');
-                        // Stop and dispose synth to prevent lingering sound
-                        if (window._voiceSynth && typeof window._voiceSynth.dispose === 'function') {
-                            window._voiceSynth.dispose();
-                            window._voiceSynth = null;
-                        }
-                        if (transcriptBuffer.trim()) {
-                            document.getElementById('searchInput').value = transcriptBuffer.trim();
-                            closeVoiceModal();
-                            performSearch();
-                        } else {
-                            createVoiceModal('No speech detected.<br><span style="font-size:0.95em;color:#666;">Try again</span>', false);
-                            setTimeout(closeVoiceModal, 1800);
-                        }
-                    };
-                    recognition.onerror = function (e) {
-                        recognizing = false;
-                        micIcon.style.color = '';
-                        playBeep('denied');
-                        // Stop and dispose synth to prevent lingering sound
-                        if (window._voiceSynth && typeof window._voiceSynth.dispose === 'function') {
-                            window._voiceSynth.dispose();
-                            window._voiceSynth = null;
-                        }
-                        if (e.error === 'not-allowed' || e.error === 'denied') {
-                            createVoiceModal('<b>Voice search is off</b><br><span style="font-size:0.95em;color:#666;">Microphone access denied</span>', false);
-                        } else {
-                            createVoiceModal('Voice search error.<br><span style="font-size:0.95em;color:#666;">' + e.error + '</span>', false);
-                        }
-                        setTimeout(closeVoiceModal, 2000);
-                    };
-                }
-                if (!recognizing) {
-                    recognition.start();
-                } else {
-                    recognition.stop();
-                }
-            };
-            function animatePulse() {
-                const pulse = document.getElementById('voicePulse');
-                if (!pulse) return;
-                let grow = true, r = 12;
-                function step() {
-                    if (!recognizing) {
-                        pulse.setAttribute('r', 12);
-                        return;
-                    }
-                    r += grow ? 0.6 : -0.6;
-                    if (r > 18) grow = false;
-                    if (r < 12) grow = true;
-                    pulse.setAttribute('r', r);
-                    requestAnimationFrame(step);
-                }
-                step();
-            }
-        } else {
-            micIcon.style.opacity = '0.5';
-            micIcon.title = 'Speech recognition not supported';
-            micIcon.style.cursor = 'not-allowed';
-            micIcon.onclick = function () {
+              }
+              if (transcriptBuffer.trim()) {
+                document.getElementById("searchInput").value =
+                  transcriptBuffer.trim();
+                closeVoiceModal();
+                performSearch();
+              } else {
                 createVoiceModal(
-                    '<b>Voice search unsupported</b><br>' +
-                    '<span style="font-size:0.95em;color:#666;">Your browser does not support speech recognition.<br>' +
-                    'Available in:<ul style="margin:8px 0 0 18px;text-align:left;font-size:0.98em;">' +
-                    '<li>Google Chrome (desktop &amp; Android)</li>' +
-                    '<li>Microsoft Edge (desktop &amp; Android)</li>' +
-                    '<li> Safari (iOS &amp; macOS)</li>' +
-                    '<li>Opera (some versions)</li>' +
-                    '<li>Samsung Internet (Android)</li>' +
-                    '</ul>' +
-                    'Not supported in Firefox</span>',
-                    false
+                  'No speech detected.<br><span style="font-size:0.95em;color:#666;">Try again</span>',
+                  false
                 );
-                playBeep('denied');
-                setTimeout(closeVoiceModal, 2000);
+                setTimeout(closeVoiceModal, 1800);
+              }
             };
+            recognition.onerror = function (e) {
+              recognizing = false;
+              micIcon.style.color = "";
+              playBeep("denied");
+              // Stop and dispose synth to prevent lingering sound
+              if (
+                window._voiceSynth &&
+                typeof window._voiceSynth.dispose === "function"
+              ) {
+                window._voiceSynth.dispose();
+                window._voiceSynth = null;
+              }
+              if (e.error === "not-allowed" || e.error === "denied") {
+                createVoiceModal(
+                  '<b>Voice search is off</b><br><span style="font-size:0.95em;color:#666;">Microphone access denied</span>',
+                  false
+                );
+              } else {
+                createVoiceModal(
+                  'Voice search error.<br><span style="font-size:0.95em;color:#666;">' +
+                    e.error +
+                    "</span>",
+                  false
+                );
+              }
+              setTimeout(closeVoiceModal, 2000);
+            };
+          }
+          if (!recognizing) {
+            recognition.start();
+          } else {
+            recognition.stop();
+          }
+        };
+        function animatePulse() {
+          const pulse = document.getElementById("voicePulse");
+          if (!pulse) return;
+          let grow = true,
+            r = 12;
+          function step() {
+            if (!recognizing) {
+              pulse.setAttribute("r", 12);
+              return;
+            }
+            r += grow ? 0.6 : -0.6;
+            if (r > 18) grow = false;
+            if (r < 12) grow = true;
+            pulse.setAttribute("r", r);
+            requestAnimationFrame(step);
+          }
+          step();
         }
-        /* --- Customize Button Modal & Logic --- */
-        // Remove search bar color from settings and UI
-        // Remove from applySettings
-        // Remove from customize modal
-        // Remove from saveSettings and getStoredSettings
-        // Remove from localStorage
+      } else {
+        micIcon.style.opacity = "0.5";
+        micIcon.title = "Speech recognition not supported";
+        micIcon.style.cursor = "not-allowed";
+        micIcon.onclick = function () {
+          createVoiceModal(
+            "<b>Voice search unsupported</b><br>" +
+              '<span style="font-size:0.95em;color:#666;">Your browser does not support speech recognition.<br>' +
+              'Available in:<ul style="margin:8px 0 0 18px;text-align:left;font-size:0.98em;">' +
+              "<li>Google Chrome (desktop &amp; Android)</li>" +
+              "<li>Microsoft Edge (desktop &amp; Android)</li>" +
+              "<li> Safari (iOS &amp; macOS)</li>" +
+              "<li>Opera (some versions)</li>" +
+              "<li>Samsung Internet (Android)</li>" +
+              "</ul>" +
+              "Not supported in Firefox</span>",
+            false
+          );
+          playBeep("denied");
+          setTimeout(closeVoiceModal, 2000);
+        };
+      }
+      /* --- Customize Button Modal & Logic --- */
+      // Remove search bar color from settings and UI
+      // Remove from applySettings
+      // Remove from customize modal
+      // Remove from saveSettings and getStoredSettings
+      // Remove from localStorage
 
-        // Remove search bar color logic from applySettings
-        // (No code needed here, just delete the relevant lines in applySettings and modal)
+      // Remove search bar color logic from applySettings
+      // (No code needed here, just delete the relevant lines in applySettings and modal)
 
-        const customizeBtn = document.getElementById('customizeBtn');
-        let customizeModal = null;
+      const customizeBtn = document.getElementById("customizeBtn");
+      let customizeModal = null;
 
-        const safeFonts = [
-           "Google Sans Flex", "Arial", "Calibri", "Times New Roman", "Georgia", "Lexend", "Poppins",
-            "Tahoma", "Verdana", "Comic Sans MS", "Impact", "Open Sans", "Comic Neue", "Google Sans",  "Roboto", "Lato", "Montserrat", "Oswald", "Raleway", "Merriweather", "Nunito", "Ubuntu", "Playfair Display", "Source Sans Pro", "Fira Sans", "Work Sans", "DM Sans", "Hind Siliguri"
-        ];
-        const googleFonts = [
-            "Lexend", "Poppins", "Open Sans", "Comic Neue", "Google Sans", "Google Sans Flex", "Roboto", "Lato", "Montserrat", "Oswald", "Raleway", "Merriweather", "Nunito", "Ubuntu", "Playfair Display", "Source Sans Pro", "Fira Sans", "Work Sans", "DM Sans", "Hind Siliguri"
-        ];
+      const safeFonts = [
+        "Google Sans Flex",
+        "Arial",
+        "Calibri",
+        "Times New Roman",
+        "Georgia",
+        "Lexend",
+        "Poppins",
+        "Tahoma",
+        "Verdana",
+        "Comic Sans MS",
+        "Impact",
+        "Open Sans",
+        "Comic Neue",
+        "Google Sans",
+        "Roboto",
+        "Lato",
+        "Montserrat",
+        "Oswald",
+        "Raleway",
+        "Merriweather",
+        "Nunito",
+        "Ubuntu",
+        "Playfair Display",
+        "Source Sans Pro",
+        "Fira Sans",
+        "Work Sans",
+        "DM Sans",
+        "Hind Siliguri",
+      ];
+      const googleFonts = [
+        "Lexend",
+        "Poppins",
+        "Open Sans",
+        "Comic Neue",
+        "Google Sans",
+        "Google Sans Flex",
+        "Roboto",
+        "Lato",
+        "Montserrat",
+        "Oswald",
+        "Raleway",
+        "Merriweather",
+        "Nunito",
+        "Ubuntu",
+        "Playfair Display",
+        "Source Sans Pro",
+        "Fira Sans",
+        "Work Sans",
+        "DM Sans",
+        "Hind Siliguri",
+      ];
 
-        function getStoredSettings() {
-            try {
-            return JSON.parse(localStorage.getItem('munetiosSettings') || '{}');
-            } catch {
-            return {};
-            }
+      function getStoredSettings() {
+        try {
+          return JSON.parse(localStorage.getItem("munetiosSettings") || "{}");
+        } catch {
+          return {};
         }
-        function saveSettings(settings) {
-            try {
-            localStorage.setItem('munetiosSettings', JSON.stringify(settings));
-            return true;
-            } catch {
-            showSaveError();
-            return false;
-            }
+      }
+      function saveSettings(settings) {
+        try {
+          localStorage.setItem("munetiosSettings", JSON.stringify(settings));
+          return true;
+        } catch {
+          showSaveError();
+          return false;
         }
-        function showSaveError() {
-            let msg = document.getElementById('munetiosSaveError');
-            if (!msg) {
-            msg = document.createElement('div');
-            msg.id = 'munetiosSaveError';
-            msg.style.position = 'fixed';
-            msg.style.bottom = '24px';
-            msg.style.left = '50%';
-            msg.style.transform = 'translateX(-50%)';
-            msg.style.background = '#e53935';
-            msg.style.color = '#fff';
-            msg.style.padding = '14px 28px';
-            msg.style.borderRadius = '10px';
-            msg.style.fontSize = '1em';
-            msg.style.zIndex = '100000';
-            msg.style.boxShadow = '0 2px 12px rgba(0,0,0,0.18)';
-            msg.textContent = 'Failed to save your changes. Please turn on your saving data.';
-            document.body.appendChild(msg);
-            setTimeout(() => {
-                if (msg) msg.remove();
-            }, 5000);
-            }
+      }
+      function showSaveError() {
+        let msg = document.getElementById("munetiosSaveError");
+        if (!msg) {
+          msg = document.createElement("div");
+          msg.id = "munetiosSaveError";
+          msg.style.position = "fixed";
+          msg.style.bottom = "24px";
+          msg.style.left = "50%";
+          msg.style.transform = "translateX(-50%)";
+          msg.style.background = "#e53935";
+          msg.style.color = "#fff";
+          msg.style.padding = "14px 28px";
+          msg.style.borderRadius = "10px";
+          msg.style.fontSize = "1em";
+          msg.style.zIndex = "100000";
+          msg.style.boxShadow = "0 2px 12px rgba(0,0,0,0.18)";
+          msg.textContent =
+            "Failed to save your changes. Please turn on your saving data.";
+          document.body.appendChild(msg);
+          setTimeout(() => {
+            if (msg) msg.remove();
+          }, 5000);
         }
-        function applySettings() {
-            const s = getStoredSettings();
-            // Background
-            if (s.bgType === 'color' && s.bgColor) {
-            document.body.style.background = s.bgColor;
-            document.body.style.backgroundImage = '';
-            } else if (s.bgType === 'image' && s.bgImage) {
-            document.body.style.background = '';
-            document.body.style.backgroundImage = s.bgImage.startsWith('url(') ? s.bgImage : `url('${s.bgImage}')`;
-            document.body.style.backgroundSize = 'cover';
-            document.body.style.backgroundPosition = 'center';
-            } else {
-            document.body.style.background = '';
-            document.body.style.backgroundImage = '';
-            }
-            // Text color
-            if (s.textColor) document.body.style.color = s.textColor;
-            // Search bar color
-            if (s.searchBarColor) {
-            document.querySelectorAll('.search-bar').forEach(el => {
-                el.style.setProperty('background', s.searchBarColor, 'important');
-            });
-            }
-            // Liquid glass toggle
-            document.querySelectorAll('.liquid-glass').forEach(el => {
-            el.style.backdropFilter = s.liquidGlass === false ? 'none' : '';
-            el.style.background = s.liquidGlass === false ? 'transparent' : '';
-            });
-            // Shortcuts location
-            const shortcuts = document.getElementById('shortcuts');
-            if (shortcuts && s.shortcutsLocation) {
-            shortcuts.style.position = 'absolute';
-            shortcuts.style.left = '';
-            shortcuts.style.right = '';
-            shortcuts.style.top = '';
-            shortcuts.style.bottom = '';
-            shortcuts.style.margin = '';
-            shortcuts.style.justifyContent = '';
-            shortcuts.style.flexDirection = '';
-            shortcuts.style.transform = '';
-            switch (s.shortcutsLocation) {
-                case 'left':
-                shortcuts.style.left = '20px';
-                shortcuts.style.top = '50%';
-                shortcuts.style.transform = 'translateY(-50%)';
-                shortcuts.style.justifyContent = 'flex-start';
-                shortcuts.style.flexDirection = 'column';
-                break;
-                case 'right':
-                shortcuts.style.right = '20px';
-                shortcuts.style.top = '50%';
-                shortcuts.style.transform = 'translateY(-50%)';
-                shortcuts.style.justifyContent = 'flex-end';
-                shortcuts.style.flexDirection = 'column';
-                break;
-                case 'up':
-                shortcuts.style.top = '80px';
-                shortcuts.style.left = '50%';
-                shortcuts.style.transform = 'translateX(-50%)';
-                shortcuts.style.justifyContent = 'center';
-                shortcuts.style.flexDirection = 'row';
-                break;
-                case 'down':
-                shortcuts.style.bottom = '40px';
-                shortcuts.style.left = '50%';
-                shortcuts.style.transform = 'translateX(-50%)';
-                shortcuts.style.justifyContent = 'center';
-                shortcuts.style.flexDirection = 'row';
-                break;
-                case 'center':
-                shortcuts.style.top = '50%';
-                shortcuts.style.left = '50%';
-                shortcuts.style.transform = 'translate(-50%,-50%)';
-                shortcuts.style.justifyContent = 'center';
-                shortcuts.style.flexDirection = 'row';
-                break;
-                case 'updown':
-                shortcuts.style.top = '80px';
-                shortcuts.style.left = '50%';
-                shortcuts.style.transform = 'translateX(-50%)';
-                shortcuts.style.justifyContent = 'center';
-                shortcuts.style.flexDirection = 'column';
-                break;
-                default:
-                shortcuts.style.position = '';
-                shortcuts.style.transform = '';
-                shortcuts.style.justifyContent = '';
-                shortcuts.style.flexDirection = '';
-                break;
-            }
-            }
-            // Font
-            if (s.fontFamily) {
-            let fontStack = s.fontFamily;
-            if (!safeFonts.includes(s.fontFamily)) fontStack += ', Arial, sans-serif';
-            const styleId = 'munetios-font-style';
-            let style = document.getElementById(styleId);
-            if (!style) {
-                style = document.createElement('style');
-                style.id = styleId;
-                document.head.appendChild(style);
-            }
-            style.innerHTML = `* { font-family: '${s.fontFamily}', Arial, sans-serif !important; }`;
-            // Google Fonts link
-            if (googleFonts.includes(s.fontFamily)) {
-                let linkId = 'munetios-google-font';
-                let link = document.getElementById(linkId);
-                if (!link) {
-                link = document.createElement('link');
-                link.id = linkId;
-                link.rel = 'stylesheet';
-                document.head.appendChild(link);
-                }
-                let fontParam = s.fontFamily.replace(/ /g, '+');
-                link.href = `https://fonts.googleapis.com/css2?family=${fontParam}:wght@300;400;500;600;700&display=swap`;
-            }
-            }
+      }
+      function applySettings() {
+        const s = getStoredSettings();
+        // Background
+        if (s.bgType === "color" && s.bgColor) {
+          document.body.style.background = s.bgColor;
+          document.body.style.backgroundImage = "";
+        } else if (s.bgType === "image" && s.bgImage) {
+          document.body.style.background = "";
+          document.body.style.backgroundImage = s.bgImage.startsWith("url(")
+            ? s.bgImage
+            : `url('${s.bgImage}')`;
+          document.body.style.backgroundSize = "cover";
+          document.body.style.backgroundPosition = "center";
+        } else {
+          document.body.style.background = "";
+          document.body.style.backgroundImage = "";
         }
-        applySettings();
+        // Text color
+        if (s.textColor) document.body.style.color = s.textColor;
+        // Search bar color
+        if (s.searchBarColor) {
+          document.querySelectorAll(".search-bar").forEach((el) => {
+            el.style.setProperty("background", s.searchBarColor, "important");
+          });
+        }
+        // Liquid glass toggle
+        document.querySelectorAll(".liquid-glass").forEach((el) => {
+          el.style.backdropFilter = s.liquidGlass === false ? "none" : "";
+          el.style.background = s.liquidGlass === false ? "transparent" : "";
+        });
+        // Shortcuts location
+        const shortcuts = document.getElementById("shortcuts");
+        if (shortcuts && s.shortcutsLocation) {
+          shortcuts.style.position = "absolute";
+          shortcuts.style.left = "";
+          shortcuts.style.right = "";
+          shortcuts.style.top = "";
+          shortcuts.style.bottom = "";
+          shortcuts.style.margin = "";
+          shortcuts.style.justifyContent = "";
+          shortcuts.style.flexDirection = "";
+          shortcuts.style.transform = "";
+          switch (s.shortcutsLocation) {
+            case "left":
+              shortcuts.style.left = "20px";
+              shortcuts.style.top = "50%";
+              shortcuts.style.transform = "translateY(-50%)";
+              shortcuts.style.justifyContent = "flex-start";
+              shortcuts.style.flexDirection = "column";
+              break;
+            case "right":
+              shortcuts.style.right = "20px";
+              shortcuts.style.top = "50%";
+              shortcuts.style.transform = "translateY(-50%)";
+              shortcuts.style.justifyContent = "flex-end";
+              shortcuts.style.flexDirection = "column";
+              break;
+            case "up":
+              shortcuts.style.top = "80px";
+              shortcuts.style.left = "50%";
+              shortcuts.style.transform = "translateX(-50%)";
+              shortcuts.style.justifyContent = "center";
+              shortcuts.style.flexDirection = "row";
+              break;
+            case "down":
+              shortcuts.style.bottom = "40px";
+              shortcuts.style.left = "50%";
+              shortcuts.style.transform = "translateX(-50%)";
+              shortcuts.style.justifyContent = "center";
+              shortcuts.style.flexDirection = "row";
+              break;
+            case "center":
+              shortcuts.style.top = "50%";
+              shortcuts.style.left = "50%";
+              shortcuts.style.transform = "translate(-50%,-50%)";
+              shortcuts.style.justifyContent = "center";
+              shortcuts.style.flexDirection = "row";
+              break;
+            case "updown":
+              shortcuts.style.top = "80px";
+              shortcuts.style.left = "50%";
+              shortcuts.style.transform = "translateX(-50%)";
+              shortcuts.style.justifyContent = "center";
+              shortcuts.style.flexDirection = "column";
+              break;
+            default:
+              shortcuts.style.position = "";
+              shortcuts.style.transform = "";
+              shortcuts.style.justifyContent = "";
+              shortcuts.style.flexDirection = "";
+              break;
+          }
+        }
+        // Font
+        if (s.fontFamily) {
+          let fontStack = s.fontFamily;
+          if (!safeFonts.includes(s.fontFamily))
+            fontStack += ", Arial, sans-serif";
+          const styleId = "munetios-font-style";
+          let style = document.getElementById(styleId);
+          if (!style) {
+            style = document.createElement("style");
+            style.id = styleId;
+            document.head.appendChild(style);
+          }
+          style.innerHTML = `* { font-family: '${s.fontFamily}', Arial, sans-serif !important; }`;
+          // Google Fonts link
+          if (googleFonts.includes(s.fontFamily)) {
+            let linkId = "munetios-google-font";
+            let link = document.getElementById(linkId);
+            if (!link) {
+              link = document.createElement("link");
+              link.id = linkId;
+              link.rel = "stylesheet";
+              document.head.appendChild(link);
+            }
+            let fontParam = s.fontFamily.replace(/ /g, "+");
+            link.href = `https://fonts.googleapis.com/css2?family=${fontParam}:wght@300;400;500;600;700&display=swap`;
+          }
+        }
+      }
+      applySettings();
 
-        customizeBtn.onclick = function() {
-            if (customizeModal) return;
-            const s = getStoredSettings();
-            customizeModal = document.createElement('div');
-            customizeModal.style.position = 'fixed';
-            customizeModal.style.top = '0';
-            customizeModal.style.left = '0';
-            customizeModal.style.width = '100vw';
-            customizeModal.style.height = '100vh';
-            customizeModal.style.background = 'rgba(0,0,0,0.4)';
-            customizeModal.style.display = 'flex';
-            customizeModal.style.alignItems = 'center';
-            customizeModal.style.justifyContent = 'center';
-            customizeModal.style.zIndex = '99999';
-            customizeModal.innerHTML = `
+      customizeBtn.onclick = function () {
+        if (customizeModal) return;
+        const s = getStoredSettings();
+        customizeModal = document.createElement("div");
+        customizeModal.style.position = "fixed";
+        customizeModal.style.top = "0";
+        customizeModal.style.left = "0";
+        customizeModal.style.width = "100vw";
+        customizeModal.style.height = "100vh";
+        customizeModal.style.background = "rgba(0,0,0,0.4)";
+        customizeModal.style.display = "flex";
+        customizeModal.style.alignItems = "center";
+        customizeModal.style.justifyContent = "center";
+        customizeModal.style.zIndex = "99999";
+        customizeModal.innerHTML = `
             <div style="background:#fff; color:#222; border-radius:18px; padding:32px 28px; min-width:340px; box-shadow:0 8px 32px rgba(0,0,0,0.18); display:flex; flex-direction:column; gap:18px; align-items:center; position:relative;max-width:95vw;">
                 <button id="closeCustomizeModal" style="position:absolute;top:8px;right:12px;background:none;border:none;font-size:1.5em;cursor:pointer;color:#888;">&times;</button>
                 <h2 style="margin:0 0 10px 0;font-size:1.2em;">Customize Munetios</h2>
                 <div style="display:flex;flex-direction:column;gap:10px;width:100%;">
                 <label><b>Background:</b></label>
                 <div>
-                    <input type="radio" name="bgType" value="color" id="bgTypeColor" ${!s.bgType || s.bgType === 'color' ? 'checked' : ''}> <label for="bgTypeColor">Color</label>
-                    <input type="radio" name="bgType" value="image" id="bgTypeImage" ${s.bgType === 'image' ? 'checked' : ''}> <label for="bgTypeImage">Image</label>
+                    <input type="radio" name="bgType" value="color" id="bgTypeColor" ${
+                      !s.bgType || s.bgType === "color" ? "checked" : ""
+                    }> <label for="bgTypeColor">Color</label>
+                    <input type="radio" name="bgType" value="image" id="bgTypeImage" ${
+                      s.bgType === "image" ? "checked" : ""
+                    }> <label for="bgTypeImage">Image</label>
                 </div>
-                <input type="color" id="bgColorInput" value="${s.bgColor || '#190047'}" style="width:60px;display:${!s.bgType || s.bgType === 'color' ? 'inline-block' : 'none'};">
-                <input type="file" id="bgImageInput" accept="image/*" style="display:${s.bgType === 'image' ? 'inline-block' : 'none'};">
+                <input type="color" id="bgColorInput" value="${
+                  s.bgColor || "#190047"
+                }" style="width:60px;display:${
+          !s.bgType || s.bgType === "color" ? "inline-block" : "none"
+        };">
+                <input type="file" id="bgImageInput" accept="image/*" style="display:${
+                  s.bgType === "image" ? "inline-block" : "none"
+                };">
                 <button id="clearBgBtn" style="margin-top:4px;font-size:0.9em;">Clear Background</button>
                 </div>
                 <div style="display:flex;flex-direction:column;gap:10px;width:100%;">
                 <label for="textColorInput"><b>Text Color:</b></label>
-                <input type="color" id="textColorInput" value="${s.textColor || '#ffffff'}" style="width:60px;">
+                <input type="color" id="textColorInput" value="${
+                  s.textColor || "#ffffff"
+                }" style="width:60px;">
                 </div>
                 <div style="display:none;flex-direction:column;gap:10px;width:100%;">
                 <label for="searchBarColorInput"><b>Search Bar Color:</b></label>
-                <input type="color" id="searchBarColorInput" value="${s.searchBarColor || '#ffffff33'}" style="width:60px;">
+                <input type="color" id="searchBarColorInput" value="${
+                  s.searchBarColor || "#ffffff33"
+                }" style="width:60px;">
                 </div>
                 <div style="display:flex;flex-direction:column;gap:10px;width:100%;">
                 <label><b>Shortcuts Location:</b></label>
                 <select id="shortcutsLocationInput">
-                    <option value="center" ${s.shortcutsLocation === 'center' ? 'selected' : ''}>Center</option>
-                    <option value="left" ${s.shortcutsLocation === 'left' ? 'selected' : ''}>Left</option>
-                    <option value="right" ${s.shortcutsLocation === 'right' ? 'selected' : ''}>Right</option>
-                    <option value="up" ${s.shortcutsLocation === 'up' ? 'selected' : ''}>Up</option>
-                    <option value="down" ${s.shortcutsLocation === 'down' ? 'selected' : ''}>Down</option>
-                    <option value="updown" ${s.shortcutsLocation === 'updown' ? 'selected' : ''}>Up and Down</option>
+                    <option value="center" ${
+                      s.shortcutsLocation === "center" ? "selected" : ""
+                    }>Center</option>
+                    <option value="left" ${
+                      s.shortcutsLocation === "left" ? "selected" : ""
+                    }>Left</option>
+                    <option value="right" ${
+                      s.shortcutsLocation === "right" ? "selected" : ""
+                    }>Right</option>
+                    <option value="up" ${
+                      s.shortcutsLocation === "up" ? "selected" : ""
+                    }>Up</option>
+                    <option value="down" ${
+                      s.shortcutsLocation === "down" ? "selected" : ""
+                    }>Down</option>
+                    <option value="updown" ${
+                      s.shortcutsLocation === "updown" ? "selected" : ""
+                    }>Up and Down</option>
                 </select>
                 </div>
                 <div style="display:flex;flex-direction:column;gap:10px;width:100%;">
                 <label for="fontFamilyInput"><b>Font:</b></label>
                 <select id="fontFamilyInput" style="width:100%;">
-                    ${safeFonts.map(f => `<option value="${f}" ${s.fontFamily === f ? 'selected' : ''}>${f}</option>`).join('')}
+                    ${safeFonts
+                      .map(
+                        (f) =>
+                          `<option value="${f}" ${
+                            s.fontFamily === f ? "selected" : ""
+                          }>${f}</option>`
+                      )
+                      .join("")}
                 </select>
                 <button id="detectFontsBtn" style="font-size:0.9em;">Detect Installed Fonts</button>
                 <span id="fontPermMsg" style="font-size:0.9em;color:#666;"></span>
                 </div>
                 <div style="display:flex;flex-direction:row;align-items:center;gap:10px;width:100%;">
                 <label for="liquidGlassToggle"><b>Liquid Glass:</b></label>
-                <input type="checkbox" id="liquidGlassToggle" ${s.liquidGlass !== false ? 'checked' : ''}>
+                <input type="checkbox" id="liquidGlassToggle" ${
+                  s.liquidGlass !== false ? "checked" : ""
+                }>
                 </div>
                 <button id="saveCustomizeBtn" style="padding:10px 18px; border-radius:8px; background:#3a1c71; color:#fff; border:none; font-weight:600; font-size:1em; cursor:pointer;margin-top:10px;">Save</button>
             </div>
             `;
-            document.body.appendChild(customizeModal);
+        document.body.appendChild(customizeModal);
 
-            // Modal logic
-            function updateBgInputs() {
-            const isColor = document.getElementById('bgTypeColor').checked;
-            document.getElementById('bgColorInput').style.display = isColor ? 'inline-block' : 'none';
-            document.getElementById('bgImageInput').style.display = !isColor ? 'inline-block' : 'none';
-            }
-            document.getElementById('bgTypeColor').onchange = updateBgInputs;
-            document.getElementById('bgTypeImage').onchange = updateBgInputs;
+        // Modal logic
+        function updateBgInputs() {
+          const isColor = document.getElementById("bgTypeColor").checked;
+          document.getElementById("bgColorInput").style.display = isColor
+            ? "inline-block"
+            : "none";
+          document.getElementById("bgImageInput").style.display = !isColor
+            ? "inline-block"
+            : "none";
+        }
+        document.getElementById("bgTypeColor").onchange = updateBgInputs;
+        document.getElementById("bgTypeImage").onchange = updateBgInputs;
 
-            document.getElementById('clearBgBtn').onclick = function() {
-            document.getElementById('bgColorInput').value = '#190047';
-            document.getElementById('bgImageInput').value = '';
+        document.getElementById("clearBgBtn").onclick = function () {
+          document.getElementById("bgColorInput").value = "#190047";
+          document.getElementById("bgImageInput").value = "";
+        };
+
+        document.getElementById("closeCustomizeModal").onclick = function () {
+          customizeModal.remove();
+          customizeModal = null;
+        };
+
+        document.getElementById("saveCustomizeBtn").onclick = function () {
+          const bgType = document.getElementById("bgTypeColor").checked
+            ? "color"
+            : "image";
+          const bgColor = document.getElementById("bgColorInput").value;
+          let bgImage = s.bgImage || "";
+          const bgImageInput = document.getElementById("bgImageInput");
+          if (
+            bgType === "image" &&
+            bgImageInput.files &&
+            bgImageInput.files[0]
+          ) {
+            const file = bgImageInput.files[0];
+            bgImage = "";
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              bgImage = e.target.result;
+              saveAndApply();
             };
-
-            document.getElementById('closeCustomizeModal').onclick = function() {
-            customizeModal.remove();
-            customizeModal = null;
+            reader.readAsDataURL(file);
+            return;
+          }
+          function saveAndApply() {
+            const settings = {
+              bgType,
+              bgColor: bgType === "color" ? bgColor : undefined,
+              bgImage: bgType === "image" ? bgImage : undefined,
+              textColor: document.getElementById("textColorInput").value,
+              searchBarColor: document.getElementById("searchBarColorInput")
+                .value,
+              shortcutsLocation: document.getElementById(
+                "shortcutsLocationInput"
+              ).value,
+              fontFamily: document.getElementById("fontFamilyInput").value,
+              liquidGlass: document.getElementById("liquidGlassToggle").checked,
             };
-
-            document.getElementById('saveCustomizeBtn').onclick = function() {
-            const bgType = document.getElementById('bgTypeColor').checked ? 'color' : 'image';
-            const bgColor = document.getElementById('bgColorInput').value;
-            let bgImage = s.bgImage || '';
-            const bgImageInput = document.getElementById('bgImageInput');
-            if (bgType === 'image' && bgImageInput.files && bgImageInput.files[0]) {
-                const file = bgImageInput.files[0];
-                bgImage = '';
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                bgImage = e.target.result;
-                saveAndApply();
-                };
-                reader.readAsDataURL(file);
-                return;
+            if (saveSettings(settings)) {
+              applySettings();
+              customizeModal.remove();
+              customizeModal = null;
             }
-            function saveAndApply() {
-                const settings = {
-                bgType,
-                bgColor: bgType === 'color' ? bgColor : undefined,
-                bgImage: bgType === 'image' ? bgImage : undefined,
-                textColor: document.getElementById('textColorInput').value,
-                searchBarColor: document.getElementById('searchBarColorInput').value,
-                shortcutsLocation: document.getElementById('shortcutsLocationInput').value,
-                fontFamily: document.getElementById('fontFamilyInput').value,
-                liquidGlass: document.getElementById('liquidGlassToggle').checked
-                };
-                if (saveSettings(settings)) {
-                applySettings();
-                customizeModal.remove();
-                customizeModal = null;
-                }
-            }
-            if (bgType === 'image' && bgImageInput.files && bgImageInput.files[0]) {
-                // Will be handled by FileReader above
-            } else {
-                saveAndApply();
-            }
-            };
+          }
+          if (
+            bgType === "image" &&
+            bgImageInput.files &&
+            bgImageInput.files[0]
+          ) {
+            // Will be handled by FileReader above
+          } else {
+            saveAndApply();
+          }
+        };
 
         // Detect Installed Fonts Button
-        document.getElementById('detectFontsBtn').onclick = async function() {
-            const fontSelect = document.getElementById('fontFamilyInput');
-            const fontPermMsg = document.getElementById('fontPermMsg');
-            fontPermMsg.textContent = '';
-            if (!('queryLocalFonts' in window)) {
-                fontPermMsg.textContent = 'Font detection not supported in this browser.';
-                return;
-            }
-            try {
-                // Request permission for local fonts
-                const perm = await navigator.permissions.query({ name: 'local-fonts' });
-                if (perm.state === 'denied') {
-                    fontPermMsg.textContent = 'Permission denied for local fonts.';
-                    return;
-                }
-                // Query local fonts
-                const localFonts = await window.queryLocalFonts();
-                // Get unique font family names
-                const fontFamilies = Array.from(new Set(localFonts.map(f => f.family))).sort();
-                // Merge with safeFonts, keeping safeFonts at top
-                const safeSet = new Set(safeFonts);
-                const mergedFonts = [...safeFonts, ...fontFamilies.filter(f => !safeSet.has(f))];
-                // Rebuild select options
-                fontSelect.innerHTML = mergedFonts.map(f =>
-                    `<option value="${f}" ${s.fontFamily === f ? 'selected' : ''}>${f}</option>`
-                ).join('');
-                fontPermMsg.textContent = 'Installed fonts loaded!';
-            } catch (e) {
-                fontPermMsg.textContent = 'Could not access local fonts.';
-            }
-        };
-        };
-
-        // Shortcuts logic with Add Shortcut Modal and Favicon
-        const shortcutsContainer = document.getElementById('shortcuts');
-        const addShortcutBtn = document.getElementById('addshortcut');
-        let shortcuts;
-        try {
-            shortcuts = JSON.parse(localStorage.getItem('shortcuts')) || [
-            { name: 'Munetios', url: 'https://www.munetios.com'},
-            { name: 'Google', url: 'https://www.google.com'},
-            { name: 'YouTube', url: 'https://www.youtube.com' },
-            { name: 'Microsoft', url: 'https://www.microsoft.com' },
-            { name: 'ChatGPT', url: 'https://chat.openai.com' },
-            { name: 'Facebook', url: 'https://www.facebook.com' },
-            { name: 'Instagram', url: 'https://www.instagram.com' },
-            { name: 'ESPN', url: 'https://www.espn.com' },
-            { name: 'Yahoo', url: 'https://www.yahoo.com' }
-            ];
-        } catch {
-            shortcuts = [
-            { name: 'Munetios', url: 'https://www.munetios.com'},
-            { name: 'Google', url: 'https://www.google.com'},
-            { name: 'YouTube', url: 'https://www.youtube.com' },
-            { name: 'Microsoft', url: 'https://www.microsoft.com' },
-            { name: 'ChatGPT', url: 'https://chat.openai.com' },
-            { name: 'Facebook', url: 'https://www.facebook.com' },
-            { name: 'Instagram', url: 'https://www.instagram.com' },
-            { name: 'ESPN', url: 'https://www.espn.com' },
-            { name: 'Yahoo', url: 'https://www.yahoo.com' }
-            ];
-        }
-
-        function showShortcutSaveError() {
-            let msg = document.getElementById('shortcutSaveError');
-            if (!msg) {
-            msg = document.createElement('div');
-            msg.id = 'shortcutSaveError';
-            msg.style.position = 'fixed';
-            msg.style.bottom = '24px';
-            msg.style.left = '50%';
-            msg.style.transform = 'translateX(-50%)';
-            msg.style.background = '#e53935';
-            msg.style.color = '#fff';
-            msg.style.padding = '14px 28px';
-            msg.style.borderRadius = '10px';
-            msg.style.fontSize = '1em';
-            msg.style.zIndex = '100000';
-            msg.style.boxShadow = '0 2px 12px rgba(0,0,0,0.18)';
-            msg.textContent = 'Could not save your shortcuts. Please turn on your saving data.';
-            document.body.appendChild(msg);
-            setTimeout(() => {
-                if (msg) msg.remove();
-            }, 5000);
-            }
-        }
-
-        function getFavicon(url) {
-            try {
-            const u = new URL(url);
-            // Special case for Instagram
-            if (u.hostname.includes('instagram.com')) {
-                return 'https://static.cdninstagram.com/rsrc.php/v4/yI/r/VsNE-OHk_8a.png';
-            }
-            return `${u.origin}/favicon.ico`;
-            } catch {
-            return 'favicon-32x32.png';
-            }
-        }
-
-        function renderShortcuts() {
-            // Remove all except the add shortcut button
-            shortcutsContainer.innerHTML = '';
-            shortcuts.forEach((shortcut, idx) => {
-            const wrapper = document.createElement('div');
-            wrapper.className = 'shortcut';
-            wrapper.style.position = 'relative';
-
-            const a = document.createElement('a');
-            a.href = shortcut.url;
-            // Open in current tab, so no target or rel attributes
-
-            const img = document.createElement('img');
-            img.src = getFavicon(shortcut.url);
-            img.alt = shortcut.name;
-            img.style.width = '32px';
-            img.style.height = '32px';
-            img.style.borderRadius = '8px';
-            img.onerror = function() {
-                this.src = 'favicon-32x32.png';
-            };
-
-            a.appendChild(img);
-
-            const label = document.createElement('div');
-            label.className = 'label';
-            label.textContent = shortcut.name;
-
-            // Delete (X) icon
-            const del = document.createElement('span');
-            del.innerHTML = '&times;';
-            del.title = 'Delete';
-            del.style.position = 'absolute';
-            del.style.top = '0px';
-            del.style.right = '0px';
-            del.style.cursor = 'pointer';
-            del.style.color = '#fff';
-            del.style.background = 'rgba(0,0,0,0.5)';
-            del.style.borderRadius = '50%';
-            del.style.width = '20px';
-            del.style.height = '20px';
-            del.style.display = 'flex';
-            del.style.alignItems = 'center';
-            del.style.justifyContent = 'center';
-            del.style.fontSize = '16px';
-            del.style.zIndex = '10';
-            del.onclick = () => {
-                shortcuts.splice(idx, 1);
-                try {
-                localStorage.setItem('shortcuts', JSON.stringify(shortcuts));
-                } catch {
-                showShortcutSaveError();
-                }
-                renderShortcuts();
-            };
-
-            wrapper.appendChild(a);
-            wrapper.appendChild(label);
-            wrapper.appendChild(del);
-
-            shortcutsContainer.appendChild(wrapper);
+        document.getElementById("detectFontsBtn").onclick = async function () {
+          const fontSelect = document.getElementById("fontFamilyInput");
+          const fontPermMsg = document.getElementById("fontPermMsg");
+          fontPermMsg.textContent = "";
+          if (!("queryLocalFonts" in window)) {
+            fontPermMsg.textContent =
+              "Font detection not supported in this browser.";
+            return;
+          }
+          try {
+            // Request permission for local fonts
+            const perm = await navigator.permissions.query({
+              name: "local-fonts",
             });
+            if (perm.state === "denied") {
+              fontPermMsg.textContent = "Permission denied for local fonts.";
+              return;
+            }
+            // Query local fonts
+            const localFonts = await window.queryLocalFonts();
+            // Get unique font family names
+            const fontFamilies = Array.from(
+              new Set(localFonts.map((f) => f.family))
+            ).sort();
+            // Merge with safeFonts, keeping safeFonts at top
+            const safeSet = new Set(safeFonts);
+            const mergedFonts = [
+              ...safeFonts,
+              ...fontFamilies.filter((f) => !safeSet.has(f)),
+            ];
+            // Rebuild select options
+            fontSelect.innerHTML = mergedFonts
+              .map(
+                (f) =>
+                  `<option value="${f}" ${
+                    s.fontFamily === f ? "selected" : ""
+                  }>${f}</option>`
+              )
+              .join("");
+            fontPermMsg.textContent = "Installed fonts loaded!";
+          } catch (e) {
+            fontPermMsg.textContent = "Could not access local fonts.";
+          }
+        };
+      };
 
-            // Add shortcut button
-            const addWrapper = document.createElement('div');
-            addWrapper.className = 'add-shortcut-wrapper';
-            addWrapper.style.display = 'flex';
-            addWrapper.style.flexDirection = 'column';
-            addWrapper.style.alignItems = 'center';
+      // Shortcuts logic with Add Shortcut Modal and Favicon
+      const shortcutsContainer = document.getElementById("shortcuts");
+      const addShortcutBtn = document.getElementById("addshortcut");
+      let shortcuts;
+      try {
+        shortcuts = JSON.parse(localStorage.getItem("shortcuts")) || [
+          { name: "Munetios", url: "https://www.munetios.com" },
+          { name: "Google", url: "https://www.google.com" },
+          { name: "YouTube", url: "https://www.youtube.com" },
+          { name: "Microsoft", url: "https://www.microsoft.com" },
+          { name: "ChatGPT", url: "https://chat.openai.com" },
+          { name: "Discord", url: "https://discord.com/app" },
+          { name: "Facebook", url: "https://www.facebook.com" },
+          { name: "Instagram", url: "https://www.instagram.com" },
+          { name: "Twitter", url: "https://www.twitter.com" },
+          { name: "LinkedIn", url: "https://www.linkedin.com" },
+        ];
+      } catch {
+        shortcuts = [
+          { name: "Munetios", url: "https://www.munetios.com" },
+          { name: "Google", url: "https://www.google.com" },
+          { name: "YouTube", url: "https://www.youtube.com" },
+          { name: "Microsoft", url: "https://www.microsoft.com" },
+          { name: "ChatGPT", url: "https://chat.openai.com" },
+          { name: "Discord", url: "https://discord.com/app" },
+          { name: "Facebook", url: "https://www.facebook.com" },
+          { name: "Instagram", url: "https://www.instagram.com" },
+          { name: "Twitter", url: "https://www.twitter.com" },
+          { name: "LinkedIn", url: "https://www.linkedin.com" },
+        ];
+      }
 
-            const addBtn = document.createElement('div');
-            addBtn.className = 'add-shortcut';
-            addBtn.id = 'addshortcut';
-            addBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>`;
-            addBtn.onclick = openAddShortcutModal;
-
-            const addLabel = document.createElement('div');
-            addLabel.className = 'label';
-            addLabel.textContent = 'Add';
-
-            addWrapper.appendChild(addBtn);
-            addWrapper.appendChild(addLabel);
-
-            shortcutsContainer.appendChild(addWrapper);
+      function showShortcutSaveError() {
+        let msg = document.getElementById("shortcutSaveError");
+        if (!msg) {
+          msg = document.createElement("div");
+          msg.id = "shortcutSaveError";
+          msg.style.position = "fixed";
+          msg.style.bottom = "24px";
+          msg.style.left = "50%";
+          msg.style.transform = "translateX(-50%)";
+          msg.style.background = "#e53935";
+          msg.style.color = "#fff";
+          msg.style.padding = "14px 28px";
+          msg.style.borderRadius = "10px";
+          msg.style.fontSize = "1em";
+          msg.style.zIndex = "100000";
+          msg.style.boxShadow = "0 2px 12px rgba(0,0,0,0.18)";
+          msg.textContent =
+            "Could not save your shortcuts. Please turn on your saving data.";
+          document.body.appendChild(msg);
+          setTimeout(() => {
+            if (msg) msg.remove();
+          }, 5000);
         }
+      }
 
-        // Modal UI
-        function createModal() {
-            if (document.getElementById('shortcutModal')) return;
-            const modal = document.createElement('div');
-            modal.id = 'shortcutModal';
-            modal.style.position = 'fixed';
-            modal.style.top = '0';
-            modal.style.left = '0';
-            modal.style.width = '100vw';
-            modal.style.height = '100vh';
-            modal.style.background = 'rgba(0,0,0,0.4)';
-            modal.style.display = 'flex';
-            modal.style.alignItems = 'center';
-            modal.style.justifyContent = 'center';
-            modal.style.zIndex = '9999';
+      function getFavicon(url) {
+        try {
+          const u = new URL(url);
+          // Special case for Instagram
+          if (u.hostname.includes("instagram.com")) {
+            return "https://www.google.com/s2/favicons?sz=64&domain=instagram.com";
+          }
+          // Special case for Discord
+          if (
+            u.hostname === "discord.com" ||
+            u.hostname.endsWith(".discord.com")
+          ) {
+            return "https://www.google.com/s2/favicons?sz=64&domain=discord.com";
+          }
+          // Use Google favicon service for all other domains
+          return `https://www.google.com/s2/favicons?sz=64&domain=${u.hostname}`;
+        } catch {
+          return "favicon-32x32.png";
+        }
+      }
 
-            modal.innerHTML = `
+      function renderShortcuts() {
+        // Remove all except the add shortcut button
+        shortcutsContainer.innerHTML = "";
+        shortcuts.forEach((shortcut, idx) => {
+          const wrapper = document.createElement("div");
+          wrapper.className = "shortcut";
+          wrapper.style.position = "relative";
+
+          const a = document.createElement("a");
+          a.href = shortcut.url;
+          // Open in current tab, so no target or rel attributes
+
+          const img = document.createElement("img");
+          img.src = getFavicon(shortcut.url);
+          img.alt = shortcut.name;
+          img.style.width = "32px";
+          img.style.height = "32px";
+          img.style.borderRadius = "8px";
+          img.onerror = function () {
+            this.src = "favicon-32x32.png";
+          };
+
+          a.appendChild(img);
+
+          const label = document.createElement("div");
+          label.className = "label";
+          label.textContent = shortcut.name;
+
+          // Delete (X) icon
+          const del = document.createElement("span");
+          del.innerHTML = "&times;";
+          del.title = "Delete";
+          del.style.position = "absolute";
+          del.style.top = "0px";
+          del.style.right = "0px";
+          del.style.cursor = "pointer";
+          del.style.color = "#fff";
+          del.style.background = "rgba(0,0,0,0.5)";
+          del.style.borderRadius = "50%";
+          del.style.width = "20px";
+          del.style.height = "20px";
+          del.style.display = "flex";
+          del.style.alignItems = "center";
+          del.style.justifyContent = "center";
+          del.style.fontSize = "16px";
+          del.style.zIndex = "10";
+          del.onclick = () => {
+            shortcuts.splice(idx, 1);
+            try {
+              localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
+            } catch {
+              showShortcutSaveError();
+            }
+            renderShortcuts();
+          };
+
+          wrapper.appendChild(a);
+          wrapper.appendChild(label);
+          wrapper.appendChild(del);
+
+          shortcutsContainer.appendChild(wrapper);
+        });
+
+        // Add shortcut button
+        const addWrapper = document.createElement("div");
+        addWrapper.className = "add-shortcut-wrapper";
+        addWrapper.style.display = "flex";
+        addWrapper.style.flexDirection = "column";
+        addWrapper.style.alignItems = "center";
+
+        const addBtn = document.createElement("div");
+        addBtn.className = "add-shortcut";
+        addBtn.id = "addshortcut";
+        addBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>`;
+        addBtn.onclick = openAddShortcutModal;
+
+        const addLabel = document.createElement("div");
+        addLabel.className = "label";
+        addLabel.textContent = "Add";
+
+        addWrapper.appendChild(addBtn);
+        addWrapper.appendChild(addLabel);
+
+        shortcutsContainer.appendChild(addWrapper);
+      }
+
+      // Modal UI
+      function createModal() {
+        if (document.getElementById("shortcutModal")) return;
+        const modal = document.createElement("div");
+        modal.id = "shortcutModal";
+        modal.style.position = "fixed";
+        modal.style.top = "0";
+        modal.style.left = "0";
+        modal.style.width = "100vw";
+        modal.style.height = "100vh";
+        modal.style.background = "rgba(0,0,0,0.4)";
+        modal.style.display = "flex";
+        modal.style.alignItems = "center";
+        modal.style.justifyContent = "center";
+        modal.style.zIndex = "9999";
+
+        modal.innerHTML = `
             <div style="background:#fff; color:#222; border-radius:16px; padding:32px 24px; min-width:320px; box-shadow:0 8px 32px rgba(0,0,0,0.18); display:flex; flex-direction:column; gap:18px; align-items:center; position:relative;">
             <button id="closeModalBtn" style="position:absolute;top:8px;right:12px;background:none;border:none;font-size:1.5em;cursor:pointer;color:#888;">&times;</button>
             <h2 style="margin:0 0 10px 0;font-size:1.2em;">Add Shortcut</h2>
@@ -1200,168 +1552,222 @@ if ('serviceWorker' in navigator) {
             <button id="saveShortcutBtn" style="padding:10px 18px; border-radius:8px; background:#3a1c71; color:#fff; border:none; font-weight:600; font-size:1em; cursor:pointer;">Add</button>
             </div>
             `;
-            document.body.appendChild(modal);
+        document.body.appendChild(modal);
 
-            document.getElementById('closeModalBtn').onclick = closeAddShortcutModal;
-            document.getElementById('saveShortcutBtn').onclick = function() {
-            const name = document.getElementById('shortcutName').value.trim();
-            let url = document.getElementById('shortcutUrl').value.trim();
-            if (!name || !url) return;
-            if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
-            shortcuts.unshift({ name, url });
-            try {
-                localStorage.setItem('shortcuts', JSON.stringify(shortcuts));
-            } catch {
-                showShortcutSaveError();
+        document.getElementById("closeModalBtn").onclick =
+          closeAddShortcutModal;
+        document.getElementById("saveShortcutBtn").onclick = function () {
+          const name = document.getElementById("shortcutName").value.trim();
+          let url = document.getElementById("shortcutUrl").value.trim();
+          if (!name || !url) return;
+          if (!/^https?:\/\//i.test(url)) url = "https://" + url;
+          shortcuts.unshift({ name, url });
+          try {
+            localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
+          } catch {
+            showShortcutSaveError();
+          }
+          closeAddShortcutModal();
+          renderShortcuts();
+        };
+      }
+
+      function openAddShortcutModal() {
+        createModal();
+      }
+      function closeAddShortcutModal() {
+        const modal = document.getElementById("shortcutModal");
+        if (modal) modal.remove();
+      }
+
+      // Initial render
+      renderShortcuts();
+
+      function performSearch() {
+        const query = document.getElementById("searchInput").value.trim();
+        if (query) {
+          window.location.href =
+            "/search/search.html?q=" + encodeURIComponent(query);
+        }
+      }
+
+      function randomizeQueries() {
+        const queries = [
+          "Munetios",
+          "Weather Near Me",
+          "How to clear cache",
+          "Google",
+          "McDonald's",
+          "OpenAI",
+          "ChatGPT",
+        ];
+        const randomQuery = queries[Math.floor(Math.random() * queries.length)];
+        document.getElementById("searchInput").value = randomQuery;
+        performSearch();
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Enter key triggers search
+        document
+          .getElementById("searchInput")
+          .addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+              performSearch();
             }
-            closeAddShortcutModal();
-            renderShortcuts();
-            };
-        }
+          });
 
-        function openAddShortcutModal() {
-            createModal();
-        }
-        function closeAddShortcutModal() {
-            const modal = document.getElementById('shortcutModal');
-            if (modal) modal.remove();
-        }
-
-        // Initial render
-        renderShortcuts();
-
-        function performSearch() {
-            const query = document.getElementById('searchInput').value.trim();
-            if (query) {
-                window.location.href = '/search/search.html?q=' + encodeURIComponent(query);
-            }
-        }
-
-        function randomizeQueries() {
-            const queries = [
-                "Munetios",
-                "Weather Near Me",
-                "How to clear cache",
-                "Google",
-                "McDonald's",
-                "OpenAI",
-                "ChatGPT"
-            ];
-            const randomQuery = queries[Math.floor(Math.random() * queries.length)];
-            document.getElementById('searchInput').value = randomQuery;
-            performSearch();
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // Enter key triggers search
-            document.getElementById('searchInput').addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    performSearch();
-                }
-            });
-
-            // Attach click handlers for buttons (CSP-safe)
-            document.querySelectorAll('button').forEach(btn => {
-                if (btn.textContent.trim() === 'Search') {
-                    btn.addEventListener('click', performSearch);
-                }
-                if (btn.textContent.trim() === "I'm Feeling Good") {
-                    btn.addEventListener('click', randomizeQueries);
-                }
-            });
+        // Attach click handlers for buttons (CSP-safe)
+        document.querySelectorAll("button").forEach((btn) => {
+          if (btn.textContent.trim() === "Search") {
+            btn.addEventListener("click", performSearch);
+          }
+          if (btn.textContent.trim() === "I'm Feeling Good") {
+            btn.addEventListener("click", randomizeQueries);
+          }
         });
-        (function() {
-            // Check if today is January 1
-            const now = new Date();
-            const isNewYear = (now.getMonth() === 0 && now.getDate() === 1);
-            if (isNewYear) {
-                // Change logo to newyears.png
-                const logoImg = document.querySelector('.munetios-logo img');
-                if (logoImg) logoImg.src = 'newyears.png';
+      });
+      (function () {
+        // Check if today is January 1
+        const now = new Date();
+        const isNewYear = now.getMonth() === 0 && now.getDate() === 1;
+        if (isNewYear) {
+          // Change logo to newyears.png
+          const logoImg = document.querySelector(".munetios-logo img");
+          if (logoImg) logoImg.src = "newyears.png";
 
-                // Make logo clickable to search "New Year's Day"
-                const logoDiv = document.querySelector('.munetios-logo');
-                if (logoDiv) {
-                    logoDiv.style.cursor = 'pointer';
-                    logoDiv.onclick = function() {
-                        window.location.href = '/search/search.html?q=' + encodeURIComponent("New Year's Day");
-                    };
-                }
-            }
-        })();
-        (function() {
-            // Check if today is between Dec 22 and Dec 26 (inclusive)
-            const now = new Date();
-            const isChristmas = (
-                (now.getMonth() === 11) && // December (0-based)
-                (now.getDate() >= 22 && now.getDate() <= 26)
-            );
-            if (isChristmas) {
-                // Change logo to christmas.png
-                const logoImg = document.querySelector('.munetios-logo img');
-                if (logoImg) logoImg.src = 'christmas.png';
+          // Make logo clickable to search "New Year's Day"
+          const logoDiv = document.querySelector(".munetios-logo");
+          if (logoDiv) {
+            logoDiv.style.cursor = "pointer";
+            logoDiv.onclick = function () {
+              window.location.href =
+                "/search/search.html?q=" + encodeURIComponent("New Year's Day");
+            };
+          }
+        }
+      })();
+      (function () {
+        // Check if today is between Dec 22 and Dec 26 (inclusive)
+        const now = new Date();
+        const isChristmas =
+          now.getMonth() === 11 && // December (0-based)
+          now.getDate() >= 22 &&
+          now.getDate() <= 26;
+        if (isChristmas) {
+          // Change logo to christmas.png
+          const logoImg = document.querySelector(".munetios-logo img");
+          if (logoImg) logoImg.src = "christmas.png";
 
-                // Make logo clickable
-                const logoDiv = document.querySelector('.munetios-logo');
-                if (logoDiv) {
-                    logoDiv.style.cursor = 'pointer';
-                    logoDiv.onclick = function() {
-                        if (document.getElementById('christmasModal')) return;
-                        const modal = document.createElement('div');
-                        modal.id = 'christmasModal';
-                        modal.style.position = 'fixed';
-                        modal.style.top = '0';
-                        modal.style.left = '0';
-                        modal.style.width = '100vw';
-                        modal.style.height = '100vh';
-                        modal.style.background = 'rgba(0,0,0,0.4)';
-                        modal.style.display = 'flex';
-                        modal.style.alignItems = 'center';
-                        modal.style.justifyContent = 'center';
-                        modal.style.zIndex = '100002';
-                        modal.innerHTML = `
+          // Make logo clickable
+          const logoDiv = document.querySelector(".munetios-logo");
+          if (logoDiv) {
+            logoDiv.style.cursor = "pointer";
+            logoDiv.onclick = function () {
+              if (document.getElementById("christmasModal")) return;
+              const modal = document.createElement("div");
+              modal.id = "christmasModal";
+              modal.style.position = "fixed";
+              modal.style.top = "0";
+              modal.style.left = "0";
+              modal.style.width = "100vw";
+              modal.style.height = "100vh";
+              modal.style.background = "rgba(0,0,0,0.4)";
+              modal.style.display = "flex";
+              modal.style.alignItems = "center";
+              modal.style.justifyContent = "center";
+              modal.style.zIndex = "100002";
+              modal.innerHTML = `
                             <div style="background:#fff; border-radius:18px; box-shadow:0 8px 32px rgba(0,0,0,0.18); max-width:800px; max-height:900px; width:95vw; height:95vh; display:flex; flex-direction:column; position:relative; overflow:hidden;">
                                 <button id="closeChristmasModal" style="position:absolute;top:8px;right:12px;background:none;border:none;font-size:1.5em;cursor:pointer;color:#888;z-index:2;">&times;</button>
                                 <iframe src="christmas.html" style="border:none; width:100%; height:100%; border-radius:18px;" allowfullscreen></iframe>
                             </div>
                         `;
-                        document.body.appendChild(modal);
-                        document.getElementById('closeChristmasModal').onclick = function() {
-                            modal.remove();
-                        };
-                    };
-                }
-            }
-        })();
-    (function() {
+              document.body.appendChild(modal);
+              document.getElementById("closeChristmasModal").onclick =
+                function () {
+                  modal.remove();
+                };
+            };
+          }
+        }
+      })();
+      (function () {
         // Detect Europe by country code or browser language
         function isEurope() {
-            // List of European country codes (ISO 3166-1 alpha-2)
-            const europeCountries = [
-                'al','ad','at','by','be','ba','bg','hr','cy','cz','dk','ee','fi','fr','de','gr','hu','is','ie','it','xk','lv','li','lt','lu','mt','md','mc','me','nl','mk','no','pl','pt','ro','ru','sm','rs','sk','si','es','se','ch','ua','gb','uk','va'
-            ];
-            // Try to get country from browser language
-            const lang = (navigator.language || '').toLowerCase();
-            for (const cc of europeCountries) {
-                if (lang.endsWith('-' + cc) || lang === cc) return true;
-            }
-            // Try to get country from timezone offset (Europe is UTC+0 to UTC+3)
-            const tz = new Date().getTimezoneOffset();
-            if (tz <= -0 && tz >= -180) return true;
-            // Try to get country from Intl API
-            try {
-                const region = new Intl.Locale(navigator.language).region;
-                if (region && europeCountries.includes(region.toLowerCase())) return true;
-            } catch {}
-            return false;
+          // List of European country codes (ISO 3166-1 alpha-2)
+          const europeCountries = [
+            "al",
+            "ad",
+            "at",
+            "by",
+            "be",
+            "ba",
+            "bg",
+            "hr",
+            "cy",
+            "cz",
+            "dk",
+            "ee",
+            "fi",
+            "fr",
+            "de",
+            "gr",
+            "hu",
+            "is",
+            "ie",
+            "it",
+            "xk",
+            "lv",
+            "li",
+            "lt",
+            "lu",
+            "mt",
+            "md",
+            "mc",
+            "me",
+            "nl",
+            "mk",
+            "no",
+            "pl",
+            "pt",
+            "ro",
+            "ru",
+            "sm",
+            "rs",
+            "sk",
+            "si",
+            "es",
+            "se",
+            "ch",
+            "ua",
+            "gb",
+            "uk",
+            "va",
+          ];
+          // Try to get country from browser language
+          const lang = (navigator.language || "").toLowerCase();
+          for (const cc of europeCountries) {
+            if (lang.endsWith("-" + cc) || lang === cc) return true;
+          }
+          // Try to get country from timezone offset (Europe is UTC+0 to UTC+3)
+          const tz = new Date().getTimezoneOffset();
+          if (tz <= -0 && tz >= -180) return true;
+          // Try to get country from Intl API
+          try {
+            const region = new Intl.Locale(navigator.language).region;
+            if (region && europeCountries.includes(region.toLowerCase()))
+              return true;
+          } catch {}
+          return false;
         }
         if (isEurope()) {
-            // Hide Classic Search button
-            var classicBtn = document.querySelector('a[href="/search/classic.html"]');
-            if (classicBtn) classicBtn.style.display = 'none';
+          // Hide Classic Search button
+          var classicBtn = document.querySelector(
+            'a[href="/search/classic.html"]'
+          );
+          if (classicBtn) classicBtn.style.display = "none";
         }
-    })();
-        </script>
-    </body>
-    </html>
-          
+      })();
+    </script>
+  </body>
+</html>
