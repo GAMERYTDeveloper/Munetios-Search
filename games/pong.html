@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pong Game</title>
+    <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #7b2ff2 0%, #f357a8 100%);
+            font-family: 'Google Sans Flex', Arial, sans-serif;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 8px #7b2ff2;
+        }
+        #gameContainer {
+            border-radius: 20px;
+            padding: 30px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        canvas {
+            background: #2d0066;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px #7b2ff2;
+            margin-bottom: 20px;
+            display: block;
+        }
+        #score {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 2px 8px #7b2ff2;
+        }
+        #restartBtn {
+            background: linear-gradient(90deg, #7b2ff2 0%, #f357a8 100%);
+            color: #fff;
+            border: none;
+            border-radius: 854px;
+            padding: 10px 24px;
+            font-size: 1.1rem;
+            font-family: 'Google Sans Flex', Arial, sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #7b2ff2;
+            transition: background 0.2s;
+        }
+        #restartBtn:hover {
+            background: linear-gradient(90deg, #f357a8 0%, #7b2ff2 100%);
+        }
+    </style>
+</head>
+<body>
+    <h1>Pong Game</h1> 
+      - Controls: ↑ (Up Arrow) and ↓ (Down Arrow)
+    <div id="gameContainer" class="liquid-glass">
+        <div id="score">Player: 0 &nbsp;|&nbsp; AI: 0</div>
+        <canvas id="pong" width="600" height="400"></canvas>
+        <button id="restartBtn">Restart</button>
+    </div>
+    <script>
+        const canvas = document.getElementById('pong');
+        const ctx = canvas.getContext('2d');
+        const scoreDiv = document.getElementById('score');
+        const restartBtn = document.getElementById('restartBtn');
+
+        // Colors
+        const paddleColor = "#a259f7";
+        const ballColor = "#f357a8";
+        const netColor = "#7b2ff2";
+
+        // Game objects
+        const paddleWidth = 12, paddleHeight = 80;
+        const player = { x: 10, y: canvas.height/2 - paddleHeight/2, w: paddleWidth, h: paddleHeight, dy: 0, score: 0 };
+        const ai = { x: canvas.width - paddleWidth - 10, y: canvas.height/2 - paddleHeight/2, w: paddleWidth, h: paddleHeight, dy: 0, score: 0 };
+        const ball = { x: canvas.width/2, y: canvas.height/2, r: 10, speed: 5, dx: 5, dy: 2 };
+
+        let upPressed = false, downPressed = false, gameOver = false;
+
+        function drawNet() {
+            ctx.setLineDash([10, 15]);
+            ctx.strokeStyle = netColor;
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(canvas.width/2, 0);
+            ctx.lineTo(canvas.width/2, canvas.height);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        function drawPaddle(p) {
+            ctx.fillStyle = paddleColor;
+            ctx.fillRect(p.x, p.y, p.w, p.h);
+        }
+
+        function drawBall(b) {
+            ctx.beginPath();
+            ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
+            ctx.fillStyle = ballColor;
+            ctx.shadowColor = "#f357a8";
+            ctx.shadowBlur = 12;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+
+        function drawScore() {
+            scoreDiv.textContent = `Player: ${player.score}  |  AI: ${ai.score}`;
+        }
+
+        function resetBall() {
+            ball.x = canvas.width/2;
+            ball.y = canvas.height/2;
+            ball.dx = (Math.random() > 0.5 ? 1 : -1) * ball.speed;
+            ball.dy = (Math.random() * 4 - 2);
+        }
+
+        function restartGame() {
+            player.score = 0;
+            ai.score = 0;
+            player.y = canvas.height/2 - paddleHeight/2;
+            ai.y = canvas.height/2 - paddleHeight/2;
+            resetBall();
+            gameOver = false;
+            drawScore();
+        }
+
+        function update() {
+            if (gameOver) return;
+
+            // Player movement
+            if (upPressed) player.y -= 7;
+            if (downPressed) player.y += 7;
+            player.y = Math.max(0, Math.min(canvas.height - player.h, player.y));
+
+            // AI movement (simple)
+            if (ball.y < ai.y + ai.h/2) ai.y -= 5;
+            else if (ball.y > ai.y + ai.h/2) ai.y += 5;
+            ai.y = Math.max(0, Math.min(canvas.height - ai.h, ai.y));
+
+            // Ball movement
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+
+            // Top/bottom collision
+            if (ball.y - ball.r < 0 || ball.y + ball.r > canvas.height) {
+                ball.dy = -ball.dy;
+            }
+
+            // Paddle collision
+            function collide(p) {
+                return ball.x - ball.r < p.x + p.w &&
+                             ball.x + ball.r > p.x &&
+                             ball.y + ball.r > p.y &&
+                             ball.y - ball.r < p.y + p.h;
+            }
+
+            if (collide(player)) {
+                ball.dx = Math.abs(ball.dx);
+                ball.dy += (ball.y - (player.y + player.h/2)) * 0.15;
+            }
+            if (collide(ai)) {
+                ball.dx = -Math.abs(ball.dx);
+                ball.dy += (ball.y - (ai.y + ai.h/2)) * 0.15;
+            }
+
+            // Score
+            if (ball.x - ball.r < 0) {
+                ai.score++;
+                resetBall();
+            }
+            if (ball.x + ball.r > canvas.width) {
+                player.score++;
+                resetBall();
+            }
+
+            drawScore();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawNet();
+            drawPaddle(player);
+            drawPaddle(ai);
+            drawBall(ball);
+        }
+
+        function loop() {
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        // Controls
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowUp') upPressed = true;
+            if (e.key === 'ArrowDown') downPressed = true;
+        });
+        document.addEventListener('keyup', e => {
+            if (e.key === 'ArrowUp') upPressed = false;
+            if (e.key === 'ArrowDown') downPressed = false;
+        });
+
+        restartBtn.addEventListener('click', restartGame);
+
+        // Start
+        restartGame();
+        loop();
+    </script>
+</body>
+</html>
