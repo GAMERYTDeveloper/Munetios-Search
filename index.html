@@ -12,8 +12,7 @@
       name="description"
       content="Our Search engine so you can use it privately without being tracked."
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
     <link
       href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,90&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
       rel="stylesheet"
@@ -169,7 +168,7 @@
         display: flex;
         align-items: center;
         gap: 15px;
-        padding: 2px 10px;
+        padding: 5px 10px;
       }
 
       .logo {
@@ -405,6 +404,11 @@
           display: none;
         }
       }
+      @media (max-width: 1000px) {
+        .hide-450 {
+          display: none !important;
+        }
+      }
       @media (max-width: 472px) {
         .munetios-logo img {
           height: 70px !important;
@@ -413,9 +417,7 @@
           font-size: 0.9em;
           padding: 6px 4px;
         }
-        .hide-450 {
-          display: none !important;
-        }
+
         .shortcut img,
         .add-shortcut svg {
           width: 22px !important;
@@ -453,16 +455,29 @@
             <div class="logo-text">Munetios</div>
           </div>
         </div>
-        <a
-          class="liquid-glass hide-450"
-          href="about.html"
-          style="padding: 10px 15px"
+        <a class="liquid-glass" href="about.html" style="padding: 10px 15px"
           >About</a
         >
-      
+        <a
+          class="liquid-glass hide-450"
+          href="https://blog.munetios.com"
+          style="padding: 10px 15px"
+          >Blog</a
+        >
+        <a
+          class="liquid-glass hide-450"
+          href="https://www.munetios.com/whats-new"
+          style="padding: 10px 15px"
+          >Whats New</a
+        >
       </div>
       <div class="top-right liquid-glass">
-        <a href="/games/">Games</a>
+        <a href="https://write.munetios.com">OmniWrite</a>
+        <a href="https://calendar.munetios.com" class="hide-450">Calendar</a>
+        <a href="https://www.munetios.com/search/classic.html" class="hide-450"
+          >Classic Search</a
+        >
+        <a href="/games/" class="hide-450">Games</a>
         <div class="apps-icon" id="apps-icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
