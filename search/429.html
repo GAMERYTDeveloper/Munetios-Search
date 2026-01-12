@@ -211,9 +211,32 @@
                 captchaText = randomText();
                 drawCaptcha(captchaText);
                 document.getElementById('captcha-input').value = '';
-                alert('Incorrect CAPTCHA. Please try again.');
+                showToast('Incorrect CAPTCHA. Please try again.');
             }
         });
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.position = 'fixed';
+            toast.style.bottom = '32px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.background = 'rgba(58,12,163,0.95)';
+            toast.style.color = '#fff';
+            toast.style.padding = '14px 28px';
+            toast.style.borderRadius = '8px';
+            toast.style.fontSize = '1rem';
+            toast.style.boxShadow = '0 2px 12px rgba(58,12,163,0.18)';
+            toast.style.zIndex = '9999';
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.3s';
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.opacity = '1'; }, 10);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => { toast.remove(); }, 300);
+            }, 2200);
+        }
     </script>
 </body>
 </html>
