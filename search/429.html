@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Too Many Requests</title>
+    <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,90&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap">
+    <style>
+        body {
+            font-family: "Google Sans Flex", sans-serif;
+            font-variation-settings: "wght" 480, "GRAD" 30, "ROND" 80, "opsz" 18;
+            background: linear-gradient(135deg, #190047 0%, #3a0ca3 100%);
+            color: #fff;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            text-align: center;
+            margin: 80px auto 0 auto;
+            padding: 40px 32px 32px 32px;
+            max-width: 480px;
+        }
+        img {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 18px;
+            filter: drop-shadow(0 2px 8px rgba(58,12,163,0.25));
+        }
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 24px;
+            color: #e0e0ff;
+        }
+        .captcha-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .captcha {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            flex-direction: column;
+            margin: 0 auto 18px auto;
+        }
+        #captcha-input {
+            padding: 10px 15px;
+            width: 220px;
+            border-radius: 8px;
+            border: 1px solid #3a0ca3;
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            font-family: "Google Sans Flex", sans-serif;
+            font-size: 16px;
+            margin-bottom: 0;
+            outline: none;
+            transition: border 0.2s;
+        }
+        #captcha-input:focus {
+            border: 1.5px solid #7209b7;
+            background: rgba(255,255,255,0.13);
+        }
+        button {
+            padding: 10px 28px;
+            font-size: 1rem;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-family: "Google Sans Flex", sans-serif;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(67,97,238,0.15);
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        button:hover, button:focus {
+            background: rgba(255,255,255,0.13);
+            box-shadow: 0 4px 16px rgba(67,97,238,0.25);
+        }
+        canvas#image-captcha {
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(58,12,163,0.10);
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 24px 8px;
+                max-width: 98vw;
+            }
+            #captcha-input {
+                width: 100%;
+            }
+            .captcha {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+        }
+        footer a {
+            margin: 0 8px;
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container liquid-glass">
+        <img src="image.png" alt="Too Many Requests">
+        <h1>Too Many Requests</h1>
+        <p>
+            It appears you've made too many requests in a short period of time. To help keep our service running smoothly for everyone, we've temporarily limited your access. Please wait a moment before trying again, or verify that you're not a robot by solving the CAPTCHA below. Thank you for your patience and understanding!
+        </p>
+        <div class="captcha-container">
+            <div class="captcha">
+            <canvas id="image-captcha" width="200" height="100"></canvas>
+            <input type="text" class="liquid-glass" id="captcha-input" placeholder="Enter the text that appears in the image">
+        </div>
+            <button class="liquid-glass" id="captcha-submit">Submit</button>
+        </div>
+    </div>
+    <footer>
+        <p style="text-align:center; color:#aaa; font-size:0.9rem;">&copy; 2026 Munetios. All rights reserved.</p>
+        <a href="https://www.munetios.com/policies/#/privacy">Privacy</a>
+        <a href="https://www.munetios.com/policies/#/terms">Terms of Service</a>
+    </footer>
+    <script>
+        const canvas = document.getElementById('image-captcha');
+        const ctx = canvas.getContext('2d');
+        const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789adefgrtzic.';
+        function randomText(len = 6) {
+            let text = '';
+            for (let i = 0; i < len; i++) {
+                text += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return text;
+        }
+        let captchaText = randomText();
+
+        function drawCaptcha(text) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Background
+            let grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            grad.addColorStop(0, '#e0c3fc');
+            grad.addColorStop(1, '#8ec5fc');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Add noise lines
+            for (let i = 0; i < 8; i++) {
+                ctx.strokeStyle = `rgba(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},0.5)`;
+                ctx.beginPath();
+                ctx.moveTo(Math.random()*canvas.width, Math.random()*canvas.height);
+                ctx.lineTo(Math.random()*canvas.width, Math.random()*canvas.height);
+                ctx.stroke();
+            }
+
+            // Draw text with random rotation and position
+            for (let i = 0; i < text.length; i++) {
+                ctx.save();
+                let fontSize = 32 + Math.random() * 12;
+                ctx.font = `${fontSize}px "Arial", sans-serif`;
+                ctx.fillStyle = `rgb(${80+Math.random()*100},${40+Math.random()*100},${120+Math.random()*100})`;
+                let angle = (Math.random() - 0.5) * 0.6;
+                ctx.translate(30 + i * 28 + Math.random()*4, 60 + Math.random()*18);
+                ctx.rotate(angle);
+                ctx.fillText(text[i], 0, 0);
+                ctx.restore();
+            }
+
+            // Add random dots
+            for (let i = 0; i < 60; i++) {
+                ctx.fillStyle = `rgba(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},0.3)`;
+                ctx.beginPath();
+                ctx.arc(Math.random()*canvas.width, Math.random()*canvas.height, Math.random()*2+1, 0, 2*Math.PI);
+                ctx.fill();
+            }
+        }
+
+        drawCaptcha(captchaText);
+
+        document.getElementById('image-captcha').addEventListener('click', () => {
+            captchaText = randomText();
+            drawCaptcha(captchaText);
+        });
+
+        document.getElementById('captcha-submit').addEventListener('click', () => {
+            const input = document.getElementById('captcha-input').value.trim();
+            if (input.toUpperCase() === captchaText) {
+                sessionStorage.setItem('submitedCaptcha', Date.now());
+                setTimeout(() => {
+                    sessionStorage.removeItem('submitedCaptcha');
+                }, 5 * 60 * 1000);
+                document.querySelector('.captcha-container').innerHTML = '<div style="color:#4caf50;font-size:1.2rem;">CAPTCHA passed! You may continue.</div>';
+                setTimeout(() => {
+                    window.location.href = '/search.html';
+                }, 1000);
+            } else {
+                captchaText = randomText();
+                drawCaptcha(captchaText);
+                document.getElementById('captcha-input').value = '';
+                alert('Incorrect CAPTCHA. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>
