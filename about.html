@@ -231,6 +231,17 @@ footer a:hover {
         <a href="https://www.munetios.com/policies/#/cookies">Cookie Policy</a>
     </footer>
    <script>
+               // --- Munetios Settings: Detect and apply singleStory font feature ---
+      (function () {
+        try {
+          const settings = JSON.parse(localStorage.getItem("munetiosSettings") || "{}");
+          if (settings.singleStory === true) {
+        const style = document.createElement("style");
+        style.innerHTML = `* { font-feature-settings: 'ss02' off, 'ss01' on, 'liga' off, 'clig' off !important; }`;
+        document.head.appendChild(style);
+          }
+        } catch (e) {}
+      })();
     function setDarkMode(enabled) {
         if (enabled) {
             document.body.classList.add('dark-mode');
@@ -257,3 +268,4 @@ footer a:hover {
    </script>
 </body>
 </html>
+
