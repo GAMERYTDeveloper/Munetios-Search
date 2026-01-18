@@ -3,527 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What is new at Munetios</title>
-    <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@8..144,100..700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" />
-    <meta name="description" content="Discover the latest updates, features, and improvements at Munetios, your private search engine. Stay informed about what's new!">
+    <title>What's New - Munetios</title>
+    <link rel="icon" href="apple-touch-icon.png" type="image/png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <!-- Do favicon 16, 32-->
-    <link rel="icon" sizes="16x16" href="favicon-16x16.png" type="image/x-icon">
-    <link rel="icon" sizes="32x32" href="favicon-32x32.png" type="image/x-icon">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <meta http-equiv="X-Frame-Options" content="DENY">
-<meta http-equiv="Content-Security-Policy" content="frame-ancestors 'none';"><link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Munetios Search">
     
-     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      if (window.top !== window.self) {
-        // Hide everything (html + body)
-        document.documentElement.style.display = "none";  
-        console.warn('Refused to display https://www.munetios.com because it is blocked from iframe embeding')
-      }
-    });
-  </script>
-  <STYLE>
-        body {
-            font-family: 'Google Sans Flex', sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            overflow-y: auto;
-            background-color: #190047;
-            color: white;
-        }
-        body.light-mode {
-            background-color: #ffffff;
-            color: #000000;
-        }
-        .topbar {
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            height: 60px;
-            position: sticky;
-            top: 0;
-        }
-        .logo {
-            height: 40px;
-            margin-right: 20px;
-            display: flex;
-            align-items: center;
-            font-weight: 600;
-            font-size: 1.5em;
-            gap: 10pxS;
-        }
-        a {
-            color: #7c3aed;
-            text-decoration: none;
-        }
-        nav a {
-            color: inherit;
-            text-decoration: none;
-            margin: 0 10px;
-            font-weight: 500;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        main {
-            padding: 20px;
-            max-width: 1200px;
-            margin: auto;
-        }
-        video {
-            width: 100%;
-            max-width: 1200px;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-        section {
-            margin-top: 40px;
-        }
-        .nav-links-1 {
-            margin: 20px 0;
-            display: flex;
-            gap: 15px;
-            flex-wrap: nowrap;
-            width: 100%;
-            max-width: 1200px;
-            overflow-x: auto;
-            justify-content: space-between;
-            box-sizing: border-box;
-        }
-        @media (prefers-color-scheme: light) {
-            body {
-                background-color: #ffffff;
-                color: #000000;
-            }
-        }
-        @media (max-width: 700px) {
-            .logo {
-                display: none;
-            }
-        }
-  </STYLE>
+    <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,0..1&display=swap">
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,80&display=swap');
+*{
+    box-sizing: border-box;
+    font-family: 'Google Sans Flex', sans-serif;
+    font-variation-settings: 'wght' 500 'ROND' 80;
+}
+body {
+    font-family: 'Google Sans Flex', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e7e7e7;
+    color: rgb(0, 0, 0);
+}
+
+body.dark-mode {
+    background-color: #190047;
+    color: #ffffff;
+}
+icon {
+    font-family: 'Material Symbols Rounded';
+    font-size: 24px;
+}
+.topbar {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    height: 80px;
+    position: sticky;
+    top: 0;
+}
+.logo {
+    height: 50px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1.5em;
+    gap: 10px;
+    padding: 10px 18px;
+}
+a {
+    color: #7c3aed;
+    text-decoration: none;
+}
+nav a {
+    color: inherit;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: 500;
+}
+nav {
+        padding: 7px 12px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+}
+nav a:hover {
+    text-decoration: underline;
+}
+button {
+    background-color: #7c3aed;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 44px;
+    font-family: inherit;
+    font-variation-settings: 'wght' 500 'ROND' 80;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #5b21b6;
+}
+.top-right {
+    margin-left: auto;
+        padding: 8px 16px;
+}
+.content {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.content h1, h2, h3, h4, h5, h6, p {
+    padding: 10px 0;
+    font-feature-settings: 'ss02' off, 'ss01' on, 'liga' off, 'clig' off !important;
+    font-family: 'Google Sans Flex', sans-serif;
+}
+.content p {
+    font-feature-settings: 'ss02' off, 'ss01' on, 'liga' off, 'clig' off !important;
+    font-family: 'Google Sans Flex', sans-serif;
+    font-size: 21px;
+}
+.content-section {
+    margin-bottom: 40px;
+    background-color: #7a0abb10;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #7a0abb10;
+    border-radius: 12px;
+    margin-top: 40px;
+}
+
+footer a {
+    margin: 0 10px;
+    color: #7c3aed;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+.click-to-load-video {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 20px;
+    background-color: #7a0abb10;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+.click-to-load-video icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+@media (max-width: 700px) {
+    .logo {
+        display: none;
+    }
+}
+</style>
 </head>
 <body>
-    <div class="topbar liquid-glass">
-        <div class="logo">
-            <img src="apple-touch-icon.png" alt="Munetios Logo" width="40" />
-            Munetios
-        </div>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/apps1.html">Products</a>
-            <a href="https://blog.munetios.com">Blog</a>
-            <a href="/whats-new.html">What's New</a>
-        </nav>
+   <div class="topbar">
+    <div class="logo liquid-glass">
+        <img src="apple-touch-icon.png" alt="Munetios Logo" width="40" />
+        Munetios
     </div>
-    <main>
-        <h2>What is New at Munetios</h2>
-        <p>Our OmniWrite has been released. See <a href="https://docs.munetios.com/">Documentation</a> for details.</p>
-        <div class="nav-links-1 liquid-glass" style="border-radius: 12px; padding: 10px 15px; margin-top: 20px;">
-            <a href="#features">Features</a>
-            <a href="#compare">Compare</a>
-            <a href="#gdpr">GDPR</a>
-            <a href="#try">Try it out</a>
+    <nav class="liquid-glass">
+        <a href="/">Home</a>
+        <a href="/apps.html">Products</a>
+        <a href="https://blog.munetios.com">Blog</a>
+        <a href="/whats-new.html">What's New</a>
+    </nav>
+    <div class="top-right liquid-glass">
+        <div class="dark-mode-toggle">
+            <icon>dark_mode</icon>
         </div>
-        <p>Released at 1/1/2026</p>
+    </div>
+   </div> 
+   <div class="content">
+    <h2>What is New at Munetios</h2>
+    <p>New App is Munetios Maps, a better world exploring with markers, directions, and openstreetmap data.</p>
+    <p>Munetios Maps allows users to explore the world with detailed maps, add custom markers, get directions, and utilize openstreetmap data for accurate and up-to-date information.</p>
+    <p>With Munetios Maps, you can easily plan your trips, discover new places, and navigate with confidence using reliable map data.</p>
+    <p>Munetios Maps is designed to be user-friendly and accessible, making it easy for anyone to start exploring the world around them.</p>
+    <p>Compare Munetios Maps vs other mapping applications to see how it stands out in terms of features, usability, and data accuracy.</p>
+    <p>Munetios Maps - No Ads, No Trackers, Open Source, No Account needed</p>
+    <p>Google Maps - Has Ads, Tracks Users, Closed Source, Account Optional</p>
+    <p>Apple Maps - No Ads, No Tracking, Closed Source, Account Optional</p>
+    <p>Bing Maps - Has Ads, Tracks Users, Closed Source, Account Optional</p>
+    <p>See more on Video</p>
+    <div class="click-to-load-video">
+        <icon>play_circle</icon>
+        <h2>Click to Load the Video</h2>
 
-        <section id="features">
-            <h3>Features</h3>
-            <ul>
-               <li>Liquid Glass Design</li>
-               <li>Privacy Focused</li>
-               <li>Open Source</li>
-                <li>No Ads</li>
-                <li>No Account Needed</li>
-                <li>Insert Image/Video/Music</li>
-            </ul>
-        </section>
-        <section id="compare">
-            <h3>Better than other document apps</h3>
-            <p>Munetios OmniWrite is better than other document apps because it is privacy focused, open source, and has no ads. It also has a beautiful liquid glass design that makes it easy to use.</p>
-            <p>Lets compare other document apps</p>
-            <ul>
-                    <li>Munetios OmniWrite - No ads, respects privacy, open source, no accounts needed</li>
-                    <li>Google Docs - No ads, tracks you, not open source, accounts needed</li>
-                    <li>Apple Pages - Only on Apple devices, not open source, accounts needed</li>
-                    <li>Microsoft Word - No ads, tracks you, not open source, accounts needed</li>
-                    <li>OnlyOffice - Focuses on privacy, open source, accounts needed</li>
-                
-            </ul>
-        </section>
-        <section id="gdpr">
-            <h3>GDPR</h3>
-            <p>Munetios OmniWrite complies with GDPR regulations. We do not collect any personal data from our users. All documents are stored locally on your device and encrypted.</p>
-        </section>
-        <section id="try">
-            <h3>Try it out</h3>
-            <p>Our url for Munetios OmniWrite is <a href="https://write.munetios.com/">https://write.munetios.com</a></p>
-        </section>
-    </main>
-    <footer class="liquid-glass" style="border-radius: 0; padding: 12px 20px; text-align: center;">
-        &copy; 2026 Munetios.
+    </div>
+    </div>
+    <footer>
+        <p>&copy; 2026 Munetios. Open Source.</p>
+        <a href="https://www.munetios.com">Munetios</a>
+        <a href="https://write.munetios.com">OmniWrite</a>
+        <a href="https://www.munetios.com/policies/#/privacy">Privacy Policy</a>
+        <a href="https://www.munetios.com/policies/#/terms">Terms of Service</a>
+        <a href="https://www.munetios.com/policies/#/cookies">Cookie Policy</a>
     </footer>
-
-    <script>
-        const video = document.querySelector('video');
-        video.controls = false;
-
-        // Create controls container
-        const controls = document.createElement('div');
-        controls.className = 'custom-video-controls';
-
-        // Play/Pause button
-        const playBtn = document.createElement('button');
-        playBtn.className = 'control-btn play-pause';
-        playBtn.innerHTML = '<span class="material-symbols-rounded">play_arrow</span>';
-
-        // Volume button and slider
-        const volumeWrapper = document.createElement('div');
-        volumeWrapper.className = 'volume-wrapper';
-
-        const volumeBtn = document.createElement('button');
-        volumeBtn.className = 'control-btn volume';
-        volumeBtn.innerHTML = '<span class="material-symbols-rounded">volume_up</span>';
-
-        const volumeSliderWrapper = document.createElement('div');
-        volumeSliderWrapper.className = 'volume-slider-wrapper liquid-glass';
-        volumeSliderWrapper.style.display = 'none';
-
-        const volumeSlider = document.createElement('input');
-        volumeSlider.type = 'range';
-        volumeSlider.min = 0;
-        volumeSlider.max = 1;
-        volumeSlider.step = 0.01;
-        volumeSlider.value = video.volume;
-
-        volumeSliderWrapper.appendChild(volumeSlider);
-        volumeWrapper.appendChild(volumeBtn);
-        volumeWrapper.appendChild(volumeSliderWrapper);
-
-        // Progress bar and timestamp
-        const progressWrapper = document.createElement('div');
-        progressWrapper.className = 'progress-wrapper';
-
-        const progress = document.createElement('input');
-        progress.type = 'range';
-        progress.min = 0;
-        progress.max = 1000;
-        progress.value = 0;
-        progress.className = 'progress-bar';
-
-        const timestamp = document.createElement('span');
-        timestamp.className = 'timestamp';
-        timestamp.textContent = '0:00 / 0:00';
-
-        progressWrapper.appendChild(progress);
-        progressWrapper.appendChild(timestamp);
-
-        // Right controls
-        const rightControls = document.createElement('div');
-        rightControls.className = 'right-controls';
-
-        // PIP button
-        const pipBtn = document.createElement('button');
-        pipBtn.className = 'control-btn pip';
-        pipBtn.innerHTML = '<span class="material-symbols-rounded">picture_in_picture_alt</span>';
-
-        // Settings button and menu
-        const settingsWrapper = document.createElement('div');
-        settingsWrapper.className = 'settings-wrapper';
-
-        const settingsBtn = document.createElement('button');
-        settingsBtn.className = 'control-btn settings';
-        settingsBtn.innerHTML = '<span class="material-symbols-rounded">settings</span>';
-
-        const settingsMenu = document.createElement('div');
-        settingsMenu.className = 'settings-menu liquid-glass';
-        settingsMenu.style.display = 'none';
-
-        const speeds = [1, 1.25, 1.5, 1.75, 2, 4, 5, 8, 10, 16];
-        speeds.forEach(speed => {
-            const speedOption = document.createElement('div');
-            speedOption.className = 'speed-option';
-            speedOption.textContent = speed + 'x';
-            speedOption.dataset.speed = speed;
-            settingsMenu.appendChild(speedOption);
-        });
-        settingsWrapper.appendChild(settingsBtn);
-        settingsWrapper.appendChild(settingsMenu);
-
-        // Fullscreen button
-        const fullscreenBtn = document.createElement('button');
-        fullscreenBtn.className = 'control-btn fullscreen';
-        fullscreenBtn.innerHTML = '<span class="material-symbols-rounded">fullscreen</span>';
-
-        rightControls.appendChild(pipBtn);
-        rightControls.appendChild(settingsWrapper);
-        rightControls.appendChild(fullscreenBtn);
-
-        // Assemble controls
-        controls.appendChild(playBtn);
-        controls.appendChild(volumeWrapper);
-        controls.appendChild(progressWrapper);
-        controls.appendChild(rightControls);
-
-        // Insert controls after video
-        video.parentNode.insertBefore(controls, video.nextSibling);
-
-        // --- Event Handlers ---
-
-        function formatTime(sec) {
-            sec = Math.floor(sec);
-            const m = Math.floor(sec / 60);
-            const s = sec % 60;
-            return `${m}:${s.toString().padStart(2, '0')}`;
+   <script>
+    document.querySelector('.click-to-load-video').addEventListener('click', function() {
+        const container = this;
+        container.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/ZRPmCGroTxY?si=EHtMuzg9ORh0EB2c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="width:100%;min-height:650px;border-radius:12px;"></iframe>`;
+    });
+    function setDarkMode(enabled) {
+        if (enabled) {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('darkMode', 'true');
+        } else {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('darkMode', 'false');
         }
+    }
 
-        function updateProgress() {
-            progress.value = video.duration ? (video.currentTime / video.duration) * 1000 : 0;
-            timestamp.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration || 0)}`;
+    // On page load, set dark mode from saved preference
+    (function() {
+        const saved = localStorage.getItem('darkMode');
+        if (saved === 'true') {
+            setDarkMode(true);
         }
+    })();
 
-        video.addEventListener('timeupdate', updateProgress);
-        video.addEventListener('loadedmetadata', updateProgress);
-
-        progress.addEventListener('input', () => {
-            video.currentTime = (progress.value / 1000) * video.duration;
-        });
-
-        playBtn.addEventListener('click', () => {
-            if (video.paused) {
-                video.play();
-            } else {
-                video.pause();
-            }
-        });
-
-        video.addEventListener('play', () => {
-            playBtn.innerHTML = '<span class="material-symbols-rounded">pause</span>';
-        });
-        video.addEventListener('pause', () => {
-            playBtn.innerHTML = '<span class="material-symbols-rounded">play_arrow</span>';
-        });
-
-        video.addEventListener('click', () => {
-            if (video.paused) video.play();
-            else video.pause();
-        });
-
-        // Volume controls
-        volumeBtn.addEventListener('click', () => {
-            volumeSliderWrapper.style.display = volumeSliderWrapper.style.display === 'none' ? 'block' : 'none';
-        });
-        volumeSlider.addEventListener('input', () => {
-            video.volume = volumeSlider.value;
-            if (video.volume == 0) {
-                volumeBtn.innerHTML = '<span class="material-symbols-rounded">volume_off</span>';
-            } else if (video.volume < 0.5) {
-                volumeBtn.innerHTML = '<span class="material-symbols-rounded">volume_down</span>';
-            } else {
-                volumeBtn.innerHTML = '<span class="material-symbols-rounded">volume_up</span>';
-            }
-        });
-        document.addEventListener('click', (e) => {
-            if (!volumeWrapper.contains(e.target)) {
-                volumeSliderWrapper.style.display = 'none';
-            }
-        });
-
-        // PIP
-        pipBtn.addEventListener('click', async () => {
-            if (document.pictureInPictureElement) {
-                document.exitPictureInPicture();
-            } else if (document.pictureInPictureEnabled) {
-                await video.requestPictureInPicture();
-            }
-        });
-
-        // Settings (speed)
-        settingsBtn.addEventListener('click', () => {
-            settingsMenu.style.display = settingsMenu.style.display === 'none' ? 'block' : 'none';
-        });
-        settingsMenu.addEventListener('click', (e) => {
-            if (e.target.classList.contains('speed-option')) {
-                video.playbackRate = parseFloat(e.target.dataset.speed);
-                settingsMenu.style.display = 'none';
-            }
-        });
-        document.addEventListener('click', (e) => {
-            if (!settingsWrapper.contains(e.target)) {
-                settingsMenu.style.display = 'none';
-            }
-        });
-
-        // Fullscreen
-        fullscreenBtn.addEventListener('click', () => {
-            if (!document.fullscreenElement) {
-            // Wrap video and controls in a container for fullscreen
-            let fsContainer = document.createElement('div');
-            fsContainer.className = 'video-fs-container';
-            video.parentNode.insertBefore(fsContainer, video);
-            fsContainer.appendChild(video);
-            fsContainer.appendChild(controls);
-
-            // Set video to fill fullscreen
-            video.style.width = '100%';
-            video.style.maxWidth = '100%';
-            video.style.height = '100%';
-            video.style.objectFit = 'contain';
-
-            // Adjust controls position for fullscreen
-            controls.classList.add('fullscreen-active');
-
-            fsContainer.requestFullscreen();
-            } else {
-            document.exitFullscreen();
-            }
-        });
-
-        // Move video and controls back when exiting fullscreen
-        document.addEventListener('fullscreenchange', () => {
-            const fsContainer = document.querySelector('.video-fs-container');
-            if (!document.fullscreenElement && fsContainer) {
-            // Move video and controls back to original parent
-            const main = document.querySelector('main');
-            main.insertBefore(video, controls);
-            main.insertBefore(controls, video.nextSibling);
-            fsContainer.remove();
-
-            // Reset video and controls styles
-            video.style.width = '';
-            video.style.height = '';
-            video.style.maxWidth = '';
-            video.style.objectFit = '';
-            controls.classList.remove('fullscreen-active');
-            }
-        });
-
-        // Style for controls
-        const style = document.createElement('style');
-        style.textContent = `
-        .custom-video-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 18px;
-            position: absolute;
-            bottom: 90px;
-            border-radius: 16px;
-            margin-top: 8px;
-            user-select: none;
-            position: relative;
-            z-index: 2;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s;
-        }
-        video:hover + .custom-video-controls,
-        .custom-video-controls:hover {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .control-btn {
-            background: none;
-            border: none;
-            color: inherit;
-            font-size: 2em;
-            cursor: pointer;
-            padding: 6px;
-            border-radius: 50%;
-            transition: background 0.2s;
-        }
-        .control-btn:active, .control-btn:focus {
-            background: rgba(255,255,255,0.08);
-            outline: none;
-        }
-        .volume-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        .volume-slider-wrapper {
-            position: absolute;
-            left: 50%;
-            bottom: 120%;
-            transform: translateX(-50%);
-            padding: 8px 12px;
-            border-radius: 12px;
-            min-width: 100px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            z-index: 10;
-        }
-        .volume-slider {
-            width: 80px;
-        }
-        .progress-wrapper {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .progress-bar {
-            flex: 1;
-            accent-color: #7c3aed;
-            height: 4px;
-        }
-        .timestamp {
-            min-width: 90px;
-            text-align: right;
-            font-variant-numeric: tabular-nums;
-            font-size: 1em;
-            opacity: 0.8;
-        }
-        .right-controls {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .settings-wrapper {
-            position: relative;
-        }
-        .settings-menu {
-            position: absolute;
-            right: 0;
-            bottom: 120%;
-            min-width: 120px;
-            padding: 8px 0;
-            border-radius: 12px;
-
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            z-index: 10;
-        }
-        .speed-option {
-            padding: 8px 18px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background 0.15s;
-        }
-        .speed-option:hover {
-            background: rgba(124,58,237,0.12);
-        }
-        @media (max-width: 700px) {
-           
-            .progress-wrapper {
-                width: 100%;
-            }
-            .timestamp {
-                font-size: 0.9em;
-            }
-        }
-            @media (max-width: 565px) {
-                .timestamp {
-                    display: none;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
+    // Toggle dark mode on icon click
+    document.querySelector('.dark-mode-toggle').addEventListener('click', function() {
+        const isDark = document.body.classList.contains('dark-mode');
+        setDarkMode(!isDark);
+    });
+   </script>
 </body>
 </html>
-
-
