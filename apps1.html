@@ -232,7 +232,31 @@ main p {
         </div>
     </section>
 </main>
+    
 <script>
+     function setDarkMode(enabled) {
+        if (enabled) {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('darkMode', 'true');
+        } else {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('darkMode', 'false');
+        }
+    }
+
+    // On page load, set dark mode from saved preference
+    (function() {
+        const saved = localStorage.getItem('darkMode');
+        if (saved === 'true') {
+            setDarkMode(true);
+        }
+    })();
+
+    // Toggle dark mode on icon click
+    document.querySelector('.dark-mode-toggle').addEventListener('click', function() {
+        const isDark = document.body.classList.contains('dark-mode');
+        setDarkMode(!isDark);
+    });
           // --- Munetios Settings: Detect and apply singleStory font feature ---
       (function () {
         try {
@@ -248,6 +272,7 @@ main p {
 </body>
 
 </html>
+
 
 
 
