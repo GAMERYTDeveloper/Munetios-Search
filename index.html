@@ -35,7 +35,7 @@
     <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' https://cdn.tailwindcss.com https://api.munetios.com https://cdn.jsdelivr.net 'nonce-IKDjefjewhCujHJeuji3jhekowdijzizkcej'; style-src 'self' https://fonts.googleapis.com https://api.munetios.com 'unsafe-inline'; img-src *; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://www.munetios.com; connect-src 'self' https://cdn.jsdelivr.net; object-src 'none'; base-uri 'self'; form-action 'self';"
+      content="default-src 'self'; script-src 'self' https://cdn.tailwindcss.com https://api.munetios.com https://cdn.jsdelivr.net 'nonce-IKDjefjewhCujHJeuji3jhekowdijzizkcej'; style-src 'self' https://fonts.googleapis.com https://api.munetios.com 'unsafe-inline'; img-src * data:; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://www.munetios.com; connect-src 'self' https://cdn.jsdelivr.net; object-src 'none'; base-uri 'self'; form-action 'self';"
     />
     <meta
       http-equiv="Content-Security-Policy"
@@ -115,6 +115,7 @@
         padding: 0;
         background-color: #190047;
         color: #ffffff;
+        background-attachment: fixed;
       }
       body.light-mode {
         background-color: #ffffff;
@@ -565,7 +566,7 @@
           onclick="randomizeQueries()"
           style="cursor: pointer; color: inherit; padding: 13px 16px"
         >
-          I'm Feeling Good
+          I'm Feeling Lucky
         </button>
       </div>
       <br /><br />
@@ -1135,7 +1136,12 @@
             style.id = styleId;
             document.head.appendChild(style);
           }
-          style.innerHTML = `* { font-family: '${s.fontFamily}', Arial, sans-serif !important; }`;
+          // Add ROND for Google Sans Flex, otherwise normal font-family
+          if (s.fontFamily === "Google Sans Flex") {
+            style.innerHTML = `* { font-family: 'Google Sans Flex', Arial, sans-serif !important; font-variation-settings: 'wght' 480, 'GRAD' 30, 'ROND' 80, 'opsz' 18 !important; }`;
+          } else {
+            style.innerHTML = `* { font-family: '${s.fontFamily}', Arial, sans-serif !important; }`;
+          }
           // Google Fonts link
           if (googleFonts.includes(s.fontFamily)) {
             let linkId = "munetios-google-font";
@@ -1147,7 +1153,12 @@
               document.head.appendChild(link);
             }
             let fontParam = s.fontFamily.replace(/ /g, "+");
-            link.href = `https://fonts.googleapis.com/css2?family=${fontParam}:wght@300;400;500;600;700&display=swap`;
+            // Add ROND axis for Google Sans Flex
+            if (s.fontFamily === "Google Sans Flex") {
+              link.href = `https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,90&display=swap`;
+            } else {
+              link.href = `https://fonts.googleapis.com/css2?family=${fontParam}:wght@300;400;500;600;700&display=swap`;
+            }
           }
         }
       }
@@ -1240,6 +1251,11 @@
                 </select>
                 <button id="detectFontsBtn" style="font-size:0.9em;">Detect Installed Fonts</button>
                 <span id="fontPermMsg" style="font-size:0.9em;color:#666;"></span>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <input type="checkbox" id="singleStoryToggle" ${s.singleStory ? "checked" : ""} ${s.fontFamily !== "Google Sans Flex" ? "disabled" : ""}>
+                  <label for="singleStoryToggle" style="font-size:0.98em;">Single Story <span style="font-feature-settings: 'ss02' off, 'ss01' on, 'liga' off, 'clig' off !important;">a</span> (Google Sans Flex only)</label>
+                </div>
+            
                 </div>
                 <div style="display:flex;flex-direction:row;align-items:center;gap:10px;width:100%;">
                 <label for="liquidGlassToggle"><b>Liquid Glass:</b></label>
@@ -1310,9 +1326,15 @@
               ).value,
               fontFamily: document.getElementById("fontFamilyInput").value,
               liquidGlass: document.getElementById("liquidGlassToggle").checked,
+              singleStory:
+                document.getElementById("singleStoryToggle") &&
+                !document.getElementById("singleStoryToggle").disabled
+                  ? document.getElementById("singleStoryToggle").checked
+                  : false,
             };
             if (saveSettings(settings)) {
               applySettings();
+              applySingleStorySetting();
               customizeModal.remove();
               customizeModal = null;
             }
@@ -1374,7 +1396,58 @@
           }
         };
       };
+      // --- Single Story Toggle Logic ---
+      // Listen for changes to the Single Story toggle in the customize modal
+      document.addEventListener("change", function (e) {
+        if (e.target && e.target.id === "singleStoryToggle") {
+          const checked = e.target.checked;
+          // Save to settings using key 'singleStory'
+          const s = getStoredSettings();
+          s.singleStory = checked;
+          saveSettings(s);
+          applySingleStorySetting();
+        }
+        // Enable/disable single story toggle based on font selection
+        if (e.target && e.target.id === "fontFamilyInput") {
+          const font = e.target.value;
+          const singleStoryToggle = document.getElementById("singleStoryToggle");
+          if (singleStoryToggle) {
+            if (font === "Google Sans Flex") {
+              singleStoryToggle.disabled = false;
+            } else {
+              singleStoryToggle.disabled = true;
+              singleStoryToggle.checked = false;
+              // Remove from settings if not Google Sans Flex
+              const s = getStoredSettings();
+              s.singleStory = false;
+              saveSettings(s);
+              applySingleStorySetting();
+            }
+          }
+        }
+      });
 
+      // Apply single story setting to the page
+      function applySingleStorySetting() {
+        const s = getStoredSettings();
+        let styleId = "munetios-single-story-style";
+        let style = document.getElementById(styleId);
+        if (!style) {
+          style = document.createElement("style");
+          style.id = styleId;
+          document.head.appendChild(style);
+        }
+        // Only apply if Google Sans Flex is selected
+        if (s.fontFamily === "Google Sans Flex" && s.singleStory) {
+          style.innerHTML = `* { font-feature-settings: 'ss02' off, 'ss01' on, 'liga' off, 'clig' off !important; }`;
+        } else if (s.fontFamily === "Google Sans Flex") {
+          style.innerHTML = `* { font-feature-settings: 'ss02' off, 'liga' off, 'clig' off !important; }`;
+        } else {
+          style.innerHTML = "";
+        }
+      }
+      // Run on load
+      applySingleStorySetting();
       // Shortcuts logic with Add Shortcut Modal and Favicon
       const shortcutsContainer = document.getElementById("shortcuts");
       const addShortcutBtn = document.getElementById("addshortcut");
@@ -1612,6 +1685,9 @@
           "McDonald's",
           "OpenAI",
           "ChatGPT",
+          "ai",
+          "Munetios OmniWrite",
+          "Munetios Search",
         ];
         const randomQuery = queries[Math.floor(Math.random() * queries.length)];
         document.getElementById("searchInput").value = randomQuery;
@@ -1633,7 +1709,7 @@
           if (btn.textContent.trim() === "Search") {
             btn.addEventListener("click", performSearch);
           }
-          if (btn.textContent.trim() === "I'm Feeling Good") {
+          if (btn.textContent.trim() === "I'm Feeling Lucky") {
             btn.addEventListener("click", randomizeQueries);
           }
         });
