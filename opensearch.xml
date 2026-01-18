@@ -7,7 +7,7 @@
     <Url 
         type="text/html"
         method="GET"
-        template="https://www.munetios.com/search/search.html?q={searchTerms}">
+        template="https://www.munetios.com/search/search.html?q={searchTerms}#/all?q={searchTerms}">
     </Url>
 
     <Image height="16" width="16" type="image/png">
