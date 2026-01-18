@@ -1,28 +1,28 @@
-MIT License (with Brand Protection Clause)
+Munetios License v1.2
 
 Copyright (c) 2026 Munetios
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission is hereby granted to any person obtaining a copy of this software
+and associated source code files (the "Software") to use, copy, modify,
+and fork the Software, including for commercial use.
 
-1. The "Munetios" name, logo, or trademarks may not be used in derivative
-   works or redistributions of this software without express written permission
-   from the original author(s).
+Commercial use is permitted provided that the Software and any derivative
+works are offered free of charge and do not generate revenue.
 
-2. Any modified versions must clearly state that they are not affiliated with,
-   endorsed by, or maintained by Munetios.
+Restrictions:
+- The Software may NOT be sold, sublicensed, or resold, in whole or in part.
+- You may NOT charge a fee for access to the Software or any derivative works.
+- The Software may NOT be offered as part of a paid product or paid service.
+- The Munetios name, logo, icons, trademarks, and visual assets are NOT licensed
+  and remain the exclusive property of Munetios.
+- Derivative works must not use Munetios branding or imply endorsement or
+  affiliation with Munetios.
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+Attribution:
+- This license notice must be included in all copies or substantial portions
+  of the Software.
 
+Disclaimer:
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
