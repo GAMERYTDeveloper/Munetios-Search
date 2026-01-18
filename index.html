@@ -1672,7 +1672,7 @@
         const query = document.getElementById("searchInput").value.trim();
         if (query) {
           window.location.href =
-            "/search/search.html?q=" + encodeURIComponent(query);
+            "/search/search.html?q=" + encodeURIComponent(query) + "#/all?q=" + encodeURIComponent(query);
         }
       }
 
@@ -1729,7 +1729,7 @@
             logoDiv.style.cursor = "pointer";
             logoDiv.onclick = function () {
               window.location.href =
-                "/search/search.html?q=" + encodeURIComponent("New Year's Day");
+                "/search/search.html?q=" + encodeURIComponent("New Year's Day") + "#/all?q=" + encodeURIComponent("New Year's Day");
             };
           }
         }
