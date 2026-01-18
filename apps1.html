@@ -28,12 +28,12 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #190047;
-            color: white;
-        }
-        body.light-mode {
             background-color: #ffffff;
-            color: #000000;
+            color: rgb(0, 0, 0);
+        }
+        body.dark-mode {
+            background-color: #190047;
+            color: #fff;
         }
         icon {
     font-family: 'Material Symbols Rounded';
@@ -232,9 +232,8 @@ main p {
         </div>
     </section>
 </main>
-    
 <script>
-     function setDarkMode(enabled) {
+    function setDarkMode(enabled) {
         if (enabled) {
             document.body.classList.add('dark-mode');
             localStorage.setItem('darkMode', 'true');
@@ -272,7 +271,6 @@ main p {
 </body>
 
 </html>
-
 
 
 
