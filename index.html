@@ -1715,6 +1715,25 @@
         });
       });
       (function () {
+        // Check if today is January 19, 2026 (MLK Day in 2026)
+        const now = new Date();
+        if (now.getFullYear() === 2026 && now.getMonth() === 0 && now.getDate() === 19) {
+          // Change logo to mlk.png
+          const logoImg = document.querySelector(".munetios-logo img");
+          if (logoImg) logoImg.src = "mlk.png";
+
+          // Make logo clickable to search "Martin Luther King Jr. Day"
+          const logoDiv = document.querySelector(".munetios-logo");
+          if (logoDiv) {
+            logoDiv.style.cursor = "pointer";
+            logoDiv.onclick = function () {
+              window.location.href =
+                "/search/search.html?q=" + encodeURIComponent("Martin Luther King Jr. Day") + "#/all?q=" + encodeURIComponent("Martin Luther King Jr. Day");
+            };
+          }
+        }
+      })();
+      (function () {
         // Check if today is January 1
         const now = new Date();
         const isNewYear = now.getMonth() === 0 && now.getDate() === 1;
