@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Data - Munetios</title>
+    <link
+      rel="stylesheet"
+      href="https://api.munetios.com/beautiful-css/beautiful.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@8..144,100..700,&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded"
+    />
+    <link rel="icon" href="munetios-logo-icon.png" />
+    <link rel="apple-touch-icon" href="munetios-logo-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#270e33ff" />
+    <meta
+      name="description"
+      content="Manage your data on Munetios - A private search engine for everything."
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' https://api.munetios.com https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'nonce-eriuhgertsihgtuidfkgrtsdghjkghjkwerafuhjkwerfuihjkuh'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; frame-src https://www.munetios.com https://munetios.com"
+    />
+    <meta
+      name="keywords"
+      content="Munetios, manage data, private search, internet search"
+    />
+    <meta name="author" content="Munetios" />
+    <meta name="robots" content="index, follow" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #110433;
+        color: #ffffff;
+        font-family: "Google Sans Flex", "Google Sans", Roboto, sans-serif;
+        font-variation-settings: "ROND" 90;
+      }
+      icon {
+        font-family: "Material Symbols Rounded";
+        font-size: 28px;
+      }
+      .topbar {
+        border-radius: 0;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 16px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 1000;
+      }
+      .top-left {
+        display: flex;
+        align-items: center;
+      }
+      .top-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .top-right icon {
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+      .top-right icon:hover {
+        color: #ffcc00;
+      }
+      .topbar-middle {
+        display: flex;
+        gap: 16px;
+      }
+      .navbar-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+      .navbar-item:hover {
+        color: #ffcc00;
+      }
+      .content {
+        padding: 16px;
+        margin-top: 64px;
+      }
+      .content-page {
+        display: none;
+      }
+      .content-page.active {
+        display: block;
+      }
+      .search-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
+      }
+      .search-bar input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        color: #ffffff;
+        font-size: 16px;
+        outline: none;
+        font-family: "Google Sans Flex", "Google Sans", Roboto, sans-serif;
+        font-variation-settings: "ROND" 90;
+      }
+      button {
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.16) 0%,
+          rgba(255, 255, 255, 0.06) 22%,
+          rgba(255, 255, 255, 0.04) 50%,
+          rgba(255, 255, 255, 0.06) 78%,
+          rgba(255, 255, 255, 0.14) 100%
+        );
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(2px) saturate(190%) brightness(105%)
+          contrast(100%);
+        -webkit-backdrop-filter: blur(1.75px) saturate(200%) brightness(125%)
+          contrast(100%);
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        padding: 8px 16px;
+        cursor: pointer;
+        color: white;
+        font-family: "Google Sans Flex", "Google Sans", Roboto, sans-serif;
+        font-variation-settings: "ROND" 90;
+        transition:
+          background 0.3s,
+          color 0.3s;
+      }
+      button:hover {
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.24) 0%,
+          rgba(255, 255, 255, 0.12) 22%,
+          rgba(255, 255, 255, 0.08) 50%,
+          rgba(255, 255, 255, 0.12) 78%,
+          rgba(255, 255, 255, 0.24) 100%
+        );
+        color: #ffcc00;
+      }
+      .settings-container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .setting-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      @media (max-width: 700px) {
+        .topbar {
+          padding: 0 8px;
+          min-height: 56px;
+          font-size: 0.98em;
+        }
+        .top-left h3 {
+          font-size: 1.1em;
+          margin-right: 8px;
+        }
+        .topbar-middle {
+          gap: 8px;
+        }
+        .navbar-item span {
+          display: none;
+        }
+        .navbar-item icon {
+          font-size: 24px;
+        }
+        .content {
+          padding: 8px;
+          margin-top: 56px;
+        }
+        .settings-container {
+          gap: 10px;
+        }
+        .setting-item label {
+          font-size: 0.98em;
+        }
+        .history-item {
+          padding: 8px 8px;
+          font-size: 0.98em;
+        }
+        .search-bar {
+          gap: 4px;
+          padding: 6px;
+        }
+        .search-bar input {
+          font-size: 15px;
+        }
+      }
+      @media (max-width: 480px) {
+        .topbar {
+          padding: 0 2vw;
+          min-height: 48px;
+        }
+        .top-left h3 {
+          font-size: 1em;
+        }
+        .content {
+          padding: 4px;
+          margin-top: 48px;
+        }
+        .history-item {
+          padding: 6px 4px;
+          font-size: 0.95em;
+        }
+        .settings-container {
+          gap: 6px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topbar liquid-glass">
+      <div class="top-left">
+        <h3 id="backtoMunetios">Manage Data</h3>
+      </div>
+      <div class="topbar-middle">
+        <div class="navbar-item" id="searchHistoryBtn">
+          <icon>history</icon>
+          <span>Search History</span>
+        </div>
+        <div class="navbar-item" id="otherDataBtn">
+          <icon>folder</icon>
+          <span>Other Data</span>
+        </div>
+        <div class="navbar-item" id="dataSettingsBtn">
+          <icon>settings</icon>
+          <span>Data Settings</span>
+        </div>
+      </div>
+      <div class="top-right">
+        <icon id="helpIcon">help</icon>
+        <icon id="appsIcon">apps</icon>
+      </div>
+    </div>
+    <div class="content">
+      <div class="content-page active" id="searchHistoryContent">
+        <h2>Search History</h2>
+        <p>Here you can view your search history.</p>
+        <div class="search-bar liquid-glass">
+          <icon>search</icon>
+          <input type="text" placeholder="Search your history" />
+        </div>
+        <div class="history-list" id="historyList">
+          <!-- Search history items will be dynamically added here -->
+        </div>
+      </div>
+      <div class="content-page" id="otherDataContent">
+        <h2>Other Data</h2>
+        <div class="search-bar liquid-glass">
+          <icon>search</icon>
+          <input type="text" placeholder="Search other data" />
+        </div>
+        <h2>Not Interested Results</h2>
+        <div class="other-data-list" id="otherDataList">
+          <!-- Other data items will be dynamically added here -->
+        </div>
+        <h2>Bookmarks</h2>
+        <div class="bookmarks-list" id="bookmarksList">
+          <!-- Bookmark items will be dynamically added here -->
+        </div>
+      </div>
+      <div class="content-page" id="dataSettingsContent">
+        <h2>Data Settings</h2>
+        <div class="settings-container">
+          <div class="setting-item">
+            <label for="clearHistory">Clear Search History</label>
+            <button id="clearHistory">Clear</button>
+          </div>
+          <div class="setting-item">
+            <label for="clearBookmarks">Clear Bookmarks</label>
+            <button id="clearBookmarks">Clear</button>
+          </div>
+          <div class="setting-item">
+            <label for="clearRemovedResults"
+              >Clear Not Interested Results</label
+            >
+            <button id="clearRemovedResults">Clear</button>
+          </div>
+          <div class="setting-item">
+            <label for="clearAllData">Clear All Data</label>
+            <button id="clearAllData">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script nonce="eriuhgertsihgtuidfkgrtsdghjkghjkwerafuhjkwerfuihjkuh">
+      document
+        .getElementById("backtoMunetios")
+        .addEventListener("click", () => {
+          window.location.href = "index.html";
+        });
+      document.getElementById("helpIcon").addEventListener("click", () => {
+        // Remove existing modal if present
+        const existing = document.getElementById("helpModal");
+        if (existing) existing.remove();
+
+        const modal = document.createElement("div");
+        modal.id = "helpModal";
+        modal.style.position = "fixed";
+        modal.style.top = "0";
+        modal.style.left = "0";
+        modal.style.width = "100vw";
+        modal.style.height = "100vh";
+        modal.style.background = "rgba(0,0,0,0.45)";
+        modal.style.display = "flex";
+        modal.style.alignItems = "center";
+        modal.style.justifyContent = "center";
+        modal.style.zIndex = "9999";
+
+        const box = document.createElement("div");
+        box.className = "liquid-glass";
+        box.style.padding = "32px 24px";
+        box.style.borderRadius = "12px";
+        box.style.boxShadow = "0 4px 32px rgba(0,0,0,0.18)";
+        box.style.maxWidth = "90vw";
+        box.style.minWidth = "260px";
+        box.style.textAlign = "center";
+        box.style.color = "#fff";
+        box.style.position = "relative";
+
+        const closeBtn = document.createElement("button");
+        closeBtn.textContent = "Close";
+        closeBtn.style.position = "absolute";
+        closeBtn.style.top = "8px";
+        closeBtn.style.right = "8px";
+        closeBtn.style.zIndex = "2";
+        closeBtn.onclick = () => modal.remove();
+
+        const msg = document.createElement("div");
+        msg.innerHTML = `
+            <h2 style="margin-top:0;">Help</h2>
+            <p>
+                <b>Manage Data</b> lets you view and clear your search history, bookmarks, and removed results.<br><br>
+                <b>Tabs:</b><br>
+                <b>Search History</b>: View and delete your search queries.<br>
+                <b>Other Data</b>: Manage removed results and bookmarks.<br>
+                <b>Data Settings</b>: Clear all or specific types of data.<br><br>
+                Use the search bars to filter items. Click the trash icon to delete individual entries.
+            </p>
+        `;
+
+        box.appendChild(closeBtn);
+        box.appendChild(msg);
+        modal.appendChild(box);
+        document.body.appendChild(modal);
+      });
+
+      // Apps icon: show iframe modal
+      document.getElementById("appsIcon").addEventListener("click", () => {
+        // Remove existing modal if present
+        const existing = document.getElementById("appsModal");
+        if (existing) existing.remove();
+
+        const modal = document.createElement("div");
+        modal.id = "appsModal";
+        modal.style.position = "fixed";
+        modal.style.top = "0";
+        modal.style.left = "0";
+        modal.style.width = "100vw";
+        modal.style.height = "100vh";
+        modal.style.background = "rgba(0,0,0,0.45)";
+        modal.style.display = "flex";
+        modal.style.alignItems = "center";
+        modal.style.justifyContent = "center";
+        modal.style.zIndex = "9999";
+
+        const box = document.createElement("div");
+        box.className = "liquid-glass";
+        box.style.padding = "0";
+        box.style.borderRadius = "12px";
+        box.style.boxShadow = "0 4px 32px rgba(0,0,0,0.18)";
+        box.style.maxWidth = "95vw";
+        box.style.maxHeight = "95vh";
+        box.style.overflow = "hidden";
+        box.style.position = "relative";
+
+        const closeBtn = document.createElement("button");
+        closeBtn.textContent = "Close";
+        closeBtn.style.position = "absolute";
+        closeBtn.style.top = "8px";
+        closeBtn.style.right = "8px";
+        closeBtn.style.zIndex = "2";
+        closeBtn.onclick = () => modal.remove();
+
+        const iframe = document.createElement("iframe");
+        iframe.src = "https://munetios.com/apps";
+        iframe.width = "500";
+        iframe.height = "768";
+        iframe.style.border = "none";
+        iframe.style.display = "block";
+        iframe.style.background = "#fff";
+        iframe.style.borderRadius = "12px";
+
+        box.appendChild(closeBtn);
+        box.appendChild(iframe);
+        modal.appendChild(box);
+        document.body.appendChild(modal);
+      });
+      function showConfirmModal(message, onConfirm) {
+        // Remove existing modal if present
+        const existing = document.getElementById("confirmModal");
+        if (existing) existing.remove();
+
+        const modal = document.createElement("div");
+        modal.id = "confirmModal";
+        modal.style.position = "fixed";
+        modal.style.top = "0";
+        modal.style.left = "0";
+        modal.style.width = "100vw";
+        modal.style.height = "100vh";
+        modal.style.background = "rgba(0,0,0,0.45)";
+        modal.style.display = "flex";
+        modal.style.alignItems = "center";
+        modal.style.justifyContent = "center";
+        modal.style.zIndex = "9999";
+
+        const box = document.createElement("div");
+        box.className = "liquid-glass";
+        box.style.padding = "32px 24px";
+        box.style.borderRadius = "12px";
+        box.style.boxShadow = "0 4px 32px rgba(0,0,0,0.18)";
+        box.style.maxWidth = "90vw";
+        box.style.minWidth = "260px";
+        box.style.textAlign = "center";
+        box.style.color = "#fff";
+
+        const msg = document.createElement("div");
+        msg.textContent = message;
+        msg.style.marginBottom = "24px";
+        msg.style.fontSize = "1.1em";
+
+        const btns = document.createElement("div");
+        btns.style.display = "flex";
+        btns.style.justifyContent = "center";
+        btns.style.gap = "16px";
+
+        const cancelBtn = document.createElement("button");
+        cancelBtn.textContent = "Cancel";
+        cancelBtn.onclick = () => modal.remove();
+
+        const okBtn = document.createElement("button");
+        okBtn.textContent = "Confirm";
+        okBtn.style.background = "#ff3333";
+        okBtn.style.color = "#fff";
+        okBtn.onclick = () => {
+          modal.remove();
+          onConfirm();
+        };
+
+        btns.appendChild(cancelBtn);
+        btns.appendChild(okBtn);
+
+        box.appendChild(msg);
+        box.appendChild(btns);
+        modal.appendChild(box);
+        document.body.appendChild(modal);
+      }
+
+      document.getElementById("clearHistory").addEventListener("click", () => {
+        showConfirmModal("Clear all search history?", () => {
+          setSearchHistory([]);
+          renderHistoryList();
+        });
+      });
+
+      document
+        .getElementById("clearBookmarks")
+        .addEventListener("click", () => {
+          showConfirmModal("Clear all bookmarks?", () => {
+            setBookmarks([]);
+            renderBookmarksList(
+              document.querySelectorAll(".search-bar input")[1].value,
+            );
+          });
+        });
+
+      document
+        .getElementById("clearRemovedResults")
+        .addEventListener("click", () => {
+          showConfirmModal("Clear all Not Interested Results?", () => {
+            setRemovedResults([]);
+            renderOtherDataList(
+              document.querySelectorAll(".search-bar input")[1].value,
+            );
+          });
+        });
+
+      document.getElementById("clearAllData").addEventListener("click", () => {
+        showConfirmModal("Clear ALL data? This cannot be undone.", () => {
+          setSearchHistory([]);
+          setBookmarks([]);
+          setRemovedResults([]);
+          renderHistoryList();
+          renderBookmarksList(
+            document.querySelectorAll(".search-bar input")[1].value,
+          );
+          renderOtherDataList(
+            document.querySelectorAll(".search-bar input")[1].value,
+          );
+        });
+      });
+      function showContentPage(pageId) {
+        document.querySelectorAll(".content-page").forEach((page) => {
+          page.classList.remove("active");
+        });
+        const page = document.getElementById(pageId);
+        if (page) page.classList.add("active");
+      }
+
+      // Navigation button event listeners
+      document
+        .getElementById("searchHistoryBtn")
+        .addEventListener("click", () => {
+          showContentPage("searchHistoryContent");
+        });
+      document
+        .getElementById("dataSettingsBtn")
+        .addEventListener("click", () => {
+          showContentPage("dataSettingsContent");
+        });
+      document.getElementById("otherDataBtn").addEventListener("click", () => {
+        showContentPage("otherDataContent");
+      });
+      function getRemovedResults() {
+        const data = localStorage.getItem("removedResults");
+        try {
+          return data ? JSON.parse(data) : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function setRemovedResults(results) {
+        localStorage.setItem("removedResults", JSON.stringify(results));
+      }
+
+      function getBookmarks() {
+        const data = localStorage.getItem("munetiosBookmarks");
+        try {
+          return data ? JSON.parse(data) : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function setBookmarks(bookmarks) {
+        localStorage.setItem("munetiosBookmarks", JSON.stringify(bookmarks));
+      }
+
+      function renderOtherDataList(filter = "") {
+        const otherDataList = document.getElementById("otherDataList");
+        const removed = getRemovedResults();
+        otherDataList.innerHTML = "";
+        const filtered = filter
+          ? removed.filter((item) =>
+              (item.title || item.url || "")
+                .toLowerCase()
+                .includes(filter.toLowerCase()),
+            )
+          : removed;
+        if (filtered.length === 0) {
+          otherDataList.innerHTML =
+            '<p style="color:#aaa;">No removed results found.</p>';
+          return;
+        }
+        filtered.forEach((item, idx) => {
+          const div = document.createElement("div");
+          div.className = "history-item liquid-glass";
+          div.style.display = "flex";
+          div.style.alignItems = "center";
+          div.style.justifyContent = "space-between";
+          div.style.padding = "10px 16px";
+          div.style.margin = "8px 0";
+          div.style.borderRadius = "8px";
+
+          const span = document.createElement("span");
+          span.textContent = item.title || item.url || JSON.stringify(item);
+          span.style.overflow = "hidden";
+          span.style.textOverflow = "ellipsis";
+          span.style.whiteSpace = "nowrap";
+          span.style.flex = "1";
+
+          const delIcon = document.createElement("icon");
+          delIcon.textContent = "delete";
+          delIcon.style.cursor = "pointer";
+          delIcon.style.marginLeft = "16px";
+          delIcon.style.color = "#ff8888";
+          delIcon.title = "Delete this entry";
+          delIcon.onclick = () => {
+            const all = getRemovedResults();
+            const realIdx = removed.indexOf(item);
+            if (realIdx > -1) {
+              all.splice(realIdx, 1);
+              setRemovedResults(all);
+              renderOtherDataList(
+                document.querySelectorAll(".search-bar input")[1].value,
+              );
+            }
+          };
+
+          div.appendChild(span);
+          div.appendChild(delIcon);
+          otherDataList.appendChild(div);
+        });
+      }
+
+      function renderBookmarksList(filter = "") {
+        const bookmarksList = document.getElementById("bookmarksList");
+        const bookmarks = getBookmarks();
+        bookmarksList.innerHTML = "";
+        const filtered = filter
+          ? bookmarks.filter((item) =>
+              (item.title || item.url || "")
+                .toLowerCase()
+                .includes(filter.toLowerCase()),
+            )
+          : bookmarks;
+        if (filtered.length === 0) {
+          bookmarksList.innerHTML =
+            '<p style="color:#aaa;">No bookmarks found.</p>';
+          return;
+        }
+        filtered.forEach((item, idx) => {
+          const div = document.createElement("div");
+          div.className = "history-item liquid-glass";
+          div.style.display = "flex";
+          div.style.alignItems = "center";
+          div.style.justifyContent = "space-between";
+          div.style.padding = "10px 16px";
+          div.style.margin = "8px 0";
+          div.style.borderRadius = "8px";
+
+          const link = document.createElement("a");
+          link.textContent = item.title || item.url || JSON.stringify(item);
+          link.href = item.url || "#";
+          link.target = "_blank";
+          link.style.color = "#fff";
+          link.style.textDecoration = "none";
+          link.style.overflow = "hidden";
+          link.style.textOverflow = "ellipsis";
+          link.style.whiteSpace = "nowrap";
+          link.style.flex = "1";
+
+          const delIcon = document.createElement("icon");
+          delIcon.textContent = "delete";
+          delIcon.style.cursor = "pointer";
+          delIcon.style.marginLeft = "16px";
+          delIcon.style.color = "#ff8888";
+          delIcon.title = "Delete this bookmark";
+          delIcon.onclick = () => {
+            const all = getBookmarks();
+            const realIdx = bookmarks.indexOf(item);
+            if (realIdx > -1) {
+              all.splice(realIdx, 1);
+              setBookmarks(all);
+              renderBookmarksList(
+                document.querySelectorAll(".search-bar input")[1].value,
+              );
+            }
+          };
+
+          div.appendChild(link);
+          div.appendChild(delIcon);
+          bookmarksList.appendChild(div);
+        });
+      }
+
+      // Initial render for Other Data tab
+      renderOtherDataList();
+      renderBookmarksList();
+
+      // Search filter for Other Data tab
+      document
+        .querySelectorAll(".search-bar input")[1]
+        .addEventListener("input", function () {
+          renderOtherDataList(this.value);
+          renderBookmarksList(this.value);
+        });
+
+      // When switching to Other Data tab, re-render lists
+      document.getElementById("otherDataBtn").addEventListener("click", () => {
+        renderOtherDataList(
+          document.querySelectorAll(".search-bar input")[1].value,
+        );
+        renderBookmarksList(
+          document.querySelectorAll(".search-bar input")[1].value,
+        );
+      });
+      // Utility to get search history from localStorage
+      function getSearchHistory() {
+        const data = localStorage.getItem("munetiosSearchHistory");
+        try {
+          return data ? JSON.parse(data) : [];
+        } catch {
+          return [];
+        }
+      }
+
+      // Utility to save search history to localStorage
+      function setSearchHistory(history) {
+        localStorage.setItem("munetiosSearchHistory", JSON.stringify(history));
+      }
+
+      // Render search history list
+      function renderHistoryList(filter = "") {
+        const historyList = document.getElementById("historyList");
+        const history = getSearchHistory();
+        historyList.innerHTML = "";
+        const filtered = filter
+          ? history.filter((item) =>
+              item.toLowerCase().includes(filter.toLowerCase()),
+            )
+          : history;
+        if (filtered.length === 0) {
+          historyList.innerHTML =
+            '<p style="color:#aaa;">No history found.</p>';
+          return;
+        }
+        filtered.forEach((item, idx) => {
+          const div = document.createElement("div");
+          div.className = "history-item liquid-glass";
+          div.style.display = "flex";
+          div.style.alignItems = "center";
+          div.style.justifyContent = "space-between";
+          div.style.padding = "10px 16px";
+          div.style.margin = "8px 0";
+          div.style.borderRadius = "8px";
+
+          const span = document.createElement("span");
+          span.textContent = item;
+          span.style.overflow = "hidden";
+          span.style.textOverflow = "ellipsis";
+          span.style.whiteSpace = "nowrap";
+          span.style.flex = "1";
+
+          const delIcon = document.createElement("icon");
+          delIcon.textContent = "delete";
+          delIcon.style.cursor = "pointer";
+          delIcon.style.marginLeft = "16px";
+          delIcon.style.color = "#ff8888";
+          delIcon.title = "Delete this entry";
+          delIcon.onclick = () => {
+            const allHistory = getSearchHistory();
+            const realIdx = history.indexOf(item);
+            if (realIdx > -1) {
+              allHistory.splice(realIdx, 1);
+              setSearchHistory(allHistory);
+              renderHistoryList(
+                document.querySelector(".search-bar input").value,
+              );
+            }
+          };
+
+          div.appendChild(span);
+          div.appendChild(delIcon);
+          historyList.appendChild(div);
+        });
+      }
+
+      // Initial render
+      renderHistoryList();
+
+      // Search filter
+      document
+        .querySelector(".search-bar input")
+        .addEventListener("input", function () {
+          renderHistoryList(this.value);
+        });
+    </script>
+    <style>
+      .history-item icon {
+        transition: color 0.2s;
+      }
+      .history-item icon:hover {
+        color: #ff3333;
+      }
+      .history-item {
+        background: rgba(255, 255, 255, 0.04);
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.08);
+      }
+    </style>
+  </body>
+</html>
