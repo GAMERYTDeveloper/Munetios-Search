@@ -2490,6 +2490,12 @@
               labsIcon.style.pointerEvents = "none";
               labsIcon.title = "Labs disabled in School Mode";
             }
+            // Disable Labs in More menu
+            document.querySelectorAll("#mobileLabsOption").forEach(function (el) {
+              el.style.opacity = "0.5";
+              el.style.pointerEvents = "none";
+              el.title = "Labs disabled in School Mode";
+            });
             // Disable School Mode toggle itself
             schoolModeToggle.disabled = true;
             showToast("School Mode enabled. Labs disabled.");
@@ -2503,6 +2509,12 @@
               labsIcon.style.pointerEvents = "";
               labsIcon.title = "";
             }
+            // Re-enable Labs in More menu
+            document.querySelectorAll("#mobileLabsOption").forEach(function (el) {
+              el.style.opacity = "";
+              el.style.pointerEvents = "";
+              el.title = "";
+            });
           }
         });
       }
