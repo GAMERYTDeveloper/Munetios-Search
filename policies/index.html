@@ -1,1155 +1,732 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Munetios Policies</title>
-    <!-- Boost SEO -->
+    <link
+      rel="stylesheet"
+      href="https://api.munetios.com/beautiful-css/beautiful.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@8..144,100..700,&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded"
+    />
+    <link rel="icon" href="munetios-logo-icon.png" />
+    <link rel="apple-touch-icon" href="munetios-logo-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#270e33ff" />
     <meta
       name="description"
-      content="Munetios is a privacy-focused suite of apps and services. Read our policies including Privacy Policy, Terms of Service, and more."
+      content="Munetios Policies - Learn about our privacy and data management policies."
     />
     <meta
       name="keywords"
-      content="Munetios, Privacy Policy, Terms of Service, Apps, Services, Trust & Safety, Contact"
+      content="Munetios, policies, privacy, data management"
     />
     <meta name="author" content="Munetios" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://www.munetios.com/policies" />
-    <link
-      rel="alternate"
-      href="https://www.munetios.com/policies"
-      hreflang="en"
-    />
     <meta
-      name="robots"
-      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
-    />
-    <meta
-      name="googlebot"
-      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
-    />
-    <meta name="bingbot" content="index, follow" />
-    <meta name="og:type" content="website" />
-    <meta property="og:title" content="Munetios Policies" />
-    <meta
-      property="og:description"
-      content="Munetios is a privacy-focused suite of apps and services. Read our policies including Privacy Policy, Terms of Service, and more."
-    />
-    <meta property="og:url" content="https://www.munetios.com/policies" />
-    <meta
-      property="og:image"
-      content="https://www.munetios.com/policies/image.png"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Munetios Policies" />
-    <meta
-      name="twitter:description"
-      content="Munetios is a privacy-focused suite of apps and services. Read our policies including Privacy Policy, Terms of Service, and more."
-    />
-    <meta
-      name="twitter:image"
-      content="https://www.munetios.com/policies/image.png"
-    />
-    <!-- Favicon -->
-    <link rel="icon" href="image.png" type="image/png" />
-    <link rel="shortcut icon" href="image.png" type="image/png" />
-    <link rel="apple-touch-icon" href="image.png" />
-    <link rel="apple-touch-icon-precomposed" href="image.png" />
-    <link rel="icon" sizes="192x192" href="image.png" />
-    <link rel="icon" sizes="32x32" href="image.png" />
-    <link rel="icon" sizes="16x16" href="image.png" />
-    <link rel="icon" href="image.png" type="image/x-icon" />
-    <!-- Munetios beautiful css link -->
-     <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css" />
-     
-    <!-- Poppins font link -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' https://api.munetios.com https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'nonce-eriuhgertsihgtuidfkgrtsdghjkghjkwerafuhjkwerfuihjkuh'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; frame-src https://www.munetios.com https://munetios.com"
     />
     <style>
+      * {
+        box-sizing: border-box;
+      }
       body {
-        font-family: "Google Sans Flex", sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #270e33ff;
-        color: #e9e9e9;
-      }
-      .btn {
-        border-radius: 40px;
-        background-color: #4f03db;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
-      }
-      .btn:hover {
-        background-color: #3d02b8;
+        background-color: #110433;
+        color: #ffffff;
+        font-family: "Google Sans Flex", "Google Sans", Roboto, sans-serif;
+        font-variation-settings: "ROND" 90;
       }
       .topbar {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 10px 20px;
-        position: fixed;
+        padding: 0.5rem 1rem;
+        position: sticky;
         top: 0;
-        width: 100%;
         z-index: 1000;
-        box-sizing: border-box;
       }
-      .navbar {
+      .top-left {
         display: flex;
-        flex-direction: column;
         align-items: center;
-        gap: 15px;
+      }
+      .top-right {
+        display: flex;
+        gap: 1rem;
       }
       .content {
-        margin-left: 280px;
-        margin-top: 80px;
-        border-radius: 18px;
-        padding: 32px 36px;
-        font-size: 18px;
-        line-height: 1.7;
-        transition: box-shadow 0.3s;
+        padding: 1rem;
       }
-      .content h1 {
-        font-size: 2.2em;
-        margin-top: 0;
-        margin-bottom: 18px;
-        font-weight: 600;
-        color: #9abaff;
+      .top-right a {
+        color: #ffffff;
+        text-decoration: none;
       }
-      .content h2,
-      .content h3 {
-        color: #b7aaff;
-        margin-top: 28px;
-        margin-bottom: 12px;
-        font-weight: 500;
-      }
-      .content ul {
-        margin: 16px 0 16px 24px;
-        padding: 0;
-      }
-      .content li {
-        margin-bottom: 8px;
-      }
-      .content a {
-        color: #9abaff;
+      .top-right a:hover {
         text-decoration: underline;
       }
-      footer {
-        text-align: center;
-        padding: 18px 0;
-        margin-left: 280px; 
-        color: #bbb;
-        font-size: 15px;
-        margin-top: 40px;
-        border-radius: 0 0 18px 18px;
+      .content h1,
+      p,
+      a,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      li {
+        font-feature-settings:
+          "liga" 0,
+          "ss01" 1;
       }
-      .sidebar {
-        position: fixed;
-        top: 70px;
-        overflow-y: auto;
-        left: 10px;
-        width: 200px;
-        height: calc(100% - 80px);
-        border-radius: 18px;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
+      .last-updated {
+        font-size: 0.875rem;
+        color: #aaaaaa;
+        margin-bottom: 1rem;
       }
-      .menu-btn,
-      .top-right {
-        padding: 14px 14px;
+      section {
+        margin-bottom: 2rem;
+      }
+      h2 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+      h3 {
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      h4 {
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+      }
+      h5 {
+        margin-top: 0.75rem;
+        margin-bottom: 0.25rem;
+      }
+      h6 {
+        margin-top: 0.5rem;
+        margin-bottom: 0.25rem;
+      }
+      li {
+        margin-bottom: 0.5rem;
+      }
+      .content {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      button {
+        background-color: rgba(127, 32, 172, 0.555);
+        backdrop-filter: blur(2px);
+        color: #ffffff;
+        border: 1px solid #ffffff36;
+        padding: 0.5rem 1rem;
+        border-radius: 8.25rem;
         cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 8px;
+        font-family: "Google Sans Flex", "Google Sans", Roboto, sans-serif;
+        font-variation-settings: "ROND" 90;
       }
-      .item {
-        padding: 10px 14px;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: background-color 0.3s;
+      button:hover {
+        background-color: #3a0f5fff;
       }
-      .item:hover {
-        background-color: #3a1a5eff;
+      .pick-a-language {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        border-radius: 1.25rem;
+        padding: 0.5rem;
+        display: none;
+        z-index: 1001;
       }
-      .item.active {
-        background-color: #4f03dbff;
+      .pick-a-language ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
       }
-      .liquid-glass {
-        /* Rendered by beautiful-css */
+      .pick-a-language li {
+        margin-bottom: 0.5rem;
+      }
+      .pick-a-language li:last-child {
+        margin-bottom: 0;
+      }
+      .pick-a-language button {
+        width: 100%;
+        text-align: left;
       }
     </style>
   </head>
   <body>
-    <header class="topbar">
-      <div class="menu-btn liquid-glass">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+    <div class="topbar liquid-glass">
+      <div class="top-left">
+        <h3>Munetios Policies</h3>
+      </div>
+      <div class="top-right">
+        <a href="index.html">Privacy</a>
+        <a href="#/terms">Terms</a>
+        <a href="#/cookies">Cookies</a>
+        <a href="#/data">Data Management</a>
+        <button id="selectLanguage">Language</button>
+        <button
+          id="backtoMunetios"
+          nonce="eriuhgertsihgtuidfkgrtsdghjkghjkwerafuhjkwerfuihjkuh"
         >
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
+          Munetios
+        </button>
       </div>
-
-      <div class="top-right liquid-glass">
-        <a href="https://www.munetios.com" style="color: inherit; text-decoration: none"
-          >Munetios.com</a>
-        </div>
-      </div>
-    </header>
-    <aside class="sidebar liquid-glass">
-            <div class="navbar">
-        <div class="item" id="homeItem">Home</div>
-        <div class="item" id="privacyItem">Privacy Policy</div>
-        <div class="item" id="termsItem">Terms of Service</div>
-        <div class="item" id="cookiesItem">Cookies Policy</div>
-        <div class="item" id="aboutItem">About Us</div>
-        <div class="item" id="apps">Apps</div>
-        <div class="item" id="gdpr">GDPR</div>
-        <div class="item" id="brandingItem">Branding</div>
-        <div class="item" id="trust-safety">Trust & Safety</div>
-        <div class="item" id="contactItem">Contact Us</div>
-      </div>
-    </aside>
-    <div class="content liquid-glass" id="home">
-      <h1>Welcome to Munetios Policies</h1>
-      <p>This is the home section. Please navigate using the menu above.</p>
-      <p>Here you can find information about our policies and guidelines.</p>
     </div>
-    <div class="content liquid-glass" id="privacy">
+    <div class="content">
       <h1>Privacy Policy</h1>
-      <p>Last updated: December 20, 2025</p>
+      <div class="last-updated">Last updated: January 22, 2026</div>
 
-      <p>
-        Your privacy is extremely important to us. Munetios is built with a
-        privacy-first design and does not collect, sell, or share personal
-        information for tracking, advertising, or profiling purposes.
-      </p>
+      <section>
+        <h2>Data Collection</h2>
+        <p>
+          Munetios is built with privacy as a core principle. We do not collect,
+          harvest, sell, or monetize personal data. Any information you provide
+          is strictly optional and only supplied when you actively choose to use
+          a specific feature that requires it. We do not engage in background
+          data collection, behavioral profiling, fingerprinting, or cross-site
+          tracking.
+        </p>
+        <p>
+          Munetios does not use third-party analytics services, advertising
+          networks, tracking pixels, or external telemetry systems. We do not
+          track how you navigate the site, what pages you visit, or how long you
+          stay. All usage remains private by default.
+        </p>
+        <p>
+          When data is voluntarily provided, it is used solely for its intended
+          purpose, processed securely, and never shared with third parties. We
+          routinely review our data practices to ensure they align with modern
+          privacy expectations and applicable data protection laws.
+        </p>
+      </section>
 
-      <p>
-        Munetios does not use tracking cookies, analytics services, advertising
-        technologies, fingerprinting, or cross-site identifiers of any kind. We
-        do not track users across websites or services.
-      </p>
+      <section>
+        <h2>AI Features</h2>
+        <p>
+          Munetios includes optional AI-powered features designed to assist with
+          productivity, accessibility, and usability. By default, AI
+          interactions are not used to train models and are not stored beyond
+          the active session. We do not use AI systems to profile users, infer
+          personal traits, or build behavioral datasets.
+        </p>
+        <p>
+          If an AI feature offers optional data sharing for improvement or
+          training purposes, this will be clearly communicated to you in
+          advance. You retain full control over whether such sharing is enabled
+          and may change your preferences at any time. Opting out does not limit
+          access to core functionality.
+        </p>
+        <p>
+          All AI processing is handled securely, and personal data is never
+          retained without explicit user consent. Transparency is central to how
+          our AI systems operate, and we aim to make their behavior
+          understandable and predictable.
+        </p>
+      </section>
 
-      <h2>Cookies & Local Storage</h2>
-      <p>
-        Munetios uses <strong>essential first-party cookies</strong> and local
-        storage only to provide core functionality, such as:
-      </p>
-      <ul>
-        <li>
-          Remembering user settings (theme, language, accessibility options)
-        </li>
-        <li>Remembering saved order or layout</li>
-        <li>Maintaining secure sessions and basic security protections</li>
-      </ul>
+      <section>
+        <h2>Speech Recognition</h2>
+        <p>
+          Munetios uses the Web Speech Recognition API to enable voice-based
+          input for features such as search and maps navigation. This
+          functionality allows spoken words to be converted into text to improve
+          accessibility and ease of use.
+        </p>
+        <p>
+          Speech recognition is handled by your browser or operating system
+          using its built-in speech services. Munetios does not operate its own
+          speech recognition servers and does not directly process or store
+          voice audio. Any voice data handling is governed by the privacy
+          policies of your browser or device provider.
+        </p>
+        <p>
+          Munetios does not record, retain, log, or transmit voice recordings to
+          its servers. Once speech input is converted into text, it is used only
+          for the immediate action requested by the user, such as performing a
+          search or locating a place on the map.
+        </p>
+        <p>
+          Use of speech recognition is entirely optional. You may disable
+          microphone access at any time through your browser or device settings.
+          Munetios recommends reviewing your browser’s speech and microphone
+          permissions to ensure they align with your privacy preferences.
+        </p>
+      </section>
 
-      <p>
-        These cookies are strictly necessary for the service to function and are
-        not used for tracking, analytics, advertising, or profiling. Because
-        only essential cookies are used, no cookie consent banner is required
-        under applicable privacy laws.
-      </p>
+      <section>
+        <h2>Encryption</h2>
+        <p>
+          Munetios uses end-to-end encryption by default and at all times. All
+          user data is encrypted on your device before it is transmitted and can
+          only be decrypted by the intended recipient or by you on your own
+          device. Munetios does not have access to unencrypted user content.
+        </p>
+        <p>
+          Encryption keys are generated and managed locally and are never shared
+          with Munetios servers. This design ensures that even in the event of
+          unauthorized access to infrastructure, user data remains unreadable
+          and protected.
+        </p>
+        <p>
+          In addition to end-to-end encryption, all communications between your
+          device and Munetios services are protected using modern,
+          industry-standard transport encryption protocols. This provides
+          layered security against interception, tampering, and unauthorized
+          access.
+        </p>
+        <p>
+          Because Munetios cannot decrypt end-to-end encrypted content, we are
+          unable to view, analyze, or recover private user data. Responsibility
+          for data access and security remains entirely with the user,
+          reinforcing Munetios’s commitment to privacy-by-design.
+        </p>
+      </section>
 
-      <p>
-        Most preference data is stored locally using technologies such as
-        <code>localStorage</code> and <code>IndexedDB</code>. This data remains
-        on your device and is not transmitted to Munetios servers.
-      </p>
-
-      <h2>Local-Only Products</h2>
-      <p>
-        Most current Munetios products operate entirely on your device and do
-        not store personal data on Munetios servers. These include:
-      </p>
-      <ul>
-        <li>Munetios Calendar</li>
-        <li>Munetios Tasks</li>
-        <li>Munetios Office (Early Preview)</li>
-        <li>Munetios Weather</li>
-        <li>Munetios Photos</li>
-        <li>Munetios Search (European Union)</li>
-      </ul>
-
-      <p>
-        For these products, Munetios does not have access to your data. Because
-        no personal data is processed or stored server-side, Munetios is not
-        acting as a data controller for this information.
-      </p>
-
-      <h2>Server Processing & Logs</h2>
-      <p>
-        Munetios does not generate analytics profiles or behavioral logs. Any
-        technical processing performed is limited to what is strictly necessary
-        to deliver the requested service securely and reliably.
-      </p>
-
-      <h2>Planned & Unreleased Services</h2>
-      <p>
-        Munetios Accounts, Munetios Mail, Munetios Drive, and other planned or
-        unreleased services are not currently active and do not collect or
-        process any data at this time. When these services officially launch,
-        they will include their own dedicated privacy policies.
-      </p>
-
-      <h2>GDPR (European Union)</h2>
-      <p>
-        If you are located in the European Economic Area (EEA), Munetios
-        complies with the General Data Protection Regulation (GDPR).
-      </p>
-
-      <p>
-        <strong>Local-Only Products:</strong> For products that store data only
-        on your device, no personal data is processed on Munetios servers. As a
-        result, GDPR rights such as data deletion, correction, or portability
-        are satisfied by default and are not applicable at the service level.
-      </p>
-
-      <p>
-        <strong>Planned Account-Based Services:</strong> Munetios Accounts and
-        other account-based services are planned but not yet active. When these
-        services launch and involve server-side processing of personal data,
-        Munetios will provide appropriate tools to exercise GDPR rights,
-        including access, correction, deletion, and data export.
-      </p>
-
-      <p>
-        Munetios relies on GDPR Article 6(1)(b) (service necessity) and Article
-        6(1)(f) (legitimate interest for security and functionality) where
-        applicable. Munetios does not use consent-based tracking technologies.
-      </p>
-
-      <h2>COPPA</h2>
-      <p>
-        Munetios complies with the Children’s Online Privacy Protection Act
-        (COPPA). We do not knowingly collect personal information from children
-        under the age of 13. If we ever discover that a child under 13 has
-        submitted personal information, it will be deleted immediately.
-      </p>
-
-      <h2>Contact</h2>
-      <p>
-        If you choose to contact us directly (such as by email or a support
-        form), any information you voluntarily provide is used only to respond
-        to your message and is not sold, shared, or retained longer than
-        necessary.
-      </p>
-
-      <p>
-        This privacy policy may be updated at any time. Please check this page
-        regularly for the latest information.
-      </p>
+      <section>
+        <h2>Cookies</h2>
+        <p>
+          Munetios uses a minimal number of cookies strictly for essential
+          functionality. These cookies are limited to session management,
+          preference storage, and basic feature operation. We do not use cookies
+          for advertising, analytics, or tracking purposes.
+        </p>
+        <p>
+          Cookie data is never shared with third parties and is not used to
+          identify or profile users. Examples of cookie usage include
+          remembering login sessions, theme preferences, or language settings.
+        </p>
+        <p>
+          You have full control over cookies through your browser settings and
+          may disable them at any time. Please note that disabling essential
+          cookies may affect certain features, but Munetios will continue to
+          respect your privacy choices.
+        </p>
+      </section>
+      <section>
+        <h2>COPPA</h2>
+        <p>
+          Munetios complies with the Children’s Online Privacy Protection Act
+          (COPPA). Our services are not directed toward children under the age
+          of 13.
+        </p>
+        <p>
+          Munetios does not collect, store, or process personal data and does
+          not require user accounts. As a result, Munetios does not knowingly
+          collect personal information from children under the age of 13.
+        </p>
+        <p>
+          Because no personal data is collected, there is no personal
+          information to retain, share, or sell. Munetios does not engage in
+          behavioral tracking, profiling, or analytics that could involve
+          children’s data.
+        </p>
+        <p>
+          If a parent or legal guardian believes that information related to a
+          child has been inadvertently provided to Munetios, they may contact us
+          to request review. Any such information, if found, will be promptly
+          deleted.
+        </p>
+      </section>
+      <section>
+        <h2>GDPR</h2>
+        <p>
+          Munetios complies with the General Data Protection Regulation (GDPR)
+          and is committed to protecting the privacy rights of users in the
+          European Union (EU) and European Economic Area (EEA).
+          Privacy-by-design is a core principle of Munetios.
+        </p>
+        <p>
+          Munetios does not collect, store, or process personal data and does
+          not require user accounts. As a result, no personal data is retained,
+          profiled, or shared, and GDPR data protection principles are
+          inherently upheld by the service architecture.
+        </p>
+        <p>
+          Because Munetios does not collect personal data, user rights such as
+          access, rectification, deletion, restriction, and objection are
+          satisfied by default. There is no stored personal information for
+          Munetios to access, modify, or erase.
+        </p>
+        <p>
+          If you have questions regarding GDPR compliance or believe an issue
+          related to personal data has occurred, you may contact us through our
+          designated data protection channels for review.
+        </p>
+      </section>
     </div>
-
-    <div class="content liquid-glass" id="terms">
+    <div class="content" style="display: none" id="terms">
       <h1>Terms of Service</h1>
-      <p>Last updated: December 20, 2025</p>
-
+      <div class="last-updated">Last updated: January 22, 2026</div>
+      <h2>Acceptance of Terms</h2>
       <p>
-        By accessing or using Munetios, you agree to comply with these Terms of
-        Service and all applicable laws and regulations.
+        By accessing or using Munetios services, you agree to be bound by these
+        Terms of Service. If you do not agree to these terms, you may not use
+        our services.
       </p>
-
+      <h2>Munetios Apps</h2>
       <p>
-        You agree not to use Munetios for any unlawful, harmful, or unauthorized
-        purpose.
+        Munetios provides various applications that are subject to these Terms
+        of Service. By using any Munetios app, you agree to comply with these
+        terms and any additional guidelines or rules provided within the app.
+        You may not use Munetios apps for any illegal or unauthorized purpose.
       </p>
-
+      <h2>Rate Limiting & Blocking</h2>
       <p>
-        You may not modify, alter, inject, reverse engineer, or interfere with
-        the user interface, styles, scripts, or functionality of any Munetios
-        product in a way that affects other users or the distributed version of
-        the software.
+        To ensure fair and reliable access for all users, Munetios Search may
+        apply rate limits to prevent excessive or automated requests. If you
+        reach these limits, you may be asked to complete a captcha or wait
+        before making additional requests. These measures help maintain service
+        quality and protect against misuse.
       </p>
-
+      <h2>Modifications to Terms</h2>
       <p>
-        Limited local customization for personal use on a single browser or
-        device is permitted, provided it does not inject advertisements, collect
-        data, bypass safeguards, or alter application behavior beyond your own
-        local environment.
-      </p>
-
-      <ul>
-        <li>Use Munetios responsibly and in compliance with the law.</li>
-        <li>
-          Do not attempt to gain unauthorized access to any Munetios service.
-        </li>
-        <li>Do not misuse, disrupt, or abuse Munetios services.</li>
-        <li>These terms may be updated periodically.</li>
-      </ul>
-
-      <p>
-        Continued use of Munetios after changes are published constitutes
-        acceptance of the updated terms.
-      </p>
-
-      <h2>Service-Specific Terms</h2>
-
-      <h3>Munetios Search</h3>
-      <p>
-        These terms apply to <strong>Munetios Classic Search</strong>. Munetios
-        New Search operates under separate rules.
-      </p>
-      <p>
-        You may request the addition of search results or advertisements.
-        However, submissions containing malicious, deceptive, or scam-related
-        content may be removed without notice. A reporting feature is available
-        for users to flag inappropriate results.
-      </p>
-
-      <h3>Munetios Calculator</h3>
-      <p>
-        Munetios Calculator is provided on an “as is” basis without warranties
-        of any kind. While we strive for accuracy, we do not guarantee that all
-        calculations or AI-generated responses are error-free.
-      </p>
-      <p>
-        All calculation history and settings are stored locally on your device
-        and are not collected or transmitted by Munetios.
-      </p>
-
-      <h3>Munetios Docs / Office Suite</h3>
-      <p>
-        Munetios Docs, now part of the Munetios Office Suite, operates locally
-        on your device. Munetios does not collect or store document content. You
-        agree not to use the service for unlawful or unauthorized purposes.
-      </p>
-
-      <h3>Munetios Calendar</h3>
-      <p>
-        Munetios Calendar is designed with privacy as a core principle. All
-        events and calendar data remain on your device and are never transmitted
-        to Munetios servers or third parties.
-      </p>
-
-      <h3>Munetios Tasks</h3>
-      <p>
-        Munetios Tasks stores all task information locally on your device.
-        Munetios does not collect, process, or share task data with third
-        parties.
-      </p>
-
-      <h3>Munetios Notes</h3>
-      <p>
-        Munetios Notes stores all notes locally on your device. Munetios does
-        not access, collect, or transmit note content.
-      </p>
-
-      <h3>Munetios Weather</h3>
-      <p>
-        Munetios Weather processes weather information locally on your device.
-        Munetios does not collect, store, or share personal data through this
-        service.
+        Munetios reserves the right to modify these Terms of Service at any
+        time. Changes will be effective immediately upon posting. Your continued
+        use of the services after any changes constitutes your acceptance of the
+        new terms.
       </p>
     </div>
-    <div class="content liquid-glass" id="gpdr">
-      <h1>GDPR Compliance</h1>
-      <p>
-        If you are located in the European Economic Area (EEA), Munetios
-        complies with the General Data Protection Regulation (GDPR).
-      </p>
-
-      <p>
-        <strong>Local-Only Products:</strong> For products that store data only
-        on your device, no personal data is processed on Munetios servers. As a
-        result, GDPR rights such as data deletion, correction, or portability
-        are satisfied by default and are not applicable at the service level.
-      </p>
-
-      <p>
-        <strong>Planned Account-Based Services:</strong> Munetios Accounts and
-        other account-based services are planned but not yet active. When these
-        services launch and involve server-side processing of personal data,
-        Munetios will provide appropriate tools to exercise GDPR rights,
-        including access, correction, deletion, and data export.
-      </p>
-
-      <p>
-        Munetios relies on GDPR Article 6(1)(b) (service necessity) and Article
-        6(1)(f) (legitimate interest for security and functionality) where
-        applicable. Munetios does not use consent-based tracking technologies.
-      </p>
-      <p>
-        If you are located in Europe, please use Munetios New Search instead of Classic Search to ensure full compliance with regional regulations.
-      </p>
-    </div>
-    <div class="content liquid-glass" id="about">
-      <h1>About Us</h1>
-      <p>
-        Munetios is dedicated to creating innovative and privacy-focused apps
-        and services.
-      </p>
-      <p>
-        We can make apps, tools, and solutions tailored to your needs, always
-        prioritizing user privacy and security.
-      </p>
-      <p>
-        Our team is passionate about technology and committed to delivering
-        high-quality experiences for everyone.
-      </p>
-    </div>
-    <div class="content liquid-glass" id="apps">
-      <h1>Our Apps</h1>
-      <p>Note: This is outdated list, see at <a href="https://www.munetios.com/apps1.html">the products page</a></p>
-      <ul>
-        <li>Munetios Search</li>
-        <li>Munetios Calculator</li>
-        <li>Munetios Docs</li>
-        <li>Munetios Calendar</li>
-        <li>Munetios Tasks</li>
-        <li>Munetios Notes</li>
-        <li>Munetios Photos</li>
-        <li>Munetios Weather</li>
-        <li>Munetios Notebook</li>
-        <li>97529 Office (Early)</li>
-        <li>Munetios WorkSheets</li>
-      </ul>
-      <h2>Coming soon:</h2>
-      <ul>
-        <li>Munetios Mail</li>
-        <li>Munetios Chat</li>
-        <li>Munetios Drive</li>
-        <li>Munetios Accounts</li>
-        <li>Munetios Protection</li>
-        <li>Munetios Present (Slides)</li>
-        <li>Munetios Forms</li>
-        <li>Munetios Pages (Sites)</li>
-        <li>Munetios Script</li>
-        <li>Munetios Paint</li>
-        <li>Munetios Whiteboard</li>
-        <li>Munetios MindMap</li>
-        <li>Munetios FontMaker</li>
-        <li>Munetios Video Editor</li>
-        <li>Munetios AppMaker</li>
-        <li>Munetios Clock</li>
-        <li>Munetios Vids</li>
-        <li>Munetios Books</li>
-        <li>Munetios News</li>
-        <li>Munetios Stocks</li>
-        <li>Munetios Games Hub</li>
-        <li>Munetios WorkFlow</li>
-
-        <li>Munetios Music (SuperVidPlayer Music)</li>
-        <li>Munetios Contacts</li>
-        <li>Munetios OS</li>
-        <li>Munetios Health</li>
-        <li>Munetios Home</li>
-        <li>Munetios Maps</li>
-        <li>Munetios Translator</li>
-        <li>Munetios WorkSpace</li>
-        <li>Munetios Kids</li>
-        <li>Munetios Admin (WorkSpace only)</li>
-        <li>Munetios Browser</li>
-        <li>Munetios Wallet</li>
-        <li>Munetios Media Tools</li>
-        <li>Munetios Terminal (OS only)</li>
-        <li>Munetios Media Player (OS only)</li>
-        <li>Munetios Passwords</li>
-        <li>Munetios Wiki</li>
-        <li>Munetios Help Center</li>
-        <li>Munetios Dev Studio</li>
-        <li>Munetios Earth</li>
-        <li>Munetios Travel</li>
-        <li>Munetios Apps Hub</li>
-        <li>Munetios GameMaker</li>
-        <li>SuperVidPlayer</li>
-        <li>YouDriveCar</li>
-        <li>Munetios AI</li>
-      </ul>
-      <p>
-        All our apps are designed with user privacy and security as top
-        priorities.
-      </p>
-    </div>
-    <div class="content liquid-glass" id="cookiesPolicy">
+    <div class="content" style="display: none" id="cookies">
       <h1>Cookies Policy</h1>
-      <p>Munetios uses first party cookies only for essential functionality.</p>
-      <h3>Which cookies are used?</h3>
+      <p>
+        Munetios uses a minimal number of cookies strictly for essential
+        functionality. These cookies are limited to session management,
+        preference storage, and basic feature operation. We do not use cookies
+        for advertising, analytics, or tracking purposes.
+      </p>
+      <p>
+        Cookie data is never shared with third parties and is not used to
+        identify or profile users. Examples of cookie usage include remembering
+        login sessions, theme preferences, or language settings.
+      </p>
+      <p>
+        You have full control over cookies through your browser settings and may
+        disable them at any time. Please note that disabling essential cookies
+        may affect certain features, but Munetios will continue to respect your
+        privacy choices.
+      </p>
+    </div>
+    <div class="content" style="display: none" id="dataManagement">
+      <h1>Data Management</h1>
+      <p>
+        You can manage your munetios search data at
+        <a href="https://www.munetios.com/manage-data.html">this page</a>.
+      </p>
+    </div>
+    <div class="pick-a-language liquid-glass" id="languageSelector">
       <ul>
-        <li>
-          <strong>Essential Cookies:</strong> These cookies are necessary for
-          the basic operation of Munetios services, such as remembering user
-          settings (theme, language, accessibility options), maintaining secure
-          sessions, and ensuring reliable functionality.
-        </li>
+        <li><button data-lang="en">English</button></li>
+        <li><button data-lang="es">Español</button></li>
+        <li><button data-lang="fr">Français</button></li>
+        <li><button data-lang="de">Deutsch</button></li>
+        <li><button data-lang="it">Italiano</button></li>
+        <li><button data-lang="pt">Português</button></li>
+        <li><button data-lang="zh">中文</button></li>
+        <li><button data-lang="ja">日本語</button></li>
+        <li><button data-lang="ko">한국어</button></li>
+        <li><button data-lang="ru">Русский</button></li>
+        <li><button data-lang="ar">العربية</button></li>
       </ul>
-      <h3>Why are cookies used?</h3>
-      <p>
-        Cookies are used solely to provide core functionality and enhance user
-        experience. They are not used for tracking, analytics, advertising, or
-        profiling purposes.
-      </p>
-
     </div>
-    <div class="content liquid-glass" id="branding">
-      <h1>Branding</h1>
-      <p>
-        You can download the official Munetios logo for use in accordance with
-        our branding guidelines. Please follow the examples below for correct
-        and incorrect usage to preserve brand quality.
-      </p>
+    <script nonce="eriuhgertsihgtuidfkgrtsdghjkghjkwerafuhjkwerfuihjkuh">
+      document
+        .getElementById("backtoMunetios")
+        .addEventListener("click", () => {
+          window.location.href = "https://www.munetios.com";
+        });
 
-      <!-- Download Area -->
-      <div
-        style="display: flex; align-items: center; gap: 30px; flex-wrap: wrap"
-      >
-        <div style="text-align: center">
-          <span style="display: block; font-size: 15px; margin-bottom: 8px"
-            >Logo Preview</span
-          >
-          <img
-            src="image.png"
-            alt="Munetios Logo Preview"
-            id="preview"
-            style="
-              width: 150px;
-              border-radius: 12px;
-              box-shadow: 0 2px 8px #0002;
-            "
-          />
-        </div>
-        <div>
-          <button class="btn" id="downloadLogoBtn">Download Logo</button>
-          <p style="font-size: 13px; color: #bbb; margin-top: 8px">
-            PNG format, transparent background
-          </p>
-        </div>
-      </div>
+      const sections = {
+        "": document.querySelector(".content"),
+        "#/terms": document.getElementById("terms"),
+        "#/cookies": document.getElementById("cookies"),
+        "#/data": document.getElementById("dataManagement"),
+      };
 
-      <!-- Branding Rules -->
-      <h2 style="margin-top: 40px">Branding Rules</h2>
-      <p style="max-width: 700px">
-        Always use the Munetios logo responsibly. Do not alter, distort,
-        recolor, or combine it with other graphics or symbols. Maintain
-        readability, spacing, and clear contrast at all times.
-      </p>
-
-      <!-- Visual Comparison -->
-      <div style="display: flex; gap: 40px; flex-wrap: wrap; margin-top: 20px">
-        <!-- ✅ DO Section -->
-        <div style="flex: 1; min-width: 260px">
-          <h3 style="margin-bottom: 6px">✅ Do</h3>
-          <ul>
-            <li>Use the logo in its original form and proportion.</li>
-            <li>Maintain clear space around the logo.</li>
-            <li>Use it on backgrounds with strong contrast.</li>
-            <li>
-              Place the logo inline in sentences when appropriate. Example:
-              <em
-                >Powered by
-                <img
-                  src="image.png"
-                  alt="Munetios"
-                  style="height: 18px; vertical-align: middle"
-                />
-                Munetios</em
-              >.
-            </li>
-            <li>Ensure the logo is always readable and properly sized.</li>
-          </ul>
-
-          <div style="margin-top: 20px; text-align: center">
-            <span style="font-size: 13px; color: #bbb"
-              >Correct Usage Examples</span
-            >
-            <div
-              style="
-                display: flex;
-                justify-content: center;
-                gap: 15px;
-                margin-top: 8px;
-                flex-wrap: wrap;
-              "
-            >
-              <div>
-                <img
-                  src="image.png"
-                  alt="Munetios Logo Correct 1"
-                  style="
-                    width: 80px;
-                    border-radius: 8px;
-                    box-shadow: 0 1px 4px #0002;
-                  "
-                />
-                <p style="font-size: 12px; color: #aaa">Default logo</p>
-              </div>
-              <div
-                style="background: #1f0a29; padding: 10px; border-radius: 8px"
-              >
-                <img
-                  src="image.png"
-                  alt="Munetios Logo Correct 2"
-                  style="width: 80px; filter: brightness(1.2)"
-                />
-                <p style="font-size: 12px; color: #aaa">On dark background</p>
-              </div>
-              <div>
-                <p style="font-size: 12px; color: #aaa">
-                  Inline example:<br />
-                  <span style="font-size: 13px"
-                    >Powered by
-                    <img
-                      src="image.png"
-                      alt="Munetios"
-                      style="height: 16px; vertical-align: middle"
-                    />
-                    Munetios</span
-                  >
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ❌ DON'T Section -->
-        <div style="flex: 1; min-width: 260px">
-          <h3 style="margin-bottom: 6px">❌ Don't</h3>
-          <ul>
-            <li>Do not stretch, distort, or rotate the logo.</li>
-            <li>Do not recolor the logo with non-brand colors.</li>
-            <li>Do not apply glows, outlines, or drop shadows.</li>
-            <li>Do not blur, skew, or flip the logo.</li>
-            <li>Do not animate, bounce, or spin the logo.</li>
-            <li>Do not use gradient overlays or textures.</li>
-            <li>Do not apply transparency that reduces visibility.</li>
-            <li>Do not add borders, emojis, or icons around the logo.</li>
-            <li>Do not put text or other elements too close.</li>
-            <li>Do not crop or cut the logo partially.</li>
-            <li>Do not use it as a watermark or pattern.</li>
-            <li>Do not place the logo inside busy images or videos.</li>
-          </ul>
-
-          <div style="margin-top: 20px; text-align: center">
-            <span style="font-size: 13px; color: #bbb"
-              >Incorrect Usage Examples</span
-            >
-
-            <div
-              style="
-                display: flex;
-                justify-content: center;
-                gap: 15px;
-                margin-top: 8px;
-                flex-wrap: wrap;
-              "
-            >
-              <!-- 1 Distorted -->
-              <div>
-                <img
-                  src="image.png"
-                  alt="Distorted"
-                  style="
-                    width: 90px;
-                    transform: scaleX(1.5);
-                    border-radius: 8px;
-                    opacity: 0.8;
-                  "
-                />
-                <p style="font-size: 12px; color: #f66">
-                  Stretched horizontally
-                </p>
-              </div>
-
-              <!-- 2 Skewed -->
-              <div>
-                <img
-                  src="image.png"
-                  alt="Skewed"
-                  style="
-                    width: 90px;
-                    transform: skewX(10deg);
-                    opacity: 0.7;
-                    filter: blur(1px);
-                    border-radius: 8px;
-                  "
-                />
-                <p style="font-size: 12px; color: #f66">Skewed/blurred</p>
-              </div>
-
-              <!-- 3 Wrong color -->
-              <div>
-                <img
-                  src="image.png"
-                  alt="Wrong color"
-                  style="
-                    width: 80px;
-                    filter: hue-rotate(220deg) saturate(4);
-                    border-radius: 8px;
-                  "
-                />
-                <p style="font-size: 12px; color: #f66">Wrong color</p>
-              </div>
-
-              <!-- 4 Drop shadow -->
-              <div>
-                <img
-                  src="image.png"
-                  alt="Shadow"
-                  style="
-                    width: 80px;
-                    filter: drop-shadow(5px 5px 5px #f00);
-                    border-radius: 8px;
-                  "
-                />
-                <p style="font-size: 12px; color: #f66">Added shadow</p>
-              </div>
-
-              <!-- 5 Rotation -->
-              <div>
-                <img
-                  src="image.png"
-                  alt="Rotated"
-                  style="width: 80px; transform: rotate(20deg); opacity: 0.7"
-                />
-                <p style="font-size: 12px; color: #f66">Rotated</p>
-              </div>
-
-              <!-- 6 Low contrast -->
-              <div style="background: #222; padding: 10px; border-radius: 8px">
-                <img
-                  src="image.png"
-                  alt="Low contrast"
-                  style="width: 80px; opacity: 0.4"
-                />
-                <p style="font-size: 12px; color: #f66">Low contrast</p>
-              </div>
-
-              <!-- 7 Text overlay -->
-              <div style="position: relative; display: inline-block">
-                <img
-                  src="image.png"
-                  alt="Text overlay"
-                  style="
-                    width: 80px;
-                    filter: brightness(0.7);
-                    border-radius: 8px;
-                  "
-                />
-                <span
-                  style="
-                    position: absolute;
-                    top: 25px;
-                    left: 15px;
-                    color: #fff;
-                    font-size: 10px;
-                    background: #0008;
-                    padding: 2px 4px;
-                    border-radius: 4px;
-                  "
-                  >TEXT</span
-                >
-                <p style="font-size: 12px; color: #f66">Text overlay</p>
-              </div>
-
-              <!-- 8 Cropped -->
-              <div
-                style="
-                  overflow: hidden;
-                  width: 60px;
-                  height: 40px;
-                  border-radius: 8px;
-                "
-              >
-                <img src="image.png" alt="Cropped" style="width: 80px" />
-              </div>
-              <p
-                style="font-size: 12px; color: #f66; width: 80px; margin: auto"
-              >
-                Cropped
-              </p>
-
-              <!-- 9 Outline -->
-              <div>
-                <img
-                  src="image.png"
-                  alt="Outlined"
-                  style="
-                    width: 80px;
-                    border: 2px solid #f00;
-                    border-radius: 8px;
-                  "
-                />
-                <p style="font-size: 12px; color: #f66">Outlined</p>
-              </div>
-
-              <!-- 10 Overly transparent -->
-              <div>
-                <img
-                  src="image.png"
-                  alt="Transparent"
-                  style="width: 80px; opacity: 0.2"
-                />
-                <p style="font-size: 12px; color: #f66">Too transparent</p>
-              </div>
-
-              <!-- 11 Glow -->
-              <div>
-                <img
-                  src="image.png"
-                  alt="Glow"
-                  style="
-                    width: 80px;
-                    filter: drop-shadow(0 0 10px #00ffff);
-                    border-radius: 8px;
-                  "
-                />
-                <p style="font-size: 12px; color: #f66">Added glow</p>
-              </div>
-              <!-- 12 Gradient overlay -->
-              <div>
-                <img
-                  src="image.png"
-                  alt="Gradient overlay"
-                  style="
-                    width: 80px;
-                    filter: brightness(0.5) sepia(1) hue-rotate(180deg)
-                      saturate(3);
-                    border-radius: 8px;
-                  "
-                />
-                <p style="font-size: 12px; color: #f66">Gradient overlay</p>
-              </div>
-
-              <!-- 13 Tilted flip -->
-              <div>
-                <img
-                  src="image.png"
-                  alt="Flipped"
-                  style="
-                    width: 80px;
-                    transform: scaleX(-1) rotate(-10deg);
-                    opacity: 0.8;
-                  "
-                />
-                <p style="font-size: 12px; color: #f66">Flipped horizontally</p>
-              </div>
-
-              <!-- 14 Emoji overlay -->
-              <div style="position: relative; display: inline-block">
-                <img
-                  src="image.png"
-                  alt="Emoji overlay"
-                  style="width: 80px; border-radius: 8px"
-                />
-                <span
-                  style="
-                    position: absolute;
-                    top: 10px;
-                    right: 10px;
-                    font-size: 20px;
-                  "
-                  >🔥</span
-                >
-                <p style="font-size: 12px; color: #f66">Emoji overlay</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <p style="margin-top: 40px">
-        If you have questions about using our branding, please
-        <a href="#contactItem" style="color: #9abaff">contact us</a>.
-      </p>
-
-      <p
-        id="downloadStatus"
-        style="margin-top: 10px; font-size: 14px; color: #bbb"
-      ></p>
-    </div>
-    <div class="content liquid-glass" id="trust">
-      <h1>Trust & Safety</h1>
-      <p>
-        Munetios is committed to providing a safe and trustworthy environment
-        for all users.
-      </p>
-      <p>
-        We do not tolerate any form of abuse, harassment, or illegal activities
-        on our platform.
-      </p>
-      <p>
-        If you encounter any issues or have concerns about safety, please
-        contact us immediately.
-      </p>
-    </div>
-    <div class="content" id="contact">
-      <h1>Contact Us</h1>
-      <p>
-        If you have any questions, feedback, or need support, please reach out
-        to us:
-      </p>
-      <ul>
-        <li>Email: minecraftgamer97529@gmail.com</li>
-        <li>
-          Website:
-          <a
-            href="https://www.munetios.com"
-            target="_blank"
-            style="color: #9abaff"
-            >www.munetios.com</a
-          >
-        </li>
-      </ul>
-      <p>We value your input and are here to help!</p>
-    </div>
-    <footer class="liquid-glass">
-      <p>
-        &copy; 2026 Munetios™️.
-      </p>
-      <p>
-        Munetios and the Munetios logo are unregistered trademarks of Munetios. All rights
-        reserved. Note for trademark protection is standard and uses the ™️ symbol.
-      </p>
-    </footer>
-    <!-- Download Script -->
-    <script>
-      // Sidebar toggle logic
-      const sidebar = document.querySelector(".sidebar");
-      const menuBtn = document.querySelector(".menu-btn");
-      const contentEls = document.querySelectorAll(".content");
-      const footer = document.querySelector("footer");
-      let sidebarOpen = true;
-
-      function setSidebarState(open) {
-        sidebarOpen = open;
-        if (window.innerWidth < 1190) {
-          sidebar.style.display = open ? "block" : "none";
-          sidebar.style.position = "fixed";
-          sidebar.style.left = open ? "0" : "-220px";
-          sidebar.style.top = "0";
-          sidebar.style.zIndex = "2000";
-          sidebar.style.background = "#270e33ff";
-          sidebar.style.boxShadow = open ? "0 0 0 9999px #0008" : "none";
-          document.body.style.overflow = open ? "hidden" : "";
-          contentEls.forEach(el => {
-        el.style.marginLeft = open ? "220px" : "0";
-        el.style.filter = open ? "blur(2px)" : "";
-          });
-          if (footer) {
-        footer.style.marginLeft = open ? "220px" : "0";
-        footer.style.filter = open ? "blur(2px)" : "";
-          }
-        } else {
-          sidebar.style.display = open ? "block" : "none";
-          sidebar.style.position = "fixed";
-          sidebar.style.left = open ? "10px" : "-220px";
-          sidebar.style.top = "70px";
-          sidebar.style.zIndex = "1000";
-          sidebar.style.background = "";
-          sidebar.style.boxShadow = "";
-          document.body.style.overflow = "";
-          contentEls.forEach(el => {
-        el.style.marginLeft = open ? "280px" : "0";
-        el.style.filter = "";
-          });
-          if (footer) {
-        footer.style.marginLeft = open ? "280px" : "0";
-        footer.style.filter = "";
-          }
-        }
+      function showSection(hash) {
+        Object.values(sections).forEach((el) => (el.style.display = "none"));
+        (sections[hash] || sections[""]).style.display = "";
       }
 
-      menuBtn.addEventListener("click", () => {
-        setSidebarState(!sidebarOpen);
+      window.addEventListener("hashchange", () => showSection(location.hash));
+      showSection(location.hash);
+
+      const selectLanguageBtn = document.getElementById("selectLanguage");
+      const languageSelector = document.getElementById("languageSelector");
+
+      selectLanguageBtn.addEventListener("click", (e) => {
+        languageSelector.style.display =
+          languageSelector.style.display === "block" ? "none" : "block";
+        languageSelector.style.top =
+          selectLanguageBtn.offsetTop + selectLanguageBtn.offsetHeight + "px";
+        languageSelector.style.right =
+          window.innerWidth -
+          selectLanguageBtn.getBoundingClientRect().right +
+          "px";
       });
 
-      // Hide sidebar overlay when clicking outside
       document.addEventListener("click", (e) => {
         if (
-          window.innerWidth < 1190 &&
-          sidebarOpen &&
-          !sidebar.contains(e.target) &&
-          !menuBtn.contains(e.target)
+          !languageSelector.contains(e.target) &&
+          e.target !== selectLanguageBtn
         ) {
-          setSidebarState(false);
+          languageSelector.style.display = "none";
         }
       });
 
-      // Responsive sidebar on resize
-      window.addEventListener("resize", () => {
-        if (window.innerWidth < 1190) {
-          setSidebarState(false);
-        } else {
-          setSidebarState(true);
-        }
-      });
-
-      // Initial sidebar state
-      window.addEventListener("DOMContentLoaded", () => {
-        if (window.innerWidth < 1190) {
-          setSidebarState(false);
-        } else {
-          setSidebarState(true);
-        }
-      });
-      const downloadBtn = document.getElementById("downloadLogoBtn");
-      const statusMsg = document.getElementById("downloadStatus");
-      downloadBtn.addEventListener("click", () => {
-        const fileUrl = "./image.png";
-        const fileName = "Munetios-Logo.png";
-        const a = document.createElement("a");
-        a.href = fileUrl;
-        a.setAttribute("download", fileName);
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        statusMsg.textContent = "✅ Download initiated...";
-      });
-      const sections = [
-        { id: "homeItem", section: "home", hash: "#/home" },
-        { id: "privacyItem", section: "privacy", hash: "#/privacy" },
-        { id: "cookiesItem", section: "cookiesPolicy", hash: "#/cookies" },
-        { id: "termsItem", section: "terms", hash: "#/terms" },
-        { id: "aboutItem", section: "about", hash: "#/about" },
-        { id: "gdpr", section: "gpdr", hash: "#/gdpr" },
-        { id: "apps", section: "apps", hash: "#/apps" },
-        { id: "brandingItem", section: "branding", hash: "#/branding" },
-        { id: "trust-safety", section: "trust", hash: "#/trust" },
-        { id: "contactItem", section: "contact", hash: "#/contact" },
-      ];
-
-      function showSection(sectionId) {
-        document.querySelectorAll(".content").forEach((sec) => {
-          sec.style.display = sec.id === sectionId ? "block" : "none";
+      languageSelector.querySelectorAll("button[data-lang]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          localStorage.setItem("munetiosLang", btn.dataset.lang);
+          // Update the page content to the selected language without reloading
+          const event = new Event("languageChange");
+          window.dispatchEvent(event);
         });
-      }
+      });
 
-      function handleHashChange() {
-        const hash = location.hash || "#/home";
-        const match = sections.find((s) => s.hash === hash);
-        showSection(match ? match.section : "home");
+      // System theme logic
+      function applyTheme() {
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        document.body.classList.toggle("dark-theme", prefersDark);
       }
+      applyTheme();
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", applyTheme);
 
-      sections.forEach(({ id, hash }) => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.style.cursor = "pointer";
-          el.addEventListener("click", () => {
-            location.hash = hash;
+      // Language logic with extended keys and more languages
+      const lang = localStorage.getItem("munetiosLang") || "en";
+      const translations = {
+        es: {
+          "Munetios Policies": "Políticas de Munetios",
+          "Privacy Policy": "Política de Privacidad",
+          "Terms of Service": "Términos de Servicio",
+          "Cookies Policy": "Política de Cookies",
+          "Data Management": "Gestión de Datos",
+          "Last updated: January 22, 2026":
+            "Última actualización: 22 de enero de 2026",
+          "Data Collection": "Recopilación de Datos",
+          "AI Features": "Funciones de IA",
+          "Speech Recognition": "Reconocimiento de Voz",
+          Encryption: "Cifrado",
+          Cookies: "Cookies",
+          "Acceptance of Terms": "Aceptación de los Términos",
+          "Munetios Apps": "Aplicaciones de Munetios",
+          "Rate Limiting & Blocking": "Limitación de Tasa y Bloqueo",
+          "Modifications to Terms": "Modificaciones de los Términos",
+          "You can manage your munetios search data at":
+            "Puede gestionar sus datos de búsqueda de Munetios en",
+        },
+        fr: {
+          "Munetios Policies": "Politiques Munetios",
+          "Privacy Policy": "Politique de Confidentialité",
+          "Terms of Service": "Conditions d'Utilisation",
+          "Cookies Policy": "Politique de Cookies",
+          "Data Management": "Gestion des Données",
+          "Last updated: January 22, 2026":
+            "Dernière mise à jour : 22 janvier 2026",
+          "Data Collection": "Collecte de Données",
+          "AI Features": "Fonctionnalités IA",
+          "Speech Recognition": "Reconnaissance Vocale",
+          Encryption: "Chiffrement",
+          Cookies: "Cookies",
+          "Acceptance of Terms": "Acceptation des Conditions",
+          "Munetios Apps": "Applications Munetios",
+          "Rate Limiting & Blocking": "Limitation du Taux & Blocage",
+          "Modifications to Terms": "Modifications des Conditions",
+          "You can manage your munetios search data at":
+            "Vous pouvez gérer vos données de recherche Munetios sur",
+        },
+        de: {
+          "Munetios Policies": "Munetios Richtlinien",
+          "Privacy Policy": "Datenschutzrichtlinie",
+          "Terms of Service": "Nutzungsbedingungen",
+          "Cookies Policy": "Cookie-Richtlinie",
+          "Data Management": "Datenverwaltung",
+          "Last updated: January 22, 2026":
+            "Zuletzt aktualisiert: 22. Januar 2026",
+          "Data Collection": "Datenerfassung",
+          "AI Features": "KI-Funktionen",
+          "Speech Recognition": "Spracherkennung",
+          Encryption: "Verschlüsselung",
+          Cookies: "Cookies",
+          "Acceptance of Terms": "Akzeptanz der Bedingungen",
+          "Munetios Apps": "Munetios Apps",
+          "Rate Limiting & Blocking": "Ratenbegrenzung & Sperrung",
+          "Modifications to Terms": "Änderungen der Bedingungen",
+          "You can manage your munetios search data at":
+            "Sie können Ihre Munetios-Suchdaten verwalten unter",
+        },
+        it: {
+          "Munetios Policies": "Politiche Munetios",
+          "Privacy Policy": "Informativa sulla Privacy",
+          "Terms of Service": "Termini di Servizio",
+          "Cookies Policy": "Politica sui Cookie",
+          "Data Management": "Gestione dei Dati",
+          "Last updated: January 22, 2026":
+            "Ultimo aggiornamento: 22 gennaio 2026",
+          "Data Collection": "Raccolta Dati",
+          "AI Features": "Funzionalità IA",
+          "Speech Recognition": "Riconoscimento Vocale",
+          Encryption: "Crittografia",
+          Cookies: "Cookie",
+          "Acceptance of Terms": "Accettazione dei Termini",
+          "Munetios Apps": "App Munetios",
+          "Rate Limiting & Blocking": "Limitazione & Blocco",
+          "Modifications to Terms": "Modifiche ai Termini",
+          "You can manage your munetios search data at":
+            "Puoi gestire i tuoi dati di ricerca Munetios su",
+        },
+        pt: {
+          "Munetios Policies": "Políticas Munetios",
+          "Privacy Policy": "Política de Privacidade",
+          "Terms of Service": "Termos de Serviço",
+          "Cookies Policy": "Política de Cookies",
+          "Data Management": "Gestão de Dados",
+          "Last updated: January 22, 2026":
+            "Última atualização: 22 de janeiro de 2026",
+          "Data Collection": "Coleta de Dados",
+          "AI Features": "Recursos de IA",
+          "Speech Recognition": "Reconhecimento de Voz",
+          Encryption: "Criptografia",
+          Cookies: "Cookies",
+          "Acceptance of Terms": "Aceitação dos Termos",
+          "Munetios Apps": "Aplicativos Munetios",
+          "Rate Limiting & Blocking": "Limitação de Taxa & Bloqueio",
+          "Modifications to Terms": "Modificações dos Termos",
+          "You can manage your munetios search data at":
+            "Você pode gerenciar seus dados de pesquisa Munetios em",
+        },
+        zh: {
+          "Munetios Policies": "Munetios政策",
+          "Privacy Policy": "隐私政策",
+          "Terms of Service": "服务条款",
+          "Cookies Policy": "Cookie政策",
+          "Data Management": "数据管理",
+          "Last updated: January 22, 2026": "最后更新：2026年1月22日",
+          "Data Collection": "数据收集",
+          "AI Features": "AI功能",
+          "Speech Recognition": "语音识别",
+          Encryption: "加密",
+          Cookies: "Cookies",
+          "Acceptance of Terms": "接受条款",
+          "Munetios Apps": "Munetios应用",
+          "Rate Limiting & Blocking": "速率限制与阻止",
+          "Modifications to Terms": "条款修改",
+          "You can manage your munetios search data at":
+            "您可以在此页面管理您的Munetios搜索数据",
+        },
+        ja: {
+          "Munetios Policies": "Munetiosポリシー",
+          "Privacy Policy": "プライバシーポリシー",
+          "Terms of Service": "利用規約",
+          "Cookies Policy": "クッキーポリシー",
+          "Data Management": "データ管理",
+          "Last updated: January 22, 2026": "最終更新日: 2026年1月22日",
+          "Data Collection": "データ収集",
+          "AI Features": "AI機能",
+          "Speech Recognition": "音声認識",
+          Encryption: "暗号化",
+          Cookies: "クッキー",
+          "Acceptance of Terms": "利用規約の承諾",
+          "Munetios Apps": "Munetiosアプリ",
+          "Rate Limiting & Blocking": "レート制限とブロック",
+          "Modifications to Terms": "規約の変更",
+          "You can manage your munetios search data at":
+            "Munetios検索データは以下のページで管理できます",
+        },
+        ko: {
+          "Munetios Policies": "Munetios 정책",
+          "Privacy Policy": "개인정보 보호정책",
+          "Terms of Service": "서비스 약관",
+          "Cookies Policy": "쿠키 정책",
+          "Data Management": "데이터 관리",
+          "Last updated: January 22, 2026": "최종 업데이트: 2026년 1월 22일",
+          "Data Collection": "데이터 수집",
+          "AI Features": "AI 기능",
+          "Speech Recognition": "음성 인식",
+          Encryption: "암호화",
+          Cookies: "쿠키",
+          "Acceptance of Terms": "약관 동의",
+          "Munetios Apps": "Munetios 앱",
+          "Rate Limiting & Blocking": "속도 제한 및 차단",
+          "Modifications to Terms": "약관 수정",
+          "You can manage your munetios search data at":
+            "Munetios 검색 데이터를 이 페이지에서 관리할 수 있습니다",
+        },
+        ru: {
+          "Munetios Policies": "Политики Munetios",
+          "Privacy Policy": "Политика конфиденциальности",
+          "Terms of Service": "Условия обслуживания",
+          "Cookies Policy": "Политика использования файлов cookie",
+          "Data Management": "Управление данными",
+          "Last updated: January 22, 2026":
+            "Последнее обновление: 22 января 2026 г.",
+          "Data Collection": "Сбор данных",
+          "AI Features": "Функции ИИ",
+          "Speech Recognition": "Распознавание речи",
+          Encryption: "Шифрование",
+          Cookies: "Cookies",
+          "Acceptance of Terms": "Принятие условий",
+          "Munetios Apps": "Приложения Munetios",
+          "Rate Limiting & Blocking": "Ограничение скорости и блокировка",
+          "Modifications to Terms": "Изменения условий",
+          "You can manage your munetios search data at":
+            "Вы можете управлять своими данными поиска Munetios на",
+        },
+        ar: {
+          "Munetios Policies": "سياسات Munetios",
+          "Privacy Policy": "سياسة الخصوصية",
+          "Terms of Service": "شروط الخدمة",
+          "Cookies Policy": "سياسة ملفات تعريف الارتباط",
+          "Data Management": "إدارة البيانات",
+          "Last updated: January 22, 2026": "آخر تحديث: 22 يناير 2026",
+          "Data Collection": "جمع البيانات",
+          "AI Features": "ميزات الذكاء الاصطناعي",
+          "Speech Recognition": "التعرف على الكلام",
+          Encryption: "التشفير",
+          Cookies: "ملفات تعريف الارتباط",
+          "Acceptance of Terms": "قبول الشروط",
+          "Munetios Apps": "تطبيقات Munetios",
+          "Rate Limiting & Blocking": "تحديد المعدل والحظر",
+          "Modifications to Terms": "تعديلات الشروط",
+          "You can manage your munetios search data at":
+            "يمكنك إدارة بيانات بحث Munetios الخاصة بك في",
+        },
+      };
+
+      function applyTranslations() {
+        if (lang !== "en" && translations[lang]) {
+          const t = translations[lang];
+          document
+            .querySelectorAll("h1,h2,h3,h4,h5,h6,.last-updated")
+            .forEach((el) => {
+              if (t[el.textContent]) el.textContent = t[el.textContent];
+            });
+          // Example for inline text (like in Data Management section)
+          document.querySelectorAll("a").forEach((el) => {
+            if (
+              el.textContent.trim() === "this page" &&
+              t["You can manage your munetios search data at"]
+            ) {
+              el.previousSibling.textContent =
+                t["You can manage your munetios search data at"] + " ";
+            }
           });
         }
-      });
+      }
 
-      window.addEventListener("hashchange", handleHashChange);
-      window.addEventListener("DOMContentLoaded", () => {
-        handleHashChange();
+      applyTranslations();
+      window.addEventListener("languageChange", () => {
+        location.reload(); // For simplicity, reload to apply translations
       });
     </script>
   </body>
