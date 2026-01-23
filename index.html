@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -12,9 +12,13 @@
       name="description"
       content="Our Search engine so you can use it privately without being tracked."
     />
-  
+
     <link
       href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,90&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
       rel="stylesheet"
     />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
@@ -59,7 +63,7 @@
           // Hide everything (html + body)
           document.documentElement.style.display = "none";
           console.warn(
-            "Refused to display https://www.munetios.com because it is blocked from iframe embeding"
+            "Refused to display https://www.munetios.com because it is blocked from iframe embeding",
           );
         }
       });
@@ -107,8 +111,30 @@
     <style>
       * {
         font-family: "Google Sans Flex", sans-serif;
-        font-variation-settings: "wght" 480, "GRAD" 30, "ROND" 80, "opsz" 18;
-        font-feature-settings: "ss02" off, "liga" off, "clig" off;
+        font-variation-settings:
+          "wght" 480,
+          "GRAD" 30,
+          "ROND" 80,
+          "opsz" 18;
+        font-feature-settings:
+          "ss02" off,
+          "liga" off,
+          "clig" off;
+      }
+      .material-symbols-rounded {
+        font-family: "Material Symbols Rounded";
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-feature-settings: "liga";
+        -webkit-font-smoothing: antialiased;
       }
       body {
         margin: 0;
@@ -131,7 +157,9 @@
         border-radius: 85px !important;
         color: white !important;
         font-size: 1em !important;
-        transition: background 0.3s, box-shadow 0.3s !important;
+        transition:
+          background 0.3s,
+          box-shadow 0.3s !important;
         backdrop-filter: blur(2px) saturate(180%) contrast(85%) brightness(115%) !important;
         padding: 10px 16px !important;
       }
@@ -141,7 +169,9 @@
         border-radius: 85px !important;
         color: white !important;
         font-size: 1em !important;
-        transition: background 0.3s, box-shadow 0.3s !important;
+        transition:
+          background 0.3s,
+          box-shadow 0.3s !important;
         backdrop-filter: blur(2px) saturate(180%) contrast(85%) brightness(115%) !important;
         padding: 10px 16px !important;
       }
@@ -191,8 +221,13 @@
         position: relative;
         cursor: pointer;
         padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border-radius: 6px;
-        transition: background 0.2s, color 0.2s;
+        transition:
+          background 0.2s,
+          color 0.2s;
       }
       .apps-icon:hover,
       .apps-icon:focus {
@@ -226,7 +261,9 @@
         width: 60%;
         max-width: 800px;
         gap: 5px;
-        transition: background 0.3s, border-color 0.3s;
+        transition:
+          background 0.3s,
+          border-color 0.3s;
       }
       .search-bar input {
         width: 100%;
@@ -247,7 +284,9 @@
         align-items: center;
         gap: 8px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        transition: background 0.3s, box-shadow 0.3s;
+        transition:
+          background 0.3s,
+          box-shadow 0.3s;
         z-index: 1000;
       }
       .floating-button:hover {
@@ -285,7 +324,9 @@
         border: 2px dashed rgba(255, 255, 255, 0.5);
         border-radius: 16px;
         cursor: pointer;
-        transition: background 0.2s, border-color 0.2s;
+        transition:
+          background 0.2s,
+          border-color 0.2s;
       }
       .add-shortcut:hover {
         background: rgba(255, 255, 255, 0.1);
@@ -320,7 +361,9 @@
         backdrop-filter: blur(2px) saturate(180%) contrast(85%) brightness(115%);
         transition: background 0.2s;
       }
-
+      .material-symbols-rounded {
+        font-family: "Material Symbols Rounded" !important;
+      }
       .dropdown-options {
         display: none;
         position: absolute;
@@ -449,7 +492,7 @@
           <div class="logo">
             <a href="https://www.munetios.com">
               <img
-                src="favicon-32x32.png"
+                src="munetios-logo-icon.png"
                 alt="Munetios Logo"
                 style="height: 30px"
               />
@@ -476,28 +519,10 @@
       <div class="top-right liquid-glass">
         <a href="https://write.munetios.com">OmniWrite</a>
         <a href="https://calendar.munetios.com" class="hide-450">Calendar</a>
-        <a href="https://www.munetios.com/search/classic.html" class="hide-450"
-          >Classic Search</a
-        >
+
         <a href="/games/" class="hide-450">Games</a>
         <div class="apps-icon" id="apps-icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-grid"
-          >
-            <rect x="3" y="3" width="7" height="7"></rect>
-            <rect x="14" y="3" width="7" height="7"></rect>
-            <rect x="14" y="14" width="7" height="7"></rect>
-            <rect x="3" y="14" width="7" height="7"></rect>
-          </svg>
+          <span class="material-symbols-rounded">apps</span>
           <div class="apps-dropdown">
             <iframe
               src="https://www.munetios.com/apps/"
@@ -518,39 +543,9 @@
         />
       </div>
       <div class="search-bar liquid-glass">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="feather feather-search"
-        >
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
+        <span class="material-symbols-rounded">search</span>
         <input type="text" placeholder="Search" id="searchInput" />
-        <svg
-          id="micIcon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="feather feather-mic"
-        >
-          <rect x="9" y="2" width="6" height="12" rx="3"></rect>
-          <path d="M5 10v2a7 7 0 0 0 14 0v-2"></path>
-          <line x1="12" y1="22" x2="12" y2="16"></line>
-          <line x1="8" y1="22" x2="16" y2="22"></line>
-        </svg>
+        <span id="micIcon" class="material-symbols-rounded">mic</span>
       </div>
       <br /><br /><br />
       <div class="buttons">
@@ -573,50 +568,16 @@
       <div class="shortcuts" id="shortcuts">
         <!-- Shortcuts will be rendered here -->
         <div class="add-shortcut" id="addshortcut">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-plus-circle"
+          <span class="material-symbols-rounded" style="font-size: 32px"
+            >add_circle</span
           >
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="16"></line>
-            <line x1="8" y1="12" x2="16" y2="12"></line>
-          </svg>
         </div>
         <div class="label">Add</div>
       </div>
     </div>
 
     <div class="floating-button liquid-glass" id="customizeBtn">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="feather feather-sliders"
-      >
-        <line x1="4" y1="21" x2="4" y2="14"></line>
-        <line x1="4" y1="10" x2="4" y2="3"></line>
-        <line x1="12" y1="21" x2="12" y2="12"></line>
-        <line x1="12" y1="8" x2="12" y2="3"></line>
-        <line x1="20" y1="21" x2="20" y2="16"></line>
-        <line x1="20" y1="12" x2="20" y2="3"></line>
-        <line x1="1" y1="14" x2="7" y2="14"></line>
-        <line x1="9" y1="8" x2="15" y2="8"></line>
-        <line x1="17" y1="16" x2="23" y2="16"></line>
-      </svg>
+      <span class="material-symbols-rounded">tune</span>
       <div class="label-button">Customize</div>
     </div>
     <footer
@@ -627,6 +588,7 @@
       |
       <a href="https://www.munetios.com/about">About</a>
       <a href="https://blog.munetios.com">Blog</a>
+      <a href="manage-data.html">Manage Data</a>
       |
       <a href="https://www.munetios.com/policies/#/terms">Terms</a>
       <a href="https://www.munetios.com/policies/#/privacy">Privacy</a>
@@ -634,7 +596,7 @@
       |
       <a href="https://www.munetios.com/search/search.html">Search</a>
       <a href="https://www.munetios.com/search/classic.html">Classic Search</a>
-           <a href="https://maps.munetios.com">Maps</a>
+      <a href="https://maps.munetios.com">Maps</a>
       <a href="https://write.munetios.com">OmniWrite</a>
       <a href="https://calendar.munetios.com">Calendar</a>
       <a href="https://photos.munetios.com">Photos</a>
@@ -692,239 +654,232 @@
         }
       });
       const micIcon = document.getElementById("micIcon");
-      let recognition,
-        recognizing = false,
-        transcriptBuffer = "";
-      function createVoiceModal(content, listening = false) {
-        let modal = document.getElementById("voiceModal");
-        if (!modal) {
-          modal = document.createElement("div");
-          modal.id = "voiceModal";
-          modal.style.position = "fixed";
-          modal.style.top = "0";
-          modal.style.left = "0";
-          modal.style.width = "100vw";
-          modal.style.height = "100vh";
-          modal.style.background = "rgba(25,0,71,0.25)";
-          modal.style.display = "flex";
-          modal.style.alignItems = "center";
-          modal.style.justifyContent = "center";
-          modal.style.zIndex = "100001";
-          modal.innerHTML = `
-                    <div style="background:rgba(255,255,255,0.95);backdrop-filter:blur(8px) saturate(180%) contrast(90%) brightness(110%);border-radius:18px;box-shadow:0 8px 32px rgba(58,28,113,0.18);padding:32px 28px;min-width:320px;display:flex;flex-direction:column;align-items:center;gap:18px;position:relative;">
-                        <button id="closeVoiceModal" style="position:absolute;top:8px;right:12px;background:none;border:none;font-size:1.5em;cursor:pointer;color:#888;">&times;</button>
-                        <div id="voiceModalContent" style="width:100%;text-align:center;font-size:1.1em;color:#222;">${content}</div>
-                        <div id="voiceListeningAnim" style="margin-top:12px;${
-                          listening ? "" : "display:none;"
-                        }">
-                            <svg width="48" height="48" viewBox="0 0 48 48">
-                                <circle cx="24" cy="24" r="20" fill="#3a1c71" opacity="0.12"/>
-                                <circle id="voicePulse" cx="24" cy="24" r="12" fill="#3a1c71" opacity="0.25"/>
-                                <rect x="20" y="12" width="8" height="20" rx="4" fill="#3a1c71"/>
-                            </svg>
-                        </div>
-                        <div id="voiceTranscript" style="margin-top:10px;font-size:1.1em;color:#3a1c71;min-height:1.5em;"></div>
-                    </div>
-                `;
-          document.body.appendChild(modal);
-          document.getElementById("closeVoiceModal").onclick = () => {
-            if (recognition && recognizing) recognition.stop();
-            modal.remove();
-          };
-        } else {
-          document.getElementById("voiceModalContent").innerHTML = content;
-          document.getElementById("voiceListeningAnim").style.display =
-            listening ? "" : "none";
-        }
-        document.getElementById("voiceTranscript").textContent =
-          transcriptBuffer;
-      }
-      function closeVoiceModal() {
-        const modal = document.getElementById("voiceModal");
-        if (modal) modal.remove();
-      }
-      function playBeep(type) {
-        // Always use Tone.js for sound
-        if (typeof Tone === "undefined") {
-          // Dynamically load Tone.js if not loaded
+      let voiceModal = null;
+      let recognition = null;
+      let listening = false;
+      let toneLoaded = false;
+      let Tone = null;
+
+      // Load Tone.js dynamically
+      function loadToneJs() {
+        return new Promise((resolve, reject) => {
+          if (toneLoaded) return resolve();
           const script = document.createElement("script");
           script.src =
             "https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.js";
-          script.onload = () => playBeep(type);
+          script.onload = () => {
+            toneLoaded = true;
+            Tone = window.Tone;
+            resolve();
+          };
+          script.onerror = reject;
           document.head.appendChild(script);
+        });
+      }
+
+      // Play beep: type = "listen" | "done" | "denied"
+      function playBeep(type) {
+        if (!toneLoaded || !Tone) return;
+        const synth = new Tone.Synth().toDestination();
+        switch (type) {
+          case "listen":
+            synth.triggerAttackRelease("C5", "8n"); // bright listen beep
+            break;
+          case "done":
+            synth.triggerAttackRelease("C3", "8n"); // low confirm beep
+            break;
+          case "denied":
+            synth.triggerAttackRelease("C2", "8n"); // short denied beep
+            break;
+        }
+      }
+
+      // Show voice modal
+      function showVoiceModal(text, state = "idle") {
+        if (!voiceModal) {
+          voiceModal = document.createElement("div");
+          voiceModal.id = "voiceModal";
+          voiceModal.style.position = "fixed";
+          voiceModal.style.top = "0";
+          voiceModal.style.left = "0";
+          voiceModal.style.width = "100vw";
+          voiceModal.style.height = "100vh";
+          voiceModal.style.background = "rgba(0,0,0,0.45)";
+          voiceModal.style.display = "flex";
+          voiceModal.style.alignItems = "center";
+          voiceModal.style.justifyContent = "center";
+          voiceModal.style.zIndex = "100003";
+          voiceModal.innerHTML = `
+            <div id="voiceModalWrapper" class="liquid-glass" style="color:#fff; border-radius:18px; box-shadow:0 8px 32px rgba(0,0,0,0.18); min-width:320px; min-height:220px; width:95vw; max-width:400px; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; padding:32px 18px 28px 18px;">
+              <button id="closeVoiceModal" style="position:absolute;top:8px;right:12px;background:none;border:none;font-size:1.5em;cursor:pointer;color:#888;">&times;</button>
+              <div id="voicePulse" style="margin-bottom:18px;">
+                <button id="voiceCircleBtn" style="background:none;border:none;outline:none;cursor:pointer;">
+                  <span class="material-symbols-rounded" id="voiceMicIcon" style="font-size:54px;color:#3a1c71;transition:color 0.2s;">mic</span>
+                </button>
+              </div>
+              <div id="voiceText" style="font-size:1.1em;color:#fff;text-align:center;min-height:32px;">${text || ""}</div>
+            </div>
+          `;
+          document.body.appendChild(voiceModal);
+          document.getElementById("closeVoiceModal").onclick = closeVoiceModal;
+          document.getElementById("voiceCircleBtn").onclick = function () {
+            if (listening) {
+              stopListening("off");
+            } else {
+              startListening();
+            }
+          };
+        }
+        // Update text and icon
+        const voiceText = document.getElementById("voiceText");
+        if (voiceText) voiceText.textContent = text || "";
+        const mic = document.getElementById("voiceMicIcon");
+        if (mic) {
+          if (state === "listen") {
+            mic.textContent = "mic";
+            mic.style.color = "#3a1c71";
+            mic.classList.add("voice-pulse");
+          } else if (state === "off" || state === "denied") {
+            mic.textContent = "mic_off";
+            mic.style.color = "#e53935";
+            mic.classList.remove("voice-pulse");
+          } else if (state === "done") {
+            mic.textContent = "mic";
+            mic.style.color = "#388e3c";
+            mic.classList.remove("voice-pulse");
+          } else {
+            mic.textContent = "mic";
+            mic.style.color = "#3a1c71";
+            mic.classList.remove("voice-pulse");
+          }
+        }
+        // Pulse animation
+        let style = document.getElementById("voicePulseStyle");
+        if (!style) {
+          style = document.createElement("style");
+          style.id = "voicePulseStyle";
+          style.innerHTML = `
+            .voice-pulse {
+              animation: voicePulseAnim 1s infinite;
+            }
+            @keyframes voicePulseAnim {
+              0% { color: #3a1c71; text-shadow: 0 0 0 #3a1c71; }
+              50% { color: #6c2eb7; text-shadow: 0 0 16px #6c2eb7; }
+              100% { color: #3a1c71; text-shadow: 0 0 0 #3a1c71; }
+            }
+          `;
+          document.head.appendChild(style);
+        }
+      }
+
+      // Close modal
+      function closeVoiceModal() {
+        if (voiceModal) {
+          voiceModal.remove();
+          voiceModal = null;
+        }
+        stopListening("off");
+      }
+
+      // Start listening
+      async function startListening() {
+        await loadToneJs();
+        if (
+          !(
+            "webkitSpeechRecognition" in window || "SpeechRecognition" in window
+          )
+        ) {
+          showVoiceModal("Voice Search is Turned off.", "denied");
+          playBeep("denied");
+          listening = false;
           return;
         }
-        // Stop and dispose any previous synth to prevent lingering sound
-        if (
-          window._voiceSynth &&
-          typeof window._voiceSynth.dispose === "function"
-        ) {
-          window._voiceSynth.dispose();
-          window._voiceSynth = null;
-        }
-        // Use a PolySynth for richer sound
-        let synth = new Tone.PolySynth(Tone.Synth, {
-          oscillator: { type: "triangle" },
-          envelope: { attack: 0.01, decay: 0.1, sustain: 0.1, release: 0.2 },
-        }).toDestination();
-        window._voiceSynth = synth;
-        // Define sound patterns for each type
-        if (type === "listening") {
-          synth.triggerAttackRelease("C5", "8n");
-        } else if (type === "done") {
-          synth.triggerAttackRelease("C3", "8n");
-        } else if (type === "denied") {
-          synth.triggerAttackRelease("C4", "8n");
-        }
-        // Schedule synth disposal after short delay to ensure sound stops
-        setTimeout(() => {
-          if (
-            window._voiceSynth &&
-            typeof window._voiceSynth.dispose === "function"
-          ) {
-            window._voiceSynth.dispose();
-            window._voiceSynth = null;
-          }
-          if (
-            typeof Tone !== "undefined" &&
-            Tone.Transport &&
-            typeof Tone.Transport.stop === "function"
-          ) {
-            Tone.Transport.stop();
-          }
-        }, 600);
-      }
-      if (
-        "webkitSpeechRecognition" in window ||
-        "SpeechRecognition" in window
-      ) {
-        micIcon.style.cursor = "pointer";
-        micIcon.onclick = function () {
-          if (!recognition) {
-            const SpeechRecognition =
-              window.SpeechRecognition || window.webkitSpeechRecognition;
-            recognition = new SpeechRecognition();
-            recognition.lang = "en-US";
-            recognition.interimResults = true;
-            recognition.maxAlternatives = 1;
-            recognition.onstart = function () {
-              recognizing = true;
-              transcriptBuffer = "";
-              createVoiceModal(
-                'Listening...<br><span style="font-size:0.95em;color:#666;">Speak now</span>',
-                true
-              );
-              playBeep("listening");
-              micIcon.style.color = "#00e676";
-              animatePulse();
-            };
-            recognition.onresult = function (event) {
-              transcriptBuffer = "";
-              for (let i = event.resultIndex; i < event.results.length; ++i) {
-                transcriptBuffer += event.results[i][0].transcript;
-              }
-              document.getElementById("voiceTranscript").textContent =
-                transcriptBuffer;
-            };
-            recognition.onend = function () {
-              recognizing = false;
-              micIcon.style.color = "";
+        try {
+          recognition = window.SpeechRecognition
+            ? new window.SpeechRecognition()
+            : new window.webkitSpeechRecognition();
+          recognition.lang = "en-US";
+          recognition.interimResults = false;
+          recognition.maxAlternatives = 1;
+          listening = true;
+          showVoiceModal("Listening...", "listen");
+          playBeep("listen");
+          recognition.onresult = function (event) {
+            const transcript = event.results[0][0].transcript.trim();
+            if (transcript) {
+              showVoiceModal("Heard: " + transcript, "done");
               playBeep("done");
-              // Stop and dispose synth to prevent lingering sound
-              if (
-                window._voiceSynth &&
-                typeof window._voiceSynth.dispose === "function"
-              ) {
-                window._voiceSynth.dispose();
-                window._voiceSynth = null;
-              }
-              if (transcriptBuffer.trim()) {
-                document.getElementById("searchInput").value =
-                  transcriptBuffer.trim();
+              setTimeout(() => {
                 closeVoiceModal();
+                document.getElementById("searchInput").value = transcript;
                 performSearch();
-              } else {
-                createVoiceModal(
-                  'No speech detected.<br><span style="font-size:0.95em;color:#666;">Try again</span>',
-                  false
-                );
-                setTimeout(closeVoiceModal, 1800);
-              }
-            };
-            recognition.onerror = function (e) {
-              recognizing = false;
-              micIcon.style.color = "";
+              }, 700);
+            } else {
+              showVoiceModal("Didn't hear that. Try again.", "denied");
               playBeep("denied");
-              // Stop and dispose synth to prevent lingering sound
-              if (
-                window._voiceSynth &&
-                typeof window._voiceSynth.dispose === "function"
-              ) {
-                window._voiceSynth.dispose();
-                window._voiceSynth = null;
-              }
-              if (e.error === "not-allowed" || e.error === "denied") {
-                createVoiceModal(
-                  '<b>Voice search is off</b><br><span style="font-size:0.95em;color:#666;">Microphone access denied</span>',
-                  false
-                );
-              } else {
-                createVoiceModal(
-                  'Voice search error.<br><span style="font-size:0.95em;color:#666;">' +
-                    e.error +
-                    "</span>",
-                  false
-                );
-              }
-              setTimeout(closeVoiceModal, 2000);
-            };
-          }
-          if (!recognizing) {
-            recognition.start();
-          } else {
-            recognition.stop();
-          }
-        };
-        function animatePulse() {
-          const pulse = document.getElementById("voicePulse");
-          if (!pulse) return;
-          let grow = true,
-            r = 12;
-          function step() {
-            if (!recognizing) {
-              pulse.setAttribute("r", 12);
-              return;
+              listening = false;
             }
-            r += grow ? 0.6 : -0.6;
-            if (r > 18) grow = false;
-            if (r < 12) grow = true;
-            pulse.setAttribute("r", r);
-            requestAnimationFrame(step);
-          }
-          step();
-        }
-      } else {
-        micIcon.style.opacity = "0.5";
-        micIcon.title = "Speech recognition not supported";
-        micIcon.style.cursor = "not-allowed";
-        micIcon.onclick = function () {
-          createVoiceModal(
-            "<b>Voice search unsupported</b><br>" +
-              '<span style="font-size:0.95em;color:#666;">Your browser does not support speech recognition.<br>' +
-              'Available in:<ul style="margin:8px 0 0 18px;text-align:left;font-size:0.98em;">' +
-              "<li>Google Chrome (desktop &amp; Android)</li>" +
-              "<li>Microsoft Edge (desktop &amp; Android)</li>" +
-              "<li> Safari (iOS &amp; macOS)</li>" +
-              "<li>Opera (some versions)</li>" +
-              "<li>Samsung Internet (Android)</li>" +
-              "</ul>" +
-              "Not supported in Firefox</span>",
-            false
-          );
+          };
+          recognition.onerror = function (event) {
+            if (event.error === "not-allowed" || event.error === "denied") {
+              showVoiceModal("Voice Search is Turned off.", "denied");
+              playBeep("denied");
+            } else if (event.error === "no-speech") {
+              showVoiceModal("Didn't hear that. Try again.", "denied");
+              playBeep("denied");
+            } else if (event.error === "audio-capture") {
+              showVoiceModal("Microphone not found.", "denied");
+              playBeep("denied");
+            } else {
+              showVoiceModal("Voice Search error.", "denied");
+              playBeep("denied");
+            }
+            listening = false;
+          };
+          recognition.onend = function () {
+            if (listening) {
+              listening = false;
+              // If no result, show try again
+              if (voiceModal) {
+                showVoiceModal("Didn't hear that. Try again.", "denied");
+                playBeep("denied");
+              }
+            }
+          };
+          recognition.start();
+        } catch (e) {
+          showVoiceModal("Microphone not found.", "denied");
           playBeep("denied");
-          setTimeout(closeVoiceModal, 2000);
-        };
+          listening = false;
+        }
       }
+
+      // Stop listening
+      function stopListening(reason) {
+        if (recognition) {
+          recognition.onresult = null;
+          recognition.onerror = null;
+          recognition.onend = null;
+          try {
+            recognition.stop();
+          } catch {}
+          recognition = null;
+        }
+        listening = false;
+        if (reason === "off") {
+          showVoiceModal("Microphone off", "off");
+          playBeep("denied");
+          setTimeout(closeVoiceModal, 900);
+        }
+      }
+
+      // Mic icon click handler
+      micIcon.addEventListener("click", async function (e) {
+        e.stopPropagation();
+        await loadToneJs();
+        showVoiceModal("Listening...", "listen");
+        startListening();
+      });
       /* --- Customize Button Modal & Logic --- */
       // Remove search bar color from settings and UI
       // Remove from applySettings
@@ -1179,7 +1134,7 @@
         customizeModal.style.justifyContent = "center";
         customizeModal.style.zIndex = "99999";
         customizeModal.innerHTML = `
-            <div style="background:#fff; color:#222; border-radius:18px; padding:32px 28px; min-width:340px; box-shadow:0 8px 32px rgba(0,0,0,0.18); display:flex; flex-direction:column; gap:18px; align-items:center; position:relative;max-width:95vw;">
+            <div class="liquid-glass" style=" border-radius:18px; padding:32px 28px; min-width:340px; box-shadow:0 8px 32px rgba(0,0,0,0.18); display:flex; flex-direction:column; gap:18px; align-items:center; position:relative;max-width:95vw;">
                 <button id="closeCustomizeModal" style="position:absolute;top:8px;right:12px;background:none;border:none;font-size:1.5em;cursor:pointer;color:#888;">&times;</button>
                 <h2 style="margin:0 0 10px 0;font-size:1.2em;">Customize Munetios</h2>
                 <div style="display:flex;flex-direction:column;gap:10px;width:100%;">
@@ -1195,8 +1150,8 @@
                 <input type="color" id="bgColorInput" value="${
                   s.bgColor || "#190047"
                 }" style="width:60px;display:${
-          !s.bgType || s.bgType === "color" ? "inline-block" : "none"
-        };">
+                  !s.bgType || s.bgType === "color" ? "inline-block" : "none"
+                };">
                 <input type="file" id="bgImageInput" accept="image/*" style="display:${
                   s.bgType === "image" ? "inline-block" : "none"
                 };">
@@ -1215,29 +1170,6 @@
                 }" style="width:60px;">
                 </div>
                 <div style="display:flex;flex-direction:column;gap:10px;width:100%;">
-                <label><b>Shortcuts Location:</b></label>
-                <select id="shortcutsLocationInput">
-                    <option value="center" ${
-                      s.shortcutsLocation === "center" ? "selected" : ""
-                    }>Center</option>
-                    <option value="left" ${
-                      s.shortcutsLocation === "left" ? "selected" : ""
-                    }>Left</option>
-                    <option value="right" ${
-                      s.shortcutsLocation === "right" ? "selected" : ""
-                    }>Right</option>
-                    <option value="up" ${
-                      s.shortcutsLocation === "up" ? "selected" : ""
-                    }>Up</option>
-                    <option value="down" ${
-                      s.shortcutsLocation === "down" ? "selected" : ""
-                    }>Down</option>
-                    <option value="updown" ${
-                      s.shortcutsLocation === "updown" ? "selected" : ""
-                    }>Up and Down</option>
-                </select>
-                </div>
-                <div style="display:flex;flex-direction:column;gap:10px;width:100%;">
                 <label for="fontFamilyInput"><b>Font:</b></label>
                 <select id="fontFamilyInput" style="width:100%;">
                     ${safeFonts
@@ -1245,7 +1177,7 @@
                         (f) =>
                           `<option value="${f}" ${
                             s.fontFamily === f ? "selected" : ""
-                          }>${f}</option>`
+                          }>${f}</option>`,
                       )
                       .join("")}
                 </select>
@@ -1255,7 +1187,6 @@
                   <input type="checkbox" id="singleStoryToggle" ${s.singleStory ? "checked" : ""} ${s.fontFamily !== "Google Sans Flex" ? "disabled" : ""}>
                   <label for="singleStoryToggle" style="font-size:0.98em;">Single Story <span style="font-feature-settings: 'ss02' off, 'ss01' on, 'liga' off, 'clig' off !important;">a</span> (Google Sans Flex only)</label>
                 </div>
-            
                 </div>
                 <div style="display:flex;flex-direction:row;align-items:center;gap:10px;width:100%;">
                 <label for="liquidGlassToggle"><b>Liquid Glass:</b></label>
@@ -1317,13 +1248,10 @@
             const settings = {
               bgType,
               bgColor: bgType === "color" ? bgColor : undefined,
-              bgImage: bgType === "image" ? bgImage : undefined,
+              // bgImage will be stored in indexedDB, not in settings/localStorage
               textColor: document.getElementById("textColorInput").value,
               searchBarColor: document.getElementById("searchBarColorInput")
                 .value,
-              shortcutsLocation: document.getElementById(
-                "shortcutsLocationInput"
-              ).value,
               fontFamily: document.getElementById("fontFamilyInput").value,
               liquidGlass: document.getElementById("liquidGlassToggle").checked,
               singleStory:
@@ -1333,10 +1261,27 @@
                   : false,
             };
             if (saveSettings(settings)) {
-              applySettings();
-              applySingleStorySetting();
-              customizeModal.remove();
-              customizeModal = null;
+              // Save bgImage to indexedDB if needed
+              if (bgType === "image" && bgImage) {
+                saveBgImageToIndexedDB(bgImage).then(() => {
+                  applySettings();
+                  applySingleStorySetting();
+                  customizeModal.remove();
+                  customizeModal = null;
+                });
+              } else if (bgType === "color") {
+                deleteBgImageFromIndexedDB().then(() => {
+                  applySettings();
+                  applySingleStorySetting();
+                  customizeModal.remove();
+                  customizeModal = null;
+                });
+              } else {
+                applySettings();
+                applySingleStorySetting();
+                customizeModal.remove();
+                customizeModal = null;
+              }
             }
           }
           if (
@@ -1373,7 +1318,7 @@
             const localFonts = await window.queryLocalFonts();
             // Get unique font family names
             const fontFamilies = Array.from(
-              new Set(localFonts.map((f) => f.family))
+              new Set(localFonts.map((f) => f.family)),
             ).sort();
             // Merge with safeFonts, keeping safeFonts at top
             const safeSet = new Set(safeFonts);
@@ -1387,7 +1332,7 @@
                 (f) =>
                   `<option value="${f}" ${
                     s.fontFamily === f ? "selected" : ""
-                  }>${f}</option>`
+                  }>${f}</option>`,
               )
               .join("");
             fontPermMsg.textContent = "Installed fonts loaded!";
@@ -1397,27 +1342,24 @@
         };
       };
       // --- Single Story Toggle Logic ---
-      // Listen for changes to the Single Story toggle in the customize modal
       document.addEventListener("change", function (e) {
         if (e.target && e.target.id === "singleStoryToggle") {
           const checked = e.target.checked;
-          // Save to settings using key 'singleStory'
           const s = getStoredSettings();
           s.singleStory = checked;
           saveSettings(s);
           applySingleStorySetting();
         }
-        // Enable/disable single story toggle based on font selection
         if (e.target && e.target.id === "fontFamilyInput") {
           const font = e.target.value;
-          const singleStoryToggle = document.getElementById("singleStoryToggle");
+          const singleStoryToggle =
+            document.getElementById("singleStoryToggle");
           if (singleStoryToggle) {
             if (font === "Google Sans Flex") {
               singleStoryToggle.disabled = false;
             } else {
               singleStoryToggle.disabled = true;
               singleStoryToggle.checked = false;
-              // Remove from settings if not Google Sans Flex
               const s = getStoredSettings();
               s.singleStory = false;
               saveSettings(s);
@@ -1426,6 +1368,53 @@
           }
         }
       });
+
+      // IndexedDB helpers for background image
+      function openBgDB() {
+        return new Promise((resolve, reject) => {
+          const req = indexedDB.open("munetios-bg", 1);
+          req.onupgradeneeded = function (e) {
+            const db = e.target.result;
+            if (!db.objectStoreNames.contains("bg")) db.createObjectStore("bg");
+          };
+          req.onsuccess = function (e) {
+            resolve(e.target.result);
+          };
+          req.onerror = function () {
+            reject();
+          };
+        });
+      }
+      function saveBgImageToIndexedDB(bgImage) {
+        return openBgDB().then((db) => {
+          return new Promise((resolve, reject) => {
+            const tx = db.transaction("bg", "readwrite");
+            tx.objectStore("bg").put(bgImage, "bgImage");
+            tx.oncomplete = () => resolve();
+            tx.onerror = () => reject();
+          });
+        });
+      }
+      function getBgImageFromIndexedDB() {
+        return openBgDB().then((db) => {
+          return new Promise((resolve, reject) => {
+            const tx = db.transaction("bg", "readonly");
+            const req = tx.objectStore("bg").get("bgImage");
+            req.onsuccess = () => resolve(req.result);
+            req.onerror = () => resolve(undefined);
+          });
+        });
+      }
+      function deleteBgImageFromIndexedDB() {
+        return openBgDB().then((db) => {
+          return new Promise((resolve, reject) => {
+            const tx = db.transaction("bg", "readwrite");
+            tx.objectStore("bg").delete("bgImage");
+            tx.oncomplete = () => resolve();
+            tx.onerror = () => reject();
+          });
+        });
+      }
 
       // Apply single story setting to the page
       function applySingleStorySetting() {
@@ -1437,7 +1426,6 @@
           style.id = styleId;
           document.head.appendChild(style);
         }
-        // Only apply if Google Sans Flex is selected
         if (s.fontFamily === "Google Sans Flex" && s.singleStory) {
           style.innerHTML = `* { font-feature-settings: 'ss02' off, 'ss01' on, 'liga' off, 'clig' off !important; }`;
         } else if (s.fontFamily === "Google Sans Flex") {
@@ -1448,6 +1436,82 @@
       }
       // Run on load
       applySingleStorySetting();
+
+      // Patch applySettings to use indexedDB for bgImage
+      const origApplySettings = applySettings;
+      applySettings = function () {
+        const s = getStoredSettings();
+        // Background
+        if (s.bgType === "color" && s.bgColor) {
+          document.body.style.background = s.bgColor;
+          document.body.style.backgroundImage = "";
+        } else if (s.bgType === "image") {
+          getBgImageFromIndexedDB().then((bgImage) => {
+            if (bgImage) {
+              document.body.style.background = "";
+              document.body.style.backgroundImage = bgImage.startsWith("url(")
+                ? bgImage
+                : `url('${bgImage}')`;
+              document.body.style.backgroundSize = "cover";
+              document.body.style.backgroundPosition = "center";
+            } else {
+              document.body.style.background = "";
+              document.body.style.backgroundImage = "";
+            }
+          });
+        } else {
+          document.body.style.background = "";
+          document.body.style.backgroundImage = "";
+        }
+        // Text color
+        if (s.textColor) document.body.style.color = s.textColor;
+        // Search bar color
+        if (s.searchBarColor) {
+          document.querySelectorAll(".search-bar").forEach((el) => {
+            el.style.setProperty("background", s.searchBarColor, "important");
+          });
+        }
+        // Liquid glass toggle
+        document.querySelectorAll(".liquid-glass").forEach((el) => {
+          el.style.backdropFilter = s.liquidGlass === false ? "none" : "";
+          el.style.background = s.liquidGlass === false ? "transparent" : "";
+        });
+        // Font
+        if (s.fontFamily) {
+          let fontStack = s.fontFamily;
+          if (!safeFonts.includes(s.fontFamily))
+            fontStack += ", Arial, sans-serif";
+          const styleId = "munetios-font-style";
+          let style = document.getElementById(styleId);
+          if (!style) {
+            style = document.createElement("style");
+            style.id = styleId;
+            document.head.appendChild(style);
+          }
+          if (s.fontFamily === "Google Sans Flex") {
+            style.innerHTML = `* { font-family: 'Google Sans Flex', Arial, sans-serif !important; font-variation-settings: 'wght' 480, 'GRAD' 30, 'ROND' 80, 'opsz' 18 !important; }`;
+          } else {
+            style.innerHTML = `* { font-family: '${s.fontFamily}', Arial, sans-serif !important; }`;
+          }
+          if (googleFonts.includes(s.fontFamily)) {
+            let linkId = "munetios-google-font";
+            let link = document.getElementById(linkId);
+            if (!link) {
+              link = document.createElement("link");
+              link.id = linkId;
+              link.rel = "stylesheet";
+              document.head.appendChild(link);
+            }
+            let fontParam = s.fontFamily.replace(/ /g, "+");
+            if (s.fontFamily === "Google Sans Flex") {
+              link.href = `https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,90&display=swap`;
+            } else {
+              link.href = `https://fonts.googleapis.com/css2?family=${fontParam}:wght@300;400;500;600;700&display=swap`;
+            }
+          }
+        }
+      };
+      applySettings();
       // Shortcuts logic with Add Shortcut Modal and Favicon
       const shortcutsContainer = document.getElementById("shortcuts");
       const addShortcutBtn = document.getElementById("addshortcut");
@@ -1599,7 +1663,7 @@
         const addBtn = document.createElement("div");
         addBtn.className = "add-shortcut";
         addBtn.id = "addshortcut";
-        addBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>`;
+        addBtn.innerHTML = `<span class="material-symbols-rounded" style="font-size: 32px;">add_circle</span>`;
         addBtn.onclick = openAddShortcutModal;
 
         const addLabel = document.createElement("div");
@@ -1629,7 +1693,7 @@
         modal.style.zIndex = "9999";
 
         modal.innerHTML = `
-            <div style="background:#fff; color:#222; border-radius:16px; padding:32px 24px; min-width:320px; box-shadow:0 8px 32px rgba(0,0,0,0.18); display:flex; flex-direction:column; gap:18px; align-items:center; position:relative;">
+            <div class="liquid-glass" style=" border-radius:16px; padding:32px 24px; min-width:320px; box-shadow:0 8px 32px rgba(0,0,0,0.18); display:flex; flex-direction:column; gap:18px; align-items:center; position:relative;">
             <button id="closeModalBtn" style="position:absolute;top:8px;right:12px;background:none;border:none;font-size:1.5em;cursor:pointer;color:#888;">&times;</button>
             <h2 style="margin:0 0 10px 0;font-size:1.2em;">Add Shortcut</h2>
             <input id="shortcutName" type="text" placeholder="Name" style="padding:8px 12px; border-radius:8px; border:1px solid #ccc; width:90%; font-size:1em;">
@@ -1672,7 +1736,10 @@
         const query = document.getElementById("searchInput").value.trim();
         if (query) {
           window.location.href =
-            "/search/search.html?q=" + encodeURIComponent(query) + "#/all?q=" + encodeURIComponent(query);
+            "/search/search.html?q=" +
+            encodeURIComponent(query) +
+            "#/all?q=" +
+            encodeURIComponent(query);
         }
       }
 
@@ -1717,7 +1784,11 @@
       (function () {
         // Check if today is January 19, 2026 (MLK Day in 2026)
         const now = new Date();
-        if (now.getFullYear() === 2026 && now.getMonth() === 0 && now.getDate() === 19) {
+        if (
+          now.getFullYear() === 2026 &&
+          now.getMonth() === 0 &&
+          now.getDate() === 19
+        ) {
           // Change logo to mlk.png
           const logoImg = document.querySelector(".munetios-logo img");
           if (logoImg) logoImg.src = "mlk.png";
@@ -1728,7 +1799,10 @@
             logoDiv.style.cursor = "pointer";
             logoDiv.onclick = function () {
               window.location.href =
-                "/search/search.html?q=" + encodeURIComponent("Martin Luther King Jr. Day") + "#/all?q=" + encodeURIComponent("Martin Luther King Jr. Day");
+                "/search/search.html?q=" +
+                encodeURIComponent("Martin Luther King Jr. Day") +
+                "#/all?q=" +
+                encodeURIComponent("Martin Luther King Jr. Day");
             };
           }
         }
@@ -1748,7 +1822,10 @@
             logoDiv.style.cursor = "pointer";
             logoDiv.onclick = function () {
               window.location.href =
-                "/search/search.html?q=" + encodeURIComponent("New Year's Day") + "#/all?q=" + encodeURIComponent("New Year's Day");
+                "/search/search.html?q=" +
+                encodeURIComponent("New Year's Day") +
+                "#/all?q=" +
+                encodeURIComponent("New Year's Day");
             };
           }
         }
@@ -1870,7 +1947,7 @@
         if (isEurope()) {
           // Hide Classic Search button
           var classicBtn = document.querySelector(
-            'a[href="/search/classic.html"]'
+            'a[href="/search/classic.html"]',
           );
           if (classicBtn) classicBtn.style.display = "none";
         }
