@@ -159,6 +159,48 @@
         width: 100%;
         text-align: left;
       }
+      @media (max-width: 900px) {
+        .content {
+          padding: 0.5rem;
+        }
+        .topbar {
+          padding: 0.5rem;
+        }
+      }
+      @media (max-width: 700px) {
+        .topbar {
+          gap: 0.5rem;
+        }
+        .top-left {
+          margin-bottom: 0.5rem;
+        }
+        .top-right {
+          width: 100%;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+        .top-right a,
+        .top-right button {
+          font-size: 1rem;
+        }
+      }
+      @media (max-width: 500px) {
+        .content {
+          padding: 0.25rem;
+        }
+        h1,
+        h2,
+        h3 {
+          font-size: 1.1em;
+        }
+        .topbar {
+          font-size: 0.95em;
+        }
+
+        .top-right a,
+        .top-right button {
+        }
+      }
     </style>
   </head>
   <body>
