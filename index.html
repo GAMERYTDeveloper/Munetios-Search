@@ -778,7 +778,17 @@
           voiceModal.remove();
           voiceModal = null;
         }
-        stopListening("off");
+        // Only stop listening, do not show "Microphone off" modal
+        if (recognition) {
+          recognition.onresult = null;
+          recognition.onerror = null;
+          recognition.onend = null;
+          try {
+            recognition.stop();
+          } catch {}
+          recognition = null;
+        }
+        listening = false;
       }
 
       // Start listening
