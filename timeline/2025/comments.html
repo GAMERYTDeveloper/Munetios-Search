@@ -1,0 +1,1555 @@
+<!-- Archived -->
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Likes vs Dislikes Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-gradient-start-dark: #4c1d95; /* dark purple */
+        --bg-gradient-via-dark: #8b5cf6; /* purple */
+        --bg-gradient-end-dark: #ec4899; /* pink-ish */
+        --bg-gradient-start-light: #e0e7ff; /* light indigo */
+        --bg-gradient-via-light: #fbcfe8; /* light pink */
+        --bg-gradient-end-light: #fce7f3; /* lighter pink */
+      }
+      .dark {
+        --bg-color: #111827;
+        --text-color: #e5e7eb;
+        --border-color: #374151;
+        --ui-bg: #1f2937;
+        --ui-hover-bg: #374151;
+        --headings-color: #f9fafb;
+        --link-color: #a78bfa;
+        --body-bg: linear-gradient(
+          135deg,
+          var(--bg-gradient-start-dark),
+          var(--bg-gradient-via-dark),
+          var(--bg-gradient-end-dark)
+        );
+      }
+      html:not(.dark) {
+        --bg-color: #f9fafb;
+        --text-color: #1f2937;
+        --border-color: #e5e7eb;
+        --ui-bg: #ffffff;
+        --ui-hover-bg: #f3f4f6;
+        --headings-color: #111827;
+        --link-color: #6d28d9;
+        --body-bg: linear-gradient(
+          135deg,
+          var(--bg-gradient-start-light),
+          var(--bg-gradient-via-light),
+          var(--bg-gradient-end-light)
+        );
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background: var(--body-bg);
+        background-attachment: fixed;
+        color: var(--text-color);
+        transition:
+          background 0.3s,
+          color 0.3s;
+      }
+      .material-symbols-rounded {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+        vertical-align: middle;
+      }
+      .large-text {
+        font-size: 1.15rem;
+      }
+      .large-text .material-symbols-rounded {
+        font-size: 1.5rem;
+      }
+
+      /* Responsive Container */
+      .responsive-container {
+        max-width: 1720px;
+        margin-left: auto;
+        margin-right: auto;
+        transition:
+          max-width 0.3s ease-in-out,
+          padding 0.3s ease-in-out;
+      }
+      @media (max-width: 1719px) {
+        .responsive-container {
+          max-width: 1520px;
+        }
+      }
+      @media (max-width: 1519px) {
+        .responsive-container {
+          max-width: 1366px;
+        }
+      }
+      @media (max-width: 576px) {
+        .responsive-container {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+      }
+
+      /* Custom scrollbar for webkit browsers */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--ui-bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+
+      /* Rich Text Editor & Comment Content Styling */
+      .rich-text-editor,
+      .comment-content {
+        min-height: 100px;
+      }
+      .rich-text-editor {
+        border: 1px solid var(--border-color);
+        padding: 10px;
+        border-radius: 8px;
+        background-color: var(--bg-color);
+      }
+      .rich-text-editor:focus {
+        outline: none;
+        border-color: var(--link-color);
+        box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.5);
+      }
+      .rich-text-editor ul,
+      .rich-text-editor ol,
+      .comment-content ul,
+      .comment-content ol {
+        padding-left: 25px;
+        margin: 8px 0;
+      }
+      .rich-text-editor ul,
+      .comment-content ul {
+        list-style-type: disc;
+      }
+      .rich-text-editor ol,
+      .comment-content ol {
+        list-style-type: decimal;
+      }
+      .comment-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+  <body class="bg-bg-color">
+    <!-- TOP BAR -->
+    <header
+      id="topbar"
+      class="bg-opacity-50 backdrop-blur-[2px] sticky top-0 z-40 bg-ui-bg border-b border-border-color"
+    >
+      <div
+        id="topbar-main-content"
+        class="responsive-container h-16 flex items-center justify-between px-4"
+      >
+        <!-- Left Side: Logo & Menu -->
+        <div class="flex items-center gap-4">
+          <button
+            id="mobile-menu-btn"
+            class="hidden max-[1035px]:inline-flex p-2 rounded-full hover:bg-ui-hover-bg"
+          >
+            <span class="material-symbols-rounded">menu</span>
+          </button>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-rounded text-purple-400 text-3xl"
+              >insights</span
+            >
+            <span id="logo-text" class="text-xl font-bold max-[576px]:hidden"
+              >Tracker</span
+            >
+          </div>
+        </div>
+
+        <!-- Middle: Nav Links -->
+        <nav id="nav-links" class="flex items-center gap-2 max-[1035px]:hidden">
+          <button
+            data-target="comments-section"
+            class="nav-link active px-4 py-2 rounded-md text-sm font-medium hover:bg-ui-hover-bg"
+          >
+            Comments
+          </button>
+          <button
+            data-target="analytics-section"
+            class="nav-link px-4 py-2 rounded-md text-sm font-medium hover:bg-ui-hover-bg"
+          >
+            Analytics
+          </button>
+          <button
+            data-target="deleted-section"
+            class="nav-link px-4 py-2 rounded-md text-sm font-medium hover:bg-ui-hover-bg"
+          >
+            Deleted
+          </button>
+          <button
+            data-target="reported-section"
+            class="nav-link px-4 py-2 rounded-md text-sm font-medium hover:bg-ui-hover-bg"
+          >
+            Reported
+          </button>
+          <button
+            data-target="settings-section"
+            class="nav-link px-4 py-2 rounded-md text-sm font-medium hover:bg-ui-hover-bg"
+          >
+            Settings
+          </button>
+        </nav>
+
+        <!-- Right Side: Search, Actions -->
+        <div class="flex items-center gap-3">
+          <div id="search-container" class="relative max-[992px]:hidden">
+            <span
+              class="material-symbols-rounded absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+              >search</span
+            >
+            <input
+              id="search-input"
+              type="text"
+              placeholder="Search comments..."
+              class="bg-ui-bg border border-border-color rounded-full w-full max-w-[375px] h-9 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-purple-400"
+            />
+          </div>
+          <button
+            id="mobile-search-btn"
+            class="hidden max-[992px]:inline-flex p-2 rounded-full hover:bg-ui-hover-bg"
+          >
+            <span class="material-symbols-rounded">search</span>
+          </button>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSebWs8nOicN4vfwH0QtCtTilmy7wSfOpRRoHQOjLpRLvwgYoQ/viewform"
+            target="_blank"
+            id="contact-btn"
+            class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition-colors max-md:hidden"
+            >Contact</a
+          >
+          <button id="info-btn" class="p-2 rounded-full hover:bg-ui-hover-bg">
+            <span class="material-symbols-rounded">info</span>
+          </button>
+        </div>
+      </div>
+      <!-- Mobile Search Bar -->
+      <div
+        id="mobile-search-bar"
+        class="hidden w-full h-16 bg-ui-bg z-50 flex items-center px-4 gap-2"
+      >
+        <button
+          id="close-mobile-search-btn"
+          class="p-2 rounded-full hover:bg-ui-hover-bg"
+        >
+          <span class="material-symbols-rounded">arrow_back</span>
+        </button>
+        <input
+          id="mobile-search-input"
+          type="text"
+          placeholder="Search comments..."
+          class="bg-transparent w-full h-full focus:outline-none text-lg"
+        />
+      </div>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div
+      id="mobile-menu"
+      class="fixed top-0 left-0 h-full w-64 bg-ui-bg z-50 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-lg"
+    >
+      <div class="p-4">
+        <div class="flex items-center gap-2 mb-6">
+          <span class="material-symbols-rounded text-purple-400 text-3xl"
+            >insights</span
+          >
+          <span class="text-xl font-bold">Tracker</span>
+        </div>
+        <nav class="flex flex-col gap-2">
+          <button
+            data-target="comments-section"
+            class="nav-link mobile-nav-link active flex items-center gap-3 px-4 py-3 rounded-md hover:bg-ui-hover-bg"
+          >
+            <span class="material-symbols-rounded">comment</span> Comments
+          </button>
+          <button
+            data-target="analytics-section"
+            class="nav-link mobile-nav-link flex items-center gap-3 px-4 py-3 rounded-md hover:bg-ui-hover-bg"
+          >
+            <span class="material-symbols-rounded">bar_chart</span> Analytics
+          </button>
+          <button
+            data-target="deleted-section"
+            class="nav-link mobile-nav-link flex items-center gap-3 px-4 py-3 rounded-md hover:bg-ui-hover-bg"
+          >
+            <span class="material-symbols-rounded">delete</span> Deleted
+          </button>
+          <button
+            data-target="reported-section"
+            class="nav-link mobile-nav-link flex items-center gap-3 px-4 py-3 rounded-md hover:bg-ui-hover-bg"
+          >
+            <span class="material-symbols-rounded">flag</span> Reported
+          </button>
+          <button
+            data-target="settings-section"
+            class="nav-link mobile-nav-link flex items-center gap-3 px-4 py-3 rounded-md hover:bg-ui-hover-bg"
+          >
+            <span class="material-symbols-rounded">settings</span> Settings
+          </button>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSebWs8nOicN4vfwH0QtCtTilmy7wSfOpRRoHQOjLpRLvwgYoQ/viewform"
+            target="_blank"
+            id="mobile-contact-btn"
+            class="hidden mt-4 bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition-colors text-center"
+            >Contact</a
+          >
+        </nav>
+      </div>
+    </div>
+    <div
+      id="mobile-menu-overlay"
+      class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"
+    ></div>
+
+    <!-- MAIN CONTENT -->
+    <main
+      id="main-content"
+      class="responsive-container p-4 min-h-[calc(100vh-128px)]"
+    >
+      <!-- Comments Section -->
+      <section id="comments-section" class="content-section space-y-6">
+        <div class="bg-ui-bg p-4 rounded-lg shadow-md">
+          <h2 class="text-xl font-bold mb-4 text-headings-color">
+            Post a new comment
+          </h2>
+          <div
+            id="comment-editor"
+            class="rich-text-editor"
+            contenteditable="true"
+            aria-label="Comment editor"
+          ></div>
+          <div class="flex justify-between items-center mt-2">
+            <div class="flex items-center gap-1 flex-wrap">
+              <div id="format-tools-standard" class="flex items-center gap-1">
+                <button
+                  class="format-btn p-2 rounded-md hover:bg-ui-hover-bg"
+                  data-command="bold"
+                >
+                  <span class="material-symbols-rounded">format_bold</span>
+                </button>
+                <button
+                  class="format-btn p-2 rounded-md hover:bg-ui-hover-bg"
+                  data-command="italic"
+                >
+                  <span class="material-symbols-rounded">format_italic</span>
+                </button>
+                <button
+                  class="format-btn p-2 rounded-md hover:bg-ui-hover-bg"
+                  data-command="underline"
+                >
+                  <span class="material-symbols-rounded"
+                    >format_underlined</span
+                  >
+                </button>
+                <button
+                  class="format-btn p-2 rounded-md hover:bg-ui-hover-bg"
+                  data-command="insertOrderedList"
+                >
+                  <span class="material-symbols-rounded"
+                    >format_list_numbered</span
+                  >
+                </button>
+                <button
+                  class="format-btn p-2 rounded-md hover:bg-ui-hover-bg"
+                  data-command="insertUnorderedList"
+                >
+                  <span class="material-symbols-rounded"
+                    >format_list_bulleted</span
+                  >
+                </button>
+              </div>
+              <div id="format-tools-overflow-container" class="relative hidden">
+                <button
+                  id="more-format-btn"
+                  class="p-2 rounded-md hover:bg-ui-hover-bg"
+                >
+                  <span class="material-symbols-rounded">more_vert</span>
+                </button>
+                <div
+                  id="more-format-dropdown"
+                  class="hidden absolute bottom-full mb-2 left-0 bg-ui-bg border border-border-color rounded-lg shadow-xl p-1 flex items-center gap-1"
+                >
+                  <!-- Overflow buttons go here -->
+                </div>
+              </div>
+              <div id="format-tools-always-on" class="flex items-center gap-1">
+                <button
+                  id="link-btn"
+                  class="p-2 rounded-md hover:bg-ui-hover-bg"
+                >
+                  <span class="material-symbols-rounded">link</span>
+                </button>
+                <button
+                  id="image-btn"
+                  class="p-2 rounded-md hover:bg-ui-hover-bg"
+                >
+                  <span class="material-symbols-rounded">image</span>
+                </button>
+              </div>
+            </div>
+            <button
+              id="post-comment-btn"
+              class="bg-purple-600 text-white px-4 py-2 rounded-full font-medium hover:bg-purple-700 transition-colors flex items-center gap-2"
+            >
+              Post <span class="material-symbols-rounded">send</span>
+            </button>
+          </div>
+        </div>
+        <div id="comments-list" class="space-y-4">
+          <!-- Comments will be injected here by JS -->
+        </div>
+      </section>
+
+      <!-- Analytics Section -->
+      <section id="analytics-section" class="content-section hidden">
+        <div class="bg-ui-bg p-4 rounded-lg shadow-md">
+          <h2 class="text-xl font-bold mb-4 text-headings-color">Analytics</h2>
+          <div class="flex flex-wrap gap-4 mb-4 items-center">
+            <div class="relative">
+              <button
+                id="chart-type-btn"
+                class="flex items-center gap-2 bg-ui-hover-bg border border-border-color px-4 py-2 rounded-md"
+              >
+                <span class="material-symbols-rounded">show_chart</span>
+                <span class="max-[768px]:hidden">Chart Type</span>
+                <span class="material-symbols-rounded">arrow_drop_down</span>
+              </button>
+              <div
+                id="chart-type-dropdown"
+                class="hidden absolute left-0 mt-2 w-40 bg-ui-bg border border-border-color rounded-lg shadow-xl z-10 backdrop-blur-[2px]"
+              >
+                <a
+                  class="chart-type-option block px-4 py-2 hover:bg-ui-hover-bg"
+                  data-type="bar"
+                  >Bar Chart</a
+                >
+                <a
+                  class="chart-type-option block px-4 py-2 hover:bg-ui-hover-bg"
+                  data-type="line"
+                  >Line Chart</a
+                >
+                <a
+                  class="chart-type-option block px-4 py-2 hover:bg-ui-hover-bg"
+                  data-type="pie"
+                  >Pie Chart</a
+                >
+              </div>
+            </div>
+            <div class="relative">
+              <button
+                id="time-period-btn"
+                class="flex items-center gap-2 bg-ui-hover-bg border border-border-color px-4 py-2 rounded-md"
+              >
+                <span class="material-symbols-rounded">schedule</span>
+                <span class="max-[768px]:hidden">Time Period</span>
+                <span class="material-symbols-rounded">arrow_drop_down</span>
+              </button>
+              <div
+                id="time-period-dropdown"
+                class="hidden absolute left-0 mt-2 w-40 bg-ui-bg border border-border-color rounded-lg shadow-xl z-10 backdrop-blur-[2px]"
+              >
+                <a
+                  class="time-period-option block px-4 py-2 hover:bg-ui-hover-bg"
+                  data-period="AM"
+                  >AM (12-11)</a
+                >
+                <a
+                  class="time-period-option block px-4 py-2 hover:bg-ui-hover-bg"
+                  data-period="PM"
+                  >PM (12-11)</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="border-b border-border-color overflow-x-auto whitespace-nowrap relative"
+          >
+            <div id="analytics-tabs-container" class="flex">
+              <button
+                class="analytics-tab active py-3 px-4 text-sm font-medium"
+                data-tab="likes"
+              >
+                Likes
+              </button>
+              <button
+                class="analytics-tab py-3 px-4 text-sm font-medium"
+                data-tab="dislikes"
+              >
+                Dislikes
+              </button>
+              <button
+                class="analytics-tab py-3 px-4 text-sm font-medium"
+                data-tab="reported"
+              >
+                Reported
+              </button>
+              <button
+                class="analytics-tab py-3 px-4 text-sm font-medium"
+                data-tab="deleted"
+              >
+                Deleted
+              </button>
+            </div>
+            <div
+              class="absolute right-0 top-0 bg-ui-bg hidden"
+              id="analytics-more-container"
+            >
+              <button
+                id="analytics-more-btn"
+                class="p-2 rounded-md hover:bg-ui-hover-bg relative"
+              >
+                <span class="material-symbols-rounded">more_horiz</span>
+              </button>
+              <div
+                id="analytics-more-dropdown"
+                class="hidden absolute right-0 mt-2 w-40 bg-ui-bg border border-border-color rounded-lg shadow-xl z-10 backdrop-blur-[2px]"
+              ></div>
+            </div>
+          </div>
+
+          <div class="mt-4 h-96">
+            <canvas id="analyticsChart"></canvas>
+          </div>
+          <div
+            id="analytics-counts"
+            class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-center"
+          >
+            <div class="bg-ui-hover-bg p-4 rounded-lg">
+              <span class="font-bold">Likes:</span>
+              <span id="total-likes-count">0</span>
+            </div>
+            <div class="bg-ui-hover-bg p-4 rounded-lg">
+              <span class="font-bold">Dislikes:</span>
+              <span id="total-dislikes-count">0</span>
+            </div>
+            <div class="bg-ui-hover-bg p-4 rounded-lg">
+              <span class="font-bold">Reported:</span>
+              <span id="total-reported-count">0</span>
+            </div>
+            <div class="bg-ui-hover-bg p-4 rounded-lg">
+              <span class="font-bold">Deleted:</span>
+              <span id="total-deleted-count">0</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Deleted Section -->
+      <section id="deleted-section" class="content-section hidden">
+        <div class="bg-ui-bg p-4 rounded-lg shadow-md">
+          <h2 class="text-xl font-bold mb-4 text-headings-color">
+            Deleted Comments
+          </h2>
+          <div id="deleted-comments-list" class="space-y-4">
+            <p class="text-gray-400">No comments have been deleted yet.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reported Section -->
+      <section id="reported-section" class="content-section hidden">
+        <div class="bg-ui-bg p-4 rounded-lg shadow-md">
+          <h2 class="text-xl font-bold mb-4 text-headings-color">
+            Reported Comments
+          </h2>
+          <div id="reported-comments-list" class="space-y-4">
+            <p class="text-gray-400">No comments have been reported yet.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings Section -->
+      <section id="settings-section" class="content-section hidden">
+        <div class="bg-ui-bg p-4 rounded-lg shadow-md">
+          <h2 class="text-xl font-bold mb-4 text-headings-color">Settings</h2>
+          <div class="space-y-4 divide-y divide-border-color">
+            <div class="flex justify-between items-center pt-4 first:pt-0">
+              <div>
+                <h3 class="font-medium">Dark Mode</h3>
+                <p class="text-sm text-gray-400">
+                  Toggle between light and dark themes.
+                </p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  id="dark-mode-toggle"
+                  class="sr-only peer"
+                  checked
+                />
+                <div
+                  class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:bg-gray-700 peer-checked:bg-purple-600"
+                ></div>
+              </label>
+            </div>
+            <div class="flex justify-between items-center pt-4">
+              <div>
+                <h3 class="font-medium">Show Dislike Progress Bar & %</h3>
+                <p class="text-sm text-gray-400">
+                  Display the dislike bar on comments.
+                </p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  id="show-dislike-bar-toggle"
+                  class="sr-only peer"
+                  checked
+                />
+                <div
+                  class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:bg-gray-700 peer-checked:bg-purple-600"
+                ></div>
+              </label>
+            </div>
+            <div class="flex justify-between items-center pt-4">
+              <div>
+                <h3 class="font-medium">Hide Decimals in %</h3>
+                <p class="text-sm text-gray-400">
+                  Show percentages as whole numbers.
+                </p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  id="hide-decimals-toggle"
+                  class="sr-only peer"
+                />
+                <div
+                  class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:bg-gray-700 peer-checked:bg-purple-600"
+                ></div>
+              </label>
+            </div>
+            <div class="flex justify-between items-center pt-4">
+              <div>
+                <h3 class="font-medium">Large Text</h3>
+                <p class="text-sm text-gray-400">
+                  Increase the font size for better readability.
+                </p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  id="large-text-toggle"
+                  class="sr-only peer"
+                />
+                <div
+                  class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:bg-gray-700 peer-checked:bg-purple-600"
+                ></div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-ui-bg bg-opacity-50 border-t border-border-color mt-8">
+      <div
+        class="responsive-container flex flex-wrap justify-between items-center py-4 px-4 text-sm"
+      >
+        <p class="text-gray-400">&copy; 2026 Munetios. Old version.</p>
+        <p class="text-gray-400">Some links return 404 errors.</p>
+        <div class="flex gap-4">
+          <a href="https://www.munetios.com">Munetios</a>
+          <a href="https://www.munetios.com/timeline/2025/advanced.html">Likes Vs Dislikes Advanced </a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- MODALS & TOASTS -->
+    <div
+      id="modal-container"
+      class="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center hidden"
+    >
+      <div
+        id="modal-content"
+        class="bg-ui-bg rounded-lg shadow-xl p-6 w-full max-w-md m-4"
+      ></div>
+    </div>
+    <div
+      id="toast-container"
+      class="fixed bottom-5 right-5 z-50 w-full max-w-xs"
+    ></div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // --- STATE MANAGEMENT (IN-MEMORY) ---
+        let state = {
+          comments: [],
+          deleted: [],
+          reported: [],
+          settings: {
+            darkMode: true,
+            showDislikeBar: true,
+            hideDecimals: false,
+            largeText: false,
+          },
+          analytics: { chartType: "bar", timePeriod: "AM", activeTab: "likes" },
+          nextId: 1,
+        };
+        let editorSelection = null;
+
+        // --- DOM ELEMENTS ---
+        const topbarMainContent = document.getElementById(
+          "topbar-main-content",
+        );
+        const mainContent = document.getElementById("main-content");
+        const navLinks = document.querySelectorAll(".nav-link");
+        const contentSections = document.querySelectorAll(".content-section");
+        const commentsList = document.getElementById("comments-list");
+        const commentEditor = document.getElementById("comment-editor");
+        const postCommentBtn = document.getElementById("post-comment-btn");
+        const searchInput = document.getElementById("search-input");
+        const mobileSearchInput = document.getElementById(
+          "mobile-search-input",
+        );
+        const darkModeToggle = document.getElementById("dark-mode-toggle");
+        const showDislikeBarToggle = document.getElementById(
+          "show-dislike-bar-toggle",
+        );
+        const hideDecimalsToggle = document.getElementById(
+          "hide-decimals-toggle",
+        );
+        const largeTextToggle = document.getElementById("large-text-toggle");
+        const analyticsChartElement = document.getElementById("analyticsChart");
+        const chartTypeBtn = document.getElementById("chart-type-btn");
+        const timePeriodBtn = document.getElementById("time-period-btn");
+        const chartTypeDropdown = document.getElementById(
+          "chart-type-dropdown",
+        );
+        const timePeriodDropdown = document.getElementById(
+          "time-period-dropdown",
+        );
+        const analyticsTabsContainer = document.getElementById(
+          "analytics-tabs-container",
+        );
+        const modalContainer = document.getElementById("modal-container");
+        const modalContent = document.getElementById("modal-content");
+        const infoBtn = document.getElementById("info-btn");
+        const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const mobileMenuOverlay = document.getElementById(
+          "mobile-menu-overlay",
+        );
+        const mobileSearchBtn = document.getElementById("mobile-search-btn");
+        const mobileSearchBar = document.getElementById("mobile-search-bar");
+        const closeMobileSearchBtn = document.getElementById(
+          "close-mobile-search-btn",
+        );
+        const mobileContactBtn = document.getElementById("mobile-contact-btn");
+        const formatToolsStandard = document.getElementById(
+          "format-tools-standard",
+        );
+        const formatToolsOverflowContainer = document.getElementById(
+          "format-tools-overflow-container",
+        );
+        const moreFormatBtn = document.getElementById("more-format-btn");
+        const moreFormatDropdown = document.getElementById(
+          "more-format-dropdown",
+        );
+        const linkBtn = document.getElementById("link-btn");
+        const imageBtn = document.getElementById("image-btn");
+        let analyticsChart;
+
+        function init() {
+          applySettings();
+          addEventListeners();
+          renderAll();
+          handleResponsiveUI();
+          window.addEventListener("resize", handleResponsiveUI);
+        }
+
+        function renderAll() {
+          const currentSearch = searchInput.value || mobileSearchInput.value;
+          renderComments(currentSearch);
+          renderDeletedList();
+          renderReportedList();
+          updateAnalytics();
+          updateSettingsUI();
+        }
+
+        function addTargetBlankToLinks(htmlString) {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(htmlString, "text/html");
+          doc.querySelectorAll("a").forEach((link) => {
+            link.setAttribute("target", "_blank");
+            link.setAttribute("rel", "noopener noreferrer");
+          });
+          return doc.body.innerHTML;
+        }
+
+        function renderComments(filter = "") {
+          commentsList.innerHTML = "";
+          const filteredComments = state.comments.filter((comment) => {
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = comment.content;
+            return tempDiv.textContent
+              .toLowerCase()
+              .includes(filter.toLowerCase());
+          });
+          if (filteredComments.length === 0) {
+            commentsList.innerHTML = `<p class="text-gray-400 text-center py-4">${filter ? `No comments match "${filter}"` : "No comments yet. Post one!"}</p>`;
+            return;
+          }
+          filteredComments.forEach((comment) => {
+            const originalIndex = state.comments.findIndex(
+              (c) => c.id === comment.id,
+            );
+            commentsList.appendChild(
+              createCommentElement(comment, originalIndex),
+            );
+          });
+        }
+
+        function createCommentElement(comment, index) {
+          const div = document.createElement("div");
+          div.className =
+            "bg-ui-bg p-4 rounded-lg shadow-md border border-border-color relative";
+          div.dataset.id = comment.id;
+
+          const totalVotes = comment.likes + comment.dislikes;
+          const likePercentage =
+            totalVotes > 0 ? (comment.likes / totalVotes) * 100 : 0;
+          let likePercentageText = state.settings.hideDecimals
+            ? `${Math.round(likePercentage)}%`
+            : `${likePercentage.toFixed(2)}%`;
+
+          let progressBarContainerHTML;
+          if (state.settings.showDislikeBar) {
+            const dislikePercentage =
+              totalVotes > 0 ? (comment.dislikes / totalVotes) * 100 : 0;
+            let dislikePercentageText = state.settings.hideDecimals
+              ? `${Math.round(dislikePercentage)}%`
+              : `${dislikePercentage.toFixed(2)}%`;
+            progressBarContainerHTML = `
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 my-2 flex"><div class="bg-green-500 h-2" style="width: ${likePercentage}%" title="Likes"></div><div class="bg-red-500 h-2" style="width: ${dislikePercentage}%" title="Dislikes"></div></div>
+                        <div class="flex justify-between text-sm text-gray-400"><span>${likePercentageText} Liked</span><span>${dislikePercentageText} Disliked</span></div>`;
+          } else {
+            progressBarContainerHTML = `
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 my-2"><div class="bg-green-500 h-2 rounded-full" style="width: ${likePercentage}%" title="Likes"></div></div>
+                        <span class="text-sm text-gray-400">${likePercentageText} Liked</span>`;
+          }
+
+          div.innerHTML = `
+                    <div class="absolute top-2 right-2 flex items-center gap-1">
+                        <div class="comment-move-btns max-[576px]:hidden">
+                            <button data-action="move-up" class="p-1 rounded-full hover:bg-ui-hover-bg ${index === 0 ? "opacity-50 cursor-not-allowed" : ""}" ${index === 0 ? "disabled" : ""}><span class="material-symbols-rounded text-base">arrow_upward</span></button>
+                            <button data-action="move-down" class="p-1 rounded-full hover:bg-ui-hover-bg ${index === state.comments.length - 1 ? "opacity-50 cursor-not-allowed" : ""}" ${index === state.comments.length - 1 ? "disabled" : ""}><span class="material-symbols-rounded text-base">arrow_downward</span></button>
+                        </div>
+                        <div class="relative">
+                            <button data-action="more-toggle" class="p-1 rounded-full hover:bg-ui-hover-bg"><span class="material-symbols-rounded">more_vert</span></button>
+                            <div class="more-wrapper hidden absolute right-0 mt-2 w-48 bg-ui-bg border border-border-color rounded-lg shadow-xl z-10 py-1">
+                                <a data-action="move-up" class="more-item hidden max-[576px]:flex items-center gap-3 px-3 py-2 text-sm hover:bg-ui-hover-bg ${index === 0 ? "opacity-50" : ""}" style="cursor: pointer;"><span class="material-symbols-rounded">arrow_upward</span> Move Up</a>
+                                <a data-action="move-down" class="more-item hidden max-[576px]:flex items-center gap-3 px-3 py-2 text-sm hover:bg-ui-hover-bg ${index === state.comments.length - 1 ? "opacity-50" : ""}" style="cursor: pointer;"><span class="material-symbols-rounded">arrow_downward</span> Move Down</a>
+                                <a data-action="edit" class="more-item hidden max-[768px]:flex items-center gap-3 px-3 py-2 text-sm hover:bg-ui-hover-bg" style="cursor: pointer;"><span class="material-symbols-rounded">edit</span> Edit</a>
+                                <a data-action="report" class="more-item hidden max-[768px]:flex items-center gap-3 px-3 py-2 text-sm hover:bg-ui-hover-bg" style="cursor: pointer;"><span class="material-symbols-rounded">flag</span> Report</a>
+                                <a data-action="delete" class="more-item hidden max-[768px]:flex text-red-500 items-center gap-3 px-3 py-2 text-sm hover:bg-ui-hover-bg" style="cursor: pointer;"><span class="material-symbols-rounded">delete</span> Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-content pr-16">${addTargetBlankToLinks(comment.content)}</div>
+                    <div class="mt-3">${progressBarContainerHTML}</div>
+                    <div class="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-border-color">
+                        <button data-action="like" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ui-hover-bg"><span class="material-symbols-rounded text-green-500">thumb_up</span><span class="text-sm font-medium">${comment.likes}</span></button>
+                        <button data-action="dislike" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ui-hover-bg"><span class="material-symbols-rounded text-red-500">thumb_down</span><span class="text-sm font-medium">${comment.dislikes}</span></button>
+                        <div class="flex items-center border border-border-color rounded-full"><button data-action="-1like" class="p-1.5 hover:bg-ui-hover-bg rounded-l-full border-r border-border-color"><span class="material-symbols-rounded text-sm">remove</span></button><button data-action="-1dislike" class="p-1.5 hover:bg-ui-hover-bg rounded-r-full"><span class="material-symbols-rounded text-sm">remove</span></button></div>
+                        <div class="flex-grow"></div>
+                        <div class="comment-actions flex items-center gap-2 max-[768px]:hidden">
+                            <button data-action="edit" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ui-hover-bg text-sm"><span class="material-symbols-rounded text-base">edit</span> <span class="max-[1024px]:hidden">Edit</span></button>
+                            <button data-action="report" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-ui-hover-bg text-sm"><span class="material-symbols-rounded text-base">flag</span> <span class="max-[1024px]:hidden">Report</span></button>
+                            <button data-action="delete" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-red-500/10 text-red-500 text-sm"><span class="material-symbols-rounded text-base">delete</span> <span class="max-[1024px]:hidden">Delete</span></button>
+                        </div>
+                    </div>`;
+          return div;
+        }
+
+        function renderDeletedList() {
+          const list = document.getElementById("deleted-comments-list");
+          list.innerHTML =
+            state.deleted.length === 0
+              ? '<p class="text-gray-400">No comments have been deleted yet.</p>'
+              : "";
+          state.deleted.forEach((item, index) => {
+            const div = document.createElement("div");
+            div.className =
+              "bg-ui-bg p-4 rounded-lg shadow-md border border-border-color flex justify-between items-start";
+            div.innerHTML = `<div class="flex-grow pr-4"><div class="comment-content">${item.content}</div><p class="text-xs text-gray-500 mt-2">Deleted on: ${new Date(item.deletedAt).toLocaleString()}</p></div><div class="flex gap-2 flex-shrink-0"><button data-action="recover" data-index="${index}" class="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium hover:bg-green-700">Recover</button><button data-action="perm-delete" data-index="${index}" class="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-medium hover:bg-red-700">Delete Permanently</button></div>`;
+            list.appendChild(div);
+          });
+        }
+
+        function renderReportedList() {
+          const list = document.getElementById("reported-comments-list");
+          list.innerHTML =
+            state.reported.length === 0
+              ? '<p class="text-gray-400">No comments have been reported yet.</p>'
+              : "";
+          state.reported.forEach((item) => {
+            const div = document.createElement("div");
+            div.className =
+              "bg-ui-bg p-4 rounded-lg shadow-md border border-border-color";
+            div.innerHTML = `<div class="comment-content">${item.content}</div><p class="text-sm text-yellow-500 mt-2 p-2 bg-yellow-500/10 rounded-md">Reason: ${item.reason}</p><p class="text-xs text-gray-500 mt-2">Reported on: ${new Date(item.reportedAt).toLocaleString()}</p>`;
+            list.appendChild(div);
+          });
+        }
+
+        function updateAnalytics() {
+          document.getElementById("total-likes-count").textContent =
+            state.comments.reduce((s, c) => s + c.likes, 0);
+          document.getElementById("total-dislikes-count").textContent =
+            state.comments.reduce((s, c) => s + c.dislikes, 0);
+          document.getElementById("total-reported-count").textContent =
+            state.reported.length;
+          document.getElementById("total-deleted-count").textContent =
+            state.deleted.length;
+          renderChart();
+        }
+
+        function updateSettingsUI() {
+          darkModeToggle.checked = state.settings.darkMode;
+          showDislikeBarToggle.checked = state.settings.showDislikeBar;
+          hideDecimalsToggle.checked = state.settings.hideDecimals;
+          largeTextToggle.checked = state.settings.largeText;
+        }
+
+        function addEventListeners() {
+          navLinks.forEach((link) =>
+            link.addEventListener("click", (e) =>
+              handleNavClick(e.currentTarget),
+            ),
+          );
+          postCommentBtn.addEventListener("click", handlePostComment);
+          ["focus", "click", "keyup"].forEach((evt) =>
+            commentEditor.addEventListener(evt, saveSelection),
+          );
+          [searchInput, mobileSearchInput].forEach((input) =>
+            input.addEventListener("input", (e) =>
+              renderComments(e.target.value),
+            ),
+          );
+          commentsList.addEventListener("click", handleCommentAction);
+          document
+            .getElementById("deleted-comments-list")
+            .addEventListener("click", handleDeletedAction);
+          [
+            darkModeToggle,
+            showDislikeBarToggle,
+            hideDecimalsToggle,
+            largeTextToggle,
+          ].forEach((toggle) =>
+            toggle.addEventListener("change", handleSettingChange),
+          );
+          chartTypeBtn.addEventListener("click", () =>
+            toggleDropdown(chartTypeDropdown),
+          );
+          timePeriodBtn.addEventListener("click", () =>
+            toggleDropdown(timePeriodDropdown),
+          );
+          document
+            .querySelectorAll(".chart-type-option")
+            .forEach((opt) =>
+              opt.addEventListener("click", handleChartTypeChange),
+            );
+          document
+            .querySelectorAll(".time-period-option")
+            .forEach((opt) =>
+              opt.addEventListener("click", handleTimePeriodChange),
+            );
+          document
+            .querySelectorAll(".analytics-tab")
+            .forEach((tab) =>
+              tab.addEventListener("click", handleAnalyticsTabChange),
+            );
+          infoBtn.addEventListener("click", showInfoModal);
+          modalContainer.addEventListener("click", (e) => {
+            if (e.target === modalContainer) closeModal();
+          });
+          mobileMenuBtn.addEventListener("click", toggleMobileMenu);
+          mobileMenuOverlay.addEventListener("click", toggleMobileMenu);
+          mobileSearchBtn.addEventListener("click", () => {
+            mobileSearchBar.classList.remove("hidden");
+            topbarMainContent.classList.add("hidden");
+          });
+          closeMobileSearchBtn.addEventListener("click", () => {
+            mobileSearchBar.classList.add("hidden");
+            topbarMainContent.classList.remove("hidden");
+          });
+          document
+            .querySelectorAll("#format-tools-standard .format-btn")
+            .forEach((btn) =>
+              btn.addEventListener("click", handleFormatCommand),
+            );
+          linkBtn.addEventListener("click", showAddLinkModal);
+          imageBtn.addEventListener("click", showAddImageModal);
+          moreFormatBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            moreFormatDropdown.classList.toggle("hidden");
+          });
+          document.addEventListener("click", (e) => {
+            if (
+              !moreFormatBtn.contains(e.target) &&
+              !moreFormatDropdown.contains(e.target)
+            ) {
+              moreFormatDropdown.classList.add("hidden");
+            }
+          });
+        }
+
+        function handleNavClick(clickedLink) {
+          const targetId = clickedLink.dataset.target;
+          navLinks.forEach((link) =>
+            link.classList.remove("active", "bg-ui-hover-bg"),
+          );
+          document
+            .querySelectorAll(`.nav-link[data-target="${targetId}"]`)
+            .forEach((l) => l.classList.add("active", "bg-ui-hover-bg"));
+          contentSections.forEach((section) =>
+            section.classList.toggle("hidden", section.id !== targetId),
+          );
+          if (targetId === "analytics-section") {
+            setTimeout(renderChart, 50);
+          }
+          if (mobileMenu.classList.contains("translate-x-0")) {
+            toggleMobileMenu();
+          }
+        }
+
+        function handlePostComment() {
+          const content = commentEditor.innerHTML.trim();
+          if (!content || content === "<br>") {
+            showToast("Comment cannot be empty.", "error");
+            return;
+          }
+          state.comments.unshift({
+            id: state.nextId++,
+            content,
+            likes: 0,
+            dislikes: 0,
+            createdAt: new Date().toISOString(),
+          });
+          commentEditor.innerHTML = "";
+          renderAll();
+          showToast("Comment posted successfully!", "success");
+        }
+
+        function handleCommentAction(e) {
+          if (e.target.tagName === "A" && e.target.closest(".comment-content"))
+            return;
+          const button = e.target.closest("button, a[data-action]");
+          if (!button) return;
+          e.preventDefault();
+
+          const action = button.dataset.action;
+          const commentEl = button.closest("[data-id]");
+          if (!commentEl) return;
+
+          const commentId = parseInt(commentEl.dataset.id);
+          if (action === "more-toggle") {
+            const wrapper = commentEl.querySelector(".more-wrapper");
+            document.querySelectorAll(".more-wrapper").forEach((w) => {
+              if (w !== wrapper) w.classList.add("hidden");
+            });
+            wrapper.classList.toggle("hidden");
+            return;
+          }
+
+          const commentIndex = state.comments.findIndex(
+            (c) => c.id === commentId,
+          );
+          if (commentIndex === -1) return;
+          let comment = state.comments[commentIndex];
+
+          switch (action) {
+            case "like":
+              comment.likes++;
+              break;
+            case "dislike":
+              comment.dislikes++;
+              break;
+            case "-1like":
+              comment.likes = Math.max(0, comment.likes - 1);
+              break;
+            case "-1dislike":
+              comment.dislikes = Math.max(0, comment.dislikes - 1);
+              break;
+            case "move-up":
+              if (commentIndex > 0) {
+                [
+                  state.comments[commentIndex - 1],
+                  state.comments[commentIndex],
+                ] = [comment, state.comments[commentIndex - 1]];
+              }
+              break;
+            case "move-down":
+              if (commentIndex < state.comments.length - 1) {
+                [
+                  state.comments[commentIndex + 1],
+                  state.comments[commentIndex],
+                ] = [comment, state.comments[commentIndex + 1]];
+              }
+              break;
+            case "edit":
+              showEditModal(comment);
+              break;
+            case "report":
+              showReportModal(comment, commentIndex);
+              break;
+            case "delete":
+              showConfirmationModal(
+                "Delete Comment?",
+                "This can be undone from the Deleted section.",
+                () => {
+                  const [deletedComment] = state.comments.splice(
+                    commentIndex,
+                    1,
+                  );
+                  deletedComment.deletedAt = new Date().toISOString();
+                  state.deleted.push(deletedComment);
+                  renderAll();
+                  showToast("Comment moved to Deleted.", "info");
+                },
+              );
+              break;
+          }
+          renderAll();
+          document
+            .querySelectorAll(".more-wrapper")
+            .forEach((w) => w.classList.add("hidden"));
+        }
+
+        function handleDeletedAction(e) {
+          const button = e.target.closest("button");
+          if (!button) return;
+          const action = button.dataset.action;
+          const index = parseInt(button.dataset.index);
+          if (action === "recover") {
+            const [item] = state.deleted.splice(index, 1);
+            state.comments.unshift(item);
+            renderAll();
+            showToast("Comment recovered.", "success");
+          } else if (action === "perm-delete") {
+            showConfirmationModal(
+              "Permanently Delete?",
+              "This action is irreversible.",
+              () => {
+                state.deleted.splice(index, 1);
+                renderAll();
+                showToast("Comment permanently deleted.", "error");
+              },
+            );
+          }
+        }
+
+        function handleSettingChange(e) {
+          const setting = e.target.id
+            .replace("-toggle", "")
+            .replace(/-(\w)/g, (_, p1) => p1.toUpperCase());
+          state.settings[setting] = e.target.checked;
+          applySettings();
+          renderAll();
+        }
+
+        function handleChartTypeChange(e) {
+          e.preventDefault();
+          state.analytics.chartType = e.currentTarget.dataset.type;
+          chartTypeDropdown.classList.add("hidden");
+          renderChart();
+        }
+        function handleTimePeriodChange(e) {
+          e.preventDefault();
+          state.analytics.timePeriod = e.currentTarget.dataset.period;
+          timePeriodDropdown.classList.add("hidden");
+          renderChart();
+        }
+        function handleAnalyticsTabChange(e) {
+          document
+            .querySelectorAll(".analytics-tab")
+            .forEach((t) =>
+              t.classList.remove("active", "border-b-2", "border-purple-500"),
+            );
+          e.currentTarget.classList.add(
+            "active",
+            "border-b-2",
+            "border-purple-500",
+          );
+          state.analytics.activeTab = e.currentTarget.dataset.tab;
+          renderChart();
+        }
+
+        function handleFormatCommand(e) {
+          const command = e.currentTarget.dataset.command;
+          if (command) {
+            restoreSelection();
+            document.execCommand(command, false, null);
+            commentEditor.focus();
+            saveSelection();
+          }
+        }
+
+        function applySettings() {
+          document.documentElement.classList.toggle(
+            "dark",
+            state.settings.darkMode,
+          );
+          mainContent.classList.toggle("large-text", state.settings.largeText);
+        }
+        function toggleDropdown(dropdown) {
+          dropdown.classList.toggle("hidden");
+        }
+        function toggleMobileMenu() {
+          mobileMenu.classList.toggle("-translate-x-full");
+          mobileMenu.classList.toggle("translate-x-0");
+          mobileMenuOverlay.classList.toggle("hidden");
+        }
+
+        function handleResponsiveUI() {
+          mobileContactBtn.classList.toggle("hidden", window.innerWidth > 768);
+          handleAnalyticsTabsOverflow();
+          handleFormatButtonsOverflow();
+        }
+
+        function handleAnalyticsTabsOverflow() {
+          const container = analyticsTabsContainer,
+            moreContainer = document.getElementById("analytics-more-container"),
+            dropdown = document.getElementById("analytics-more-dropdown");
+          dropdown.innerHTML = "";
+          moreContainer.classList.add("hidden");
+          container
+            .querySelectorAll(".analytics-tab")
+            .forEach((tab) => tab.classList.remove("hidden"));
+          if (container.scrollWidth > container.clientWidth) {
+            moreContainer.classList.remove("hidden");
+            const tabs = Array.from(
+              container.querySelectorAll(".analytics-tab"),
+            );
+            for (let i = tabs.length - 1; i >= 0; i--) {
+              if (container.scrollWidth > container.clientWidth) {
+                const tab = tabs[i];
+                tab.classList.add("hidden");
+                const clone = tab.cloneNode(true);
+                clone.classList.remove(
+                  "hidden",
+                  "active",
+                  "border-b-2",
+                  "border-purple-500",
+                );
+                clone.classList.add(
+                  "block",
+                  "w-full",
+                  "text-left",
+                  "px-4",
+                  "py-2",
+                  "hover:bg-ui-hover-bg",
+                );
+                clone.addEventListener("click", (e) => {
+                  handleAnalyticsTabChange(e);
+                  dropdown.classList.add("hidden");
+                });
+                dropdown.prepend(clone);
+              } else break;
+            }
+          }
+          document.getElementById("analytics-more-btn").onclick = (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle("hidden");
+          };
+        }
+
+        function handleFormatButtonsOverflow() {
+          if (window.innerWidth <= 768) {
+            formatToolsStandard.classList.add("hidden");
+            formatToolsOverflowContainer.classList.remove("hidden");
+            if (moreFormatDropdown.children.length === 0) {
+              Array.from(formatToolsStandard.children).forEach((btn) => {
+                const clone = btn.cloneNode(true);
+                clone.addEventListener("click", handleFormatCommand);
+                moreFormatDropdown.appendChild(clone);
+              });
+            }
+          } else {
+            formatToolsStandard.classList.remove("hidden");
+            formatToolsOverflowContainer.classList.add("hidden");
+            if (moreFormatDropdown.children.length > 0)
+              moreFormatDropdown.innerHTML = "";
+          }
+        }
+
+        function saveSelection() {
+          const s = window.getSelection();
+          if (s.rangeCount > 0) editorSelection = s.getRangeAt(0).cloneRange();
+        }
+        function restoreSelection() {
+          if (editorSelection) {
+            const s = window.getSelection();
+            s.removeAllRanges();
+            s.addRange(editorSelection);
+          }
+        }
+
+        function showToast(message, type = "info") {
+          const t = document.createElement("div"),
+            colors = { s: "bg-green-500", e: "bg-red-500", i: "bg-blue-500" },
+            icons = { s: "check_circle", e: "error", i: "info" };
+          t.className = `flex items-center gap-4 ${colors[type[0]]} text-white p-4 rounded-lg shadow-lg transform transition-all duration-300 translate-y-4 opacity-0`;
+          t.innerHTML = `<span class="material-symbols-rounded">${icons[type[0]]}</span> <p>${message}</p>`;
+          document.getElementById("toast-container").appendChild(t);
+          setTimeout(
+            () => t.classList.remove("translate-y-4", "opacity-0"),
+            100,
+          );
+          setTimeout(() => {
+            t.classList.add("opacity-0");
+            t.addEventListener("transitionend", () => t.remove());
+          }, 3000);
+        }
+
+        function showModal(content) {
+          modalContent.innerHTML = content;
+          modalContainer.classList.remove("hidden");
+        }
+        function closeModal() {
+          modalContainer.classList.add("hidden");
+          modalContent.innerHTML = "";
+        }
+
+        function showInfoModal() {
+          showModal(
+            `<h2 class="text-2xl font-bold mb-4 text-headings-color">About This Tracker</h2><div class="space-y-4 text-sm"><p>This app helps track likes, dislikes, and feedback.</p><h3 class="font-bold mt-4">How to Use:</h3><ul class="list-disc list-inside space-y-2"><li><strong>Comments:</strong> Post, format, and manage comments.</li><li><strong>Analytics:</strong> Visualize data trends with charts.</li><li><strong>Deleted/Reported:</strong> Manage removed comments.</li><li><strong>Settings:</strong> Customize your experience.</li></ul></div><button id="close-modal-btn" class="mt-6 bg-purple-600 text-white px-4 py-2 rounded-full w-full hover:bg-purple-700">Got it</button>`,
+          );
+          document
+            .getElementById("close-modal-btn")
+            .addEventListener("click", closeModal);
+        }
+
+        function showConfirmationModal(title, message, onConfirm) {
+          showModal(
+            `<h2 class="text-xl font-bold mb-2">${title}</h2><p class="text-gray-400 mb-6">${message}</p><div class="flex justify-end gap-4"><button id="confirm-cancel-btn" class="px-4 py-2 rounded-full hover:bg-ui-hover-bg">Cancel</button><button id="confirm-action-btn" class="bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700">Confirm</button></div>`,
+          );
+          document.getElementById("confirm-action-btn").onclick = () => {
+            onConfirm();
+            closeModal();
+          };
+          document.getElementById("confirm-cancel-btn").onclick = closeModal;
+        }
+
+        function showEditModal(comment) {
+          showModal(
+            `<h2 class="text-xl font-bold mb-4">Edit Comment</h2><div id="edit-editor" class="rich-text-editor" contenteditable="true">${comment.content}</div><div class="flex justify-end gap-4 mt-6"><button id="edit-cancel-btn" class="px-4 py-2 rounded-full hover:bg-ui-hover-bg">Cancel</button><button id="edit-save-btn" class="bg-purple-600 text-white px-4 py-2 rounded-full hover:bg-purple-700">Save</button></div>`,
+          );
+          const editor = document.getElementById("edit-editor");
+          editor.focus();
+          document.getElementById("edit-save-btn").onclick = () => {
+            const newContent = editor.innerHTML.trim();
+            if (newContent) {
+              comment.content = newContent;
+              renderAll();
+              closeModal();
+              showToast("Comment updated!", "success");
+            } else {
+              showToast("Comment cannot be empty.", "error");
+            }
+          };
+          document.getElementById("edit-cancel-btn").onclick = closeModal;
+        }
+
+        function showReportModal(comment, index) {
+          showModal(
+            `<h2 class="text-xl font-bold mb-4">Report Comment</h2><p class="text-gray-400 mb-4">Provide a reason.</p><textarea id="report-reason" class="w-full p-2 border rounded-md bg-bg-color" rows="3" placeholder="e.g., Spam..."></textarea><div class="flex justify-end gap-4 mt-6"><button id="report-cancel-btn" class="px-4 py-2 rounded-full hover:bg-ui-hover-bg">Cancel</button><button id="report-confirm-btn" class="bg-yellow-500 text-black px-4 py-2 rounded-full hover:bg-yellow-600">Report</button></div>`,
+          );
+          document.getElementById("report-confirm-btn").onclick = () => {
+            const reason = document
+              .getElementById("report-reason")
+              .value.trim();
+            if (!reason) {
+              showToast("A reason is required.", "error");
+              return;
+            }
+            const [reportedComment] = state.comments.splice(index, 1);
+            reportedComment.reportedAt = new Date().toISOString();
+            reportedComment.reason = reason;
+            state.reported.push(reportedComment);
+            renderAll();
+            closeModal();
+            showToast("Comment reported.", "info");
+          };
+          document.getElementById("report-cancel-btn").onclick = closeModal;
+        }
+
+        function showAddLinkModal() {
+          saveSelection();
+          if (!editorSelection || editorSelection.collapsed) {
+            showToast("Please select text to turn into a link.", "error");
+            return;
+          }
+          showModal(
+            `<h2 class="text-xl font-bold mb-4">Add Link</h2><input type="url" id="link-url-input" class="w-full p-2 border rounded-md bg-bg-color" placeholder="https://example.com"><div class="flex justify-end gap-4 mt-6"><button id="link-cancel-btn" class="px-4 py-2 rounded-full hover:bg-ui-hover-bg">Cancel</button><button id="link-insert-btn" class="bg-purple-600 text-white px-4 py-2 rounded-full hover:bg-purple-700">Insert</button></div>`,
+          );
+          document.getElementById("link-insert-btn").onclick = () => {
+            const url = document.getElementById("link-url-input").value.trim();
+            if (url) {
+              restoreSelection();
+              document.execCommand("createLink", false, url);
+              closeModal();
+              commentEditor.focus();
+            }
+          };
+          document.getElementById("link-cancel-btn").onclick = closeModal;
+        }
+
+        function showAddImageModal() {
+          saveSelection();
+          const fileInput = document.createElement("input");
+          fileInput.type = "file";
+          fileInput.accept = "image/*";
+          fileInput.onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onload = (event) => {
+                restoreSelection();
+                document.execCommand("insertImage", false, event.target.result);
+                commentEditor.focus();
+              };
+              reader.readAsDataURL(file);
+            }
+          };
+          fileInput.click();
+        }
+
+        function renderChart() {
+          if (!analyticsChartElement.offsetParent) return;
+          const period = state.analytics.timePeriod,
+            labels = Array.from(
+              { length: 12 },
+              (_, i) => `${i === 0 ? 12 : i}${period}`,
+            );
+          const dataMap = {
+            likes: { data: getHourlyData(state.comments, "likes", period) },
+            dislikes: {
+              data: getHourlyData(state.comments, "dislikes", period),
+            },
+            reported: { data: getHourlyData(state.reported, null, period) },
+            deleted: { data: getHourlyData(state.deleted, null, period) },
+          };
+          const colors = {
+            likes: "rgba(74, 222, 128, 0.6)",
+            dislikes: "rgba(239, 68, 68, 0.6)",
+            reported: "rgba(234, 179, 8, 0.6)",
+            deleted: "rgba(107, 114, 128, 0.6)",
+          };
+          const textColor = state.settings.darkMode ? "#e5e7eb" : "#1f2937";
+          let chartData, chartOptions;
+
+          if (state.analytics.chartType === "pie") {
+            chartData = {
+              labels: ["Likes", "Dislikes", "Reported", "Deleted"],
+              datasets: [
+                {
+                  data: [
+                    dataMap.likes.data.reduce((a, b) => a + b, 0),
+                    dataMap.dislikes.data.reduce((a, b) => a + b, 0),
+                    dataMap.reported.data.reduce((a, b) => a + b, 0),
+                    dataMap.deleted.data.reduce((a, b) => a + b, 0),
+                  ],
+                  backgroundColor: Object.values(colors),
+                },
+              ],
+            };
+            chartOptions = {
+              responsive: true,
+              maintainAspectRatio: true,
+              plugins: { legend: { labels: { color: textColor } } },
+            };
+          } else {
+            const activeTab = state.analytics.activeTab;
+            chartData = {
+              labels,
+              datasets: [
+                {
+                  label: activeTab.charAt(0).toUpperCase() + activeTab.slice(1),
+                  data: dataMap[activeTab].data,
+                  backgroundColor: colors[activeTab],
+                  borderColor: colors[activeTab].replace("0.6", "1"),
+                  borderWidth: 1,
+                  fill: state.analytics.chartType === "line",
+                },
+              ],
+            };
+            chartOptions = {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  ticks: { stepSize: 1, color: textColor },
+                },
+                x: { ticks: { color: textColor } },
+              },
+              plugins: { legend: { labels: { color: textColor } } },
+            };
+          }
+          if (analyticsChart) analyticsChart.destroy();
+          analyticsChart = new Chart(analyticsChartElement, {
+            type: state.analytics.chartType,
+            data: chartData,
+            options: chartOptions,
+          });
+        }
+
+        function getHourlyData(items, property, period) {
+          const data = Array(12).fill(0);
+          items.forEach((item) => {
+            const date = new Date(
+              item.createdAt || item.reportedAt || item.deletedAt,
+            );
+            let h24 = date.getHours();
+            if (
+              (period === "AM" && h24 < 12) ||
+              (period === "PM" && h24 >= 12)
+            ) {
+              let h12 = h24 % 12;
+              data[h12] += property ? item[property] : 1;
+            }
+          });
+          return data;
+        }
+
+        init();
+      });
+    </script>
+  </body>
+</html>
