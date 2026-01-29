@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Munetios Search 2.8</title>
+    <title>Munetios Search 2.9</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <link rel="icon" href="image.png" type="image/png" />
     <link rel="apple-touch-icon" href="image.png" />
@@ -23,7 +23,7 @@
   script-src 'self'  'nonce-rjighegujregergrejge' https://api.munetios.com https://cdnjs.cloudflare.com https://unpkg.com https://cdn.jsdelivr.net https://cdn.tailwindcss.com;
   connect-src 'self' https:;
   font-src 'self' https: data:;
-  frame-src https://www.munetios.com;
+  frame-src https://www.munetios.com https://www.youtube-nocookie.com;
   worker-src 'self' blob:;
   object-src 'none';
 "
@@ -99,6 +99,7 @@
       .btn {
         cursor: pointer;
         padding: 10px 16px;
+
         border-radius: 64px;
         display: flex;
         align-items: center;
@@ -108,6 +109,7 @@
 
       .dropdown-wrapper {
         position: relative;
+
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -117,6 +119,7 @@
         border-radius: 8px;
         background: rgba(58, 28, 113, 0.1) !important;
         transition: background 0.2s;
+
       }
 
       .dropdown-options-wrapper {
@@ -124,6 +127,7 @@
         position: absolute;
         top: 110%;
         left: 0;
+
         border-radius: 8px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         z-index: 200;
@@ -156,6 +160,7 @@
         -webkit-backdrop-filter: blur(2px) saturate(200%) contrast(75%)
           brightness(125%) !important;
       }
+
 
       .result {
         background: rgba(58, 28, 113, 0.116);
@@ -419,6 +424,13 @@
           display: none;
         }
       }
+
+      .safesearch-setting {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+      }
     </style>
   </head>
   <body>
@@ -469,6 +481,11 @@
                 title="Voice Search"
                 >mic</span
               >
+              <span
+                id="incognitoIcon"
+                class="material-symbols-rounded cursor-pointer text-[24px]"
+                title="Incognito"
+                >visibility_off</span>
             </div>
           </div>
 
@@ -592,6 +609,10 @@
       </div>
 
       <div class="content">
+        <div class="safesearch-setting">
+          <label for="SafeSearchLabel">SafeSearch</label>
+          <button id="SafeSearchToggle" class="btn liquid-glass">Strict</button>
+        </div>
         <div class="ai-overview-box liquid-glass" id="aiOverviewBox"></div>
         <div class="results" id="results">
           <div class="enter-a-search-query">
@@ -647,31 +668,21 @@
             align-items: center;
           "
         >
-          <label>
-            <input
-              type="checkbox"
-              id="enableVoiceMode"
-              style="margin-right: 8px"
-            />
-            Enable Voice Mode
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              id="enableRedditResults"
-              style="margin-right: 8px"
-            />
-            Enable Reddit Results
-          </label>
-          <label style="display: none">
-            <input
-              type="checkbox"
-              id="enableAIOverview"
-              style="margin-right: 8px; display: none; margin-left: 16px"
-            />
-            Enable AI Overview
-          </label>
+        <p>
+          New Labs features coming soon!
+          </p>
         </div>
+      </div>
+    </div>
+    <div class="liquid-glass hidden p-4 rounded-2xl flex flex-col gap-2" id="safeSearchDropdown">
+      <div class="flex items-center gap-2 p-2 hover:bg-gray-700" id="safeSearchStrict">
+        <div class="options-label">Strict</div>
+      </div>
+      <div class="flex items-center gap-2 p-2 hover:bg-gray-700" id="safeSearchModerate">
+        <div class="options-label">Moderate</div>
+      </div>
+      <div class="flex items-center gap-2 p-2 hover:bg-gray-700" id="safeSearchOff">
+        <div class="options-label">Off</div>
       </div>
     </div>
     <div
@@ -866,7 +877,7 @@
       }
       body[data-liquid-glass="frosted"] .liquid-glass {
         background: rgba(80, 5, 141, 0.473);
-        backdrop-filter: blur(16px) saturate(200%) brightness(120%);
+        backdrop-filter: blur(10px) saturate(200%) brightness(120%) !important;
         border: 1.5px solid #a259f733;
       }
       body[data-liquid-glass="off"] .liquid-glass {
@@ -1053,9 +1064,7 @@
       </div>
     </div>
     </div>
-    <script nonce="rjighegujregergrejge">
    
-    </script>
   <style>
     body.compact-mode {
       font-size: 0.85rem;
@@ -2223,6 +2232,189 @@
         const lang = localStorage.getItem("searchLanguage") || "en";
         setLanguage(lang);
       });
+      // --- SafeSearch Filtering ---
+      let safeSearchLevel = localStorage.getItem("safeSearchLevel") || "strict";
+      // SafeSearch dropdown logic
+      const safeSearchToggle = document.getElementById("SafeSearchToggle");
+      const safeSearchDropdown = document.getElementById("safeSearchDropdown");
+      safeSearchToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        // Prevent opening if school mode is enabled
+        if (localStorage.getItem("schoolMode") === "true") {
+          showToast("SafeSearch is locked to Strict in School Mode");
+          return;
+        }
+        safeSearchDropdown.classList.toggle("hidden");
+        // Position dropdown below button
+        const rect = safeSearchToggle.getBoundingClientRect();
+        safeSearchDropdown.style.position = "absolute";
+        safeSearchDropdown.style.top = rect.bottom + window.scrollY + 8 + "px";
+        safeSearchDropdown.style.left = rect.left + window.scrollX + "px";
+        safeSearchDropdown.style.zIndex = "10015";
+      });
+      document.addEventListener("mousedown", function (e) {
+        if (
+          !safeSearchDropdown.contains(e.target) &&
+          e.target !== safeSearchToggle
+        ) {
+          safeSearchDropdown.classList.add("hidden");
+        }
+      });
+      // SafeSearch dropdown options
+      document.getElementById("safeSearchStrict").addEventListener("click", function () {
+        safeSearchLevel = "strict";
+        localStorage.setItem("safeSearchLevel", "strict");
+        safeSearchToggle.textContent = "Strict";
+        safeSearchDropdown.classList.add("hidden");
+        performSearch();
+        showToast("SafeSearch: Strict");
+      });
+      document.getElementById("safeSearchModerate").addEventListener("click", function () {
+        safeSearchLevel = "moderate";
+        localStorage.setItem("safeSearchLevel", "moderate");
+        safeSearchToggle.textContent = "Moderate";
+        safeSearchDropdown.classList.add("hidden");
+        performSearch();
+        showToast("SafeSearch: Moderate");
+      });
+      document.getElementById("safeSearchOff").addEventListener("click", function () {
+        safeSearchLevel = "off";
+        localStorage.setItem("safeSearchLevel", "off");
+        safeSearchToggle.textContent = "Off";
+        safeSearchDropdown.classList.add("hidden");
+        performSearch();
+        showToast("SafeSearch: Off");
+      });
+      // On load, restore SafeSearch level
+      window.addEventListener("DOMContentLoaded", function () {
+        // If school mode is enabled, force strict SafeSearch
+        if (localStorage.getItem("schoolMode") === "true") {
+          safeSearchLevel = "strict";
+          localStorage.setItem("safeSearchLevel", "strict");
+          safeSearchToggle.textContent = "Strict";
+          safeSearchToggle.style.opacity = "0.7";
+          safeSearchToggle.style.cursor = "not-allowed";
+          safeSearchToggle.title = "SafeSearch is locked to Strict in School Mode";
+        } else {
+          safeSearchLevel = localStorage.getItem("safeSearchLevel") || "strict";
+          safeSearchToggle.textContent =
+            safeSearchLevel.charAt(0).toUpperCase() + safeSearchLevel.slice(1);
+          safeSearchToggle.style.opacity = "";
+          safeSearchToggle.style.cursor = "";
+          safeSearchToggle.title = "";
+        }
+      });
+
+      // --- SafeSearch Filtering ---
+      function filterResults(results) {
+        if (safeSearchLevel === "off") return results;
+
+        // Obfuscated bad words (ASCII codes)
+        const strictPatterns = [
+          /f[\u0075u][c\u0063][k\u006B]/i,
+          /s[\u0068h][i\u0069][t\u0074]/i,
+          /b[\u0069i][t\u0074][c\u0063][h\u0068]/i,
+          /\bass\b/i,
+          /d[\u0061a][m\u006D][n\u006E]/i,
+          /p[\u0072r][n\u006E]/i,
+          /c[\u0075u][m\u006D]/i,
+          /n[\u0069i][g\u0067]{2}[e\u0065][r\u0072]/i,
+          /f[\u0061a][g\u0067]/i,
+          /c[\u0075u][n\u006E][t\u0074]/i,
+          /d[\u0069i][c\u0063][k\u006B]/i,
+          /p[\u0069i][s\u0073][s\u0073]/i,
+          /b[\u0061a][s\u0073][t\u0074][a\u0061][r\u0072][d\u0064]/i,
+          /s[\u006cL][u\u0075][t\u0074]/i,
+          /w[\u0068h][o\u006F][r\u0072][e\u0065]/i,
+          /a[\u0072r][s\u0073][e\u0065]/i,
+          /m[\u006fO][t\u0074][h\u0068][e\u0065][r\u0072][f\u0066][u\u0075][c\u0063][k\u006B][e\u0065][r\u0072]/i,
+          /s[\u0063c][r\u0072][e\u0065][w\u0077]/i,
+          /b[\u006fO][l\u006c][l\u006c][o\u006f][c\u0063][k\u006B][s\u0073]/i,
+          /t[\u0069i][t\u0074]/i,
+          /s[\u0063c][u\u0075][m\u006D]/i,
+          /j[\u0065e][r\u0072][k\u006B][o\u006F][f\u0066][f\u0066]/i,
+          /w[\u0061a][n\u006E][k\u006B][e\u0065][r\u0072]/i,
+          /f[\u006fO][o\u006f][l\u006c]/i,
+          /f[\u0061a][r\u0072][t\u0074]/i,
+          /s[\u0068h][i\u0069][t\u0074][h\u0068][e\u0065][a\u0061][d\u0064]/i,
+          /a[\u0073s]{2}[h\u0068][o\u006f][l\u006c][e\u0065]/i,
+          /m[\u006fO][r\u0072][o\u006f][n\u006E]/i,
+          /i[\u0064d][i\u0069][o\u006f][t\u0074]/i,
+          /f[\u0075u][c\u0063][k\u006B][e\u0065][r\u0072]/i,
+          /f[\u0075u][c\u0063][k\u006B][i\u0069][n\u006E][g\u0067]/i,
+          /d[\u006fO][u\u0075][c\u0063][h\u0068][b\u0062][a\u0061][g\u0067]/i,
+          /b[\u0069i][t\u0074][c\u0063][h\u0068][e\u0065][s\u0073]/i,
+          /p[\u0075u][s\u0073][s\u0073][y\u0079]/i,
+          /a[\u0073s]{2}[h\u0068][o\u006f][l\u006c][e\u0065][s\u0073]/i,
+          /d[\u0069i][c\u0063][k\u006B][h\u0068][e\u0065][a\u0061][d\u0064]/i,
+          /f[\u0061a][g\u0067][g\u0067][o\u006f][t\u0074]/i,
+          /b[\u0061a][s\u0073][t\u0074][a\u0061][r\u0072][d\u0064][s\u0073]/i,
+          /s[\u006fO][n\u006E][o\u006f][f\u0066][a\u0061][b\u0062][i\u0069][t\u0074][c\u0063][h\u0068]/i,
+          /n[\u0069i][g\u0067]{2}[a\u0065][s\u0072]/i,
+          /n[\u0069i][g\u0067]{2}[a\u0065]/i,
+          // Clickbait/spammy
+          /free\s+money/i,
+          /work\s+from\s+home/i,
+          /lose\s+weight/i,
+          /miracle\s+pill/i,
+          /make\s+\$\d+/i,
+          /hot\s+singles/i,
+          /cheap\s+viagra/i,
+          /casino/i,
+          /betting/i,
+          /get\s+rich\s+quick/i,
+        ];
+
+        const moderatePatterns = [
+          // 18+ content, sex, harmful
+          /sex/i,
+          /porn/i,
+          /xxx/i,
+          /escort/i,
+          /adult/i,
+          /nude/i,
+          /nsfw/i,
+          /suicide/i,
+          /kill\s+yourself/i,
+          /self\s*harm/i,
+          /violence/i,
+          /murder/i,
+          /abuse/i,
+          /rape/i,
+          /drugs?/i,
+          /overdose/i,
+          /gambling/i,
+          /casino/i,
+          /betting/i,
+          /gun/i,
+          /weapon/i,
+          /terror/i,
+          /bomb/i,
+          /explosive/i,
+          /child\s*(porn|abuse|molest)/i,
+        ];
+
+        function matchesAny(text, patterns) {
+          if (!text) return false;
+          return patterns.some((re) => re.test(text));
+        }
+
+        return results.filter((r) => {
+          const fields = [r.title, r.description, r.url].join(" ");
+          if (safeSearchLevel === "strict") {
+        if (matchesAny(fields, strictPatterns)) return false;
+        if (matchesAny(fields, moderatePatterns)) return false;
+          } else if (safeSearchLevel === "moderate") {
+        if (matchesAny(fields, moderatePatterns)) return false;
+          }
+          return true;
+        });
+      }
+      // Patch renderResults to filter
+      const origRenderResultsSafeSearch = renderResults;
+      renderResults = function (results) {
+        origRenderResultsSafeSearch(filterResults(results));
+      };
       // --- Country Selector Functionality ---
       // Country code mapping for dropdown
       const countryMap = {
@@ -2391,7 +2583,6 @@
             el.classList.remove("bg-purple-700");
           }
         });
-        showToast("Liquid Glass style changed");
       }
 
       // Open/close liquid glass dropdown
@@ -2465,6 +2656,32 @@
         if (schoolModeEnabled) {
           document.body.classList.add("school-mode");
           schoolModeToggle.checked = true;
+          window.location.hash = "";
+          
+          // Lock SafeSearch to strict
+          safeSearchLevel = "strict";
+          localStorage.setItem("safeSearchLevel", "strict");
+          const safeSearchToggle = document.getElementById("SafeSearchToggle");
+          if (safeSearchToggle) {
+            safeSearchToggle.textContent = "Strict";
+            safeSearchToggle.style.opacity = "0.7";
+            safeSearchToggle.style.cursor = "not-allowed";
+            safeSearchToggle.title = "SafeSearch is locked to Strict in School Mode";
+          }
+          
+          showToast("School Mode: SafeSearch locked to Strict, Incognito and Labs disabled.");
+          document.getElementById("incognitoIcon")?.setAttribute("disabled", "true");
+          document.getElementById("labsIcon")?.setAttribute("disabled", "true");
+          const labsModal = document.getElementById("labsModal");
+          if (labsModal) {
+            labsModal.style.display = "none";
+          }
+          window.addEventListener("hashchange", function () {
+            if (window.location.hash === "#incognito") {
+              window.location.hash = "";
+              showToast("Incognito Mode is blocked in School Mode.");
+            }
+          });
           // Disable Labs toggle
           const labsIcon = document.getElementById("labsIcon");
           if (labsIcon) {
@@ -2483,6 +2700,18 @@
           if (schoolModeToggle.checked) {
             document.body.classList.add("school-mode");
             localStorage.setItem("schoolMode", "true");
+            
+            // Lock SafeSearch to strict
+            safeSearchLevel = "strict";
+            localStorage.setItem("safeSearchLevel", "strict");
+            const safeSearchToggle = document.getElementById("SafeSearchToggle");
+            if (safeSearchToggle) {
+              safeSearchToggle.textContent = "Strict";
+              safeSearchToggle.style.opacity = "0.7";
+              safeSearchToggle.style.cursor = "not-allowed";
+              safeSearchToggle.title = "SafeSearch is locked to Strict in School Mode";
+            }
+            
             // Disable Labs
             const labsIcon = document.getElementById("labsIcon");
             if (labsIcon) {
@@ -2498,10 +2727,21 @@
             });
             // Disable School Mode toggle itself
             schoolModeToggle.disabled = true;
-            showToast("School Mode enabled. Labs disabled.");
+            showToast("School Mode enabled: SafeSearch locked to Strict, Labs disabled.");
           } else {
             document.body.classList.remove("school-mode");
             localStorage.setItem("schoolMode", "false");
+            
+            // Unlock SafeSearch
+            const safeSearchToggle = document.getElementById("SafeSearchToggle");
+            if (safeSearchToggle) {
+              const savedLevel = localStorage.getItem("safeSearchLevel") || "strict";
+              safeSearchToggle.textContent = savedLevel.charAt(0).toUpperCase() + savedLevel.slice(1);
+              safeSearchToggle.style.opacity = "";
+              safeSearchToggle.style.cursor = "";
+              safeSearchToggle.title = "";
+            }
+            
             // Re-enable Labs
             const labsIcon = document.getElementById("labsIcon");
             if (labsIcon) {
@@ -2515,6 +2755,7 @@
               el.style.pointerEvents = "";
               el.title = "";
             });
+            showToast("School Mode disabled: SafeSearch unlocked.");
           }
         });
       }
@@ -2530,6 +2771,7 @@
           "casino",
           "gambling",
           "porn",
+          
           "xxx",
           "explicit",
           "nsfw",
@@ -2833,20 +3075,25 @@
         const SEARCH_HISTORY_KEY = "munetiosSearchHistory";
         const MAX_HISTORY = 270;
 
+        // Helper: check incognito mode
+        function isIncognitoMode() {
+          return window.location.hash === "#incognito";
+        }
+
         // Save query to history
         function saveSearchHistory(query) {
-          if (!query) return;
+          if (!query || isIncognitoMode()) return;
           let history = [];
           try {
-            history = JSON.parse(
-              localStorage.getItem(SEARCH_HISTORY_KEY) || "[]",
-            );
+        history = JSON.parse(
+          localStorage.getItem(SEARCH_HISTORY_KEY) || "[]",
+        );
           } catch {}
           // Remove duplicates
           history = history.filter((q) => q !== query);
           history.unshift(query);
           if (history.length > MAX_HISTORY)
-            history = history.slice(0, MAX_HISTORY);
+        history = history.slice(0, MAX_HISTORY);
           localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(history));
         }
 
@@ -2863,9 +3110,9 @@
           document.getElementById("searchHistoryModal")?.remove();
           let history = [];
           try {
-            history = JSON.parse(
-              localStorage.getItem(SEARCH_HISTORY_KEY) || "[]",
-            );
+        history = JSON.parse(
+          localStorage.getItem(SEARCH_HISTORY_KEY) || "[]",
+        );
           } catch {}
           const modal = document.createElement("div");
           modal.id = "searchHistoryModal";
@@ -2880,72 +3127,72 @@
           modal.style.justifyContent = "center";
           modal.style.zIndex = "10050";
           modal.innerHTML = `
-            <div class="liquid-glass" style="padding:0;border-radius:18px;box-shadow:0 4px 32px #0002;position:relative;max-width:95vw;min-width:320px;">
-              <button id="searchHistoryModalClose" style="position:absolute;top:10px;right:10px;z-index:2;background:#a259f7;color:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:1.3em;cursor:pointer;display:flex;align-items:center;justify-content:center;">
-                &times;
-              </button>
-              <div style="padding:32px 28px 24px 28px;max-width:420px;">
-                <h3 style="margin-top:0;">Search History</h3>
-                <div id="searchHistoryList" style="margin-bottom:18px;max-height:320px;overflow-y:auto;"></div>
-                <button id="clearSearchHistoryBtn" class="btn liquid-glass" style="background:#e34133;color:#fff;padding:6px 18px;font-size:1em;">Clear History</button>
-              </div>
-            </div>
+        <div class="liquid-glass" style="padding:0;border-radius:18px;box-shadow:0 4px 32px #0002;position:relative;max-width:95vw;min-width:320px;">
+          <button id="searchHistoryModalClose" style="position:absolute;top:10px;right:10px;z-index:2;background:#a259f7;color:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:1.3em;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            &times;
+          </button>
+          <div style="padding:32px 28px 24px 28px;max-width:420px;">
+            <h3 style="margin-top:0;">Search History</h3>
+            <div id="searchHistoryList" style="margin-bottom:18px;max-height:320px;overflow-y:auto;"></div>
+            <button id="clearSearchHistoryBtn" class="btn liquid-glass" style="background:#e34133;color:#fff;padding:6px 18px;font-size:1em;">Clear History</button>
+          </div>
+        </div>
           `;
           document.body.appendChild(modal);
 
           // Render history
           const list = modal.querySelector("#searchHistoryList");
           if (!history.length) {
-            list.innerHTML =
-              '<div style="color:#aaa;">No recent searches.</div>';
+        list.innerHTML =
+          '<div style="color:#aaa;">No recent searches.</div>';
           } else {
-            list.innerHTML = "";
-            history.forEach((q, i) => {
-              const div = document.createElement("div");
-              div.style.display = "flex";
-              div.style.alignItems = "center";
-              div.style.justifyContent = "space-between";
-              div.style.gap = "8px";
-              div.style.padding = "6px 0";
-              div.style.borderBottom = "1px solid #a259f733";
-              div.style.cursor = "pointer";
-              div.innerHTML = `
-                <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${q}</span>
-                <button class="btn liquid-glass" style="background:#aaa;color:#fff;padding:2px 10px;font-size:0.95em;" data-index="${i}">Remove</button>
-              `;
-              div.onclick = (e) => {
-                if (e.target.tagName === "BUTTON") return;
-                document.getElementById("searchInput").value = q;
-                modal.remove();
-                performSearch();
-              };
-              div.querySelector("button").onclick = function (ev) {
-                ev.stopPropagation();
-                history.splice(i, 1);
-                localStorage.setItem(
-                  SEARCH_HISTORY_KEY,
-                  JSON.stringify(history),
-                );
-                div.remove();
-                if (!history.length)
-                  list.innerHTML =
-                    '<div style="color:#aaa;">No recent searches.</div>';
-              };
-              list.appendChild(div);
-            });
+        list.innerHTML = "";
+        history.forEach((q, i) => {
+          const div = document.createElement("div");
+          div.style.display = "flex";
+          div.style.alignItems = "center";
+          div.style.justifyContent = "space-between";
+          div.style.gap = "8px";
+          div.style.padding = "6px 0";
+          div.style.borderBottom = "1px solid #a259f733";
+          div.style.cursor = "pointer";
+          div.innerHTML = `
+            <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${q}</span>
+            <button class="btn liquid-glass" style="background:#aaa;color:#fff;padding:2px 10px;font-size:0.95em;" data-index="${i}">Remove</button>
+          `;
+          div.onclick = (e) => {
+            if (e.target.tagName === "BUTTON") return;
+            document.getElementById("searchInput").value = q;
+            modal.remove();
+            performSearch();
+          };
+          div.querySelector("button").onclick = function (ev) {
+            ev.stopPropagation();
+            history.splice(i, 1);
+            localStorage.setItem(
+          SEARCH_HISTORY_KEY,
+          JSON.stringify(history),
+            );
+            div.remove();
+            if (!history.length)
+          list.innerHTML =
+            '<div style="color:#aaa;">No recent searches.</div>';
+          };
+          list.appendChild(div);
+        });
           }
 
           // Close
           modal.querySelector("#searchHistoryModalClose").onclick = () =>
-            modal.remove();
+        modal.remove();
           modal.addEventListener("mousedown", function (e) {
-            if (e.target === modal) modal.remove();
+        if (e.target === modal) modal.remove();
           });
           // Clear all
           modal.querySelector("#clearSearchHistoryBtn").onclick = function () {
-            localStorage.removeItem(SEARCH_HISTORY_KEY);
-            list.innerHTML =
-              '<div style="color:#aaa;">No recent searches.</div>';
+        localStorage.removeItem(SEARCH_HISTORY_KEY);
+        list.innerHTML =
+          '<div style="color:#aaa;">No recent searches.</div>';
           };
         }
 
@@ -2953,8 +3200,13 @@
         document
           .getElementById("searchHistoryOption")
           .addEventListener("click", function () {
-            showSearchHistoryModal();
-            document.getElementById("moreOptions").classList.add("hidden");
+        if (isIncognitoMode()) {
+          showToast("Search history is disabled in Incognito Mode");
+          document.getElementById("moreOptions").classList.add("hidden");
+          return;
+        }
+        showSearchHistoryModal();
+        document.getElementById("moreOptions").classList.add("hidden");
           });
       })();
       /* --- Keyboard Shortcuts Functionality --- */
@@ -3238,52 +3490,23 @@
             moreOptions.classList.add("hidden");
           }
         });
+      // --- Reddit Results Toggle ---
+      // Always enabled by default, not in Labs
+      localStorage.setItem("enableRedditResults", "true");
+
+      // --- Voice Mode Toggle ---
+      // Always enabled by default, not in Labs
+      localStorage.setItem("enableVoiceMode", "true");
+      const voiceModeBtn = document.getElementById("voiceModeBtn");
+      if (voiceModeBtn) voiceModeBtn.style.display = "";
+
+      // --- Voice Mode Floating UI ---
       (function () {
-        // --- Reddit Results Toggle ---
-        let redditResultsEnabled = localStorage.getItem("enableRedditResults") === "true";
-        const redditCheckbox = document.getElementById("enableRedditResults");
-        if (redditCheckbox) {
-          redditCheckbox.checked = redditResultsEnabled;
-          redditCheckbox.addEventListener("change", function () {
-            redditResultsEnabled = this.checked;
-            localStorage.setItem("enableRedditResults", redditResultsEnabled);
-          });
-        }
-        // --- Voice Mode Toggle ---
-        let voiceModeEnabled =
-          localStorage.getItem("enableVoiceMode") === "true";
-        const voiceModeBtn = document.getElementById("voiceModeBtn");
         const searchApp = document.querySelector(".search-app");
         let voiceModeUI = null;
 
-        // Labs modal checkbox
-        const labsVoiceCheckbox = document.getElementById("enableVoiceMode");
-        if (labsVoiceCheckbox) {
-          labsVoiceCheckbox.checked = voiceModeEnabled;
-          labsVoiceCheckbox.addEventListener("change", function () {
-            voiceModeEnabled = this.checked;
-            localStorage.setItem("enableVoiceMode", voiceModeEnabled);
-            updateVoiceModeUI();
-          });
-        }
-
-        // Show/hide voice mode button in topbar
-        function updateVoiceModeUI() {
-          if (!voiceModeEnabled) {
-            if (voiceModeBtn) voiceModeBtn.style.display = "none";
-            if (voiceModeUI) voiceModeUI.remove();
-            return;
-          }
-          if (voiceModeBtn) voiceModeBtn.style.display = "";
-        }
-
-        updateVoiceModeUI();
-
-        // --- Voice Mode Floating UI ---
         function showVoiceModeUI() {
-          // Remove existing
           document.getElementById("voiceModeFloating")?.remove();
-          // Floating container
           voiceModeUI = document.createElement("div");
           voiceModeUI.id = "voiceModeFloating";
           voiceModeUI.style.position = "fixed";
@@ -3294,54 +3517,54 @@
           voiceModeUI.style.flexDirection = "column";
           voiceModeUI.style.alignItems = "flex-end";
           voiceModeUI.innerHTML = `
-                    <div class="liquid-glass" id="voiceModeTopbar" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px 10px 18px;border-radius:18px 18px 0 0;min-width:220px; width: 100%;">
-                        <span style="font-weight:700;font-size:1.1em;">Voice Mode</span>
-                        <button id="voiceModeClose" style="background:none;border:none;color:#fff;font-size:1.5em;cursor:pointer;">&times;</button>
-                    </div>
-                    <div id="voiceHistoryWrapper" style="background:rgba(25,0,71,0.13);backdrop-filter:blur(2px) saturate(180%);border-radius:0 0 18px 18px;box-shadow:0 2px 16px #0002;padding:12px 18px 12px 18px;max-width:340px;min-width:220px;max-height:260px;overflow-y:auto;">
-                        <div style="font-size:0.97em;color:#aaa;margin-bottom:6px;">Voice History</div>
-                        <div id="voiceHistoryList" style="display:flex;flex-direction:column;gap:8px;"></div>
-                    </div>
-                    <button id="voiceMicBtn" class="liquid-glass" style="margin-top:12px;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;">
-                        <span class="material-symbols-rounded" style="font-size:2.2em;color:#fff;">mic</span>
-                    </button>
-                `;
+            <div class="liquid-glass" id="voiceModeTopbar" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px 10px 18px;border-radius:18px 18px 0 0;min-width:220px; width: 100%;">
+            <span style="font-weight:700;font-size:1.1em;">Voice Mode</span>
+            <button id="voiceModeClose" style="background:none;border:none;color:#fff;font-size:1.5em;cursor:pointer;">&times;</button>
+            </div>
+            <div id="voiceHistoryWrapper" style="background:rgba(25,0,71,0.13);backdrop-filter:blur(2px) saturate(180%);border-radius:0 0 18px 18px;box-shadow:0 2px 16px #0002;padding:12px 18px 12px 18px;max-width:340px;min-width:220px;max-height:260px;overflow-y:auto;">
+            <div style="font-size:0.97em;color:#aaa;margin-bottom:6px;">Voice History</div>
+            <div id="voiceHistoryList" style="display:flex;flex-direction:column;gap:8px;"></div>
+            </div>
+            <button id="voiceMicBtn" class="liquid-glass" style="margin-top:12px;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+            <span class="material-symbols-rounded" style="font-size:2.2em;color:#fff;">mic</span>
+            </button>
+            `;
           document.body.appendChild(voiceModeUI);
 
           // Topbar close
           voiceModeUI.querySelector("#voiceModeClose").onclick = function () {
-            voiceModeUI.remove();
+        voiceModeUI.remove();
           };
 
           // Voice history
           let voiceHistory = [];
           function renderVoiceHistory() {
-            const list = voiceModeUI.querySelector("#voiceHistoryList");
-            list.innerHTML = "";
-            if (!voiceHistory.length) {
-              list.innerHTML =
-                '<span style="color:#aaa;">No voice history.</span>';
-              return;
+        const list = voiceModeUI.querySelector("#voiceHistoryList");
+        list.innerHTML = "";
+        if (!voiceHistory.length) {
+          list.innerHTML =
+            '<span style="color:#aaa;">No voice history.</span>';
+          return;
+        }
+        voiceHistory
+          .slice(-10)
+          .reverse()
+          .forEach((msg, i) => {
+            const div = document.createElement("div");
+            div.style.background = "#a259f722";
+            div.style.borderRadius = "8px";
+            div.style.padding = "6px 10px";
+            div.style.fontSize = "1em";
+            div.style.color = "#fff";
+            div.style.cursor =
+          msg.type === "result" ? "pointer" : "default";
+            div.textContent = msg.text;
+            if (msg.type === "result" && msg.link) {
+          div.onclick = () => window.open(msg.link, "_blank");
+          div.style.textDecoration = "underline";
             }
-            voiceHistory
-              .slice(-10)
-              .reverse()
-              .forEach((msg, i) => {
-                const div = document.createElement("div");
-                div.style.background = "#a259f722";
-                div.style.borderRadius = "8px";
-                div.style.padding = "6px 10px";
-                div.style.fontSize = "1em";
-                div.style.color = "#fff";
-                div.style.cursor =
-                  msg.type === "result" ? "pointer" : "default";
-                div.textContent = msg.text;
-                if (msg.type === "result" && msg.link) {
-                  div.onclick = () => window.open(msg.link, "_blank");
-                  div.style.textDecoration = "underline";
-                }
-                list.appendChild(div);
-              });
+            list.appendChild(div);
+          });
           }
 
           // Mic button logic
@@ -3349,194 +3572,194 @@
           let recognition = null;
           let isListening = false;
           micBtn.onclick = function () {
-            if (isListening) {
-              stopVoiceRecognition();
-            } else {
-              startVoiceRecognition();
-            }
+        if (isListening) {
+          stopVoiceRecognition();
+        } else {
+          startVoiceRecognition();
+        }
           };
 
           // Play sound
           function playSound(type) {
-            if (typeof Tone === "undefined") {
-              const script = document.createElement("script");
-              script.src =
-                "https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.js";
-              script.onload = () => playSound(type);
-              document.head.appendChild(script);
-              return;
-            }
-            let synth = window._voiceSynth;
-            if (!synth) {
-              synth = new Tone.PolySynth(Tone.Synth, {
-                oscillator: { type: "triangle" },
-                envelope: {
-                  attack: 0.01,
-                  decay: 0.1,
-                  sustain: 0.1,
-                  release: 0.2,
-                },
-              }).toDestination();
-              window._voiceSynth = synth;
-            }
-            if (type === "listening") {
-              synth.triggerAttackRelease("C5", "8n");
-            } else if (type === "done") {
-              synth.triggerAttackRelease("C3", "8n");
-            } else if (type === "denied") {
-              synth.triggerAttackRelease("C4", "8n");
-            }
+        if (typeof Tone === "undefined") {
+          const script = document.createElement("script");
+          script.src =
+            "https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.js";
+          script.onload = () => playSound(type);
+          document.head.appendChild(script);
+          return;
+        }
+        let synth = window._voiceSynth;
+        if (!synth) {
+          synth = new Tone.PolySynth(Tone.Synth, {
+            oscillator: { type: "triangle" },
+            envelope: {
+          attack: 0.01,
+          decay: 0.1,
+          sustain: 0.1,
+          release: 0.2,
+            },
+          }).toDestination();
+          window._voiceSynth = synth;
+        }
+        if (type === "listening") {
+          synth.triggerAttackRelease("C5", "8n");
+        } else if (type === "done") {
+          synth.triggerAttackRelease("C3", "8n");
+        } else if (type === "denied") {
+          synth.triggerAttackRelease("C4", "8n");
+        }
           }
 
           // Speak text
           function speak(text) {
-            if ("speechSynthesis" in window) {
-              const utter = new SpeechSynthesisUtterance(text);
-              utter.lang = localStorage.getItem("searchLanguage") || "en";
-              window.speechSynthesis.speak(utter);
-            }
+        if ("speechSynthesis" in window) {
+          const utter = new SpeechSynthesisUtterance(text);
+          utter.lang = localStorage.getItem("searchLanguage") || "en";
+          window.speechSynthesis.speak(utter);
+        }
           }
 
           // Voice recognition logic
           function startVoiceRecognition() {
-            const SpeechRecognition =
-              window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) {
-              speak("Sorry, voice search is not supported in this browser.");
-              playSound("denied");
-              return;
-            }
-            if (recognition) {
-              recognition.stop();
-              recognition = null;
-            }
-            recognition = new SpeechRecognition();
-            recognition.lang = localStorage.getItem("searchLanguage") || "en";
-            recognition.interimResults = false;
-            recognition.continuous = true;
-            isListening = true;
-            playSound("listening");
-            micBtn.style.boxShadow = "0 0 0 8px #a259f744";
-            recognition.onresult = function (event) {
-              let transcript =
-                event.results[event.results.length - 1][0].transcript.trim();
-              voiceHistory.push({ text: transcript, type: "user" });
-              renderVoiceHistory();
-              handleVoiceCommand(transcript);
-              playSound("done");
-              // Don't stop listening; keep recognition running
-            };
-            recognition.onerror = function (event) {
-              playSound("denied");
-              micBtn.style.boxShadow = "0 2px 16px #a259f733";
-              speak("Sorry, I could not get your microphone");
-              voiceHistory.push({
-                text: "Sorry, I could not get your microphone",
-                type: "system",
-              });
-              renderVoiceHistory();
-              stopVoiceRecognition();
-            };
-            recognition.onend = function () {
-              if (isListening) {
-                // Restart recognition for continuous listening
-                try {
-                  recognition.start();
-                } catch {}
-              } else {
-                micBtn.style.boxShadow = "0 2px 16px #a259f733";
-              }
-            };
-            recognition.start();
+        const SpeechRecognition =
+          window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+          speak("Sorry, voice search is not supported in this browser.");
+          playSound("denied");
+          return;
+        }
+        if (recognition) {
+          recognition.stop();
+          recognition = null;
+        }
+        recognition = new SpeechRecognition();
+        recognition.lang = localStorage.getItem("searchLanguage") || "en";
+        recognition.interimResults = false;
+        recognition.continuous = true;
+        isListening = true;
+        playSound("listening");
+        micBtn.style.boxShadow = "0 0 0 8px #a259f744";
+        recognition.onresult = function (event) {
+          let transcript =
+            event.results[event.results.length - 1][0].transcript.trim();
+          voiceHistory.push({ text: transcript, type: "user" });
+          renderVoiceHistory();
+          handleVoiceCommand(transcript);
+          playSound("done");
+          // Don't stop listening; keep recognition running
+        };
+        recognition.onerror = function (event) {
+          playSound("denied");
+          micBtn.style.boxShadow = "0 2px 16px #a259f733";
+          speak("Sorry, I could not get your microphone");
+          voiceHistory.push({
+            text: "Sorry, I could not get your microphone",
+            type: "system",
+          });
+          renderVoiceHistory();
+          stopVoiceRecognition();
+        };
+        recognition.onend = function () {
+          if (isListening) {
+            // Restart recognition for continuous listening
+            try {
+          recognition.start();
+            } catch {}
+          } else {
+            micBtn.style.boxShadow = "0 2px 16px #a259f733";
+          }
+        };
+        recognition.start();
           }
 
           function stopVoiceRecognition() {
-            isListening = false;
-            if (recognition) {
-              recognition.onend = null;
-              recognition.stop();
-              recognition = null;
-            }
-            micBtn.style.boxShadow = "0 2px 16px #a259f733";
+        isListening = false;
+        if (recognition) {
+          recognition.onend = null;
+          recognition.stop();
+          recognition = null;
+        }
+        micBtn.style.boxShadow = "0 2px 16px #a259f733";
           }
 
           // Handle voice commands
           function handleVoiceCommand(text) {
-            // "search for ..." or "find ..." or "look up ..."
-            let searchMatch = text.match(/^(search for|find|look up)\s+(.+)/i);
-            if (searchMatch) {
-              let q = searchMatch[2];
-              document.getElementById("searchInput").value = q;
-              speak("Searching for " + q);
-              performSearch().then(() => {
-                // After results are rendered, speak which result to open
-                const results = document.querySelectorAll(".result-link");
-                if (results.length > 0) {
-                  speak(
-                    `Say "open result 1" to open the first result, or "open result 2" for the second, and so on.`,
-                  );
-                } else {
-                  speak("No results found.");
-                }
-              });
-              voiceHistory.push({
-                text: "Searching for: " + q,
-                type: "system",
-              });
-              renderVoiceHistory();
-              return;
+        // "search for ..." or "find ..." or "look up ..."
+        let searchMatch = text.match(/^(search for|find|look up)\s+(.+)/i);
+        if (searchMatch) {
+          let q = searchMatch[2];
+          document.getElementById("searchInput").value = q;
+          speak("Searching for " + q);
+          performSearch().then(() => {
+            // After results are rendered, speak which result to open
+            const results = document.querySelectorAll(".result-link");
+            if (results.length > 0) {
+          speak(
+            `Say "open result 1" to open the first result, or "open result 2" for the second, and so on.`,
+          );
+            } else {
+          speak("No results found.");
             }
-            // "choose result [number]" or "open result [number]"
-            let chooseMatch = text.match(/(choose|open) result (\d+)/i);
-            if (chooseMatch) {
-              let idx = parseInt(chooseMatch[2], 10) - 1;
-              let results = document.querySelectorAll(".result-link");
-              if (results[idx]) {
-                let link = results[idx].href;
-                speak("Opening result " + (idx + 1));
-                window.open(link, "_blank");
-                voiceHistory.push({
-                  text: "Opened result " + (idx + 1),
-                  type: "result",
-                  link,
-                });
-                renderVoiceHistory();
-                return;
-              } else {
-                speak("Sorry, I could not find that result.");
-                voiceHistory.push({
-                  text: "Sorry, I could not find that result.",
-                  type: "system",
-                });
-                renderVoiceHistory();
-                return;
-              }
-            }
-            // "clear history"
-            if (/clear history/i.test(text)) {
-              voiceHistory = [];
-              renderVoiceHistory();
-              speak("Voice history cleared.");
-              return;
-            }
-            // Fallback: treat as search
-            document.getElementById("searchInput").value = text;
-            speak("Searching for " + text);
-            performSearch().then(() => {
-              const results = document.querySelectorAll(".result-link");
-              if (results.length > 0) {
-                speak(
-                  `Say "open result 1" to open the first result, or "open result 2" for the second, and so on.`,
-                );
-              } else {
-                speak("No results found.");
-              }
-            });
+          });
+          voiceHistory.push({
+            text: "Searching for: " + q,
+            type: "system",
+          });
+          renderVoiceHistory();
+          return;
+        }
+        // "choose result [number]" or "open result [number]"
+        let chooseMatch = text.match(/(choose|open) result (\d+)/i);
+        if (chooseMatch) {
+          let idx = parseInt(chooseMatch[2], 10) - 1;
+          let results = document.querySelectorAll(".result-link");
+          if (results[idx]) {
+            let link = results[idx].href;
+            speak("Opening result " + (idx + 1));
+            window.open(link, "_blank");
             voiceHistory.push({
-              text: "Searching for: " + text,
-              type: "system",
+          text: "Opened result " + (idx + 1),
+          type: "result",
+          link,
             });
             renderVoiceHistory();
+            return;
+          } else {
+            speak("Sorry, I could not find that result.");
+            voiceHistory.push({
+          text: "Sorry, I could not find that result.",
+          type: "system",
+            });
+            renderVoiceHistory();
+            return;
+          }
+        }
+        // "clear history"
+        if (/clear history/i.test(text)) {
+          voiceHistory = [];
+          renderVoiceHistory();
+          speak("Voice history cleared.");
+          return;
+        }
+        // Fallback: treat as search
+        document.getElementById("searchInput").value = text;
+        speak("Searching for " + text);
+        performSearch().then(() => {
+          const results = document.querySelectorAll(".result-link");
+          if (results.length > 0) {
+            speak(
+          `Say "open result 1" to open the first result, or "open result 2" for the second, and so on.`,
+            );
+          } else {
+            speak("No results found.");
+          }
+        });
+        voiceHistory.push({
+          text: "Searching for: " + text,
+          type: "system",
+        });
+        renderVoiceHistory();
           }
 
           renderVoiceHistory();
@@ -3545,63 +3768,43 @@
         // Show floating UI when voice mode button is clicked
         if (voiceModeBtn) {
           voiceModeBtn.onclick = function () {
-            showVoiceModeUI();
+        showVoiceModeUI();
           };
         }
       })();
-      (function () {
-        // --- AI Overview Toggle ---
-        function isAIOverviewEnabled() {
-          return (
-            localStorage.getItem("enableAIOverview") === "true" ||
-            (document.getElementById("enableAIOverview") &&
-              document.getElementById("enableAIOverview").checked)
-          );
-        }
-        // Listen for Labs modal checkbox
-        document
-          .getElementById("enableAIOverview")
-          .addEventListener("change", function () {
-            localStorage.setItem("enableAIOverview", this.checked);
-          });
-        // Set AI Overview default ON if not set
-        document.addEventListener("DOMContentLoaded", function () {
-          const aiOverviewCheckbox =
-            document.getElementById("enableAIOverview");
-          if (localStorage.getItem("enableAIOverview") === null) {
-            localStorage.setItem("enableAIOverview", "true");
-            if (aiOverviewCheckbox) aiOverviewCheckbox.checked = true;
-          } else {
-            if (aiOverviewCheckbox)
-              aiOverviewCheckbox.checked =
-                localStorage.getItem("enableAIOverview") === "true";
-          }
-        });
 
-        // --- AI Overview Logic ---
-        const aiOverviewBox = document.getElementById("aiOverviewBox");
-        aiOverviewBox.classList.add("aioverviewbox");
-        aiOverviewBox.style.display = "none";
-        aiOverviewBox.style.margin = "24px auto";
-        aiOverviewBox.style.padding = "0";
-        aiOverviewBox.style.borderRadius = "18px";
-        aiOverviewBox.style.boxShadow = "0 4px 24px rgba(25,0,71,0.08)";
-        aiOverviewBox.style.backdropFilter =
-          "blur(4px) saturate(180%) contrast(85%) brightness(115%)";
-        aiOverviewBox.style.webkitBackdropFilter =
-          "blur(4px) saturate(180%) contrast(85%) brightness(115%)";
-        aiOverviewBox.style.background = "rgba(162,89,247,0.07)";
-        aiOverviewBox.style.transition = "box-shadow 0.2s, background 0.2s";
+      // --- AI Overview Toggle ---
+      // Always enabled by default, not in Labs
+      localStorage.setItem("enableAIOverview", "true");
+      document.addEventListener("DOMContentLoaded", function () {
+        const aiOverviewCheckbox = document.getElementById("enableAIOverview");
+        if (aiOverviewCheckbox) aiOverviewCheckbox.checked = true;
+      });
+
+      // --- AI Overview Logic ---
+      const aiOverviewBox = document.getElementById("aiOverviewBox");
+      aiOverviewBox.classList.add("aioverviewbox");
+      aiOverviewBox.style.display = "none";
+      aiOverviewBox.style.margin = "24px auto";
+      aiOverviewBox.style.padding = "0";
+      aiOverviewBox.style.borderRadius = "18px";
+      aiOverviewBox.style.boxShadow = "0 4px 24px rgba(25,0,71,0.08)";
+      aiOverviewBox.style.backdropFilter =
+        "blur(4px) saturate(180%) contrast(85%) brightness(115%)";
+      aiOverviewBox.style.webkitBackdropFilter =
+        "blur(4px) saturate(180%) contrast(85%) brightness(115%)";
+      aiOverviewBox.style.background = "rgba(162,89,247,0.07)";
+      aiOverviewBox.style.transition = "box-shadow 0.2s, background 0.2s";
 
         // AI Overview Q&A (expandable)
         const aiAnswers = [
           {
             keywords: [
               /what\s+is\s+munetios/i,
-              /munetios\s+(search|office|photos|calendar|tasks|notebook|api|blog)/i,
+              /munetios\s+(search|omniwrite|photos|calendar|tasks|notebook|api|blog)/i,
             ],
             answer:
-              "Munetios is a suite of modern, privacy-friendly web apps including search, office, calendar, photos, tasks, and more. It aims to provide a beautiful, fast, and secure experience without tracking users. Learn more at <a href='https://www.munetios.com' target='_blank' rel='noopener'>munetios.com</a>.",
+              "Munetios is a suite of modern, privacy-friendly web apps including search, omniwrite, calendar, photos, tasks, and more. It aims to provide a beautiful, fast, and secure experience without tracking users. Learn more at <a href='https://www.munetios.com' target='_blank' rel='noopener'>munetios.com</a>.",
           },
           {
             keywords: [
@@ -3627,7 +3830,7 @@
               /who\s+created\s+munetios/i,
             ],
             answer:
-              "Munetios was founded in Abington, Massachusetts by an independent developer passionate about privacy and modern web experiences.",
+              "Munetios was founded in Massachusetts by an independent developer passionate about privacy and modern web experiences.",
           },
           {
             keywords: [
@@ -3636,7 +3839,7 @@
               /munetios\s+established/i,
             ],
             answer:
-              "Munetios was founded on January 12, 2025 in Abington, Massachusetts. It started as a project focused on privacy-friendly, modern web apps and has since grown to include search, office, calendar, photos, tasks, and more.",
+              "Munetios was founded on February 9, 2025 in Massachusetts. It started as a project focused on privacy-friendly, modern web apps and has since grown to include search, office, calendar, photos, tasks, and more.",
           },
           {
             keywords: [
@@ -5815,6 +6018,11 @@
         }
 
         // --- AI Overview Render ---
+        function isAIOverviewEnabled() {
+          // Always enabled by default, but check localStorage if you want to allow toggling in the future
+          return localStorage.getItem("enableAIOverview") === "true";
+        }
+
         function renderAIOverview(query) {
           if (!isAIOverviewEnabled()) {
             aiOverviewBox.style.display = "none";
@@ -6096,7 +6304,7 @@
           .addEventListener("input", function () {
             renderAIOverview(this.value.trim());
           });
-      })();
+  
 
       document
         .getElementById("labsIcon")
@@ -6514,35 +6722,35 @@
         function playMicSound(type) {
           // Use Tone.js for mic sounds
           if (typeof Tone === "undefined") {
-            if (!micSoundLoaded) {
-              micSoundLoaded = true;
-              const script = document.createElement("script");
-              script.src =
-                "https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.js";
-              script.onload = () => playMicSound(type);
-              document.head.appendChild(script);
-            }
-            return;
+        if (!micSoundLoaded) {
+          micSoundLoaded = true;
+          const script = document.createElement("script");
+          script.src =
+            "https://cdn.jsdelivr.net/npm/tone@14.8.49/build/Tone.js";
+          script.onload = () => playMicSound(type);
+          document.head.appendChild(script);
+        }
+        return;
           }
           let synth = window._micSynth;
           if (!synth) {
-            synth = new Tone.PolySynth(Tone.Synth, {
-              oscillator: { type: "triangle" },
-              envelope: {
-                attack: 0.01,
-                decay: 0.1,
-                sustain: 0.1,
-                release: 0.2,
-              },
-            }).toDestination();
-            window._micSynth = synth;
+        synth = new Tone.PolySynth(Tone.Synth, {
+          oscillator: { type: "triangle" },
+          envelope: {
+            attack: 0.01,
+            decay: 0.1,
+            sustain: 0.1,
+            release: 0.2,
+          },
+        }).toDestination();
+        window._micSynth = synth;
           }
           if (type === "on") {
-            synth.triggerAttackRelease("C5", "8n");
+        synth.triggerAttackRelease("C5", "8n");
           } else if (type === "off") {
-            synth.triggerAttackRelease("C3", "8n");
+        synth.triggerAttackRelease("C3", "8n");
           } else if (type === "denied") {
-            synth.triggerAttackRelease("C4", "8n");
+        synth.triggerAttackRelease("C4", "8n");
           }
         }
 
@@ -6570,60 +6778,118 @@
           micWrapper.style.minHeight = "64px";
           micWrapper.style.userSelect = "none";
           micWrapper.innerHTML = `
-                <div id="micTranscript" style="flex:1;font-size:1.13em;font-weight:600;color:#fff;word-break:break-word;min-height:28px;display:flex;align-items:center;">
-                    ${text || "Tap the microphone to speak"}
-                </div>
-                <button id="micCircleBtn" style="width:56px;height:56px;border-radius:50%;background:#a259f7;display:flex;align-items:center;justify-content:center;border:none;outline:none;box-shadow:0 2px 16px #a259f733;cursor:pointer;transition:box-shadow 0.2s;">
-                    <span class="material-symbols-rounded" style="font-size:2em;color:#fff;">mic</span>
-                </button>
-            `;
+            <div id="micTranscript" style="flex:1;font-size:1.13em;font-weight:600;color:#fff;word-break:break-word;min-height:28px;display:flex;align-items:center;">
+            ${text || "Tap the microphone to speak"}
+            </div>
+            <button id="micCircleBtn" style="width:56px;height:56px;border-radius:50%;background:#a259f7;display:flex;align-items:center;justify-content:center;border:none;outline:none;box-shadow:0 2px 16px #a259f733;cursor:pointer;transition:box-shadow 0.2s;">
+            <span class="material-symbols-rounded" style="font-size:2em;color:#fff;">mic</span>
+            </button>
+        `;
           // Insert after aioverviewbox
           const overviewBox = document.querySelector(".aioverviewbox");
           if (overviewBox && overviewBox.parentNode) {
-            overviewBox.parentNode.insertBefore(
-              micWrapper,
-              overviewBox.nextSibling,
-            );
+        overviewBox.parentNode.insertBefore(
+          micWrapper,
+          overviewBox.nextSibling,
+        );
           } else {
-            document.body.appendChild(micWrapper);
+        document.body.appendChild(micWrapper);
           }
           // Animate mic button if listening
           const micBtn = micWrapper.querySelector("#micCircleBtn");
           if (state === "on") {
-            micBtn.style.boxShadow = "0 0 0 8px #a259f744";
+        micBtn.style.boxShadow = "0 0 0 8px #a259f744";
           } else {
-            micBtn.style.boxShadow = "0 2px 16px #a259f733";
+        micBtn.style.boxShadow = "0 2px 16px #a259f733";
           }
           // Mic button click
           micBtn.onclick = function () {
-            if (isListening) {
-              stopListening();
-            } else {
-              startListening();
-            }
+        if (isListening) {
+          stopListening();
+        } else {
+          startListening();
+        }
           };
         }
 
         function updateMicText(text) {
           if (micWrapper) {
-            micWrapper.querySelector("#micTranscript").textContent = text;
+        micWrapper.querySelector("#micTranscript").textContent = text;
           }
+        }
+        function showMicPrivacyModal(onContinue) {
+          // Detect browser provider for speech recognition
+          let provider = "your browser provider";
+          const ua = navigator.userAgent;
+          let isSupported = true;
+          if (/Edg\//.test(ua)) {
+            provider = "Microsoft";
+          } else if (/Chrome\//.test(ua)) {
+            provider = "Google";
+          } else if (/Safari\//.test(ua) && !/Chrome\//.test(ua)) {
+            provider = "Apple";
+          } else if (/Firefox\//.test(ua)) {
+            provider = "Unsupported";
+            isSupported = false;
+          }
+          // Remove any existing modal
+          document.getElementById("micPrivacyModal")?.remove();
+          const modal = document.createElement("div");
+          modal.id = "micPrivacyModal";
+          modal.style.position = "fixed";
+          modal.style.top = "0";
+          modal.style.left = "0";
+          modal.style.width = "100vw";
+          modal.style.height = "100vh";
+          modal.style.background = "rgba(0,0,0,0.35)";
+          modal.style.display = "flex";
+          modal.style.alignItems = "center";
+          modal.style.justifyContent = "center";
+          modal.style.zIndex = "10050";
+          modal.innerHTML = `
+        <div class="liquid-glass" style="padding:32px 28px 24px 28px;border-radius:18px;box-shadow:0 4px 32px #0002;max-width:95vw;min-width:320px;position:relative;">
+          <div style="font-size:1.2em;font-weight:600;margin-bottom:12px;">Voice Search Privacy Warning</div>
+          <div style="margin-bottom:18px;font-size:1.05em;">
+            <b>Important:</b> When you use voice search, your speech may be sent to your browser’s built-in speech recognition service and processed by ${provider}. <br><br>
+            <b>Munetios does not collect or store your voice data.</b> <br>
+            ${provider} may process your voice input according to their privacy policy.<br><br>
+            <b>Munetios AI Speech Services is coming soon for private, local voice recognition.</b>
+            ${!isSupported ? `<br><br><span style="color:#e34133;"><b>Note:</b> Voice search is not supported in Firefox.</span>` : ""}
+          </div>
+          <div style="display:flex;gap:12px;justify-content:flex-end;">
+            <button id="micPrivacyCancel" class="btn liquid-glass" style="background:#aaa;color:#fff;">Cancel</button>
+            <button id="micPrivacyContinue" class="btn liquid-glass" style="background:#a259f7;color:#fff;" ${!isSupported ? "disabled" : ""}>Continue</button>
+          </div>
+        </div>
+          `;
+          document.body.appendChild(modal);
+          modal.querySelector("#micPrivacyCancel").onclick = function () {
+            modal.remove();
+          };
+          modal.querySelector("#micPrivacyContinue").onclick = function () {
+            modal.remove();
+            if (typeof onContinue === "function" && isSupported) onContinue();
+          };
+          // Close on click outside
+          modal.addEventListener("mousedown", function (ev) {
+            if (ev.target === modal) modal.remove();
+          });
         }
 
         function startListening() {
           const SpeechRecognition =
-            window.SpeechRecognition || window.webkitSpeechRecognition;
+        window.SpeechRecognition || window.webkitSpeechRecognition;
           if (!SpeechRecognition) {
-            showMicWrapper(
-              "Voice search not supported in this browser.",
-              "off",
-            );
-            playMicSound("denied");
-            return;
+        showMicWrapper(
+          "Voice search not supported in this browser.",
+          "off",
+        );
+        playMicSound("denied");
+        return;
           }
           if (recognition) {
-            recognition.stop();
-            recognition = null;
+        recognition.stop();
+        recognition = null;
           }
           recognition = new SpeechRecognition();
           recognition.lang = localStorage.getItem("searchLanguage") || "en";
@@ -6633,105 +6899,105 @@
           playMicSound("on");
           showMicWrapper("Listening...", "on");
           recognition.onresult = function (event) {
-            let transcript =
-              event.results[event.results.length - 1][0].transcript.trim();
-            lastTranscript = transcript;
-            updateMicText(transcript);
-            // Fill search input and perform search
-            searchInput.value = transcript;
-            setTimeout(() => {
-              showMicWrapper("Searching: " + transcript, "off");
-              performSearch();
-              setTimeout(() => {
-                micWrapper?.remove();
-              }, 1200);
-            }, 600);
-            stopListening();
+        let transcript =
+          event.results[event.results.length - 1][0].transcript.trim();
+        lastTranscript = transcript;
+        updateMicText(transcript);
+        // Fill search input and perform search
+        searchInput.value = transcript;
+        setTimeout(() => {
+          showMicWrapper("Searching: " + transcript, "off");
+          performSearch();
+          setTimeout(() => {
+            micWrapper?.remove();
+          }, 1200);
+        }, 600);
+        stopListening();
           };
           recognition.onerror = function (event) {
-            if (
-              event.error === "not-allowed" ||
-              event.error === "denied" ||
-              event.error === "no-speech"
-            ) {
-              playMicSound("denied");
-              showMicWrapper(
-                "Want to search your voice? Make sure you allow microphone access for Munetios to search with your voice.",
-                "off",
-              );
-              updateMicText(
-                "Want to search your voice? Make sure you allow microphone access for Munetios to search with your voice.",
-              );
-              stopListening({ denied: true });
-            } else if (event.error === "audio-capture") {
-              playMicSound("denied");
-              showMicWrapper(
-                "Microphone not found. Please connect a microphone to use voice search.",
-                "off",
-              );
-              updateMicText(
-                "Microphone not found. Please connect a microphone to use voice search.",
-              );
-              stopListening({ denied: true });
-            } else if (event.error === "aborted") {
-              showMicWrapper("Oops Something went wrong", "off");
-              playMicSound("off");
-              stopListening();
-            } else if (event.error === "service-not-allowed") {
-              playMicSound("denied");
-              showMicWrapper(
-                "Microphone access is blocked. Please enable microphone permissions in your browser settings.",
-                "off",
-              );
-              stopListening();
-            } else if (event.error === "bad-grammar") {
-              playMicSound("denied");
-              showMicWrapper(
-                "There was a problem with the speech recognition grammar.",
-                "off",
-              );
-              stopListening();
-            } else if (event.error === "language-not-supported") {
-              playMicSound("denied");
-              showMicWrapper(
-                "The selected language is not supported for speech recognition.",
-                "off",
-              );
-              stopListening();
-            } else if (event.error === "timeout") {
-              playMicSound("denied");
-              showMicWrapper("Listening timed out. Please try again.", "off");
-              stopListening();
-            } else if (event.error === "internal-error") {
-              playMicSound("denied");
-              showMicWrapper(
-                "An internal error occurred in the speech recognition service.",
-                "off",
-              );
-              stopListening();
-            } else if (event.error === "unsupported") {
-              playMicSound("denied");
-              showMicWrapper(
-                "Voice search is not supported on this device.",
-                "off",
-              );
-              stopListening();
-            } else if (event.error === "network") {
-              playMicSound("denied");
-              showMicWrapper(
-                "Network error occurred during speech recognition.",
-                "off",
-              );
-              stopListening();
-            } else {
-              showMicWrapper("Could not get microphone.", "off");
-              stopListening();
-            }
+        if (
+          event.error === "not-allowed" ||
+          event.error === "denied" ||
+          event.error === "no-speech"
+        ) {
+          playMicSound("denied");
+          showMicWrapper(
+            "Want to search your voice? Make sure you allow microphone access for Munetios to search with your voice.",
+            "off",
+          );
+          updateMicText(
+            "Want to search your voice? Make sure you allow microphone access for Munetios to search with your voice.",
+          );
+          stopListening({ denied: true });
+        } else if (event.error === "audio-capture") {
+          playMicSound("denied");
+          showMicWrapper(
+            "Microphone not found. Please connect a microphone to use voice search.",
+            "off",
+          );
+          updateMicText(
+            "Microphone not found. Please connect a microphone to use voice search.",
+          );
+          stopListening({ denied: true });
+        } else if (event.error === "aborted") {
+          showMicWrapper("Oops Something went wrong", "off");
+          playMicSound("off");
+          stopListening();
+        } else if (event.error === "service-not-allowed") {
+          playMicSound("denied");
+          showMicWrapper(
+            "Microphone access is blocked. Please enable microphone permissions in your browser settings.",
+            "off",
+          );
+          stopListening();
+        } else if (event.error === "bad-grammar") {
+          playMicSound("denied");
+          showMicWrapper(
+            "There was a problem with the speech recognition grammar.",
+            "off",
+          );
+          stopListening();
+        } else if (event.error === "language-not-supported") {
+          playMicSound("denied");
+          showMicWrapper(
+            "The selected language is not supported for speech recognition.",
+            "off",
+          );
+          stopListening();
+        } else if (event.error === "timeout") {
+          playMicSound("denied");
+          showMicWrapper("Listening timed out. Please try again.", "off");
+          stopListening();
+        } else if (event.error === "internal-error") {
+          playMicSound("denied");
+          showMicWrapper(
+            "An internal error occurred in the speech recognition service.",
+            "off",
+          );
+          stopListening();
+        } else if (event.error === "unsupported") {
+          playMicSound("denied");
+          showMicWrapper(
+            "Voice search is not supported on this device.",
+            "off",
+          );
+          stopListening();
+        } else if (event.error === "network") {
+          playMicSound("denied");
+          showMicWrapper(
+            "Network error occurred during speech recognition.",
+            "off",
+          );
+          stopListening();
+        } else {
+          showMicWrapper("Could not get microphone.", "off");
+          stopListening();
+        }
           };
           recognition.onend = function () {
-            if (isListening) {
-              stopListening();
-            }
+        if (isListening) {
+          stopListening();
+        }
           };
           recognition.start();
         }
@@ -6739,41 +7005,44 @@
         function stopListening(options = {}) {
           isListening = false;
           if (recognition) {
-            recognition.onend = null;
-            recognition.stop();
-            recognition = null;
+        recognition.onend = null;
+        recognition.stop();
+        recognition = null;
           }
           if (options && options.denied) {
-            // Don't show "Microphone off" if denied
-            return;
+        // Don't show "Microphone off" if denied
+        return;
           }
           playMicSound("off");
           showMicWrapper(
-            "Microphone off. Tap the microphone button to speak.",
-            "off",
+        "Microphone off. Tap the microphone button to speak.",
+        "off",
           );
         }
 
         micIcon.addEventListener("click", function () {
-          if (isListening) {
-            stopListening();
-            if (micWrapper && micWrapper.parentNode) {
-              micWrapper.remove();
-            }
-            return;
+          // Show privacy modal before starting voice search
+          showMicPrivacyModal(() => {
+        if (isListening) {
+          stopListening();
+          if (micWrapper && micWrapper.parentNode) {
+            micWrapper.remove();
           }
-          startListening();
+          return;
+        }
+        startListening();
+          });
         });
 
         // Remove mic wrapper if click outside
         document.addEventListener("mousedown", function (e) {
           if (
-            micWrapper &&
-            !micWrapper.contains(e.target) &&
-            e.target !== micIcon
+        micWrapper &&
+        !micWrapper.contains(e.target) &&
+        e.target !== micIcon
           ) {
-            micWrapper.remove();
-            stopListening();
+        micWrapper.remove();
+        stopListening();
           }
         });
       })();
@@ -7028,6 +7297,31 @@
                   // Reddit fetch failed, ignore
                   console.log("Reddit fetch error:", err);
                 }
+                // Fetch Hacker News search results
+                let hnResults = [];
+                if (query !== "@all") {
+                  try {
+                  const hnRes = await fetch(
+                    `https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(query)}&hitsPerPage=40` // higher hitsPerPage = more results
+                  );
+                  const hnData = await hnRes.json();
+                  if (hnData.hits && Array.isArray(hnData.hits)) {
+                    hnResults = hnData.hits
+                    .filter(item => item.title && item.url)
+                    .map(item => ({
+                      title: item.title,
+                      description: item._highlightResult && item._highlightResult.title && item._highlightResult.title.value
+                      ? item._highlightResult.title.value.replace(/<\/?[^>]+(>|$)/g, "")
+                      : "Hacker News",
+                      link: item.url,
+                      favicon: "" // blank = depends
+                    }));
+                  }
+                  } catch (err) {
+                  // Hacker News fetch failed, ignore
+                  console.log("Hacker News fetch error:", err);
+                  }
+                }
                 // Fetch Stack Overflow search results
                 let stackResults = [];
                 if (query !== "@all") {
@@ -7108,6 +7402,7 @@
                 // Combine all results
                 let filtered = [
                   ...filteredLocal,
+                  ...hnResults,
                   ...redditResults,
                   ...stackResults,
                   ...wikiResults,
@@ -7949,88 +8244,480 @@
           }
           showSkeletonLoading();
           isLoading = true;
-          try {
+            try {
             // Static video data set (example)
             const staticVideos = [
               {
-                title: "Introducing Munetios Search our search engine",
-                description:
-                  "We have over 100+ Search Results and you can do more with it. Also you can search privately without being tracked",
-                link: "https://www.youtube.com/watch?v=75msyGeQ_4c",
-                thumbnail:
-                  "https://i9.ytimg.com/vi_webp/75msyGeQ_4c/mqdefault.webp?v=690684a8&sqp=CLDDqckG&rs=AOn4CLAHpSOh2DthCkVhB3_7ZYTIKlcpZg",
+              title: "This Maps App Respects Your Privacy",
+              url: "https://youtu.be/ZRPmCGroTxY?si=SuwxVS26bPKnCHRW",
+              link: "https://youtu.be/ZRPmCGroTxY?si=SuwxVS26bPKnCHRW",
+              description:
+                "Most maps apps track you. Discover a private alternative.",
+              thumbnail:
+                "https://img.youtube.com/vi/ZRPmCGroTxY/hqdefault.jpg",
+              source: "YouTube",
               },
               {
-                title: "Introducing Munetios Photos",
-                description:
-                  "We are releasing the Munetios Photos App \n Try it out: https://photos.munetios.com",
-                link: "https://youtu.be/n7uAoFw1k-w",
-                thumbnail:
-                  "https://i9.ytimg.com/vi_webp/n7uAoFw1k-w/mq2.webp?sqp=CIjIqckG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGFwgFih_MA8=&rs=AOn4CLCNT-nH30uer17yAHCXAT_aH7frNA",
+              title:
+                "I Made a To-Do App Even I Can’t Read (End-to-End Encrypted)",
+              url: "https://youtu.be/w0fP4choa9A?si=mcdZuUNCKmeqXpao",
+              link: "https://youtu.be/w0fP4choa9A?si=mcdZuUNCKmeqXpao",
+              description:
+                "Most to-do and task apps store your tasks on their servers. Not this one.",
+              thumbnail:
+                "https://img.youtube.com/vi/w0fP4choa9A/hqdefault.jpg",
+              source: "YouTube",
               },
               {
-                title: "Introducing Munetios office early preview",
-                description:
-                  "We made our office suite like Docs, Sheets and Journal but note that presentations are coming soon and hard to make.",
-                link: "https://youtu.be/4G_fjwxzDMM",
-                thumbnail:
-                  "https://i9.ytimg.com/vi_webp/4G_fjwxzDMM/mq2.webp?sqp=CLTKqckG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGFwgRyhyMA8=&rs=AOn4CLBq4ybD2O-djKvJh64WKEe2s-lZKw",
+              title: "This Search Engine Doesn’t Track You",
+              url: "https://youtu.be/fizYuaKpAi0?si=JOVxuTlCQa8p8o1p",
+              link: "https://youtu.be/fizYuaKpAi0?si=JOVxuTlCQa8p8o1p",
+              description:
+                "I built Munetios Search — a privacy-first search engine that doesn’t track you.",
+              thumbnail:
+                "https://img.youtube.com/vi/fizYuaKpAi0/hqdefault.jpg",
+              source: "YouTube",
               },
               {
-                title: "Improvements in Minecraft skygen 2",
-                description: "Some Improvements",
-                link: "https://youtu.be/hcwRXBppwRE",
-                thumbnail:
-                  "https://i9.ytimg.com/vi_webp/hcwRXBppwRE/mq2.webp?sqp=CLTKqckG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEogUShlMA8=&rs=AOn4CLDl5JGotjUN5dxyacjTcYZ1yIEbNg",
+              title: "Introducing Munetios office early preview",
+              url: "https://www.youtube.com/watch?v=4G_fjwxzDMM",
+              link: "https://www.youtube.com/watch?v=4G_fjwxzDMM",
+              description:
+                "An early preview of the Munetios office suite including Docs, Sheets, and Journal.",
+              thumbnail:
+                "https://img.youtube.com/vi/4G_fjwxzDMM/hqdefault.jpg",
+              source: "YouTube",
               },
               {
-                title: "Improvements in Minecraft skygen",
-                description: "Some Improvements",
-                link: "https://youtu.be/aJt6XGzW0UM",
-                thumbnail:
-                  "https://i9.ytimg.com/vi_webp/aJt6XGzW0UM/mq2.webp?sqp=CLTKqckG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGMgYyhjMA8=&rs=AOn4CLAimIhXhhYxKZI2LemQB84aN3Oz2w",
+              title: "Introducing Munetios Search our search engine",
+              url: "https://www.youtube.com/watch?v=75msyGeQ_4c",
+              link: "https://www.youtube.com/watch?v=75msyGeQ_4c",
+              description:
+                "We have over 100+ Search Results and you can do more with it privately.",
+              thumbnail:
+                "https://img.youtube.com/vi/75msyGeQ_4c/hqdefault.jpg",
+              source: "YouTube",
               },
               {
-                title: "Introducing Munetios Notebook!",
-                description:
-                  "It's built to be secured, safe, and local \n You can do: \n - Make notebook\n- Add tags\n- and more\nTry it now: https://notebook.munetios.com",
-                link: "https://youtu.be/OL5yqDxhusk",
-                thumbnail:
-                  "https://i9.ytimg.com/vi/OL5yqDxhusk/mqdefault.jpg?v=68e5dc4d&sqp=CLTKqckG&rs=AOn4CLBwdBAx0UOL1wgL4XsUGw596xm_Hg",
+              title: "I made a search engine with no tracking",
+              url: "https://www.youtube.com/watch?v=zwrduRv97po",
+              link: "https://www.youtube.com/watch?v=zwrduRv97po",
+              description:
+                "Most search engines track what you search. So I built Munetios Search.",
+              thumbnail:
+                "https://img.youtube.com/vi/zwrduRv97po/hqdefault.jpg",
+              source: "YouTube",
               },
               {
-                title:
-                  "Minecraft SkyGen Update: Added Sponsored, some improvements.",
-                description:
-                  "So I havent play minecraft for 1 month so I'm back. \n So we added ads to SkyGen they are not banner or video ads. its just message. \n If you want to remove them. you can buy VIP",
-                link: "https://youtu.be/5jwa9m8sTxQ",
-                thumbnail:
-                  "https://i9.ytimg.com/vi_webp/5jwa9m8sTxQ/mq2.webp?sqp=CLTKqckG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGFEgVihlMA8=&rs=AOn4CLAlGWfj-uQeZu6tLAK-45yE38XcTA",
+              title: "What's New in Munetios Search",
+              url: "https://www.youtube.com/watch?v=NopEMDIO5cc",
+              link: "https://www.youtube.com/watch?v=NopEMDIO5cc",
+              description:
+                "New features update for Munetios Search, including Map Search and improved images.",
+              thumbnail:
+                "https://img.youtube.com/vi/NopEMDIO5cc/hqdefault.jpg",
+              source: "YouTube",
               },
               {
-                title: "Introducing Munetios API's!",
-                description:
-                  "We had made our API so you can use Better HTML or Beautiful CSS.\nBetter HTML:\nYou can use card, cards, topbar, logo using HTML to make it.\nClasses for Beautiful CSS: liquid-glass, transparency, etc.\n\nRead more classes at https://api.munetios.com then go to documentation.\n\nLink: https://api.munetios.com",
-                link: "https://youtu.be/Qrmr4Ta4OCo",
-                thumbnail:
-                  "https://i9.ytimg.com/vi_webp/Qrmr4Ta4OCo/mq2.webp?sqp=CODMqckG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGE8gRShyMA8=&rs=AOn4CLCfDZl0RNhUZ3CnHypsugKsGhhsiw",
+              title: "Introducing Munetios Calendar New!",
+              url: "https://www.youtube.com/watch?v=qJktWeu-K1U",
+              link: "https://www.youtube.com/watch?v=qJktWeu-K1U",
+              description:
+                "Manage your events with the new Munetios Calendar featuring a beautiful liquid glass design.",
+              thumbnail:
+                "https://img.youtube.com/vi/qJktWeu-K1U/hqdefault.jpg",
+              source: "YouTube",
               },
               {
-                title:
-                  "How to export your events and move to the new Munetios Calendar",
-                description:
-                  "So note that the classic calendar shuts down at October 15 2025 so you can go to https://calendar.munetios.com then export your data then import to https://calendar.munetios.com/ Follow me on Socials TikTok:...",
-                link: "https://youtu.be/LHm0esrC5Rw",
-                thumbnail:
-                  "https://i9.ytimg.com/vi_webp/LHm0esrC5Rw/mq2.webp?sqp=CODMqckG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEkgEyh_MA8=&rs=AOn4CLCej2u34ZdTDCkMGNdOValfqI8zVQ",
+              title:
+                "How to export your events and move to the new Munetios Calendar",
+              url: "https://www.youtube.com/watch?v=LHm0esrC5Rw",
+              link: "https://www.youtube.com/watch?v=LHm0esrC5Rw",
+              description:
+                "A quick guide on how to safely export your data and migrate your schedule.",
+              thumbnail:
+                "https://img.youtube.com/vi/LHm0esrC5Rw/hqdefault.jpg",
+              source: "YouTube",
               },
               {
-                title: "Introducing Munetios Calendar New!",
-                description:
-                  "We made a better calendar that you can manage your events, and also the design looks beautiful and with liquid glass and animations. You can export your events from the classic calendar then import to the new calendar. Do more with the...",
-                link: "https://youtu.be/qJktWeu-K1U",
-                thumbnail:
-                  "https://i9.ytimg.com/vi_webp/qJktWeu-K1U/mqdefault.webp?v=68d6084e&sqp=CODMqckG&rs=AOn4CLCKbY8Llu4958_3ihrbVpSq7pLPTA",
+              title: "Changed the branding from GAMERYT To Munetios",
+              url: "https://www.youtube.com/watch?v=Tr4Xm_Tal6k",
+              link: "https://www.youtube.com/watch?v=Tr4Xm_Tal6k",
+              description:
+                "Official announcement regarding the rebrand from GAMERYT to Munetios.",
+              thumbnail:
+                "https://img.youtube.com/vi/Tr4Xm_Tal6k/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title:
+                "I Built a Fully Responsive Login Form Using ONLY HTML & CSS!",
+              url: "https://www.youtube.com/watch?v=05hsXrD4CQM",
+              link: "https://www.youtube.com/watch?v=05hsXrD4CQM",
+              description:
+                "Building a responsive login page with two selectable options using only HTML and CSS.",
+              thumbnail:
+                "https://img.youtube.com/vi/05hsXrD4CQM/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "I rebuilt my calendar app from scratch",
+              url: "https://www.youtube.com/watch?v=7H4SYygaxng",
+              link: "https://www.youtube.com/watch?v=7H4SYygaxng",
+              description:
+                "Munetios Calendar is now faster and more stable. Rebuilt from the ground up for a better user experience.",
+              thumbnail:
+                "https://img.youtube.com/vi/7H4SYygaxng/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "I built a photo app because I don’t trust trackers",
+              url: "https://www.youtube.com/watch?v=n7uAoFw1k-w",
+              link: "https://www.youtube.com/watch?v=n7uAoFw1k-w",
+              description:
+                "Most photo apps track you. That's why I built Munetios Photos — a privacy-first photo app with no tracking.",
+              thumbnail:
+                "https://img.youtube.com/vi/n7uAoFw1k-w/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title:
+                "Planning a Privacy Safe Search Strategy - Options in 2025/2026",
+              url: "https://www.youtube.com/watch?v=ZaXhGD1Zrp8",
+              link: "https://www.youtube.com/watch?v=ZaXhGD1Zrp8",
+              description:
+                "Understanding privacy invasions in modern search and how to build a safe strategy using private tools.",
+              thumbnail:
+                "https://img.youtube.com/vi/ZaXhGD1Zrp8/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title:
+                "AI browsers are the future? | Best Browsers of 2026 RANKED",
+              url: "https://www.youtube.com/watch?v=BQzieEorRBI",
+              link: "https://www.youtube.com/watch?v=BQzieEorRBI",
+              description:
+                "Comparing the next generation of browsers and search tools for privacy and speed.",
+              thumbnail:
+                "https://img.youtube.com/vi/BQzieEorRBI/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title:
+                "DuckDuckGo vs Google | Does Your Search Engine REALLY Matter???",
+              url: "https://www.youtube.com/watch?v=ZRA7KDldECY",
+              link: "https://www.youtube.com/watch?v=ZRA7KDldECY",
+              description:
+                "Analyzing the variables between mainstream engines and private alternatives.",
+              thumbnail:
+                "https://img.youtube.com/vi/ZRA7KDldECY/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "The problem with private web browsers",
+              url: "https://www.youtube.com/watch?v=YhY8pk86mxQ",
+              link: "https://www.youtube.com/watch?v=YhY8pk86mxQ",
+              description:
+                "A quick critical look at current privacy browser and search engine limitations.",
+              thumbnail:
+                "https://img.youtube.com/vi/YhY8pk86mxQ/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "The Best Private Search Engines in 2026 🎯",
+              url: "https://www.youtube.com/watch?v=_GPgjMHTvWM",
+              link: "https://www.youtube.com/watch?v=_GPgjMHTvWM",
+              description:
+                "Top 7 private search engine picks for 2026. Stay secure online.",
+              thumbnail:
+                "https://img.youtube.com/vi/_GPgjMHTvWM/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Is DuckDuckGo Safe? 🔥 Full Review 2026",
+              url: "https://www.youtube.com/watch?v=mPSoENFAtAw",
+              link: "https://www.youtube.com/watch?v=mPSoENFAtAw",
+              description:
+                "A comprehensive audit of DuckDuckGo's privacy features in the 2026 landscape.",
+              thumbnail:
+                "https://img.youtube.com/vi/mPSoENFAtAw/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Top 5 Search Engines That Don’t Track You in 2025!",
+              url: "https://www.youtube.com/watch?v=uO9-HuO4j8U",
+              link: "https://www.youtube.com/watch?v=uO9-HuO4j8U",
+              description:
+                "Stop being followed. These 5 engines prioritize your anonymity.",
+              thumbnail:
+                "https://img.youtube.com/vi/uO9-HuO4j8U/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Planning a Privacy Safe Search Strategy",
+              url: "https://www.youtube.com/watch?v=ZaXhGD1Zrp8",
+              link: "https://www.youtube.com/watch?v=ZaXhGD1Zrp8",
+              description:
+                "It's time to understand privacy invasions. Build a better strategy today.",
+              thumbnail:
+                "https://img.youtube.com/vi/ZaXhGD1Zrp8/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "7 Cybersecurity Tips NOBODY Tells You",
+              url: "https://www.youtube.com/watch?v=Uy60wy20ADE",
+              link: "https://www.youtube.com/watch?v=Uy60wy20ADE",
+              description:
+                "Easy and effective tips to secure your digital life beyond just passwords.",
+              thumbnail:
+                "https://img.youtube.com/vi/Uy60wy20ADE/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "I Tested 20 Browsers, That's The Best (and private)",
+              url: "https://www.youtube.com/watch?v=mAr8wLgDYj4",
+              link: "https://www.youtube.com/watch?v=mAr8wLgDYj4",
+              description:
+                "Ranking browsers for privacy and speed. Which one came out on top?",
+              thumbnail:
+                "https://img.youtube.com/vi/mAr8wLgDYj4/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Top 6 Most Secure Web Browsers in 2026 🎯",
+              url: "https://www.youtube.com/watch?v=7mncDljBusk",
+              link: "https://www.youtube.com/watch?v=7mncDljBusk",
+              description:
+                "The definitive guide to secure browsing in the current year.",
+              thumbnail:
+                "https://img.youtube.com/vi/7mncDljBusk/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "STOP using a VPN for Security! (here's why)",
+              url: "https://www.youtube.com/watch?v=8x1BJCKwqpI",
+              link: "https://www.youtube.com/watch?v=8x1BJCKwqpI",
+              description:
+                "The truth about VPNs and what they actually protect (and don't).",
+              thumbnail:
+                "https://img.youtube.com/vi/8x1BJCKwqpI/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "I'm leaving DuckDuckGo, and here's what I picked...",
+              url: "https://www.youtube.com/watch?v=ma2qDOkvaJo",
+              link: "https://www.youtube.com/watch?v=ma2qDOkvaJo",
+              description:
+                "Journey of finding a new private search engine. Why I made the switch.",
+              thumbnail:
+                "https://img.youtube.com/vi/ma2qDOkvaJo/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Brave Search vs DuckDuckGo: What is the best?",
+              url: "https://www.youtube.com/watch?v=7QFV7fnDFZg",
+              link: "https://www.youtube.com/watch?v=7QFV7fnDFZg",
+              description:
+                "A complete search engine comparison between two privacy giants.",
+              thumbnail:
+                "https://img.youtube.com/vi/7QFV7fnDFZg/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Stop Using Unsafe Browsers… Do This Instead",
+              url: "https://www.youtube.com/watch?v=pvxaLBbh_ko",
+              link: "https://www.youtube.com/watch?v=pvxaLBbh_ko",
+              description:
+                "Secure your digital gateway with these better browser options.",
+              thumbnail:
+                "https://img.youtube.com/vi/pvxaLBbh_ko/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Ultimate browser tier list 2026",
+              url: "https://www.youtube.com/watch?v=tJ6d2oKpVAI",
+              link: "https://www.youtube.com/watch?v=tJ6d2oKpVAI",
+              description:
+                "Ranking browsers from S-tier to F-tier for privacy and performance.",
+              thumbnail:
+                "https://img.youtube.com/vi/tJ6d2oKpVAI/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "I Tested 17 Browsers for Privacy (Tier List)",
+              url: "https://www.youtube.com/watch?v=0QJIILmUvRI",
+              link: "https://www.youtube.com/watch?v=0QJIILmUvRI",
+              description:
+                "Which browser spies on you? 17 popular options ranked.",
+              thumbnail:
+                "https://img.youtube.com/vi/0QJIILmUvRI/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "De-Google Your Life - Part 1",
+              url: "https://www.youtube.com/watch?v=YnSv8ylLfPw",
+              link: "https://www.youtube.com/watch?v=YnSv8ylLfPw",
+              description:
+                "Starting your journey to digital independence from Big Tech.",
+              thumbnail:
+                "https://img.youtube.com/vi/YnSv8ylLfPw/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Secure and Private Browsing Reviews",
+              url: "https://www.youtube.com/watch?v=hjPKXBYxTWM",
+              link: "https://www.youtube.com/watch?v=hjPKXBYxTWM",
+              description:
+                "Breaking down the lies and the truth about private browsing.",
+              thumbnail:
+                "https://img.youtube.com/vi/hjPKXBYxTWM/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title:
+                "World's Best Private Search Engine? Startpage VS DuckDuckGo",
+              url: "https://www.youtube.com/watch?v=pYmPOlgbh2s",
+              link: "https://www.youtube.com/watch?v=pYmPOlgbh2s",
+              description: "Comparing the big two in privacy search results.",
+              thumbnail:
+                "https://img.youtube.com/vi/pYmPOlgbh2s/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "I LEFT DUCKDUCKGO FOR THIS SEARCH ENGINE",
+              url: "https://www.youtube.com/watch?v=7xbnFDg6u2M",
+              link: "https://www.youtube.com/watch?v=7xbnFDg6u2M",
+              description:
+                "Why and how to move to a completely open-source search engine.",
+              thumbnail:
+                "https://img.youtube.com/vi/7xbnFDg6u2M/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "How to find and delete data Google has on you!",
+              url: "https://www.youtube.com/watch?v=-qKwjws_2ik",
+              link: "https://www.youtube.com/watch?v=-qKwjws_2ik",
+              description:
+                "Take back your privacy by clearing your historical footprint.",
+              thumbnail:
+                "https://img.youtube.com/vi/-qKwjws_2ik/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Are private search engines worth it?",
+              url: "https://www.youtube.com/watch?v=BkQ5qN2qY7E",
+              link: "https://www.youtube.com/watch?v=BkQ5qN2qY7E",
+              description:
+                "The pros and cons of moving away from Google for daily searches.",
+              thumbnail:
+                "https://img.youtube.com/vi/BkQ5qN2qY7E/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "How to Access Dark Web Safely",
+              url: "https://www.youtube.com/watch?v=VHhclHkzS_c",
+              link: "https://www.youtube.com/watch?v=VHhclHkzS_c",
+              description:
+                "A tutorial on staying safe and private in the depths of the internet.",
+              thumbnail:
+                "https://img.youtube.com/vi/VHhclHkzS_c/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "The Truth About Browser Privacy",
+              url: "https://www.youtube.com/watch?v=mCE-LB167ng",
+              link: "https://www.youtube.com/watch?v=mCE-LB167ng",
+              description:
+                "The good, the bad, and the dangerous browsers revealed.",
+              thumbnail:
+                "https://img.youtube.com/vi/mCE-LB167ng/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Best Browsers of 2025 Tier List",
+              url: "https://www.youtube.com/watch?v=UqrDqOIoS98",
+              link: "https://www.youtube.com/watch?v=UqrDqOIoS98",
+              description: "Fast and private browsers for the modern web.",
+              thumbnail:
+                "https://img.youtube.com/vi/UqrDqOIoS98/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "You are using DuckDuckGo Wrong!",
+              url: "https://www.youtube.com/watch?v=WiCqAcWRl_I",
+              link: "https://www.youtube.com/watch?v=WiCqAcWRl_I",
+              description:
+                "If you use it like this, you're not actually protected.",
+              thumbnail:
+                "https://img.youtube.com/vi/WiCqAcWRl_I/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Does DuckDuckGo Really Keep You Safe?",
+              url: "https://www.youtube.com/watch?v=A6K7Eh7s1os",
+              link: "https://www.youtube.com/watch?v=A6K7Eh7s1os",
+              description: "A quick fact-check on privacy claims.",
+              thumbnail:
+                "https://img.youtube.com/vi/A6K7Eh7s1os/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Ultimate Privacy Tier List 2026",
+              url: "https://www.youtube.com/watch?v=0QJIILmUvRI",
+              link: "https://www.youtube.com/watch?v=0QJIILmUvRI",
+              description: "Ranking 17 tools for maximum online anonymity.",
+              thumbnail:
+                "https://img.youtube.com/vi/0QJIILmUvRI/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Cybersecurity COMPLETE Beginner’s Guide",
+              url: "https://www.youtube.com/watch?v=y7_AwQovTtc",
+              link: "https://www.youtube.com/watch?v=y7_AwQovTtc",
+              description:
+                "Start from zero and learn how to protect your digital life.",
+              thumbnail:
+                "https://img.youtube.com/vi/y7_AwQovTtc/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "BRAVE vs DUCKDUCKGO: Most Secure?",
+              url: "https://www.youtube.com/watch?v=FDo_7noezfA",
+              link: "https://www.youtube.com/watch?v=FDo_7noezfA",
+              description: "Head-to-head comparison of two privacy giants.",
+              thumbnail:
+                "https://img.youtube.com/vi/FDo_7noezfA/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "The problem with private web browsers",
+              url: "https://www.youtube.com/watch?v=YhY8pk86mxQ",
+              link: "https://www.youtube.com/watch?v=YhY8pk86mxQ",
+              description:
+                "A short critique of common privacy browser pitfalls.",
+              thumbnail:
+                "https://img.youtube.com/vi/YhY8pk86mxQ/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "What Search Engine Do You Use?",
+              url: "https://www.youtube.com/watch?v=bV39pr4ANgg",
+              link: "https://www.youtube.com/watch?v=bV39pr4ANgg",
+              description:
+                "A quick look at why you should switch to private search.",
+              thumbnail:
+                "https://img.youtube.com/vi/bV39pr4ANgg/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Best Web Browser thats NOT Google Chrome",
+              url: "https://www.youtube.com/watch?v=qbo0PnkyXBo",
+              link: "https://www.youtube.com/watch?v=qbo0PnkyXBo",
+              description:
+                "Breaking the Chrome habit with faster, private alternatives.",
+              thumbnail:
+                "https://img.youtube.com/vi/qbo0PnkyXBo/hqdefault.jpg",
+              source: "YouTube",
               },
             ];
 
@@ -8044,45 +8731,98 @@
             clearResults();
             if (!videos.length) {
               resultsContainer.innerHTML =
-                '<div style="padding:32px 0;text-align:center;color:#aaa;">No videos found.</div>';
+              '<div style="padding:32px 0;text-align:center;color:#aaa;">No videos found.</div>';
             } else {
               const grid = document.createElement("div");
               grid.style.display = "grid";
               grid.style.gridTemplateColumns =
-                "repeat(auto-fit, minmax(260px, 1fr))";
+              "repeat(auto-fit, minmax(260px, 1fr))";
               grid.style.gap = "18px";
               videos.forEach((v) => {
-                const div = document.createElement("div");
-                div.className = "result";
-                div.style.cursor = "pointer";
-                div.innerHTML = `
-                            <a href="${
-                              v.link
-                            }" rel="noopener" target="_blank" style="display:block;">
-                                <img src="${v.thumbnail}" alt="${
-                                  v.title
-                                }" style="width:100%;max-height:160px;object-fit:cover;border-radius:12px;box-shadow:0 2px 8px #0002;">
-                                <div style="margin-top:8px;font-weight:600;font-size:1.1em;color:inherit;">${
-                                  v.title
-                                }</div>
-                                <div style="font-size:0.97em;color:#aaa;">${
-                                  v.description
-                                    ? v.description.substring(0, 80) + "..."
-                                    : ""
-                                }</div>
-                            </a>
-                        `;
-                grid.appendChild(div);
+              const div = document.createElement("div");
+              div.className = "result";
+              div.style.cursor = "pointer";
+              div.innerHTML = `
+                <a href="#" rel="noopener" style="display:block;">
+                <img src="${v.thumbnail}" alt="${v.title}" style="width:100%;max-height:160px;object-fit:cover;border-radius:12px;box-shadow:0 2px 8px #0002;">
+                <div style="margin-top:8px;font-weight:600;font-size:1.1em;color:inherit;">${v.title}</div>
+                <div style="font-size:0.97em;color:#aaa;">${v.description ? v.description.substring(0, 80) + "..." : ""}</div>
+                </a>
+              `;
+              // Modal logic
+              div.querySelector("a").onclick = function (e) {
+                e.preventDefault();
+                // Remove existing modal if any
+                document.getElementById("videoViewModal")?.remove();
+                // Extract YouTube video ID
+                let ytId = "";
+                const ytMatch = v.link.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_\-]+)/);
+                if (ytMatch) ytId = ytMatch[1];
+                const embedUrl = ytId
+                ? `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1`
+                : "";
+                const modal = document.createElement("div");
+                modal.id = "videoViewModal";
+                modal.style.position = "fixed";
+                modal.style.top = "0";
+                modal.style.left = "0";
+                modal.style.width = "100vw";
+                modal.style.height = "100vh";
+                modal.style.background = "rgba(0,0,0,0.55)";
+                modal.style.display = "flex";
+                modal.style.alignItems = "center";
+                modal.style.justifyContent = "center";
+                modal.style.zIndex = "10061";
+                modal.innerHTML = `
+                <div class="liquid-glass" style="max-width:900px;width:100%;max-height:96vh;overflow:auto;border-radius:22px;position:relative;padding:0;">
+                  <button id="videoViewModalClose" style="position:absolute;top:10px;right:10px;z-index:2;background:#a259f7;color:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:1.3em;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+                  &times;
+                  </button>
+                  <div style="padding:24px 32px 0 32px;">
+                  <div style="font-size:1.18em;font-weight:700;margin-bottom:8px;word-break:break-word;">${v.title || ""}</div>
+                  <div style="font-size:1em;color:#aaa;margin-bottom:18px;word-break:break-word;">${v.description || ""}</div>
+                  <div style="display:flex;gap:14px;margin-bottom:18px;">
+                    <button class="btn liquid-glass" id="videoWatchHereBtn" style="background:#a259f7;color:#fff;" ${embedUrl ? "" : "disabled"}>Watch Here</button>
+                    <a href="${v.link}" target="_blank" rel="noopener" class="btn liquid-glass" style="background:#e34133;color:#fff;">Watch on YouTube</a>
+                  </div>
+                  <div id="videoEmbedWrapper" style="display:none;margin-bottom:18px;">
+                    ${embedUrl ? `<iframe src="${embedUrl}" width="100%" height="400" frameborder="0" allowfullscreen allow="autoplay; encrypted-media"></iframe>` : "<div style='color:#aaa;'>Embed not available.</div>"}
+                  </div>
+                  <div style="display:flex;gap:14px;">
+                    <a href="${v.link}" target="_blank" rel="noopener" class="btn liquid-glass" style="background:#a259f7;color:#fff;">Visit</a>
+                  </div>
+                  </div>
+                </div>
+                `;
+                document.body.appendChild(modal);
+                document.body.style.overflow = "hidden";
+                modal.querySelector("#videoViewModalClose").onclick = function () {
+                modal.remove();
+                document.body.style.overflow = "";
+                };
+                modal.addEventListener("mousedown", function (e) {
+                if (e.target === modal) {
+                  modal.remove();
+                  document.body.style.overflow = "";
+                }
+                });
+                // Watch Here button logic
+                modal.querySelector("#videoWatchHereBtn").onclick = function () {
+                const embed = modal.querySelector("#videoEmbedWrapper");
+                if (embed) embed.style.display = "";
+                };
+              };
+              grid.appendChild(div);
               });
               resultsContainer.appendChild(grid);
             }
-          } catch (e) {
+            } catch (e) {
             clearResults();
             resultsContainer.innerHTML =
               '<div style="padding:32px 0;text-align:center;color:#e66;">Failed to load videos.</div>';
-          } finally {
+            } finally {
             isLoading = false;
-          }
+            }
         });
       document.addEventListener("click", async function (e) {
         // Handle "more" icon click for results
@@ -8318,6 +9058,114 @@
         document.body.appendChild(toast);
         setTimeout(() => toast.remove(), 2500);
       }
+      // --- Incognito Mode Logic ---
+      (function () {
+        const incognitoBtn = document.getElementById("incognitoIcon");
+        let isIncognito = false;
+
+        function setIncognitoMode(on) {
+          isIncognito = !!on;
+          if (isIncognito) {
+        window.location.hash = "#incognito";
+        // Hide labs/settings UI if present
+        document.getElementById("settingsBtn")?.setAttribute("disabled", "true");
+        document.getElementById("labsIcon")?.setAttribute("disabled", "true");
+        // Optionally visually indicate incognito mode
+        document.body.setAttribute("data-incognito", "true");
+          } else {
+        document.body.removeAttribute("data-incognito");
+        document.getElementById("settingsBtn")?.removeAttribute("disabled");
+        document.getElementById("labsIcon")?.removeAttribute("disabled");
+          }
+        }
+
+        // On click, toggle incognito mode
+        if (incognitoBtn) {
+          incognitoBtn.addEventListener("click", function () {
+            if (!isIncognito) {
+              setIncognitoMode(true);
+              showToast("Incognito Mode enabled");
+              // Clear incognito data on reload
+              window.addEventListener("beforeunload", function () {
+          if (window.location.hash === "#incognito") {
+            sessionStorage.clear();
+          }
+              });
+            } else {
+              setIncognitoMode(false);
+              showToast("Incognito Mode disabled");
+              // Remove hash if disabling incognito
+              if (window.location.hash === "#incognito") {
+          history.replaceState(null, "", window.location.pathname + window.location.search);
+              }
+            }
+          });
+        }
+
+        // On hashchange, enable/disable incognito mode
+        window.addEventListener("hashchange", function () {
+          if (window.location.hash === "#incognito") {
+        setIncognitoMode(true);
+          } else {
+        setIncognitoMode(false);
+          }
+        });
+
+        // On load, check hash
+        if (window.location.hash === "#incognito") {
+          setIncognitoMode(true);
+        }
+
+        // Patch search history, labs, and settings to do nothing in incognito
+        function isIncognitoMode() {
+          return window.location.hash === "#incognito";
+        }
+
+        // Patch saveSearchHistory
+        if (window.saveSearchHistory) {
+          const origSaveSearchHistory = window.saveSearchHistory;
+          window.saveSearchHistory = function (query) {
+        if (isIncognitoMode()) return;
+        origSaveSearchHistory(query);
+          };
+        }
+
+        // Patch performSearch to skip history in incognito
+        if (window.performSearch) {
+          const origPerformSearchIncog = window.performSearch;
+          window.performSearch = async function () {
+        if (isIncognitoMode()) {
+          // Don't save history
+          await origPerformSearchIncog.apply(this, arguments);
+        } else {
+          await origPerformSearchIncog.apply(this, arguments);
+        }
+          };
+        }
+
+        // Patch labs/settings open
+        document.getElementById("settingsBtn")?.addEventListener("click", function (e) {
+          if (isIncognitoMode()) {
+        showToast("Settings are disabled in Incognito Mode");
+        e.stopImmediatePropagation();
+        return false;
+          }
+        }, true);
+        document.getElementById("labsIcon")?.addEventListener("click", function (e) {
+          if (isIncognitoMode()) {
+        showToast("Labs are disabled in Incognito Mode");
+        e.stopImmediatePropagation();
+        return false;
+          }
+        }, true);
+
+        // On reload in incognito, clear sessionStorage
+        window.addEventListener("DOMContentLoaded", function () {
+          if (isIncognitoMode()) {
+        sessionStorage.clear();
+          }
+        });
+      })();
     </script>
     <script nonce="rjighegujregergrejge">
       /* Results and crawler rendering */
@@ -15979,6 +16827,12 @@
           }
         } catch (e) {}
       })();
+      // --- Enable Voice Mode by Default on Load ---
+      window.addEventListener("DOMContentLoaded", function () {
+        if (localStorage.getItem("enableVoiceMode") !== "true") {
+          localStorage.setItem("enableVoiceMode", "true");
+        }
+      });
     </script>
   </body>
 </html>
