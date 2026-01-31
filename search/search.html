@@ -2398,7 +2398,7 @@
           if (!text) return false;
           return patterns.some((re) => re.test(text));
         }
-
+        
         return results.filter((r) => {
           const fields = [r.title, r.description, r.url].join(" ");
           if (safeSearchLevel === "strict") {
@@ -2410,6 +2410,7 @@
           return true;
         });
       }
+      
       // Patch renderResults to filter
       const origRenderResultsSafeSearch = renderResults;
       renderResults = function (results) {
@@ -7271,7 +7272,6 @@
                           r.link.toLowerCase().includes(query.toLowerCase()))),
                   );
                 }
-                // Fetch Reddit results if Labs "Enable Reddit Results" is ON
                 let redditResults = [];
                 try {
                   const enableReddit = localStorage.getItem("enableRedditResults") === "true";
@@ -7747,7 +7747,7 @@
             // Static dataset of images (add your own images here)
             const staticImages = [
               {
-                image: "https://www.munetios.com/Munetios-Logo.png",
+                image: "https://www.munetios.com/munetios-Logo.png",
                 title: "Munetios Logo",
                 description: "Munetios official logo.",
                 link: "https://www.munetios.com",
@@ -7790,7 +7790,6 @@
             } else {
               imageResults = imageResults.concat(staticImages);
             }
-            // Reddit results (if Labs "Enable Reddit Results" is ON)
             try {
               const enableReddit = localStorage.getItem("enableRedditResults") === "true";
               if (enableReddit && query) {
@@ -7991,12 +7990,54 @@
             }
             // Render images with pagination (limit 100, show more button)
             clearResults();
-            const filteredImages = imageResults.filter(
+            
+            // Apply SafeSearch filtering to images
+            let filteredImages = imageResults.filter(
               (img) =>
                 img.image &&
                 typeof img.image === "string" &&
                 img.image.trim() !== "",
             );
+            
+            // SafeSearch filtering
+            const currentSafeSearchLevel = localStorage.getItem("safeSearchLevel") || "strict";
+            
+            if (currentSafeSearchLevel === "strict") {
+              // In strict mode, hide all Reddit images
+              filteredImages = filteredImages.filter((img) => {
+                const isReddit = img.description && img.description.includes("Reddit");
+                return !isReddit;
+              });
+            } else if (currentSafeSearchLevel === "moderate") {
+              // In moderate mode, hide spoiler/18+ images
+              filteredImages = filteredImages.filter((img) => {
+                const text = (img.title || "") + " " + (img.description || "") + " " + (img.link || "");
+                const textLower = text.toLowerCase();
+                
+                // Keywords to filter in moderate mode
+                const spoilerKeywords = [
+                  "spoiler", "nsfw", "18+", "adult", "porn", "xxx", "nude", "explicit",
+                  "sex", "mature", "erotic", "fetish", "hentai"
+                ];
+                
+                // Check if any spoiler keyword is present
+                const hasSpoilerContent = spoilerKeywords.some((keyword) =>
+                  textLower.includes(keyword)
+                );
+                
+                // Also check Reddit spoiler/NSFW flags
+                if (img.description && img.description.includes("Reddit")) {
+                  // If title contains nsfw/spoiler indicators
+                  if (/(nsfw|spoiler|\[18\+\])/i.test(img.title || "")) {
+                    return false;
+                  }
+                }
+                
+                return !hasSpoilerContent;
+              });
+            }
+            // If off, show all images (no filtering)
+            
             if (!filteredImages.length) {
               resultsContainer.innerHTML =
                 '<div style="padding:32px 0;text-align:center;color:#aaa;">No images found.</div>';
@@ -9181,7 +9222,7 @@
         {
           title: "Munetios OmniWrite",
           description:
-            "A powerful and intuitive writing tool by Munetios.",
+            "End to end encrypted, privacy-focused online document editor with templates and offline support.",
           url: "https://write.munetios.com",
           favicon: "https://write.munetios.com/favicon.ico",
           link: "https://write.munetios.com",
