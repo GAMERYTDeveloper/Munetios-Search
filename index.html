@@ -230,21 +230,22 @@
           color 0.2s;
       }
       .liquid-glass {
-       background:
-    linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.16) 0%,
-      rgba(255,255,255,0.06) 22%,
-      rgba(255,255,255,0.04) 50%,
-      rgba(255,255,255,0.06) 78%,
-      rgba(255,255,255,0.14) 100%
-    );
-    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-    backdrop-filter: blur( 2px )  saturate(190%) brightness(105%) contrast(100%) !important;
-    -webkit-backdrop-filter: blur( 1.75px )  saturate(200%) brightness(125%) contrast(100%) !important;
-    border-radius: 50px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-}
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.16) 0%,
+          rgba(255, 255, 255, 0.06) 22%,
+          rgba(255, 255, 255, 0.04) 50%,
+          rgba(255, 255, 255, 0.06) 78%,
+          rgba(255, 255, 255, 0.14) 100%
+        );
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(2px) saturate(190%) brightness(105%)
+          contrast(100%) !important;
+        -webkit-backdrop-filter: blur(1.75px) saturate(200%) brightness(125%)
+          contrast(100%) !important;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
       .apps-icon:hover,
       .apps-icon:focus {
         background: #3a1c71;
@@ -499,6 +500,17 @@
           border-color: #999;
         }
       }
+      #labsIcon {
+        cursor: pointer;
+        border-radius: 22px;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      #labsIcon:hover {
+        background: #3a1c71 !important;
+        color: #fff;
+      }
     </style>
   </head>
   <body>
@@ -537,6 +549,7 @@
         <a href="https://calendar.munetios.com" class="hide-450">Calendar</a>
 
         <a href="/games/" class="hide-450">Games</a>
+        <div class="material-symbols-rounded" id="labsIcon">science</div>
         <div class="apps-icon" id="apps-icon">
           <span class="material-symbols-rounded">apps</span>
           <div class="apps-dropdown">
@@ -604,7 +617,7 @@
       |
       <a href="https://www.munetios.com/about">About</a>
       <a href="https://blog.munetios.com">Blog</a>
-      
+
       <a href="/timeline">Timeline</a>
       <a href="manage-data.html">Manage Data</a>
       |
@@ -633,6 +646,10 @@
       <a href="https://www.munetios.com/apps1">Products</a>
     </footer>
     <script nonce="IKDjefjewhCujHJeuji3jhekowdijzizkcej">
+      // Make labsIcon functional: redirect to /labs/
+      document.getElementById("labsIcon").onclick = function () {
+        window.location.href = "/labs/";
+      };
       const appsIcon = document.getElementById("apps-icon");
       const appsDropdown = appsIcon.querySelector(".apps-dropdown");
 
@@ -736,6 +753,11 @@
                 </button>
               </div>
               <div id="voiceText" style="font-size:1.1em;color:#fff;text-align:center;min-height:32px;">${text || ""}</div>
+
+                <p style="font-size:0.85em;margin-top:12px; color:#ccc; text-align:center;">
+                Privacy Notice: Voice data may be sent to Google or Apple servers for processing when using Chrome, Edge, or Safari. For enhanced privacy, consider using a privacy focused browser. <br>
+                Munetios does not store or process your voice data.
+                </p>
             </div>
           `;
           document.body.appendChild(voiceModal);
