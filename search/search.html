@@ -37,8 +37,7 @@
       rel="stylesheet"
       href="https://api.munetios.com/beautiful-css/beautiful.css"
     />
-   <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> -->
+  
     <link
       href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,90&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
       rel="stylesheet"
@@ -6820,12 +6819,12 @@
           micWrapper.style.minHeight = "64px";
           micWrapper.style.userSelect = "none";
           micWrapper.innerHTML = `
-            <div id="micTranscript" style="flex:1;font-size:1.13em;font-weight:600;color:#fff;word-break:break-word;min-height:28px;display:flex;align-items:center;">
-            ${text || "Tap the microphone to speak"}
-            </div>
-            <button id="micCircleBtn" style="width:56px;height:56px;border-radius:50%;background:#a259f7;display:flex;align-items:center;justify-content:center;border:none;outline:none;box-shadow:0 2px 16px #a259f733;cursor:pointer;transition:box-shadow 0.2s;">
-            <span class="material-symbols-rounded" style="font-size:2em;color:#fff;">mic</span>
-            </button>
+        <div id="micTranscript" style="flex:1;font-size:1.13em;font-weight:600;color:#fff;word-break:break-word;min-height:28px;display:flex;align-items:center;">
+        ${text || "Tap the microphone to speak"}
+        </div>
+        <button id="micCircleBtn" style="width:56px;height:56px;border-radius:50%;background:#a259f7;display:flex;align-items:center;justify-content:center;border:none;outline:none;box-shadow:0 2px 16px #a259f733;cursor:pointer;transition:box-shadow 0.2s;">
+        <span class="material-symbols-rounded" style="font-size:2em;color:#fff;">mic</span>
+        </button>
         `;
           // Insert after aioverviewbox
           const overviewBox = document.querySelector(".aioverviewbox");
@@ -6859,20 +6858,36 @@
         micWrapper.querySelector("#micTranscript").textContent = text;
           }
         }
+
         function showMicPrivacyModal(onContinue) {
           // Detect browser provider for speech recognition
           let provider = "your browser provider";
           const ua = navigator.userAgent;
           let isSupported = true;
+          let skipPrivacyModal = false;
+          // MunetiosBrowser or MunetiosWebview: skip privacy modal
+          if (/MunetiosBrowser/i.test(ua) || /MunetiosWebview/i.test(ua)) {
+        skipPrivacyModal = true;
+          }
           if (/Edg\//.test(ua)) {
-            provider = "Microsoft";
+        provider = "Microsoft";
           } else if (/Chrome\//.test(ua)) {
-            provider = "Google";
+        provider = "Google";
           } else if (/Safari\//.test(ua) && !/Chrome\//.test(ua)) {
-            provider = "Apple";
+        provider = "Apple";
           } else if (/Firefox\//.test(ua)) {
-            provider = "Unsupported";
-            isSupported = false;
+        provider = "Unsupported";
+        isSupported = false;
+        // Firefox: check speech recognition flag
+        // If window.SpeechRecognition exists, allow continue
+        if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+          isSupported = true;
+          provider = "No provider";
+        }
+          }
+          if (skipPrivacyModal) {
+        if (typeof onContinue === "function" && isSupported) onContinue();
+        return;
           }
           // Remove any existing modal
           document.getElementById("micPrivacyModal")?.remove();
@@ -6892,29 +6907,29 @@
         <div class="liquid-glass" style="padding:32px 28px 24px 28px;border-radius:18px;box-shadow:0 4px 32px #0002;max-width:95vw;min-width:320px;position:relative;">
           <div style="font-size:1.2em;font-weight:600;margin-bottom:12px;">Voice Search Privacy Warning</div>
           <div style="margin-bottom:18px;font-size:1.05em;">
-            <b>Important:</b> When you use voice search, your speech may be sent to your browser’s built-in speech recognition service and processed by ${provider}. <br><br>
-            <b>Munetios does not collect or store your voice data.</b> <br>
-            ${provider} may process your voice input according to their privacy policy.<br><br>
-            <b>Munetios AI Speech Services is coming soon for private, local voice recognition.</b>
-            ${!isSupported ? `<br><br><span style="color:#e34133;"><b>Note:</b> Voice search is not supported in Firefox.</span>` : ""}
+        <b>Important:</b> When you use voice search, your speech may be sent to your browser’s built-in speech recognition service and processed by ${provider}. <br><br>
+        <b>Munetios does not collect or store your voice data.</b> <br>
+        ${provider} may process your voice input according to their privacy policy.<br><br>
+        <b>Munetios AI Speech Services is coming soon for private, local voice recognition.</b>
+        ${!isSupported ? `<br><br><span style="color:#e34133;"><b>Note:</b> Voice search is not supported in Firefox unless the speech recognition flag is enabled.</span>` : ""}
           </div>
           <div style="display:flex;gap:12px;justify-content:flex-end;">
-            <button id="micPrivacyCancel" class="btn liquid-glass" style="background:#aaa;color:#fff;">Cancel</button>
-            <button id="micPrivacyContinue" class="btn liquid-glass" style="background:#a259f7;color:#fff;" ${!isSupported ? "disabled" : ""}>Continue</button>
+        <button id="micPrivacyCancel" class="btn liquid-glass" style="background:#aaa;color:#fff;">Cancel</button>
+        <button id="micPrivacyContinue" class="btn liquid-glass" style="background:#a259f7;color:#fff;" ${!isSupported ? "disabled" : ""}>Continue</button>
           </div>
         </div>
           `;
           document.body.appendChild(modal);
           modal.querySelector("#micPrivacyCancel").onclick = function () {
-            modal.remove();
+        modal.remove();
           };
           modal.querySelector("#micPrivacyContinue").onclick = function () {
-            modal.remove();
-            if (typeof onContinue === "function" && isSupported) onContinue();
+        modal.remove();
+        if (typeof onContinue === "function" && isSupported) onContinue();
           };
           // Close on click outside
           modal.addEventListener("mousedown", function (ev) {
-            if (ev.target === modal) modal.remove();
+        if (ev.target === modal) modal.remove();
           });
         }
 
