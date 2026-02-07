@@ -231,7 +231,7 @@
         padding: 20px;
         border-bottom-left-radius: 12px;
         border-bottom-right-radius: 12px;
-        position: absolute;
+        position: relative;
         width: 100%;
         display: flex;
         align-items: center;
@@ -273,6 +273,11 @@
               <p>Test New Features using OmniWrite Beta</p>
               <button class="btn" id="tryItBtn">Try it</button>
             </div>
+            <div class="box-labs liquid-glass">
+              <h2>Secure Notes</h2>
+              <p>Manage your secure, encrypted notes.</p>
+              <button class="btn" id="secureNotesBtn">Try it</button>
+            </div>
           </div>
         </div>
       </div>
@@ -294,6 +299,11 @@
       </div>
     </div>
     <script nonce="2jSjSbegDIjwnXikejssx">
+      document
+        .getElementById("secureNotesBtn")
+        .addEventListener("click", function () {
+          window.location.href = "https://www.munetios.com/labs/notes";
+        });
       document
         .getElementById("tryItBtn")
         .addEventListener("click", function () {
