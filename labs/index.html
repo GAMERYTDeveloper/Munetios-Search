@@ -273,6 +273,11 @@
               <p>Test New Features using OmniWrite Beta</p>
               <button class="btn" id="tryItBtn">Try it</button>
             </div>
+            <div class="box-labs liquid-glass">
+              <h2>🔐 Experimental Notes</h2>
+              <p>E2E Encrypted Productivity App with IndexedDB</p>
+              <button class="btn" id="experimentalNotesBtn">Try it</button>
+            </div>
           </div>
         </div>
       </div>
@@ -298,6 +303,11 @@
         .getElementById("tryItBtn")
         .addEventListener("click", function () {
           window.location.href = "https://write.munetios.com/preview";
+        });
+      document
+        .getElementById("experimentalNotesBtn")
+        .addEventListener("click", function () {
+          window.location.href = "/labs/experimental-notes.html";
         });
       document
         .getElementById("munetiosHome")
