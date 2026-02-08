@@ -1,26 +1,33 @@
-Munetios License v1.3
+Munetios License v1.4
 
 Copyright (c) 2026 Munetios
 
 Permission is hereby granted to any person obtaining a copy of this software
 and associated source code files (the "Software") to use, copy, modify,
-and fork the Software, including for commercial use.
-
+fork, distribute, and sell the Software, including as part of commercial
+products and paid services, subject to the restrictions below.
 
 Restrictions:
-- The Software may NOT be sold, sublicensed, or resold, in whole or in part.
-- You may NOT charge a fee for access to the Software or any derivative works.
-- The Software may NOT be offered as part of a paid product or paid service.
 - The Munetios name, logo, icons, trademarks, and visual assets are NOT licensed
   and remain the exclusive property of Munetios.
-- Derivative works must not use Munetios branding or imply endorsement or
-  affiliation with Munetios.
+- Derivative works must NOT use the Munetios name, branding, logos, icons,
+  or imply endorsement, affiliation, or sponsorship by Munetios.
+- You may NOT market, advertise, or present derivative works as "Munetios"
+  or as official Munetios software.
+- Any use of Munetios branding requires explicit written permission
+  from Munetios.
 
 Attribution:
 - This license notice must be included in all copies or substantial portions
   of the Software.
+- Attribution must clearly state:
+  "Based on software by Munetios."
 
 Disclaimer:
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
