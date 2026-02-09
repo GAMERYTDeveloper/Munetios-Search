@@ -8,9 +8,10 @@
       rel="stylesheet"
       href="https://api.munetios.com/beautiful-css/beautiful.css"
     />
-    <meta name="description"
-content="Munetios Search lets you search the web without Google, accounts, profiling, or ads. No tracking. No personalization. Just results." />
-
+    <meta
+      name="description"
+      content="Munetios Search lets you search the web without Google, accounts, profiling, or ads. No tracking. No personalization. Just results."
+    />
 
     <link
       href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,90&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
@@ -78,36 +79,41 @@ content="Munetios Search lets you search the web without Google, accounts, profi
         });
       }
     </script>
-   <meta name="keywords"
-content="privacy search engine, google alternative, private search, no tracking search engine, munetios search" />
-<meta name="theme-color" content="#6a00ff" />
+    <meta
+      name="keywords"
+      content="privacy search engine, google alternative, private search, no tracking search engine, munetios search"
+    />
+    <meta name="theme-color" content="#6a00ff" />
 
     <meta name="robots" content="index, follow" />
-    <meta property="og:title"
-content="Munetios Search — Search Without Google Watching" />
+    <meta
+      property="og:title"
+      content="Munetios Search — Search Without Google Watching"
+    />
 
-<meta property="og:description"
-content="A privacy-first search engine with no accounts, no tracking, and no Google involvement. Built for people who care about control." />
+    <meta
+      property="og:description"
+      content="A privacy-first search engine with no accounts, no tracking, and no Google involvement. Built for people who care about control."
+    />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.munetios.com" />
     <meta name="googlebot" content="index, follow" />
     <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "Munetios Search",
-  "operatingSystem": "Web",
-  "applicationCategory": "SearchEngine",
-  "url": "https://munetios.com",
-  "description": "A privacy-first search engine with no tracking, no accounts, and no Google profiling.",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Munetios"
-  }
-}
-</script>
-
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Munetios Search",
+        "operatingSystem": "Web",
+        "applicationCategory": "SearchEngine",
+        "url": "https://munetios.com",
+        "description": "A privacy-first search engine with no tracking, no accounts, and no Google profiling.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Munetios"
+        }
+      }
+    </script>
 
     <!-- Skipping Lexend because I don't Like it -->
     <style>
@@ -1031,7 +1037,7 @@ content="A privacy-first search engine with no accounts, no tracking, and no Goo
           msg.style.zIndex = "100000";
           msg.style.boxShadow = "0 2px 12px rgba(0,0,0,0.18)";
           msg.textContent =
-            "Failed to save your changes. Please turn on your saving data.";
+            "Failed to save your changes. Please check your storage settings.";
           document.body.appendChild(msg);
           setTimeout(() => {
             if (msg) msg.remove();
@@ -1882,6 +1888,7 @@ content="A privacy-first search engine with no accounts, no tracking, and no Goo
           }
         }
       })();
+
       (function () {
         // Check if today is between Dec 22 and Dec 26 (inclusive)
         const now = new Date();
@@ -1923,6 +1930,30 @@ content="A privacy-first search engine with no accounts, no tracking, and no Goo
                 function () {
                   modal.remove();
                 };
+            };
+          }
+        }
+      })();
+      (function () {
+        // Check if today is between Feb 9 and Feb 11, 2026 (inclusive)
+        const now = new Date();
+        if (
+          now.getFullYear() === 2026 &&
+          now.getMonth() === 1 && // February (0-based)
+          now.getDate() >= 9 &&
+          now.getDate() <= 11
+        ) {
+          // Change logo to 1year.png
+          const logoImg = document.querySelector(".munetios-logo img");
+          if (logoImg) logoImg.src = "1year.png";
+
+          // Make logo clickable to link to the timeline page
+          const logoDiv = document.querySelector(".munetios-logo");
+          if (logoDiv) {
+            logoDiv.style.cursor = "pointer";
+            logoDiv.onclick = function () {
+              window.location.href =
+                "https://www.munetios.com/timeline/2025/advanced";
             };
           }
         }
