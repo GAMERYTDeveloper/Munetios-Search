@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Munetios Search Lite - Fast, simple search experience."
+    />
+    <meta name="keywords" content="Munetios, Search, Lite, Fast, Simple" />
+    <meta name="author" content="Munetios" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>Munetios Home Lite</title>
+    <style>
+      * {
+        font-family:
+          Segoe UI,
+          system-ui,
+          sans-serif;
+      }
+      body {
+        min-width: 922px;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+      }
+      header {
+        background-color: #0066cc;
+        color: #ffffff;
+        padding: 6px 12px;
+        display: flex;
+        font-size: 17px;
+        min-width: 1000px;
+      }
+      header a {
+        color: #ffffff !important;
+        text-decoration: none;
+        margin-right: 12px;
+        white-space: nowrap;
+      }
+      header a:hover {
+        text-decoration: underline;
+      }
+      header a:visited {
+        color: #7030a0;
+      }
+      .search-box {
+        border: 1px solid #d3d3d3;
+        padding: 2px;
+        width: 380px;
+        max-width: 100%;
+        background-color: #ffffff;
+        margin: 16px auto;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+      .search-box input {
+        border: none;
+        outline: none;
+        width: 100%;
+        font-size: 13px;
+        padding: 6px 8px;
+        font-family:
+          Segoe UI,
+          system-ui,
+          sans-serif;
+      }
+      button {
+        padding: 9px 18px;
+        cursor: pointer;
+        border: 1px solid #d3d3d3;
+        background-color: #f5f5f5;
+        font-family:
+          Segoe UI,
+          system-ui,
+          sans-serif;
+        font-size: 13px;
+        margin: 4px;
+        color: #333333;
+      }
+      button:hover {
+        border: 1px solid #b3b3b3;
+        background-color: #efefef;
+      }
+      button:active {
+        background-color: #e8e8e8;
+      }
+      footer {
+        margin-top: 32px;
+        font-size: 11px;
+        color: #808080;
+      }
+      footer a {
+        color: #0066cc;
+        text-decoration: none;
+        margin: 0 6px;
+      }
+      footer a:hover {
+        text-decoration: underline;
+      }
+      footer a:visited {
+        color: #7030a0;
+      }
+      right {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="https://www.munetios.com/about">About</a>
+      <a href="/">Home</a>
+      <a href="https://write.munetios.com">OmniWrite</a>
+      <a href="https://maps.munetios.com">Maps</a>
+      <a href="https://calendar.munetios.com">Calendar</a>
+      <a href="https://photos.munetios.com">Photos</a>
+      <a href="https://tasks.munetios.com">Tasks</a>
+      <a href="https://calculator.munetios.com">Calculator</a>
+      <a href="https://games.munetios.com">Games Hub</a>
+      <a href="https://weather.munetios.com">Weather</a>
+      <a href="https://www.munetios.com/apps1">More Apps...</a>
+      <right>
+        <a href="https://www.munetios.com/policies/#/terms">Terms</a>
+        <a href="https://www.munetios.com/policies/#/privacy">Privacy</a>
+      </right>
+    </header>
+    <center>
+      <br />
+      <img src="munetios-logo.png" height="200" alt="Munetios Logo" />
+      <div class="search-box">
+        <input type="search" placeholder="Search Munetios" />
+      </div>
+      <br />
+      <button id="searchBtn">Search</button>
+      <button id="ImLuckyBtn">I'm Feeling Lucky</button>
+      <footer>
+        <p>2026 Munetios</p>
+      </footer>
+      <p>Lite version. Optimized for low bandwidth and performance.</p>
+    </center>
+    <script>
+      // Get elements
+      var searchInput = document.querySelector(".search-box input");
+      var searchBtn = document.getElementById("searchBtn");
+      var luckyBtn = document.getElementById("ImLuckyBtn");
+
+      // Search URL pattern
+      function getSearchUrl(q) {
+        var encoded = encodeURIComponent(q);
+        return (
+          "https://www.munetios.com/search/search.html?q=" +
+          encoded +
+          "#/all?q=" +
+          encoded
+        );
+      }
+
+      // Search button handler
+      function doSearch() {
+        var q = searchInput.value.trim();
+        if (q) {
+          window.location.href = getSearchUrl(q);
+        }
+      }
+
+      // I'm Feeling Lucky handler (simulate local: just go to first result page)
+      function doLucky() {
+        var q = searchInput.value.trim();
+        if (q) {
+        } else {
+          // Random URLs and queries
+          var randomUrls = [
+            "https://munetios.com",
+            "https://write.munetios.com",
+            "https://calendar.munetios.com",
+            "https://blog.munetios.com",
+            "https://tasks.munetios.com",
+            "https://www.munetios.com/about",
+            "https://www.munetios.com/policies/#/",
+            "https://www.munetios.com/policies/#/terms",
+          ];
+          var randomQueries = [
+            "productivity",
+            "ai tools",
+            "calendar tips",
+            "writing apps",
+            "privacy policy",
+            "task management",
+            "blog posts",
+            "about munetios",
+          ];
+          if (Math.random() < 0.5) {
+            // Visit a random URL
+            var url = randomUrls[Math.floor(Math.random() * randomUrls.length)];
+            window.location.href = url;
+          } else {
+            // Search a random query
+            var rq =
+              randomQueries[Math.floor(Math.random() * randomQueries.length)];
+            window.location.href = getSearchUrl(rq);
+          }
+        }
+      }
+
+      // Event listeners
+      searchBtn.addEventListener("click", doSearch);
+      luckyBtn.addEventListener("click", doLucky);
+      searchInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") doSearch();
+      });
+    </script>
+  </body>
+</html>
