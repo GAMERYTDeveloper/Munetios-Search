@@ -2415,7 +2415,7 @@
                 synth.triggerAttackRelease("G4", "0.1");
               } else if (type === "denied") {
                 const synth = new Tone.Synth().toDestination();
-                synth.triggerAttackRelease("C5", "0.2");
+                synth.triggerAttackRelease("C4", "0.2");
               }
             } catch (e) {
               console.log("Audio error:", e);
@@ -2754,7 +2754,7 @@
                 s.triggerAttackRelease("G4", "0.1");
               } else if (type === "denied") {
                 const s = new Tone.Synth().toDestination();
-                s.triggerAttackRelease("C5", "0.2");
+                s.triggerAttackRelease("C4", "0.2");
               } else if (type === "success") {
                 const s = new Tone.Synth().toDestination();
                 s.triggerAttackRelease("E5", "0.15");
