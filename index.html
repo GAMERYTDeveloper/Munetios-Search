@@ -22,7 +22,7 @@
       rel="stylesheet"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
       rel="stylesheet"
     />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
@@ -3232,23 +3232,32 @@
         });
       })();
 
-      // Logo change and click redirect for Feb 9-12, 2026
+      // Logo change and click redirect for special dates in 2026
       (function () {
         const now = new Date();
         const year = now.getFullYear();
         const month = now.getMonth(); // 0-indexed
         const day = now.getDate();
-        // Feb = 1, days 9-12, year 2026
+        const logo = document.getElementById("canChangeLogoinDoodles");
+        
+        if (!logo) return;
+        
+        logo.style.cursor = "pointer";
+        
+        // Feb 9-12, 2026 - Anniversary
         if (year === 2026 && month === 1 && day >= 9 && day <= 12) {
-          const logo = document.getElementById("canChangeLogoinDoodles");
-          if (logo) {
-            logo.src = "1year.png";
-            logo.style.cursor = "pointer";
-            logo.onclick = function () {
-              window.location.href =
-                "https://www.munetios.com/timeline/2025/advanced";
-            };
-          }
+          logo.src = "1year.png";
+          logo.onclick = function () {
+            window.location.href =
+              "https://www.munetios.com/timeline/2025/advanced";
+          };
+        }
+        // Feb 13-14, 2026 - Valentine's Day
+        else if (year === 2026 && month === 1 && (day === 13 || day === 14)) {
+          logo.src = "valentines.png";
+          logo.onclick = function () {
+            window.location.href = "valentines.html";
+          };
         }
       })();
 
