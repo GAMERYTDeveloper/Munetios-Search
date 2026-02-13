@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Munetios Valentines Game ❤️</title>
+
+<!-- Munetios Beautiful CSS -->
+<link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css">
+
+<style>
+
+body {
+  margin:0;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#2b0a35;
+  font-family: "Google Sans Flex", sans-serif;
+  overflow:hidden;
+}
+
+.game-container {
+  width:90vw;
+  height:90vh;
+  position:relative;
+}
+
+.liquid-glass {
+  backdrop-filter: blur(2px) saturate(180%);
+  background: rgba(255,255,255,0.08);
+  border-radius:20px;
+  padding:20px;
+}
+
+#score {
+  position:absolute;
+  top:10px;
+  left:10px;
+  font-size:22px;
+  color:white;
+}
+
+.heart {
+  position:absolute;
+  font-size:32px;
+  cursor:pointer;
+  user-select:none;
+  transition: transform .15s ease;
+}
+
+.heart:hover {
+  transform: scale(1.2);
+}
+
+.controls {
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  color:white;
+  font-size:14px;
+}
+
+.credit {
+  position:absolute;
+  bottom:5px;
+  right:10px;
+  color:white;
+  font-size:12px;
+  opacity:.8;
+}
+
+</style>
+</head>
+<body>
+
+<div class="game-container liquid-glass">
+  <div id="score">❤️ Score: 0</div>
+  <div class="controls">Click hearts to gain points!</div>
+  <div class="credit">Music by SoundHelix (https://www.soundhelix.com)</div>
+</div>
+
+<audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" loop></audio>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
+<script>
+
+const container = document.querySelector('.game-container');
+const scoreEl = document.getElementById('score');
+const music = document.getElementById('bgMusic');
+
+let score = 0;
+let synth = new Tone.Synth({
+  oscillator: { type: 'triangle' },
+  envelope: { attack: 0.01, decay: 1.0, sustain: 0, release: 1.0 } // higher release = longer note tail, higher sustain = louder sustained note
+}).toDestination();
+
+// Start music after first interaction (browser autoplay rules)
+document.addEventListener('click', () => {
+  Tone.start();
+  music.play().catch(()=>{});
+},{once:true});
+
+function spawnHeart(){
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.textContent = '💖';
+
+  const x = Math.random() * (container.clientWidth - 40);
+  const y = Math.random() * (container.clientHeight - 40);
+
+  heart.style.left = x + 'px';
+  heart.style.top = y + 'px';
+
+  heart.addEventListener('click', () => {
+    score++;
+    scoreEl.textContent = '❤️ Score: ' + score;
+    synth.triggerAttackRelease('C5', '0.2');
+    heart.remove();
+  });
+
+  container.appendChild(heart);
+
+  setTimeout(()=>{
+    heart.remove();
+  }, 2500);
+}
+
+// Increase difficulty over time
+let spawnRate = 1200;
+setInterval(()=>{
+  spawnHeart();
+}, spawnRate);
+
+setInterval(()=>{
+  if(spawnRate > 400) spawnRate -= 50;
+}, 5000);
+
+</script>
+
+</body>
+</html>
