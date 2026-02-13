@@ -18,7 +18,7 @@
       rel="stylesheet"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Merriweather:wght@300;400;700&family=Ubuntu:wght@300;400;500;700&family=Nunito:wght@300;400;600;700&family=PT+Sans:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Oswald:wght@300;400;500;600;700&family=Crimson+Text:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Merriweather:wght@300;400;700&family=Ubuntu:wght@300;400;500;700&family=Nunito:wght@300;400;600;700&family=PT+Sans:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Oswald:wght@300;400;500;600;700&family=Crimson+Text:wght@400;600;700&family=Noto+Sans:wght@300;400;500;600;700&family=Mukta:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&family=Karla:wght@300;400;500;600;700&family=Barlow:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=Cabin:wght@400;500;600;700&family=Titillium+Web:wght@300;400;600;700&family=Mulish:wght@300;400;500;600;700&family=Libre+Franklin:wght@300;400;500;600;700&family=Varela+Round&family=Hind:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&family=Exo+2:wght@300;400;500;600;700&family=Archivo:wght@300;400;500;600;700&family=Oxygen:wght@300;400;700&family=Josefin+Sans:wght@300;400;500;600;700&family=Red+Hat+Display:wght@300;400;500;600;700&family=Slabo+27px&family=Anton&family=Bebas+Neue&display=swap"
       rel="stylesheet"
     />
     <link
@@ -1115,6 +1115,8 @@
         display: none;
         padding: 8px 12px;
         border-radius: 14px;
+        max-height: 500px;
+        overflow-y: auto;
       }
 
       /* Settings Modal Styles */
@@ -1588,6 +1590,209 @@
         color: white;
       }
 
+      /* Left Sidebar Menu Styles */
+      .left-sidebar {
+        position: fixed;
+        top: 0;
+        left: -380px;
+        width: 280px;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(85, 12, 202, 0.35),
+          rgba(106, 0, 255, 0.35)
+        );
+        backdrop-filter: blur(2px);
+        border-right: 1px solid rgba(106, 0, 255, 0.4);
+        z-index: 5000;
+        transition: left 0.3s ease;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .left-sidebar.active {
+        left: 0;
+      }
+
+      .sidebar-header {
+        padding: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .sidebar-header h2 {
+        margin: 0;
+        font-size: 22px;
+        color: white;
+      }
+
+      .sidebar-close {
+        cursor: pointer;
+        color: white;
+        font-size: 28px;
+      }
+
+      .sidebar-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 10px 0;
+      }
+
+      .sidebar-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: white;
+        text-decoration: none;
+      }
+
+      .sidebar-item:hover {
+        background: rgba(255, 255, 255, 0.1);
+        padding-left: 30px;
+      }
+
+      .sidebar-item icon {
+        font-size: 24px;
+      }
+
+      .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(2px);
+        z-index: 4999;
+        display: none;
+      }
+
+      .sidebar-overlay.active {
+        display: block;
+      }
+
+      /* Responsive Settings Modal */
+      @media (max-width: 768px) {
+        .settings-modal-content {
+          width: 95%;
+          height: 90vh;
+          max-height: none;
+        }
+
+        .settings-container {
+          flex-direction: column;
+        }
+
+        .settings-sidebar {
+          width: 100%;
+          border-right: none;
+          border-bottom: 1px solid rgba(106, 0, 255, 0.3);
+          display: flex;
+          flex-direction: row;
+          overflow-x: auto;
+          padding: 10px;
+        }
+
+        .settings-sidebar-item {
+          flex-direction: column;
+          gap: 5px;
+          padding: 10px 15px;
+          white-space: nowrap;
+        }
+
+        .settings-sidebar-item .menu-text {
+          font-size: 12px;
+        }
+
+        .settings-content-pages {
+          padding: 15px;
+        }
+
+        .settings-page h2 {
+          font-size: 22px;
+        }
+
+        .settings-item {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+
+        .button-groups {
+          flex-wrap: wrap;
+        }
+
+        .shortcuts-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 405px) {
+        .settings-button .btn-label {
+          display: none;
+        }
+      }
+
+      .font-detect-section {
+        margin-top: 15px;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+      }
+
+      .detect-fonts-btn {
+        width: 100%;
+        padding: 12px 20px;
+        background: rgba(106, 0, 255, 0.4);
+        border: 1px solid rgba(106, 0, 255, 0.5);
+        border-radius: 8px;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      .detect-fonts-btn:hover {
+        background: rgba(106, 0, 255, 0.6);
+        transform: translateY(-2px);
+      }
+
+      .local-fonts-list {
+        margin-top: 15px;
+        max-height: 200px;
+        overflow-y: auto;
+        display: none;
+      }
+
+      .local-fonts-list.active {
+        display: block;
+      }
+
+      .local-font-item {
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 6px;
+        margin-bottom: 5px;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .local-font-item:hover {
+        background: rgba(106, 0, 255, 0.3);
+        color: white;
+      }
+
       
     </style>
   </head>
@@ -1628,9 +1833,9 @@
         </div>
         <div class="topbar-right liquid-glass">
           <a href="https://www.munetios.com/labs"><icon>science</icon></a>
-          <div id="appsBtn" class="apps-btn">
-            <icon>apps</icon>
-          </div>
+             <div id="appsBtnMobile" class="apps-btn">
+              <icon>apps</icon>
+            </div>
         </div>
       </div>
     </div>
@@ -2162,6 +2367,13 @@
                   <button id="fontFamilyButton">Google Sans Flex</button>
                 </div>
                 <div id="fontFeatures" style="margin-top: 10px;"></div>
+                <div class="font-detect-section">
+                  <button class="detect-fonts-btn" id="detectLocalFontsBtn">
+                    <icon>font_download</icon>
+                    <span>Detect Local Fonts</span>
+                  </button>
+                  <div class="local-fonts-list" id="localFontsList"></div>
+                </div>
                 <div class="settings-item">
                   <span class="settings-label">Reduce Transparency</span>
                   <div class="toggle-switch" id="reduceTransparencyToggle"></div>
@@ -2269,12 +2481,32 @@
       <div class="dropdown-item" id="frenchButton">French</div>
       <div class="dropdown-item" id="germanButton">German</div>
       <div class="dropdown-item" id="italianButton">Italian</div>
-      <div class="dropdown-item" id="chineseButton">Chinese</div>
+      <div class="dropdown-item" id="portugueseButton">Portuguese</div>
+      <div class="dropdown-item" id="dutchButton">Dutch</div>
+      <div class="dropdown-item" id="polishButton">Polish</div>
+      <div class="dropdown-item" id="turkishButton">Turkish</div>
+      <div class="dropdown-item" id="swedishButton">Swedish</div>
+      <div class="dropdown-item" id="norwegianButton">Norwegian</div>
+      <div class="dropdown-item" id="danishButton">Danish</div>
+      <div class="dropdown-item" id="finnishButton">Finnish</div>
+      <div class="dropdown-item" id="chineseButton">Chinese (Simplified)</div>
+      <div class="dropdown-item" id="chineseTraditionalButton">Chinese (Traditional)</div>
       <div class="dropdown-item" id="japaneseButton">Japanese</div>
       <div class="dropdown-item" id="koreanButton">Korean</div>
       <div class="dropdown-item" id="arabicButton">Arabic</div>
       <div class="dropdown-item" id="hindiButton">Hindi</div>
+      <div class="dropdown-item" id="bengaliButton">Bengali</div>
+      <div class="dropdown-item" id="thaiButton">Thai</div>
+      <div class="dropdown-item" id="vietnameseButton">Vietnamese</div>
+      <div class="dropdown-item" id="indonesianButton">Indonesian</div>
+      <div class="dropdown-item" id="malayButton">Malay</div>
       <div class="dropdown-item" id="russianButton">Russian</div>
+      <div class="dropdown-item" id="ukrainianButton">Ukrainian</div>
+      <div class="dropdown-item" id="greekButton">Greek</div>
+      <div class="dropdown-item" id="hebrewButton">Hebrew</div>
+      <div class="dropdown-item" id="czechButton">Czech</div>
+      <div class="dropdown-item" id="romanianButton">Romanian</div>
+      <div class="dropdown-item" id="hungarianButton">Hungarian</div>
     </div>
     <div class="dropdown-wrapper liquid-glass" id="fontFamilySelector">
       <div class="dropdown-item" data-font="Google Sans Flex">Google Sans Flex</div>
@@ -2293,6 +2525,29 @@
       <div class="dropdown-item" data-font="Source Sans 3">Source Sans 3</div>
       <div class="dropdown-item" data-font="Oswald">Oswald</div>
       <div class="dropdown-item" data-font="Crimson Text">Crimson Text</div>
+      <div class="dropdown-item" data-font="Noto Sans">Noto Sans</div>
+      <div class="dropdown-item" data-font="Mukta">Mukta</div>
+      <div class="dropdown-item" data-font="Rubik">Rubik</div>
+      <div class="dropdown-item" data-font="Work Sans">Work Sans</div>
+      <div class="dropdown-item" data-font="Quicksand">Quicksand</div>
+      <div class="dropdown-item" data-font="Karla">Karla</div>
+      <div class="dropdown-item" data-font="Barlow">Barlow</div>
+      <div class="dropdown-item" data-font="DM Sans">DM Sans</div>
+      <div class="dropdown-item" data-font="Cabin">Cabin</div>
+      <div class="dropdown-item" data-font="Titillium Web">Titillium Web</div>
+      <div class="dropdown-item" data-font="Mulish">Mulish</div>
+      <div class="dropdown-item" data-font="Libre Franklin">Libre Franklin</div>
+      <div class="dropdown-item" data-font="Varela Round">Varela Round</div>
+      <div class="dropdown-item" data-font="Hind">Hind</div>
+      <div class="dropdown-item" data-font="Manrope">Manrope</div>
+      <div class="dropdown-item" data-font="Exo 2">Exo 2</div>
+      <div class="dropdown-item" data-font="Archivo">Archivo</div>
+      <div class="dropdown-item" data-font="Oxygen">Oxygen</div>
+      <div class="dropdown-item" data-font="Josefin Sans">Josefin Sans</div>
+      <div class="dropdown-item" data-font="Red Hat Display">Red Hat Display</div>
+      <div class="dropdown-item" data-font="Slabo 27px">Slabo 27px</div>
+      <div class="dropdown-item" data-font="Anton">Anton</div>
+      <div class="dropdown-item" data-font="Bebas Neue">Bebas Neue</div>
       <div class="dropdown-item" data-font="Segoe UI">Segoe UI (Windows)</div>
     </div>
     <div class="confirm-modal" id="confirmModal">
@@ -2369,6 +2624,56 @@
         </button>
       </div>
     </div>
+    <!-- Left Sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="left-sidebar" id="leftSidebar">
+      <div class="sidebar-header">
+        <h2>Menu</h2>
+        <icon class="sidebar-close" id="sidebarClose">close</icon>
+      </div>
+      <div class="sidebar-content">
+        <a href="https://www.munetios.com/about" class="sidebar-item">
+          <icon>info</icon>
+          <span>About</span>
+        </a>
+        <a href="https://blog.munetios.com" class="sidebar-item">
+          <icon>article</icon>
+          <span>Blog</span>
+        </a>
+        <a href="https://write.munetios.com" class="sidebar-item">
+          <icon>edit_note</icon>
+          <span>OmniWrite</span>
+        </a>
+        <a href="https://calendar.munetios.com" class="sidebar-item">
+          <icon>calendar_month</icon>
+          <span>Calendar</span>
+        </a>
+        <a href="https://games.munetios.com" class="sidebar-item">
+          <icon>games</icon>
+          <span>Games</span>
+        </a>
+        <a href="https://maps.munetios.com" class="sidebar-item">
+          <icon>map</icon>
+          <span>Maps</span>
+        </a>
+        <a href="https://photos.munetios.com" class="sidebar-item">
+          <icon>photo_library</icon>
+          <span>Photos</span>
+        </a>
+        <a href="https://tasks.munetios.com" class="sidebar-item">
+          <icon>task</icon>
+          <span>Tasks</span>
+        </a>
+        <a href="https://notes.munetios.com" class="sidebar-item">
+          <icon>notes</icon>
+          <span>Notes</span>
+        </a>
+        <a href="https://www.munetios.com/labs" class="sidebar-item">
+          <icon>science</icon>
+          <span>Labs</span>
+        </a>
+      </div>
+    </div>
     <script nonce="IKDjefjewhCujHJeuji3jhekowdijzizkcej">
       // Tesseract.js loader (inline)
       (function () {
@@ -2415,7 +2720,7 @@
                 synth.triggerAttackRelease("G4", "0.1");
               } else if (type === "denied") {
                 const synth = new Tone.Synth().toDestination();
-                synth.triggerAttackRelease("C4", "0.2");
+                synth.triggerAttackRelease("C4", "8n");
               }
             } catch (e) {
               console.log("Audio error:", e);
@@ -2754,7 +3059,7 @@
                 s.triggerAttackRelease("G4", "0.1");
               } else if (type === "denied") {
                 const s = new Tone.Synth().toDestination();
-                s.triggerAttackRelease("C4", "0.2");
+                s.triggerAttackRelease("C5", "0.2");
               } else if (type === "success") {
                 const s = new Tone.Synth().toDestination();
                 s.triggerAttackRelease("E5", "0.15");
@@ -3288,12 +3593,7 @@
           settingsModal.classList.remove("active");
         });
 
-        // Close on outside click
-        settingsModal?.addEventListener("click", (e) => {
-          if (e.target === settingsModal) {
-            settingsModal.classList.remove("active");
-          }
-        });
+   
 
         // Sidebar navigation
         Object.keys(sidebarItems).forEach((btnId) => {
@@ -3330,21 +3630,29 @@
         const translations = {
           en: { 
             name: "English", 
+            // Search & Main UI
             searchPlaceholder: "Search The Web",
             settingsBtn: "Settings",
             voiceModeBtn: "Voice Mode",
             searchButton: "Search",
             luckyButton: "I'm Feeling Lucky",
             addShortcut: "Add",
+            
+            // Settings Pages
             generalSettings: "General",
             appearanceSettings: "Appearance",
             shortcutsSettings: "Shortcuts",
             privacySettings: "Privacy",
             advancedSettings: "Advanced",
+            keyboardShortcuts: "Keyboard Shortcuts",
+            
+            // General Settings
             language: "Language",
             defaultSearchMode: "Default Search Mode",
             web: "Web",
             images: "Images",
+            
+            // Appearance Settings
             bgColor: "Background Color",
             textColor: "Text Color",
             bgImage: "Background Image",
@@ -3353,9 +3661,17 @@
             uploadImage: "Upload Image",
             clearImage: "Clear",
             noFileChosen: "No file chosen",
+            detectLocalFonts: "Detect Local Fonts",
+            
+            // Privacy Settings
             manageData: "Manage Your Data",
             manageDataBtn: "Manage Data",
+            
+            // Shortcuts Settings
             shortcutsDescription: "Manage your homepage shortcuts. Click the delete icon on each card to remove a shortcut.",
+            addShortcutBtn: "Add Shortcut",
+            
+            // Advanced Settings
             searchHistoryLabel: "Search History",
             shortcutsLabel: "Shortcuts",
             settingsLabel: "Settings",
@@ -3366,31 +3682,91 @@
             importSettings: "Import Settings",
             resetSettings: "Reset All Settings",
             deleteEverything: "Delete Everything",
+            
+            // Confirmation Messages
             deleteSearchHistoryConfirm: "Are you sure you want to delete all search history? This action cannot be undone.",
             deleteShortcutsConfirm: "Are you sure you want to delete all shortcuts? This action cannot be undone.",
             resetSettingsConfirm: "Are you sure you want to reset all settings to defaults? This action cannot be undone.",
             deleteEverythingConfirm: "This will delete ALL your data including search history, shortcuts, and all settings. This action cannot be undone. Are you absolutely sure?",
             confirmTitle: "Confirm",
             ok: "OK",
-            cancel: "Cancel"
+            cancel: "Cancel",
+            close: "Close",
+            done: "Done",
+            
+            // Voice Search Modal
+            voiceSearch: "Voice Search",
+            clickMicToStart: "Click the microphone to start",
+            clickMicToStartShort: "Click mic to start",
+            
+            // Image Search
+            imageSearch: "Image Search",
+            uploadImagePrompt: "Click to upload an image or drag & drop",
+            extractedText: "Extracted Text:",
+            
+            // Sidebar Menu
+            menu: "Menu",
+            about: "About",
+            blog: "Blog",
+            omniWrite: "OmniWrite",
+            calendar: "Calendar",
+            games: "Games",
+            maps: "Maps",
+            photos: "Photos",
+            tasks: "Tasks",
+            notes: "Notes",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Apps",
+            
+            // Voice Mode
+            voiceMode: "Voice Mode",
+            voiceModePrompt: 'Say "Search [your query]" to search',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Add Shortcut",
+            addShortcutDescription: "Enter the details for your new shortcut below:",
+            shortcutName: "Name:",
+            shortcutURL: "URL:",
+            add: "Add",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Focus Search Bar",
+            openVoiceSearch: "Open Voice Search",
+            openImageSearch: "Open Image Search",
+            openSettings: "Open Settings",
+            
+            // Footer
+            terms: "Terms",
+            privacy: "Privacy",
+            cookies: "Cookies"
           },
           es: { 
             name: "Spanish",
+            // Search & Main UI
             searchPlaceholder: "Buscar en la Web",
             settingsBtn: "Configuración",
             voiceModeBtn: "Modo de Voz",
             searchButton: "Buscar",
             luckyButton: "Voy a tener suerte",
             addShortcut: "Añadir",
+            
+            // Settings Pages
             generalSettings: "General",
             appearanceSettings: "Apariencia",
             shortcutsSettings: "Accesos directos",
             privacySettings: "Privacidad",
             advancedSettings: "Avanzado",
+            keyboardShortcuts: "Atajos de teclado",
+            
+            // General Settings
             language: "Idioma",
             defaultSearchMode: "Modo de búsqueda predeterminado",
             web: "Web",
             images: "Imágenes",
+            
+            // Appearance Settings
             bgColor: "Color de fondo",
             textColor: "Color del texto",
             bgImage: "Imagen de fondo",
@@ -3399,9 +3775,17 @@
             uploadImage: "Subir imagen",
             clearImage: "Borrar",
             noFileChosen: "Ningún archivo elegido",
+            detectLocalFonts: "Detectar fuentes locales",
+            
+            // Privacy Settings
             manageData: "Administrar tus datos",
             manageDataBtn: "Administrar datos",
+            
+            // Shortcuts Settings
             shortcutsDescription: "Administra los accesos directos de tu página de inicio. Haz clic en el icono de eliminar en cada tarjeta para eliminar un acceso directo.",
+            addShortcutBtn: "Añadir acceso directo",
+            
+            // Advanced Settings
             searchHistoryLabel: "Historial de búsqueda",
             shortcutsLabel: "Accesos directos",
             settingsLabel: "Configuración",
@@ -3412,31 +3796,91 @@
             importSettings: "Importar configuración",
             resetSettings: "Restablecer configuración",
             deleteEverything: "Eliminar todo",
+            
+            // Confirmation Messages
             deleteSearchHistoryConfirm: "¿Estás seguro de que deseas eliminar todo el historial de búsqueda? Esta acción no se puede deshacer.",
             deleteShortcutsConfirm: "¿Estás seguro de que deseas eliminar todos los accesos directos? Esta acción no se puede deshacer.",
             resetSettingsConfirm: "¿Estás seguro de que deseas restablecer toda la configuración a los valores predeterminados? Esta acción no se puede deshacer.",
             deleteEverythingConfirm: "Esto eliminará TODOS tus datos, incluido el historial de búsqueda, los accesos directos y toda la configuración. Esta acción no se puede deshacer. ¿Estás absolutamente seguro?",
             confirmTitle: "Confirmar",
             ok: "Aceptar",
-            cancel: "Cancelar"
+            cancel: "Cancelar",
+            close: "Cerrar",
+            done: "Hecho",
+            
+            // Voice Search Modal
+            voiceSearch: "Búsqueda por voz",
+            clickMicToStart: "Haz clic en el micrófono para comenzar",
+            clickMicToStartShort: "Clic en el micrófono para iniciar",
+            
+            // Image Search
+            imageSearch: "Búsqueda de imágenes",
+            uploadImagePrompt: "Haz clic para subir una imagen o arrastra y suelta",
+            extractedText: "Texto extraído:",
+            
+            // Sidebar Menu
+            menu: "Menú",
+            about: "Acerca de",
+            blog: "Blog",
+            omniWrite: "OmniWrite",
+            calendar: "Calendario",
+            games: "Juegos",
+            maps: "Mapas",
+            photos: "Fotos",
+            tasks: "Tareas",
+            notes: "Notas",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Aplicaciones",
+            
+            // Voice Mode
+            voiceMode: "Modo de Voz",
+            voiceModePrompt: 'Di "Buscar [tu consulta]" para buscar',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Añadir acceso directo",
+            addShortcutDescription: "Ingresa los detalles para tu nuevo acceso directo a continuación:",
+            shortcutName: "Nombre:",
+            shortcutURL: "URL:",
+            add: "Añadir",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Enfocar barra de búsqueda",
+            openVoiceSearch: "Abrir búsqueda por voz",
+            openImageSearch: "Abrir búsqueda de imágenes",
+            openSettings: "Abrir configuración",
+            
+            // Footer
+            terms: "Términos",
+            privacy: "Privacidad",
+            cookies: "Cookies"
           },
           fr: { 
             name: "French",
+            // Search & Main UI
             searchPlaceholder: "Rechercher sur le Web",
             settingsBtn: "Paramètres",
             voiceModeBtn: "Mode Vocal",
             searchButton: "Rechercher",
             luckyButton: "J'ai de la chance",
             addShortcut: "Ajouter",
+            
+            // Settings Pages
             generalSettings: "Général",
             appearanceSettings: "Apparence",
             shortcutsSettings: "Raccourcis",
             privacySettings: "Confidentialité",
             advancedSettings: "Avancé",
+            keyboardShortcuts: "Raccourcis clavier",
+            
+            // General Settings
             language: "Langue",
             defaultSearchMode: "Mode de recherche par défaut",
             web: "Web",
             images: "Images",
+            
+            // Appearance Settings
             bgColor: "Couleur de fond",
             textColor: "Couleur du texte",
             bgImage: "Image de fond",
@@ -3445,9 +3889,17 @@
             uploadImage: "Télécharger l'image",
             clearImage: "Effacer",
             noFileChosen: "Aucun fichier choisi",
+            detectLocalFonts: "Détecter les polices locales",
+            
+            // Privacy Settings
             manageData: "Gérer vos données",
             manageDataBtn: "Gérer les données",
+            
+            // Shortcuts Settings
             shortcutsDescription: "Gérez les raccourcis de votre page d'accueil. Cliquez sur l'icône de suppression sur chaque carte pour supprimer un raccourci.",
+            addShortcutBtn: "Ajouter un raccourci",
+            
+            // Advanced Settings
             searchHistoryLabel: "Historique de recherche",
             shortcutsLabel: "Raccourcis",
             settingsLabel: "Paramètres",
@@ -3458,31 +3910,91 @@
             importSettings: "Importer les paramètres",
             resetSettings: "Réinitialiser les paramètres",
             deleteEverything: "Tout supprimer",
+            
+            // Confirmation Messages
             deleteSearchHistoryConfirm: "Êtes-vous sûr de vouloir supprimer tout l'historique de recherche ? Cette action ne peut pas être annulée.",
             deleteShortcutsConfirm: "Êtes-vous sûr de vouloir supprimer tous les raccourcis ? Cette action ne peut pas être annulée.",
             resetSettingsConfirm: "Êtes-vous sûr de vouloir réinitialiser tous les paramètres aux valeurs par défaut ? Cette action ne peut pas être annulée.",
             deleteEverythingConfirm: "Cela supprimera TOUTES vos données, y compris l'historique de recherche, les raccourcis et tous les paramètres. Cette action ne peut pas être annulée. Êtes-vous absolument sûr ?",
             confirmTitle: "Confirmer",
             ok: "OK",
-            cancel: "Annuler"
+            cancel: "Annuler",
+            close: "Fermer",
+            done: "Terminé",
+            
+            // Voice Search Modal
+            voiceSearch: "Recherche vocale",
+            clickMicToStart: "Cliquez sur le microphone pour commencer",
+            clickMicToStartShort: "Cliquez sur le micro pour commencer",
+            
+            // Image Search
+            imageSearch: "Recherche d'images",
+            uploadImagePrompt: "Cliquez pour télécharger une image ou glissez-déposez",
+            extractedText: "Texte extrait :",
+            
+            // Sidebar Menu
+            menu: "Menu",
+            about: "À propos",
+            blog: "Blog",
+            omniWrite: "OmniWrite",
+            calendar: "Calendrier",
+            games: "Jeux",
+            maps: "Cartes",
+            photos: "Photos",
+            tasks: "Tâches",
+            notes: "Notes",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Applications",
+            
+            // Voice Mode
+            voiceMode: "Mode Vocal",
+            voiceModePrompt: 'Dites "Rechercher [votre requête]" pour rechercher',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Ajouter un raccourci",
+            addShortcutDescription: "Entrez les détails de votre nouveau raccourci ci-dessous :",
+            shortcutName: "Nom :",
+            shortcutURL: "URL :",
+            add: "Ajouter",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Focaliser la barre de recherche",
+            openVoiceSearch: "Ouvrir la recherche vocale",
+            openImageSearch: "Ouvrir la recherche d'images",
+            openSettings: "Ouvrir les paramètres",
+            
+            // Footer
+            terms: "Conditions",
+            privacy: "Confidentialité",
+            cookies: "Cookies"
           },
           de: { 
             name: "German",
+            // Search & Main UI
             searchPlaceholder: "Im Web suchen",
             settingsBtn: "Einstellungen",
             voiceModeBtn: "Sprachmodus",
             searchButton: "Suchen",
             luckyButton: "Auf gut Glück",
             addShortcut: "Hinzufügen",
+            
+            // Settings Pages
             generalSettings: "Allgemein",
             appearanceSettings: "Aussehen",
             shortcutsSettings: "Verknüpfungen",
             privacySettings: "Datenschutz",
             advancedSettings: "Erweitert",
+            keyboardShortcuts: "Tastenkombinationen",
+            
+            // General Settings
             language: "Sprache",
             defaultSearchMode: "Standard-Suchmodus",
             web: "Web",
             images: "Bilder",
+            
+            // Appearance Settings
             bgColor: "Hintergrundfarbe",
             textColor: "Textfarbe",
             bgImage: "Hintergrundbild",
@@ -3491,9 +4003,17 @@
             uploadImage: "Bild hochladen",
             clearImage: "Löschen",
             noFileChosen: "Keine Datei ausgewählt",
+            detectLocalFonts: "Lokale Schriftarten erkennen",
+            
+            // Privacy Settings
             manageData: "Ihre Daten verwalten",
             manageDataBtn: "Daten verwalten",
+            
+            // Shortcuts Settings
             shortcutsDescription: "Verwalten Sie Ihre Homepage-Verknüpfungen. Klicken Sie auf das Löschsymbol auf jeder Karte, um eine Verknüpfung zu entfernen.",
+            addShortcutBtn: "Verknüpfung hinzufügen",
+            
+            // Advanced Settings
             searchHistoryLabel: "Suchverlauf",
             shortcutsLabel: "Verknüpfungen",
             settingsLabel: "Einstellungen",
@@ -3504,21 +4024,3146 @@
             importSettings: "Einstellungen importieren",
             resetSettings: "Einstellungen zurücksetzen",
             deleteEverything: "Alles löschen",
+            
+            // Confirmation Messages
             deleteSearchHistoryConfirm: "Möchten Sie wirklich den gesamten Suchverlauf löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
             deleteShortcutsConfirm: "Möchten Sie wirklich alle Verknüpfungen löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
             resetSettingsConfirm: "Möchten Sie wirklich alle Einstellungen auf die Standardwerte zurücksetzen? Diese Aktion kann nicht rückgängig gemacht werden.",
             deleteEverythingConfirm: "Dadurch werden ALLE Ihre Daten gelöscht, einschließlich Suchverlauf, Verknüpfungen und alle Einstellungen. Diese Aktion kann nicht rückgängig gemacht werden. Sind Sie wirklich sicher?",
             confirmTitle: "Bestätigen",
             ok: "OK",
-            cancel: "Abbrechen"
+            cancel: "Abbrechen",
+            close: "Schließen",
+            done: "Fertig",
+            
+            // Voice Search Modal
+            voiceSearch: "Sprachsuche",
+            clickMicToStart: "Klicken Sie auf das Mikrofon, um zu beginnen",
+            clickMicToStartShort: "Mikrofon anklicken zum Starten",
+            
+            // Image Search
+            imageSearch: "Bildsuche",
+            uploadImagePrompt: "Klicken Sie zum Hochladen eines Bildes oder ziehen Sie es per Drag & Drop",
+            extractedText: "Extrahierter Text:",
+            
+            // Sidebar Menu
+            menu: "Menü",
+            about: "Über",
+            blog: "Blog",
+            omniWrite: "OmniWrite",
+            calendar: "Kalender",
+            games: "Spiele",
+            maps: "Karten",
+            photos: "Fotos",
+            tasks: "Aufgaben",
+            notes: "Notizen",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Apps",
+            
+            // Voice Mode
+            voiceMode: "Sprachmodus",
+            voiceModePrompt: 'Sagen Sie "Suchen [Ihre Anfrage]" zum Suchen',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Verknüpfung hinzufügen",
+            addShortcutDescription: "Geben Sie die Details für Ihre neue Verknüpfung unten ein:",
+            shortcutName: "Name:",
+            shortcutURL: "URL:",
+            add: "Hinzufügen",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Suchleiste fokussieren",
+            openVoiceSearch: "Sprachsuche öffnen",
+            openImageSearch: "Bildsuche öffnen",
+            openSettings: "Einstellungen öffnen",
+            
+            // Footer
+            terms: "Bedingungen",
+            privacy: "Datenschutz",
+            cookies: "Cookies"
           },
-          it: { name: "Italian", searchPlaceholder: "Cerca nel Web" },
-          zh: { name: "Chinese", searchPlaceholder: "搜索网页" },
-          ja: { name: "Japanese", searchPlaceholder: "ウェブを検索" },
-          ko: { name: "Korean", searchPlaceholder: "웹 검색" },
-          ar: { name: "Arabic", searchPlaceholder: "ابحث في الويب" },
-          hi: { name: "Hindi", searchPlaceholder: "वेब खोजें" },
-          ru: { name: "Russian", searchPlaceholder: "Поиск в Интернете" }
+          it: { 
+            name: "Italian", 
+            // Search & Main UI
+            searchPlaceholder: "Cerca sul Web",
+            settingsBtn: "Impostazioni",
+            voiceModeBtn: "Modalità Vocale",
+            searchButton: "Cerca",
+            luckyButton: "Mi sento fortunato",
+            addShortcut: "Aggiungi",
+            
+            // Settings Pages
+            generalSettings: "Generale",
+            appearanceSettings: "Aspetto",
+            shortcutsSettings: "Scorciatoie",
+            privacySettings: "Privacy",
+            advancedSettings: "Avanzate",
+            keyboardShortcuts: "Scorciatoie da tastiera",
+            
+            // General Settings
+            language: "Lingua",
+            defaultSearchMode: "Modalità di ricerca predefinita",
+            web: "Web",
+            images: "Immagini",
+            
+            // Appearance Settings
+            bgColor: "Colore di sfondo",
+            textColor: "Colore del testo",
+            bgImage: "Immagine di sfondo",
+            fontFamily: "Famiglia di caratteri",
+            reduceTransparency: "Ridurre la trasparenza",
+            uploadImage: "Carica immagine",
+            clearImage: "Cancella",
+            noFileChosen: "Nessun file scelto",
+            detectLocalFonts: "Rileva caratteri locali",
+            
+            // Privacy Settings
+            manageData: "Gestisci i tuoi dati",
+            manageDataBtn: "Gestisci dati",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "Gestisci le scorciatoie della tua homepage. Fai clic sull'icona di eliminazione su ogni carta per rimuovere una scorciatoia.",
+            addShortcutBtn: "Aggiungi scorciatoia",
+            
+            // Advanced Settings
+            searchHistoryLabel: "Cronologia ricerche",
+            shortcutsLabel: "Scorciatoie",
+            settingsLabel: "Impostazioni",
+            dataLabel: "Dati",
+            deleteSearchHistory: "Elimina tutta la cronologia",
+            deleteShortcuts: "Elimina tutte le scorciatoie",
+            exportSettings: "Esporta impostazioni",
+            importSettings: "Importa impostazioni",
+            resetSettings: "Ripristina impostazioni",
+            deleteEverything: "Elimina tutto",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "Sei sicuro di voler eliminare tutta la cronologia delle ricerche? Questa azione non può essere annullata.",
+            deleteShortcutsConfirm: "Sei sicuro di voler eliminare tutte le scorciatoie? Questa azione non può essere annullata.",
+            resetSettingsConfirm: "Sei sicuro di voler ripristinare tutte le impostazioni ai valori predefiniti? Questa azione non può essere annullata.",
+            deleteEverythingConfirm: "Questo eliminerà TUTTI i tuoi dati inclusa la cronologia delle ricerche, le scorciatoie e tutte le impostazioni. Questa azione non può essere annullata. Sei assolutamente sicuro?",
+            confirmTitle: "Conferma",
+            ok: "OK",
+            cancel: "Annulla",
+            close: "Chiudi",
+            done: "Fatto",
+            
+            // Voice Search Modal
+            voiceSearch: "Ricerca vocale",
+            clickMicToStart: "Fai clic sul microfono per iniziare",
+            clickMicToStartShort: "Fai clic sul microfono",
+            
+            // Image Search
+            imageSearch: "Ricerca per immagini",
+            uploadImagePrompt: "Fai clic per caricare un'immagine o trascina e rilascia",
+            extractedText: "Testo estratto:",
+            
+            // Sidebar Menu
+            menu: "Menu",
+            about: "Informazioni",
+            blog: "Blog",
+            omniWrite: "OmniWrite",
+            calendar: "Calendario",
+            games: "Giochi",
+            maps: "Mappe",
+            photos: "Foto",
+            tasks: "Attività",
+            notes: "Note",
+            labs: "Labs",
+            
+            // Apps
+            apps: "App",
+            
+            // Voice Mode
+            voiceMode: "Modalità vocale",
+            voiceModePrompt: 'Dì "Cerca [la tua query]" per cercare',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Aggiungi scorciatoia",
+            addShortcutDescription: "Inserisci i dettagli per la tua nuova scorciatoia qui sotto:",
+            shortcutName: "Nome:",
+            shortcutURL: "URL:",
+            add: "Aggiungi",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Focalizza barra di ricerca",
+            openVoiceSearch: "Apri ricerca vocale",
+            openImageSearch: "Apri ricerca per immagini",
+            openSettings: "Apri impostazioni",
+            
+            // Footer
+            terms: "Termini",
+            privacy: "Privacy",
+            cookies: "Cookie"
+          },
+          pt: { 
+            name: "Portuguese", 
+            // Search & Main UI
+            searchPlaceholder: "Pesquisar na Web",
+            settingsBtn: "Configurações",
+            voiceModeBtn: "Modo de Voz",
+            searchButton: "Pesquisar",
+            luckyButton: "Estou com sorte",
+            addShortcut: "Adicionar",
+            
+            // Settings Pages
+            generalSettings: "Geral",
+            appearanceSettings: "Aparência",
+            shortcutsSettings: "Atalhos",
+            privacySettings: "Privacidade",
+            advancedSettings: "Avançado",
+            keyboardShortcuts: "Atalhos de teclado",
+            
+            // General Settings
+            language: "Idioma",
+            defaultSearchMode: "Modo de pesquisa padrão",
+            web: "Web",
+            images: "Imagens",
+            
+            // Appearance Settings
+            bgColor: "Cor de fundo",
+            textColor: "Cor do texto",
+            bgImage: "Imagem de fundo",
+            fontFamily: "Família de fontes",
+            reduceTransparency: "Reduzir transparência",
+            uploadImage: "Carregar imagem",
+            clearImage: "Limpar",
+            noFileChosen: "Nenhum arquivo escolhido",
+            detectLocalFonts: "Detectar fontes locais",
+            
+            // Privacy Settings
+            manageData: "Gerenciar seus dados",
+            manageDataBtn: "Gerenciar dados",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "Gerencie os atalhos da sua página inicial. Clique no ícone de exclusão em cada cartão para remover um atalho.",
+            addShortcutBtn: "Adicionar atalho",
+            
+            // Advanced Settings
+            searchHistoryLabel: "Histórico de pesquisa",
+            shortcutsLabel: "Atalhos",
+            settingsLabel: "Configurações",
+            dataLabel: "Dados",
+            deleteSearchHistory: "Excluir todo o histórico",
+            deleteShortcuts: "Excluir todos os atalhos",
+            exportSettings: "Exportar configurações",
+            importSettings: "Importar configurações",
+            resetSettings: "Redefinir configurações",
+            deleteEverything: "Excluir tudo",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "Tem certeza de que deseja excluir todo o histórico de pesquisa? Esta ação não pode ser desfeita.",
+            deleteShortcutsConfirm: "Tem certeza de que deseja excluir todos os atalhos? Esta ação não pode ser desfeita.",
+            resetSettingsConfirm: "Tem certeza de que deseja redefinir todas as configurações para os padrões? Esta ação não pode ser desfeita.",
+            deleteEverythingConfirm: "Isso excluirá TODOS os seus dados, incluindo histórico de pesquisa, atalhos e todas as configurações. Esta ação não pode ser desfeita. Tem certeza absoluta?",
+            confirmTitle: "Confirmar",
+            ok: "OK",
+            cancel: "Cancelar",
+            close: "Fechar",
+            done: "Concluído",
+            
+            // Voice Search Modal
+            voiceSearch: "Pesquisa por voz",
+            clickMicToStart: "Clique no microfone para começar",
+            clickMicToStartShort: "Clique no microfone",
+            
+            // Image Search
+            imageSearch: "Pesquisa por imagem",
+            uploadImagePrompt: "Clique para carregar uma imagem ou arraste e solte",
+            extractedText: "Texto extraído:",
+            
+            // Sidebar Menu
+            menu: "Menu",
+            about: "Sobre",
+            blog: "Blog",
+            omniWrite: "OmniWrite",
+            calendar: "Calendário",
+            games: "Jogos",
+            maps: "Mapas",
+            photos: "Fotos",
+            tasks: "Tarefas",
+            notes: "Notas",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Apps",
+            
+            // Voice Mode
+            voiceMode: "Modo de voz",
+            voiceModePrompt: 'Diga "Pesquisar [sua consulta]" para pesquisar',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Adicionar atalho",
+            addShortcutDescription: "Digite os detalhes do seu novo atalho abaixo:",
+            shortcutName: "Nome:",
+            shortcutURL: "URL:",
+            add: "Adicionar",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Focar barra de pesquisa",
+            openVoiceSearch: "Abrir pesquisa por voz",
+            openImageSearch: "Abrir pesquisa por imagem",
+            openSettings: "Abrir configurações",
+            
+            // Footer
+            terms: "Termos",
+            privacy: "Privacidade",
+            cookies: "Cookies"
+          },
+          nl: { 
+            name: "Dutch", 
+            // Search & Main UI
+            searchPlaceholder: "Zoeken op het web",
+            settingsBtn: "Instellingen",
+            voiceModeBtn: "Spraak modus",
+            searchButton: "Zoeken",
+            luckyButton: "Ik doe een gok",
+            addShortcut: "Toevoegen",
+            
+            // Settings Pages
+            generalSettings: "Algemeen",
+            appearanceSettings: "Uiterlijk",
+            shortcutsSettings: "Snelkoppelingen",
+            privacySettings: "Privacy",
+            advancedSettings: "Geavanceerd",
+            keyboardShortcuts: "Toetsenbord sneltoetsen",
+            
+            // General Settings
+            language: "Taal",
+            defaultSearchMode: "Standaard zoekmodus",
+            web: "Web",
+            images: "Afbeeldingen",
+            
+            // Appearance Settings
+            bgColor: "Achtergrondkleur",
+            textColor: "Tekstkleur",
+            bgImage: "Achtergrondafbeelding",
+            fontFamily: "Lettertype",
+            reduceTransparency: "Transparantie verminderen",
+            uploadImage: "Afbeelding uploaden",
+            clearImage: "Wissen",
+            noFileChosen: "Geen bestand gekozen",
+            detectLocalFonts: "Lokale lettertypen detecteren",
+            
+            // Privacy Settings
+            manageData: "Beheer uw gegevens",
+            manageDataBtn: "Gegevens beheren",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "Beheer de snelkoppelingen van uw startpagina. Klik op het verwijderpictogram op elke kaart om een snelkoppeling te verwijderen.",
+            addShortcutBtn: "Snelkoppeling toevoegen",
+            
+            // Advanced Settings
+            searchHistoryLabel: "Zoekgeschiedenis",
+            shortcutsLabel: "Snelkoppelingen",
+            settingsLabel: "Instellingen",
+            dataLabel: "Gegevens",
+            deleteSearchHistory: "Alle zoekgeschiedenis verwijderen",
+            deleteShortcuts: "Alle snelkoppelingen verwijderen",
+            exportSettings: "Instellingen exporteren",
+            importSettings: "Instellingen importeren",
+            resetSettings: "Instellingen resetten",
+            deleteEverything: "Alles verwijderen",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "Weet u zeker dat u alle zoekgeschiedenis wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
+            deleteShortcutsConfirm: "Weet u zeker dat u alle snelkoppelingen wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
+            resetSettingsConfirm: "Weet u zeker dat u alle instellingen wilt resetten naar de standaardwaarden? Deze actie kan niet ongedaan worden gemaakt.",
+            deleteEverythingConfirm: "Dit zal ALLE gegevens verwijderen, inclusief zoekgeschiedenis, snelkoppelingen en alle instellingen. Deze actie kan niet ongedaan worden gemaakt. Weet u dit absoluut zeker?",
+            confirmTitle: "Bevestigen",
+            ok: "OK",
+            cancel: "Annuleren",
+            close: "Sluiten",
+            done: "Klaar",
+            
+            // Voice Search Modal
+            voiceSearch: "Spraakzoeken",
+            clickMicToStart: "Klik op de microfoon om te beginnen",
+            clickMicToStartShort: "Klik op de microfoon",
+            
+            // Image Search
+            imageSearch: "Zoeken op afbeelding",
+            uploadImagePrompt: "Klik om een afbeelding te uploaden of sleep en zet neer",
+            extractedText: "Geëxtraheerde tekst:",
+            
+            // Sidebar Menu
+            menu: "Menu",
+            about: "Over",
+            blog: "Blog",
+            omniWrite: "OmniWrite",
+            calendar: "Kalender",
+            games: "Spellen",
+            maps: "Kaarten",
+            photos: "Foto's",
+            tasks: "Taken",
+            notes: "Notities",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Apps",
+            
+            // Voice Mode
+            voiceMode: "Spraak modus",
+            voiceModePrompt: 'Zeg "Zoeken [uw zoekopdracht]" om te zoeken',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Snelkoppeling toevoegen",
+            addShortcutDescription: "Voer de details voor uw nieuwe snelkoppeling hieronder in:",
+            shortcutName: "Naam:",
+            shortcutURL: "URL:",
+            add: "Toevoegen",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Focus zoekbalk",
+            openVoiceSearch: "Spraakzoeken openen",
+            openImageSearch: "Zoeken op afbeelding openen",
+            openSettings: "Instellingen openen",
+            
+            // Footer
+            terms: "Voorwaarden",
+            privacy: "Privacy",
+            cookies: "Cookies"
+          },
+          pl: { 
+            name: "Polish", 
+            // Search & Main UI
+            searchPlaceholder: "Szukaj w sieci",
+            settingsBtn: "Ustawienia",
+            voiceModeBtn: "Tryb głosowy",
+            searchButton: "Szukaj",
+            luckyButton: "Szczęśliwy traf",
+            addShortcut: "Dodaj",
+            
+            // Settings Pages
+            generalSettings: "Ogólne",
+            appearanceSettings: "Wygląd",
+            shortcutsSettings: "Skróty",
+            privacySettings: "Prywatność",
+            advancedSettings: "Zaawansowane",
+            keyboardShortcuts: "Skróty klawiaturowe",
+            
+            // General Settings
+            language: "Język",
+            defaultSearchMode: "Domyślny tryb wyszukiwania",
+            web: "Sieć",
+            images: "Obrazy",
+            
+            // Appearance Settings
+            bgColor: "Kolor tła",
+            textColor: "Kolor tekstu",
+            bgImage: "Obraz tła",
+            fontFamily: "Czcionka",
+            reduceTransparency: "Zmniejsz przezroczystość",
+            uploadImage: "Prześlij obraz",
+            clearImage: "Wyczyść",
+            noFileChosen: "Nie wybrano pliku",
+            detectLocalFonts: "Wykryj lokalne czcionki",
+            
+            // Privacy Settings
+            manageData: "Zarządzaj swoimi danymi",
+            manageDataBtn: "Zarządzaj danymi",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "Zarządzaj skrótami na stronie głównej. Kliknij ikonę usuwania na każdej karcie, aby usunąć skrót.",
+            addShortcutBtn: "Dodaj skrót",
+            
+            // Advanced Settings
+            searchHistoryLabel: "Historia wyszukiwania",
+            shortcutsLabel: "Skróty",
+            settingsLabel: "Ustawienia",
+            dataLabel: "Dane",
+            deleteSearchHistory: "Usuń całą historię",
+            deleteShortcuts: "Usuń wszystkie skróty",
+            exportSettings: "Eksportuj ustawienia",
+            importSettings: "Importuj ustawienia",
+            resetSettings: "Zresetuj ustawienia",
+            deleteEverything: "Usuń wszystko",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "Czy na pewno chcesz usunąć całą historię wyszukiwania? Tej czynności nie można cofnąć.",
+            deleteShortcutsConfirm: "Czy na pewno chcesz usunąć wszystkie skróty? Tej czynności nie można cofnąć.",
+            resetSettingsConfirm: "Czy na pewno chcesz zresetować wszystkie ustawienia do wartości domyślnych? Tej czynności nie można cofnąć.",
+            deleteEverythingConfirm: "Spowoduje to usunięcie WSZYSTKICH danych, w tym historii wyszukiwania, skrótów i wszystkich ustawień. Tej czynności nie można cofnąć. Czy na pewno?",
+            confirmTitle: "Potwierdź",
+            ok: "OK",
+            cancel: "Anuluj",
+            close: "Zamknij",
+            done: "Gotowe",
+            
+            // Voice Search Modal
+            voiceSearch: "Wyszukiwanie głosowe",
+            clickMicToStart: "Kliknij mikrofon, aby rozpocząć",
+            clickMicToStartShort: "Kliknij mikrofon",
+            
+            // Image Search
+            imageSearch: "Wyszukiwanie obrazem",
+            uploadImagePrompt: "Kliknij, aby przesłać obraz lub przeciągnij i upuść",
+            extractedText: "Wyodrębniony tekst:",
+            
+            // Sidebar Menu
+            menu: "Menu",
+            about: "O nas",
+            blog: "Blog",
+            omniWrite: "OmniWrite",
+            calendar: "Kalendarz",
+            games: "Gry",
+            maps: "Mapy",
+            photos: "Zdjęcia",
+            tasks: "Zadania",
+            notes: "Notatki",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Aplikacje",
+            
+            // Voice Mode
+            voiceMode: "Tryb głosowy",
+            voiceModePrompt: 'Powiedz "Szukaj [Twoje zapytanie]" aby wyszukać',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Dodaj skrót",
+            addShortcutDescription: "Wprowadź szczegóły nowego skrótu poniżej:",
+            shortcutName: "Nazwa:",
+            shortcutURL: "URL:",
+            add: "Dodaj",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Aktywuj pasek wyszukiwania",
+            openVoiceSearch: "Otwórz wyszukiwanie głosowe",
+            openImageSearch: "Otwórz wyszukiwanie obrazem",
+            openSettings: "Otwórz ustawienia",
+            
+            // Footer
+            terms: "Warunki",
+            privacy: "Prywatność",
+            cookies: "Ciasteczka"
+          },
+          tr: { 
+            name: "Turkish", 
+            // Search & Main UI
+            searchPlaceholder: "Web'de Ara",
+            settingsBtn: "Ayarlar",
+            voiceModeBtn: "Sesli Mod",
+            searchButton: "Ara",
+            luckyButton: "Kendimi Şanslı Hissediyorum",
+            addShortcut: "Ekle",
+            
+            // Settings Pages
+            generalSettings: "Genel",
+            appearanceSettings: "Görünüm",
+            shortcutsSettings: "Kısayollar",
+            privacySettings: "Gizlilik",
+            advancedSettings: "Gelişmiş",
+            keyboardShortcuts: "Klavye Kısayolları",
+            
+            // General Settings
+            language: "Dil",
+            defaultSearchMode: "Varsayılan arama modu",
+            web: "Web",
+            images: "Görseller",
+            
+            // Appearance Settings
+            bgColor: "Arka plan rengi",
+            textColor: "Metin rengi",
+            bgImage: "Arka plan resmi",
+            fontFamily: "Yazı tipi",
+            reduceTransparency: "Şeffaflığı azalt",
+            uploadImage: "Resim yükle",
+            clearImage: "Temizle",
+            noFileChosen: "Dosya seçilmedi",
+            detectLocalFonts: "Yerel yazı tiplerini algıla",
+            
+            // Privacy Settings
+            manageData: "Verilerinizi yönetin",
+            manageDataBtn: "Verileri yönet",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "Ana sayfa kısayollarınızı yönetin. Bir kısayolu kaldırmak için her karttaki silme simgesine tıklayın.",
+            addShortcutBtn: "Kısayol ekle",
+            
+            // Advanced Settings
+            searchHistoryLabel: "Arama geçmişi",
+            shortcutsLabel: "Kısayollar",
+            settingsLabel: "Ayarlar",
+            dataLabel: "Veriler",
+            deleteSearchHistory: "Tüm geçmişi sil",
+            deleteShortcuts: "Tüm kısayolları sil",
+            exportSettings: "Ayarları dışa aktar",
+            importSettings: "Ayarları içe aktar",
+            resetSettings: "Ayarları sıfırla",
+            deleteEverything: "Her şeyi sil",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "Tüm arama geçmişini silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+            deleteShortcutsConfirm: "Tüm kısayolları silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+            resetSettingsConfirm: "Tüm ayarları varsayılanlara sıfırlamak istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+            deleteEverythingConfirm: "Bu, arama geçmişi, kısayollar ve tüm ayarlar dahil TÜM verilerinizi silecektir. Bu işlem geri alınamaz. Kesinlikle emin misiniz?",
+            confirmTitle: "Onayla",
+            ok: "Tamam",
+            cancel: "İptal",
+            close: "Kapat",
+            done: "Bitti",
+            
+            // Voice Search Modal
+            voiceSearch: "Sesli arama",
+            clickMicToStart: "Başlamak için mikrofona tıklayın",
+            clickMicToStartShort: "Mikrofona tıklayın",
+            
+            // Image Search
+            imageSearch: "Görsel arama",
+            uploadImagePrompt: "Bir resim yüklemek için tıklayın veya sürükleyip bırakın",
+            extractedText: "Çıkarılan metin:",
+            
+            // Sidebar Menu
+            menu: "Menü",
+            about: "Hakkında",
+            blog: "Blog",
+            omniWrite: "OmniWrite",
+            calendar: "Takvim",
+            games: "Oyunlar",
+            maps: "Haritalar",
+            photos: "Fotoğraflar",
+            tasks: "Görevler",
+            notes: "Notlar",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Uygulamalar",
+            
+            // Voice Mode
+            voiceMode: "Sesli mod",
+            voiceModePrompt: 'Aramak için "Ara [sorgunuz]" deyin',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Kısayol ekle",
+            addShortcutDescription: "Yeni kısayolunuzun ayrıntılarını aşağıya girin:",
+            shortcutName: "İsim:",
+            shortcutURL: "URL:",
+            add: "Ekle",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Arama çubuğuna odaklan",
+            openVoiceSearch: "Sesli aramayı aç",
+            openImageSearch: "Görsel aramayı aç",
+            openSettings: "Ayarları aç",
+            
+            // Footer
+            terms: "Şartlar",
+            privacy: "Gizlilik",
+            cookies: "Çerezler"
+          },
+          sv: { 
+            name: "Swedish", 
+            // Search & Main UI
+            searchPlaceholder: "Sök på webben",
+            settingsBtn: "Inställningar",
+            voiceModeBtn: "Röstläge",
+            searchButton: "Sök",
+            luckyButton: "Jag har tur",
+            addShortcut: "Lägg till",
+            
+            // Settings Pages
+            generalSettings: "Allmänt",
+            appearanceSettings: "Utseende",
+            shortcutsSettings: "Genvägar",
+            privacySettings: "Integritet",
+            advancedSettings: "Avancerat",
+            keyboardShortcuts: "Tangentbordsgenvägar",
+            
+            // General Settings
+            language: "Språk",
+            defaultSearchMode: "Standardsökläge",
+            web: "Webb",
+            images: "Bilder",
+            
+            // Appearance Settings
+            bgColor: "Bakgrundsfärg",
+            textColor: "Textfärg",
+            bgImage: "Bakgrundsbild",
+            fontFamily: "Teckensnitt",
+            reduceTransparency: "Minska genomskinlighet",
+            uploadImage: "Ladda upp bild",
+            clearImage: "Rensa",
+            noFileChosen: "Ingen fil vald",
+            detectLocalFonts: "Upptäck lokala teckensnitt",
+            
+            // Privacy Settings
+            manageData: "Hantera dina data",
+            manageDataBtn: "Hantera data",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "Hantera genvägar på din startsida. Klicka på raderingsikonen på varje kort för att ta bort en genväg.",
+            addShortcutBtn: "Lägg till genväg",
+            
+            // Advanced Settings
+            searchHistoryLabel: "Sökhistorik",
+            shortcutsLabel: "Genvägar",
+            settingsLabel: "Inställningar",
+            dataLabel: "Data",
+            deleteSearchHistory: "Ta bort all historik",
+            deleteShortcuts: "Ta bort alla genvägar",
+            exportSettings: "Exportera inställningar",
+            importSettings: "Importera inställningar",
+            resetSettings: "Återställ inställningar",
+            deleteEverything: "Ta bort allt",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "Är du säker på att du vill ta bort all sökhistorik? Denna åtgärd kan inte ångras.",
+            deleteShortcutsConfirm: "Är du säker på att du vill ta bort alla genvägar? Denna åtgärd kan inte ångras.",
+            resetSettingsConfirm: "Är du säker på att du vill återställa alla inställningar till standardvärden? Denna åtgärd kan inte ångras.",
+            deleteEverythingConfirm: "Detta kommer att ta bort ALL din data inklusive sökhistorik, genvägar och alla inställningar. Denna åtgärd kan inte ångras. Är du helt säker?",
+            confirmTitle: "Bekräfta",
+            ok: "OK",
+            cancel: "Avbryt",
+            close: "Stäng",
+            done: "Klar",
+            
+            // Voice Search Modal
+            voiceSearch: "Röstsökning",
+            clickMicToStart: "Klicka på mikrofonen för att börja",
+            clickMicToStartShort: "Klicka på mikrofonen",
+            
+            // Image Search
+            imageSearch: "Bildsökning",
+            uploadImagePrompt: "Klicka för att ladda upp en bild eller dra och släpp",
+            extractedText: "Extraherad text:",
+            
+            // Sidebar Menu
+            menu: "Meny",
+            about: "Om",
+            blog: "Blogg",
+            omniWrite: "OmniWrite",
+            calendar: "Kalender",
+            games: "Spel",
+            maps: "Kartor",
+            photos: "Foton",
+            tasks: "Uppgifter",
+            notes: "Anteckningar",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Appar",
+            
+            // Voice Mode
+            voiceMode: "Röstläge",
+            voiceModePrompt: 'Säg "Sök [din fråga]" för att söka',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Lägg till genväg",
+            addShortcutDescription: "Ange detaljerna för din nya genväg nedan:",
+            shortcutName: "Namn:",
+            shortcutURL: "URL:",
+            add: "Lägg till",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Fokusera sökfält",
+            openVoiceSearch: "Öppna röstsökning",
+            openImageSearch: "Öppna bildsökning",
+            openSettings: "Öppna inställningar",
+            
+            // Footer
+            terms: "Villkor",
+            privacy: "Integritet",
+            cookies: "Kakor"
+          },
+          no: { 
+            name: "Norwegian", 
+            // Search & Main UI
+            searchPlaceholder: "Søk på nettet",
+            settingsBtn: "Innstillinger",
+            voiceModeBtn: "Stemmemodus",
+            searchButton: "Søk",
+            luckyButton: "Jeg føler meg heldig",
+            addShortcut: "Legg til",
+            
+            // Settings Pages
+            generalSettings: "Generelt",
+            appearanceSettings: "Utseende",
+            shortcutsSettings: "Snarveier",
+            privacySettings: "Personvern",
+            advancedSettings: "Avansert",
+            keyboardShortcuts: "Tastatursnarveier",
+            
+            // General Settings
+            language: "Språk",
+            defaultSearchMode: "Standard søkemodus",
+            web: "Web",
+            images: "Bilder",
+            
+            // Appearance Settings
+            bgColor: "Bakgrunnsfarge",
+            textColor: "Tekstfarge",
+            bgImage: "Bakgrunnsbilde",
+            fontFamily: "Skrifttype",
+            reduceTransparency: "Reduser gjennomsiktighet",
+            uploadImage: "Last opp bilde",
+            clearImage: "Fjern",
+            noFileChosen: "Ingen fil valgt",
+            detectLocalFonts: "Oppdag lokale skrifttyper",
+            
+            // Privacy Settings
+            manageData: "Administrer dataen din",
+            manageDataBtn: "Administrer data",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "Administrer snarveiene på startsiden din. Klikk på sletteikonet på hvert kort for å fjerne en snarvei.",
+            addShortcutBtn: "Legg til snarvei",
+            
+            // Advanced Settings
+            searchHistoryLabel: "Søkehistorikk",
+            shortcutsLabel: "Snarveier",
+            settingsLabel: "Innstillinger",
+            dataLabel: "Data",
+            deleteSearchHistory: "Slett all historikk",
+            deleteShortcuts: "Slett alle snarveier",
+            exportSettings: "Eksporter innstillinger",
+            importSettings: "Importer innstillinger",
+            resetSettings: "Tilbakestill innstillinger",
+            deleteEverything: "Slett alt",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "Er du sikker på at du vil slette all søkehistorikk? Denne handlingen kan ikke angres.",
+            deleteShortcutsConfirm: "Er du sikker på at du vil slette alle snarveier? Denne handlingen kan ikke angres.",
+            resetSettingsConfirm: "Er du sikker på at du vil tilbakestille alle innstillinger til standardverdier? Denne handlingen kan ikke angres.",
+            deleteEverythingConfirm: "Dette vil slette ALL dataen din inkludert søkehistorikk, snarveier og alle innstillinger. Denne handlingen kan ikke angres. Er du helt sikker?",
+            confirmTitle: "Bekreft",
+            ok: "OK",
+            cancel: "Avbryt",
+            close: "Lukk",
+            done: "Ferdig",
+            
+            // Voice Search Modal
+            voiceSearch: "Stemmesøk",
+            clickMicToStart: "Klikk på mikrofonen for å starte",
+            clickMicToStartShort: "Klikk på mikrofonen",
+            
+            // Image Search
+            imageSearch: "Bildesøk",
+            uploadImagePrompt: "Klikk for å laste opp et bilde eller dra og slipp",
+            extractedText: "Ekstrahert tekst:",
+            
+            // Sidebar Menu
+            menu: "Meny",
+            about: "Om",
+            blog: "Blogg",
+            omniWrite: "OmniWrite",
+            calendar: "Kalender",
+            games: "Spill",
+            maps: "Kart",
+            photos: "Bilder",
+            tasks: "Oppgaver",
+            notes: "Notater",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Apper",
+            
+            // Voice Mode
+            voiceMode: "Stemmemodus",
+            voiceModePrompt: 'Si "Søk [din spørring]" for å søke',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Legg til snarvei",
+            addShortcutDescription: "Angi detaljene for den nye snarveien din nedenfor:",
+            shortcutName: "Navn:",
+            shortcutURL: "URL:",
+            add: "Legg til",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Fokuser søkefelt",
+            openVoiceSearch: "Åpne stemmesøk",
+            openImageSearch: "Åpne bildesøk",
+            openSettings: "Åpne innstillinger",
+            
+            // Footer
+            terms: "Vilkår",
+            privacy: "Personvern",
+            cookies: "Informasjonskapsler"
+          },
+          da: { 
+            name: "Danish", 
+            // Search & Main UI
+            searchPlaceholder: "Søg på nettet",
+            settingsBtn: "Indstillinger",
+            voiceModeBtn: "Stemmetilstand",
+            searchButton: "Søg",
+            luckyButton: "Jeg føler mig heldig",
+            addShortcut: "Tilføj",
+            
+            // Settings Pages
+            generalSettings: "Generelt",
+            appearanceSettings: "Udseende",
+            shortcutsSettings: "Genveje",
+            privacySettings: "Privatliv",
+            advancedSettings: "Avanceret",
+            keyboardShortcuts: "Tastaturgenveje",
+            
+            // General Settings
+            language: "Sprog",
+            defaultSearchMode: "Standard søgetilstand",
+            web: "Web",
+            images: "Billeder",
+            
+            // Appearance Settings
+            bgColor: "Baggrundsfarve",
+            textColor: "Tekstfarve",
+            bgImage: "Baggrundsbillede",
+            fontFamily: "Skrifttype",
+            reduceTransparency: "Reducer gennemsigtighed",
+            uploadImage: "Upload billede",
+            clearImage: "Ryd",
+            noFileChosen: "Ingen fil valgt",
+            detectLocalFonts: "Opdage lokale skrifttyper",
+            
+            // Privacy Settings
+            manageData: "Administrer dine data",
+            manageDataBtn: "Administrer data",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "Administrer genveje på din startside. Klik på sletikonen på hvert kort for at fjerne en genvej.",
+            addShortcutBtn: "Tilføj genvej",
+            
+            // Advanced Settings
+            searchHistoryLabel: "Søgehistorik",
+            shortcutsLabel: "Genveje",
+            settingsLabel: "Indstillinger",
+            dataLabel: "Data",
+            deleteSearchHistory: "Slet al historik",
+            deleteShortcuts: "Slet alle genveje",
+            exportSettings: "Eksporter indstillinger",
+            importSettings: "Importer indstillinger",
+            resetSettings: "Nulstil indstillinger",
+            deleteEverything: "Slet alt",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "Er du sikker på, at du vil slette al søgehistorik? Denne handling kan ikke fortrydes.",
+            deleteShortcutsConfirm: "Er du sikker på, at du vil slette alle genveje? Denne handling kan ikke fortrydes.",
+            resetSettingsConfirm: "Er du sikker på, at du vil nulstille alle indstillinger til standardværdierne? Denne handling kan ikke fortrydes.",
+            deleteEverythingConfirm: "Dette vil slette ALLE dine data, inklusiv søgehistorik, genveje og alle indstillinger. Denne handling kan ikke fortrydes. Er du helt sikker?",
+            confirmTitle: "Bekræft",
+            ok: "OK",
+            cancel: "Annuller",
+            close: "Luk",
+            done: "Færdig",
+            
+            // Voice Search Modal
+            voiceSearch: "Stemmesøgning",
+            clickMicToStart: "Klik på mikrofonen for at starte",
+            clickMicToStartShort: "Klik på mikrofonen",
+            
+            // Image Search
+            imageSearch: "Billedsøgning",
+            uploadImagePrompt: "Klik for at uploade et billede eller træk og slip",
+            extractedText: "Ekstraheret tekst:",
+            
+            // Sidebar Menu
+            menu: "Menu",
+            about: "Om",
+            blog: "Blog",
+            omniWrite: "OmniWrite",
+            calendar: "Kalender",
+            games: "Spil",
+            maps: "Kort",
+            photos: "Billeder",
+            tasks: "Opgaver",
+            notes: "Noter",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Apps",
+            
+            // Voice Mode
+            voiceMode: "Stemmetilstand",
+            voiceModePrompt: 'Sig "Søg [din forespørgsel]" for at søge',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Tilføj genvej",
+            addShortcutDescription: "Indtast detaljerne for din nye genvej nedenfor:",
+            shortcutName: "Navn:",
+            shortcutURL: "URL:",
+            add: "Tilføj",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Fokuser søgefelt",
+            openVoiceSearch: "Åbn stemmesøgning",
+            openImageSearch: "Åbn billedsøgning",
+            openSettings: "Åbn indstillinger",
+            
+            // Footer
+            terms: "Vilkår",
+            privacy: "Privatliv",
+            cookies: "Cookies"
+          },
+          fi: { 
+            name: "Finnish", 
+            // Search & Main UI
+            searchPlaceholder: "Etsi verkosta",
+            settingsBtn: "Asetukset",
+            voiceModeBtn: "Äänitila",
+            searchButton: "Etsi",
+            luckyButton: "Tuurilla",
+            addShortcut: "Lisää",
+            
+            // Settings Pages
+            generalSettings: "Yleiset",
+            appearanceSettings: "Ulkoasu",
+            shortcutsSettings: "Pikakuvakkeet",
+            privacySettings: "Yksityisyys",
+            advancedSettings: "Lisäasetukset",
+            keyboardShortcuts: "Pikanäppäimet",
+            
+            // General Settings
+            language: "Kieli",
+            defaultSearchMode: "Oletushakutila",
+            web: "Verkko",
+            images: "Kuvat",
+            
+            // Appearance Settings
+            bgColor: "Taustaväri",
+            textColor: "Tekstin väri",
+            bgImage: "Taustakuva",
+            fontFamily: "Fonttityyppi",
+            reduceTransparency: "Vähennä läpinäkyvyyttä",
+            uploadImage: "Lataa kuva",
+            clearImage: "Tyhjennä",
+            noFileChosen: "Ei tiedostoa valittu",
+            detectLocalFonts: "Havaitse paikalliset fontit",
+            
+            // Privacy Settings
+            manageData: "Hallinnoi tietojasi",
+            manageDataBtn: "Hallinnoi tietoja",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "Hallinnoi kotisivusi pikakuvakkeita. Napsauta poistokuvaketta jokaisessa kortissa poistaaksesi pikakuvakkeen.",
+            addShortcutBtn: "Lisää pikakuvake",
+            
+            // Advanced Settings
+            searchHistoryLabel: "Hakuhistoria",
+            shortcutsLabel: "Pikakuvakkeet",
+            settingsLabel: "Asetukset",
+            dataLabel: "Tiedot",
+            deleteSearchHistory: "Poista kaikki historia",
+            deleteShortcuts: "Poista kaikki pikakuvakkeet",
+            exportSettings: "Vie asetukset",
+            importSettings: "Tuo asetukset",
+            resetSettings: "Nollaa asetukset",
+            deleteEverything: "Poista kaikki",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "Haluatko varmasti poistaa kaiken hakuhistorian? Tätä toimintoa ei voi peruuttaa.",
+            deleteShortcutsConfirm: "Haluatko varmasti poistaa kaikki pikakuvakkeet? Tätä toimintoa ei voi peruuttaa.",
+            resetSettingsConfirm: "Haluatko varmasti nollata kaikki asetukset oletusarvoihin? Tätä toimintoa ei voi peruuttaa.",
+            deleteEverythingConfirm: "Tämä poistaa KAIKKI tietosi, mukaan lukien hakuhistorian, pikakuvakkeet ja kaikki asetukset. Tätä toimintoa ei voi peruuttaa. Oletko aivan varma?",
+            confirmTitle: "Vahvista",
+            ok: "OK",
+            cancel: "Peruuta",
+            close: "Sulje",
+            done: "Valmis",
+            
+            // Voice Search Modal
+            voiceSearch: "Äänihaku",
+            clickMicToStart: "Napsauta mikrofonia aloittaaksesi",
+            clickMicToStartShort: "Napsauta mikrofonia",
+            
+            // Image Search
+            imageSearch: "Kuvahaku",
+            uploadImagePrompt: "Napsauta ladataksesi kuvan tai vedä ja pudota",
+            extractedText: "Poimittu teksti:",
+            
+            // Sidebar Menu
+            menu: "Valikko",
+            about: "Tietoja",
+            blog: "Blogi",
+            omniWrite: "OmniWrite",
+            calendar: "Kalenteri",
+            games: "Pelit",
+            maps: "Kartat",
+            photos: "Kuvat",
+            tasks: "Tehtävät",
+            notes: "Muistiinpanot",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Sovellukset",
+            
+            // Voice Mode
+            voiceMode: "Äänitila",
+            voiceModePrompt: 'Sano "Etsi [kyselysi]" etsiäksesi',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Lisää pikakuvake",
+            addShortcutDescription: "Syötä uuden pikakuvakkeesi tiedot alle:",
+            shortcutName: "Nimi:",
+            shortcutURL: "URL:",
+            add: "Lisää",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Kohdista hakupalkki",
+            openVoiceSearch: "Avaa äänihaku",
+            openImageSearch: "Avaa kuvahaku",
+            openSettings: "Avaa asetukset",
+            
+            // Footer
+            terms: "Ehdot",
+            privacy: "Yksityisyys",
+            cookies: "Evästeet"
+          },
+          zh: { 
+            name: "Chinese (Simplified)", 
+            // Search & Main UI
+            searchPlaceholder: "搜索网络",
+            settingsBtn: "设置",
+            voiceModeBtn: "语音模式",
+            searchButton: "搜索",
+            luckyButton: "好运搜索",
+            addShortcut: "添加",
+            
+            // Settings Pages
+            generalSettings: "常规",
+            appearanceSettings: "外观",
+            shortcutsSettings: "快捷方式",
+            privacySettings: "隐私",
+            advancedSettings: "高级",
+            keyboardShortcuts: "键盘快捷键",
+            
+            // General Settings
+            language: "语言",
+            defaultSearchMode: "默认搜索模式",
+            web: "网络",
+            images: "图片",
+            
+            // Appearance Settings
+            bgColor: "背景颜色",
+            textColor: "文本颜色",
+            bgImage: "背景图片",
+            fontFamily: "字体",
+            reduceTransparency: "降低透明度",
+            uploadImage: "上传图片",
+            clearImage: "清除",
+            noFileChosen: "未选择文件",
+            detectLocalFonts: "检测本地字体",
+            
+            // Privacy Settings
+            manageData: "管理您的数据",
+            manageDataBtn: "管理数据",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "管理您的主页快捷方式。单击每张卡片上的删除图标以删除快捷方式。",
+            addShortcutBtn: "添加快捷方式",
+            
+            // Advanced Settings
+            searchHistoryLabel: "搜索历史",
+            shortcutsLabel: "快捷方式",
+            settingsLabel: "设置",
+            dataLabel: "数据",
+            deleteSearchHistory: "删除所有历史",
+            deleteShortcuts: "删除所有快捷方式",
+            exportSettings: "导出设置",
+            importSettings: "导入设置",
+            resetSettings: "重置设置",
+            deleteEverything: "删除所有内容",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "您确定要删除所有搜索历史吗？此操作不可恢复。",
+            deleteShortcutsConfirm: "您确定要删除所有快捷方式吗？此操作不可恢复。",
+            resetSettingsConfirm: "您确定要将所有设置重置为默认值吗？此操作不可恢复。",
+            deleteEverythingConfirm: "这将删除您的所有数据，包括搜索历史、快捷方式和所有设置。此操作不可恢复。您确定吗？",
+            confirmTitle: "确认",
+            ok: "确定",
+            cancel: "取消",
+            close: "关闭",
+            done: "完成",
+            
+            // Voice Search Modal
+            voiceSearch: "语音搜索",
+            clickMicToStart: "点击麦克风开始",
+            clickMicToStartShort: "点击麦克风",
+            
+            // Image Search
+            imageSearch: "图片搜索",
+            uploadImagePrompt: "点击上传图片或拖放",
+            extractedText: "提取的文本：",
+            
+            // Sidebar Menu
+            menu: "菜单",
+            about: "关于",
+            blog: "博客",
+            omniWrite: "OmniWrite",
+            calendar: "日历",
+            games: "游戏",
+            maps: "地图",
+            photos: "照片",
+            tasks: "任务",
+            notes: "笔记",
+            labs: "Labs",
+            
+            // Apps
+            apps: "应用",
+            
+            // Voice Mode
+            voiceMode: "语音模式",
+            voiceModePrompt: '说“搜索 [您的查询]”进行搜索',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "添加快捷方式",
+            addShortcutDescription: "在下方输入您的新快捷方式详细信息：",
+            shortcutName: "名称：",
+            shortcutURL: "URL：",
+            add: "添加",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "聚焦搜索栏",
+            openVoiceSearch: "打开语音搜索",
+            openImageSearch: "打开图片搜索",
+            openSettings: "打开设置",
+            
+            // Footer
+            terms: "条款",
+            privacy: "隐私",
+            cookies: "Cookie"
+          },
+          "zh-TW": { 
+            name: "Chinese (Traditional)", 
+            // Search & Main UI
+            searchPlaceholder: "搜尋網路",
+            settingsBtn: "設置",
+            voiceModeBtn: "語音模式",
+            searchButton: "搜尋",
+            luckyButton: "好運搜尋",
+            addShortcut: "新增",
+            
+            // Settings Pages
+            generalSettings: "常規",
+            appearanceSettings: "外觀",
+            shortcutsSettings: "捷徑",
+            privacySettings: "隱私",
+            advancedSettings: "進階",
+            keyboardShortcuts: "鍵盤快捷鍵",
+            
+            // General Settings
+            language: "語言",
+            defaultSearchMode: "預設搜尋模式",
+            web: "網路",
+            images: "圖片",
+            
+            // Appearance Settings
+            bgColor: "背景顏色",
+            textColor: "文字顏色",
+            bgImage: "背景圖片",
+            fontFamily: "字體",
+            reduceTransparency: "降低透明度",
+            uploadImage: "上傳圖片",
+            clearImage: "清除",
+            noFileChosen: "未選擇檔案",
+            detectLocalFonts: "檢測本地字體",
+            
+            // Privacy Settings
+            manageData: "管理您的資料",
+            manageDataBtn: "管理資料",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "管理您的主頁捷徑。點擊每張卡片上的刪除圖示以刪除捷徑。",
+            addShortcutBtn: "新增捷徑",
+            
+            // Advanced Settings
+            searchHistoryLabel: "搜尋歷史",
+            shortcutsLabel: "捷徑",
+            settingsLabel: "設置",
+            dataLabel: "資料",
+            deleteSearchHistory: "刪除所有歷史",
+            deleteShortcuts: "刪除所有捷徑",
+            exportSettings: "匯出設置",
+            importSettings: "匯入設置",
+            resetSettings: "重設設置",
+            deleteEverything: "刪除所有內容",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "您確定要刪除所有搜尋歷史嗎？此操作無法復原。",
+            deleteShortcutsConfirm: "您確定要刪除所有捷徑嗎？此操作無法復原。",
+            resetSettingsConfirm: "您確定要將所有設置重設為預設值嗎？此操作無法復原。",
+            deleteEverythingConfirm: "這將刪除您的所有資料，包括搜尋歷史、捷徑和所有設置。此操作無法復原。您確定嗎？",
+            confirmTitle: "確認",
+            ok: "確定",
+            cancel: "取消",
+            close: "關閉",
+            done: "完成",
+            
+            // Voice Search Modal
+            voiceSearch: "語音搜尋",
+            clickMicToStart: "點擊麥克風開始",
+            clickMicToStartShort: "點擊麥克風",
+            
+            // Image Search
+            imageSearch: "圖片搜尋",
+            uploadImagePrompt: "點擊上傳圖片或拖放",
+            extractedText: "提取的文字：",
+            
+            // Sidebar Menu
+            menu: "選單",
+            about: "關於",
+            blog: "部落格",
+            omniWrite: "OmniWrite",
+            calendar: "日曆",
+            games: "遊戲",
+            maps: "地圖",
+            photos: "照片",
+            tasks: "任務",
+            notes: "筆記",
+            labs: "Labs",
+            
+            // Apps
+            apps: "應用",
+            
+            // Voice Mode
+            voiceMode: "語音模式",
+            voiceModePrompt: '說「搜尋 [您的查詢]」進行搜尋',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "新增捷徑",
+            addShortcutDescription: "在下方輸入您的新捷徑詳細資訊：",
+            shortcutName: "名稱：",
+            shortcutURL: "URL：",
+            add: "新增",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "聚焦搜尋列",
+            openVoiceSearch: "打開語音搜尋",
+            openImageSearch: "打開圖片搜尋",
+            openSettings: "打開設置",
+            
+            // Footer
+            terms: "條款",
+            privacy: "隱私",
+            cookies: "Cookie"
+          },
+          ja: { 
+            name: "Japanese", 
+            // Search & Main UI
+            searchPlaceholder: "ウェブを検索",
+            settingsBtn: "設定",
+            voiceModeBtn: "音声モード",
+            searchButton: "検索",
+            luckyButton: "I'm Feeling Lucky",
+            addShortcut: "追加",
+            
+            // Settings Pages
+            generalSettings: "一般",
+            appearanceSettings: "外観",
+            shortcutsSettings: "ショートカット",
+            privacySettings: "プライバシー",
+            advancedSettings: "詳細設定",
+            keyboardShortcuts: "キーボードショートカット",
+            
+            // General Settings
+            language: "言語",
+            defaultSearchMode: "デフォルト検索モード",
+            web: "ウェブ",
+            images: "画像",
+            
+            // Appearance Settings
+            bgColor: "背景色",
+            textColor: "テキストの色",
+            bgImage: "背景画像",
+            fontFamily: "フォント",
+            reduceTransparency: "透明度を下げる",
+            uploadImage: "画像をアップロード",
+            clearImage: "クリア",
+            noFileChosen: "ファイルが選択されていません",
+            detectLocalFonts: "ローカルフォントを検出",
+            
+            // Privacy Settings
+            manageData: "データを管理",
+            manageDataBtn: "データ管理",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "ホームページのショートカットを管理します。各カードの削除アイコンをクリックしてショートカットを削除します。",
+            addShortcutBtn: "ショートカットを追加",
+            
+            // Advanced Settings
+            searchHistoryLabel: "検索履歴",
+            shortcutsLabel: "ショートカット",
+            settingsLabel: "設定",
+            dataLabel: "データ",
+            deleteSearchHistory: "すべての履歴を削除",
+            deleteShortcuts: "すべてのショートカットを削除",
+            exportSettings: "設定をエクスポート",
+            importSettings: "設定をインポート",
+            resetSettings: "設定をリセット",
+            deleteEverything: "すべて削除",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "すべての検索履歴を削除してもよろしいですか？この操作は元に戻せません。",
+            deleteShortcutsConfirm: "すべてのショートカットを削除してもよろしいですか？この操作は元に戻せません。",
+            resetSettingsConfirm: "すべての設定をデフォルトにリセットしてもよろしいですか？この操作は元に戻せません。",
+            deleteEverythingConfirm: "これにより、検索履歴、ショートカット、すべての設定を含むすべてのデータが削除されます。この操作は元に戻せません。本当によろしいですか？",
+            confirmTitle: "確認",
+            ok: "OK",
+            cancel: "キャンセル",
+            close: "閉じる",
+            done: "完了",
+            
+            // Voice Search Modal
+            voiceSearch: "音声検索",
+            clickMicToStart: "マイクをクリックして開始",
+            clickMicToStartShort: "マイクをクリック",
+            
+            // Image Search
+            imageSearch: "画像検索",
+            uploadImagePrompt: "クリックして画像をアップロードまたはドラッグ＆ドロップ",
+            extractedText: "抽出されたテキスト：",
+            
+            // Sidebar Menu
+            menu: "メニュー",
+            about: "概要",
+            blog: "ブログ",
+            omniWrite: "OmniWrite",
+            calendar: "カレンダー",
+            games: "ゲーム",
+            maps: "地図",
+            photos: "写真",
+            tasks: "タスク",
+            notes: "ノート",
+            labs: "Labs",
+            
+            // Apps
+            apps: "アプリ",
+            
+            // Voice Mode
+            voiceMode: "音声モード",
+            voiceModePrompt: '「検索 [あなたのクエリ]」と言って検索',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "ショートカットを追加",
+            addShortcutDescription: "以下に新しいショートカットの詳細を入力してください：",
+            shortcutName: "名前：",
+            shortcutURL: "URL：",
+            add: "追加",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "検索バーにフォーカス",
+            openVoiceSearch: "音声検索を開く",
+            openImageSearch: "画像検索を開く",
+            openSettings: "設定を開く",
+            
+            // Footer
+            terms: "利用規約",
+            privacy: "プライバシー",
+            cookies: "Cookie"
+          },
+          ko: { 
+            name: "Korean", 
+            // Search & Main UI
+            searchPlaceholder: "웹 검색",
+            settingsBtn: "설정",
+            voiceModeBtn: "음성 모드",
+            searchButton: "검색",
+            luckyButton: "I'm Feeling Lucky",
+            addShortcut: "추가",
+            
+            // Settings Pages
+            generalSettings: "일반",
+            appearanceSettings: "모양",
+            shortcutsSettings: "바로가기",
+            privacySettings: "개인정보 보호",
+            advancedSettings: "고급",
+            keyboardShortcuts: "키보드 단축키",
+            
+            // General Settings
+            language: "언어",
+            defaultSearchMode: "기본 검색 모드",
+            web: "웹",
+            images: "이미지",
+            
+            // Appearance Settings
+            bgColor: "배경색",
+            textColor: "텍스트 색상",
+            bgImage: "배경 이미지",
+            fontFamily: "글꼴",
+            reduceTransparency: "투명도 감소",
+            uploadImage: "이미지 업로드",
+            clearImage: "지우기",
+            noFileChosen: "파일이 선택되지 않음",
+            detectLocalFonts: "로컬 글꼴 감지",
+            
+            // Privacy Settings
+            manageData: "데이터 관리",
+            manageDataBtn: "데이터 관리",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "홈페이지 바로가기를 관리합니다. 각 카드의 삭제 아이콘을 클릭하여 바로가기를 제거합니다.",
+            addShortcutBtn: "바로가기 추가",
+            
+            // Advanced Settings
+            searchHistoryLabel: "검색 기록",
+            shortcutsLabel: "바로가기",
+            settingsLabel: "설정",
+            dataLabel: "데이터",
+            deleteSearchHistory: "모든 기록 삭제",
+            deleteShortcuts: "모든 바로가기 삭제",
+            exportSettings: "설정 내보내기",
+            importSettings: "설정 가져오기",
+            resetSettings: "설정 초기화",
+            deleteEverything: "모두 삭제",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "모든 검색 기록을 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.",
+            deleteShortcutsConfirm: "모든 바로가기를 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.",
+            resetSettingsConfirm: "모든 설정을 기본값으로 초기화하시겠습니까? 이 작업은 취소할 수 없습니다.",
+            deleteEverythingConfirm: "이렇게 하면 검색 기록, 바로가기 및 모든 설정을 포함한 모든 데이터가 삭제됩니다. 이 작업은 취소할 수 없습니다. 정말 확실합니까?",
+            confirmTitle: "확인",
+            ok: "확인",
+            cancel: "취소",
+            close: "닫기",
+            done: "완료",
+            
+            // Voice Search Modal
+            voiceSearch: "음성 검색",
+            clickMicToStart: "마이크를 클릭하여 시작",
+            clickMicToStartShort: "마이크 클릭",
+            
+            // Image Search
+            imageSearch: "이미지 검색",
+            uploadImagePrompt: "클릭하여 이미지를 업로드하거나 드래그 앤 드롭",
+            extractedText: "추출된 텍스트:",
+            
+            // Sidebar Menu
+            menu: "메뉴",
+            about: "정보",
+            blog: "블로그",
+            omniWrite: "OmniWrite",
+            calendar: "캘린더",
+            games: "게임",
+            maps: "지도",
+            photos: "사진",
+            tasks: "할 일",
+            notes: "메모",
+            labs: "Labs",
+            
+            // Apps
+            apps: "앱",
+            
+            // Voice Mode
+            voiceMode: "음성 모드",
+            voiceModePrompt: '"검색 [귀하의 쿼리]"라고 말하여 검색',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "바로가기 추가",
+            addShortcutDescription: "아래에 새 바로가기의 세부 정보를 입력하세요:",
+            shortcutName: "이름:",
+            shortcutURL: "URL:",
+            add: "추가",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "검색창 포커스",
+            openVoiceSearch: "음성 검색 열기",
+            openImageSearch: "이미지 검색 열기",
+            openSettings: "설정 열기",
+            
+            // Footer
+            terms: "약관",
+            privacy: "개인정보 보호",
+            cookies: "Cookie"
+          },
+          ar: { 
+            name: "Arabic", 
+            // Search & Main UI
+            searchPlaceholder: "البحث على الويب",
+            settingsBtn: "الإعدادات",
+            voiceModeBtn: "وضع الصوت",
+            searchButton: "بحث",
+            luckyButton: "ضربة حظ",
+            addShortcut: "إضافة",
+            
+            // Settings Pages
+            generalSettings: "عام",
+            appearanceSettings: "المظهر",
+            shortcutsSettings: "الاختصارات",
+            privacySettings: "الخصوصية",
+            advancedSettings: "متقدم",
+            keyboardShortcuts: "اختصارات لوحة المفاتيح",
+            
+            // General Settings
+            language: "اللغة",
+            defaultSearchMode: "وضع البحث الافتراضي",
+            web: "الويب",
+            images: "صور",
+            
+            // Appearance Settings
+            bgColor: "لون الخلفية",
+            textColor: "لون النص",
+            bgImage: "صورة الخلفية",
+            fontFamily: "نوع الخط",
+            reduceTransparency: "تقليل الشفافية",
+            uploadImage: "تحميل صورة",
+            clearImage: "مسح",
+            noFileChosen: "لم يتم اختيار ملف",
+            detectLocalFonts: "اكتشاف الخطوط المحلية",
+            
+            // Privacy Settings
+            manageData: "إدارة بياناتك",
+            manageDataBtn: "إدارة البيانات",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "إدارة اختصارات صفحتك الرئيسية. انقر فوق رمز الحذف على كل بطاقة لإزالة اختصار.",
+            addShortcutBtn: "إضافة اختصار",
+            
+            // Advanced Settings
+            searchHistoryLabel: "سجل البحث",
+            shortcutsLabel: "الاختصارات",
+            settingsLabel: "الإعدادات",
+            dataLabel: "البيانات",
+            deleteSearchHistory: "حذف كل السجل",
+            deleteShortcuts: "حذف كل الاختصارات",
+            exportSettings: "تصدير الإعدادات",
+            importSettings: "استيراد الإعدادات",
+            resetSettings: "إعادة تعيين الإعدادات",
+            deleteEverything: "حذف كل شيء",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "هل أنت متأكد من رغبتك في حذف سجل البحث بالكامل؟ لا يمكن التراجع عن هذا الإجراء.",
+            deleteShortcutsConfirm: "هل أنت متأكد من رغبتك في حذف جميع الاختصارات؟ لا يمكن التراجع عن هذا الإجراء.",
+            resetSettingsConfirm: "هل أنت متأكد من رغبتك في إعادة تعيين جميع الإعدادات إلى الافتراضية؟ لا يمكن التراجع عن هذا الإجراء.",
+            deleteEverythingConfirm: "سيتم حذف جميع بياناتك بما في ذلك سجل البحث والاختصارات وجميع الإعدادات. لا يمكن التراجع عن هذا الإجراء. هل أنت متأكد تمامًا؟",
+            confirmTitle: "تأكيد",
+            ok: "موافق",
+            cancel: "إلغاء",
+            close: "إغلاق",
+            done: "تم",
+            
+            // Voice Search Modal
+            voiceSearch: "البحث الصوتي",
+            clickMicToStart: "انقر فوق الميكروفون للبدء",
+            clickMicToStartShort: "انقر فوق الميكروفون",
+            
+            // Image Search
+            imageSearch: "البحث بالصور",
+            uploadImagePrompt: "انقر لتحميل صورة أو اسحب وأفلت",
+            extractedText: "النص المستخرج:",
+            
+            // Sidebar Menu
+            menu: "القائمة",
+            about: "عن الموقع",
+            blog: "المدونة",
+            omniWrite: "OmniWrite",
+            calendar: "التقويم",
+            games: "الألعاب",
+            maps: "الخرائط",
+            photos: "الصور",
+            tasks: "المهام",
+            notes: "الملاحظات",
+            labs: "Labs",
+            
+            // Apps
+            apps: "التطبيقات",
+            
+            // Voice Mode
+            voiceMode: "وضع الصوت",
+            voiceModePrompt: 'قل "بحج [استفسارك]"للبحث',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "إضافة اختصار",
+            addShortcutDescription: "أدخل تفاصيل الاختصار الجديد أدناه:",
+            shortcutName: "الاسم:",
+            shortcutURL: "URL:",
+            add: "إضافة",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "التركيز على شريط البحث",
+            openVoiceSearch: "فتح البحث الصوتي",
+            openImageSearch: "فتح البحث بالصور",
+            openSettings: "فتح الإعدادات",
+            
+            // Footer
+            terms: "الشروط",
+            privacy: "الخصوصية",
+            cookies: "ملفات تعريف الارتباط"
+          },
+          he: { 
+            name: "Hebrew", 
+            // Search & Main UI
+            searchPlaceholder: "חיפוש באינטרנט",
+            settingsBtn: "הגדרות",
+            voiceModeBtn: "מצב קולי",
+            searchButton: "חיפוש",
+            luckyButton: "אני מרגיש מזלי",
+            addShortcut: "הוסף",
+            
+            // Settings Pages
+            generalSettings: "כללי",
+            appearanceSettings: "מראה",
+            shortcutsSettings: "קיצורי דרך",
+            privacySettings: "פרטיות",
+            advancedSettings: "מתקדם",
+            keyboardShortcuts: "קיצורי מקלדת",
+            
+            // General Settings
+            language: "שפה",
+            defaultSearchMode: "מצב חיפוש ברירת מחדל",
+            web: "אינטרנט",
+            images: "תמונות",
+            
+            // Appearance Settings
+            bgColor: "צבע רקע",
+            textColor: "צבע טקסט",
+            bgImage: "תמונת רקע",
+            fontFamily: "גופן",
+            reduceTransparency: "הפחתת שקיפות",
+            uploadImage: "העלאת תמונה",
+            clearImage: "ניקוי",
+            noFileChosen: "לא נבחר קובץ",
+            detectLocalFonts: "זיהוי גופנים מקומיים",
+            
+            // Privacy Settings
+            manageData: "ניהול הנתונים שלך",
+            manageDataBtn: "ניהול נתונים",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "נהל את קיצורי הדרך של דף הבית שלך. לחץ על סמל המחיקה בכל כרטיס כדי להסיר קיצור דרך.",
+            addShortcutBtn: "הוסף קיצור דרך",
+            
+            // Advanced Settings
+            searchHistoryLabel: "היסטוריית חיפוש",
+            shortcutsLabel: "קיצורי דרך",
+            settingsLabel: "הגדרות",
+            dataLabel: "נתונים",
+            deleteSearchHistory: "מחק את כל ההיסטוריה",
+            deleteShortcuts: "מחק את כל קיצורי הדרך",
+            exportSettings: "ייצוא הגדרות",
+            importSettings: "ייבוא הגדרות",
+            resetSettings: "איפוס הגדרות",
+            deleteEverything: "מחק הכל",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "האם אתה בטוח שברצונך למחוק את כל היסטוריית החיפוש? לא ניתן לבטל פעולה זו.",
+            deleteShortcutsConfirm: "האם אתה בטוח שברצונך למחוק את כל קיצורי הדרך? לא ניתן לבטל פעולה זו.",
+            resetSettingsConfirm: "האם אתה בטוח שברצונך לאפס את כל ההגדרות לברירת המחדל? לא ניתן לבטל פעולה זו.",
+            deleteEverythingConfirm: "פעולה זו תמחק את כל הנתונים שלך כולל היסטוריית חיפוש, קיצורי דרך וכל ההגדרות. לא ניתן לבטל פעולה זו. האם אתה בטוח לחלוטין?",
+            confirmTitle: "אישור",
+            ok: "אישור",
+            cancel: "ביטול",
+            close: "סגור",
+            done: "בוצע",
+            
+            // Voice Search Modal
+            voiceSearch: "חיפוש קולי",
+            clickMicToStart: "לחץ על המיקרופון כדי להתחיל",
+            clickMicToStartShort: "לחץ על המיקרופון",
+            
+            // Image Search
+            imageSearch: "חיפוש לפי תמונה",
+            uploadImagePrompt: "לחץ כדי להעלות תמונה או גרור ושחרר",
+            extractedText: "טקסט מופק:",
+            
+            // Sidebar Menu
+            menu: "תפריט",
+            about: "אודות",
+            blog: "בלוג",
+            omniWrite: "OmniWrite",
+            calendar: "לוח שנה",
+            games: "משחקים",
+            maps: "מפות",
+            photos: "תמונות",
+            tasks: "משימות",
+            notes: "הערות",
+            labs: "Labs",
+            
+            // Apps
+            apps: "אפליקציות",
+            
+            // Voice Mode
+            voiceMode: "מצב קולי",
+            voiceModePrompt: 'אמור "חפש [השאילתה שלך]" כדי לחפש',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "הוסף קיצור דרך",
+            addShortcutDescription: "הזן את פרטי קיצור הדרך החדש שלך להלן:",
+            shortcutName: "שם:",
+            shortcutURL: "URL:",
+            add: "הוסף",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "מיקוד על שורת החיפוש",
+            openVoiceSearch: "פתח חיפוש קולי",
+            openImageSearch: "פתח חיפוש לפי תמונה",
+            openSettings: "פתח הגדרות",
+            
+            // Footer
+            terms: "תנאים",
+            privacy: "פרטיות",
+            cookies: "Cookie"
+          },
+          ru: { 
+            name: "Russian", 
+            // Search & Main UI
+            searchPlaceholder: "Поиск в Интернете",
+            settingsBtn: "Настройки",
+            voiceModeBtn: "Голосовой режим",
+            searchButton: "Поиск",
+            luckyButton: "Мне повезёт",
+            addShortcut: "Добавить",
+            
+            // Settings Pages
+            generalSettings: "Общие",
+            appearanceSettings: "Внешний вид",
+            shortcutsSettings: "Ярлыки",
+            privacySettings: "Конфиденциальность",
+            advancedSettings: "Дополнительно",
+            keyboardShortcuts: "Клавиатурные сокращения",
+            
+            // General Settings
+            language: "Язык",
+            defaultSearchMode: "Режим поиска по умолчанию",
+            web: "Веб",
+            images: "Изображения",
+            
+            // Appearance Settings
+            bgColor: "Цвет фона",
+            textColor: "Цвет текста",
+            bgImage: "Фоновое изображение",
+            fontFamily: "Шрифт",
+            reduceTransparency: "Уменьшить прозрачность",
+            uploadImage: "Загрузить изображение",
+            clearImage: "Очистить",
+            noFileChosen: "Файл не выбран",
+            detectLocalFonts: "Определить локальные шрифты",
+            
+            // Privacy Settings
+            manageData: "Управление данными",
+            manageDataBtn: "Управление данными",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "Управляйте ярлыками на вашей домашней странице. Нажмите значок удаления на каждой карточке, чтобы удалить ярлык.",
+            addShortcutBtn: "Добавить ярлык",
+            
+            // Advanced Settings
+            searchHistoryLabel: "История поиска",
+            shortcutsLabel: "Ярлыки",
+            settingsLabel: "Настройки",
+            dataLabel: "Данные",
+            deleteSearchHistory: "Удалить всю историю",
+            deleteShortcuts: "Удалить все ярлыки",
+            exportSettings: "Экспорт настроек",
+            importSettings: "Импорт настроек",
+            resetSettings: "Сбросить настройки",
+            deleteEverything: "Удалить все",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "Вы уверены, что хотите удалить всю историю поиска? Это действие нельзя отменить.",
+            deleteShortcutsConfirm: "Вы уверены, что хотите удалить все ярлыки? Это действие нельзя отменить.",
+            resetSettingsConfirm: "Вы уверены, что хотите сбросить все настройки по умолчанию? Это действие нельзя отменить.",
+            deleteEverythingConfirm: "Это удалит ВСЕ ваши данные, включая историю поиска, ярлыки и все настройки. Это действие нельзя отменить. Вы абсолютно уверены?",
+            confirmTitle: "Подтверждение",
+            ok: "OK",
+            cancel: "Отмена",
+            close: "Закрыть",
+            done: "Готово",
+            
+            // Voice Search Modal
+            voiceSearch: "Голосовой поиск",
+            clickMicToStart: "Нажмите микрофон, чтобы начать",
+            clickMicToStartShort: "Нажмите микрофон",
+            
+            // Image Search
+            imageSearch: "Поиск по изображению",
+            uploadImagePrompt: "Нажмите, чтобы загрузить изображение, или перетащите",
+            extractedText: "Извлечённый текст:",
+            
+            // Sidebar Menu
+            menu: "Меню",
+            about: "О сайте",
+            blog: "Блог",
+            omniWrite: "OmniWrite",
+            calendar: "Календарь",
+            games: "Игры",
+            maps: "Карты",
+            photos: "Фото",
+            tasks: "Задачи",
+            notes: "Заметки",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Приложения",
+            
+            // Voice Mode
+            voiceMode: "Голосовой режим",
+            voiceModePrompt: 'Скажите "Поиск [ваш запрос]" для поиска',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Добавить ярлык",
+            addShortcutDescription: "Введите детали вашего нового ярлыка ниже:",
+            shortcutName: "Название:",
+            shortcutURL: "URL:",
+            add: "Добавить",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Фокус на поисковой строке",
+            openVoiceSearch: "Открыть голосовой поиск",
+            openImageSearch: "Открыть поиск по изображению",
+            openSettings: "Открыть настройки",
+            
+            // Footer
+            terms: "Условия",
+            privacy: "Конфиденциальность",
+            cookies: "Файлы cookie"
+          },
+          uk: { 
+            name: "Ukrainian", 
+            // Search & Main UI
+            searchPlaceholder: "Пошук в Інтернеті",
+            settingsBtn: "Налаштування",
+            voiceModeBtn: "Голосовий режим",
+            searchButton: "Пошук",
+            luckyButton: "Мені пощастить",
+            addShortcut: "Додати",
+            
+            // Settings Pages
+            generalSettings: "Загальні",
+            appearanceSettings: "Зовнішній вигляд",
+            shortcutsSettings: "Ярлики",
+            privacySettings: "Конфіденційність",
+            advancedSettings: "Додатково",
+            keyboardShortcuts: "Клавіатурні скорочення",
+            
+            // General Settings
+            language: "Мова",
+            defaultSearchMode: "Стандартний режим пошуку",
+            web: "Веб",
+            images: "Зображення",
+            
+            // Appearance Settings
+            bgColor: "Колір фону",
+            textColor: "Колір тексту",
+            bgImage: "Фонове зображення",
+            fontFamily: "Шрифт",
+            reduceTransparency: "Зменшити прозорість",
+            uploadImage: "Завантажити зображення",
+            clearImage: "Очистити",
+            noFileChosen: "Файл не вибрано",
+            detectLocalFonts: "Визначити локальні шрифти",
+            
+            // Privacy Settings
+            manageData: "Управління даними",
+            manageDataBtn: "Управління даними",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "Керуйте ярликами на вашій домашній сторінці. Натисніть значок видалення на кожній картці, щоб видалити ярлик.",
+            addShortcutBtn: "Додати ярлик",
+            
+            // Advanced Settings
+            searchHistoryLabel: "Історія пошуку",
+            shortcutsLabel: "Ярлики",
+            settingsLabel: "Налаштування",
+            dataLabel: "Дані",
+            deleteSearchHistory: "Видалити всю історію",
+            deleteShortcuts: "Видалити всі ярлики",
+            exportSettings: "Експорт налаштувань",
+            importSettings: "Імпорт налаштувань",
+            resetSettings: "Скинути налаштування",
+            deleteEverything: "Видалити все",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "Ви впевнені, що хочете видалити всю історію пошуку? Цю дію не можна скасувати.",
+            deleteShortcutsConfirm: "Ви впевнені, що хочете видалити всі ярлики? Цю дію не можна скасувати.",
+            resetSettingsConfirm: "Ви впевнені, що хочете скинути всі налаштування за замовчуванням? Цю дію не можна скасувати.",
+            deleteEverythingConfirm: "Це видалить ВСІ ваші дані, включаючи історію пошуку, ярлики та всі налаштування. Цю дію не можна скасувати. Ви абсолютно впевнені?",
+            confirmTitle: "Підтвердження",
+            ok: "OK",
+            cancel: "Скасувати",
+            close: "Закрити",
+            done: "Готово",
+            
+            // Voice Search Modal
+            voiceSearch: "Голосовий пошук",
+            clickMicToStart: "Натисніть мікрофон, щоб розпочати",
+            clickMicToStartShort: "Натисніть мікрофон",
+            
+            // Image Search
+            imageSearch: "Пошук за зображенням",
+            uploadImagePrompt: "Натисніть, щоб завантажити зображення, або перетягніть",
+            extractedText: "Витягнутий текст:",
+            
+            // Sidebar Menu
+            menu: "Меню",
+            about: "Про сайт",
+            blog: "Блог",
+            omniWrite: "OmniWrite",
+            calendar: "Календар",
+            games: "Ігри",
+            maps: "Карти",
+            photos: "Фото",
+            tasks: "Завдання",
+            notes: "Примітки",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Додатки",
+            
+            // Voice Mode
+            voiceMode: "Голосовий режим",
+            voiceModePrompt: 'Скажіть "Пошук [ваш запит]" для пошуку',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Додати ярлик",
+            addShortcutDescription: "Введіть деталі вашого нового ярлика нижче:",
+            shortcutName: "Назва:",
+            shortcutURL: "URL:",
+            add: "Додати",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Фокус на пошуковому рядку",
+            openVoiceSearch: "Відкрити голосовий пошук",
+            openImageSearch: "Відкрити пошук за зображенням",
+            openSettings: "Відкрити налаштування",
+            
+            // Footer
+            terms: "Умови",
+            privacy: "Конфіденційність",
+            cookies: "Файли cookie"
+          },
+          el: { 
+            name: "Greek", 
+            // Search & Main UI
+            searchPlaceholder: "Αναζήτηση στο διαδίκτυο",
+            settingsBtn: "Ρυθμίσεις",
+            voiceModeBtn: "Φωνητική λειτουργία",
+            searchButton: "Αναζήτηση",
+            luckyButton: "Βαθμός τύχης",
+            addShortcut: "Προσθήκη",
+            
+            // Settings Pages
+            generalSettings: "Γενικά",
+            appearanceSettings: "Εμφάνιση",
+            shortcutsSettings: "Συντομεύσεις",
+            privacySettings: "Απόρρητο",
+            advancedSettings: "Προχωρημένα",
+            keyboardShortcuts: "Συντομεύσεις πληκτρολογίου",
+            
+            // General Settings
+            language: "Γλώσσα",
+            defaultSearchMode: "Προεπιλεγμένη λειτουργία αναζήτησης",
+            web: "Ιστός",
+            images: "Εικόνες",
+            
+            // Appearance Settings
+            bgColor: "Χρώμα φόντου",
+            textColor: "Χρώμα κειμένου",
+            bgImage: "Εικόνα φόντου",
+            fontFamily: "Γραμματοσειρά",
+            reduceTransparency: "Μείωση διαφάνειας",
+            uploadImage: "Μεταφόρτωση εικόνας",
+            clearImage: "Εκκαθάριση",
+            noFileChosen: "Δεν επιλέχθηκε αρχείο",
+            detectLocalFonts: "Ανίχνευση τοπικών γραμματοσειρών",
+            
+            // Privacy Settings
+            manageData: "Διαχείριση δεδομένων σας",
+            manageDataBtn: "Διαχείριση δεδομένων",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "Διαχειριστείτε τις συντομεύσεις της αρχικής σας σελίδας. Κάντε κλικ στο εικονίδιο διαγραφής σε κάθε κάρτα για να αφαιρέσετε μια συντόμευση.",
+            addShortcutBtn: "Προσθήκη συντόμευσης",
+            
+            // Advanced Settings
+            searchHistoryLabel: "Ιστορικό αναζήτησης",
+            shortcutsLabel: "Συντομεύσεις",
+            settingsLabel: "Ρυθμίσεις",
+            dataLabel: "Δεδομένα",
+            deleteSearchHistory: "Διαγραφή όλου του ιστορικού",
+            deleteShortcuts: "Διαγραφή όλων των συντομεύσεων",
+            exportSettings: "Εξαγωγή ρυθμίσεων",
+            importSettings: "Εισαγωγή ρυθμίσεων",
+            resetSettings: "Επαναφορά ρυθμίσεων",
+            deleteEverything: "Διαγραφή όλων",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "Είστε βέβαιοι ότι θέλετε να διαγράψετε όλο το ιστορικό αναζήτησης; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.",
+            deleteShortcutsConfirm: "Είστε βέβαιοι ότι θέλετε να διαγράψετε όλες τις συντομεύσεις; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.",
+            resetSettingsConfirm: "Είστε βέβαιοι ότι θέλετε να επαναφέρετε όλες τις ρυθμίσεις στις προεπιλεγμένες τιμές; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.",
+            deleteEverythingConfirm: "Αυτό θα διαγράψει ΟΛΑ τα δεδομένα σας συμπεριλαμβανομένου του ιστορικού αναζήτησης, των συντομεύσεων και όλων των ρυθμίσεων. Αυτή η ενέργεια δεν μπορεί να αναιρεθεί. Είστε απόλυτα βέβαιοι;",
+            confirmTitle: "Επιβεβαίωση",
+            ok: "OK",
+            cancel: "Ακύρωση",
+            close: "Κλείσιμο",
+            done: "Ολοκληρώθηκε",
+            
+            // Voice Search Modal
+            voiceSearch: "Φωνητική αναζήτηση",
+            clickMicToStart: "Κάντε κλικ στο μικρόφωνο για να ξεκινήσετε",
+            clickMicToStartShort: "Κάντε κλικ στο μικρόφωνο",
+            
+            // Image Search
+            imageSearch: "Αναζήτηση εικόνας",
+            uploadImagePrompt: "Κάντε κλικ για μεταφόρτωση εικόνας ή σύρετε και αποθέστε",
+            extractedText: "Εξαγόμενο κείμενο:",
+            
+            // Sidebar Menu
+            menu: "Μενού",
+            about: "Σχετικά",
+            blog: "Ιστολόγιο",
+            omniWrite: "OmniWrite",
+            calendar: "Ημερολόγιο",
+            games: "Παιχνίδια",
+            maps: "Χάρτες",
+            photos: "Φωτογραφίες",
+            tasks: "Εργασίες",
+            notes: "Σημειώσεις",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Εφαρμογές",
+            
+            // Voice Mode
+            voiceMode: "Φωνητική λειτουργία",
+            voiceModePrompt: 'Πείτε "Αναζήτηση [το ερώτημά σας]" για αναζήτηση',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Προσθήκη συντόμευσης",
+            addShortcutDescription: "Εισαγάγετε τα στοιχεία της νέας σας συντόμευσης παρακάτω:",
+            shortcutName: "Όνομα:",
+            shortcutURL: "URL:",
+            add: "Προσθήκη",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Εστίαση στη γραμμή αναζήτησης",
+            openVoiceSearch: "Άνοιγμα φωνητικής αναζήτησης",
+            openImageSearch: "Άνοιγμα αναζήτησης εικόνας",
+            openSettings: "Άνοιγμα ρυθμίσεων",
+            
+            // Footer
+            terms: "Όροι",
+            privacy: "Απόρρητο",
+            cookies: "Cookie"
+          },
+          cs: { 
+            name: "Czech", 
+            // Search & Main UI
+            searchPlaceholder: "Hledat na webu",
+            settingsBtn: "Nastavení",
+            voiceModeBtn: "Hlasový režim",
+            searchButton: "Hledat",
+            luckyButton: "Zkusím štěstí",
+            addShortcut: "Přidat",
+            
+            // Settings Pages
+            generalSettings: "Obecné",
+            appearanceSettings: "Vzhled",
+            shortcutsSettings: "Zkratky",
+            privacySettings: "Soukromí",
+            advancedSettings: "Rozšířené",
+            keyboardShortcuts: "Klávesové zkratky",
+            
+            // General Settings
+            language: "Jazyk",
+            defaultSearchMode: "Výchozí režim vyhledávání",
+            web: "Web",
+            images: "Obrázky",
+            
+            // Appearance Settings
+            bgColor: "Barva pozadí",
+            textColor: "Barva textu",
+            bgImage: "Obrázek pozadí",
+            fontFamily: "Rodina písem",
+            reduceTransparency: "Snížit průhlednost",
+            uploadImage: "Nahrát obrázek",
+            clearImage: "Vymazat",
+            noFileChosen: "Nebyl vybrán žádný soubor",
+            detectLocalFonts: "Detekovat místní písma",
+            
+            // Privacy Settings
+            manageData: "Správa vašich dat",
+            manageDataBtn: "Správa dat",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "Spravujte zkratky na vaší domovské stránce. Klikněte na ikonu odstranění na každé kartě pro odstranění zkratky.",
+            addShortcutBtn: "Přidat zkratku",
+            
+            // Advanced Settings
+            searchHistoryLabel: "Historie vyhledávání",
+            shortcutsLabel: "Zkratky",
+            settingsLabel: "Nastavení",
+            dataLabel: "Data",
+            deleteSearchHistory: "Smazat celou historii",
+            deleteShortcuts: "Smazat všechny zkratky",
+            exportSettings: "Exportovat nastavení",
+            importSettings: "Importovat nastavení",
+            resetSettings: "Obnovit nastavení",
+            deleteEverything: "Smazat vše",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "Jste si jisti, že chcete smazat celou historii vyhledávání? Tuto akci nelze vrátit zpět.",
+            deleteShortcutsConfirm: "Jste si jisti, že chcete smazat všechny zkratky? Tuto akci nelze vrátit zpět.",
+            resetSettingsConfirm: "Jste si jisti, že chcete obnovit všechna nastavení na výchozí hodnoty? Tuto akci nelze vrátit zpět.",
+            deleteEverythingConfirm: "Tím smažete VŠECHNA vaše data včetně historie vyhledávání, zkratek a všech nastavení. Tuto akci nelze vrátit zpět. Jste si naprosto jisti?",
+            confirmTitle: "Potvrdit",
+            ok: "OK",
+            cancel: "Zrušit",
+            close: "Zavřít",
+            done: "Hotovo",
+            
+            // Voice Search Modal
+            voiceSearch: "Hlasové vyhledávání",
+            clickMicToStart: "Klikněte na mikrofon pro spuštění",
+            clickMicToStartShort: "Klikněte na mikrofon",
+            
+            // Image Search
+            imageSearch: "Vyhledávání obrázků",
+            uploadImagePrompt: "Klikněte pro nahrání obrázku nebo přetáhněte",
+            extractedText: "Extrahovaný text:",
+            
+            // Sidebar Menu
+            menu: "Menu",
+            about: "O nás",
+            blog: "Blog",
+            omniWrite: "OmniWrite",
+            calendar: "Kalendář",
+            games: "Hry",
+            maps: "Mapy",
+            photos: "Fotky",
+            tasks: "Úkoly",
+            notes: "Poznámky",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Aplikace",
+            
+            // Voice Mode
+            voiceMode: "Hlasový režim",
+            voiceModePrompt: 'Řekněte "Hledat [váš dotaz]" pro vyhledávání',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Přidat zkratku",
+            addShortcutDescription: "Zadejte podrobnosti o vaší nové zkratce níže:",
+            shortcutName: "Název:",
+            shortcutURL: "URL:",
+            add: "Přidat",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Zaměřit se na vyhledávací lištu",
+            openVoiceSearch: "Otevřít hlasové vyhledávání",
+            openImageSearch: "Otevřít vyhledávání obrázků",
+            openSettings: "Otevřít nastavení",
+            
+            // Footer
+            terms: "Podmínky",
+            privacy: "Soukromí",
+            cookies: "Cookies"
+          },
+          ro: { 
+            name: "Romanian", 
+            // Search & Main UI
+            searchPlaceholder: "Căutare pe web",
+            settingsBtn: "Setări",
+            voiceModeBtn: "Mod vocal",
+            searchButton: "Căutare",
+            luckyButton: "Mă simt norocos",
+            addShortcut: "Adaugă",
+            
+            // Settings Pages
+            generalSettings: "General",
+            appearanceSettings: "Aspect",
+            shortcutsSettings: "Comenzi rapide",
+            privacySettings: "Confidențialitate",
+            advancedSettings: "Avansat",
+            keyboardShortcuts: "Comenzi rapide de tastatură",
+            
+            // General Settings
+            language: "Limbă",
+            defaultSearchMode: "Mod de căutare implicit",
+            web: "Web",
+            images: "Imagini",
+            
+            // Appearance Settings
+            bgColor: "Culoare fundal",
+            textColor: "Culoare text",
+            bgImage: "Imagine fundal",
+            fontFamily: "Familie de fonturi",
+            reduceTransparency: "Reduceți transparența",
+            uploadImage: "Încărcați imagine",
+            clearImage: "Ștergeți",
+            noFileChosen: "Niciun fișier selectat",
+            detectLocalFonts: "Detectați fonturile locale",
+            
+            // Privacy Settings
+            manageData: "Gestionați datele dvs.",
+            manageDataBtn: "Gestionați datele",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "Gestionați comenzile rapide de pe pagina de pornire. Faceți clic pe pictograma de ștergere de pe fiecare card pentru a elimina o comandă rapidă.",
+            addShortcutBtn: "Adaugă comandă rapidă",
+            
+            // Advanced Settings
+            searchHistoryLabel: "Istoric căutări",
+            shortcutsLabel: "Comenzi rapide",
+            settingsLabel: "Setări",
+            dataLabel: "Date",
+            deleteSearchHistory: "Ștergeți tot istoricul",
+            deleteShortcuts: "Ștergeți toate comenzile rapide",
+            exportSettings: "Exportați setările",
+            importSettings: "Importați setările",
+            resetSettings: "Resetați setările",
+            deleteEverything: "Ștergeți totul",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "Sunteți sigur că doriți să ștergeți tot istoricul de căutare? Această acțiune nu poate fi anulată.",
+            deleteShortcutsConfirm: "Sunteți sigur că doriți să ștergeți toate comenzile rapide? Această acțiune nu poate fi anulată.",
+            resetSettingsConfirm: "Sunteți sigur că doriți să resetați toate setările la valorile implicite? Această acțiune nu poate fi anulată.",
+            deleteEverythingConfirm: "Aceasta va șterge TOATE datele dvs., inclusiv istoricul de căutare, comenzile rapide și toate setările. Această acțiune nu poate fi anulată. Sunteți absolut sigur?",
+            confirmTitle: "Confirmați",
+            ok: "OK",
+            cancel: "Anulați",
+            close: "Închideți",
+            done: "Gata",
+            
+            // Voice Search Modal
+            voiceSearch: "Căutare vocală",
+            clickMicToStart: "Faceți clic pe microfon pentru a începe",
+            clickMicToStartShort: "Faceți clic pe microfon",
+            
+            // Image Search
+            imageSearch: "Căutare imagine",
+            uploadImagePrompt: "Faceți clic pentru a încărca o imagine sau trageți și plasați",
+            extractedText: "Text extras:",
+            
+            // Sidebar Menu
+            menu: "Meniu",
+            about: "Despre",
+            blog: "Blog",
+            omniWrite: "OmniWrite",
+            calendar: "Calendar",
+            games: "Jocuri",
+            maps: "Hărți",
+            photos: "Fotografii",
+            tasks: "Sarcini",
+            notes: "Notițe",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Aplicații",
+            
+            // Voice Mode
+            voiceMode: "Mod vocal",
+            voiceModePrompt: 'Spuneți "Căutare [interogarea dvs.]" pentru a căuta',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Adaugă comandă rapidă",
+            addShortcutDescription: "Introduceți detaliile noii comenzi rapide mai jos:",
+            shortcutName: "Nume:",
+            shortcutURL: "URL:",
+            add: "Adaugă",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Focalizați bara de căutare",
+            openVoiceSearch: "Deschideți căutarea vocală",
+            openImageSearch: "Deschideți căutarea imagine",
+            openSettings: "Deschideți setările",
+            
+            // Footer
+            terms: "Termeni",
+            privacy: "Confidențialitate",
+            cookies: "Cookie-uri"
+          },
+          hu: { 
+            name: "Hungarian", 
+            // Search & Main UI
+            searchPlaceholder: "Keresés a weben",
+            settingsBtn: "Beállítások",
+            voiceModeBtn: "Hangmód",
+            searchButton: "Keresés",
+            luckyButton: "Szerencsét próbálok",
+            addShortcut: "Hozzáadás",
+            
+            // Settings Pages
+            generalSettings: "Általános",
+            appearanceSettings: "Megjelenés",
+            shortcutsSettings: "Parancsikonok",
+            privacySettings: "Adatvédelem",
+            advancedSettings: "Haladó",
+            keyboardShortcuts: "Billentyű parancsikonok",
+            
+            // General Settings
+            language: "Nyelv",
+            defaultSearchMode: "Alapértelmezett keresési mód",
+            web: "Web",
+            images: "Képek",
+            
+            // Appearance Settings
+            bgColor: "Háttérszín",
+            textColor: "Szöveg színe",
+            bgImage: "Háttérkép",
+            fontFamily: "Betűcsalád",
+            reduceTransparency: "Átlátszóság csökkentése",
+            uploadImage: "Kép feltöltése",
+            clearImage: "Törlés",
+            noFileChosen: "Nincs fájl kiválasztva",
+            detectLocalFonts: "Helyi betűtípusok észlelése",
+            
+            // Privacy Settings
+            manageData: "Adatok kezelése",
+            manageDataBtn: "Adatok kezelése",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "Kezelje a kezdőlapon lévő parancsikonokat. Kattintson a törlés ikonra minden kártyán a parancsikon eltávolításához.",
+            addShortcutBtn: "Parancsikon hozzáadása",
+            
+            // Advanced Settings
+            searchHistoryLabel: "Keresési előzmények",
+            shortcutsLabel: "Parancsikonok",
+            settingsLabel: "Beállítások",
+            dataLabel: "Adatok",
+            deleteSearchHistory: "Összes előzmény törlése",
+            deleteShortcuts: "Összes parancsikon törlése",
+            exportSettings: "Beállítások exportálása",
+            importSettings: "Beállítások importálása",
+            resetSettings: "Beállítások visszaállítása",
+            deleteEverything: "Minden törlése",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "Biztosan törölni szeretné az összes keresési előzményt? Ez a művelet nem vonható vissza.",
+            deleteShortcutsConfirm: "Biztosan törölni szeretné az összes parancsikonot? Ez a művelet nem vonható vissza.",
+            resetSettingsConfirm: "Biztosan visszaállítja az összes beállítást az alapértelmezett értékekre? Ez a művelet nem vonható vissza.",
+            deleteEverythingConfirm: "Ez törli az ÖSSZES adatát, beleértve a keresési előzményeket, parancsikonokat és az összes beállítást. Ez a művelet nem vonható vissza. Biztosan folytatja?",
+            confirmTitle: "Megerősítés",
+            ok: "OK",
+            cancel: "Mégse",
+            close: "Bezár",
+            done: "Kész",
+            
+            // Voice Search Modal
+            voiceSearch: "Hangkeresés",
+            clickMicToStart: "Kattintson a mikrofonra az indításhoz",
+            clickMicToStartShort: "Kattintson a mikrofonra",
+            
+            // Image Search
+            imageSearch: "Képkeresés",
+            uploadImagePrompt: "Kattintson a kép feltöltéséhez vagy húzza ide",
+            extractedText: "Kinyert szöveg:",
+            
+            // Sidebar Menu
+            menu: "Menü",
+            about: "Névjegy",
+            blog: "Blog",
+            omniWrite: "OmniWrite",
+            calendar: "Naptár",
+            games: "Játékok",
+            maps: "Térképek",
+            photos: "Fényképek",
+            tasks: "Feladatok",
+            notes: "Jegyzetek",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Alkalmazások",
+            
+            // Voice Mode
+            voiceMode: "Hangmód",
+            voiceModePrompt: 'Mondja: "Keresés [az Ön lekérdezése]" a kereséshez',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Parancsikon hozzáadása",
+            addShortcutDescription: "Adja meg az új parancsikon részleteit alább:",
+            shortcutName: "Név:",
+            shortcutURL: "URL:",
+            add: "Hozzáadás",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Keresősáv fókuszálása",
+            openVoiceSearch: "Hangkeresés megnyitása",
+            openImageSearch: "Képkeresés megnyitása",
+            openSettings: "Beállítások megnyitása",
+            
+            // Footer
+            terms: "Feltételek",
+            privacy: "Adatvédelem",
+            cookies: "Sütik"
+          },
+          hi: { 
+            name: "Hindi", 
+            // Search & Main UI
+            searchPlaceholder: "वेब पर खोजें",
+            settingsBtn: "सेटिंग्स",
+            voiceModeBtn: "वॉइस मोड",
+            searchButton: "खोजें",
+            luckyButton: "मुझे भाग्यशाली लग रहा है",
+            addShortcut: "जोड़ें",
+            
+            // Settings Pages
+            generalSettings: "सामान्य",
+            appearanceSettings: "दिखावट",
+            shortcutsSettings: "शॉर्टकट",
+            privacySettings: "गोपनीयता",
+            advancedSettings: "उन्नत",
+            keyboardShortcuts: "कीबोर्ड शॉर्टकट",
+            
+            // General Settings
+            language: "भाषा",
+            defaultSearchMode: "डिफ़ॉल्ट खोज मोड",
+            web: "वेब",
+            images: "छवियाँ",
+            
+            // Appearance Settings
+            bgColor: "पृष्ठभूमि रंग",
+            textColor: "पाठ का रंग",
+            bgImage: "पृष्ठभूमि छवि",
+            fontFamily: "फ़ॉन्ट परिवार",
+            reduceTransparency: "पारदर्शिता कम करें",
+            uploadImage: "छवि अपलोड करें",
+            clearImage: "साफ़ करें",
+            noFileChosen: "कोई फ़ाइल नहीं चुनी गई",
+            detectLocalFonts: "स्थानीय फ़ॉन्ट का पता लगाएं",
+            
+            // Privacy Settings
+            manageData: "अपने डेटा को प्रबंधित करें",
+            manageDataBtn: "डेटा प्रबंधित करें",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "अपने होमपेज शॉर्टकट प्रबंधित करें। शॉर्टकट को हटाने के लिए प्रत्येक कार्ड पर हटाएं आइकन पर क्लिक करें।",
+            addShortcutBtn: "शॉर्टकट जोड़ें",
+            
+            // Advanced Settings
+            searchHistoryLabel: "खोज इतिहास",
+            shortcutsLabel: "शॉर्टकट",
+            settingsLabel: "सेटिंग्स",
+            dataLabel: "डेटा",
+            deleteSearchHistory: "सभी इतिहास हटाएं",
+            deleteShortcuts: "सभी शॉर्टकट हटाएं",
+            exportSettings: "सेटिंग्स निर्यात करें",
+            importSettings: "सेटिंग्स आयात करें",
+            resetSettings: "सेटिंग्स रीसेट करें",
+            deleteEverything: "सब कुछ हटाएं",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "क्या आप वाकई सभी खोज इतिहास हटाना चाहते हैं? इस क्रिया को पूर्ववत नहीं किया जा सकता।",
+            deleteShortcutsConfirm: "क्या आप वाकई सभी शॉर्टकट हटाना चाहते हैं? इस क्रिया को पूर्ववत नहीं किया जा सकता।",
+            resetSettingsConfirm: "क्या आप वाकई सभी सेटिंग्स को डिफ़ॉल्ट पर रीसेट करना चाहते हैं? इस क्रिया को पूर्ववत नहीं किया जा सकता।",
+            deleteEverythingConfirm: "यह आपके सभी डेटा को हटा देगा जिसमें खोज इतिहास, शॉर्टकट और सभी सेटिंग्स शामिल हैं। इस क्रिया को पूर्ववत नहीं किया जा सकता। क्या आप पूर्णतः निश्चित हैं?",
+            confirmTitle: "पुष्टि करें",
+            ok: "ठीक है",
+            cancel: "रद्द करें",
+            close: "बंद करें",
+            done: "हो गया",
+            
+            // Voice Search Modal
+            voiceSearch: "वॉइस सर्च",
+            clickMicToStart: "शुरू करने के लिए माइक्रोफ़ोन पर क्लिक करें",
+            clickMicToStartShort: "माइक पर क्लिक करें",
+            
+            // Image Search
+            imageSearch: "इमेज सर्च",
+            uploadImagePrompt: "छवि अपलोड करने के लिए क्लिक करें या खींचें और छोड़ें",
+            extractedText: "निकाला गया पाठ:",
+            
+            // Sidebar Menu
+            menu: "मेनू",
+            about: "के बारे में",
+            blog: "ब्लॉग",
+            omniWrite: "OmniWrite",
+            calendar: "कैलेंडर",
+            games: "गेम्स",
+            maps: "मानचित्र",
+            photos: "फ़ोटो",
+            tasks: "कार्य",
+            notes: "नोट्स",
+            labs: "Labs",
+            
+            // Apps
+            apps: "ऐप्स",
+            
+            // Voice Mode
+            voiceMode: "वॉइस मोड",
+            voiceModePrompt: 'खोज करने के लिए "खोजें [आपकी क्वेरी]" कहें',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "शॉर्टकट जोड़ें",
+            addShortcutDescription: "नीचे अपने नए शॉर्टकट का विवरण दर्ज करें:",
+            shortcutName: "नाम:",
+            shortcutURL: "URL:",
+            add: "जोड़ें",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "खोज बार पर ध्यान केंद्रित करें",
+            openVoiceSearch: "वॉइस सर्च खोलें",
+            openImageSearch: "इमेज सर्च खोलें",
+            openSettings: "सेटिंग्स खोलें",
+            
+            // Footer
+            terms: "शर्तें",
+            privacy: "गोपनीयता",
+            cookies: "कुकीज़"
+          },
+          bn: { 
+            name: "Bengali", 
+            // Search & Main UI
+            searchPlaceholder: "ওয়েবে অনুসন্ধান করুন",
+            settingsBtn: "সেটিংস",
+            voiceModeBtn: "ভয়েস মোড",
+            searchButton: "অনুসন্ধান",
+            luckyButton: "আমি ভাগ্যবান",
+            addShortcut: "যোগ করুন",
+            
+            // Settings Pages
+            generalSettings: "সাধারণ",
+            appearanceSettings: "চেহারা",
+            shortcutsSettings: "শর্টকাট",
+            privacySettings: "গোপনীয়তা",
+            advancedSettings: "উন্নত",
+            keyboardShortcuts: "কীবোর্ড শর্টকাট",
+            
+            // General Settings
+            language: "ভাষা",
+            defaultSearchMode: "ডিফল্ট অনুসন্ধান মোড",
+            web: "ওয়েব",
+            images: "ছবি",
+            
+            // Appearance Settings
+            bgColor: "পটভূমির রঙ",
+            textColor: "লেখার রঙ",
+            bgImage: "পটভূমির ছবি",
+            fontFamily: "ফন্ট পরিবার",
+            reduceTransparency: "স্বচ্ছতা হ্রাস করুন",
+            uploadImage: "ছবি আপলোড করুন",
+            clearImage: "পরিষ্কার করুন",
+            noFileChosen: "কোন ফাইল নির্বাচন করা হয়নি",
+            detectLocalFonts: "স্থানীয় ফন্ট সনাক্ত করুন",
+            
+            // Privacy Settings
+            manageData: "আপনার ডেটা পরিচালনা করুন",
+            manageDataBtn: "ডেটা পরিচালনা",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "আপনার হোমপেজ শর্টকাট পরিচালনা করুন। শর্টকাট সরাতে প্রতিটি কার্ডে মুছুন আইকনে ক্লিক করুন।",
+            addShortcutBtn: "শর্টকাট যোগ করুন",
+            
+            // Advanced Settings
+            searchHistoryLabel: "অনুসন্ধান ইতিহাস",
+            shortcutsLabel: "শর্টকাট",
+            settingsLabel: "সেটিংস",
+            dataLabel: "ডেটা",
+            deleteSearchHistory: "সমস্ত ইতিহাস মুছুন",
+            deleteShortcuts: "সমস্ত শর্টকাট মুছুন",
+            exportSettings: "সেটিংস রপ্তানি করুন",
+            importSettings: "সেটিংস আমদানি করুন",
+            resetSettings: "সেটিংস রিসেট করুন",
+            deleteEverything: "সবকিছু মুছুন",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "আপনি কি সমস্ত অনুসন্ধান ইতিহাস মুছে ফেলতে নিশ্চিত? এই ক্রিয়াটি পূর্বাবস্থায় ফেরানো যাবে না।",
+            deleteShortcutsConfirm: "আপনি কি সমস্ত শর্টকাট মুছে ফেলতে নিশ্চিত? এই ক্রিয়াটি পূর্বাবস্থায় ফেরানো যাবে না।",
+            resetSettingsConfirm: "আপনি কি সমস্ত সেটিংস ডিফল্টে রিসেট করতে নিশ্চিত? এই ক্রিয়াটি পূর্বাবস্থায় ফেরানো যাবে না।",
+            deleteEverythingConfirm: "এটি আপনার সমস্ত ডেটা মুছে ফেলবে যার মধ্যে অনুসন্ধান ইতিহাস, শর্টকাট এবং সমস্ত সেটিংস রয়েছে। এই ক্রিয়াটি পূর্বাবস্থায় ফেরানো যাবে না। আপনি কি সম্পূর্ণ নিশ্চিত?",
+            confirmTitle: "নিশ্চিত করুন",
+            ok: "ঠিক আছে",
+            cancel: "বাতিল করুন",
+            close: "বন্ধ করুন",
+            done: "সম্পন্ন",
+            
+            // Voice Search Modal
+            voiceSearch: "ভয়েস সার্চ",
+            clickMicToStart: "শুরু করতে মাইক্রোফোনে ক্লিক করুন",
+            clickMicToStartShort: "মাইকে ক্লিক করুন",
+            
+            // Image Search
+            imageSearch: "ছবি সার্চ",
+            uploadImagePrompt: "ছবি আপলোড করতে ক্লিক করুন বা টেনে আনুন",
+            extractedText: "নিষ্কাশিত পাঠ্য:",
+            
+            // Sidebar Menu
+            menu: "মেনু",
+            about: "সম্পর্কে",
+            blog: "ব্লগ",
+            omniWrite: "OmniWrite",
+            calendar: "ক্যালেন্ডার",
+            games: "গেমস",
+            maps: "মানচিত্র",
+            photos: "ছবি",
+            tasks: "কাজ",
+            notes: "নোট",
+            labs: "Labs",
+            
+            // Apps
+            apps: "অ্যাপস",
+            
+            // Voice Mode
+            voiceMode: "ভয়েস মোড",
+            voiceModePrompt: 'অনুসন্ধানের জন্য "অনুসন্ধান [আপনার ক্যোয়ারি]" বলুন',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "শর্টকাট যোগ করুন",
+            addShortcutDescription: "নিচে আপনার নতুন শর্টকাটের বিবরণ লিখুন:",
+            shortcutName: "নাম:",
+            shortcutURL: "URL:",
+            add: "যোগ করুন",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "সার্চ বারে ফোকাস করুন",
+            openVoiceSearch: "ভয়েস সার্চ খুলুন",
+            openImageSearch: "ছবি সার্চ খুলুন",
+            openSettings: "সেটিংস খুলুন",
+            
+            // Footer
+            terms: "শর্তাবলী",
+            privacy: "গোপনীয়তা",
+            cookies: "কুকিজ"
+          },
+          th: { 
+            name: "Thai", 
+            // Search & Main UI
+            searchPlaceholder: "ค้นหาเว็บ",
+            settingsBtn: "การตั้งค่า",
+            voiceModeBtn: "โหมดเสียง",
+            searchButton: "ค้นหา",
+            luckyButton: "โชคดี",
+            addShortcut: "เพิ่ม",
+            
+            // Settings Pages
+            generalSettings: "ทั่วไป",
+            appearanceSettings: "รูปลักษณ์",
+            shortcutsSettings: "ทางลัด",
+            privacySettings: "ความเป็นส่วนตัว",
+            advancedSettings: "ขั้นสูง",
+            keyboardShortcuts: "ทางลัดคีย์บอร์ด",
+            
+            // General Settings
+            language: "ภาษา",
+            defaultSearchMode: "โหมดการค้นหาเริ่มต้น",
+            web: "เว็บ",
+            images: "รูปภาพ",
+            
+            // Appearance Settings
+            bgColor: "สีพื้นหลัง",
+            textColor: "สีข้อความ",
+            bgImage: "ภาพพื้นหลัง",
+            fontFamily: "แบบอักษร",
+            reduceTransparency: "ลดความโปร่งใส",
+            uploadImage: "อัปโหลดภาพ",
+            clearImage: "ล้าง",
+            noFileChosen: "ไม่ได้เลือกไฟล์",
+            detectLocalFonts: "ตรวจจับฟอนต์ในเครื่อง",
+            
+            // Privacy Settings
+            manageData: "จัดการข้อมูลของคุณ",
+            manageDataBtn: "จัดการข้อมูล",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "จัดการทางลัดในหน้าแรกของคุณ คลิกไอคอนลบบนแต่ละการ์ดเพื่อลบทางลัด",
+            addShortcutBtn: "เพิ่มทางลัด",
+            
+            // Advanced Settings
+            searchHistoryLabel: "ประวัติการค้นหา",
+            shortcutsLabel: "ทางลัด",
+            settingsLabel: "การตั้งค่า",
+            dataLabel: "ข้อมูล",
+            deleteSearchHistory: "ลบประวัติทั้งหมด",
+            deleteShortcuts: "ลบทางลัดทั้งหมด",
+            exportSettings: "ส่งออกการตั้งค่า",
+            importSettings: "นำเข้าการตั้งค่า",
+            resetSettings: "รีเซ็ตการตั้งค่า",
+            deleteEverything: "ลบทั้งหมด",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "คุณแน่ใจหรือไม่ว่าต้องการลบประวัติการค้นหาทั้งหมด? การดำเนินการนี้ไม่สามารถย้อนกลับได้",
+            deleteShortcutsConfirm: "คุณแน่ใจหรือไม่ว่าต้องการลบทางลัดทั้งหมด? การดำเนินการนี้ไม่สามารถย้อนกลับได้",
+            resetSettingsConfirm: "คุณแน่ใจหรือไม่ว่าต้องการรีเซ็ตการตั้งค่าทั้งหมดเป็นค่าเริ่มต้น? การดำเนินการนี้ไม่สามารถย้อนกลับได้",
+            deleteEverythingConfirm: "การดำเนินการนี้จะลบข้อมูลทั้งหมดของคุณ รวมถึงประวัติการค้นหา ทางลัด และการตั้งค่าทั้งหมด การดำเนินการนี้ไม่สามารถย้อนกลับได้ คุณแน่ใจหรือไม่?",
+            confirmTitle: "ยืนยัน",
+            ok: "ตกลง",
+            cancel: "ยกเลิก",
+            close: "ปิด",
+            done: "เสร็จสิ้น",
+            
+            // Voice Search Modal
+            voiceSearch: "ค้นหาด้วยเสียง",
+            clickMicToStart: "คลิกไมโครโฟนเพื่อเริ่มต้น",
+            clickMicToStartShort: "คลิกไมค์",
+            
+            // Image Search
+            imageSearch: "ค้นหาด้วยภาพ",
+            uploadImagePrompt: "คลิกเพื่ออัปโหลดภาพหรือลากและวาง",
+            extractedText: "ข้อความที่แยกออก:",
+            
+            // Sidebar Menu
+            menu: "เมนู",
+            about: "เกี่ยวกับ",
+            blog: "บล็อก",
+            omniWrite: "OmniWrite",
+            calendar: "ปฏิทิน",
+            games: "เกม",
+            maps: "แผนที่",
+            photos: "รูปภาพ",
+            tasks: "งาน",
+            notes: "บันทึก",
+            labs: "Labs",
+            
+            // Apps
+            apps: "แอป",
+            
+            // Voice Mode
+            voiceMode: "โหมดเสียง",
+            voiceModePrompt: 'พูด "ค้นหา [คำค้นหาของคุณ]" เพื่อค้นหา',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "เพิ่มทางลัด",
+            addShortcutDescription: "ใส่รายละเอียดของทางลัดใหม่ของคุณด้านล่าง:",
+            shortcutName: "ชื่อ:",
+            shortcutURL: "URL:",
+            add: "เพิ่ม",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "โฟกัสที่แถบค้นหา",
+            openVoiceSearch: "เปิดค้นหาด้วยเสียง",
+            openImageSearch: "เปิดค้นหาด้วยภาพ",
+            openSettings: "เปิดการตั้งค่า",
+            
+            // Footer
+            terms: "เงื่อนไข",
+            privacy: "ความเป็นส่วนตัว",
+            cookies: "คุกกี้"
+          },
+          vi: { 
+            name: "Vietnamese", 
+            // Search & Main UI
+            searchPlaceholder: "Tìm kiếm trên web",
+            settingsBtn: "Cài đặt",
+            voiceModeBtn: "Chế độ giọng nói",
+            searchButton: "Tìm kiếm",
+            luckyButton: "May mắn",
+            addShortcut: "Thêm",
+            
+            // Settings Pages
+            generalSettings: "Chung",
+            appearanceSettings: "Giao diện",
+            shortcutsSettings: "Phím tắt",
+            privacySettings: "Riêng tư",
+            advancedSettings: "Nâng cao",
+            keyboardShortcuts: "Phím tắt bàn phím",
+            
+            // General Settings
+            language: "Ngôn ngữ",
+            defaultSearchMode: "Chế độ tìm kiếm mặc định",
+            web: "Web",
+            images: "Hình ảnh",
+            
+            // Appearance Settings
+            bgColor: "Màu nền",
+            textColor: "Màu chữ",
+            bgImage: "Hình nền",
+            fontFamily: "Phông chữ",
+            reduceTransparency: "Giảm độ trong suốt",
+            uploadImage: "Tải lên hình ảnh",
+            clearImage: "Xóa",
+            noFileChosen: "Không có tệp nào được chọn",
+            detectLocalFonts: "Phát hiện phông chữ cục bộ",
+            
+            // Privacy Settings
+            manageData: "Quản lý dữ liệu của bạn",
+            manageDataBtn: "Quản lý dữ liệu",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "Quản lý các phím tắt trên trang chủ của bạn. Nhấp vào biểu tượng xóa trên mỗi thẻ để xóa phím tắt.",
+            addShortcutBtn: "Thêm phím tắt",
+            
+            // Advanced Settings
+            searchHistoryLabel: "Lịch sử tìm kiếm",
+            shortcutsLabel: "Phím tắt",
+            settingsLabel: "Cài đặt",
+            dataLabel: "Dữ liệu",
+            deleteSearchHistory: "Xóa tất cả lịch sử",
+            deleteShortcuts: "Xóa tất cả phím tắt",
+            exportSettings: "Xuất cài đặt",
+            importSettings: "Nhập cài đặt",
+            resetSettings: "Đặt lại cài đặt",
+            deleteEverything: "Xóa tất cả",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "Bạn có chắc chắn muốn xóa toàn bộ lịch sử tìm kiếm không? Hành động này không thể hoàn tác.",
+            deleteShortcutsConfirm: "Bạn có chắc chắn muốn xóa tất cả phím tắt không? Hành động này không thể hoàn tác.",
+            resetSettingsConfirm: "Bạn có chắc chắn muốn đặt lại tất cả cài đặt về mặc định không? Hành động này không thể hoàn tác.",
+            deleteEverythingConfirm: "Điều này sẽ xóa TẤT CẢ dữ liệu của bạn bao gồm lịch sử tìm kiếm, phím tắt và tất cả cài đặt. Hành động này không thể hoàn tác. Bạn có hoàn toàn chắc chắn không?",
+            confirmTitle: "Xác nhận",
+            ok: "OK",
+            cancel: "Hủy",
+            close: "Đóng",
+            done: "Xong",
+            
+            // Voice Search Modal
+            voiceSearch: "Tìm kiếm bằng giọng nói",
+            clickMicToStart: "Nhấp vào micrô để bắt đầu",
+            clickMicToStartShort: "Nhấp vào micrô",
+            
+            // Image Search
+            imageSearch: "Tìm kiếm hình ảnh",
+            uploadImagePrompt: "Nhấp để tải lên hình ảnh hoặc kéo và thả",
+            extractedText: "Văn bản được trích xuất:",
+            
+            // Sidebar Menu
+            menu: "Menu",
+            about: "Giới thiệu",
+            blog: "Blog",
+            omniWrite: "OmniWrite",
+            calendar: "Lịch",
+            games: "Trò chơi",
+            maps: "Bản đồ",
+            photos: "Ảnh",
+            tasks: "Nhiệm vụ",
+            notes: "Ghi chú",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Ứng dụng",
+            
+            // Voice Mode
+            voiceMode: "Chế độ giọng nói",
+            voiceModePrompt: 'Nói "Tìm kiếm [truy vấn của bạn]" để tìm kiếm',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Thêm phím tắt",
+            addShortcutDescription: "Nhập chi tiết cho phím tắt mới của bạn bên dưới:",
+            shortcutName: "Tên:",
+            shortcutURL: "URL:",
+            add: "Thêm",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Tập trung vào thanh tìm kiếm",
+            openVoiceSearch: "Mở tìm kiếm bằng giọng nói",
+            openImageSearch: "Mở tìm kiếm hình ảnh",
+            openSettings: "Mở cài đặt",
+            
+            // Footer
+            terms: "Điều khoản",
+            privacy: "Riêng tư",
+            cookies: "Cookie"
+          },
+          id: { 
+            name: "Indonesian", 
+            // Search & Main UI
+            searchPlaceholder: "Cari di web",
+            settingsBtn: "Pengaturan",
+            voiceModeBtn: "Mode Suara",
+            searchButton: "Cari",
+            luckyButton: "Saya Beruntung",
+            addShortcut: "Tambah",
+            
+            // Settings Pages
+            generalSettings: "Umum",
+            appearanceSettings: "Penampilan",
+            shortcutsSettings: "Pintasan",
+            privacySettings: "Privasi",
+            advancedSettings: "Lanjutan",
+            keyboardShortcuts: "Pintasan Keyboard",
+            
+            // General Settings
+            language: "Bahasa",
+            defaultSearchMode: "Mode pencarian default",
+            web: "Web",
+            images: "Gambar",
+            
+            // Appearance Settings
+            bgColor: "Warna latar belakang",
+            textColor: "Warna teks",
+            bgImage: "Gambar latar belakang",
+            fontFamily: "Jenis huruf",
+            reduceTransparency: "Kurangi transparansi",
+            uploadImage: "Unggah gambar",
+            clearImage: "Hapus",
+            noFileChosen: "Tidak ada file yang dipilih",
+            detectLocalFonts: "Deteksi font lokal",
+            
+            // Privacy Settings
+            manageData: "Kelola data Anda",
+            manageDataBtn: "Kelola data",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "Kelola pintasan beranda Anda. Klik ikon hapus di setiap kartu untuk menghapus pintasan.",
+            addShortcutBtn: "Tambah pintasan",
+            
+            // Advanced Settings
+            searchHistoryLabel: "Riwayat pencarian",
+            shortcutsLabel: "Pintasan",
+            settingsLabel: "Pengaturan",
+            dataLabel: "Data",
+            deleteSearchHistory: "Hapus semua riwayat",
+            deleteShortcuts: "Hapus semua pintasan",
+            exportSettings: "Ekspor pengaturan",
+            importSettings: "Impor pengaturan",
+            resetSettings: "Atur ulang pengaturan",
+            deleteEverything: "Hapus semua",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "Apakah Anda yakin ingin menghapus semua riwayat pencarian? Tindakan ini tidak dapat dibatalkan.",
+            deleteShortcutsConfirm: "Apakah Anda yakin ingin menghapus semua pintasan? Tindakan ini tidak dapat dibatalkan.",
+            resetSettingsConfirm: "Apakah Anda yakin ingin mengatur ulang semua pengaturan ke default? Tindakan ini tidak dapat dibatalkan.",
+            deleteEverythingConfirm: "Ini akan menghapus SEMUA data Anda termasuk riwayat pencarian, pintasan, dan semua pengaturan. Tindakan ini tidak dapat dibatalkan. Apakah Anda benar-benar yakin?",
+            confirmTitle: "Konfirmasi",
+            ok: "OK",
+            cancel: "Batal",
+            close: "Tutup",
+            done: "Selesai",
+            
+            // Voice Search Modal
+            voiceSearch: "Pencarian Suara",
+            clickMicToStart: "Klik mikrofon untuk memulai",
+            clickMicToStartShort: "Klik mikrofon",
+            
+            // Image Search
+            imageSearch: "Pencarian Gambar",
+            uploadImagePrompt: "Klik untuk mengunggah gambar atau seret dan lepas",
+            extractedText: "Teks yang diekstrak:",
+            
+            // Sidebar Menu
+            menu: "Menu",
+            about: "Tentang",
+            blog: "Blog",
+            omniWrite: "OmniWrite",
+            calendar: "Kalender",
+            games: "Permainan",
+            maps: "Peta",
+            photos: "Foto",
+            tasks: "Tugas",
+            notes: "Catatan",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Aplikasi",
+            
+            // Voice Mode
+            voiceMode: "Mode suara",
+            voiceModePrompt: 'Katakan "Cari [kueri Anda]" untuk mencari',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Tambah pintasan",
+            addShortcutDescription: "Masukkan detail pintasan baru Anda di bawah:",
+            shortcutName: "Nama:",
+            shortcutURL: "URL:",
+            add: "Tambah",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Fokus pada bilah pencarian",
+            openVoiceSearch: "Buka pencarian suara",
+            openImageSearch: "Buka pencarian gambar",
+            openSettings: "Buka pengaturan",
+            
+            // Footer
+            terms: "Syarat",
+            privacy: "Privasi",
+            cookies: "Cookie"
+          },
+          ms: { 
+            name: "Malay", 
+            // Search & Main UI
+            searchPlaceholder: "Cari di web",
+            settingsBtn: "Tetapan",
+            voiceModeBtn: "Mod Suara",
+            searchButton: "Cari",
+            luckyButton: "Saya Bertuah",
+            addShortcut: "Tambah",
+            
+            // Settings Pages
+            generalSettings: "Umum",
+            appearanceSettings: "Penampilan",
+            shortcutsSettings: "Pintasan",
+            privacySettings: "Privasi",
+            advancedSettings: "Lanjutan",
+            keyboardShortcuts: "Pintasan Papan Kekunci",
+            
+            // General Settings
+            language: "Bahasa",
+            defaultSearchMode: "Mod carian lalai",
+            web: "Web",
+            images: "Imej",
+            
+            // Appearance Settings
+            bgColor: "Warna latar belakang",
+            textColor: "Warna teks",
+            bgImage: "Imej latar belakang",
+            fontFamily: "Jenis fon",
+            reduceTransparency: "Kurangkan ketelusan",
+            uploadImage: "Muat naik imej",
+            clearImage: "Padam",
+            noFileChosen: "Tiada fail dipilih",
+            detectLocalFonts: "Kesan fon tempatan",
+            
+            // Privacy Settings
+            manageData: "Urus data anda",
+            manageDataBtn: "Urus data",
+            
+            // Shortcuts Settings
+            shortcutsDescription: "Urus pintasan halaman utama anda. Klik ikon padam pada setiap kad untuk membuang pintasan.",
+            addShortcutBtn: "Tambah pintasan",
+            
+            // Advanced Settings
+            searchHistoryLabel: "Sejarah carian",
+            shortcutsLabel: "Pintasan",
+            settingsLabel: "Tetapan",
+            dataLabel: "Data",
+            deleteSearchHistory: "Padam semua sejarah",
+            deleteShortcuts: "Padam semua pintasan",
+            exportSettings: "Eksport tetapan",
+            importSettings: "Import tetapan",
+            resetSettings: "Set semula tetapan",
+            deleteEverything: "Padam semua",
+            
+            // Confirmation Messages
+            deleteSearchHistoryConfirm: "Adakah anda pasti mahu memadam semua sejarah carian? Tindakan ini tidak boleh dibatalkan.",
+            deleteShortcutsConfirm: "Adakah anda pasti mahu memadam semua pintasan? Tindakan ini tidak boleh dibatalkan.",
+            resetSettingsConfirm: "Adakah anda pasti mahu menetapkan semula semua tetapan ke lalai? Tindakan ini tidak boleh dibatalkan.",
+            deleteEverythingConfirm: "Ini akan memadam SEMUA data anda termasuk sejarah carian, pintasan, dan semua tetapan. Tindakan ini tidak boleh dibatalkan. Adakah anda benar-benar pasti?",
+            confirmTitle: "Sahkan",
+            ok: "OK",
+            cancel: "Batal",
+            close: "Tutup",
+            done: "Selesai",
+            
+            // Voice Search Modal
+            voiceSearch: "Carian Suara",
+            clickMicToStart: "Klik mikrofon untuk mula",
+            clickMicToStartShort: "Klik mikrofon",
+            
+            // Image Search
+            imageSearch: "Carian Imej",
+            uploadImagePrompt: "Klik untuk muat naik imej atau seret dan lepas",
+            extractedText: "Teks yang diekstrak:",
+            
+            // Sidebar Menu
+            menu: "Menu",
+            about: "Perihal",
+            blog: "Blog",
+            omniWrite: "OmniWrite",
+            calendar: "Kalendar",
+            games: "Permainan",
+            maps: "Peta",
+            photos: "Foto",
+            tasks: "Tugasan",
+            notes: "Nota",
+            labs: "Labs",
+            
+            // Apps
+            apps: "Aplikasi",
+            
+            // Voice Mode
+            voiceMode: "Mod suara",
+            voiceModePrompt: 'Katakan "Cari [pertanyaan anda]" untuk mencari',
+            
+            // Add Shortcut Modal
+            addShortcutTitle: "Tambah pintasan",
+            addShortcutDescription: "Masukkan butiran pintasan baru anda di bawah:",
+            shortcutName: "Nama:",
+            shortcutURL: "URL:",
+            add: "Tambah",
+            
+            // Keyboard Shortcuts
+            focusSearchBar: "Fokus pada bar carian",
+            openVoiceSearch: "Buka carian suara",
+            openImageSearch: "Buka carian imej",
+            openSettings: "Buka tetapan",
+            
+            // Footer
+            terms: "Terma",
+            privacy: "Privasi",
+            cookies: "Kuki"
+          },
+
+            
         };
 
         function applyTranslations(langCode) {
@@ -3528,14 +7173,122 @@
           const searchInput = document.getElementById("searchInput");
           if (searchInput) searchInput.placeholder = t.searchPlaceholder || translations.en.searchPlaceholder;
           
-          // Buttons
+          // Main Buttons
           const doSearch = document.getElementById("doSearch");
           if (doSearch) doSearch.textContent = t.searchButton || translations.en.searchButton;
           
           const doLucky = document.getElementById("doLucky");
           if (doLucky) doLucky.textContent = t.luckyButton || translations.en.luckyButton;
           
-          // Settings labels
+          // Voice Mode Button
+          const voiceModeBtn = document.querySelector("#voiceModeBtn .btn-label");
+          if (voiceModeBtn) voiceModeBtn.textContent = t.voiceModeBtn || translations.en.voiceModeBtn;
+          
+          // Settings Button
+          const settingsBtn = document.querySelector("#settingsBtn .btn-label");
+          if (settingsBtn) settingsBtn.textContent = t.settingsBtn || translations.en.settingsBtn;
+          
+          // Add Shortcut Button
+          const shortcutLabel = document.querySelector(".shortcut-label");
+          if (shortcutLabel) shortcutLabel.textContent = t.addShortcut || translations.en.addShortcut;
+          
+          // Voice Search Modal
+          const voiceSearchTitle = document.querySelector("#voiceSearchModal h2");
+          if (voiceSearchTitle) voiceSearchTitle.textContent = t.voiceSearch || translations.en.voiceSearch;
+          
+          const spokenWords = document.getElementById("spokenWords");
+          if (spokenWords && spokenWords.textContent === "Click the microphone to start") {
+            spokenWords.textContent = t.clickMicToStart || translations.en.clickMicToStart;
+          }
+          
+          const doneVoiceSearch = document.getElementById("doneVoiceSearch");
+          if (doneVoiceSearch) doneVoiceSearch.textContent = t.done || translations.en.done;
+          
+          const closeVoiceModal = document.getElementById("closeVoiceModal");
+          if (closeVoiceModal) closeVoiceModal.textContent = t.close || translations.en.close;
+          
+          // Image Search Wrapper
+          const imageSearchTitle = document.querySelector("#imageSearchWrapper h3");
+          if (imageSearchTitle) imageSearchTitle.textContent = t.imageSearch || translations.en.imageSearch;
+          
+          const uploadPrompt = document.querySelector("#imageUploadArea p");
+          if (uploadPrompt) uploadPrompt.textContent = t.uploadImagePrompt || translations.en.uploadImagePrompt;
+          
+          const extractedTextTitle = document.querySelector("#extractedTextContainer h4");
+          if (extractedTextTitle) extractedTextTitle.textContent = t.extractedText || translations.en.extractedText;
+          
+          const searchExtractedText = document.getElementById("searchExtractedText");
+          if (searchExtractedText) searchExtractedText.textContent = t.searchButton || translations.en.searchButton;
+          
+          // Apps Wrapper
+          const appsTitle = document.querySelector("#appsWrapper .apps-header h2");
+          if (appsTitle) appsTitle.textContent = t.apps || translations.en.apps;
+          
+          // Voice Mode Wrapper
+          const voiceModeTitle = document.querySelector("#voiceModeWrapper .voice-mode-header h3");
+          if (voiceModeTitle) voiceModeTitle.textContent = t.voiceMode || translations.en.voiceMode;
+          
+          const voiceModePromptEl = document.querySelector(".voice-history-item");
+          if (voiceModePromptEl && voiceModePromptEl.textContent.includes('Say "Search')) {
+            voiceModePromptEl.textContent = t.voiceModePrompt || translations.en.voiceModePrompt;
+          }
+          
+          const voiceStatus = document.getElementById("voiceStatus");
+          if (voiceStatus && voiceStatus.textContent === "Click mic to start") {
+            voiceStatus.textContent = t.clickMicToStartShort || translations.en.clickMicToStartShort;
+          }
+          
+          // Left Sidebar Menu
+          const sidebarTitle = document.querySelector("#leftSidebar .sidebar-header h2");
+          if (sidebarTitle) sidebarTitle.textContent = t.menu || translations.en.menu;
+          
+          // Sidebar items (by index)
+          const sidebarItems = document.querySelectorAll("#leftSidebar .sidebar-item span");
+          const sidebarTexts = [t.about, t.blog, t.omniWrite, t.calendar, t.games, t.maps, t.photos, t.tasks, t.notes, t.labs];
+          sidebarItems.forEach((item, index) => {
+            if (sidebarTexts[index]) item.textContent = sidebarTexts[index];
+          });
+          
+          // Settings Modal Title
+          const settingsModalTitle = document.querySelector("#settingsModal .settings-modal-header h2");
+          if (settingsModalTitle) settingsModalTitle.textContent = t.settingsBtn || translations.en.settingsBtn;
+          
+          // Settings Sidebar Menu
+          const generalSettingsBtn = document.querySelector("#searchSettingsBtn .menu-text");
+          if (generalSettingsBtn) generalSettingsBtn.textContent = t.generalSettings || translations.en.generalSettings;
+          
+          const appearanceSettingsBtn = document.querySelector("#appearanceSettingsBtn .menu-text");
+          if (appearanceSettingsBtn) appearanceSettingsBtn.textContent = t.appearanceSettings || translations.en.appearanceSettings;
+          
+          const shortcutsSettingsBtn = document.querySelector("#shortcutsSettingsBtn .menu-text");
+          if (shortcutsSettingsBtn) shortcutsSettingsBtn.textContent = t.shortcutsSettings || translations.en.shortcutsSettings;
+          
+          const privacySettingsBtn = document.querySelector("#privacySettingsBtn .menu-text");
+          if (privacySettingsBtn) privacySettingsBtn.textContent = t.privacySettings || translations.en.privacySettings;
+          
+          const advancedSettingsBtn = document.querySelector("#advancedSettingsBtn .menu-text");
+          if (advancedSettingsBtn) advancedSettingsBtn.textContent = t.advancedSettings || translations.en.advancedSettings;
+          
+          // Settings Pages Titles
+          const generalPage = document.querySelector("#generalSettingsPage h2");
+          if (generalPage) generalPage.textContent = t.generalSettings || translations.en.generalSettings;
+          
+          const appearancePage = document.querySelector("#appearanceSettingsPage h2");
+          if (appearancePage) appearancePage.textContent = t.appearanceSettings || translations.en.appearanceSettings;
+          
+          const shortcutsPage = document.querySelector("#shortcutsSettingsPage h2");
+          if (shortcutsPage) shortcutsPage.textContent = t.shortcutsSettings || translations.en.shortcutsSettings;
+          
+          const privacyPage = document.querySelector("#privacySettingsPage h2");
+          if (privacyPage) privacyPage.textContent = t.privacySettings || translations.en.privacySettings;
+          
+          const advancedPage = document.querySelector("#advancedSettingsPage h2");
+          if (advancedPage) advancedPage.textContent = t.advancedSettings || translations.en.advancedSettings;
+          
+          const keyboardShortcutsPage = document.querySelector("#shortcutsListPage h2");
+          if (keyboardShortcutsPage) keyboardShortcutsPage.textContent = t.keyboardShortcuts || translations.en.keyboardShortcuts;
+          
+          // Settings Labels
           const settingsLabels = document.querySelectorAll(".settings-label");
           const labelMap = {
             "Language": t.language,
@@ -3560,7 +7313,7 @@
             });
           });
           
-          // Button texts
+          // Appearance Settings Buttons
           const uploadImageBtn = document.getElementById("bgImageUploadBtn");
           if (uploadImageBtn) uploadImageBtn.textContent = t.uploadImage || translations.en.uploadImage;
           
@@ -3572,9 +7325,14 @@
             noFileText.textContent = t.noFileChosen || translations.en.noFileChosen;
           }
           
+          const detectLocalFontsBtn = document.querySelector("#detectLocalFontsBtn span");
+          if (detectLocalFontsBtn) detectLocalFontsBtn.textContent = t.detectLocalFonts || translations.en.detectLocalFonts;
+          
+          // Privacy Settings
           const manageDataBtn = document.getElementById("manageDataBtn");
           if (manageDataBtn) manageDataBtn.textContent = t.manageDataBtn || translations.en.manageDataBtn;
           
+          // Advanced Settings Actions
           const deleteSearchHistoryText = document.querySelector(".delete-search-history-text");
           if (deleteSearchHistoryText) deleteSearchHistoryText.textContent = t.deleteSearchHistory || translations.en.deleteSearchHistory;
           
@@ -3593,24 +7351,44 @@
           const deleteEverythingText = document.querySelector(".delete-everything-text");
           if (deleteEverythingText) deleteEverythingText.textContent = t.deleteEverything || translations.en.deleteEverything;
           
+          // Shortcuts Settings
           const shortcutsDesc = document.querySelector(".shortcuts-description");
           if (shortcutsDesc) shortcutsDesc.textContent = t.shortcutsDescription || translations.en.shortcutsDescription;
           
-          // Settings page titles
-          const generalPage = document.querySelector("#generalSettingsPage h2");
-          if (generalPage) generalPage.textContent = t.generalSettings || translations.en.generalSettings;
+          const addShortcutBtnSettings = document.querySelector("#addShortcutBtnSettings span");
+          if (addShortcutBtnSettings) addShortcutBtnSettings.textContent = t.addShortcutBtn || translations.en.addShortcutBtn;
           
-          const appearancePage = document.querySelector("#appearanceSettingsPage h2");
-          if (appearancePage) appearancePage.textContent = t.appearanceSettings || translations.en.appearanceSettings;
+          // Keyboard Shortcuts
+          const keyboardShortcuts = document.querySelectorAll("#shortcutsListPage .keyboard-shortcut span:first-child");
+          const shortcutTranslations = [
+            t.focusSearchBar || translations.en.focusSearchBar,
+            t.openVoiceSearch || translations.en.openVoiceSearch,
+            t.openImageSearch || translations.en.openImageSearch,
+            t.luckyButton || translations.en.luckyButton,
+            t.openSettings || translations.en.openSettings
+          ];
+          keyboardShortcuts.forEach((shortcut, index) => {
+            if (shortcutTranslations[index]) shortcut.textContent = shortcutTranslations[index];
+          });
           
-          const shortcutsPage = document.querySelector("#shortcutsSettingsPage h2");
-          if (shortcutsPage) shortcutsPage.textContent = t.shortcutsSettings || translations.en.shortcutsSettings;
+          // Add Shortcut Modal
+          const addShortcutTitle = document.querySelector("#addShortcutModal h2");
+          if (addShortcutTitle) addShortcutTitle.textContent = t.addShortcutTitle || translations.en.addShortcutTitle;
           
-          const privacyPage = document.querySelector("#privacySettingsPage h2");
-          if (privacyPage) privacyPage.textContent = t.privacySettings || translations.en.privacySettings;
+          const addShortcutDesc = document.querySelector("#addShortcutModal p");
+          if (addShortcutDesc) addShortcutDesc.textContent = t.addShortcutDescription || translations.en.addShortcutDescription;
           
-          const advancedPage = document.querySelector("#advancedSettingsPage h2");
-          if (advancedPage) advancedPage.textContent = t.advancedSettings || translations.en.advancedSettings;
+          const shortcutNameLabel = document.querySelector("#addShortcutModal label[for='shortcutName']");
+          if (shortcutNameLabel) shortcutNameLabel.textContent = t.shortcutName || translations.en.shortcutName;
+          
+          const shortcutURLLabel = document.querySelector("#addShortcutModal label[for='shortcutURL']");
+          if (shortcutURLLabel) shortcutURLLabel.textContent = t.shortcutURL || translations.en.shortcutURL;
+          
+          const addShortcutSubmitBtn = document.querySelector("#shortcutForm .modal-button.confirm");
+          if (addShortcutSubmitBtn) addShortcutSubmitBtn.textContent = t.add || translations.en.add;
+          
+          const cancelShortcut = document.getElementById("cancelShortcut");
+          if (cancelShortcut) cancelShortcut.textContent = t.cancel || translations.en.cancel;
           
           // Mode buttons
           const webBtn = document.getElementById("webOptionButton");
@@ -3624,6 +7402,18 @@
         const savedLang = localStorage.getItem("munetiosLanguage") || "en";
         languageButton.textContent = translations[savedLang]?.name || "English";
         applyTranslations(savedLang);
+        
+        // Expose for global access
+        window.getTranslation = function(key) {
+          const langCode = localStorage.getItem("munetiosLanguage") || "en";
+          const t = translations[langCode] || translations.en;
+          return t[key] || translations.en[key] || key;
+        };
+        
+        window.reapplyTranslations = function() {
+          const langCode = localStorage.getItem("munetiosLanguage") || "en";
+          applyTranslations(langCode);
+        };
 
         // Toggle dropdown
         languageButton?.addEventListener("click", (e) => {
@@ -3643,12 +7433,32 @@
           frenchButton: "fr",
           germanButton: "de",
           italianButton: "it",
+          portugueseButton: "pt",
+          dutchButton: "nl",
+          polishButton: "pl",
+          turkishButton: "tr",
+          swedishButton: "sv",
+          norwegianButton: "no",
+          danishButton: "da",
+          finnishButton: "fi",
           chineseButton: "zh",
+          chineseTraditionalButton: "zh-TW",
           japaneseButton: "ja",
           koreanButton: "ko",
           arabicButton: "ar",
           hindiButton: "hi",
-          russianButton: "ru"
+          bengaliButton: "bn",
+          thaiButton: "th",
+          vietnameseButton: "vi",
+          indonesianButton: "id",
+          malayButton: "ms",
+          russianButton: "ru",
+          ukrainianButton: "uk",
+          greekButton: "el",
+          hebrewButton: "he",
+          czechButton: "cs",
+          romanianButton: "ro",
+          hungarianButton: "hu"
         };
 
         Object.keys(langButtons).forEach((btnId) => {
@@ -3856,6 +7666,85 @@
         document.addEventListener("click", (e) => {
           if (!fontFamilyButton?.contains(e.target) && !fontFamilySelector?.contains(e.target)) {
             fontFamilySelector.style.display = "none";
+          }
+        });
+
+        // Detect Local Fonts Functionality
+        const detectLocalFontsBtn = document.getElementById("detectLocalFontsBtn");
+        const localFontsList = document.getElementById("localFontsList");
+
+        detectLocalFontsBtn?.addEventListener("click", async () => {
+          try {
+            // Check if the Local Font Access API is available
+            if ('queryLocalFonts' in window) {
+              const status = await navigator.permissions.query({ name: 'local-fonts' });
+              
+              if (status.state === 'denied') {
+                window.showToast && window.showToast("Permission to access local fonts was denied");
+                return;
+              }
+
+              const fonts = await window.queryLocalFonts();
+              
+              if (fonts.length === 0) {
+                localFontsList.innerHTML = '<div style="padding: 10px; color: rgba(255,255,255,0.6);">No local fonts found</div>';
+                localFontsList.classList.add("active");
+                return;
+              }
+
+              // Get unique font families
+              const fontFamilies = [...new Set(fonts.map(font => font.family))].sort();
+              
+              localFontsList.innerHTML = '';
+              fontFamilies.forEach(fontFamily => {
+                const fontItem = document.createElement('div');
+                fontItem.className = 'local-font-item';
+                fontItem.textContent = fontFamily;
+                fontItem.style.fontFamily = fontFamily;
+                fontItem.addEventListener('click', () => {
+                  fontFamilyButton.textContent = fontFamily;
+                  localStorage.setItem('munetiosFontFamily', fontFamily);
+                  applyAppearanceSettings();
+                  updateFontFeatures(fontFamily);
+                  window.showToast && window.showToast(`Font changed to ${fontFamily}`);
+                });
+                localFontsList.appendChild(fontItem);
+              });
+              
+              localFontsList.classList.add("active");
+              window.showToast && window.showToast(`Found ${fontFamilies.length} local fonts`);
+            } else {
+              // Fallback: Show common system fonts
+              const commonFonts = [
+                'Arial', 'Helvetica', 'Times New Roman', 'Times', 'Courier New', 'Courier',
+                'Verdana', 'Georgia', 'Palatino', 'Garamond', 'Bookman', 'Comic Sans MS',
+                'Trebuchet MS', 'Arial Black', 'Impact', 'Lucida Sans Unicode', 'Tahoma',
+                'Lucida Console', 'Monaco', 'Courier', 'Bradley Hand', 'Brush Script MT',
+                'Luminari', 'Chalkboard', 'Marker Felt', 'Copperplate', 'Papyrus'
+              ];
+              
+              localFontsList.innerHTML = '<div style="padding: 10px; color: rgba(255,255,255,0.6); margin-bottom: 10px; font-size: 12px;">Local Font Access API not supported. Showing common system fonts:</div>';
+              
+              commonFonts.forEach(fontFamily => {
+                const fontItem = document.createElement('div');
+                fontItem.className = 'local-font-item';
+                fontItem.textContent = fontFamily;
+                fontItem.style.fontFamily = fontFamily;
+                fontItem.addEventListener('click', () => {
+                  fontFamilyButton.textContent = fontFamily;
+                  localStorage.setItem('munetiosFontFamily', fontFamily);
+                  applyAppearanceSettings();
+                  updateFontFeatures(fontFamily);
+                  window.showToast && window.showToast(`Font changed to ${fontFamily}`);
+                });
+                localFontsList.appendChild(fontItem);
+              });
+              
+              localFontsList.classList.add("active");
+            }
+          } catch (error) {
+            console.error('Error detecting local fonts:', error);
+            window.showToast && window.showToast("Error detecting local fonts");
           }
         });
 
@@ -4295,11 +8184,18 @@
       // Apps button functionality
       (function () {
         const appsBtn = document.getElementById("appsBtn");
+        const appsBtnMobile = document.getElementById("appsBtnMobile");
         const appsWrapper = document.getElementById("appsWrapper");
         const closeAppsWrapper = document.getElementById("closeAppsWrapper");
 
         if (appsBtn) {
           appsBtn.addEventListener("click", () => {
+            appsWrapper.classList.add("active");
+          });
+        }
+
+        if (appsBtnMobile) {
+          appsBtnMobile.addEventListener("click", () => {
             appsWrapper.classList.add("active");
           });
         }
@@ -4317,6 +8213,36 @@
               appsWrapper.classList.remove("active");
             }
           });
+        }
+      })();
+
+      // Left Sidebar Menu Functionality
+      (function () {
+        const menuBtn = document.getElementById("menuBtn");
+        const leftSidebar = document.getElementById("leftSidebar");
+        const sidebarOverlay = document.getElementById("sidebarOverlay");
+        const sidebarClose = document.getElementById("sidebarClose");
+
+        function openSidebar() {
+          leftSidebar.classList.add("active");
+          sidebarOverlay.classList.add("active");
+        }
+
+        function closeSidebar() {
+          leftSidebar.classList.remove("active");
+          sidebarOverlay.classList.remove("active");
+        }
+
+        if (menuBtn) {
+          menuBtn.addEventListener("click", openSidebar);
+        }
+
+        if (sidebarClose) {
+          sidebarClose.addEventListener("click", closeSidebar);
+        }
+
+        if (sidebarOverlay) {
+          sidebarOverlay.addEventListener("click", closeSidebar);
         }
       })();
         // Initialize appearance settings on page load
