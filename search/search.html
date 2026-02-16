@@ -14,20 +14,49 @@
     <link rel="icon" sizes="16x16" href="image.png" type="image/png" />
     <link rel="manifest" href="site.webmanifest" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="
-  default-src 'self';
-  img-src 'self' https: data:;
-  style-src 'self' https: 'unsafe-inline';
-  script-src 'self'  'nonce-rjighegujregergrejge' https://api.munetios.com https://cdnjs.cloudflare.com https://unpkg.com https://cdn.jsdelivr.net https://cdn.tailwindcss.com;
-  connect-src 'self' https:;
-  font-src 'self' https: data:;
-  frame-src https://www.munetios.com https://www.youtube-nocookie.com;
-  worker-src 'self' blob:;
-  object-src 'none';
-"
-    />
+   <meta
+  http-equiv="Content-Security-Policy"
+  content="
+    default-src 'self';
+
+    img-src 'self' https: data: blob:;
+
+    style-src 'self' https: 'unsafe-inline';
+
+    script-src
+      'self'
+      'nonce-rjighegujregergrejge'
+      https://api.munetios.com
+      https://cdnjs.cloudflare.com
+      https://unpkg.com
+      https://cdn.jsdelivr.net
+      https://cdn.tailwindcss.com;
+
+    connect-src
+      'self'
+      https://*.wikipedia.org
+      https://minecraft.wiki
+      https://bugs.mojang.com
+      https://api.stackexchange.com
+      https://hn.algolia.com
+      https://dev.to
+      https://www.wikidata.org 
+      https://api.github.com
+      https://api.duckduckgo.com
+      https://www.reddit.com;
+
+    font-src 'self' https: data:;
+
+    frame-src
+      https://www.munetios.com
+      https://www.youtube-nocookie.com;
+
+    worker-src 'self' blob:;
+
+    object-src 'none';
+  "
+/>
+
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded"
@@ -7302,189 +7331,530 @@
         return [];
       }
 
-      
-            async function performSearch() {
-              const query = searchInput.value.trim();
-              updateQueryParam(query);
-              if (!query) {
-                clearResults();
-                return;
-              }
-              showSkeletonLoading();
-              isLoading = true;
-              try {
-                let allResults = getResultsFromDOM();
-                let filteredLocal;
-                if (query === "@all") {
-                  filteredLocal = allResults.filter((r) => r.title && r.description);
-                } else {
-                  filteredLocal = allResults.filter(
-                    (r) =>
-                      r.title &&
-                      r.description &&
-                      (r.title.toLowerCase().includes(query.toLowerCase()) ||
-                        r.description.toLowerCase().includes(query.toLowerCase()) ||
-                        (r.link &&
-                          r.link.toLowerCase().includes(query.toLowerCase()))),
-                  );
-                }
-                let redditResults = [];
-                try {
-                  const enableReddit = localStorage.getItem("enableRedditResults") === "true";
-                  if (enableReddit && query && query !== "@all") {
-                  const redditRes = await fetch(
-                    `https://www.reddit.com/search.json?q=${encodeURIComponent(query)}&limit=5`
-                  );
-                  const redditData = await redditRes.json();
-                  if (redditData.data && Array.isArray(redditData.data.children)) {
-                    redditResults = redditData.data.children
-                    .filter(item => item.data && item.data.title && item.data.permalink)
-                    .map(item => ({
-                      title: item.data.title,
-                      description: item.data.subreddit_name_prefixed
-                      ? `Reddit: ${item.data.subreddit_name_prefixed}`
-                      : "Reddit",
-                      link: `https://www.reddit.com${item.data.permalink}`,
-                      favicon: "https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png"
-                    }));
-                  }
-                  }
-                } catch (err) {
-                  // Reddit fetch failed, ignore
-                  console.log("Reddit fetch error:", err);
-                }
-                // Fetch Hacker News search results
-                let hnResults = [];
-                if (query !== "@all") {
-                  try {
-                  const hnRes = await fetch(
-                    `https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(query)}&hitsPerPage=40` // higher hitsPerPage = more results
-                  );
-                  const hnData = await hnRes.json();
-                  if (hnData.hits && Array.isArray(hnData.hits)) {
-                    hnResults = hnData.hits
-                    .filter(item => item.title && item.url)
-                    .map(item => ({
-                      title: item.title,
-                      description: item._highlightResult && item._highlightResult.title && item._highlightResult.title.value
-                      ? item._highlightResult.title.value.replace(/<\/?[^>]+(>|$)/g, "")
-                      : "Hacker News",
-                      link: item.url,
-                      favicon: "" // blank = depends
-                    }));
-                  }
-                  } catch (err) {
-                  // Hacker News fetch failed, ignore
-                  console.log("Hacker News fetch error:", err);
-                  }
-                }
-                // Fetch Stack Overflow search results
-                let stackResults = [];
-                if (query !== "@all") {
-                  try {
-                    const stackRes = await fetch(
-                      `https://api.stackexchange.com/2.3/search/advanced?order=desc&sort=relevance&q=${encodeURIComponent(
-                        query,
-                      )}&site=stackoverflow&pagesize=5`,
-                    );
-                    const stackData = await stackRes.json();
-                    if (stackData.items && Array.isArray(stackData.items)) {
-                      stackResults = stackData.items.map((item) => ({
-                        title: item.title,
-                        description: item.tags ? "Tags: " + item.tags.join(", ") : "",
-                        link: item.link,
-                        favicon:
-                          "https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico",
-                      }));
-                    }
-                  } catch (err) {
-                    // Stack Overflow fetch failed, ignore
-                    console.log("Stack Overflow fetch error:", err);
-                  }
-                }
-      
-                // Fetch Wikipedia search results using the API (skip if @all)
-                let wikiResults = [];
-                if (query !== "@all") {
-                  try {
-                    const wikiRes = await fetch(
-                      `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(
-                        query,
-                      )}&utf8=&format=json&origin=*`,
-                    );
-                    const wikiData = await wikiRes.json();
-                    if (wikiData.query && wikiData.query.search) {
-                      wikiResults = wikiData.query.search.map((item) => ({
-                        title: item.title,
-                        description: item.snippet.replace(/<\/?[^>]+(>|$)/g, ""), // Remove HTML tags
-                        link: `https://en.wikipedia.org/wiki/${encodeURIComponent(
-                          item.title,
-                        )}`,
-                        favicon:
-                          "https://en.wikipedia.org/static/favicon/wikipedia.ico",
-                      }));
-                    }
-                  } catch (err) {
-                    // Wikipedia fetch failed, ignore and just use local results
-                    console.log("Wikipedia fetch error:", err);
-                  }
-                }
-      
-                // Fetch GitHub search results (repositories)
-                let githubResults = [];
-                if (query !== "@all") {
-                  try {
-                    const githubRes = await fetch(
-                      `https://api.github.com/search/repositories?q=${encodeURIComponent(
-                        query,
-                      )}&per_page=5`,
-                    );
-                    const githubData = await githubRes.json();
-                    if (githubData.items && Array.isArray(githubData.items)) {
-                      githubResults = githubData.items.map((item) => ({
-                        title: item.full_name,
-                        description: item.description || "",
-                        link: item.html_url,
-                        favicon:
-                          "https://github.githubassets.com/favicons/favicon.svg",
-                      }));
-                    }
-                  } catch (err) {
-                    // GitHub fetch failed, ignore
-                    console.log("GitHub fetch error:", err);
-                  }
-                }
-      
-                // Combine all results
-                let filtered = [
-                  ...filteredLocal,
-                  ...hnResults,
-                  ...redditResults,
-                  ...stackResults,
-                  ...wikiResults,
-                  ...githubResults,
-                ];
-      
-                // Apply country filtering
-                const country = localStorage.getItem("country") || "us";
-                if (typeof window.filterResultsByCountry === "function") {
-                  filtered = window.filterResultsByCountry(filtered, country);
-                }
-      
-                renderResults(filtered);
-              } catch (e) {
-                clearResults();
-                const t = window.currentTranslations || translations.en;
-                resultsContainer.innerHTML = `<div style="padding:32px 0;text-align:center;color:#e66;">${t.failedToLoad}</div>`;
-              } finally {
-                isLoading = false;
-              }
-            }
-      searchInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-          performSearch();
+      // Ranking function to score results based on relevance to the search query
+      function calculateRelevanceScore(result, query) {
+        let score = 0;
+        const queryLower = query.toLowerCase();
+        const queryWords = queryLower.split(/\s+/).filter(w => w.length > 2);
+        
+        const title = (result.title || "").toLowerCase();
+        const description = (result.description || "").toLowerCase();
+        const link = (result.link || "").toLowerCase();
+        
+        // Extract domain from URL for brand matching
+        let domain = "";
+        let isMainDomain = false;
+        let isSubdomain = false;
+        try {
+          const url = new URL(result.link || "");
+          domain = url.hostname.toLowerCase();
+          const pathSegments = url.pathname.split('/').filter(p => p.length > 0);
+          
+          // Check if it's a main domain homepage (few path segments)
+          isMainDomain = pathSegments.length === 0;
+        } catch (e) {
+          // If URL parsing fails, try to extract domain from link string
+          const match = link.match(/(?:https?:\/\/)?(?:www\.)?([^\/\?]+)/);
+          if (match) domain = match[1];
         }
-      });
+        
+        // BRAND NAME / DOMAIN MATCHING (Highest Priority)
+        // Detect if query is a brand/company name (single word or known brand)
+        const isBrandQuery = queryWords.length <= 2 && !queryLower.includes('how to') && !queryLower.includes('what is');
+        
+        if (isBrandQuery && domain) {
+          // Extract base domain (remove www, subdomains for comparison)
+          const baseDomain = domain.replace(/^www\./, '');
+          const domainParts = baseDomain.split('.');
+          const mainDomainName = domainParts[0]; // e.g., "google" from "google.com"
+          
+          // Exact domain match: massive boost (e.g., searching "google" finds google.com)
+          if (mainDomainName === queryLower || baseDomain.startsWith(queryLower + '.')) {
+            score += 200; // Highest priority
+            
+            // Extra boost for main domain homepage (google.com vs google.com/about)
+            if (isMainDomain) {
+              score += 100;
+            } else {
+              // Still boost subpages of the main domain
+              score += 50;
+            }
+          }
+          
+          // Domain contains query as part: high boost (e.g., "munetios" matches munetios.com)
+          else if (domain.includes(queryLower)) {
+            score += 150;
+            
+            if (isMainDomain) {
+              score += 80;
+            } else {
+              score += 40;
+            }
+          }
+          
+          // Query matches brand in title + relevant domain
+          else if (title.includes(queryLower) && domain.includes(queryLower.substring(0, Math.min(5, queryLower.length)))) {
+            score += 120;
+          }
+        }
+        
+        // Exact title match (highest priority for non-brand queries)
+        if (title === queryLower) {
+          score += 100;
+        }
+        
+        // Title contains full query
+        if (title.includes(queryLower)) {
+          score += 50;
+        }
+        
+        // Description contains full query
+        if (description.includes(queryLower)) {
+          score += 30;
+        }
+        
+        // Count matching words in title (high weight)
+        queryWords.forEach(word => {
+          if (title.includes(word)) {
+            score += 15;
+          }
+        });
+        
+        // Count matching words in description (medium weight)
+        queryWords.forEach(word => {
+          if (description.includes(word)) {
+            score += 5;
+          }
+        });
+        
+        // Domain-specific boosts for topic-based searches
+        // Minecraft-related queries
+        if (queryLower.match(/minecraft|survival|creative|block|mob|craft|enchant|potion|nether|end/)) {
+          if (link.includes('minecraft.wiki') || link.includes('minecraft.fandom')) {
+            score += 40;
+          }
+        }
+        
+        // Wikipedia for general knowledge
+        if (link.includes('wikipedia.org')) {
+          score += 10;
+        }
+        
+        // Wikidata for entities
+        if (link.includes('wikidata.org')) {
+          score += 8;
+        }
+        
+        // GitHub for code/programming queries
+        if (queryLower.match(/code|library|framework|api|github|repository|npm|package/)) {
+          if (link.includes('github.com')) {
+            score += 35;
+          }
+        }
+        
+        // Stack Overflow for programming questions
+        if (queryLower.match(/how to|error|exception|bug|programming|code|function|method/)) {
+          if (link.includes('stackoverflow.com')) {
+            score += 35;
+          }
+        }
+        
+        // Reddit for community discussions
+        if (queryLower.match(/discussion|community|opinion|review|recommend/)) {
+          if (link.includes('reddit.com')) {
+            score += 30;
+          }
+        }
+        
+        // Dev.to for tutorials and articles
+        if (queryLower.match(/tutorial|guide|learn|how to/)) {
+          if (link.includes('dev.to')) {
+            score += 25;
+          }
+        }
+        
+        // Title starts with query (good relevance)
+        if (title.startsWith(queryLower)) {
+          score += 20;
+        }
+        
+        return score;
+      }
+
+      
+         async function performSearch() {
+
+  const query = searchInput.value.trim();
+  updateQueryParam(query);
+
+  if (!query) {
+    clearResults();
+    return;
+  }
+
+  showSkeletonLoading();
+  isLoading = true;
+
+  try {
+
+    let allResults = getResultsFromDOM();
+
+    let filteredLocal;
+
+    if (query === "@all") {
+
+      filteredLocal = allResults.filter(r => r.title && r.description);
+
+    } else {
+
+      filteredLocal = allResults.filter(r =>
+        r.title &&
+        r.description &&
+        (
+          r.title.toLowerCase().includes(query.toLowerCase()) ||
+          r.description.toLowerCase().includes(query.toLowerCase()) ||
+          (r.link && r.link.toLowerCase().includes(query.toLowerCase()))
+        )
+      );
+
+    }
+
+    let redditResults = [];
+    let hnResults = [];
+    let stackResults = [];
+    let wikiResults = [];
+    let githubResults = [];
+    let ddgResults = [];
+
+    /* ---------- REDDIT ---------- */
+
+    try {
+
+      const enableReddit = localStorage.getItem("enableRedditResults") === "true";
+
+      if (enableReddit && query !== "@all") {
+
+        const redditRes = await fetch(
+          `https://www.reddit.com/search.json?q=${encodeURIComponent(query)}&limit=5`
+        );
+
+        const redditData = await redditRes.json();
+
+        if (redditData.data?.children) {
+
+          redditResults = redditData.data.children.map(item => ({
+            title: item.data.title,
+            description: `Reddit: ${item.data.subreddit_name_prefixed}`,
+            link: `https://www.reddit.com${item.data.permalink}`,
+            favicon: "https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png"
+          }));
+
+        }
+
+      }
+
+    } catch(err){ console.log("Reddit error:", err); }
+
+    /* ---------- HACKER NEWS ---------- */
+
+    if (query !== "@all") {
+
+      try {
+
+        const hnRes = await fetch(
+          `https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(query)}&hitsPerPage=40`
+        );
+
+        const hnData = await hnRes.json();
+
+        hnResults = hnData.hits
+          ?.filter(i => i.title && i.url)
+          .map(i => ({
+            title: i.title,
+            description: "Hacker News",
+            link: i.url,
+            favicon: ""
+          })) || [];
+
+      } catch(err){ console.log("HN error:", err); }
+
+    }
+
+    /* ---------- STACK OVERFLOW ---------- */
+
+    if (query !== "@all") {
+
+      try {
+
+        const stackRes = await fetch(
+          `https://api.stackexchange.com/2.3/search/advanced?order=desc&sort=relevance&q=${encodeURIComponent(query)}&site=stackoverflow&pagesize=5`
+        );
+
+        const stackData = await stackRes.json();
+
+        stackResults = stackData.items?.map(item => ({
+          title: item.title,
+          description: item.tags ? "Tags: " + item.tags.join(", ") : "",
+          link: item.link,
+          favicon: "https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico"
+        })) || [];
+
+      } catch(err){ console.log("Stack error:", err); }
+
+    }
+/* ---------- MOJANG BUG TRACKER (REAL RESULTS via RSS) ---------- */
+
+let mojangBugResults = [];
+
+if (query !== "@all") {
+
+  try {
+
+    const rssURL =
+      `https://bugs.mojang.com/issues/?jql=text~"${encodeURIComponent(query)}"&rss=true`;
+
+    const res = await fetch(rssURL);
+
+    const text = await res.text();
+
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(text, "text/xml");
+
+    const items = xml.querySelectorAll("item");
+
+    mojangBugResults = Array.from(items).slice(0,5).map(item => ({
+
+      title: item.querySelector("title")?.textContent || "",
+
+      description: "Official Mojang Bug Tracker",
+
+      link: item.querySelector("link")?.textContent || "",
+
+      favicon: ""
+
+    }));
+
+  } catch(err){
+
+    console.log("Mojang RSS error:", err);
+
+  }
+
+}
+
+    /* ---------- WIKIDATA ---------- */
+
+let wikidataResults = [];
+
+if (query !== "@all") {
+
+  try {
+
+    const wdRes = await fetch(
+      `https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${encodeURIComponent(query)}&language=en&format=json&origin=*`
+    );
+
+    const wdData = await wdRes.json();
+
+    if (wdData.search) {
+
+      wikidataResults = wdData.search.map(item => ({
+        title: item.label,
+        description: item.description || "Wikidata",
+        link: `https://www.wikidata.org/wiki/${item.id}`,
+        favicon: ""
+      }));
+
+    }
+
+  } catch(err) {
+    console.log("Wikidata error:", err);
+  }
+
+}
+
+    /* ---------- WIKIPEDIA ---------- */
+
+    if (query !== "@all") {
+
+      try {
+
+        const wikiRes = await fetch(
+          `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`
+        );
+
+        const wikiData = await wikiRes.json();
+
+        wikiResults = wikiData.query.search.map(item => ({
+          title: item.title,
+          description: item.snippet.replace(/<\/?[^>]+>/g,""),
+          link: `https://en.wikipedia.org/wiki/${encodeURIComponent(item.title)}`,
+          favicon: "https://en.wikipedia.org/static/favicon/wikipedia.ico"
+        }));
+
+      } catch(err){ console.log("Wiki error:", err); }
+
+    }
+    /* ---------- MINECRAFT WIKI (MediaWiki API) ---------- */
+
+let minecraftWikiResults = [];
+
+if (query !== "@all") {
+
+  try {
+
+    const mcWikiRes = await fetch(
+      `https://minecraft.wiki/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`
+    );
+
+    const mcWikiData = await mcWikiRes.json();
+
+    if (mcWikiData.query && mcWikiData.query.search) {
+
+      minecraftWikiResults = mcWikiData.query.search.map(item => ({
+
+        title: item.title,
+
+        description: item.snippet.replace(/<\/?[^>]+(>|$)/g,""),
+
+        link: `https://minecraft.wiki/w/${encodeURIComponent(item.title)}`,
+
+        favicon: "https://minecraft.wiki/favicon.ico"
+
+      }));
+
+    }
+
+  } catch(err) {
+
+    console.log("Minecraft Wiki fetch error:", err);
+
+  }
+
+}
+
+
+let devtoResults=[];
+
+if(query!=="@all"){
+
+  try{
+
+    const devRes=await fetch(
+      `https://dev.to/api/articles?per_page=5&tag=${encodeURIComponent(query)}`
+    );
+
+    const devData=await devRes.json();
+
+    devtoResults=devData.map(a=>({
+
+      title:a.title,
+      description:a.description||"Dev.to",
+      link:a.url,
+      favicon:""
+
+    }));
+
+  }catch(err){console.log(err);}
+
+}
+
+
+    /* ---------- GITHUB ---------- */
+
+    if (query !== "@all") {
+
+      try {
+
+        const githubRes = await fetch(
+          `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&per_page=5`
+        );
+
+        const githubData = await githubRes.json();
+
+        githubResults = githubData.items?.map(repo => ({
+          title: repo.full_name,
+          description: repo.description || "",
+          link: repo.html_url,
+          favicon: "https://github.githubassets.com/favicons/favicon.svg"
+        })) || [];
+
+      } catch(err){ console.log("GitHub error:", err); }
+
+    }
+
+    /* ---------- DUCKDUCKGO INSTANT ANSWER (PRIVACY SAFE) ---------- */
+
+    if (query !== "@all") {
+
+      try {
+
+        const ddgRes = await fetch(
+          `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1`
+        );
+
+        const ddgData = await ddgRes.json();
+
+        if (ddgData.AbstractURL) {
+
+          ddgResults.push({
+            title: ddgData.Heading,
+            description: ddgData.AbstractText,
+            link: ddgData.AbstractURL,
+            favicon: "https://duckduckgo.com/favicon.ico"
+          });
+
+        }
+
+      } catch(err){ console.log("DDG error:", err); }
+
+    }
+
+ 
+    /* ---------- COMBINE AND RANK ---------- */
+
+    let filtered = [
+      ...filteredLocal,
+ 
+    
+     ...devtoResults,
+      ...hnResults,
+      ...mojangBugResults,
+      ...redditResults,
+
+       ...minecraftWikiResults,
+         ...wikidataResults,
+           ...wikiResults,
+
+      ...ddgResults,
+      ...stackResults,
+      ...githubResults, 
+    ];
+
+    // Calculate relevance score for each result
+    filtered = filtered.map(result => ({
+      ...result,
+      relevanceScore: calculateRelevanceScore(result, query)
+    }));
+
+    // Sort by relevance score (highest first)
+    filtered.sort((a, b) => b.relevanceScore - a.relevanceScore);
+
+    renderResults(filtered);
+
+  } catch(e){
+
+    clearResults();
+    resultsContainer.innerHTML = `<div style="padding:32px;text-align:center;color:#e66;">Failed to load</div>`;
+
+  } finally {
+
+    isLoading = false;
+
+  }
+
+}
+
       // Remove duplicate event listeners and keep only one for each button with correct logic
 
       document.getElementById("popularResult").addEventListener("click", () => {
@@ -7803,7 +8173,7 @@
             // Static dataset of images (add your own images here)
             const staticImages = [
               {
-                image: "https://www.munetios.com/munetios-Logo.png",
+                image: "https://www.munetios.com/munetios-logo.png",
                 title: "Munetios Logo",
                 description: "Munetios official logo.",
                 link: "https://www.munetios.com",
@@ -17026,7 +17396,134 @@ document
           url: "https://apps.apple.com/app/tiktok/id835599320",
           favicon: "",
           link: "https://apps.apple.com/app/tiktok/id835599320",
-        }
+        },
+        {
+          title: "K5 Learning",
+          description: "Free worksheets, workbooks, and online learning for math, reading, and science. Perfect for elementary school students.",
+          url: "https://www.k5learning.com/",
+          favicon: "",
+          link: "https://www.k5learning.com/",
+        },
+        {
+          title: "Skillshare",
+          description: "Online learning community with thousands of classes on creativity, business, lifestyle, and more.",
+          url: "https://www.skillshare.com/",
+          favicon: "",
+          link: "https://www.skillshare.com/",
+        },
+        {
+          title: "Monday.com",
+          description: "Work operating system that powers teams to run projects and workflows with confidence.",
+          url: "https://monday.com/",
+          favicon: "",
+          link: "https://monday.com/",
+        },
+        {
+          title: "ClickUp",
+          description: "One app to replace them all. Project management, docs, chat, goals, and more in one place.",
+          url: "https://clickup.com/",
+          favicon: "",
+          link: "https://clickup.com/",
+        },
+        {
+          title: "Airtable",
+          description: "Part spreadsheet, part database, fully flexible. Organize anything, with anyone, from anywhere.",
+          url: "https://www.airtable.com/",
+          favicon: "",
+          link: "https://www.airtable.com/",
+        },
+        {
+          title: "Hulu",
+          description: "Watch thousands of shows and movies, with plans starting at $7.99/month.",
+          url: "https://www.hulu.com/",
+          favicon: "",
+          link: "https://www.hulu.com/",
+        },
+        {
+          title: "Disney+",
+          description: "Stream Disney, Pixar, Marvel, Star Wars, and National Geographic content.",
+          url: "https://www.disneyplus.com/",
+          favicon: "",
+          link: "https://www.disneyplus.com/",
+        },
+        {
+          title: "HBO Max",
+          description: "Stream HBO original series, movies, and documentaries plus classics.",
+          url: "https://www.hbomax.com/",
+          favicon: "",
+          link: "https://www.hbomax.com/",
+        },
+        {
+          title: "Photopea",
+          description: "Free online photo editor supporting PSD, XCF, Sketch, XD, and CDR formats.",
+          url: "https://www.photopea.com/",
+          favicon: "",
+          link: "https://www.photopea.com/",
+        },
+        {
+          title: "Pixlr",
+          description: "Free online photo editor and design tool with AI-powered features.",
+          url: "https://pixlr.com/",
+          favicon: "",
+          link: "https://pixlr.com/",
+        },
+        {
+          title: "Wix",
+          description: "Create a free website with Wix's powerful drag-and-drop website builder.",
+          url: "https://www.wix.com/",
+          favicon: "",
+          link: "https://www.wix.com/",
+        },
+        {
+          title: "Squarespace",
+          description: "Build a beautiful website. Create a blog, online store, or portfolio.",
+          url: "https://www.squarespace.com/",
+          favicon: "",
+          link: "https://www.squarespace.com/",
+        },
+        {
+          title: "Mailchimp",
+          description: "Marketing, automation, and email platform for growing businesses.",
+          url: "https://mailchimp.com/",
+          favicon: "",
+          link: "https://mailchimp.com/",
+        },
+        {
+          title: "HubSpot",
+          description: "Inbound marketing, sales, and service software to grow your business.",
+          url: "https://www.hubspot.com/",
+          favicon: "",
+          link: "https://www.hubspot.com/",
+        },
+        {
+          title: "Shopify",
+          description: "Build your business. Start your online store with Shopify's ecommerce platform.",
+          url: "https://www.shopify.com/",
+          favicon: "",
+          link: "https://www.shopify.com/",
+        },
+        {
+          title: "Duolingo ABC",
+          description: "Fun, research-backed reading lessons that teach kids ages 3-8 how to read.",
+          url: "https://abc.duolingo.com/",
+          favicon: "",
+          link: "https://abc.duolingo.com/",
+        },
+        {
+          title: "ABCmouse",
+          description: "Full online curriculum for kids ages 2-8. Learning games, books, puzzles, and songs.",
+          url: "https://www.abcmouse.com/",
+          favicon: "",
+          link: "https://www.abcmouse.com/",
+        },
+        {
+          title: "Prodigy Math",
+          description: "Engage students with adaptive math practice that makes learning fun.",
+          url: "https://www.prodigygame.com/",
+          favicon: "",
+          link: "https://www.prodigygame.com/",
+        },
+        
       ];
     </script>
     <script nonce="rjighegujregergrejge">
