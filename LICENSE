@@ -1,33 +1,89 @@
-Munetios License v1.4
+Munetios License v1.5
 
 Copyright (c) 2026 Munetios
 
-Permission is hereby granted to any person obtaining a copy of this software
-and associated source code files (the "Software") to use, copy, modify,
-fork, distribute, and sell the Software, including as part of commercial
-products and paid services, subject to the restrictions below.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated source code files (the “Software”), to use,
+copy, modify, fork, merge, publish, distribute, sublicense, and sell copies
+of the Software, and to permit persons to whom the Software is furnished to
+do so, subject to the conditions below.
 
-Restrictions:
-- The Munetios name, logo, icons, trademarks, and visual assets are NOT licensed
-  and remain the exclusive property of Munetios.
-- Derivative works must NOT use the Munetios name, branding, logos, icons,
-  or imply endorsement, affiliation, or sponsorship by Munetios.
-- You may NOT market, advertise, or present derivative works as "Munetios"
-  or as official Munetios software.
-- Any use of Munetios branding requires explicit written permission
-  from Munetios.
+======================================================================
+PERMISSIONS
+======================================================================
 
-Attribution:
-- This license notice must be included in all copies or substantial portions
-  of the Software.
-- Attribution must clearly state:
-  "Based on software by Munetios."
+You may:
 
-Disclaimer:
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+- Copy and use the Software.
+- Modify the Software.
+- Fork the Software.
+- Distribute the Software.
+- Sell copies of the Software.
+- Change the license of your modified version.
+
+If you modify the Software, you may apply a different license to your
+modifications, provided that you comply with the attribution and branding
+requirements below.
+
+======================================================================
+REQUIREMENTS
+======================================================================
+
+1. License Notice
+   This license text must be included in all copies or substantial
+   portions of the Software.
+
+2. Attribution
+   You must clearly state in documentation, source code, or legal notices:
+
+   "Based on software by Munetios."
+
+3. Modification Disclosure
+   If you modify the Software, you must indicate that changes were made.
+   You may not imply that Munetios endorses or sponsors your modified version.
+
+======================================================================
+PATENT GRANT
+======================================================================
+
+Subject to the terms and conditions of this License, Munetios hereby grants
+you a perpetual, worldwide, non-exclusive, royalty-free patent license to
+make, have made, use, offer to sell, sell, import, and otherwise transfer
+the Software.
+
+======================================================================
+PATENT TERMINATION
+======================================================================
+
+If you initiate patent litigation against Munetios or any contributor
+alleging that the Software infringes a patent, then any patent rights
+granted to you under this License shall terminate immediately.
+
+======================================================================
+BRAND & TRADEMARK PROTECTION
+======================================================================
+
+The Munetios name, logo, icons, visual assets, product names, trademarks,
+and branding elements are NOT licensed under this License.
+
+You may not:
+
+- Use the Munetios name in your product name.
+- Use Munetios logos or brand assets.
+- Imply endorsement, affiliation, or sponsorship by Munetios.
+- Market derivative works as official Munetios software.
+
+Any use of Munetios branding requires explicit written permission.
+
+======================================================================
+DISCLAIMER
+======================================================================
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT,
+OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
