@@ -22,7 +22,7 @@
       rel="stylesheet"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded"
       rel="stylesheet"
     />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
@@ -2025,7 +2025,17 @@
           onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
           >Search</a
         >
-  
+        <a
+          href="https://www.munetios.com/search/classic"
+          style="
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+          "
+          onmouseover="this.style.color = 'white'"
+          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
+          >Classic Search</a
+        >
         <a
           href="https://write.munetios.com"
           style="
@@ -2047,17 +2057,6 @@
           onmouseover="this.style.color = 'white'"
           onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
           >Maps</a
-        >  
-        <a
-          href="https://notes.munetios.com"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >SupaNotes</a
         >
         <a
           href="https://calendar.munetios.com"
@@ -2103,7 +2102,17 @@
           onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
           >Photos</a
         >
-     
+        <a
+          href="https://notes.munetios.com"
+          style="
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+          "
+          onmouseover="this.style.color = 'white'"
+          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
+          >Notes</a
+        >
         <a
           href="https://notebook.munetios.com"
           style="
@@ -2182,7 +2191,7 @@
           onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
           >YouTube Channel</a
         >
-          <a
+           <a
           href="https://x.com/munetios"
           style="
             color: rgba(255, 255, 255, 0.8);
@@ -2404,43 +2413,50 @@
             <div class="settings-page" id="advancedSettingsPage">
               <h2>Advanced</h2>
               <div class="settings-group">
-                <div class="settings-item">
-                  <span class="settings-label settings-label-search-history">Search History</span>
+                <div class="settings-item" style="flex-direction: column;">
+                  <span class="settings-label settings-label-search-history" style="text-align: left; width: 100%;">Search History</span>
                   <button class="action-button danger" id="deleteSearchHistoryBtn">
                     <icon>delete</icon>
                     <span class="delete-search-history-text">Delete All Search History</span>
                   </button>
                 </div>
-                <div class="settings-item">
-                  <span class="settings-label settings-label-shortcuts">Shortcuts</span>
+                <div class="settings-item" style="flex-direction: column;">
+                  <span class="settings-label settings-label-shortcuts" style="text-align: left; width: 100%;">Shortcuts</span>
                   <button class="action-button danger" id="deleteAllShortcutsBtn">
                     <icon>delete</icon>
                     <span class="delete-shortcuts-text">Delete All Shortcuts</span>
                   </button>
                 </div>
-                <div class="settings-item">
-                  <span class="settings-label settings-label-settings">Settings</span>
+                <div class="settings-item" style="flex-direction: column;">
+                  <span class="settings-label settings-label-settings" style="text-align: left; width: 100%;">Settings</span>
                   <button class="action-button" id="exportSettingsBtn">
                     <icon>download</icon>
                     <span class="export-settings-text">Export Settings</span>
                   </button>
                 </div>
-                <div class="settings-item">
-                  <span class="settings-label"></span>
+                <div class="settings-item" style="flex-direction: column;">
+                  <span class="settings-label" style="text-align: left; width: 100%;"></span>
                   <button class="action-button" id="importSettingsBtn">
                     <icon>upload</icon>
                     <span class="import-settings-text">Import Settings</span>
                   </button>
                 </div>
-                <div class="settings-item">
-                  <span class="settings-label"></span>
+                <div class="settings-item" style="flex-direction: column;">
+                  <span class="settings-label" style="text-align: left; width: 100%;"></span>
                   <button class="action-button danger" id="resetSettingsBtn">
                     <icon>restart_alt</icon>
                     <span class="reset-settings-text">Reset All Settings</span>
                   </button>
                 </div>
-                <div class="settings-item">
-                  <span class="settings-label settings-label-data">Data</span>
+                <div class="settings-item" style="flex-direction: column;">
+                  <span class="settings-label" style="text-align: left; width: 100%;"></span>
+                  <button class="action-button" id="unregisterServiceWorkersBtn">
+                    <icon>cloud_off</icon>
+                    <span class="unregister-service-workers-text">Unregister Service Workers</span>
+                  </button>
+                </div>
+                <div class="settings-item" style="flex-direction: column;">
+                  <span class="settings-label settings-label-data" style="text-align: left; width: 100%;">Data</span>
                   <button class="action-button danger" id="deleteEverythingBtn">
                     <icon>delete_forever</icon>
                     <span class="delete-everything-text">Delete Everything</span>
@@ -2512,6 +2528,7 @@
     </div>
     <div class="dropdown-wrapper liquid-glass" id="fontFamilySelector">
       <div class="dropdown-item" data-font="Google Sans Flex">Google Sans Flex</div>
+      <div class="dropdown-item" data-font="Google Sans">Google Sans</div>
       <div class="dropdown-item" data-font="Poppins">Poppins</div>
       <div class="dropdown-item" data-font="Roboto">Roboto</div>
       <div class="dropdown-item" data-font="Open Sans">Open Sans</div>
@@ -3233,33 +3250,24 @@
           }
         });
       })();
-
-      // Logo change and click redirect for special dates in 2026
+      
+      // Logo change and click redirect for Feb 9-12, 2026
       (function () {
         const now = new Date();
         const year = now.getFullYear();
         const month = now.getMonth(); // 0-indexed
         const day = now.getDate();
-        const logo = document.getElementById("canChangeLogoinDoodles");
-        
-        if (!logo) return;
-        
-        logo.style.cursor = "pointer";
-        
-        // Feb 9-12, 2026 - Anniversary
+        // Feb = 1, days 9-12, year 2026
         if (year === 2026 && month === 1 && day >= 9 && day <= 12) {
-          logo.src = "1year.png";
-          logo.onclick = function () {
-            window.location.href =
-              "https://www.munetios.com/timeline/2025/advanced";
-          };
-        }
-        // Feb 13-14, 2026 - Valentine's Day
-        else if (year === 2026 && month === 1 && (day === 13 || day === 14)) {
-          logo.src = "valentines.png";
-          logo.onclick = function () {
-            window.location.href = "valentines.html";
-          };
+          const logo = document.getElementById("canChangeLogoinDoodles");
+          if (logo) {
+            logo.src = "1year.png";
+            logo.style.cursor = "pointer";
+            logo.onclick = function () {
+              window.location.href =
+                "https://www.munetios.com/timeline/2025/advanced";
+            };
+          }
         }
       })();
 
@@ -7200,8 +7208,8 @@
           if (settingsBtn) settingsBtn.textContent = t.settingsBtn || translations.en.settingsBtn;
           
           // Add Shortcut Button
-          const shortcutLabel = document.querySelector(".shortcut-label");
-          if (shortcutLabel) shortcutLabel.textContent = t.addShortcut || translations.en.addShortcut;
+      /*    const shortcutLabel = document.querySelector(".shortcut-label");
+          if (shortcutLabel) shortcutLabel.textContent = t.addShortcut || translations.en.addShortcut; */
           
           // Voice Search Modal
           const voiceSearchTitle = document.querySelector("#voiceSearchModal h2");
@@ -7807,9 +7815,22 @@
           // Build font feature settings
           const features = getFontFeatures(font);
           let fontFeatureSettings = [];
+          let opticalSizingCSS = "";
+          let fontVariationCSS = "";
+          
           features.forEach((feature) => {
             const isEnabled = localStorage.getItem(`munetiosFont_${font}_${feature.tag}`) === "true";
-            if (isEnabled) {
+            if (feature.tag === "opsz") {
+              // Handle optical sizing separately - when OFF, disable it
+              if (!isEnabled) {
+                opticalSizingCSS = "font-optical-sizing: none;";
+              }
+            } else if (feature.tag === "text") {
+              // Handle Text feature for Google Sans - applies font-variation-settings
+              if (isEnabled) {
+                fontVariationCSS = "font-variation-settings: 'opsz' 17;";
+              }
+            } else if (isEnabled) {
               fontFeatureSettings.push(`"${feature.tag}"`);
             }
           });
@@ -7823,6 +7844,8 @@
               color: ${textColor};
               font-family: "${font}", sans-serif;
               ${fontFeatureCSS}
+              ${opticalSizingCSS}
+              ${fontVariationCSS}
             }
           `;
         }
@@ -7852,12 +7875,15 @@
               const isActive = toggle.classList.contains("active");
               localStorage.setItem(`munetiosFont_${font}_${feature.tag}`, isActive);
               applyAppearanceSettings();
-            });
-          });
+            });  });
         }
 
         function getFontFeatures(font) {
           const featuresMap = {
+            "Google Sans": [
+              { name: "Optical Size", tag: "opsz" },
+              { name: "Text", tag: "text" }
+            ],
             "Google Sans Flex": [
               { name: "Single Story a", tag: "ss01" },
               { name: "Double Story g", tag: "ss02" }
@@ -8085,7 +8111,7 @@
             window.showToast && window.showToast(getTranslation("searchHistoryDeleted"));
           }
         });
-
+        
         // Delete All Shortcuts
         document.getElementById("deleteAllShortcutsBtn")?.addEventListener("click", async () => {
           const confirmed = await showConfirmModal(
@@ -8149,6 +8175,20 @@
               }
             };
             reader.readAsText(file);
+          }
+        });
+
+        // Unregister Service Workers
+        document.getElementById("unregisterServiceWorkersBtn")?.addEventListener("click", async () => {
+          try {
+            const registrations = await navigator.serviceWorker.getRegistrations();
+            for (let registration of registrations) {
+              await registration.unregister();
+            }
+            window.showToast && window.showToast("Service workers unregistered successfully");
+          } catch (error) {
+            console.error("Error unregistering service workers:", error);
+            window.showToast && window.showToast("Failed to unregister service workers");
           }
         });
 
