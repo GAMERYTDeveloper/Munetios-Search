@@ -3725,7 +3725,7 @@
             maps: "Maps",
             photos: "Photos",
             tasks: "Tasks",
-            notes: "Notes",
+            notes: "SupaNotes",
             labs: "Labs",
             
             // Apps
@@ -3839,7 +3839,7 @@
             maps: "Mapas",
             photos: "Fotos",
             tasks: "Tareas",
-            notes: "Notas",
+            notes: "SupaNotes",
             labs: "Labs",
             
             // Apps
@@ -3953,7 +3953,7 @@
             maps: "Cartes",
             photos: "Photos",
             tasks: "Tâches",
-            notes: "Notes",
+            notes: "SupaNotes",
             labs: "Labs",
             
             // Apps
@@ -7253,9 +7253,9 @@
           const sidebarTitle = document.querySelector("#leftSidebar .sidebar-header h2");
           if (sidebarTitle) sidebarTitle.textContent = t.menu || translations.en.menu;
           
-          // Sidebar items (by index)
+          // Sidebar items (by index — order must match HTML: About, Blog, OmniWrite, Calendar, Games, Notes, Maps, Photos, Tasks, Labs)
           const sidebarItems = document.querySelectorAll("#leftSidebar .sidebar-item span");
-          const sidebarTexts = [t.about, t.blog, t.omniWrite, t.calendar, t.games, t.maps, t.photos, t.tasks, t.notes, t.labs];
+          const sidebarTexts = [t.about, t.blog, t.omniWrite, t.calendar, t.games, t.notes, t.maps, t.photos, t.tasks, t.labs];
           sidebarItems.forEach((item, index) => {
             if (sidebarTexts[index]) item.textContent = sidebarTexts[index];
           });
