@@ -1,28 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The page that your looking for does not exist</title>
-    <style>
-        body {
-            font-family: Lexend, Poppins, Roboto, Segoe UI, Arial sans-serif;
-            background-color: #f8f8f8;
-            color: #333;
-            text-align: center;
-            padding: 50px;
-        }
-        h1 {
-            font-size: 50px;
-        }
-        p {
-            font-size: 20px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 – Page Not Found | Munetios</title>
+
+<link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css">
+
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,300..1000");
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+body{
+font-family:"Google Sans Flex",sans-serif;
+background:linear-gradient(135deg,#12002b,#1a0038,#220046);
+color:white;
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.container{
+text-align:center;
+padding:50px;
+border-radius:22px;
+max-width:700px;
+width:90%;
+}
+
+.liquid-glass{
+backdrop-filter:blur(2px) saturate(180%);
+background:rgba(255,255,255,0.08);
+border:1px solid rgba(255,255,255,0.15);
+}
+
+.logo{
+font-size:60px;
+font-weight:800;
+color:#a970ff;
+margin-bottom:10px;
+}
+
+h1{
+font-size:90px;
+font-weight:900;
+margin-bottom:10px;
+}
+
+p{
+font-size:20px;
+opacity:0.85;
+margin-bottom:30px;
+}
+
+.buttons{
+display:flex;
+gap:16px;
+justify-content:center;
+flex-wrap:wrap;
+}
+
+button,a{
+font-family:"Google Sans Flex",sans-serif;
+font-size:16px;
+padding:14px 22px;
+border-radius:12px;
+border:none;
+cursor:pointer;
+text-decoration:none;
+transition:all .2s ease;
+}
+
+.home{
+background:#7a3cff;
+color:white;
+}
+
+.search{
+background:rgba(255,255,255,0.15);
+color:white;
+}
+
+button:hover,a:hover{
+transform:translateY(-2px);
+opacity:0.9;
+}
+
+.footer{
+margin-top:35px;
+opacity:0.6;
+font-size:14px;
+}
+</style>
 </head>
+
 <body>
-    <h1>404 - Page Not Found</h1>
-    <p>The page you are looking for does not exist.</p>
-    <p><a href="/">Go back to the home page</a></p>
+
+<div class="container liquid-glass">
+
+<div class="logo"><img src="https://www.munetios.com/apple-touch-icon-new.png"></div>
+
+<h1>404</h1>
+
+<p>This page does not exist on Munetios.</p>
+
+<div class="buttons">
+
+<a class="home" href="https://www.munetios.com">
+Go to Homepage
+</a>
+
+<a class="search" href="https://www.munetios.com/search/search.html">
+Search Munetios
+</a>
+
+</div>
+
+<div class="footer">
+© 2026 Munetios
+</div>
+
+</div>
+
 </body>
 </html>
