@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Munetios Search 2.9</title>
+    <title>Munetios Search 3.0</title>
     <link rel="shortcut icon" href="/favicon-new.ico" type="image/x-icon" />
     <link rel="icon" href="/favicon-new.ico" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -438,6 +438,7 @@
         }
         #searchBar {
              position: fixed;
+             right: 10px;
         bottom: 16px;
         width: calc(100% - 30px) !important;
         max-width: none;
@@ -458,6 +459,44 @@
         align-items: center;
         gap: 8px;
         padding: 8px 16px;
+      }
+      #searchSuggestions .suggestion-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 18px;
+        cursor: pointer;
+        font-size: 0.97em;
+        transition: background 0.15s;
+        border-bottom: 1px solid rgba(162,89,247,0.12);
+      }
+      #searchSuggestions .suggestion-item:last-child {
+        border-bottom: none;
+      }
+      #searchSuggestions .suggestion-item:hover,
+      #searchSuggestions .suggestion-item.active {
+        background: rgba(108, 46, 183, 0.25);
+      }
+      #searchSuggestions .suggestion-icon {
+        font-size: 18px;
+        opacity: 0.7;
+        flex-shrink: 0;
+      }
+      #searchSuggestions .suggestion-label {
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      #searchSuggestions .suggestion-type {
+        font-size: 0.8em;
+        opacity: 0.5;
+        flex-shrink: 0;
+      }
+      @media (max-width: 590px) {
+        #searchSuggestions {
+         display: none !important;
+        }
       }
       .leaflet-control-attribution {
         background: rgba(255, 255, 255, 0.1) !important;
@@ -492,11 +531,12 @@
               </div>
             </div>
           </div>
+          <div style="position:relative;width:calc(100% - 60px);max-width:800px;" id="searchBarWrapper">
           <div
-            class="flex items-center gap-2 rounded-[64px] px-5 py-[14px] max-w-[800px] liquid-glass transition-colors duration-300 border-box"
+            class="flex items-center gap-2 rounded-[64px] px-5 py-[14px] liquid-glass transition-colors duration-300 border-box"
             id="searchBar"
             title="Search"
-            style="width: calc(100% - 60px)"
+            style="width:100%"
           >
             <span class="material-symbols-rounded text-[24px]">search</span>
             <input
@@ -519,6 +559,9 @@
                 >visibility_off</span>
             </div>
           </div>
+          <!-- Search Suggestions Dropdown -->
+          <div id="searchSuggestions" class="liquid-glass" style="display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;border-radius:18px;z-index:10020;overflow:hidden;max-height:320px;overflow-y:auto;"></div>
+          </div><!-- end searchBarWrapper -->
 
           <div
             class="ml-auto flex items-center gap-[5px] p-[8px]"
@@ -2440,13 +2483,42 @@
           return patterns.some((re) => re.test(text));
         }
         
+        // Spammy / low-quality domains blocked in strict mode
+        const spammyDomains = [
+          // Ad-farms & clickbait
+          "adfly.net", "adf.ly", "shorte.st", "sh.st", "linkbucks.com",
+          "bc.vc", "clkme.us", "ow.ly", "tinyurl.com", "soo.gd",
+          // Malware / phishing patterns
+          "onlinefreetv.com", "freepcvpn.com", "downloadnow.com",
+          "getfreestuff.io", "winfreeprize.com", "claimyourprize.net",
+          "bestviagra.com", "cheapmeds.net", "pillsforsale.com",
+          // Content farms
+          "examiner.com", "helium.com", "answerbag.com", "mahalo.com",
+          "chiff.com", "listverse-clone.com", "buzzfeedclone.net",
+          "viralthread.com", "viralstories.net", "totallynotagency.com",
+          // Spam/scam
+          "999-shots.com", "free-gifts.biz", "download-free-songs.net",
+          "work-from-home-jobs.org", "earnmoneynow.biz", "loansfast.net",
+          "paydayloans-now.com", "casinosonline.net", "onlinecasinos99.com",
+          "slotgames.biz", "pokersite.net", "sportsbetting247.com",
+          "xxxadult.com", "hottvseries.net", "hdmoviesfree.biz",
+          // Malware delivery
+          "updateflashplayer.net", "plugin-update.net", "flashupdate.biz",
+          "driverupdate.org", "pcspeedup.com",
+        ];
+
         return results.filter((r) => {
           const fields = [r.title, r.description, r.url].join(" ");
           if (safeSearchLevel === "strict") {
-        if (matchesAny(fields, strictPatterns)) return false;
-        if (matchesAny(fields, moderatePatterns)) return false;
+            if (matchesAny(fields, strictPatterns)) return false;
+            if (matchesAny(fields, moderatePatterns)) return false;
+            // Block spammy domains
+            try {
+              const rDomain = new URL(r.link || "").hostname.toLowerCase().replace(/^www\./, "");
+              if (spammyDomains.some(sd => rDomain === sd || rDomain.endsWith("." + sd))) return false;
+            } catch (e) {}
           } else if (safeSearchLevel === "moderate") {
-        if (matchesAny(fields, moderatePatterns)) return false;
+            if (matchesAny(fields, moderatePatterns)) return false;
           }
           return true;
         });
@@ -3149,6 +3221,161 @@
           return window.location.hash === "#incognito";
         }
 
+        // --- Search Suggestions ---
+        (function () {
+          const input = document.getElementById("searchInput");
+          const dropdown = document.getElementById("searchSuggestions");
+          let activeIndex = -1;
+
+          function getHistory() {
+            try { return JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || "[]"); } catch { return []; }
+          }
+
+          function getLocalTitles() {
+            try {
+              const res = window.results || [];
+              return res.map(r => r.title).filter(Boolean);
+            } catch { return []; }
+          }
+
+          const localSuggestions = [
+            // Apps & software
+            "google alternatives", "photo editing apps", "video editing apps",
+            "free office apps", "password manager apps", "vpn apps",
+            "note taking apps", "to do list apps", "music streaming apps",
+            "podcast apps", "browser alternatives", "email apps",
+            "calendar apps", "cloud storage apps", "screen recorder apps",
+            "drawing apps", "meditation apps", "habit tracker apps", "munetios blog",
+            // Search & web
+            "privacy search engines", "munetios search features",
+            "how to search better", "search tips", "boolean search",
+            // Trending tech
+            "ai image generators", "ai writing tools", "ai coding assistants",
+            "best programming languages 2026", "open source alternatives",
+            "linux distros for beginners", "raspberry pi projects",
+            "home server setup", "self hosted apps", "smart home devices",
+            // Lifestyle
+            "healthy meal prep ideas", "budget travel tips",
+            "language learning apps", "online courses free",
+            "work from home productivity", "minimalist lifestyle tips",
+            // Entertainment
+            "best movies 2026", "top tv shows 2026", "indie games 2026",
+            "free streaming sites", "retro games online", "board games for adults",
+            // Science & learning
+            "space exploration news", "climate change solutions",
+            "quantum computing explained", "how does the internet work",
+            "history of the web",
+            // other topics
+            "police", "airplane", "99 Restaurants", "96", "67", "911", "emergency services", "natural disasters", "weather storms"
+          ];
+
+          function buildSuggestions(val) {
+            const v = val.trim().toLowerCase();
+            if (!v) {
+              // Show recent history (up to 6) + fill remaining with local suggestions
+              const hist = getHistory().slice(0, 6).map(q => ({ label: q, type: "history" }));
+              const histSet = new Set(hist.map(h => h.label.toLowerCase()));
+              const locals = localSuggestions
+                .filter(s => !histSet.has(s.toLowerCase()))
+                .slice(0, Math.max(2, 8 - hist.length))
+                .map(s => ({ label: s, type: "suggestion" }));
+              return [...hist, ...locals];
+            }
+            const seen = new Set();
+            const results = [];
+            // History matches first
+            getHistory().forEach(q => {
+              if (q.toLowerCase().includes(v) && !seen.has(q.toLowerCase())) {
+                seen.add(q.toLowerCase());
+                results.push({ label: q, type: "history" });
+              }
+            });
+            // Local suggestion matches
+            localSuggestions.forEach(s => {
+              if (s.toLowerCase().includes(v) && !seen.has(s.toLowerCase())) {
+                seen.add(s.toLowerCase());
+                results.push({ label: s, type: "suggestion" });
+              }
+            });
+            // Local result titles
+            getLocalTitles().forEach(t => {
+              const tl = t.toLowerCase();
+              if (tl.includes(v) && !seen.has(tl)) {
+                seen.add(tl);
+                results.push({ label: t, type: "result" });
+              }
+            });
+            return results.slice(0, 10);
+          }
+
+          function renderSuggestions(items) {
+            activeIndex = -1;
+            if (!items.length) { dropdown.style.display = "none"; return; }
+            dropdown.innerHTML = items.map((item, i) => `
+              <div class="suggestion-item" data-index="${i}" data-label="${item.label.replace(/"/g, '&quot;')}">
+                <span class="material-symbols-rounded suggestion-icon">${item.type === "history" ? "history" : item.type === "suggestion" ? "tips_and_updates" : "search"}</span>
+                <span class="suggestion-label">${item.label}</span>
+                <span class="suggestion-type">${item.type === "history" ? "Recent" : item.type === "suggestion" ? "Suggested" : "Result"}</span>
+              </div>
+            `).join("");
+            dropdown.style.display = "block";
+            dropdown.querySelectorAll(".suggestion-item").forEach(el => {
+              el.addEventListener("mousedown", function (e) {
+                e.preventDefault();
+                input.value = this.dataset.label;
+                dropdown.style.display = "none";
+                if (typeof performSearch === "function") performSearch();
+              });
+            });
+          }
+
+          function setActive(idx) {
+            const items = dropdown.querySelectorAll(".suggestion-item");
+            items.forEach(el => el.classList.remove("active"));
+            if (idx >= 0 && idx < items.length) {
+              items[idx].classList.add("active");
+              activeIndex = idx;
+            } else {
+              activeIndex = -1;
+            }
+          }
+
+          input.addEventListener("input", function () {
+            if (isIncognitoMode()) { dropdown.style.display = "none"; return; }
+            renderSuggestions(buildSuggestions(this.value));
+          });
+
+          input.addEventListener("focus", function () {
+            if (isIncognitoMode()) return;
+            renderSuggestions(buildSuggestions(this.value));
+          });
+
+          input.addEventListener("keydown", function (e) {
+            const items = dropdown.querySelectorAll(".suggestion-item");
+            if (!items.length || dropdown.style.display === "none") return;
+            if (e.key === "ArrowDown") {
+              e.preventDefault();
+              setActive(Math.min(activeIndex + 1, items.length - 1));
+              if (activeIndex >= 0) input.value = items[activeIndex].dataset.label;
+            } else if (e.key === "ArrowUp") {
+              e.preventDefault();
+              setActive(Math.max(activeIndex - 1, -1));
+              if (activeIndex >= 0) input.value = items[activeIndex].dataset.label;
+            } else if (e.key === "Escape") {
+              dropdown.style.display = "none";
+            } else if (e.key === "Enter") {
+              dropdown.style.display = "none";
+            }
+          });
+
+          document.addEventListener("mousedown", function (e) {
+            if (!dropdown.contains(e.target) && e.target !== input) {
+              dropdown.style.display = "none";
+            }
+          });
+        })();
+        // End Search Suggestions
+
         // Save query to history
         function saveSearchHistory(query) {
           if (!query || isIncognitoMode()) return;
@@ -3629,7 +3856,7 @@
           msg.type === "result" ? "pointer" : "default";
             div.textContent = msg.text;
             if (msg.type === "result" && msg.link) {
-          div.onclick = () => window.open(msg.link, "_blank");
+          div.onclick = () => { window.location.href = msg.link; };
           div.style.textDecoration = "underline";
             }
             list.appendChild(div);
@@ -3786,7 +4013,7 @@
           if (results[idx]) {
             let link = results[idx].href;
             speak("Opening result " + (idx + 1));
-            window.open(link, "_blank");
+            window.location.href = link;
             voiceHistory.push({
           text: "Opened result " + (idx + 1),
           type: "result",
@@ -4701,7 +4928,7 @@
               /create\s+a\s+spreadsheet/i,
             ],
             answer:
-              "Try <a href='https://docs.google.com/spreadsheets/' target='_blank' rel='noopener'>Google Sheets</a>, <a href='https://excel.office.com/' target='_blank' rel='noopener'>Excel Online</a>, or <a href='https://docs.munetios.com/' target='_blank' rel='noopener'>Munetios Office</a>.",
+              "Try <a href='https://docs.google.com/spreadsheets/' target='_self' rel='noopener'>Google Sheets</a>, <a href='https://excel.office.com/' target='_blank' rel='noopener'>Excel Online</a>, or <a href='https://docs.munetios.com/' target='_blank' rel='noopener'>Munetios Office</a>.",
           },
           {
             keywords: [
@@ -4709,7 +4936,7 @@
               /create\s+a\s+calendar/i,
             ],
             answer:
-              "Use <a href='https://calendar.munetios.com/' target='_blank' rel='noopener'>Munetios Calendar</a>, <a href='https://calendar.google.com/' target='_blank' rel='noopener'>Google Calendar</a>, or <a href='https://outlook.live.com/calendar/' target='_blank' rel='noopener'>Outlook Calendar</a>.",
+              "Use <a href='https://calendar.munetios.com/' target='_self' rel='noopener'>Munetios Calendar</a>, <a href='https://calendar.google.com/' target='_blank' rel='noopener'>Google Calendar</a>, or <a href='https://outlook.live.com/calendar/' target='_blank' rel='noopener'>Outlook Calendar</a>.",
           },
           {
             keywords: [
@@ -4717,12 +4944,12 @@
               /create\s+a\s+to[- ]?do\s+list/i,
             ],
             answer:
-              "Try <a href='https://tasks.munetios.com/' target='_blank' rel='noopener'>Munetios Tasks</a>, <a href='https://todo.microsoft.com/' target='_blank' rel='noopener'>Microsoft To Do</a>, or <a href='https://keep.google.com/' target='_blank' rel='noopener'>Google Keep</a>.",
+              "Try <a href='https://tasks.munetios.com/' target='_self' rel='noopener'>Munetios Tasks</a>, <a href='https://todo.microsoft.com/' target='_blank' rel='noopener'>Microsoft To Do</a>, or <a href='https://keep.google.com/' target='_blank' rel='noopener'>Google Keep</a>.",
           },
           {
             keywords: [/how\s+to\s+make\s+a\s+note/i, /create\s+a\s+note/i],
             answer:
-              "Use <a href='https://notebook.munetios.com/' target='_blank' rel='noopener'>Munetios Notebook</a>, <a href='https://keep.google.com/' target='_blank' rel='noopener'>Google Keep</a>, or <a href='https://www.notion.so/' target='_blank' rel='noopener'>Notion</a>.",
+              "Use <a href='https://notebook.munetios.com/' target='_self' rel='noopener'>Munetios Notebook</a>, <a href='https://keep.google.com/' target='_blank' rel='noopener'>Google Keep</a>, or <a href='https://www.notion.so/' target='_blank' rel='noopener'>Notion</a>.",
           },
           {
             keywords: [
@@ -6339,10 +6566,7 @@
                 "",
               )}\n\nFeedback:\n${feedback}`,
             );
-            window.open(
-              `https://mail.google.com/mail/?view=cm&fs=1&to=minecraftgamer97529@gmail.com&su=${subject}&body=${body}`,
-              "_blank",
-            );
+            window.location.href = `https://mail.google.com/mail/?view=cm&fs=1&to=minecraftgamer97529@gmail.com&su=${subject}&body=${body}`;
             modal.remove();
             showToast("Feedback window opened in Gmail");
           };
@@ -6484,11 +6708,11 @@
                 }" alt="favicon">
                 <a class="result-link" href="${
                   bm.link
-                }" rel="noopener" target="_blank">${bm.link}</a>
+                }" rel="noopener" target="_self">${bm.link}</a>
             </div>
             <a class="result-title" href="${
               bm.link
-            }" rel="noopener" target="_blank" style="font-size:1.15em;font-weight:700;display:inline-block;text-decoration:none;color:inherit;margin-bottom:8px;">${
+            }" rel="noopener" target="_self" style="font-size:1.15em;font-weight:700;display:inline-block;text-decoration:none;color:inherit;margin-bottom:8px;">${
               bm.title
             }</a>
             <div class="result-description">${bm.description}</div>
@@ -6601,7 +6825,7 @@
             <div class="details-buttons" style="padding:8px 16px;">
             <a href="${
               found.link
-            }" target="_blank" rel="noopener" class="btn liquid-glass" style="background:#6c2eb7;color:#fff;">Visit</a>
+            }" target="_self" rel="noopener" class="btn liquid-glass" style="background:#6c2eb7;color:#fff;">Visit</a>
             <button class="btn liquid-glass not-interested-btn" style="background:#a259f7;color:#fff;">Not interested</button>
             <button class="btn liquid-glass bookmark-btn" style="background:#f7b500;color:#fff;">Bookmark</button>
             <button class="btn liquid-glass report-btn" style="background:#3a1c71;color:#fff;">Report</button>
@@ -7163,6 +7387,46 @@
         resultsContainer.innerHTML = "";
       }
 
+      // --- HTTP Link Warning Modal ---
+      (function () {
+        function showHttpWarning(url, continueCallback) {
+          const existing = document.getElementById("httpWarningModal");
+          if (existing) existing.remove();
+          const modal = document.createElement("div");
+          modal.id = "httpWarningModal";
+          modal.style.cssText = "position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:99999;";
+          modal.innerHTML = `
+            <div class="liquid-glass" style="border-radius:18px;padding:28px 32px;max-width:440px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,0.5);">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+                <span class="material-symbols-rounded" style="font-size:28px;color:#f7b500;">warning</span>
+                <span style="font-size:1.15em;font-weight:700;">Insecure Connection</span>
+              </div>
+              <p style="color:#ddd;font-size:0.97em;margin:0 0 8px;">This link uses <strong>HTTP</strong>, not HTTPS. Your connection may not be private and data could be intercepted.</p>
+              <p style="color:#aaa;font-size:0.87em;margin:0 0 20px;word-break:break-all;">${url}</p>
+              <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                <button id="httpWarnContinue" class="btn liquid-glass" style="background:#6c2eb7;color:#fff;">Continue anyway</button>
+                <button id="httpWarnCancel" class="btn liquid-glass" style="background:#3a1c71;color:#fff;">Go back</button>
+              </div>
+            </div>
+          `;
+          document.body.appendChild(modal);
+          modal.querySelector("#httpWarnContinue").onclick = function () { modal.remove(); continueCallback(); };
+          modal.querySelector("#httpWarnCancel").onclick = function () { modal.remove(); };
+          modal.addEventListener("mousedown", function (ev) { if (ev.target === modal) modal.remove(); });
+        }
+
+        document.addEventListener("click", function (e) {
+          const a = e.target.closest("a[href]");
+          if (!a) return;
+          const href = a.getAttribute("href") || "";
+          if (href.startsWith("http://")) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            showHttpWarning(href, function () { window.location.href = href; });
+          }
+        }, true);
+      })();
+
       function renderResults(results) {
         clearResults();
         if (!results.length) {
@@ -7366,13 +7630,20 @@
             
             // Extra boost for main domain homepage (google.com vs google.com/about)
             if (isMainDomain) {
-              score += 100;
+              score += 190;
             } else {
               // Still boost subpages of the main domain
-              score += 50;
+              score += 100;
             }
           }
-          
+          else if (domain.includes('https://www.munetios.com/')) {
+            score += 700;
+            if (isMainDomain) {
+              score += 190;
+            } else {
+              score += 100;
+            }
+          }
           // Domain contains query as part: high boost (e.g., "munetios" matches munetios.com)
           else if (domain.includes(queryLower)) {
             score += 150;
@@ -7467,9 +7738,35 @@
         
         // Title starts with query (good relevance)
         if (title.startsWith(queryLower)) {
-          score += 20;
+          score += 100;
         }
-        
+
+        // --- Brand Authority Tiers ---
+        // Applied on every result regardless of query to surface trusted brands higher.
+        const brandTiers = [
+          // Tier 1 – Munetios (highest)
+          { patterns: ["munetios.com"], boost: 500 },
+          // Tier 2 – Google (very high)
+          { patterns: ["google.com", "google.co.", "googleapis.com", "googleblog.com", "youtube.com", "youtu.be"], boost: 400 },
+          // Tier 3 – Microsoft (medium-high)
+          { patterns: ["microsoft.com", "bing.com", "msn.com", "office.com", "xbox.com", "github.com", "linkedin.com", "skype.com"], boost: 55 },
+          // Tier 4 – Apple (medium)
+          { patterns: ["apple.com", "icloud.com"], boost: 50 },
+          // Tier 4 – Meta (medium)
+          { patterns: ["meta.com", "facebook.com", "instagram.com", "whatsapp.com", "threads.net", "oculus.com"], boost: 50 },
+          // Tier 5 – Amazon (medium)
+          { patterns: ["amazon.com", "aws.amazon.com", "aws.com", "twitch.tv"], boost: 45 },
+          // Tier 6 – Other major trusted sources (lower-medium)
+          { patterns: ["wikipedia.org", "mozilla.org", "w3.org", "mdn.io", "developer.mozilla.org"], boost: 30 },
+        ];
+
+        for (const tier of brandTiers) {
+          if (tier.patterns.some(p => domain.includes(p))) {
+            score += tier.boost;
+            break; // Only apply the highest matching tier
+          }
+        }
+
         return score;
       }
 
@@ -8018,89 +8315,392 @@ if(query!=="@all"){
           // Static blog data
           const staticBlogs = [
             {
-              title: "Introducing Munetios Photos ",
-              description:
-                "Your photos app that allows to upload photos and take a photo and make albums. The link is https://photos.munetios.com/.",
-              link: "https://blog.munetios.com/#/introducing-munetios-photos",
-              favicon: "",
+              title: "Introducing Munetios SupaNotes",
+              description: "Launch announcement for SupaNotes, a new privacy-focused note-taking app with rich text, code blocks, and images — designed for speed and simplicity.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-supanotes",
+              favicon: "https://www.munetios.com/favicon-new.ico",
             },
             {
-              title: "Introducing Munetios Office",
-              description:
-                "Our office suite that has docs, worksheets and journal. The link is https://docs.munetios.com/.",
-              link: "https://blog.munetios.com/#/introducing-munetios-office",
-              favicon: "",
+              title: "Discontinuing Munetios OmniWrite Preview",
+              description: "OmniWrite Preview is being discontinued due to low usage. The main OmniWrite stable app remains fully available.",
+              link: "https://blog.munetios.com/#/post/discontinuing-munetios-omniwrite-preview",
+              favicon: "https://www.munetios.com/favicon-new.ico",
             },
             {
-              title: "Introducing Munetios Search",
-              description:
-                "Beta search engine. you can search for anything and will show results from other sites and more. Note Some features like video, ai and better search will come in future updates. The link is https://www.munetios.com/.",
-              link: "https://blog.munetios.com/#/introducing-munetios-search",
-              favicon: "",
+              title: "Discontinuing Munetios Classic Search",
+              description: "Classic Search is discontinued. The new Munetios Search is ad-free, open source, and requires no account.",
+              link: "https://blog.munetios.com/#/post/discontinuing-munetios-classic-search",
+              favicon: "https://www.munetios.com/favicon-new.ico",
             },
             {
-              title: "Introdcuing Munetios Blog",
-              description:
-                "Welcome to Munetios Blog! This is our official blog where we will share the latest news, updates, and articles about our products and services. Stay tuned for exciting content coming your way!",
-              link: "https://blog.munetios.com/#/introducing-munetios-blog",
-              favicon: "",
+              title: "Top Best Google Alternative Search Engines in 2026 (Ranked & Compared)",
+              description: "A ranked comparison of privacy-focused Google alternatives in 2026, including DuckDuckGo, Munetios Search, Brave Search, Startpage, and Ecosia.",
+              link: "https://blog.munetios.com/#/post/top-best-google-alternative-search-engines-in-2026-(ranked-&-compared)",
+              favicon: "https://www.munetios.com/favicon-new.ico",
             },
             {
-              title: "Munetios Classic Calendar is winding down",
-              description:
-                "Munetios Classic Calendar is being deprecated. If you visit calendar.munetios.com, you will be redirected to the new calendar. The classic version is being retired due to missing features and limited support. Please switch to the new Munetios Calendar for the latest updates and improvements.",
-              link: "https://blog.munetios.com/#/munetios-classic-calendar-is-winding-down",
-              favicon: "",
+              title: "Introducing Munetios OmniWrite Folders Feature",
+              description: "OmniWrite now supports folders so you can group and organize documents, making it easier to manage writing projects.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-omniwrite-folders-feature:-organize-your-documents-with-ease",
+              favicon: "https://www.munetios.com/favicon-new.ico",
             },
             {
-              title: "We are deprecating Munetios Classic Calendar",
-              description:
-                "We are announcing the deprecation of Munetios Classic Calendar. Please transition to our new calendar app for improved features and support url is https://calendar.munetios.com/new.",
-              link: "https://blog.munetios.com/#/we-are-deprecating-munetios-classic-calendar",
-              favicon: "",
+              title: "Comparing Munetios OmniWrite with Other Document Editors",
+              description: "A feature-by-feature comparison of OmniWrite vs. Google Docs, Microsoft Word, Notion, and Apple Pages, highlighting OmniWrite's encryption and no-account approach.",
+              link: "https://blog.munetios.com/#/post/comparing-munetios-omniwrite-with-other-document-editors:-why-choose-omniwrite?",
+              favicon: "https://www.munetios.com/favicon-new.ico",
             },
             {
-              title: "Introducing Munetios New Calendar",
-              description:
-                "We are excited to introduce a new version of Munetios Calendar. This new calendar has liquid glass design and you can favorite events and you can make holidays. The link is https://calendar.munetios.com/new.",
-              link: "https://blog.munetios.com/#/introducing-munetios-new-calendar",
-              favicon: "",
+              title: "Introducing Munetios Tasks Rewritten Version",
+              description: "Munetios Tasks has been rewritten from scratch with a new liquid glass design and improved performance.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-tasks-rewritten-version",
+              favicon: "https://www.munetios.com/favicon-new.ico",
             },
             {
-              title: "Rebrand Update: From GAMERYT to Munetios",
-              description:
-                "We are excited to announce that GAMERYT has officially rebranded to Munetios. This change reflects our commitment to providing a broader range of services and a fresh new look. All our apps and services will now be under the Munetios brand. Visit our new website at https://munetios.com/.",
-              link: "https://blog.munetios.com/#/rebrand-update-from-gameryt-to-munetios",
-              favicon: "",
+              title: "Introducing Munetios Maps: Your Privacy-Focused Mapping Solution",
+              description: "Munetios Maps launches as a privacy-first mapping app powered by OpenStreetMap, with no location tracking or personal data collection.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-maps:-your-privacy-focused-mapping-solution",
+              favicon: "https://www.munetios.com/favicon-new.ico",
             },
             {
-              title:
-                "Announcing SuperVidPlayer The next gen video platform. Coming in March 2026",
-              description:
-                "Announcing SuperVidPlayer, our next-generation video platform launching January 2026! SuperVidPlayer will feature up to 8K video quality, free downloads for offline, seamless discovery, easy sharing and uploading, and an optional ad toggle (default off) for a user-first experience. Unlike other platforms, SuperVidPlayer puts you in control—no forced ads, just great content. Stay tuned for more updates as we approach launch! Planned domain is supervidplayer.net",
-              link: "https://blog.munetios.com/#/announcing-supervidplayer-the-next-gen-video-platform-coming-in-march-2026",
-              favicon: "",
+              title: "Introducing Munetios Games Hub",
+              description: "Munetios Games Hub is a new gaming platform that collects no personal data, offering a growing library of games while keeping your activity private.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-games-hub:-your-gateway-to-privacy-focused-gaming",
+              favicon: "https://www.munetios.com/favicon-new.ico",
             },
             {
-              title: "Introducing Munetios Weather",
-              description:
-                "Munetios Weather is a free weather app that uses Open-Meteo API like a weather information for your location. The link is https://weather.munetios.com/.",
-              link: "https://blog.munetios.com/#/introducing-munetios-weather",
-              favicon: "",
+              title: "Introducing Munetios OmniWrite: Your Advanced Document Editor",
+              description: "OmniWrite is an open-source, browser-based writing platform with end-to-end encryption, offline support, and no account requirement — now out of beta.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-omniwrite:-your-advanced-document-editor",
+              favicon: "https://www.munetios.com/favicon-new.ico",
             },
             {
-              title: "Munetios is founded",
-              description:
-                "Munetios was starting to code projects and websites the first website was coming in January 2025 was Likes vs dislikes advanced and link was https://sites.google.com/view/likesvsdislikes/ then now deprecated at June 1 2025.",
-              link: "https://blog.munetios.com/#/munetios-is-founded",
-              favicon: "",
+              title: "Introducing Munetios Calendar Rewritten Version",
+              description: "The Munetios Calendar has been rewritten from scratch, featuring a sleek liquid glass design and improved performance.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-calendar-rewritten-version",
+              favicon: "https://www.munetios.com/favicon-new.ico",
             },
             {
-              title: "First munetios app was GAMERYT Calculator",
-              description:
-                "The first munetios app was GAMERYT Calculator it was launched on June 21 2025 it was a calculator for advanced features like ai, coverters and more. The link is https://calculator.gameryt.com now its changed to https://calculator.munetios.com/.",
-              link: "https://blog.munetios.com/#/first-munetios-app-was-gameryt-calculator",
-              favicon: "",
+              title: "Introducing Munetios Search 2.0",
+              description: "Munetios Search 2.0 delivers an improved search algorithm, a new design, and better performance — without tracking users.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-search-2.0",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Discontinuing Ads on Munetios",
+              description: "Munetios is removing all ads from Munetios Search to provide a completely ad-free experience.",
+              link: "https://blog.munetios.com/#/post/discontinuing-ads",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Introducing Munetios Photos",
+              description: "Munetios Photos launches as a private photo management app that never tracks your photos or collects personal data.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-photos:-your-privacy-focused-photo-management-app",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Introducing Munetios Docs Suite",
+              description: "Munetios Docs Suite was a productivity bundle including Docs, Sheets, and Journal — since discontinued and replaced by OmniWrite.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-docs-suite",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Discontinuing Munetios Docs",
+              description: "Munetios Docs is discontinued; users are directed to migrate to OmniWrite for a more advanced, encrypted editing experience.",
+              link: "https://blog.munetios.com/#/post/discontinuing-munetios-docs",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Testing Ads in Munetios Search",
+              description: "Munetios briefly tested local (non-tracking) ads in Search results — ads have since been fully discontinued.",
+              link: "https://blog.munetios.com/#/post/testing-ads-in-munetios-search",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Introducing Munetios Search: Your Privacy-Focused Search Engine",
+              description: "The original launch post for Munetios Search, introducing a privacy-first search engine that does not track searches or store personal data.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-search:-your-privacy-focused-search-engine",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Discontinued Munetios Classic Calendar",
+              description: "Munetios Classic Calendar has been discontinued; users are encouraged to switch to the new Munetios Calendar.",
+              link: "https://blog.munetios.com/#/post/discontinued-munetios-classic-calendar",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Introducing Munetios Notebook",
+              description: "Munetios Notebook is a private note-taking app that stores nothing on external servers, with a user-friendly interface for organizing thoughts securely.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-notebook",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Introducing Munetios APIs",
+              description: "Munetios APIs give developers access to Beautiful CSS, web protection utilities, and more to integrate Munetios features into their own apps.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-apis:-with-beautiful-css-and-more",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Fully Releasing Liquid Glass UI Across All Munetios Apps",
+              description: "After piloting in Munetios Calculator, the Liquid Glass UI design is rolling out to all Munetios apps.",
+              link: "https://blog.munetios.com/#/post/fully-releasing-liquid-glass-ui-across-all-munetios-apps",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Discontinuing Munetios Classic Calendar",
+              description: "Formal discontinuation notice for Munetios Classic Calendar, directing users to the new Calendar app.",
+              link: "https://blog.munetios.com/#/post/discontinuing-munetios-classic-calendar",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Introducing Munetios Calendar Beta",
+              description: "A beta release of the rewritten Munetios Calendar with a new liquid glass design, later fully relaunched.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-calendar-beta",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Testing Out Liquid Glass UI for Munetios Apps",
+              description: "Munetios begins testing the Liquid Glass UI style — liquid glass-like panels with smooth animations — starting with Munetios Calculator.",
+              link: "https://blog.munetios.com/#/post/testing-out-liquid-glass-ui-for-munetios-apps",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Deprecating Munetios Translator",
+              description: "Munetios Translator is deprecated due to privacy concerns and rate limits with the MyMemory Translation API.",
+              link: "https://blog.munetios.com/#/post/deprecating-munetios-translator",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Introducing Munetios Weather: Your Privacy-Focused Weather App",
+              description: "Munetios Weather launches as a private weather app powered by Open-Meteo, offering accurate forecasts without tracking your location.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-weather:-your-privacy-focused-weather-app",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Rebranding from GAMERYT to Munetios",
+              description: "All products and apps previously under the GAMERYT brand are officially rebranded to Munetios.",
+              link: "https://blog.munetios.com/#/post/rebranding-our-name-for-all-products-from-gameryt-to-munetios",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Introducing Munetios Notes: Your Privacy-Focused Note-Taking App",
+              description: "Launch of the original Munetios Notes app — a privacy-focused note-taking tool, later superseded by SupaNotes.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-notes:-your-privacy-focused-note-taking-app",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Introducing Munetios Tasks: Your Privacy-Focused Task Management App",
+              description: "The original launch of Munetios Tasks, a private task management app with no data collection and a clean, intuitive interface.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-tasks:-your-privacy-focused-task-management-app",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "First Munetios Game is Munetios Tetris",
+              description: "Munetios Tetris — the first game under the Munetios brand — launches with classic gameplay, custom blocks, and adjustable settings.",
+              link: "https://blog.munetios.com/#/post/first-munetios-game-is-munetios-tetris",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Introducing Munetios Calendar: Your Privacy-Focused Scheduling App",
+              description: "The original launch of Munetios Calendar, a private scheduling app with no event tracking or personal data collection.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-calendar:-your-privacy-focused-scheduling-app",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Third Munetios App is Munetios Translator",
+              description: "Munetios Translator was the third Munetios app, using the MyMemory API for translation — later discontinued due to privacy issues.",
+              link: "https://blog.munetios.com/#/post/third-munetios-app-is-munetios-translator",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Second Munetios App is Munetios Docs",
+              description: "Munetios Docs was the second app, a beta document editor that laid the foundation for OmniWrite before being discontinued.",
+              link: "https://blog.munetios.com/#/post/second-munetios-app-is-munetios-docs",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "First Munetios App is Munetios Calculator",
+              description: "Munetios Calculator — the very first Munetios app — launches with a liquid glass UI offering basic and scientific calculator functions.",
+              link: "https://blog.munetios.com/#/post/first-munetios-app-is-munetios-calculator",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+            {
+              title: "Munetios is Founded — Our Journey Begins",
+              description: "The founding post of Munetios Technologies, marking the beginning of the Munetios ecosystem on February 9, 2025.",
+              link: "https://blog.munetios.com/#/post/munetios-is-founded---our-journey-begins",
+              favicon: "https://www.munetios.com/favicon-new.ico",
+            },
+
+            // --- TechCrunch — Latest (March 4, 2026) ---
+            {
+              title: "Jensen Huang says Nvidia is pulling back from OpenAI and Anthropic",
+              description: "Nvidia CEO Jensen Huang says the company is pulling back from equity investments in OpenAI and Anthropic, though his full reasoning raises more questions than answers.",
+              link: "https://techcrunch.com/2026/03/04/jensen-huang-says-nvidia-is-pulling-back-from-openai-and-anthropic-but-his-explanation-raises-more-questions-than-it-answers/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "Anthropic CEO calls OpenAI's messaging around military deal 'straight up lies'",
+              description: "Dario Amodei publicly disputes OpenAI's framing of its Pentagon AI services deal, calling their statements fabricated.",
+              link: "https://techcrunch.com/2026/03/04/anthropic-ceo-dario-amodei-calls-openais-messaging-around-military-deal-straight-up-lies-report-says/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "Google settles with Epic Games, drops Play Store commissions to 20%",
+              description: "Google and Epic Games have settled their antitrust lawsuit, with Google agreeing to cut its Play Store commission rate from 30% to 20%.",
+              link: "https://techcrunch.com/2026/03/04/google-settles-with-epic-games-drops-its-play-store-commissions-to-20/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "MacBook Neo, iPhone 17e, and everything else Apple announced this week",
+              description: "A full roundup of Apple's March 2026 event announcements, including the new budget MacBook Neo at $599 and the iPhone 17e.",
+              link: "https://techcrunch.com/2026/03/04/everything-apple-announced-macbook-neo-iphone-17e-ipad-air/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "US and EU police shut down LeakBase, a hacking forum with hundreds of millions of stolen credentials",
+              description: "Law enforcement across the US and EU seized LeakBase, a hacking forum accused of distributing stolen passwords and offensive hacking tools.",
+              link: "https://techcrunch.com/2026/03/04/u-s-and-eu-police-shut-down-leakbase-a-site-accused-of-sharing-stolen-passwords-and-hacking-tools/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "Google Search rolls out Gemini's Canvas in AI Mode to all US users",
+              description: "Google is expanding its Canvas feature inside AI Mode in Search to all users in the United States, enabling an AI-powered collaborative workspace.",
+              link: "https://techcrunch.com/2026/03/04/https-techcrunch-com-2026-03-04-google-search-rolls-out-geminis-canvas-in-ai-mode-to-all-us-users/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "The US military is still using Claude — but defense-tech clients are fleeing",
+              description: "Despite the Pentagon designating Anthropic a 'supply chain risk,' the US military continues using Claude, even as defense contractors preemptively drop it.",
+              link: "https://techcrunch.com/2026/03/04/the-us-military-is-still-using-claude-but-defense-tech-clients-are-fleeing/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "Father sues Google, claiming Gemini chatbot drove son into fatal delusion",
+              description: "A father has filed a wrongful death lawsuit against Google, alleging that its Gemini AI chatbot reinforced dangerous delusions that contributed to his son's death.",
+              link: "https://techcrunch.com/2026/03/04/father-sues-google-claiming-gemini-chatbot-drove-son-into-fatal-delusion/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "Apple Music to add Transparency Tags to distinguish AI-generated music",
+              description: "Apple Music is reportedly planning to label AI-generated tracks with transparency tags so listeners can tell when a song was made with artificial intelligence.",
+              link: "https://techcrunch.com/2026/03/04/apple-music-to-add-transparency-tags-to-distinguish-ai-music-says-report/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "TikTok won't add end-to-end encryption to direct messages",
+              description: "A new report reveals TikTok has decided against implementing end-to-end encryption for its direct messages, raising fresh privacy concerns.",
+              link: "https://techcrunch.com/2026/03/04/tiktok-wont-add-end-to-end-encryption-to-direct-messages-report-says/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "ChatGPT's new GPT-5.3 Instant model will stop telling you to calm down",
+              description: "OpenAI's latest GPT-5.3 Instant model is tuned to be less preachy and patronising, dropping the habit of telling users to 'calm down' during emotional conversations.",
+              link: "https://techcrunch.com/2026/03/03/chatgpts-new-gpt-5-3-instant-model-will-stop-telling-you-to-calm-down/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "ChatGPT uninstalls surged by 295% after DoD deal",
+              description: "App uninstall data shows ChatGPT downloads dropped sharply and uninstalls spiked 295% after OpenAI revealed a deal to supply AI to the US Department of Defense.",
+              link: "https://techcrunch.com/2026/03/02/chatgpt-uninstalls-surged-by-295-after-dod-deal/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "A suite of government hacking tools targeting iPhones is now being used by cybercriminals",
+              description: "Powerful iPhone exploit tools originally developed for government surveillance have leaked and are now being actively deployed by criminal hacking groups.",
+              link: "https://techcrunch.com/2026/03/03/a-suite-of-government-hacking-tools-targeting-iphones-is-now-being-used-by-cybercriminals/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "A new app alerts you if someone nearby is wearing smart glasses",
+              description: "A new privacy-focused app detects Bluetooth signals from nearby smart glasses — including Meta and Snap — and alerts you if someone could be recording.",
+              link: "https://techcrunch.com/2026/03/02/nearby-glasses-new-app-alerts-you-wearing-smart-glasses-surveillance-meta-snap-bluetooth/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+
+            // --- The Verge — Latest (March 4, 2026) ---
+            {
+              title: "Our first hands-on look at Apple's MacBook Neo",
+              description: "Apple's new $599 MacBook Neo uses an iPhone chip and comes in bold colors — a fascinating set of tradeoffs for budget laptop buyers.",
+              link: "https://www.theverge.com/tech/888712/macbook-neo-laptop-iphone-chip-apple-event-photos-price-features",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "MacBook Neo versus an old MacBook Air: good luck",
+              description: "The Verge compares Apple's new budget MacBook Neo to older MacBook Air models to see if upgrading actually makes sense.",
+              link: "https://www.theverge.com/gadgets/889128/macbook-neo-vs-older-macbook-air",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "Google isn't waiting for a settlement — the 30 percent Android app store fee is dead",
+              description: "Even before finalising its Epic settlement, Google has announced it's cutting Android app store commissions to 20%, ending the era of the 30% app tax.",
+              link: "https://www.theverge.com/policy/889252/google-app-store-fee-reduction-20-percent-epic-v-google",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "iPhone 17e hands-on: nothing more, nothing less",
+              description: "Apple's new budget iPhone 17e is exactly what it promises — a clean, capable phone at $599 with no surprises and no extras.",
+              link: "https://www.theverge.com/tech/888941/apple-iphone-17e-hands-on",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "Inside the secret meeting that led to the AI political resistance",
+              description: "A group of AI researchers and ethicists secretly convened to draft a pro-human AI declaration challenging the rapid militarization and commercialization of AI.",
+              link: "https://www.theverge.com/ai-artificial-intelligence/888841/pro-human-ai-declaration-fli",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "Google's AI-powered Canvas workspace is now available to more users in Search",
+              description: "Google is rolling out its Canvas feature in AI Mode to more Search users, providing an AI-assisted research and document workspace inside Google Search.",
+              link: "https://www.theverge.com/tech/889339/google-canvas-ai-mode-search-us-launch",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "Google faces wrongful death lawsuit after Gemini allegedly coached man to die by suicide",
+              description: "A father is suing Google in a wrongful death case, alleging Gemini's AI chatbot played a role in pushing his son toward suicide through harmful interactions.",
+              link: "https://www.theverge.com/tech/889152/google-gemini-ai-wrongful-death-lawsuit",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "FBI and Europol shut down LeakBase hacking forum",
+              description: "The FBI and Europol have seized LeakBase, a hacking forum with over 142,000 members and hundreds of millions of stolen account credentials.",
+              link: "https://www.theverge.com/tech/889474/fbi-and-europol-shut-down-leakbase-hacking-forum",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "Seven tech giants signed Trump's pledge to keep electricity costs from spiking around data centers",
+              description: "Google, Meta, Microsoft and four other tech companies signed a White House pledge committing to manage electricity demand from their AI data centers.",
+              link: "https://www.theverge.com/news/889578/data-center-power-pledge-white-house-google-meta-microsoft",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "NotebookLM can now summarize research in cinematic video overviews",
+              description: "Google's NotebookLM has added a new feature that generates short, cinematic-style video summaries of research documents and sources.",
+              link: "https://www.theverge.com/ai-artificial-intelligence/889475/notebooklm-can-now-summarize-research-in-cinematic-video-overviews",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "Meta won't let morality get in the way of a product launch",
+              description: "The Verge explores how Meta's smart glasses ended up being used for ICE tracking and doxxing — and why Meta isn't slowing down its rollout.",
+              link: "https://www.theverge.com/policy/886348/meta-glasses-ice-doxxing-privacy",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "Why is SpaceX going public?",
+              description: "After years of resistance, Elon Musk is now opening the door to a SpaceX IPO — but the risks around AI investment and long-term mission clarity remain.",
+              link: "https://www.theverge.com/tech/887899/spacex-ipo-risks-ai",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "Downdetector and Speedtest sold to Accenture for $1.2 billion",
+              description: "Accenture has acquired Downdetector and Speedtest (Ookla) for $1.2 billion, bringing two of the web's most-used performance monitoring tools under one roof.",
+              link: "https://www.theverge.com/tech/889234/downdetector-ookla-speedtest-sold-accenture",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "Raycast's Glaze is an all-in-one vibe coding app platform",
+              description: "Raycast has launched Glaze, an integrated AI coding environment designed for vibe coding — letting developers describe features in natural language and ship apps fast.",
+              link: "https://www.theverge.com/tech/888866/raycast-glaze-vibe-code-app-store",
+              favicon: "https://www.theverge.com/favicon.ico",
             },
           ];
 
@@ -9421,6 +10021,392 @@ document
                 "https://img.youtube.com/vi/qbo0PnkyXBo/hqdefault.jpg",
               source: "YouTube",
               },
+              // --- Munetios Channel: Additional Videos ---
+              {
+              title: "SupaNotes — Modern Notes Without Google Keep",
+              url: "https://www.youtube.com/watch?v=KFNwcoHSWYo",
+              link: "https://www.youtube.com/watch?v=KFNwcoHSWYo",
+              description: "Introduces SupaNotes, a privacy-respecting alternative to Google Keep.",
+              thumbnail: "https://img.youtube.com/vi/KFNwcoHSWYo/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "I Left Google Search — Switching to a Privacy Search Engine (Munetios Review)",
+              url: "https://www.youtube.com/watch?v=caEJC-M29KM",
+              link: "https://www.youtube.com/watch?v=caEJC-M29KM",
+              description: "A personal review of switching from Google Search to Munetios Search.",
+              thumbnail: "https://img.youtube.com/vi/caEJC-M29KM/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Munetios Secure Notes (Labs)",
+              url: "https://www.youtube.com/watch?v=QSsObDMQix8",
+              link: "https://www.youtube.com/watch?v=QSsObDMQix8",
+              description: "Showcases the Secure Notes feature from Munetios Labs — encrypted, private note-taking.",
+              thumbnail: "https://img.youtube.com/vi/QSsObDMQix8/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "10 Google Alternatives You Should Switch To",
+              url: "https://www.youtube.com/watch?v=XF0DzONj8zg",
+              link: "https://www.youtube.com/watch?v=XF0DzONj8zg",
+              description: "Lists 10 privacy-focused alternatives to Google products: search, maps, docs, and more.",
+              thumbnail: "https://img.youtube.com/vi/XF0DzONj8zg/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Change These 6 Chrome Settings Right Now",
+              url: "https://www.youtube.com/watch?v=bxf8wAXXwR0",
+              link: "https://www.youtube.com/watch?v=bxf8wAXXwR0",
+              description: "Quick, actionable browser hardening tips — 6 Chrome settings that improve privacy and security.",
+              thumbnail: "https://img.youtube.com/vi/bxf8wAXXwR0/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "I Built a Writing App Better Than Google Docs",
+              url: "https://www.youtube.com/watch?v=bCPTw_MEzvs",
+              link: "https://www.youtube.com/watch?v=bCPTw_MEzvs",
+              description: "Introduces a privacy-first writing app built by Munetios and what sets it apart from Google Docs.",
+              thumbnail: "https://img.youtube.com/vi/bCPTw_MEzvs/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "ASMR Coding – Responsive Comment System with HTML, JavaScript & Beautiful CSS 2",
+              url: "https://www.youtube.com/watch?v=5EZMHNH29bA",
+              link: "https://www.youtube.com/watch?v=5EZMHNH29bA",
+              description: "A silent coding video building a responsive comment system with HTML, JS, and CSS — part 2.",
+              thumbnail: "https://img.youtube.com/vi/5EZMHNH29bA/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "How To Move Your Photos to a Different Browser (Munetios Photos)",
+              url: "https://www.youtube.com/watch?v=Lzi1nQsDG3g",
+              link: "https://www.youtube.com/watch?v=Lzi1nQsDG3g",
+              description: "Tutorial on exporting and migrating your photos within Munetios Photos across browsers.",
+              thumbnail: "https://img.youtube.com/vi/Lzi1nQsDG3g/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Introducing Munetios Notebook!",
+              url: "https://www.youtube.com/watch?v=OL5yqDxhusk",
+              link: "https://www.youtube.com/watch?v=OL5yqDxhusk",
+              description: "Announces the launch of Munetios Notebook, a private note-taking app, with a feature demo.",
+              thumbnail: "https://img.youtube.com/vi/OL5yqDxhusk/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Introducing Munetios APIs!",
+              url: "https://www.youtube.com/watch?v=Qrmr4Ta4OCo",
+              link: "https://www.youtube.com/watch?v=Qrmr4Ta4OCo",
+              description: "Introduces the Munetios developer APIs and what they offer for building on the platform.",
+              thumbnail: "https://img.youtube.com/vi/Qrmr4Ta4OCo/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "GAMERYT Calculator has Programmer and Graphic modes",
+              url: "https://www.youtube.com/watch?v=xWQp6Nmnla4",
+              link: "https://www.youtube.com/watch?v=xWQp6Nmnla4",
+              description: "Shows off new Programmer and Graphic modes added to the GAMERYT (now Munetios) Calculator app.",
+              thumbnail: "https://img.youtube.com/vi/xWQp6Nmnla4/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "GAMERYT Ecosystem Overview",
+              url: "https://www.youtube.com/watch?v=dG1w7m_smig",
+              link: "https://www.youtube.com/watch?v=dG1w7m_smig",
+              description: "A full overview of the GAMERYT (pre-rebrand Munetios) ecosystem of apps and how they connect.",
+              thumbnail: "https://img.youtube.com/vi/dG1w7m_smig/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Munetios Tasks Update 1.10",
+              url: "https://www.youtube.com/watch?v=wrsmnO7IefM",
+              link: "https://www.youtube.com/watch?v=wrsmnO7IefM",
+              description: "Covers what's new in Munetios Tasks version 1.10 — new features and improvements.",
+              thumbnail: "https://img.youtube.com/vi/wrsmnO7IefM/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "GAMERYT Portfolio Overview",
+              url: "https://www.youtube.com/watch?v=fPqbNne5Ryc",
+              link: "https://www.youtube.com/watch?v=fPqbNne5Ryc",
+              description: "A walkthrough of the GAMERYT/Munetios portfolio site showcasing its design and projects.",
+              thumbnail: "https://img.youtube.com/vi/fPqbNne5Ryc/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "GAMERYT Calendar/Tasks Has Offline Mode",
+              url: "https://www.youtube.com/watch?v=vVpn9vRU6ec",
+              link: "https://www.youtube.com/watch?v=vVpn9vRU6ec",
+              description: "Announces offline mode support for GAMERYT Calendar and Tasks with a live demo.",
+              thumbnail: "https://img.youtube.com/vi/vVpn9vRU6ec/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "You Can Now Embed a Weather Widget in Munetios Weather",
+              url: "https://www.youtube.com/watch?v=5EigyWC4c4M",
+              link: "https://www.youtube.com/watch?v=5EigyWC4c4M",
+              description: "Shows the new embeddable weather widget in Munetios Weather and how to add it to your site.",
+              thumbnail: "https://img.youtube.com/vi/5EigyWC4c4M/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "GAMERYT Calculator – Overview",
+              url: "https://www.youtube.com/watch?v=Tx7_Ghq9DXQ",
+              link: "https://www.youtube.com/watch?v=Tx7_Ghq9DXQ",
+              description: "An overview of the GAMERYT Calculator app covering its different modes and capabilities.",
+              thumbnail: "https://img.youtube.com/vi/Tx7_Ghq9DXQ/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "ASMR Coding – Responsive Comment System with HTML, JavaScript & Tailwind CSS",
+              url: "https://www.youtube.com/watch?v=A7c9gjICMXI",
+              link: "https://www.youtube.com/watch?v=A7c9gjICMXI",
+              description: "A silent coding session building a responsive comment system using Tailwind CSS — part 1.",
+              thumbnail: "https://img.youtube.com/vi/A7c9gjICMXI/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Introducing GAMERYT Weather!",
+              url: "https://www.youtube.com/watch?v=kglCtof1heo",
+              link: "https://www.youtube.com/watch?v=kglCtof1heo",
+              description: "Launches the GAMERYT Weather app — a privacy-first weather tool with UI demo.",
+              thumbnail: "https://img.youtube.com/vi/kglCtof1heo/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "You Can Backup Your Events, Tasks and More in GAMERYT Calendar",
+              url: "https://www.youtube.com/watch?v=IKsq3qBoW2s",
+              link: "https://www.youtube.com/watch?v=IKsq3qBoW2s",
+              description: "Shows how to back up calendar events, tasks, and data in GAMERYT Calendar.",
+              thumbnail: "https://img.youtube.com/vi/IKsq3qBoW2s/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "GAMERYT Calendar – Fast, Private and Secured",
+              url: "https://www.youtube.com/watch?v=_VRL870Y_kI",
+              link: "https://www.youtube.com/watch?v=_VRL870Y_kI",
+              description: "Short promo for GAMERYT Calendar highlighting its speed, privacy, and security.",
+              thumbnail: "https://img.youtube.com/vi/_VRL870Y_kI/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Introducing GAMERYT Notes!",
+              url: "https://www.youtube.com/watch?v=hgw1h1f5JYs",
+              link: "https://www.youtube.com/watch?v=hgw1h1f5JYs",
+              description: "Launches GAMERYT Notes, a private note-taking app, with a walkthrough of the interface.",
+              thumbnail: "https://img.youtube.com/vi/hgw1h1f5JYs/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Introducing GAMERYT Tasks!",
+              url: "https://www.youtube.com/watch?v=X141Z76C3W4",
+              link: "https://www.youtube.com/watch?v=X141Z76C3W4",
+              description: "Announces GAMERYT Tasks, a to-do and task management app, with a live demo.",
+              thumbnail: "https://img.youtube.com/vi/X141Z76C3W4/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Introducing GAMERYT Tetris!",
+              url: "https://www.youtube.com/watch?v=MypCYzwww1s",
+              link: "https://www.youtube.com/watch?v=MypCYzwww1s",
+              description: "Launches GAMERYT Tetris, a browser-based Tetris game — shows gameplay and how it was built.",
+              thumbnail: "https://img.youtube.com/vi/MypCYzwww1s/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Introducing GAMERYT Calendar!",
+              url: "https://www.youtube.com/watch?v=8bRNKe9O-Lw",
+              link: "https://www.youtube.com/watch?v=8bRNKe9O-Lw",
+              description: "The original launch video for GAMERYT Calendar covering its initial feature set and design.",
+              thumbnail: "https://img.youtube.com/vi/8bRNKe9O-Lw/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Introducing GAMERYT Translator!",
+              url: "https://www.youtube.com/watch?v=86eE_n6psbs",
+              link: "https://www.youtube.com/watch?v=86eE_n6psbs",
+              description: "Announces the GAMERYT Translator app — a privacy-friendly translation tool demo.",
+              thumbnail: "https://img.youtube.com/vi/86eE_n6psbs/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Introducing GAMERYT Docs!",
+              url: "https://www.youtube.com/watch?v=fMu_AfoGRzM",
+              link: "https://www.youtube.com/watch?v=fMu_AfoGRzM",
+              description: "Launches GAMERYT Docs, a private document editor with a feature walkthrough.",
+              thumbnail: "https://img.youtube.com/vi/fMu_AfoGRzM/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Responsive Design vs Unresponsive – Web Dev Tips!",
+              url: "https://www.youtube.com/watch?v=N3Bw2TrHlt0",
+              link: "https://www.youtube.com/watch?v=N3Bw2TrHlt0",
+              description: "Compares responsive and non-responsive web design with practical tips for making sites mobile-friendly.",
+              thumbnail: "https://img.youtube.com/vi/N3Bw2TrHlt0/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Likes vs Dislikes Advanced Update: Fullscreen, Loop, & AI Chat Features!",
+              url: "https://www.youtube.com/watch?v=3Uh_NYs9sxU",
+              link: "https://www.youtube.com/watch?v=3Uh_NYs9sxU",
+              description: "Shows new advanced features added to a Likes vs Dislikes app including fullscreen, loop, and AI chat.",
+              thumbnail: "https://img.youtube.com/vi/3Uh_NYs9sxU/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Build a Login Form with HTML & CSS (No Talking - Step by Step Tutorial)",
+              url: "https://www.youtube.com/watch?v=cX1lQi2bHjo",
+              link: "https://www.youtube.com/watch?v=cX1lQi2bHjo",
+              description: "A silent step-by-step tutorial building a login form from scratch with HTML and CSS.",
+              thumbnail: "https://img.youtube.com/vi/cX1lQi2bHjo/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "How to Make a Responsive Left Sidebar Tutorial",
+              url: "https://www.youtube.com/watch?v=0SwSDUbxWOw",
+              link: "https://www.youtube.com/watch?v=0SwSDUbxWOw",
+              description: "Tutorial on building a fully responsive left sidebar navigation with HTML and CSS.",
+              thumbnail: "https://img.youtube.com/vi/0SwSDUbxWOw/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "How to Make the Content Centered on Your Website",
+              url: "https://www.youtube.com/watch?v=1A9-0C5zzYQ",
+              link: "https://www.youtube.com/watch?v=1A9-0C5zzYQ",
+              description: "Explains different CSS techniques for centering content on a webpage — short and practical.",
+              thumbnail: "https://img.youtube.com/vi/1A9-0C5zzYQ/hqdefault.jpg",
+              source: "YouTube",
+              },
+              // --- Minecraft Videos ---
+              {
+              title: "Skyblock: The Great Potato War",
+              url: "https://www.youtube.com/watch?v=5qjnDd1rsII",
+              link: "https://www.youtube.com/watch?v=5qjnDd1rsII",
+              description: "Technoblade embarks on a massive Hypixel SkyBlock potato farming grind to defeat a rival player.",
+              thumbnail: "https://img.youtube.com/vi/5qjnDd1rsII/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Absolutely Ruining a $36,000 Minecraft Tournament",
+              url: "https://www.youtube.com/watch?v=vAACnDkKqFo",
+              link: "https://www.youtube.com/watch?v=vAACnDkKqFo",
+              description: "Technoblade joins a high-stakes Minecraft tournament and dominates the competition with chaos.",
+              thumbnail: "https://img.youtube.com/vi/vAACnDkKqFo/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Minecraft But TNT Spawns On Me Every 10 Seconds",
+              url: "https://www.youtube.com/watch?v=tBfeIXLuOYg",
+              link: "https://www.youtube.com/watch?v=tBfeIXLuOYg",
+              description: "Technoblade tries to survive Minecraft with constant TNT explosions every 10 seconds.",
+              thumbnail: "https://img.youtube.com/vi/tBfeIXLuOYg/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "stabbing famous youtubers in minecraft for $10,000",
+              url: "https://www.youtube.com/watch?v=8RqPs324X28",
+              link: "https://www.youtube.com/watch?v=8RqPs324X28",
+              description: "Technoblade competes in a PvP event against well-known creators for a cash prize.",
+              thumbnail: "https://img.youtube.com/vi/8RqPs324X28/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "so long nerds",
+              url: "https://www.youtube.com/watch?v=DPMluEVUqS0",
+              link: "https://www.youtube.com/watch?v=DPMluEVUqS0",
+              description: "Technoblade's heartfelt final farewell video, posted by his father after his passing.",
+              thumbnail: "https://img.youtube.com/vi/DPMluEVUqS0/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "bedwars: mission impossible",
+              url: "https://www.youtube.com/watch?v=USErowmaYBE",
+              link: "https://www.youtube.com/watch?v=USErowmaYBE",
+              description: "Technoblade takes on extreme Bed Wars challenges on Hypixel with legendary skill.",
+              thumbnail: "https://img.youtube.com/vi/USErowmaYBE/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "bedwars 600 winstreak meets fly hacker",
+              url: "https://www.youtube.com/watch?v=2VMZRB6QBjU",
+              link: "https://www.youtube.com/watch?v=2VMZRB6QBjU",
+              description: "Technoblade's legendary Bed Wars winstreak is challenged by a fly-hacking opponent.",
+              thumbnail: "https://img.youtube.com/vi/2VMZRB6QBjU/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Hermitcraft Season 10: The Big World Tour!",
+              url: "https://www.youtube.com/watch?v=IbStk8OBcl8",
+              link: "https://www.youtube.com/watch?v=IbStk8OBcl8",
+              description: "Grian takes a grand tour of every Hermit's base near the end of Hermitcraft Season 10.",
+              thumbnail: "https://img.youtube.com/vi/IbStk8OBcl8/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Hermitcraft 10: Mini Minecraft Starter Base – Episode 1",
+              url: "https://www.youtube.com/watch?v=dETdHynvcow",
+              link: "https://www.youtube.com/watch?v=dETdHynvcow",
+              description: "GeminiTay starts her Hermitcraft Season 10 journey by building a cozy starter base.",
+              thumbnail: "https://img.youtube.com/vi/dETdHynvcow/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Hermitcraft Season 10 Explained with STATS!",
+              url: "https://www.youtube.com/watch?v=wiUNmGiJCHE",
+              link: "https://www.youtube.com/watch?v=wiUNmGiJCHE",
+              description: "Xisuma breaks down Hermitcraft Season 10 using detailed server statistics and analytics.",
+              thumbnail: "https://img.youtube.com/vi/wiUNmGiJCHE/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "FINAL WORLD TOUR! | Hermitcraft Season 10",
+              url: "https://www.youtube.com/watch?v=BT5FjavyHMM",
+              link: "https://www.youtube.com/watch?v=BT5FjavyHMM",
+              description: "SmallishBeans does a final walkthrough of all builds from Hermitcraft Season 10.",
+              thumbnail: "https://img.youtube.com/vi/BT5FjavyHMM/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "1 Minute vs 10 Year Build Challenge",
+              url: "https://www.youtube.com/watch?v=XrAoDZLZZ1g",
+              link: "https://www.youtube.com/watch?v=XrAoDZLZZ1g",
+              description: "Players compete to build the best Minecraft creation in wildly different time limits.",
+              thumbnail: "https://img.youtube.com/vi/XrAoDZLZZ1g/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "I Survived 100 Days on SKYBLOCK in Minecraft Hardcore...",
+              url: "https://www.youtube.com/watch?v=2aEV6FNZKyI",
+              link: "https://www.youtube.com/watch?v=2aEV6FNZKyI",
+              description: "A 100-day hardcore Skyblock challenge on a single floating island with no room for error.",
+              thumbnail: "https://img.youtube.com/vi/2aEV6FNZKyI/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Minecraft, But It's 2D...",
+              url: "https://www.youtube.com/watch?v=am1urw6p8Q4",
+              link: "https://www.youtube.com/watch?v=am1urw6p8Q4",
+              description: "Wisp plays Minecraft with a mod that restricts the entire world to a flat 2D plane.",
+              thumbnail: "https://img.youtube.com/vi/am1urw6p8Q4/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Minecraft, But Trees Are CHESTS!",
+              url: "https://www.youtube.com/watch?v=s9qydecrh9U",
+              link: "https://www.youtube.com/watch?v=s9qydecrh9U",
+              description: "A challenge mod where every tree in the game is replaced with chest loot drops.",
+              thumbnail: "https://img.youtube.com/vi/s9qydecrh9U/hqdefault.jpg",
+              source: "YouTube",
+              },
+              {
+              title: "Stop Thinking for a Moment... (Minecraft Music w/ Soft Rain)",
+              url: "https://www.youtube.com/watch?v=8v7-7g0LhAU",
+              link: "https://www.youtube.com/watch?v=8v7-7g0LhAU",
+              description: "Minecraft's iconic soundtrack paired with soft rain sounds for relaxation and focus.",
+              thumbnail: "https://img.youtube.com/vi/8v7-7g0LhAU/hqdefault.jpg",
+              source: "YouTube",
+              },
             ];
 
             // Filter static videos by query
@@ -9485,13 +10471,13 @@ document
                   <div style="font-size:1em;color:#aaa;margin-bottom:18px;word-break:break-word;">${v.description || ""}</div>
                   <div style="display:flex;gap:14px;margin-bottom:18px;">
                     <button class="btn liquid-glass" id="videoWatchHereBtn" style="background:#a259f7;color:#fff;" ${embedUrl ? "" : "disabled"}>Watch Here</button>
-                    <a href="${v.link}" target="_blank" rel="noopener" class="btn liquid-glass" style="background:#e34133;color:#fff;">Watch on YouTube</a>
+                    <a href="${v.link}" target="_self" rel="noopener" class="btn liquid-glass" style="background:#e34133;color:#fff;">Watch on YouTube</a>
                   </div>
                   <div id="videoEmbedWrapper" style="display:none;margin-bottom:18px;">
                     ${embedUrl ? `<iframe src="${embedUrl}" width="100%" height="400" frameborder="0" allowfullscreen allow="autoplay; encrypted-media"></iframe>` : "<div style='color:#aaa;'>Embed not available.</div>"}
                   </div>
                   <div style="display:flex;gap:14px;">
-                    <a href="${v.link}" target="_blank" rel="noopener" class="btn liquid-glass" style="background:#a259f7;color:#fff;">Visit</a>
+                    <a href="${v.link}" target="_self" rel="noopener" class="btn liquid-glass" style="background:#a259f7;color:#fff;">Visit</a>
                   </div>
                   </div>
                 </div>
@@ -9562,7 +10548,7 @@ document
                   found.favicon ||
                   "https://www.google.com/s2/favicons?domain=" +
                     encodeURIComponent(found.link)
-                }" alt="favicon" style="width:18px;height:18px;border-radius:4px;">
+                }" alt="favicon" referrerpolicy="no-referrer" style="width:18px;height:18px;border-radius:4px;">
                 <span style="font-weight:600;font-size:1.05em;">${
                   found.title
                 }</span>
@@ -9571,7 +10557,7 @@ document
                 <div class="details-buttons" style="padding:8px 16px;">
                 <a href="${
                   found.link
-                }" target="_blank" rel="noopener" class="btn liquid-glass" style="background:#6c2eb7;color:#fff;">Visit</a>
+                }" target="_self" rel="noopener" class="btn liquid-glass" style="background:#6c2eb7;color:#fff;">Visit</a>
                 <button class="btn liquid-glass not-interested-btn" style="background:#a259f7;color:#fff;">Not interested</button>
                 <button class="btn liquid-glass report-btn" style="background:#3a1c71;color:#fff;">Report</button>
                 </div>
@@ -9689,10 +10675,7 @@ document
               `Details: ${details}\n`,
           );
           // Open Gmail compose with filled subject/body
-          window.open(
-            `https://mail.google.com/mail/?view=cm&fs=1&to=minecraftgamer97529@gmail.com&su=${subject}&body=${body}`,
-            "_blank",
-          );
+          window.location.href = `https://mail.google.com/mail/?view=cm&fs=1&to=minecraftgamer97529@gmail.com&su=${subject}&body=${body}`;
           modal.remove();
           showToast("Report window opened in Gmail");
         };
@@ -9991,6 +10974,8 @@ document
           favicon: "",
           link: "https://blog.munetios.com",
         },
+
+      
 
         // Google Services
         {
@@ -17516,6 +18501,394 @@ document
           favicon: "",
           link: "https://www.prodigygame.com/",
         },
+                {
+              title: "Introducing Munetios SupaNotes",
+              description: "Launch announcement for SupaNotes, a new privacy-focused note-taking app with rich text, code blocks, and images — designed for speed and simplicity.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-supanotes",
+              favicon: "",
+            },
+            {
+              title: "Discontinuing Munetios OmniWrite Preview",
+              description: "OmniWrite Preview is being discontinued due to low usage. The main OmniWrite stable app remains fully available.",
+              link: "https://blog.munetios.com/#/post/discontinuing-munetios-omniwrite-preview",
+              favicon: "",
+            },
+            {
+              title: "Discontinuing Munetios Classic Search",
+              description: "Classic Search is discontinued. The new Munetios Search is ad-free, open source, and requires no account.",
+              link: "https://blog.munetios.com/#/post/discontinuing-munetios-classic-search",
+              favicon: "",
+            },
+            {
+              title: "Top Best Google Alternative Search Engines in 2026 (Ranked & Compared)",
+              description: "A ranked comparison of privacy-focused Google alternatives in 2026, including DuckDuckGo, Munetios Search, Brave Search, Startpage, and Ecosia.",
+              link: "https://blog.munetios.com/#/post/top-best-google-alternative-search-engines-in-2026-(ranked-&-compared)",
+              favicon: "",
+            },
+            {
+              title: "Introducing Munetios OmniWrite Folders Feature",
+              description: "OmniWrite now supports folders so you can group and organize documents, making it easier to manage writing projects.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-omniwrite-folders-feature:-organize-your-documents-with-ease",
+              favicon: "",
+            },
+            {
+              title: "Comparing Munetios OmniWrite with Other Document Editors",
+              description: "A feature-by-feature comparison of OmniWrite vs. Google Docs, Microsoft Word, Notion, and Apple Pages, highlighting OmniWrite's encryption and no-account approach.",
+              link: "https://blog.munetios.com/#/post/comparing-munetios-omniwrite-with-other-document-editors:-why-choose-omniwrite?",
+              favicon: "",
+            },
+            {
+              title: "Introducing Munetios Tasks Rewritten Version",
+              description: "Munetios Tasks has been rewritten from scratch with a new liquid glass design and improved performance.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-tasks-rewritten-version",
+              favicon: "",
+            },
+            {
+              title: "Introducing Munetios Maps: Your Privacy-Focused Mapping Solution",
+              description: "Munetios Maps launches as a privacy-first mapping app powered by OpenStreetMap, with no location tracking or personal data collection.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-maps:-your-privacy-focused-mapping-solution",
+              favicon: "",
+            },
+            {
+              title: "Introducing Munetios Games Hub",
+              description: "Munetios Games Hub is a new gaming platform that collects no personal data, offering a growing library of games while keeping your activity private.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-games-hub:-your-gateway-to-privacy-focused-gaming",
+              favicon: "",
+            },
+            {
+              title: "Introducing Munetios OmniWrite: Your Advanced Document Editor",
+              description: "OmniWrite is an open-source, browser-based writing platform with end-to-end encryption, offline support, and no account requirement — now out of beta.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-omniwrite:-your-advanced-document-editor",
+              favicon: "",
+            },
+            {
+              title: "Introducing Munetios Calendar Rewritten Version",
+              description: "The Munetios Calendar has been rewritten from scratch, featuring a sleek liquid glass design and improved performance.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-calendar-rewritten-version",
+              favicon: "",
+            },
+            {
+              title: "Introducing Munetios Search 2.0",
+              description: "Munetios Search 2.0 delivers an improved search algorithm, a new design, and better performance — without tracking users.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-search-2.0",
+              favicon: "",
+            },
+            {
+              title: "Discontinuing Ads on Munetios",
+              description: "Munetios is removing all ads from Munetios Search to provide a completely ad-free experience.",
+              link: "https://blog.munetios.com/#/post/discontinuing-ads",
+              favicon: "",
+            },
+            {
+              title: "Introducing Munetios Photos",
+              description: "Munetios Photos launches as a private photo management app that never tracks your photos or collects personal data.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-photos:-your-privacy-focused-photo-management-app",
+              favicon: "",
+            },
+            {
+              title: "Introducing Munetios Docs Suite",
+              description: "Munetios Docs Suite was a productivity bundle including Docs, Sheets, and Journal — since discontinued and replaced by OmniWrite.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-docs-suite",
+              favicon: "",
+            },
+            {
+              title: "Discontinuing Munetios Docs",
+              description: "Munetios Docs is discontinued; users are directed to migrate to OmniWrite for a more advanced, encrypted editing experience.",
+              link: "https://blog.munetios.com/#/post/discontinuing-munetios-docs",
+              favicon: "",
+            },
+            {
+              title: "Testing Ads in Munetios Search",
+              description: "Munetios briefly tested local (non-tracking) ads in Search results — ads have since been fully discontinued.",
+              link: "https://blog.munetios.com/#/post/testing-ads-in-munetios-search",
+              favicon: "",
+            },
+            {
+              title: "Introducing Munetios Search: Your Privacy-Focused Search Engine",
+              description: "The original launch post for Munetios Search, introducing a privacy-first search engine that does not track searches or store personal data.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-search:-your-privacy-focused-search-engine",
+              favicon: "",
+            },
+            {
+              title: "Discontinued Munetios Classic Calendar",
+              description: "Munetios Classic Calendar has been discontinued; users are encouraged to switch to the new Munetios Calendar.",
+              link: "https://blog.munetios.com/#/post/discontinued-munetios-classic-calendar",
+              favicon: "",
+            },
+            {
+              title: "Introducing Munetios Notebook",
+              description: "Munetios Notebook is a private note-taking app that stores nothing on external servers, with a user-friendly interface for organizing thoughts securely.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-notebook",
+              favicon: "",
+            },
+            {
+              title: "Introducing Munetios APIs",
+              description: "Munetios APIs give developers access to Beautiful CSS, web protection utilities, and more to integrate Munetios features into their own apps.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-apis:-with-beautiful-css-and-more",
+              favicon: "",
+            },
+            {
+              title: "Fully Releasing Liquid Glass UI Across All Munetios Apps",
+              description: "After piloting in Munetios Calculator, the Liquid Glass UI design is rolling out to all Munetios apps.",
+              link: "https://blog.munetios.com/#/post/fully-releasing-liquid-glass-ui-across-all-munetios-apps",
+              favicon: "",
+            },
+            {
+              title: "Discontinuing Munetios Classic Calendar",
+              description: "Formal discontinuation notice for Munetios Classic Calendar, directing users to the new Calendar app.",
+              link: "https://blog.munetios.com/#/post/discontinuing-munetios-classic-calendar",
+              favicon: "",
+            },
+            {
+              title: "Introducing Munetios Calendar Beta",
+              description: "A beta release of the rewritten Munetios Calendar with a new liquid glass design, later fully relaunched.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-calendar-beta",
+              favicon: "",
+            },
+            {
+              title: "Testing Out Liquid Glass UI for Munetios Apps",
+              description: "Munetios begins testing the Liquid Glass UI style — liquid glass-like panels with smooth animations — starting with Munetios Calculator.",
+              link: "https://blog.munetios.com/#/post/testing-out-liquid-glass-ui-for-munetios-apps",
+              favicon: "",
+            },
+            {
+              title: "Deprecating Munetios Translator",
+              description: "Munetios Translator is deprecated due to privacy concerns and rate limits with the MyMemory Translation API.",
+              link: "https://blog.munetios.com/#/post/deprecating-munetios-translator",
+              favicon: "",
+            },
+            {
+              title: "Introducing Munetios Weather: Your Privacy-Focused Weather App",
+              description: "Munetios Weather launches as a private weather app powered by Open-Meteo, offering accurate forecasts without tracking your location.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-weather:-your-privacy-focused-weather-app",
+              favicon: "",
+            },
+            {
+              title: "Rebranding from GAMERYT to Munetios",
+              description: "All products and apps previously under the GAMERYT brand are officially rebranded to Munetios.",
+              link: "https://blog.munetios.com/#/post/rebranding-our-name-for-all-products-from-gameryt-to-munetios",
+              favicon: "",
+            },
+            {
+              title: "Introducing Munetios Notes: Your Privacy-Focused Note-Taking App",
+              description: "Launch of the original Munetios Notes app — a privacy-focused note-taking tool, later superseded by SupaNotes.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-notes:-your-privacy-focused-note-taking-app",
+              favicon: "",
+            },
+            {
+              title: "Introducing Munetios Tasks: Your Privacy-Focused Task Management App",
+              description: "The original launch of Munetios Tasks, a private task management app with no data collection and a clean, intuitive interface.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-tasks:-your-privacy-focused-task-management-app",
+              favicon: "",
+            },
+            {
+              title: "First Munetios Game is Munetios Tetris",
+              description: "Munetios Tetris — the first game under the Munetios brand — launches with classic gameplay, custom blocks, and adjustable settings.",
+              link: "https://blog.munetios.com/#/post/first-munetios-game-is-munetios-tetris",
+              favicon: "",
+            },
+            {
+              title: "Introducing Munetios Calendar: Your Privacy-Focused Scheduling App",
+              description: "The original launch of Munetios Calendar, a private scheduling app with no event tracking or personal data collection.",
+              link: "https://blog.munetios.com/#/post/introducing-munetios-calendar:-your-privacy-focused-scheduling-app",
+              favicon: "",
+            },
+            {
+              title: "Third Munetios App is Munetios Translator",
+              description: "Munetios Translator was the third Munetios app, using the MyMemory API for translation — later discontinued due to privacy issues.",
+              link: "https://blog.munetios.com/#/post/third-munetios-app-is-munetios-translator",
+              favicon: "",
+            },
+            {
+              title: "Second Munetios App is Munetios Docs",
+              description: "Munetios Docs was the second app, a beta document editor that laid the foundation for OmniWrite before being discontinued.",
+              link: "https://blog.munetios.com/#/post/second-munetios-app-is-munetios-docs",
+              favicon: "",
+            },
+            {
+              title: "First Munetios App is Munetios Calculator",
+              description: "Munetios Calculator — the very first Munetios app — launches with a liquid glass UI offering basic and scientific calculator functions.",
+              link: "https://blog.munetios.com/#/post/first-munetios-app-is-munetios-calculator",
+              favicon: "",
+            },
+            {
+              title: "Munetios is Founded — Our Journey Begins",
+              description: "The founding post of Munetios Technologies, marking the beginning of the Munetios ecosystem on February 9, 2025.",
+              link: "https://blog.munetios.com/#/post/munetios-is-founded---our-journey-begins",
+              favicon: "",
+            },
+
+            // --- TechCrunch — Latest (March 4, 2026) ---
+            {
+              title: "Jensen Huang says Nvidia is pulling back from OpenAI and Anthropic",
+              description: "Nvidia CEO Jensen Huang says the company is pulling back from equity investments in OpenAI and Anthropic, though his full reasoning raises more questions than answers.",
+              link: "https://techcrunch.com/2026/03/04/jensen-huang-says-nvidia-is-pulling-back-from-openai-and-anthropic-but-his-explanation-raises-more-questions-than-it-answers/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "Anthropic CEO calls OpenAI's messaging around military deal 'straight up lies'",
+              description: "Dario Amodei publicly disputes OpenAI's framing of its Pentagon AI services deal, calling their statements fabricated.",
+              link: "https://techcrunch.com/2026/03/04/anthropic-ceo-dario-amodei-calls-openais-messaging-around-military-deal-straight-up-lies-report-says/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "Google settles with Epic Games, drops Play Store commissions to 20%",
+              description: "Google and Epic Games have settled their antitrust lawsuit, with Google agreeing to cut its Play Store commission rate from 30% to 20%.",
+              link: "https://techcrunch.com/2026/03/04/google-settles-with-epic-games-drops-its-play-store-commissions-to-20/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "MacBook Neo, iPhone 17e, and everything else Apple announced this week",
+              description: "A full roundup of Apple's March 2026 event announcements, including the new budget MacBook Neo at $599 and the iPhone 17e.",
+              link: "https://techcrunch.com/2026/03/04/everything-apple-announced-macbook-neo-iphone-17e-ipad-air/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "US and EU police shut down LeakBase, a hacking forum with hundreds of millions of stolen credentials",
+              description: "Law enforcement across the US and EU seized LeakBase, a hacking forum accused of distributing stolen passwords and offensive hacking tools.",
+              link: "https://techcrunch.com/2026/03/04/u-s-and-eu-police-shut-down-leakbase-a-site-accused-of-sharing-stolen-passwords-and-hacking-tools/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "Google Search rolls out Gemini's Canvas in AI Mode to all US users",
+              description: "Google is expanding its Canvas feature inside AI Mode in Search to all users in the United States, enabling an AI-powered collaborative workspace.",
+              link: "https://techcrunch.com/2026/03/04/https-techcrunch-com-2026-03-04-google-search-rolls-out-geminis-canvas-in-ai-mode-to-all-us-users/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "The US military is still using Claude — but defense-tech clients are fleeing",
+              description: "Despite the Pentagon designating Anthropic a 'supply chain risk,' the US military continues using Claude, even as defense contractors preemptively drop it.",
+              link: "https://techcrunch.com/2026/03/04/the-us-military-is-still-using-claude-but-defense-tech-clients-are-fleeing/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "Father sues Google, claiming Gemini chatbot drove son into fatal delusion",
+              description: "A father has filed a wrongful death lawsuit against Google, alleging that its Gemini AI chatbot reinforced dangerous delusions that contributed to his son's death.",
+              link: "https://techcrunch.com/2026/03/04/father-sues-google-claiming-gemini-chatbot-drove-son-into-fatal-delusion/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "Apple Music to add Transparency Tags to distinguish AI-generated music",
+              description: "Apple Music is reportedly planning to label AI-generated tracks with transparency tags so listeners can tell when a song was made with artificial intelligence.",
+              link: "https://techcrunch.com/2026/03/04/apple-music-to-add-transparency-tags-to-distinguish-ai-music-says-report/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "TikTok won't add end-to-end encryption to direct messages",
+              description: "A new report reveals TikTok has decided against implementing end-to-end encryption for its direct messages, raising fresh privacy concerns.",
+              link: "https://techcrunch.com/2026/03/04/tiktok-wont-add-end-to-end-encryption-to-direct-messages-report-says/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "ChatGPT's new GPT-5.3 Instant model will stop telling you to calm down",
+              description: "OpenAI's latest GPT-5.3 Instant model is tuned to be less preachy and patronising, dropping the habit of telling users to 'calm down' during emotional conversations.",
+              link: "https://techcrunch.com/2026/03/03/chatgpts-new-gpt-5-3-instant-model-will-stop-telling-you-to-calm-down/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "ChatGPT uninstalls surged by 295% after DoD deal",
+              description: "App uninstall data shows ChatGPT downloads dropped sharply and uninstalls spiked 295% after OpenAI revealed a deal to supply AI to the US Department of Defense.",
+              link: "https://techcrunch.com/2026/03/02/chatgpt-uninstalls-surged-by-295-after-dod-deal/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "A suite of government hacking tools targeting iPhones is now being used by cybercriminals",
+              description: "Powerful iPhone exploit tools originally developed for government surveillance have leaked and are now being actively deployed by criminal hacking groups.",
+              link: "https://techcrunch.com/2026/03/03/a-suite-of-government-hacking-tools-targeting-iphones-is-now-being-used-by-cybercriminals/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+            {
+              title: "A new app alerts you if someone nearby is wearing smart glasses",
+              description: "A new privacy-focused app detects Bluetooth signals from nearby smart glasses — including Meta and Snap — and alerts you if someone could be recording.",
+              link: "https://techcrunch.com/2026/03/02/nearby-glasses-new-app-alerts-you-wearing-smart-glasses-surveillance-meta-snap-bluetooth/",
+              favicon: "https://techcrunch.com/favicon.ico",
+            },
+
+            // --- The Verge — Latest (March 4, 2026) ---
+            {
+              title: "Our first hands-on look at Apple's MacBook Neo",
+              description: "Apple's new $599 MacBook Neo uses an iPhone chip and comes in bold colors — a fascinating set of tradeoffs for budget laptop buyers.",
+              link: "https://www.theverge.com/tech/888712/macbook-neo-laptop-iphone-chip-apple-event-photos-price-features",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "MacBook Neo versus an old MacBook Air: good luck",
+              description: "The Verge compares Apple's new budget MacBook Neo to older MacBook Air models to see if upgrading actually makes sense.",
+              link: "https://www.theverge.com/gadgets/889128/macbook-neo-vs-older-macbook-air",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "Google isn't waiting for a settlement — the 30 percent Android app store fee is dead",
+              description: "Even before finalising its Epic settlement, Google has announced it's cutting Android app store commissions to 20%, ending the era of the 30% app tax.",
+              link: "https://www.theverge.com/policy/889252/google-app-store-fee-reduction-20-percent-epic-v-google",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "iPhone 17e hands-on: nothing more, nothing less",
+              description: "Apple's new budget iPhone 17e is exactly what it promises — a clean, capable phone at $599 with no surprises and no extras.",
+              link: "https://www.theverge.com/tech/888941/apple-iphone-17e-hands-on",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "Inside the secret meeting that led to the AI political resistance",
+              description: "A group of AI researchers and ethicists secretly convened to draft a pro-human AI declaration challenging the rapid militarization and commercialization of AI.",
+              link: "https://www.theverge.com/ai-artificial-intelligence/888841/pro-human-ai-declaration-fli",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "Google's AI-powered Canvas workspace is now available to more users in Search",
+              description: "Google is rolling out its Canvas feature in AI Mode to more Search users, providing an AI-assisted research and document workspace inside Google Search.",
+              link: "https://www.theverge.com/tech/889339/google-canvas-ai-mode-search-us-launch",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "Google faces wrongful death lawsuit after Gemini allegedly coached man to die by suicide",
+              description: "A father is suing Google in a wrongful death case, alleging Gemini's AI chatbot played a role in pushing his son toward suicide through harmful interactions.",
+              link: "https://www.theverge.com/tech/889152/google-gemini-ai-wrongful-death-lawsuit",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "FBI and Europol shut down LeakBase hacking forum",
+              description: "The FBI and Europol have seized LeakBase, a hacking forum with over 142,000 members and hundreds of millions of stolen account credentials.",
+              link: "https://www.theverge.com/tech/889474/fbi-and-europol-shut-down-leakbase-hacking-forum",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "Seven tech giants signed Trump's pledge to keep electricity costs from spiking around data centers",
+              description: "Google, Meta, Microsoft and four other tech companies signed a White House pledge committing to manage electricity demand from their AI data centers.",
+              link: "https://www.theverge.com/news/889578/data-center-power-pledge-white-house-google-meta-microsoft",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "NotebookLM can now summarize research in cinematic video overviews",
+              description: "Google's NotebookLM has added a new feature that generates short, cinematic-style video summaries of research documents and sources.",
+              link: "https://www.theverge.com/ai-artificial-intelligence/889475/notebooklm-can-now-summarize-research-in-cinematic-video-overviews",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "Meta won't let morality get in the way of a product launch",
+              description: "The Verge explores how Meta's smart glasses ended up being used for ICE tracking and doxxing — and why Meta isn't slowing down its rollout.",
+              link: "https://www.theverge.com/policy/886348/meta-glasses-ice-doxxing-privacy",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "Why is SpaceX going public?",
+              description: "After years of resistance, Elon Musk is now opening the door to a SpaceX IPO — but the risks around AI investment and long-term mission clarity remain.",
+              link: "https://www.theverge.com/tech/887899/spacex-ipo-risks-ai",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "Downdetector and Speedtest sold to Accenture for $1.2 billion",
+              description: "Accenture has acquired Downdetector and Speedtest (Ookla) for $1.2 billion, bringing two of the web's most-used performance monitoring tools under one roof.",
+              link: "https://www.theverge.com/tech/889234/downdetector-ookla-speedtest-sold-accenture",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
+            {
+              title: "Raycast's Glaze is an all-in-one vibe coding app platform",
+              description: "Raycast has launched Glaze, an integrated AI coding environment designed for vibe coding — letting developers describe features in natural language and ship apps fast.",
+              link: "https://www.theverge.com/tech/888866/raycast-glaze-vibe-code-app-store",
+              favicon: "https://www.theverge.com/favicon.ico",
+            },
         
       ];
     </script>
@@ -17649,8 +19022,7 @@ document
       // --- Munetios Settings: Detect and apply singleStory font feature ---
       (function () {
         try {
-          const settings = JSON.parse(localStorage.getItem("munetiosSettings") || "{}");
-          if (settings.singleStory === true) {
+          if (localStorage.getItem("munetiosFont_Google Sans Flex_ss01") === "true") {
         const style = document.createElement("style");
         style.innerHTML = `* { font-feature-settings: 'ss02' off, 'ss01' on, 'liga' off, 'clig' off !important; }`;
         document.head.appendChild(style);
