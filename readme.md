@@ -8,4 +8,4 @@ You are free to use and modify the code, but may not rebrand it as "Munetios" or
 
 Munetios is open-source software under the Munetios License.
 The source is publicly available, modifiable, and forkable.
-Selling the software or reusing Munetios branding is not permitted.
+ reusing Munetios branding is not permitted.
