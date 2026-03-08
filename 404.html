@@ -104,29 +104,163 @@ font-size:14px;
 
 <div class="container liquid-glass">
 
-<div class="logo"><img src="https://www.munetios.com/apple-touch-icon-new.png"></div>
+<div class="logo"><img src="https://www.munetios.com/apple-touch-icon-new.png" alt="Munetios"></div>
 
 <h1>404</h1>
 
-<p>This page does not exist on Munetios.</p>
+<p id="message">This page does not exist on Munetios.</p>
 
 <div class="buttons">
 
-<a class="home" href="https://www.munetios.com">
-Go to Homepage
-</a>
+<a class="home" id="home-link" href="https://www.munetios.com">Go to Homepage</a>
 
-<a class="search" href="https://www.munetios.com/search/search.html">
-Search Munetios
-</a>
+<a class="search" id="search-link" href="https://www.munetios.com/search/search.html">Search Munetios</a>
 
 </div>
 
-<div class="footer">
-© 2026 Munetios
-</div>
+<div class="footer" id="footer-text">© 2026 Munetios</div>
 
 </div>
+
+<script>
+const baseTranslation = {
+  title: "404 – Page Not Found | Munetios",
+  message: "This page does not exist on Munetios.",
+  home: "Go to Homepage",
+  search: "Search Munetios",
+  footer: "© 2026 Munetios"
+};
+
+const pageTranslations = {
+  en: baseTranslation,
+  tr: { title: "404 – Sayfa Bulunamadı | Munetios", message: "Bu sayfa Munetios'ta mevcut değil.", home: "Ana Sayfaya Git", search: "Munetios'ta Ara", footer: "© 2026 Munetios" },
+  es: { title: "404 – Página no encontrada | Munetios", message: "Esta página no existe en Munetios.", home: "Ir al inicio", search: "Buscar en Munetios", footer: "© 2026 Munetios" },
+  fr: { title: "404 – Page introuvable | Munetios", message: "Cette page n'existe pas sur Munetios.", home: "Aller à l'accueil", search: "Rechercher sur Munetios", footer: "© 2026 Munetios" },
+  de: { title: "404 – Seite nicht gefunden | Munetios", message: "Diese Seite existiert auf Munetios nicht.", home: "Zur Startseite", search: "Munetios durchsuchen", footer: "© 2026 Munetios" },
+  it: { title: "404 – Pagina non trovata | Munetios", message: "Questa pagina non esiste su Munetios.", home: "Vai alla home", search: "Cerca su Munetios", footer: "© 2026 Munetios" },
+  pt: { title: "404 – Página não encontrada | Munetios", message: "Esta página não existe na Munetios.", home: "Ir para a página inicial", search: "Pesquisar no Munetios", footer: "© 2026 Munetios" },
+  nl: { title: "404 – Pagina niet gevonden | Munetios", message: "Deze pagina bestaat niet op Munetios.", home: "Ga naar home", search: "Zoeken op Munetios", footer: "© 2026 Munetios" },
+  ru: { title: "404 – Страница не найдена | Munetios", message: "Эта страница отсутствует на Munetios.", home: "На главную", search: "Поиск в Munetios", footer: "© 2026 Munetios" },
+  uk: { title: "404 – Сторінку не знайдено | Munetios", message: "Цієї сторінки немає на Munetios.", home: "На головну", search: "Пошук у Munetios", footer: "© 2026 Munetios" },
+  pl: { title: "404 – Nie znaleziono strony | Munetios", message: "Ta strona nie istnieje w Munetios.", home: "Przejdź do strony głównej", search: "Szukaj w Munetios", footer: "© 2026 Munetios" },
+  cs: { title: "404 – Stránka nenalezena | Munetios", message: "Tato stránka na Munetios neexistuje.", home: "Přejít na domovskou stránku", search: "Hledat na Munetios", footer: "© 2026 Munetios" },
+  sk: { title: "404 – Stránka sa nenašla | Munetios", message: "Táto stránka na Munetios neexistuje.", home: "Prejsť na domovskú stránku", search: "Hľadať na Munetios", footer: "© 2026 Munetios" },
+  sl: { title: "404 – Stran ni mogoče najti | Munetios", message: "Ta stran ne obstaja na Munetios.", home: "Na domačo stran", search: "Išči po Munetios", footer: "© 2026 Munetios" },
+  hr: { title: "404 – Stranica nije pronađena | Munetios", message: "Ova stranica ne postoji na Munetiosu.", home: "Idi na početnu", search: "Pretraži Munetios", footer: "© 2026 Munetios" },
+  sr: { title: "404 – Stranica nije pronađena | Munetios", message: "Ova stranica ne postoji na Munetios-u.", home: "Idi na početnu", search: "Pretraži Munetios", footer: "© 2026 Munetios" },
+  bg: { title: "404 – Страницата не е намерена | Munetios", message: "Тази страница не съществува в Munetios.", home: "Към началната страница", search: "Търсене в Munetios", footer: "© 2026 Munetios" },
+  ro: { title: "404 – Pagină negăsită | Munetios", message: "Această pagină nu există pe Munetios.", home: "Mergi la pagina principală", search: "Caută pe Munetios", footer: "© 2026 Munetios" },
+  hu: { title: "404 – Az oldal nem található | Munetios", message: "Ez az oldal nem létezik a Munetioson.", home: "Ugrás a főoldalra", search: "Keresés a Munetioson", footer: "© 2026 Munetios" },
+  el: { title: "404 – Η σελίδα δεν βρέθηκε | Munetios", message: "Αυτή η σελίδα δεν υπάρχει στο Munetios.", home: "Μετάβαση στην αρχική", search: "Αναζήτηση στο Munetios", footer: "© 2026 Munetios" },
+  sv: { title: "404 – Sidan hittades inte | Munetios", message: "Den här sidan finns inte på Munetios.", home: "Gå till startsidan", search: "Sök på Munetios", footer: "© 2026 Munetios" },
+  no: { title: "404 – Siden ble ikke funnet | Munetios", message: "Denne siden finnes ikke på Munetios.", home: "Gå til startsiden", search: "Søk i Munetios", footer: "© 2026 Munetios" },
+  da: { title: "404 – Siden blev ikke fundet | Munetios", message: "Denne side findes ikke på Munetios.", home: "Gå til forsiden", search: "Søg på Munetios", footer: "© 2026 Munetios" },
+  fi: { title: "404 – Sivua ei löydy | Munetios", message: "Tätä sivua ei ole Munetiosissa.", home: "Siirry etusivulle", search: "Hae Munetiosista", footer: "© 2026 Munetios" },
+  is: { title: "404 – Síða fannst ekki | Munetios", message: "Þessi síða er ekki til á Munetios.", home: "Fara á heimasíðu", search: "Leita á Munetios", footer: "© 2026 Munetios" },
+  et: { title: "404 – Lehte ei leitud | Munetios", message: "Seda lehte pole Munetioses olemas.", home: "Avalehele", search: "Otsi Munetiosest", footer: "© 2026 Munetios" },
+  lv: { title: "404 – Lapa nav atrasta | Munetios", message: "Šī lapa Munetios neeksistē.", home: "Doties uz sākumlapu", search: "Meklēt Munetios", footer: "© 2026 Munetios" },
+  lt: { title: "404 – Puslapis nerastas | Munetios", message: "Šio puslapio Munetios nėra.", home: "Eiti į pradžią", search: "Ieškoti Munetios", footer: "© 2026 Munetios" },
+  ga: { title: "404 – Leathanach gan aimsiú | Munetios", message: "Níl an leathanach seo ar Munetios.", home: "Téigh go dtí an baile", search: "Cuardaigh Munetios", footer: "© 2026 Munetios" },
+  mt: { title: "404 – Paġna ma nstabitx | Munetios", message: "Din il-paġna ma teżistix fuq Munetios.", home: "Mur fil-paġna ewlenija", search: "Fittex fuq Munetios", footer: "© 2026 Munetios" },
+  cy: { title: "404 – Tudalen heb ei chanfod | Munetios", message: "Nid yw'r dudalen hon yn bodoli ar Munetios.", home: "Ewch i'r hafan", search: "Chwilio Munetios", footer: "© 2026 Munetios" },
+  eu: { title: "404 – Orria ez da aurkitu | Munetios", message: "Orrialde hau ez dago Munetios-en.", home: "Joan hasierara", search: "Bilatu Munetios-en", footer: "© 2026 Munetios" },
+  ca: { title: "404 – Pàgina no trobada | Munetios", message: "Aquesta pàgina no existeix a Munetios.", home: "Ves a l'inici", search: "Cerca a Munetios", footer: "© 2026 Munetios" },
+  gl: { title: "404 – Páxina non atopada | Munetios", message: "Esta páxina non existe en Munetios.", home: "Ir á páxina principal", search: "Buscar en Munetios", footer: "© 2026 Munetios" },
+  af: { title: "404 – Bladsy nie gevind nie | Munetios", message: "Hierdie bladsy bestaan nie op Munetios nie.", home: "Gaan na tuisblad", search: "Soek Munetios", footer: "© 2026 Munetios" },
+  sq: { title: "404 – Faqja nuk u gjet | Munetios", message: "Kjo faqe nuk ekziston në Munetios.", home: "Shko te faqja kryesore", search: "Kërko në Munetios", footer: "© 2026 Munetios" },
+  bs: { title: "404 – Stranica nije pronađena | Munetios", message: "Ova stranica ne postoji na Munetiosu.", home: "Idi na početnu stranicu", search: "Pretraži Munetios", footer: "© 2026 Munetios" },
+  mk: { title: "404 – Страницата не е пронајдена | Munetios", message: "Оваа страница не постои на Munetios.", home: "Оди на почетна", search: "Пребарај на Munetios", footer: "© 2026 Munetios" },
+  be: { title: "404 – Старонка не знойдзена | Munetios", message: "Гэтай старонкі няма на Munetios.", home: "На галоўную", search: "Шукаць у Munetios", footer: "© 2026 Munetios" },
+  hy: { title: "404 – Էջը չի գտնվել | Munetios", message: "Այս էջը Munetios-ում գոյություն չունի:", home: "Գնալ գլխավոր էջ", search: "Որոնել Munetios-ում", footer: "© 2026 Munetios" },
+  ka: { title: "404 – გვერდი ვერ მოიძებნა | Munetios", message: "ეს გვერდი Munetios-ზე არ არსებობს.", home: "მთავარ გვერდზე გადასვლა", search: "ძიება Munetios-ზე", footer: "© 2026 Munetios" },
+  az: { title: "404 – Səhifə tapılmadı | Munetios", message: "Bu səhifə Munetios-da mövcud deyil.", home: "Ana səhifəyə keç", search: "Munetios-da axtar", footer: "© 2026 Munetios" },
+  kk: { title: "404 – Бет табылмады | Munetios", message: "Бұл бет Munetios сайтында жоқ.", home: "Басты бетке өту", search: "Munetios-та іздеу", footer: "© 2026 Munetios" },
+  uz: { title: "404 – Sahifa topilmadi | Munetios", message: "Bu sahifa Munetiosda mavjud emas.", home: "Bosh sahifaga o'tish", search: "Munetiosdan qidirish", footer: "© 2026 Munetios" },
+  tk: { title: "404 – Sahypa tapylmady | Munetios", message: "Bu sahypa Munetios-da ýok.", home: "Baş sahypa git", search: "Munetios-da gözle", footer: "© 2026 Munetios" },
+  ky: { title: "404 – Баракча табылган жок | Munetios", message: "Бул баракча Munetios'та жок.", home: "Башкы бетке өтүү", search: "Munetios'тан издөө", footer: "© 2026 Munetios" },
+  tg: { title: "404 – Саҳифа ёфт нашуд | Munetios", message: "Ин саҳифа дар Munetios вуҷуд надорад.", home: "Ба саҳифаи асосӣ", search: "Ҷустуҷӯ дар Munetios", footer: "© 2026 Munetios" },
+  mn: { title: "404 – Хуудас олдсонгүй | Munetios", message: "Энэ хуудас Munetios дээр байхгүй байна.", home: "Нүүр хуудас руу", search: "Munetios-оос хайх", footer: "© 2026 Munetios" },
+  zh: { title: "404 – 页面未找到 | Munetios", message: "此页面在 Munetios 上不存在。", home: "返回首页", search: "搜索 Munetios", footer: "© 2026 Munetios" },
+  ja: { title: "404 – ページが見つかりません | Munetios", message: "このページは Munetios に存在しません。", home: "ホームへ戻る", search: "Munetios を検索", footer: "© 2026 Munetios" },
+  ko: { title: "404 – 페이지를 찾을 수 없습니다 | Munetios", message: "이 페이지는 Munetios에 존재하지 않습니다.", home: "홈페이지로 이동", search: "Munetios 검색", footer: "© 2026 Munetios" },
+  vi: { title: "404 – Không tìm thấy trang | Munetios", message: "Trang này không tồn tại trên Munetios.", home: "Về trang chủ", search: "Tìm kiếm trên Munetios", footer: "© 2026 Munetios" },
+  th: { title: "404 – ไม่พบหน้า | Munetios", message: "ไม่มีหน้านี้บน Munetios", home: "ไปหน้าแรก", search: "ค้นหาใน Munetios", footer: "© 2026 Munetios" },
+  id: { title: "404 – Halaman tidak ditemukan | Munetios", message: "Halaman ini tidak ada di Munetios.", home: "Ke beranda", search: "Cari di Munetios", footer: "© 2026 Munetios" },
+  ms: { title: "404 – Halaman tidak dijumpai | Munetios", message: "Halaman ini tidak wujud di Munetios.", home: "Pergi ke laman utama", search: "Cari di Munetios", footer: "© 2026 Munetios" },
+  tl: { title: "404 – Hindi nahanap ang pahina | Munetios", message: "Wala ang pahinang ito sa Munetios.", home: "Pumunta sa homepage", search: "Maghanap sa Munetios", footer: "© 2026 Munetios" },
+  sw: { title: "404 – Ukurasa haujapatikana | Munetios", message: "Ukurasa huu haupo kwenye Munetios.", home: "Nenda kwenye ukurasa wa nyumbani", search: "Tafuta kwenye Munetios", footer: "© 2026 Munetios" },
+  zu: { title: "404 – Ikhasi alitholakali | Munetios", message: "Leli khasi alikho ku-Munetios.", home: "Iya ekhasini lasekhaya", search: "Sesha ku-Munetios", footer: "© 2026 Munetios" },
+  xh: { title: "404 – Iphepha alifumanekanga | Munetios", message: "Eli phepha alikho kwiMunetios.", home: "Yiya kwiphepha lasekhaya", search: "Khangela kwiMunetios", footer: "© 2026 Munetios" },
+  st: { title: "404 – Leqephe ha le fumanehe | Munetios", message: "Leqephe lena ha le eo ho Munetios.", home: "Eya leqepheng la lapeng", search: "Batla ho Munetios", footer: "© 2026 Munetios" },
+  tn: { title: "404 – Tsebe ga e bonwe | Munetios", message: "Tsebe eno ga eyo mo Munetios.", home: "Ya kwa tsebeng ya ntlha", search: "Batla mo Munetios", footer: "© 2026 Munetios" },
+  ts: { title: "404 – Pheji a yi kumekangi | Munetios", message: "Pheji leyi a yi kona eka Munetios.", home: "Ya eka pheji ra le kaya", search: "Lava eka Munetios", footer: "© 2026 Munetios" },
+  ve: { title: "404 – Siatari a si wanali | Munetios", message: "Siatari itshi a si ho kha Munetios.", home: "Iyani kha hayani", search: "Todani kha Munetios", footer: "© 2026 Munetios" },
+  nso: { title: "404 – Letlakala ga le hwetšagale | Munetios", message: "Letlakala le ga le gona go Munetios.", home: "Eya letlakaleng la mathomo", search: "Nyaka go Munetios", footer: "© 2026 Munetios" },
+  ss: { title: "404 – Likhasi alikatholakali | Munetios", message: "Leli likhasi alikho kuMunetios.", home: "Yani ekhasini lasekhaya", search: "Sesha kuMunetios", footer: "© 2026 Munetios" },
+  am: { title: "404 – ገጹ አልተገኘም | Munetios", message: "ይህ ገጽ በMunetios ላይ የለም።", home: "ወደ መነሻ ገጽ ይሂዱ", search: "Munetios ውስጥ ፈልግ", footer: "© 2026 Munetios" },
+  ar: { title: "404 – الصفحة غير موجودة | Munetios", message: "هذه الصفحة غير موجودة على Munetios.", home: "الذهاب إلى الصفحة الرئيسية", search: "البحث في Munetios", footer: "© 2026 Munetios" },
+  he: { title: "404 – הדף לא נמצא | Munetios", message: "הדף הזה לא קיים ב-Munetios.", home: "מעבר לדף הבית", search: "חיפוש ב-Munetios", footer: "© 2026 Munetios" },
+  fa: { title: "404 – صفحه پیدا نشد | Munetios", message: "این صفحه در Munetios وجود ندارد.", home: "رفتن به صفحه اصلی", search: "جستجو در Munetios", footer: "© 2026 Munetios" },
+  ur: { title: "404 – صفحہ نہیں ملا | Munetios", message: "یہ صفحہ Munetios پر موجود نہیں ہے۔", home: "ہوم پیج پر جائیں", search: "Munetios میں تلاش کریں", footer: "© 2026 Munetios" },
+  hi: { title: "404 – पेज नहीं मिला | Munetios", message: "यह पेज Munetios पर मौजूद नहीं है।", home: "मुखपृष्ठ पर जाएँ", search: "Munetios में खोजें", footer: "© 2026 Munetios" },
+  bn: { title: "404 – পৃষ্ঠা খুঁজে পাওয়া যায়নি | Munetios", message: "এই পৃষ্ঠাটি Munetios-এ নেই।", home: "হোমপেজে যান", search: "Munetios-এ অনুসন্ধান করুন", footer: "© 2026 Munetios" },
+  pa: { title: "404 – ਪੰਨਾ ਨਹੀਂ ਮਿਲਿਆ | Munetios", message: "ਇਹ ਪੰਨਾ Munetios 'ਤੇ ਮੌਜੂਦ ਨਹੀਂ ਹੈ।", home: "ਮੁੱਖ ਪੰਨੇ ਤੇ ਜਾਓ", search: "Munetios ਵਿੱਚ ਖੋਜੋ", footer: "© 2026 Munetios" },
+  gu: { title: "404 – પાનું મળ્યું નથી | Munetios", message: "આ પાનું Munetios પર ઉપલબ્ધ નથી.", home: "હોમપેજ પર જાઓ", search: "Munetios માં શોધો", footer: "© 2026 Munetios" },
+  mr: { title: "404 – पृष्ठ सापडले नाही | Munetios", message: "हे पृष्ठ Munetios वर उपलब्ध नाही.", home: "मुख्यपृष्ठावर जा", search: "Munetios मध्ये शोधा", footer: "© 2026 Munetios" },
+  ne: { title: "404 – पृष्ठ फेला परेन | Munetios", message: "यो पृष्ठ Munetios मा छैन।", home: "गृहपृष्ठमा जानुहोस्", search: "Munetios मा खोज्नुहोस्", footer: "© 2026 Munetios" },
+  si: { title: "404 – පිටුව හමු නොවීය | Munetios", message: "මෙම පිටුව Munetios හි නොමැත.", home: "මුල් පිටුවට යන්න", search: "Munetios හි සොයන්න", footer: "© 2026 Munetios" },
+  ta: { title: "404 – பக்கம் கிடைக்கவில்லை | Munetios", message: "இந்தப் பக்கம் Munetios-இல் இல்லை.", home: "முகப்புப் பக்கத்திற்கு செல்லவும்", search: "Munetios-இல் தேடவும்", footer: "© 2026 Munetios" },
+  te: { title: "404 – పేజీ కనబడలేదు | Munetios", message: "ఈ పేజీ Munetiosలో లేదు.", home: "హోమ్‌పేజీకి వెళ్లండి", search: "Munetiosలో వెతకండి", footer: "© 2026 Munetios" },
+  kn: { title: "404 – ಪುಟ ಕಂಡುಬಂದಿಲ್ಲ | Munetios", message: "ಈ ಪುಟ Munetios ನಲ್ಲಿ ಲಭ್ಯವಿಲ್ಲ.", home: "ಮುಖ್ಯ ಪುಟಕ್ಕೆ ಹೋಗಿ", search: "Munetios ನಲ್ಲಿ ಹುಡುಕಿ", footer: "© 2026 Munetios" },
+  ml: { title: "404 – പേജ് കണ്ടെത്താനായില്ല | Munetios", message: "ഈ പേജ് Munetios-ൽ ലഭ്യമല്ല.", home: "ഹോംപേജിലേക്ക് പോകുക", search: "Munetios-ൽ തിരയുക", footer: "© 2026 Munetios" },
+  or: { title: "404 – ପୃଷ୍ଠା ମିଳିଲା ନାହିଁ | Munetios", message: "ଏହି ପୃଷ୍ଠା Munetios ରେ ନାହିଁ।", home: "ମୁଖ୍ୟ ପୃଷ୍ଠାକୁ ଯାଆନ୍ତୁ", search: "Munetios ରେ ସନ୍ଧାନ କରନ୍ତୁ", footer: "© 2026 Munetios" },
+  as: { title: "404 – পৃষ্ঠা পোৱা নগ'ল | Munetios", message: "এই পৃষ্ঠাখন Munetiosত নাই।", home: "মুখ্য পৃষ্ঠালৈ যাওক", search: "Munetiosত সন্ধান কৰক", footer: "© 2026 Munetios" },
+  my: { title: "404 – စာမျက်နှာ မတွေ့ပါ | Munetios", message: "ဤစာမျက်နှာသည် Munetios တွင် မရှိပါ။", home: "ပင်မစာမျက်နှာသို့ သွားရန်", search: "Munetios တွင် ရှာဖွေရန်", footer: "© 2026 Munetios" },
+  km: { title: "404 – រកមិនឃើញទំព័រ | Munetios", message: "ទំព័រនេះមិនមាននៅលើ Munetios ទេ។", home: "ទៅទំព័រដើម", search: "ស្វែងរកក្នុង Munetios", footer: "© 2026 Munetios" },
+  lo: { title: "404 – ບໍ່ພົບໜ້າ | Munetios", message: "ໜ້ານີ້ບໍ່ມີຢູ່ໃນ Munetios.", home: "ໄປໜ້າຫຼັກ", search: "ຄົ້ນຫາໃນ Munetios", footer: "© 2026 Munetios" },
+  ps: { title: "404 – پاڼه ونه موندل شوه | Munetios", message: "دا پاڼه په Munetios کې نشته.", home: "کورپاڼې ته لاړ شئ", search: "په Munetios کې لټون", footer: "© 2026 Munetios" },
+  sd: { title: "404 – صفحو نه مليو | Munetios", message: "هي صفحو Munetios تي موجود ناهي.", home: "هوم پيج ڏانھن وڃو", search: "Munetios ۾ ڳوليو", footer: "© 2026 Munetios" },
+  so: { title: "404 – Bogga lama helin | Munetios", message: "Boggan kama jiro Munetios.", home: "Tag bogga hore", search: "Ka raadi Munetios", footer: "© 2026 Munetios" },
+  yo: { title: "404 – Oju-iwe ko ri | Munetios", message: "Oju-iwe yii ko si lori Munetios.", home: "Lọ si oju-ile", search: "Wa lori Munetios", footer: "© 2026 Munetios" },
+  ig: { title: "404 – Ahụghị ibe a | Munetios", message: "Ibe a adịghị na Munetios.", home: "Gaa na ibe mbu", search: "Chọọ na Munetios", footer: "© 2026 Munetios" },
+  ha: { title: "404 – Ba a sami shafin ba | Munetios", message: "Wannan shafin baya a Munetios.", home: "Je zuwa shafin farko", search: "Nema a Munetios", footer: "© 2026 Munetios" },
+  mi: { title: "404 – Kāore i kitea te whārangi | Munetios", message: "Kāore tēnei whārangi i te Munetios.", home: "Haere ki te kāinga", search: "Rapu i Munetios", footer: "© 2026 Munetios" },
+  sm: { title: "404 – Leai se itulau | Munetios", message: "E leai lenei itulau i luga o Munetios.", home: "Alu i le itulau autu", search: "Su'e i Munetios", footer: "© 2026 Munetios" },
+  to: { title: "404 – ʻIkai maʻu e peesi | Munetios", message: "ʻOku ʻikai ʻi ai ʻa e peesi ni ʻi Munetios.", home: "ʻAlu ki he peesi ʻuluaki", search: "Kumi ʻi Munetios", footer: "© 2026 Munetios" },
+  fj: { title: "404 – Sega ni kunea na tabana | Munetios", message: "Na tabana qo e sega ni tiko ena Munetios.", home: "Lako ina itabana levu", search: "Vakasaqara ena Munetios", footer: "© 2026 Munetios" },
+  mg: { title: "404 – Tsy hita ny pejy | Munetios", message: "Tsy misy ao amin'ny Munetios ity pejy ity.", home: "Mankanesa any amin'ny pejy fandraisana", search: "Hikaroka ao amin'ny Munetios", footer: "© 2026 Munetios" },
+  ht: { title: "404 – Paj pa jwenn | Munetios", message: "Paj sa a pa egziste sou Munetios.", home: "Ale nan paj dakèy", search: "Chèche sou Munetios", footer: "© 2026 Munetios" },
+  la: { title: "404 – Pagina non inventa | Munetios", message: "Haec pagina in Munetios non exstat.", home: "I ad paginam principalem", search: "Quaere in Munetios", footer: "© 2026 Munetios" },
+  lb: { title: "404 – Säit net fonnt | Munetios", message: "Dës Säit gëtt et net op Munetios.", home: "Op d'Haaptsäit", search: "Sich op Munetios", footer: "© 2026 Munetios" }
+};
+
+const supportedLanguageCodes = Object.keys(pageTranslations);
+const supportedLanguageCount = supportedLanguageCodes.length;
+if (supportedLanguageCount !== 100) {
+  console.error(`Expected 100 languages, found ${supportedLanguageCount}.`);
+}
+
+const browserLanguages = Array.isArray(navigator.languages) && navigator.languages.length
+  ? navigator.languages
+  : [navigator.language || "en"];
+
+const normalizedLanguages = browserLanguages
+  .filter(Boolean)
+  .map((language) => language.toLowerCase());
+
+const matchedLanguage = normalizedLanguages.find((language) => pageTranslations[language])
+  || normalizedLanguages.map((language) => language.split("-")[0]).find((language) => pageTranslations[language])
+  || "en";
+
+const selectedTranslation = pageTranslations[matchedLanguage] || baseTranslation;
+
+document.documentElement.lang = matchedLanguage;
+document.title = selectedTranslation.title;
+document.getElementById("message").textContent = selectedTranslation.message;
+document.getElementById("home-link").textContent = selectedTranslation.home;
+document.getElementById("search-link").textContent = selectedTranslation.search;
+document.getElementById("footer-text").textContent = selectedTranslation.footer;
+</script>
 
 </body>
 </html>
