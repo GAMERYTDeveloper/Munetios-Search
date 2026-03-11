@@ -25,7 +25,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded"
       rel="stylesheet"
     />
-    <link rel="apple-touch-icon" href="apple-touch-icon-new.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     <!-- Do favicon 16, 32-->
     <link
       rel="icon"
@@ -39,7 +39,7 @@
       href="favicon-32x32.png"
       type="image/x-icon"
     />
-    <link rel="icon" href="favicon-new.ico" type="image/x-icon" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta
       http-equiv="Content-Security-Policy"
@@ -1809,8 +1809,8 @@
         </div>
         <div class="topbar-right liquid-glass">
           <div class="topbar-left-item">
-            <a href="#/">Search</a>
-            <a href="#/images">Images</a>
+            <a href="#/" data-translate="navSearch">Search</a>
+            <a href="#/images" data-translate="navImages">Images</a>
             <a class="hide-611" href="https://write.munetios.com">OmniWrite</a>
             <a class="hide-700" href="https://calendar.munetios.com"
               >Calendar</a
@@ -1827,8 +1827,8 @@
         <div class="topbar-left liquid-glass">
           <div class="menu-btn" id="menuBtn"><icon>menu</icon></div>
           <div class="tabs">
-            <a href="#/">Search</a>
-            <a href="#/images">Images</a>
+            <a href="#/" data-translate="navSearch">Search</a>
+            <a href="#/images" data-translate="navImages">Images</a>
           </div>
         </div>
         <div class="topbar-right liquid-glass">
@@ -2404,6 +2404,13 @@
             <div class="settings-page" id="advancedSettingsPage">
               <h2>Advanced</h2>
               <div class="settings-group">
+                <div class="settings-item">
+                  <span class="settings-label">Text to Speech</span>
+                  <div class="toggle-switch" id="ttsToggle"></div>
+                </div>
+                <p class="tts-sublabel" style="font-size:13px;color:rgba(255,255,255,0.55);margin:4px 0 0;padding:0 4px;line-height:1.4;">Speak text when clicking buttons or labels</p>
+              </div>
+              <div class="settings-group">
                 <div class="settings-item" style="flex-direction: column;">
                   <span class="settings-label settings-label-search-history" style="text-align: left; width: 100%;">Search History</span>
                   <button class="action-button danger" id="deleteSearchHistoryBtn">
@@ -2565,8 +2572,8 @@
         <h3 id="confirmModalTitle">Confirm Action</h3>
         <p id="confirmModalMessage">Are you sure you want to proceed?</p>
         <div class="confirm-modal-buttons">
-          <button class="cancel-btn" id="confirmCancelBtn">Cancel</button>
-          <button class="confirm-btn" id="confirmOkBtn">Confirm</button>
+          <button class="cancel-btn" id="confirmCancelBtn" data-translate="cancel">Cancel</button>
+          <button class="confirm-btn" id="confirmOkBtn" data-translate="ok">Confirm</button>
         </div>
       </div>
     </div>
@@ -2627,7 +2634,7 @@
       </div>
       <div class="voice-mode-controls">
         <div style="flex: 1">
-          <div class="voice-status" id="voiceStatus">Click mic to start</div>
+          <div class="voice-status" id="voiceStatus" data-translate="clickMicToStartShort">Click mic to start</div>
         </div>
         <button class="voice-mic-btn" id="voiceMicBtn">
           <icon style="font-size: 32px; color: white">mic</icon>
@@ -2741,7 +2748,7 @@
 
         function showModal() {
           modal.classList.add("show");
-          spokenWords.textContent = "Click the microphone to start";
+          spokenWords.textContent = window.getTranslation ? window.getTranslation("clickMicToStart") : "Click the microphone to start";
           doneBtn.style.display = "none";
         }
 
@@ -2758,9 +2765,9 @@
               "SpeechRecognition" in window
             )
           ) {
-            spokenWords.textContent = "Voice search not supported";
+            spokenWords.textContent = window.getTranslation ? window.getTranslation("voiceNotSupportedShort") : "Voice search not supported";
             window.showToast &&
-              window.showToast("Voice search not supported in this browser.");
+              window.showToast(window.getTranslation ? window.getTranslation("voiceNotSupportedFull") : "Voice search not supported in this browser.");
             playSound("denied");
             return;
           }
@@ -2768,7 +2775,16 @@
             const SpeechRecognition =
               window.SpeechRecognition || window.webkitSpeechRecognition;
             recognition = new SpeechRecognition();
-            recognition.lang = "en-US";
+            const speechLangMap = {
+              en: "en-US", es: "es-ES", fr: "fr-FR", de: "de-DE", it: "it-IT",
+              pt: "pt-BR", nl: "nl-NL", pl: "pl-PL", tr: "tr-TR", sv: "sv-SE",
+              no: "nb-NO", da: "da-DK", fi: "fi-FI", zh: "zh-CN", "zh-TW": "zh-TW",
+              ja: "ja-JP", ko: "ko-KR", ar: "ar-SA", hi: "hi-IN", bn: "bn-IN",
+              th: "th-TH", vi: "vi-VN", id: "id-ID", ms: "ms-MY", ru: "ru-RU",
+              uk: "uk-UA", el: "el-GR", he: "he-IL", cs: "cs-CZ", ro: "ro-RO", hu: "hu-HU"
+            };
+            const uiLang = localStorage.getItem("munetiosLanguage") || "en";
+            recognition.lang = speechLangMap[uiLang] || "en-US";
             recognition.interimResults = true;
             recognition.continuous = false;
 
@@ -2779,7 +2795,7 @@
                 "linear-gradient(135deg, rgba(255,64,129,0.5), rgba(245,0,87,0.5))";
               micToggleBtn.style.border = "2px solid rgba(245,0,87,0.6)";
               micToggleBtn.style.boxShadow = "0 4px 12px rgba(245,0,87,0.4)";
-              spokenWords.textContent = "Listening...";
+              spokenWords.textContent = window.getTranslation ? window.getTranslation("listening") : "Listening...";
               playSound("start");
               autoStopTimeout = setTimeout(stopListening, 10000);
             };
@@ -2811,22 +2827,20 @@
                 e.error === "not-allowed" ||
                 e.error === "permission-denied"
               ) {
-                errorMessage =
-                  "Microphone access denied. Please allow microphone permissions.";
-                spokenWords.textContent = "Microphone access denied";
+                errorMessage = window.getTranslation ? window.getTranslation("micAccessDeniedFull") : "Microphone access denied. Please allow microphone permissions.";
+                spokenWords.textContent = window.getTranslation ? window.getTranslation("micAccessDeniedShort") : "Microphone access denied";
               } else if (e.error === "audio-capture") {
-                errorMessage =
-                  "Microphone not connected. Please connect a microphone.";
-                spokenWords.textContent = "Microphone not connected";
+                errorMessage = window.getTranslation ? window.getTranslation("micNotConnectedFull") : "Microphone not connected. Please connect a microphone.";
+                spokenWords.textContent = window.getTranslation ? window.getTranslation("micNotConnectedShort") : "Microphone not connected";
               } else if (e.error === "no-speech") {
-                errorMessage = "No speech detected. Please try again.";
-                spokenWords.textContent = "No speech detected";
+                errorMessage = window.getTranslation ? window.getTranslation("noSpeechFull") : "No speech detected. Please try again.";
+                spokenWords.textContent = window.getTranslation ? window.getTranslation("noSpeechShort") : "No speech detected";
               } else if (e.error === "network") {
-                errorMessage = "Network error. Please check your connection.";
-                spokenWords.textContent = "Network error";
+                errorMessage = window.getTranslation ? window.getTranslation("networkErrorFull") : "Network error. Please check your connection.";
+                spokenWords.textContent = window.getTranslation ? window.getTranslation("networkErrorShort") : "Network error";
               } else {
-                errorMessage = "Audio capture error: " + e.error;
-                spokenWords.textContent = "Error: " + e.error;
+                errorMessage = (window.getTranslation ? window.getTranslation("audioErrorText") : "Audio capture error: ") + e.error;
+                spokenWords.textContent = (window.getTranslation ? window.getTranslation("errorPrefix") : "Error: ") + e.error;
               }
 
               window.showToast && window.showToast(errorMessage);
@@ -2846,10 +2860,9 @@
 
             recognition.start();
           } catch (err) {
-            spokenWords.textContent = "Unable to start voice recognition";
+            spokenWords.textContent = window.getTranslation ? window.getTranslation("unableToStartVoice") : "Unable to start voice recognition";
             window.showToast &&
-              window.showToast(
-                "Audio capture error: Unable to start voice recognition.",
+              window.showToast(window.getTranslation ? window.getTranslation("unableToStartFull") : "Audio capture error: Unable to start voice recognition."
               );
             playSound("denied");
           }
@@ -2886,17 +2899,18 @@
 
         doneBtn.addEventListener("click", function () {
           const text = spokenWords.textContent.trim();
-          if (
-            text &&
-            text !== "Click the microphone to start" &&
-            !text.startsWith("Microphone") &&
-            !text.startsWith("Error:") &&
-            !text.startsWith("No speech") &&
-            !text.startsWith("Network error") &&
-            !text.startsWith("Voice search not supported") &&
-            !text.startsWith("Unable to start") &&
-            text !== "Listening..."
-          ) {
+          const gt = window.getTranslation;
+          const systemTexts = [
+            gt ? gt("clickMicToStart") : "Click the microphone to start",
+            gt ? gt("listening") : "Listening...",
+            gt ? gt("voiceNotSupportedShort") : "Voice search not supported",
+            gt ? gt("micAccessDeniedShort") : "Microphone access denied",
+            gt ? gt("micNotConnectedShort") : "Microphone not connected",
+            gt ? gt("noSpeechShort") : "No speech detected",
+            gt ? gt("networkErrorShort") : "Network error",
+            gt ? gt("unableToStartVoice") : "Unable to start voice recognition",
+          ];
+          if (text && !systemTexts.includes(text) && !(gt ? text.startsWith(gt("errorPrefix")) : text.startsWith("Error:"))) {
             searchInput.value = text;
             hideModal();
             const q = encodeURIComponent(text);
@@ -2965,7 +2979,7 @@
             processImage(file);
           } else {
             window.showToast &&
-              window.showToast("Please upload a valid image file.");
+              window.showToast(window.getTranslation ? window.getTranslation("pleaseUploadValidImage") : "Please upload a valid image file.");
           }
         });
 
@@ -2988,19 +3002,20 @@
         }
 
         function extractTextFromImage(imageSrc) {
+          const gt = window.getTranslation;
           if (!window.Tesseract) {
-            imageStatus.textContent = "Loading OCR library...";
+            imageStatus.textContent = gt ? gt("loadingOCRLibrary") : "Loading OCR library...";
             setTimeout(() => extractTextFromImage(imageSrc), 500);
             return;
           }
 
-          imageStatus.textContent = "Extracting text from image...";
+          imageStatus.textContent = gt ? gt("extractingTextStatus") : "Extracting text from image...";
 
           Tesseract.recognize(imageSrc, "eng", {
             logger: (m) => {
               if (m.status === "recognizing text") {
                 const percent = Math.round(m.progress * 100);
-                imageStatus.textContent = `Extracting text: ${percent}%`;
+                imageStatus.textContent = (gt ? gt("extractingTextStatus").replace("...", "") : "Extracting text") + `: ${percent}%`;
               }
             },
           })
@@ -3009,21 +3024,21 @@
               if (cleanedText) {
                 extractedText.textContent = cleanedText;
                 extractedTextContainer.style.display = "block";
-                imageStatus.textContent = "Text extracted successfully!";
+                imageStatus.textContent = gt ? gt("textExtractedSuccess") : "Text extracted successfully!";
                 searchInput.value = cleanedText;
                 window.showToast &&
-                  window.showToast("Text extracted from image!");
+                  window.showToast(gt ? gt("textExtractedToast") : "Text extracted from image!");
               } else {
-                imageStatus.textContent = "No text found in image.";
+                imageStatus.textContent = gt ? gt("noTextFoundInImage") : "No text found in image.";
                 window.showToast &&
-                  window.showToast("No text detected in the image.");
+                  window.showToast(gt ? gt("noTextDetectedToast") : "No text detected in the image.");
               }
             })
             .catch((err) => {
               console.error("OCR Error:", err);
-              imageStatus.textContent = "Failed to extract text.";
+              imageStatus.textContent = gt ? gt("failedToExtractText") : "Failed to extract text.";
               window.showToast &&
-                window.showToast("Failed to extract text from image.");
+                window.showToast(gt ? gt("failedToExtractToast") : "Failed to extract text from image.");
             });
         }
 
@@ -3109,13 +3124,13 @@
               "SpeechRecognition" in window
             )
           ) {
-            voiceStatus.textContent = "Voice not supported";
+            voiceStatus.textContent = window.getTranslation ? window.getTranslation("voiceNotSupportedShort") : "Voice not supported";
             addToHistory(
-              "Voice search not supported in this browser",
+              window.getTranslation ? window.getTranslation("voiceNotSupportedFull") : "Voice search not supported in this browser",
               "system",
             );
-            speak("Sorry, voice search is not supported in this browser.");
-            showToast("Voice mode is not supported in this browser.");
+            speak(window.getTranslation ? window.getTranslation("voiceNotSupportedModeFull") : "Sorry, voice search is not supported in this browser.");
+            showToast(window.getTranslation ? window.getTranslation("voiceNotSupportedModeFull") : "Voice mode is not supported in this browser.");
             playSound("denied");
             return;
           }
@@ -3123,14 +3138,23 @@
             const SpeechRecognition =
               window.SpeechRecognition || window.webkitSpeechRecognition;
             recognition = new SpeechRecognition();
-            recognition.lang = "en-US";
+            const speechLangMap = {
+              en: "en-US", es: "es-ES", fr: "fr-FR", de: "de-DE", it: "it-IT",
+              pt: "pt-BR", nl: "nl-NL", pl: "pl-PL", tr: "tr-TR", sv: "sv-SE",
+              no: "nb-NO", da: "da-DK", fi: "fi-FI", zh: "zh-CN", "zh-TW": "zh-TW",
+              ja: "ja-JP", ko: "ko-KR", ar: "ar-SA", hi: "hi-IN", bn: "bn-IN",
+              th: "th-TH", vi: "vi-VN", id: "id-ID", ms: "ms-MY", ru: "ru-RU",
+              uk: "uk-UA", el: "el-GR", he: "he-IL", cs: "cs-CZ", ro: "ro-RO", hu: "hu-HU"
+            };
+            const uiLang = localStorage.getItem("munetiosLanguage") || "en";
+            recognition.lang = speechLangMap[uiLang] || "en-US";
             recognition.interimResults = true;
             recognition.continuous = true;
 
             recognition.onstart = function () {
               listening = true;
               voiceMicBtn.classList.add("listening");
-              voiceStatus.textContent = "Listening...";
+              voiceStatus.textContent = window.getTranslation ? window.getTranslation("listening") : "Listening...";
               playSound("start");
             };
 
@@ -3151,32 +3175,27 @@
               listening = false;
               voiceMicBtn.classList.remove("listening");
 
+              const gt = window.getTranslation;
               if (
                 e.error === "not-allowed" ||
                 e.error === "permission-denied"
               ) {
-                voiceStatus.textContent = "Mic access denied";
-                showToast("Please enable microphone access to use voice mode.");
-                addToHistory(
-                  "Sorry, I could not get your Microphone.",
-                  "system",
-                );
-                speak("Sorry, I could not get your Microphone.");
+                voiceStatus.textContent = gt ? gt("micAccessDeniedShort") : "Mic access denied";
+                showToast(gt ? gt("enableMicAccessToast") : "Please enable microphone access to use voice mode.");
+                addToHistory(gt ? gt("sorryMicrophone") : "Sorry, I could not get your Microphone.", "system");
+                speak(gt ? gt("sorryMicrophone") : "Sorry, I could not get your Microphone.");
                 playSound("denied");
               } else if (e.error === "audio-capture") {
-                voiceStatus.textContent = "Mic not connected";
-                addToHistory(
-                  "Sorry, I could not get your Microphone.",
-                  "system",
-                );
-                speak("Sorry, I could not get your Microphone.");
-                showToast("Please connect a microphone to use voice mode.");
+                voiceStatus.textContent = gt ? gt("micNotConnectedShort") : "Mic not connected";
+                addToHistory(gt ? gt("sorryMicrophone") : "Sorry, I could not get your Microphone.", "system");
+                speak(gt ? gt("sorryMicrophone") : "Sorry, I could not get your Microphone.");
+                showToast(gt ? gt("connectMicrophoneToast") : "Please connect a microphone to use voice mode.");
                 playSound("denied");
               } else if (e.error === "no-speech") {
-                voiceStatus.textContent = "No speech detected";
+                voiceStatus.textContent = gt ? gt("noSpeechShort") : "No speech detected";
               } else {
-                voiceStatus.textContent = "Error: " + e.error;
-                addToHistory("Error: " + e.error, "system");
+                voiceStatus.textContent = (gt ? gt("errorPrefix") : "Error: ") + e.error;
+                addToHistory((gt ? gt("errorPrefix") : "Error: ") + e.error, "system");
                 playSound("denied");
               }
             };
@@ -3184,15 +3203,16 @@
             recognition.onend = function () {
               listening = false;
               voiceMicBtn.classList.remove("listening");
-              voiceStatus.textContent = "Click mic to start";
+              voiceStatus.textContent = window.getTranslation ? window.getTranslation("clickMicToStartShort") : "Click mic to start";
             };
 
             recognition.start();
           } catch (err) {
-            voiceStatus.textContent = "Unable to start";
-            addToHistory("Sorry, I could not get your Microphone.", "system");
-            showToast("Unable to start voice recognition");
-            speak("Sorry, I could not get your Microphone.");
+            const gt = window.getTranslation;
+            voiceStatus.textContent = gt ? gt("unableToStartShort") : "Unable to start";
+            addToHistory(gt ? gt("sorryMicrophone") : "Sorry, I could not get your Microphone.", "system");
+            showToast(gt ? gt("unableToStartVoice") : "Unable to start voice recognition");
+            speak(gt ? gt("sorryMicrophone") : "Sorry, I could not get your Microphone.");
             playSound("denied");
           }
         }
@@ -3202,18 +3222,19 @@
             recognition.stop();
             listening = false;
             voiceMicBtn.classList.remove("listening");
-            voiceStatus.textContent = "Click mic to start";
+            voiceStatus.textContent = window.getTranslation ? window.getTranslation("clickMicToStartShort") : "Click mic to start";
           }
         }
 
         function processVoiceCommand(text) {
           const lowerText = text.toLowerCase().trim();
           const searchMatch = lowerText.match(/search\s+(.+)/);
+          const gt = window.getTranslation;
 
           if (searchMatch && searchMatch[1]) {
             const query = searchMatch[1];
-            addToHistory(`Searching for: ${query}`, "system");
-            speak(`Searching for ${query}`);
+            addToHistory((gt ? gt("searchingFor") : "Searching for: ") + query, "system");
+            speak((gt ? gt("searchingFor") : "Searching for ") + query);
             playSound("success");
             setTimeout(() => {
               const q = encodeURIComponent(query);
@@ -3221,7 +3242,7 @@
               window.location.href = url;
             }, 500);
           } else {
-            addToHistory("Say 'Search [query]' to search", "system");
+            addToHistory(gt ? gt("saySearchQuery") : "Say 'Search [query]' to search", "system");
           }
         }
 
@@ -3318,7 +3339,7 @@
           const q = encodeURIComponent(searchInput.value.trim());
           if (!q) {
             window.showToast &&
-              window.showToast("Please enter a search query.");
+              window.showToast(window.getTranslation ? window.getTranslation("pleaseEnterQuery") : "Please enter a search query.");
             return;
           }
 
@@ -3405,7 +3426,7 @@
             window.location.href = shortcut.url;
           } else {
             window.showToast &&
-              window.showToast("No shortcuts or queries available.");
+              window.showToast(window.getTranslation ? window.getTranslation("noShortcutsOrQueries") : "No shortcuts or queries available.");
           }
         });
       })();
@@ -3482,7 +3503,7 @@
             const url = document.getElementById("shortcutURL").value;
 
             if (!name || !url) {
-              showToast("Please fill in both the Name and URL fields.");
+              showToast(window.getTranslation ? window.getTranslation("pleaseFillFields") : "Please fill in both the Name and URL fields.");
               return;
             }
 
@@ -3693,6 +3714,10 @@
             importSettings: "Import Settings",
             resetSettings: "Reset All Settings",
             deleteEverything: "Delete Everything",
+
+            // Text to Speech
+            ttsLabel: "Text to Speech",
+            ttsDescription: "Speak text when clicking buttons or labels",
             
             // Confirmation Messages
             deleteSearchHistoryConfirm: "Are you sure you want to delete all search history? This action cannot be undone.",
@@ -3751,7 +3776,52 @@
             // Footer
             terms: "Terms",
             privacy: "Privacy",
-            cookies: "Cookies"
+            cookies: "Cookies",
+
+            // Navigation tabs
+            navSearch: "Search",
+            navImages: "Images",
+
+            // Voice mode dynamic messages
+            listening: "Listening...",
+            voiceNotSupportedShort: "Voice not supported",
+            micAccessDeniedShort: "Microphone access denied",
+            micNotConnectedShort: "Microphone not connected",
+            noSpeechShort: "No speech detected",
+            networkErrorShort: "Network error",
+            unableToStartShort: "Unable to start",
+            errorPrefix: "Error: ",
+            sorryMicrophone: "Sorry, I could not get your Microphone.",
+            micAccessDeniedFull: "Microphone access denied. Please allow microphone permissions.",
+            micNotConnectedFull: "Microphone not connected. Please connect a microphone.",
+            noSpeechFull: "No speech detected. Please try again.",
+            networkErrorFull: "Network error. Please check your connection.",
+            audioErrorText: "Audio capture error: ",
+            voiceNotSupportedFull: "Voice search not supported in this browser.",
+            voiceNotSupportedModeFull: "Voice mode is not supported in this browser.",
+            unableToStartFull: "Audio capture error: Unable to start voice recognition.",
+            unableToStartVoice: "Unable to start voice recognition",
+            searchingFor: "Searching for: ",
+            saySearchQuery: "Say \"Search [your query]\" to search",
+            enableMicAccessToast: "Please enable microphone access to use voice mode.",
+            connectMicrophoneToast: "Please connect a microphone to use voice mode.",
+
+            // Toast / UI messages
+            pleaseEnterQuery: "Please enter a search query.",
+            pleaseFillFields: "Please fill in both the Name and URL fields.",
+            pleaseUploadValidImage: "Please upload a valid image file.",
+            textExtractedToast: "Text extracted from image!",
+            noTextDetectedToast: "No text detected in the image.",
+            failedToExtractToast: "Failed to extract text from image.",
+            shortcutDeletedToast: "Shortcut deleted",
+            noShortcutsOrQueries: "No shortcuts or queries available.",
+
+            // Image search status messages
+            loadingOCRLibrary: "Loading OCR library...",
+            extractingTextStatus: "Extracting text from image...",
+            textExtractedSuccess: "Text extracted successfully!",
+            noTextFoundInImage: "No text found in image.",
+            failedToExtractText: "Failed to extract text."
           },
           es: { 
             name: "Spanish",
@@ -3865,7 +3935,52 @@
             // Footer
             terms: "Términos",
             privacy: "Privacidad",
-            cookies: "Cookies"
+            cookies: "Cookies",
+
+            // Navigation tabs
+            navSearch: "Buscar",
+            navImages: "Imágenes",
+
+            // Voice mode dynamic messages
+            listening: "Escuchando...",
+            voiceNotSupportedShort: "Voz no soportada",
+            micAccessDeniedShort: "Micrófono denegado",
+            micNotConnectedShort: "Micrófono no conectado",
+            noSpeechShort: "No se detectó voz",
+            networkErrorShort: "Error de red",
+            unableToStartShort: "No se puede iniciar",
+            errorPrefix: "Error: ",
+            sorryMicrophone: "Lo siento, no pude acceder a tu micrófono.",
+            micAccessDeniedFull: "Acceso al micrófono denegado. Por favor, permite los permisos del micrófono.",
+            micNotConnectedFull: "Micrófono no conectado. Por favor, conecta un micrófono.",
+            noSpeechFull: "No se detectó voz. Por favor, inténtalo de nuevo.",
+            networkErrorFull: "Error de red. Por favor, comprueba tu conexión.",
+            audioErrorText: "Error de captura de audio: ",
+            voiceNotSupportedFull: "Búsqueda por voz no soportada en este navegador.",
+            voiceNotSupportedModeFull: "Modo de voz no soportado en este navegador.",
+            unableToStartFull: "Error de captura de audio: No se puede iniciar el reconocimiento de voz.",
+            unableToStartVoice: "No se puede iniciar el reconocimiento de voz",
+            searchingFor: "Buscando: ",
+            saySearchQuery: "Di \"Buscar [tu consulta]\" para buscar",
+            enableMicAccessToast: "Por favor, habilita el acceso al micrófono para usar el modo de voz.",
+            connectMicrophoneToast: "Por favor, conecta un micrófono para usar el modo de voz.",
+
+            // Toast / UI messages
+            pleaseEnterQuery: "Por favor, ingresa una consulta de búsqueda.",
+            pleaseFillFields: "Por favor, rellena los campos de Nombre y URL.",
+            pleaseUploadValidImage: "Por favor, sube un archivo de imagen válido.",
+            textExtractedToast: "¡Texto extraído de la imagen!",
+            noTextDetectedToast: "No se detectó texto en la imagen.",
+            failedToExtractToast: "No se pudo extraer texto de la imagen.",
+            shortcutDeletedToast: "Acceso directo eliminado",
+            noShortcutsOrQueries: "No hay accesos directos ni consultas disponibles.",
+
+            // Image search status messages
+            loadingOCRLibrary: "Cargando biblioteca OCR...",
+            extractingTextStatus: "Extrayendo texto de la imagen...",
+            textExtractedSuccess: "¡Texto extraído con éxito!",
+            noTextFoundInImage: "No se encontró texto en la imagen.",
+            failedToExtractText: "No se pudo extraer el texto."
           },
           fr: { 
             name: "French",
@@ -3979,7 +4094,52 @@
             // Footer
             terms: "Conditions",
             privacy: "Confidentialité",
-            cookies: "Cookies"
+            cookies: "Cookies",
+
+            // Navigation tabs
+            navSearch: "Rechercher",
+            navImages: "Images",
+
+            // Voice mode dynamic messages
+            listening: "Écoute en cours...",
+            voiceNotSupportedShort: "Voix non supportée",
+            micAccessDeniedShort: "Microphone refusé",
+            micNotConnectedShort: "Microphone non connecté",
+            noSpeechShort: "Aucune parole détectée",
+            networkErrorShort: "Erreur réseau",
+            unableToStartShort: "Impossible de démarrer",
+            errorPrefix: "Erreur : ",
+            sorryMicrophone: "Désolé, je n'ai pas pu accéder à votre microphone.",
+            micAccessDeniedFull: "Accès au microphone refusé. Veuillez autoriser les permissions du microphone.",
+            micNotConnectedFull: "Microphone non connecté. Veuillez connecter un microphone.",
+            noSpeechFull: "Aucune parole détectée. Veuillez réessayer.",
+            networkErrorFull: "Erreur réseau. Veuillez vérifier votre connexion.",
+            audioErrorText: "Erreur de capture audio : ",
+            voiceNotSupportedFull: "La recherche vocale n'est pas prise en charge dans ce navigateur.",
+            voiceNotSupportedModeFull: "Le mode vocal n'est pas pris en charge dans ce navigateur.",
+            unableToStartFull: "Erreur de capture audio : Impossible de démarrer la reconnaissance vocale.",
+            unableToStartVoice: "Impossible de démarrer la reconnaissance vocale",
+            searchingFor: "Recherche de : ",
+            saySearchQuery: "Dites \"Rechercher [votre requête]\" pour rechercher",
+            enableMicAccessToast: "Veuillez activer l'accès au microphone pour utiliser le mode vocal.",
+            connectMicrophoneToast: "Veuillez connecter un microphone pour utiliser le mode vocal.",
+
+            // Toast / UI messages
+            pleaseEnterQuery: "Veuillez saisir une requête de recherche.",
+            pleaseFillFields: "Veuillez remplir les champs Nom et URL.",
+            pleaseUploadValidImage: "Veuillez télécharger un fichier image valide.",
+            textExtractedToast: "Texte extrait de l'image !",
+            noTextDetectedToast: "Aucun texte détecté dans l'image.",
+            failedToExtractToast: "Échec de l'extraction du texte de l'image.",
+            shortcutDeletedToast: "Raccourci supprimé",
+            noShortcutsOrQueries: "Aucun raccourci ou requête disponible.",
+
+            // Image search status messages
+            loadingOCRLibrary: "Chargement de la bibliothèque OCR...",
+            extractingTextStatus: "Extraction du texte de l'image...",
+            textExtractedSuccess: "Texte extrait avec succès !",
+            noTextFoundInImage: "Aucun texte trouvé dans l'image.",
+            failedToExtractText: "Échec de l'extraction du texte."
           },
           de: { 
             name: "German",
@@ -4093,7 +4253,52 @@
             // Footer
             terms: "Bedingungen",
             privacy: "Datenschutz",
-            cookies: "Cookies"
+            cookies: "Cookies",
+
+            // Navigation tabs
+            navSearch: "Suchen",
+            navImages: "Bilder",
+
+            // Voice mode dynamic messages
+            listening: "Zuhören...",
+            voiceNotSupportedShort: "Sprache nicht unterstützt",
+            micAccessDeniedShort: "Mikrofon verweigert",
+            micNotConnectedShort: "Mikrofon nicht verbunden",
+            noSpeechShort: "Keine Sprache erkannt",
+            networkErrorShort: "Netzwerkfehler",
+            unableToStartShort: "Start nicht möglich",
+            errorPrefix: "Fehler: ",
+            sorryMicrophone: "Entschuldigung, ich konnte nicht auf Ihr Mikrofon zugreifen.",
+            micAccessDeniedFull: "Mikrofonzugriff verweigert. Bitte erlauben Sie Mikrofonberechtigungen.",
+            micNotConnectedFull: "Mikrofon nicht verbunden. Bitte schließen Sie ein Mikrofon an.",
+            noSpeechFull: "Keine Sprache erkannt. Bitte versuchen Sie es erneut.",
+            networkErrorFull: "Netzwerkfehler. Bitte überprüfen Sie Ihre Verbindung.",
+            audioErrorText: "Audioaufnahmefehler: ",
+            voiceNotSupportedFull: "Sprachsuche wird in diesem Browser nicht unterstützt.",
+            voiceNotSupportedModeFull: "Sprachmodus wird in diesem Browser nicht unterstützt.",
+            unableToStartFull: "Audioaufnahmefehler: Spracherkennung konnte nicht gestartet werden.",
+            unableToStartVoice: "Spracherkennung konnte nicht gestartet werden",
+            searchingFor: "Suche nach: ",
+            saySearchQuery: "Sagen Sie \"Suchen [Ihre Anfrage]\" zum Suchen",
+            enableMicAccessToast: "Bitte aktivieren Sie den Mikrofonzugriff für den Sprachmodus.",
+            connectMicrophoneToast: "Bitte schließen Sie ein Mikrofon für den Sprachmodus an.",
+
+            // Toast / UI messages
+            pleaseEnterQuery: "Bitte geben Sie eine Suchanfrage ein.",
+            pleaseFillFields: "Bitte füllen Sie die Felder Name und URL aus.",
+            pleaseUploadValidImage: "Bitte laden Sie eine gültige Bilddatei hoch.",
+            textExtractedToast: "Text aus Bild extrahiert!",
+            noTextDetectedToast: "Kein Text im Bild erkannt.",
+            failedToExtractToast: "Text aus Bild konnte nicht extrahiert werden.",
+            shortcutDeletedToast: "Verknüpfung gelöscht",
+            noShortcutsOrQueries: "Keine Verknüpfungen oder Anfragen verfügbar.",
+
+            // Image search status messages
+            loadingOCRLibrary: "OCR-Bibliothek wird geladen...",
+            extractingTextStatus: "Text wird aus Bild extrahiert...",
+            textExtractedSuccess: "Text erfolgreich extrahiert!",
+            noTextFoundInImage: "Kein Text im Bild gefunden.",
+            failedToExtractText: "Text konnte nicht extrahiert werden."
           },
           it: { 
             name: "Italian", 
@@ -4207,7 +4412,52 @@
             // Footer
             terms: "Termini",
             privacy: "Privacy",
-            cookies: "Cookie"
+            cookies: "Cookie",
+
+            // Navigation tabs
+            navSearch: "Cerca",
+            navImages: "Immagini",
+
+            // Voice mode dynamic messages
+            listening: "In ascolto...",
+            voiceNotSupportedShort: "Voce non supportata",
+            micAccessDeniedShort: "Microfono negato",
+            micNotConnectedShort: "Microfono non connesso",
+            noSpeechShort: "Nessun parlato rilevato",
+            networkErrorShort: "Errore di rete",
+            unableToStartShort: "Impossibile avviare",
+            errorPrefix: "Errore: ",
+            sorryMicrophone: "Scusa, non sono riuscito ad accedere al tuo microfono.",
+            micAccessDeniedFull: "Accesso al microfono negato. Consenti le autorizzazioni del microfono.",
+            micNotConnectedFull: "Microfono non connesso. Collega un microfono.",
+            noSpeechFull: "Nessun parlato rilevato. Riprova.",
+            networkErrorFull: "Errore di rete. Controlla la tua connessione.",
+            audioErrorText: "Errore di acquisizione audio: ",
+            voiceNotSupportedFull: "La ricerca vocale non è supportata in questo browser.",
+            voiceNotSupportedModeFull: "La modalità vocale non è supportata in questo browser.",
+            unableToStartFull: "Errore di acquisizione audio: Impossibile avviare il riconoscimento vocale.",
+            unableToStartVoice: "Impossibile avviare il riconoscimento vocale",
+            searchingFor: "Ricerca di: ",
+            saySearchQuery: "Di' \"Cerca [la tua query]\" per cercare",
+            enableMicAccessToast: "Abilita l'accesso al microfono per usare la modalità vocale.",
+            connectMicrophoneToast: "Collega un microfono per usare la modalità vocale.",
+
+            // Toast / UI messages
+            pleaseEnterQuery: "Inserisci una query di ricerca.",
+            pleaseFillFields: "Compila i campi Nome e URL.",
+            pleaseUploadValidImage: "Carica un file immagine valido.",
+            textExtractedToast: "Testo estratto dall'immagine!",
+            noTextDetectedToast: "Nessun testo rilevato nell'immagine.",
+            failedToExtractToast: "Impossibile estrarre testo dall'immagine.",
+            shortcutDeletedToast: "Scorciatoia eliminata",
+            noShortcutsOrQueries: "Nessuna scorciatoia o query disponibile.",
+
+            // Image search status messages
+            loadingOCRLibrary: "Caricamento libreria OCR...",
+            extractingTextStatus: "Estrazione testo dall'immagine...",
+            textExtractedSuccess: "Testo estratto con successo!",
+            noTextFoundInImage: "Nessun testo nell'immagine.",
+            failedToExtractText: "Impossibile estrarre il testo."
           },
           pt: { 
             name: "Portuguese", 
@@ -4321,7 +4571,52 @@
             // Footer
             terms: "Termos",
             privacy: "Privacidade",
-            cookies: "Cookies"
+            cookies: "Cookies",
+
+            // Navigation tabs
+            navSearch: "Pesquisar",
+            navImages: "Imagens",
+
+            // Voice mode dynamic messages
+            listening: "Ouvindo...",
+            voiceNotSupportedShort: "Voz não suportada",
+            micAccessDeniedShort: "Microfone negado",
+            micNotConnectedShort: "Microfone não conectado",
+            noSpeechShort: "Sem fala detectada",
+            networkErrorShort: "Erro de rede",
+            unableToStartShort: "Impossível iniciar",
+            errorPrefix: "Erro: ",
+            sorryMicrophone: "Desculpe, não consegui acessar seu microfone.",
+            micAccessDeniedFull: "Acesso ao microfone negado. Por favor, permita as permissões do microfone.",
+            micNotConnectedFull: "Microfone não conectado. Por favor, conecte um microfone.",
+            noSpeechFull: "Sem fala detectada. Por favor, tente novamente.",
+            networkErrorFull: "Erro de rede. Por favor, verifique sua conexão.",
+            audioErrorText: "Erro de captura de áudio: ",
+            voiceNotSupportedFull: "Pesquisa por voz não suportada neste navegador.",
+            voiceNotSupportedModeFull: "Modo de voz não suportado neste navegador.",
+            unableToStartFull: "Erro de captura de áudio: Impossível iniciar reconhecimento de voz.",
+            unableToStartVoice: "Impossível iniciar o reconhecimento de voz",
+            searchingFor: "Pesquisando: ",
+            saySearchQuery: "Diga \"Pesquisar [sua consulta]\" para pesquisar",
+            enableMicAccessToast: "Por favor, ative o acesso ao microfone para usar o modo de voz.",
+            connectMicrophoneToast: "Por favor, conecte um microfone para usar o modo de voz.",
+
+            // Toast / UI messages
+            pleaseEnterQuery: "Por favor, insira uma consulta de pesquisa.",
+            pleaseFillFields: "Por favor, preencha os campos Nome e URL.",
+            pleaseUploadValidImage: "Por favor, faça upload de um arquivo de imagem válido.",
+            textExtractedToast: "Texto extraído da imagem!",
+            noTextDetectedToast: "Nenhum texto detectado na imagem.",
+            failedToExtractToast: "Falha ao extrair texto da imagem.",
+            shortcutDeletedToast: "Atalho excluído",
+            noShortcutsOrQueries: "Nenhum atalho ou consulta disponível.",
+
+            // Image search status messages
+            loadingOCRLibrary: "Carregando biblioteca OCR...",
+            extractingTextStatus: "Extraindo texto da imagem...",
+            textExtractedSuccess: "Texto extraído com sucesso!",
+            noTextFoundInImage: "Nenhum texto encontrado na imagem.",
+            failedToExtractText: "Falha ao extrair o texto."
           },
           nl: { 
             name: "Dutch", 
@@ -5233,7 +5528,52 @@
             // Footer
             terms: "条款",
             privacy: "隐私",
-            cookies: "Cookie"
+            cookies: "Cookie",
+
+            // Navigation tabs
+            navSearch: "搜索",
+            navImages: "图片",
+
+            // Voice mode dynamic messages
+            listening: "正在监听...",
+            voiceNotSupportedShort: "不支持语音",
+            micAccessDeniedShort: "麦克风被拒绝",
+            micNotConnectedShort: "麦克风未连接",
+            noSpeechShort: "未检测到语音",
+            networkErrorShort: "网络错误",
+            unableToStartShort: "无法启动",
+            errorPrefix: "错误：",
+            sorryMicrophone: "抱歉，我无法访问您的麦克风。",
+            micAccessDeniedFull: "麦克风访问被拒绝。请允许麦克风权限。",
+            micNotConnectedFull: "麦克风未连接。请连接麦克风。",
+            noSpeechFull: "未检测到语音。请重试。",
+            networkErrorFull: "网络错误。请检查您的连接。",
+            audioErrorText: "音频捕获错误：",
+            voiceNotSupportedFull: "此浏览器不支持语音搜索。",
+            voiceNotSupportedModeFull: "此浏览器不支持语音模式。",
+            unableToStartFull: "音频捕获错误：无法启动语音识别。",
+            unableToStartVoice: "无法启动语音识别",
+            searchingFor: "正在搜索：",
+            saySearchQuery: "说“搜索 [您的查询]”进行搜索",
+            enableMicAccessToast: "请开启麦克风访问权限以使用语音模式。",
+            connectMicrophoneToast: "请连接麦克风以使用语音模式。",
+
+            // Toast / UI messages
+            pleaseEnterQuery: "请输入搜索内容。",
+            pleaseFillFields: "请填写名称和 URL 字段。",
+            pleaseUploadValidImage: "请上传有效的图片文件。",
+            textExtractedToast: "已从图片中提取文字！",
+            noTextDetectedToast: "图片中未检测到文字。",
+            failedToExtractToast: "从图片提取文字失败。",
+            shortcutDeletedToast: "快捷方式已删除",
+            noShortcutsOrQueries: "没有可用的快捷方式或查询。",
+
+            // Image search status messages
+            loadingOCRLibrary: "正在加载 OCR 库...",
+            extractingTextStatus: "正在从图片中提取文字...",
+            textExtractedSuccess: "文字提取成功！",
+            noTextFoundInImage: "图片中未找到文字。",
+            failedToExtractText: "提取文字失败。"
           },
           "zh-TW": { 
             name: "Chinese (Traditional)", 
@@ -5461,7 +5801,52 @@
             // Footer
             terms: "利用規約",
             privacy: "プライバシー",
-            cookies: "Cookie"
+            cookies: "Cookie",
+
+            // Navigation tabs
+            navSearch: "検索",
+            navImages: "画像",
+
+            // Voice mode dynamic messages
+            listening: "聴いています...",
+            voiceNotSupportedShort: "音声非対応",
+            micAccessDeniedShort: "マイク拒否",
+            micNotConnectedShort: "マイク未接続",
+            noSpeechShort: "音声未検出",
+            networkErrorShort: "ネットワークエラー",
+            unableToStartShort: "起動不可",
+            errorPrefix: "エラー: ",
+            sorryMicrophone: "申し訳ございません、マイクにアクセスできませんでした。",
+            micAccessDeniedFull: "マイクのアクセスが拒否されました。マイクのアクセスを許可してください。",
+            micNotConnectedFull: "マイクが接続されていません。マイクを接続してください。",
+            noSpeechFull: "音声が検出されませんでした。もう一度お試しください。",
+            networkErrorFull: "ネットワークエラー。接続を確認してください。",
+            audioErrorText: "音声キャプチャエラー: ",
+            voiceNotSupportedFull: "このブラウザでは音声検索は対応していません。",
+            voiceNotSupportedModeFull: "このブラウザでは音声モードは対応していません。",
+            unableToStartFull: "音声キャプチャエラー: 音声認識を開始できませんでした。",
+            unableToStartVoice: "音声認識を開始できませんでした",
+            searchingFor: "検索中: ",
+            saySearchQuery: "\"Search [検索クエリ]\"と言って検索する",
+            enableMicAccessToast: "音声モードを使用するにはマイクのアクセスを有効にしてください。",
+            connectMicrophoneToast: "音声モードを使用するにはマイクを接続してください。",
+
+            // Toast / UI messages
+            pleaseEnterQuery: "検索クエリを入力してください。",
+            pleaseFillFields: "名前と URL フィールドを入力してください。",
+            pleaseUploadValidImage: "有効な画像ファイルをアップロードしてください。",
+            textExtractedToast: "画像からテキストを抽出しました！",
+            noTextDetectedToast: "画像にテキストが検出されませんでした。",
+            failedToExtractToast: "画像からテキストを抽出できませんでした。",
+            shortcutDeletedToast: "ショートカットを削除しました",
+            noShortcutsOrQueries: "利用可能なショートカットまたはクエリがありません。",
+
+            // Image search status messages
+            loadingOCRLibrary: "OCRライブラリを読み込んでいます...",
+            extractingTextStatus: "画像からテキストを抽出中...",
+            textExtractedSuccess: "テキストの抽出に成功しました！",
+            noTextFoundInImage: "画像にテキストが見つかりませんでした。",
+            failedToExtractText: "テキストの抽出に失敗しました。"
           },
           ko: { 
             name: "Korean", 
@@ -5575,7 +5960,52 @@
             // Footer
             terms: "약관",
             privacy: "개인정보 보호",
-            cookies: "Cookie"
+            cookies: "Cookie",
+
+            // Navigation tabs
+            navSearch: "검색",
+            navImages: "이미지",
+
+            // Voice mode dynamic messages
+            listening: "듣는 중...",
+            voiceNotSupportedShort: "음성 미지원",
+            micAccessDeniedShort: "마이크 거부됨",
+            micNotConnectedShort: "마이크 미연결",
+            noSpeechShort: "음성 미감지",
+            networkErrorShort: "네트워크 오류",
+            unableToStartShort: "시작 불가",
+            errorPrefix: "오류: ",
+            sorryMicrophone: "죄송합니다, 마이크에 접근할 수 없었습니다.",
+            micAccessDeniedFull: "마이크 접근이 거부되었습니다. 마이크 권한을 허용해 주세요.",
+            micNotConnectedFull: "마이크가 연결되지 않았습니다. 마이크를 연결해 주세요.",
+            noSpeechFull: "음성이 감지되지 않았습니다. 다시 시도해 주세요.",
+            networkErrorFull: "네트워크 오류입니다. 연결을 확인해 주세요.",
+            audioErrorText: "오디오 캡처 오류: ",
+            voiceNotSupportedFull: "이 브라우저에서는 음성 검색이 지원되지 않습니다.",
+            voiceNotSupportedModeFull: "이 브라우저에서는 음성 모드가 지원되지 않습니다.",
+            unableToStartFull: "오디오 캡처 오류: 음성 인식을 시작할 수 없습니다.",
+            unableToStartVoice: "음성 인식을 시작할 수 없습니다",
+            searchingFor: "검색 중: ",
+            saySearchQuery: "\"Search [검색어]\"라고 말해 검색하세요",
+            enableMicAccessToast: "음성 모드를 사용하려면 마이크 접근을 활성화하세요.",
+            connectMicrophoneToast: "음성 모드를 사용하려면 마이크를 연결하세요.",
+
+            // Toast / UI messages
+            pleaseEnterQuery: "검색어를 입력해 주세요.",
+            pleaseFillFields: "이름과 URL 필드를 모두 입력해 주세요.",
+            pleaseUploadValidImage: "유효한 이미지 파일을 업로드해 주세요.",
+            textExtractedToast: "이미지에서 텍스트를 추출했습니다!",
+            noTextDetectedToast: "이미지에서 텍스트가 감지되지 않았습니다.",
+            failedToExtractToast: "이미지에서 텍스트 추출에 실패했습니다.",
+            shortcutDeletedToast: "바로가기 삭제됨",
+            noShortcutsOrQueries: "사용 가능한 바로가기나 쿼리가 없습니다.",
+
+            // Image search status messages
+            loadingOCRLibrary: "OCR 라이브러리 로드 중...",
+            extractingTextStatus: "이미지에서 텍스트 추출 중...",
+            textExtractedSuccess: "텍스트 추출 성공!",
+            noTextFoundInImage: "이미지에서 텍스트를 찾을 수 없습니다.",
+            failedToExtractText: "텍스트 추출에 실패했습니다."
           },
           ar: { 
             name: "Arabic", 
@@ -5689,7 +6119,52 @@
             // Footer
             terms: "الشروط",
             privacy: "الخصوصية",
-            cookies: "ملفات تعريف الارتباط"
+            cookies: "ملفات تعريف الارتباط",
+
+            // Navigation tabs
+            navSearch: "بحث",
+            navImages: "صور",
+
+            // Voice mode dynamic messages
+            listening: "جارٍ الاستماع...",
+            voiceNotSupportedShort: "الصوت غير مدعوم",
+            micAccessDeniedShort: "الميكروفون مرفوض",
+            micNotConnectedShort: "الميكروفون غير متصل",
+            noSpeechShort: "لم يُكتشف صوت",
+            networkErrorShort: "خطأ في الشبكة",
+            unableToStartShort: "تعذر البدء",
+            errorPrefix: "خطأ: ",
+            sorryMicrophone: "آسف، لم أتمكن من الوصول إلى الميكروفون.",
+            micAccessDeniedFull: "تم رفض الوصول إلى الميكروفون. يرجى السماح بأذونات الميكروفون.",
+            micNotConnectedFull: "الميكروفون غير متصل. يرجى توصيل ميكروفون.",
+            noSpeechFull: "لم يُكتشف صوت. يرجى المحاولة مرة أخرى.",
+            networkErrorFull: "خطأ في الشبكة. يرجى التحقق من الاتصال.",
+            audioErrorText: "خطأ التقاط الصوت: ",
+            voiceNotSupportedFull: "البحث الصوتي غير مدعوم في هذا المتصفح.",
+            voiceNotSupportedModeFull: "وضع الصوت غير مدعوم في هذا المتصفح.",
+            unableToStartFull: "خطأ التقاط الصوت: تعذر بدء التعرف على الصوت.",
+            unableToStartVoice: "تعذر بدء التعرف على الصوت",
+            searchingFor: "جارٍ البحث عن: ",
+            saySearchQuery: "قل \"Search [استعلامك]\" للبحث",
+            enableMicAccessToast: "يرجى تفعيل الوصول إلى الميكروفون لاستخدام وضع الصوت.",
+            connectMicrophoneToast: "يرجى توصيل ميكروفون لاستخدام وضع الصوت.",
+
+            // Toast / UI messages
+            pleaseEnterQuery: "يرجى إدخال استعلام بحث.",
+            pleaseFillFields: "يرجى ملء حقلي الاسم وURL.",
+            pleaseUploadValidImage: "يرجى تحميل ملف صورة صالح.",
+            textExtractedToast: "تم استخلاص النص من الصورة!",
+            noTextDetectedToast: "لم يُكتشف نص في الصورة.",
+            failedToExtractToast: "فشل استخلاص النص من الصورة.",
+            shortcutDeletedToast: "تم حذف الاختصار",
+            noShortcutsOrQueries: "لا توجد اختصارات أو استفسارات متاحة.",
+
+            // Image search status messages
+            loadingOCRLibrary: "جارٍ تحميل مكتبة OCR...",
+            extractingTextStatus: "جارٍ استخلاص النص من الصورة...",
+            textExtractedSuccess: "تم استخلاص النص بنجاح!",
+            noTextFoundInImage: "لم يُعثر على نص في الصورة.",
+            failedToExtractText: "فشل استخلاص النص."
           },
           he: { 
             name: "Hebrew", 
@@ -5917,7 +6392,52 @@
             // Footer
             terms: "Условия",
             privacy: "Конфиденциальность",
-            cookies: "Файлы cookie"
+            cookies: "Файлы cookie",
+
+            // Navigation tabs
+            navSearch: "Поиск",
+            navImages: "Изображения",
+
+            // Voice mode dynamic messages
+            listening: "Слушаю...",
+            voiceNotSupportedShort: "Голос не поддерживается",
+            micAccessDeniedShort: "Микрофон отклонён",
+            micNotConnectedShort: "Микрофон не подключён",
+            noSpeechShort: "Речь не распознана",
+            networkErrorShort: "Ошибка сети",
+            unableToStartShort: "Не удаётся запустить",
+            errorPrefix: "Ошибка: ",
+            sorryMicrophone: "Извините, не удалось получить доступ к микрофону.",
+            micAccessDeniedFull: "Доступ к микрофону отклонён. Пожалуйста, разрешите доступ к микрофону.",
+            micNotConnectedFull: "Микрофон не подключён. Пожалуйста, подключите микрофон.",
+            noSpeechFull: "Речь не распознана. Пожалуйста, попробуйте ещё раз.",
+            networkErrorFull: "Ошибка сети. Пожалуйста, проверьте соединение.",
+            audioErrorText: "Ошибка захвата звука: ",
+            voiceNotSupportedFull: "Голосовой поиск не поддерживается в этом браузере.",
+            voiceNotSupportedModeFull: "Голосовой режим не поддерживается в этом браузере.",
+            unableToStartFull: "Ошибка захвата звука: Не удаётся запустить распознавание речи.",
+            unableToStartVoice: "Не удаётся запустить распознавание речи",
+            searchingFor: "Поиск: ",
+            saySearchQuery: "Скажите \"Поиск [ваш запрос]\" для поиска",
+            enableMicAccessToast: "Пожалуйста, включите доступ к микрофону для использования голосового режима.",
+            connectMicrophoneToast: "Пожалуйста, подключите микрофон для использования голосового режима.",
+
+            // Toast / UI messages
+            pleaseEnterQuery: "Пожалуйста, введите содержимое для поиска.",
+            pleaseFillFields: "Пожалуйста, заполните поля Название и URL.",
+            pleaseUploadValidImage: "Пожалуйста, загрузите допустимый файл изображения.",
+            textExtractedToast: "Текст извлечён из изображения!",
+            noTextDetectedToast: "Текст в изображении не обнаружен.",
+            failedToExtractToast: "Не удалось извлечь текст из изображения.",
+            shortcutDeletedToast: "Ярлык удалён",
+            noShortcutsOrQueries: "Нет доступных ярлыков или запросов.",
+
+            // Image search status messages
+            loadingOCRLibrary: "Загрузка библиотеки OCR...",
+            extractingTextStatus: "Извлечение текста из изображения...",
+            textExtractedSuccess: "Текст успешно извлечён!",
+            noTextFoundInImage: "Текст в изображении не найден.",
+            failedToExtractText: "Не удалось извлечь текст."
           },
           uk: { 
             name: "Ukrainian", 
@@ -6601,7 +7121,52 @@
             // Footer
             terms: "शर्तें",
             privacy: "गोपनीयता",
-            cookies: "कुकीज़"
+            cookies: "कुकीज़",
+
+            // Navigation tabs
+            navSearch: "खोजें",
+            navImages: "छवियाँ",
+
+            // Voice mode dynamic messages
+            listening: "सुन रहा हूँ...",
+            voiceNotSupportedShort: "आवाज़ समर्थित नहीं",
+            micAccessDeniedShort: "माइक अस्वीकृत",
+            micNotConnectedShort: "माइक नहीं जुड़ा",
+            noSpeechShort: "कोई आवाज़ नहीं",
+            networkErrorShort: "नेटवर्क त्रुटि",
+            unableToStartShort: "शुरू नहीं हो सकता",
+            errorPrefix: "त्रुटि: ",
+            sorryMicrophone: "क्षमा करें, मैं आपका माइक्रोफ़ोन नहीं पा सका।",
+            micAccessDeniedFull: "माइक्रोफ़ोन की पहुँच अस्वीकार कर दी गई। कृपया माइक्रोफ़ोन अनुमति दें।",
+            micNotConnectedFull: "माइक्रोफ़ोन नहीं जुड़ा। कृपया माइक्रोफ़ोन जोड़ें।",
+            noSpeechFull: "कोई आवाज़ नहीं मिली। कृपया फिर कोशिश करें।",
+            networkErrorFull: "नेटवर्क त्रुटि। कृपया अपना कनेक्शन जाँचें।",
+            audioErrorText: "ऑडियो कैप्चर त्रुटि: ",
+            voiceNotSupportedFull: "इस ब्राउज़र में वॉइस सर्च समर्थित नहीं है।",
+            voiceNotSupportedModeFull: "इस ब्राउज़र में वॉइस मोड समर्थित नहीं है।",
+            unableToStartFull: "ऑडियो कैप्चर त्रुटि: वॉइस रिकॉग्निशन शुरू नहीं हो सका।",
+            unableToStartVoice: "वॉइस रिकॉग्निशन शुरू नहीं हो सका",
+            searchingFor: "खोज रहा हूँ: ",
+            saySearchQuery: "खोजने के लिए \"Search [अपनी क्वेरी]\" कहें",
+            enableMicAccessToast: "वॉइस मोड उपयोग करने के लिए माइक्रोफ़ोन एक्सेस सक्षम करें।",
+            connectMicrophoneToast: "वॉइस मोड उपयोग करने के लिए माइक्रोफ़ोन जोड़ें।",
+
+            // Toast / UI messages
+            pleaseEnterQuery: "कृपया खोज क्वेरी दर्ज करें।",
+            pleaseFillFields: "कृपया नाम और URL दोनों फ़ील्ड भरें।",
+            pleaseUploadValidImage: "कृपया एक मान्य चित्र फ़ाइल अपलोड करें।",
+            textExtractedToast: "छवि से पाठ निकाला गया!",
+            noTextDetectedToast: "छवि में कोई पाठ नहीं मिला।",
+            failedToExtractToast: "छवि से पाठ निकालने में विफल।",
+            shortcutDeletedToast: "शॉर्टकट हटाया गया",
+            noShortcutsOrQueries: "कोई शॉर्टकट या क्वेरी उपलब्ध नहीं।",
+
+            // Image search status messages
+            loadingOCRLibrary: "OCR लाइब्रेरी लोड हो रही है...",
+            extractingTextStatus: "छवि से पाठ निकाला जा रहा है...",
+            textExtractedSuccess: "पाठ सफलतापूर्वक निकाला गया!",
+            noTextFoundInImage: "छवि में कोई पाठ नहीं मिला।",
+            failedToExtractText: "पाठ निकालने में विफल।"
           },
           bn: { 
             name: "Bengali", 
@@ -7208,8 +7773,14 @@
           if (voiceSearchTitle) voiceSearchTitle.textContent = t.voiceSearch || translations.en.voiceSearch;
           
           const spokenWords = document.getElementById("spokenWords");
-          if (spokenWords && spokenWords.textContent === "Click the microphone to start") {
-            spokenWords.textContent = t.clickMicToStart || translations.en.clickMicToStart;
+          if (spokenWords) {
+            const currentText = spokenWords.textContent;
+            const enDefault = translations.en.clickMicToStart;
+            const currentTranslation = t.clickMicToStart || enDefault;
+            // Update if showing the default placeholder (any language)
+            if (currentText === enDefault || currentText === currentTranslation || currentText === (t.clickMicToStart || "")) {
+              spokenWords.textContent = t.clickMicToStart || enDefault;
+            }
           }
           
           const doneVoiceSearch = document.getElementById("doneVoiceSearch");
@@ -7313,7 +7884,8 @@
             "Search History": t.searchHistoryLabel,
             "Shortcuts": t.shortcutsLabel,
             "Settings": t.settingsLabel,
-            "Data": t.dataLabel
+            "Data": t.dataLabel,
+            "Text to Speech": t.ttsLabel
           };
           
           settingsLabels.forEach(label => {
@@ -7323,6 +7895,10 @@
               }
             });
           });
+
+          // TTS sublabel
+          const ttsSublabel = document.querySelector(".tts-sublabel");
+          if (ttsSublabel) ttsSublabel.textContent = t.ttsDescription || translations.en.ttsDescription;
           
           // Appearance Settings Buttons
           const uploadImageBtn = document.getElementById("bgImageUploadBtn");
@@ -7407,10 +7983,34 @@
           
           const imageBtn = document.getElementById("imageOptionButton");
           if (imageBtn) imageBtn.textContent = t.images || translations.en.images;
+
+          // data-translate attribute elements
+          document.querySelectorAll("[data-translate]").forEach(function(el) {
+            const key = el.getAttribute("data-translate");
+            const translation = t[key] || translations.en[key];
+            if (translation) el.textContent = translation;
+          });
+
+          // Confirm modal buttons
+          const confirmOkBtn = document.getElementById("confirmOkBtn");
+          if (confirmOkBtn) confirmOkBtn.textContent = t.ok || translations.en.ok;
+          const confirmCancelBtn = document.getElementById("confirmCancelBtn");
+          if (confirmCancelBtn) confirmCancelBtn.textContent = t.cancel || translations.en.cancel;
         }
 
-        // Load saved language
-        const savedLang = localStorage.getItem("munetiosLanguage") || "en";
+        // Load saved language (with navigator.language auto-detection on first visit)
+        let savedLang = localStorage.getItem("munetiosLanguage");
+        if (!savedLang) {
+          const browserLang = (navigator.language || navigator.userLanguage || "en").toLowerCase();
+          const baseLang = browserLang.split("-")[0];
+          if (translations[browserLang]) {
+            savedLang = browserLang;
+          } else if (translations[baseLang]) {
+            savedLang = baseLang;
+          } else {
+            savedLang = "en";
+          }
+        }
         languageButton.textContent = translations[savedLang]?.name || "English";
         applyTranslations(savedLang);
         
@@ -7954,7 +8554,7 @@
           if (window.renderShortcuts) {
             window.renderShortcuts();
           }
-          window.showToast && window.showToast("Shortcut deleted");
+          window.showToast && window.showToast(window.getTranslation ? window.getTranslation("shortcutDeletedToast") : "Shortcut deleted");
         }
 
         function deleteAllShortcuts() {
@@ -8288,6 +8888,95 @@
           sidebarOverlay.addEventListener("click", closeSidebar);
         }
       })();
+
+      // Text-to-Speech UI functionality
+      (function () {
+        const ttsToggle = document.getElementById("ttsToggle");
+        const ttsSaved = localStorage.getItem("munetiosTTS") === "true";
+
+        if (ttsSaved && ttsToggle) ttsToggle.classList.add("active");
+
+        const speechLangMap = {
+          en: "en-US", es: "es-ES", fr: "fr-FR", de: "de-DE", it: "it-IT",
+          pt: "pt-BR", nl: "nl-NL", pl: "pl-PL", tr: "tr-TR", sv: "sv-SE",
+          no: "nb-NO", da: "da-DK", fi: "fi-FI", zh: "zh-CN", "zh-TW": "zh-TW",
+          ja: "ja-JP", ko: "ko-KR", ar: "ar-SA", hi: "hi-IN", bn: "bn-IN",
+          th: "th-TH", vi: "vi-VN", id: "id-ID", ms: "ms-MY", ru: "ru-RU",
+          uk: "uk-UA", el: "el-GR", he: "he-IL", cs: "cs-CZ", ro: "ro-RO", hu: "hu-HU"
+        };
+
+        // Major layout containers — stop walking up at these
+        const LAYOUT_TAGS = new Set(["HTML", "BODY", "MAIN", "HEADER", "FOOTER", "NAV", "SECTION", "ARTICLE"]);
+
+        function speakText(text) {
+          if (!window.speechSynthesis || !text || !text.trim()) return;
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(text.trim());
+          const uiLang = localStorage.getItem("munetiosLanguage") || "en";
+          utterance.lang = speechLangMap[uiLang] || "en-US";
+          utterance.rate = 1.0;
+          window.speechSynthesis.speak(utterance);
+        }
+
+        // Returns readable text from an element by cloning it and stripping all icon elements first
+        function getReadableText(el) {
+          const clone = el.cloneNode(true);
+          // Strip <icon>, <svg>, <img> and any material-icon class elements
+          clone.querySelectorAll(
+            "icon, svg, img, .material-symbols-rounded, .material-icons, .material-symbols-outlined"
+          ).forEach(function (n) { n.remove(); });
+          return clone.textContent.replace(/\s+/g, " ").trim();
+        }
+
+        // Returns true if the element is purely an icon (should never be spoken)
+        function isIconElement(el) {
+          const tag = el.nodeName.toLowerCase();
+          return tag === "icon" || tag === "svg" || tag === "img" ||
+            el.classList.contains("material-symbols-rounded") ||
+            el.classList.contains("material-icons") ||
+            el.classList.contains("material-symbols-outlined");
+        }
+
+        function ttsClickHandler(e) {
+          if (localStorage.getItem("munetiosTTS") !== "true") return;
+          // Don't self-echo the TTS toggle itself
+          if (e.target.closest("#ttsToggle")) return;
+          // Never speak when clicking directly on an icon element
+          if (isIconElement(e.target)) return;
+
+          // Walk up from click target looking for the nearest element with readable text.
+          // Stop at major layout containers or after 10 levels.
+          let node = e.target;
+          let depth = 0;
+          while (node && node !== document.body && depth < 10) {
+            if (LAYOUT_TAGS.has(node.nodeName)) break;
+            const text = getReadableText(node);
+            if (text && text.length > 0 && text.length < 200) {
+              speakText(text);
+              return;
+            }
+            node = node.parentElement;
+            depth++;
+          }
+        }
+
+        function updateTTSListener(isActive) {
+          document.removeEventListener("click", ttsClickHandler, true);
+          if (isActive) {
+            document.addEventListener("click", ttsClickHandler, true);
+          }
+        }
+
+        ttsToggle?.addEventListener("click", function () {
+          ttsToggle.classList.toggle("active");
+          const isActive = ttsToggle.classList.contains("active");
+          localStorage.setItem("munetiosTTS", isActive);
+          updateTTSListener(isActive);
+        });
+
+        // Init listener on page load if previously enabled
+        updateTTSListener(ttsSaved);
+      })();
         // Initialize appearance settings on page load
       (function () {
         // Apply appearance settings
@@ -8432,7 +9121,7 @@
       })();
     </script>
     <script nonce="IKDjefjewhCujHJeuji3jhekowdijzizkcej">
-      // Detect old browsers and redirect to lite version
+      // Detect old browsers and show modal
       (function () {
         function isOldBrowser() {
           var ua = navigator.userAgent;
@@ -8486,7 +9175,40 @@
         }
 
         if (isOldBrowser()) {
-          window.location.href = "lite.html";
+          var modal = document.createElement("div");
+          modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:10000;";
+          
+          var modalContent = document.createElement("div");
+          modalContent.style.cssText = "background:white;padding:30px;border-radius:8px;text-align:center;max-width:400px;box-shadow:0 4px 6px rgba(0,0,0,0.1);";
+          
+          var title = document.createElement("h2");
+          title.textContent = "Unsupported Browser";
+          title.style.cssText = "margin:0 0 10px 0;color:#333;";
+          
+          var message = document.createElement("p");
+          message.textContent = "Your browser is outdated. Please upgrade for the best experience.";
+          message.style.cssText = "margin:0 0 20px 0;color:#666;font-size:14px;";
+          
+          var buttonContainer = document.createElement("div");
+          buttonContainer.style.cssText = "display:flex;gap:10px;justify-content:center;";
+          
+          var liteBtn = document.createElement("button");
+          liteBtn.textContent = "Go to Lite Version";
+          liteBtn.style.cssText = "padding:10px 20px;background:#007bff;color:white;border:none;border-radius:4px;cursor:pointer;font-weight:bold;";
+          liteBtn.onclick = function() { window.location.href = "lite.html"; };
+          
+          var tryBtn = document.createElement("button");
+          tryBtn.textContent = "Try Anyway";
+          tryBtn.style.cssText = "padding:10px 20px;background:#6c757d;color:white;border:none;border-radius:4px;cursor:pointer;font-weight:bold;";
+          tryBtn.onclick = function() { modal.remove(); };
+          
+          buttonContainer.appendChild(liteBtn);
+          buttonContainer.appendChild(tryBtn);
+          modalContent.appendChild(title);
+          modalContent.appendChild(message);
+          modalContent.appendChild(buttonContainer);
+          modal.appendChild(modalContent);
+          document.body.appendChild(modal);
         }
       })();
 
