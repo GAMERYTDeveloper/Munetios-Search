@@ -233,7 +233,7 @@
   <body>
     <div class="topbar liquid-glass">
       <div class="top-left">
-        <h3 id="backtoMunetios">Manage Data</h3>
+        <h3 id="backtoMunetios" data-i18n="manageData">Manage Data</h3>
       </div>
       <div class="topbar-middle">
         <div class="navbar-item" id="searchHistoryBtn">
@@ -352,7 +352,7 @@
         msg.innerHTML = `
             <h2 style="margin-top:0;">Help</h2>
             <p>
-                <b>Manage Data</b> lets you view and clear your search history, bookmarks, and removed results.<br><br>
+                <b data-i18n="manageData">Manage Data</b> lets you view and clear your search history, bookmarks, and removed results.<br><br>
                 <b>Tabs:</b><br>
                 <b>Search History</b>: View and delete your search queries.<br>
                 <b>Other Data</b>: Manage removed results and bookmarks.<br>
@@ -801,5 +801,6 @@
         box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.08);
       }
     </style>
-  </body>
+      <script src="/local-i18n.js"></script>
+</body>
 </html>
