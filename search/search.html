@@ -6802,18 +6802,6 @@
           }
         });
 
-        // Also handle click on the slider label area for better UX
-        document.addEventListener("click", function (e) {
-          const slider = document.getElementById("instantAnswersSlider");
-          const knob = document.getElementById("instantAnswersKnob");
-          if (e.target === slider || e.target === knob) {
-            const checkbox = document.getElementById("enableInstantAnswers");
-            if (checkbox) {
-              checkbox.checked = !checkbox.checked;
-              checkbox.dispatchEvent(new Event("change", { bubbles: true }));
-            }
-          }
-        });
       })();
   
 
