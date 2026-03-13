@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Munetios Labs — Secure Folders</title>
+    <link rel="icon" href="/apple-touch-icon-new.png" type="image/png" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline' https://api.munetios.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com; script-src 'self' 'nonce-sfK3j1Lm9Qx7vN2a'; img-src 'self' data: blob:;"
+    />
+    <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,200..700,0..1,-25..200&display=swap"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,80&display=swap");
+
+      * {
+        box-sizing: border-box;
+        font-family: "Google Sans Flex", sans-serif;
+        font-variation-settings: "wght" 500, "ROND" 80;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: radial-gradient(circle at 20% -10%, #9f85ff88, transparent 45%),
+          radial-gradient(circle at 90% 10%, #57c1ff6e, transparent 38%),
+          linear-gradient(135deg, #0f1033, #170e3f 55%, #0d1d3d);
+        color: #f6f8ff;
+      }
+
+      .liquid-glass-custom {
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.06));
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
+      }
+
+      .app-shell {
+        display: grid;
+        grid-template-columns: 270px 1fr;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        margin: 14px;
+        border-radius: 24px;
+        padding: 20px;
+      }
+
+      .sidebar h2 {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .sidebar p,
+      .muted {
+        color: #e6ebffcc;
+        line-height: 1.5;
+      }
+
+      .workspace {
+        margin: 14px 14px 14px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .topbar {
+        border-radius: 22px;
+        min-height: 72px;
+        padding: 14px 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .title-wrap h1 {
+        margin: 0;
+        font-variation-settings: "wght" 700, "ROND" 80;
+      }
+
+      .controls {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      button,
+      .upload-btn {
+        border: 1px solid rgba(255, 255, 255, 0.26);
+        border-radius: 999px;
+        color: white;
+        background: linear-gradient(120deg, rgba(255, 255, 255, 0.18), rgba(95, 136, 255, 0.2));
+        padding: 10px 16px;
+        cursor: pointer;
+      }
+
+      input[type="file"] {
+        display: none;
+      }
+
+      .panel {
+        border-radius: 24px;
+        padding: 22px;
+      }
+
+      .status {
+        margin: 0;
+        min-height: 24px;
+        color: #f2f6ff;
+      }
+
+      .file-list {
+        display: grid;
+        gap: 12px;
+        margin-top: 12px;
+      }
+
+      .file-card {
+        border-radius: 18px;
+        padding: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        background: linear-gradient(140deg, rgba(255, 255, 255, 0.16), rgba(122, 88, 255, 0.12));
+        border: 1px solid rgba(255, 255, 255, 0.24);
+      }
+
+      .file-meta h3 {
+        margin: 0;
+        font-size: 18px;
+      }
+
+      .file-meta p {
+        margin: 3px 0;
+        color: #e8edffd1;
+        font-size: 13px;
+      }
+
+      .file-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      @media (max-width: 960px) {
+        .app-shell {
+          grid-template-columns: 1fr;
+        }
+
+        .workspace {
+          margin: 0 14px 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar liquid-glass-custom">
+        <h2><span class="material-symbols-rounded">folder_lock</span> <span data-i18n="secureFolders">Secure Folders</span></h2>
+        <p data-i18n="sidebarDesc">End-to-end encrypted vault for files, photos, and videos.</p>
+        <p class="muted" data-i18n="sidebarStorage">Data stays encrypted in IndexedDB. Keys are stored in a hidden key vault reference.</p>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar liquid-glass-custom">
+          <div class="title-wrap">
+            <h1 data-i18n="secureFolders">Secure Folders</h1>
+            <p class="muted" data-i18n="subtitle">Beautiful liquid glass labs experiment.</p>
+          </div>
+          <div class="controls">
+            <button id="langBtn">Español</button>
+            <button id="homeBtn" data-i18n="backToLabs">Back to Labs</button>
+          </div>
+        </header>
+
+        <section class="panel liquid-glass-custom">
+          <div class="controls">
+            <label class="upload-btn" for="uploadInput"><span data-i18n="uploadFiles">Upload files</span></label>
+            <input id="uploadInput" type="file" multiple accept="image/*,video/*,.pdf,.txt,.zip,.doc,.docx" />
+          </div>
+          <p class="status" id="statusText"></p>
+        </section>
+
+        <section class="panel liquid-glass-custom">
+          <h2 data-i18n="vaultItems">Vault items</h2>
+          <div id="fileList" class="file-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <script nonce="sfK3j1Lm9Qx7vN2a">
+      const DB_NAME = "munetios_secure_folders_lab";
+      const DB_VERSION = 1;
+      const FILE_STORE = "vault_files";
+      const KEY_STORE = "vault_keys";
+      const KEY_SALT = "munetios-secure-folders-hidden-reference";
+      const translations = {
+        en: {
+          secureFolders: "Secure Folders",
+          sidebarDesc: "End-to-end encrypted vault for files, photos, and videos.",
+          sidebarStorage: "Data stays encrypted in IndexedDB. Keys are stored in a hidden key vault reference.",
+          subtitle: "Beautiful liquid glass labs experiment.",
+          backToLabs: "Back to Labs",
+          uploadFiles: "Upload files",
+          vaultItems: "Vault items",
+          noFiles: "No files yet. Upload your first encrypted file.",
+          uploaded: "Encrypted and stored successfully.",
+          downloaded: "File decrypted and downloaded.",
+          removed: "Item removed from encrypted vault.",
+          languageBtn: "Español",
+          type: "Type",
+          size: "Size",
+          updated: "Updated",
+          download: "Download",
+          delete: "Delete"
+        },
+        es: {
+          secureFolders: "Carpetas Seguras",
+          sidebarDesc: "Bóveda cifrada de extremo a extremo para archivos, fotos y videos.",
+          sidebarStorage: "Los datos quedan cifrados en IndexedDB. Las claves se guardan en una referencia oculta.",
+          subtitle: "Experimento de Labs con estilo liquid glass.",
+          backToLabs: "Volver a Labs",
+          uploadFiles: "Subir archivos",
+          vaultItems: "Elementos de la bóveda",
+          noFiles: "Aún no hay archivos. Sube tu primer archivo cifrado.",
+          uploaded: "Cifrado y guardado correctamente.",
+          downloaded: "Archivo descifrado y descargado.",
+          removed: "Elemento eliminado de la bóveda cifrada.",
+          languageBtn: "English",
+          type: "Tipo",
+          size: "Tamaño",
+          updated: "Actualizado",
+          download: "Descargar",
+          delete: "Eliminar"
+        }
+      };
+
+      let currentLang = "en";
+
+      function t(key) {
+        return translations[currentLang][key] || key;
+      }
+
+      function applyLanguage() {
+        document.documentElement.lang = currentLang;
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          el.textContent = t(el.dataset.i18n);
+        });
+        document.getElementById("langBtn").textContent = t("languageBtn");
+      }
+
+      function openDB() {
+        return new Promise((resolve, reject) => {
+          const req = indexedDB.open(DB_NAME, DB_VERSION);
+          req.onupgradeneeded = () => {
+            const db = req.result;
+            if (!db.objectStoreNames.contains(FILE_STORE)) db.createObjectStore(FILE_STORE, { keyPath: "id" });
+            if (!db.objectStoreNames.contains(KEY_STORE)) db.createObjectStore(KEY_STORE, { keyPath: "keyId" });
+          };
+          req.onsuccess = () => resolve(req.result);
+          req.onerror = () => reject(req.error);
+        });
+      }
+
+      async function hiddenKeyRef(fileId) {
+        const payload = new TextEncoder().encode(fileId + KEY_SALT);
+        const digest = await crypto.subtle.digest("SHA-256", payload);
+        return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, "0")).join("");
+      }
+
+      function toBase64(uint8) {
+        return btoa(String.fromCharCode(...uint8));
+      }
+
+      function fromBase64(str) {
+        const binary = atob(str);
+        return Uint8Array.from(binary, (char) => char.charCodeAt(0));
+      }
+
+      function formatSize(size) {
+        if (size < 1024) return `${size} B`;
+        if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
+        return `${(size / (1024 * 1024)).toFixed(2)} MB`;
+      }
+
+      async function listFiles() {
+        const db = await openDB();
+        const tx = db.transaction(FILE_STORE, "readonly");
+        const store = tx.objectStore(FILE_STORE);
+        const req = store.getAll();
+        const records = await new Promise((resolve, reject) => {
+          req.onsuccess = () => resolve(req.result || []);
+          req.onerror = () => reject(req.error);
+        });
+        db.close();
+
+        const list = document.getElementById("fileList");
+        list.innerHTML = "";
+
+        if (!records.length) {
+          list.innerHTML = `<p class="muted">${t("noFiles")}</p>`;
+          return;
+        }
+
+        records.sort((a, b) => b.updatedAt - a.updatedAt);
+        records.forEach((item) => {
+          const wrapper = document.createElement("article");
+          wrapper.className = "file-card";
+          wrapper.innerHTML = `
+            <div class="file-meta">
+              <h3>${item.name}</h3>
+              <p>${t("type")}: ${item.type || "application/octet-stream"}</p>
+              <p>${t("size")}: ${formatSize(item.size)} · ${t("updated")}: ${new Date(item.updatedAt).toLocaleString(currentLang)}</p>
+            </div>
+            <div class="file-actions">
+              <button data-action="download" data-id="${item.id}">${t("download")}</button>
+              <button data-action="delete" data-id="${item.id}">${t("delete")}</button>
+            </div>
+          `;
+          list.appendChild(wrapper);
+        });
+      }
+
+      async function uploadFiles(files) {
+        const db = await openDB();
+        const tx = db.transaction([FILE_STORE, KEY_STORE], "readwrite");
+        const fileStore = tx.objectStore(FILE_STORE);
+        const keyStore = tx.objectStore(KEY_STORE);
+
+        for (const file of files) {
+          const fileId = crypto.randomUUID();
+          const keyId = await hiddenKeyRef(fileId);
+          const iv = crypto.getRandomValues(new Uint8Array(12));
+          const rawBuffer = await file.arrayBuffer();
+          const cryptoKey = await crypto.subtle.generateKey({ name: "AES-GCM", length: 256 }, true, ["encrypt", "decrypt"]);
+          const cipher = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, cryptoKey, rawBuffer);
+          const exportedKey = new Uint8Array(await crypto.subtle.exportKey("raw", cryptoKey));
+
+          fileStore.put({
+            id: fileId,
+            keyRef: keyId,
+            name: file.name,
+            type: file.type,
+            size: file.size,
+            updatedAt: Date.now(),
+            iv: toBase64(iv),
+            cipher
+          });
+
+          keyStore.put({
+            keyId,
+            material: toBase64(exportedKey),
+            createdAt: Date.now()
+          });
+        }
+
+        await new Promise((resolve, reject) => {
+          tx.oncomplete = resolve;
+          tx.onerror = () => reject(tx.error);
+        });
+        db.close();
+      }
+
+      async function downloadFile(fileId) {
+        const db = await openDB();
+        const tx = db.transaction([FILE_STORE, KEY_STORE], "readonly");
+        const fileRecord = await new Promise((resolve, reject) => {
+          const req = tx.objectStore(FILE_STORE).get(fileId);
+          req.onsuccess = () => resolve(req.result);
+          req.onerror = () => reject(req.error);
+        });
+
+        if (!fileRecord) {
+          db.close();
+          return;
+        }
+
+        const keyRecord = await new Promise((resolve, reject) => {
+          const req = tx.objectStore(KEY_STORE).get(fileRecord.keyRef);
+          req.onsuccess = () => resolve(req.result);
+          req.onerror = () => reject(req.error);
+        });
+        db.close();
+        if (!keyRecord) return;
+
+        const cryptoKey = await crypto.subtle.importKey("raw", fromBase64(keyRecord.material), { name: "AES-GCM" }, false, ["decrypt"]);
+        const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: fromBase64(fileRecord.iv) }, cryptoKey, fileRecord.cipher);
+        const blob = new Blob([plain], { type: fileRecord.type || "application/octet-stream" });
+
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = fileRecord.name;
+        document.body.appendChild(a);
+        a.click();
+        URL.revokeObjectURL(a.href);
+        a.remove();
+      }
+
+      async function deleteFile(fileId) {
+        const db = await openDB();
+        const lookupTx = db.transaction(FILE_STORE, "readonly");
+        const record = await new Promise((resolve, reject) => {
+          const req = lookupTx.objectStore(FILE_STORE).get(fileId);
+          req.onsuccess = () => resolve(req.result);
+          req.onerror = () => reject(req.error);
+        });
+
+        const tx = db.transaction([FILE_STORE, KEY_STORE], "readwrite");
+        tx.objectStore(FILE_STORE).delete(fileId);
+        if (record?.keyRef) tx.objectStore(KEY_STORE).delete(record.keyRef);
+        await new Promise((resolve, reject) => {
+          tx.oncomplete = resolve;
+          tx.onerror = () => reject(tx.error);
+        });
+        db.close();
+      }
+
+      function setStatus(messageKey) {
+        document.getElementById("statusText").textContent = t(messageKey);
+      }
+
+      document.getElementById("homeBtn").addEventListener("click", () => {
+        window.location.href = "https://www.munetios.com/labs";
+      });
+
+      document.getElementById("langBtn").addEventListener("click", async () => {
+        currentLang = currentLang === "en" ? "es" : "en";
+        applyLanguage();
+        await listFiles();
+      });
+
+      document.getElementById("uploadInput").addEventListener("change", async (event) => {
+        const files = Array.from(event.target.files || []);
+        if (!files.length) return;
+        await uploadFiles(files);
+        setStatus("uploaded");
+        await listFiles();
+        event.target.value = "";
+      });
+
+      document.getElementById("fileList").addEventListener("click", async (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLButtonElement)) return;
+        const fileId = target.dataset.id;
+        if (!fileId) return;
+
+        if (target.dataset.action === "download") {
+          await downloadFile(fileId);
+          setStatus("downloaded");
+        }
+
+        if (target.dataset.action === "delete") {
+          await deleteFile(fileId);
+          setStatus("removed");
+          await listFiles();
+        }
+      });
+
+      if (!window.indexedDB || !window.crypto?.subtle) {
+        document.body.innerHTML = '<div style="padding:40px;color:white;">This experiment requires IndexedDB and Web Crypto support.</div>';
+      } else {
+        applyLanguage();
+        listFiles();
+      }
+    </script>
+  </body>
+</html>
