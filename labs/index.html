@@ -8,7 +8,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon-new.png" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; style-src 'self' 'unsafe-inline' https://api.munetios.com https://fonts.googleapis.com; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'nonce-2jSjSbegDIjwnXikejssx';"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline' https://api.munetios.com https://fonts.googleapis.com; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: https://translate.googleapis.com https://*.gstatic.com; frame-src 'self' https://translate.google.com; script-src 'self' 'unsafe-inline' https://translate.google.com https://translate.googleapis.com;"
     />
     <link
       rel="stylesheet"
@@ -347,5 +347,7 @@
           '<div style="display:flex;justify-content:center;align-items:center;height:100vh;font-size:2em;font-weight:700;">Sorry, Labs is not available in school mode</div>';
       }
     </script>
-  </body>
+  
+  <script src="/i18n-translate.js"></script>
+</body>
 </html>
