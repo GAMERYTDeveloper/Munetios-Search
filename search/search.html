@@ -748,7 +748,7 @@
           <div style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.1);">
             <div>
               <strong>Instant Answers</strong>
-              <p style="margin:4px 0 0;font-size:0.88em;color:#ccc;">Instantly shows math results and knowledge panels above search results. E.g. searching <em>5*12</em> shows <em>60</em>.</p>
+              <p style="margin:4px 0 0;font-size:0.88em;color:#ccc;">Instantly shows math results above search results. E.g. searching <em>5*12</em> shows <em>60</em>.</p>
             </div>
             <label style="position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0;">
               <input type="checkbox" id="enableInstantAnswers" style="opacity:0;width:0;height:0;position:absolute;" />
@@ -6629,18 +6629,71 @@
         /**
          * Safely evaluate a simple math expression containing only numbers,
          * basic operators (+, -, *, /, **, ^, %, (, )) and whitespace.
+         * Uses a recursive descent parser — no eval or Function constructor.
          * Returns the numeric result or null if not a valid math expression.
          */
         function safeMathEval(expr) {
           // Allow only digits, operators, parentheses, dot, whitespace, and ^ (power)
           if (!/^[\d\s\+\-\*\/\^\%\(\)\.]+$/.test(expr)) return null;
-          // Replace ^ with ** for exponentiation
-          const sanitized = expr.replace(/\^/g, "**");
+          // Normalise: strip spaces, replace ^ with ** marker "p"
+          const s = expr.replace(/\s+/g, "").replace(/\^/g, "p");
+          let pos = 0;
+
+          function parseAddSub() {
+            let v = parseMulDiv();
+            while (pos < s.length && (s[pos] === "+" || s[pos] === "-")) {
+              const op = s[pos++];
+              const r = parseMulDiv();
+              v = op === "+" ? v + r : v - r;
+            }
+            return v;
+          }
+
+          function parseMulDiv() {
+            let v = parsePow();
+            while (pos < s.length && (s[pos] === "*" || s[pos] === "/" || s[pos] === "%")) {
+              const op = s[pos++];
+              const r = parsePow();
+              if (op === "*") v *= r;
+              else if (op === "/") v /= r;
+              else v %= r;
+            }
+            return v;
+          }
+
+          function parsePow() {
+            // right-associative: a p b p c → a ** (b ** c)
+            const base = parseUnary();
+            if (pos < s.length && s[pos] === "p") {
+              pos++;
+              return Math.pow(base, parsePow());
+            }
+            return base;
+          }
+
+          function parseUnary() {
+            if (s[pos] === "-") { pos++; return -parsePrimary(); }
+            if (s[pos] === "+") { pos++; return parsePrimary(); }
+            return parsePrimary();
+          }
+
+          function parsePrimary() {
+            if (s[pos] === "(") {
+              pos++;
+              const v = parseAddSub();
+              if (s[pos] !== ")") throw new Error("Expected )");
+              pos++;
+              return v;
+            }
+            const start = pos;
+            while (pos < s.length && /[\d\.]/.test(s[pos])) pos++;
+            if (pos === start) throw new Error("Expected number at pos " + pos);
+            return parseFloat(s.slice(start, pos));
+          }
+
           try {
-            // Use Function constructor to evaluate in a clean scope
-            // eslint-disable-next-line no-new-func
-            const result = Function('"use strict"; return (' + sanitized + ')')();
-            if (typeof result !== "number" || !isFinite(result)) return null;
+            const result = parseAddSub();
+            if (pos !== s.length || !isFinite(result) || isNaN(result)) return null;
             return result;
           } catch (e) {
             return null;
@@ -6653,6 +6706,16 @@
          */
         function isMathQuery(query) {
           return /[\+\-\*\/\^\%]/.test(query) && /\d/.test(query);
+        }
+
+        /** Escape a string for safe insertion into HTML. */
+        function escapeHtml(str) {
+          return str
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
         }
 
         /**
@@ -6689,8 +6752,8 @@
               <span class="material-symbols-rounded" style="font-size:32px;color:#a259f7;flex-shrink:0;">calculate</span>
               <div style="flex:1;min-width:0;">
                 <div style="font-size:0.85em;color:#aaa;margin-bottom:4px;">Instant Answer</div>
-                <div style="font-size:1.1em;opacity:0.75;word-break:break-all;">${query.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</div>
-                <div style="font-size:2em;font-weight:700;color:#a259f7;line-height:1.2;">${formatted}</div>
+                <div style="font-size:1.1em;opacity:0.75;word-break:break-all;">${escapeHtml(query)}</div>
+                <div style="font-size:2em;font-weight:700;color:#a259f7;line-height:1.2;">${escapeHtml(formatted)}</div>
               </div>
             </div>`;
         }
@@ -6713,8 +6776,6 @@
           const q = document.getElementById("searchInput").value.trim();
           showInstantAnswer(q);
         });
-        // Also try immediately in case DOMContentLoaded already fired
-        showInstantAnswer((document.getElementById("searchInput") || {}).value || "");
 
         // --- Toggle wiring ---
         function updateInstantAnswersToggle(enabled) {
