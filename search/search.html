@@ -690,6 +690,7 @@
           <button id="SafeSearchToggle" class="btn liquid-glass">Strict</button>
         </div>
         <div class="ai-overview-box liquid-glass" id="aiOverviewBox"></div>
+        <div id="instantAnswerBox" style="display:none;"></div>
         <div class="results" id="results">
           <div class="enter-a-search-query">
             <span class="material-symbols-rounded" style="font-size: 48px"
@@ -744,9 +745,17 @@
             align-items: center;
           "
         >
-        <p>
-          New Labs features coming soon!
-          </p>
+          <div style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.1);">
+            <div>
+              <strong>Instant Answers</strong>
+              <p style="margin:4px 0 0;font-size:0.88em;color:#ccc;">Instantly shows math results and knowledge panels above search results. E.g. searching <em>5*12</em> shows <em>60</em>.</p>
+            </div>
+            <label style="position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0;">
+              <input type="checkbox" id="enableInstantAnswers" style="opacity:0;width:0;height:0;position:absolute;" />
+              <span id="instantAnswersSlider" style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#3a1c71;border-radius:24px;transition:background 0.2s;"></span>
+              <span id="instantAnswersKnob" style="position:absolute;content:'';height:18px;width:18px;left:3px;bottom:3px;background:white;border-radius:50%;transition:transform 0.2s;"></span>
+            </label>
+          </div>
         </div>
       </div>
     </div>
@@ -925,6 +934,9 @@
       </div>
       <div class="flex items-center gap-2 p-2 hover:bg-gray-700" data-country="za">
         <div class="options-label">South Africa</div>
+      </div>
+      <div class="flex items-center gap-2 p-2 hover:bg-gray-700" data-country="nl">
+        <div class="options-label">Netherlands</div>
       </div>
     </div>
     <div class="liquid-glass hidden p-4 rounded-2xl flex flex-col gap-2" id="liquidGlassDropdown">
@@ -2571,6 +2583,7 @@
         br: "Brazil",
         ru: "Russia",
         za: "South Africa",
+        nl: "Netherlands",
       };
 
       // Blocked phrases per country (example, expand as needed)
@@ -2644,6 +2657,9 @@
       function setCountry(code) {
         localStorage.setItem("country", code);
         window.currentCountry = code;
+        // Update button label
+        const btn = document.getElementById("countryDropdownBtn");
+        if (btn) btn.textContent = countryMap[code] || "Choose Country";
         // Update UI (optional: highlight selected)
         Object.keys(countryMap).forEach((c) => {
           const el = document.querySelector(`[data-country="${c}"]`);
@@ -3021,6 +3037,7 @@
           "enableRedditResults",
           "enableVoiceMode",
           "enableAIOverview",
+          "enableInstantAnswers",
           "searchLanguage",
           
         ];
@@ -3088,6 +3105,7 @@
           "enableRedditResults",
           "enableVoiceMode",
           "enableAIOverview",
+          "enableInstantAnswers",
           "searchLanguage",
         ].forEach((key) => {
           try { localStorage.removeItem(key); } catch {}
@@ -6590,6 +6608,152 @@
           .addEventListener("input", function () {
             renderAIOverview(this.value.trim());
           });
+
+      // --- Instant Answers (Labs feature) ---
+      (function () {
+        const instantAnswerBox = document.getElementById("instantAnswerBox");
+        if (!instantAnswerBox) return;
+
+        // Style the instant answer box
+        instantAnswerBox.style.margin = "0 0 16px 0";
+        instantAnswerBox.style.borderRadius = "18px";
+        instantAnswerBox.style.overflow = "hidden";
+
+        // Map of country code -> locale for number formatting
+        const countryLocaleMap = {
+          us: "en-US", gb: "en-GB", ca: "en-CA", au: "en-AU", za: "en-ZA",
+          de: "de-DE", fr: "fr-FR", jp: "ja-JP", cn: "zh-CN", br: "pt-BR",
+          in: "hi-IN", ru: "ru-RU", nl: "nl-NL",
+        };
+
+        /**
+         * Safely evaluate a simple math expression containing only numbers,
+         * basic operators (+, -, *, /, **, ^, %, (, )) and whitespace.
+         * Returns the numeric result or null if not a valid math expression.
+         */
+        function safeMathEval(expr) {
+          // Allow only digits, operators, parentheses, dot, whitespace, and ^ (power)
+          if (!/^[\d\s\+\-\*\/\^\%\(\)\.]+$/.test(expr)) return null;
+          // Replace ^ with ** for exponentiation
+          const sanitized = expr.replace(/\^/g, "**");
+          try {
+            // Use Function constructor to evaluate in a clean scope
+            // eslint-disable-next-line no-new-func
+            const result = Function('"use strict"; return (' + sanitized + ')')();
+            if (typeof result !== "number" || !isFinite(result)) return null;
+            return result;
+          } catch (e) {
+            return null;
+          }
+        }
+
+        /**
+         * Detect if the query looks like a math expression.
+         * Must contain at least one operator and at least one digit.
+         */
+        function isMathQuery(query) {
+          return /[\+\-\*\/\^\%]/.test(query) && /\d/.test(query);
+        }
+
+        /**
+         * Format a number for display, respecting the user's country locale.
+         */
+        function formatNumber(num) {
+          const locale = countryLocaleMap[window.currentCountry] || "en-US";
+          try {
+            // Show up to 10 significant digits but trim unnecessary trailing zeros
+            return new Intl.NumberFormat(locale, { maximumSignificantDigits: 10 }).format(num);
+          } catch (e) {
+            return String(num);
+          }
+        }
+
+        function showInstantAnswer(query) {
+          if (localStorage.getItem("enableInstantAnswers") !== "true") {
+            instantAnswerBox.style.display = "none";
+            return;
+          }
+          if (!query || !isMathQuery(query)) {
+            instantAnswerBox.style.display = "none";
+            return;
+          }
+          const result = safeMathEval(query);
+          if (result === null) {
+            instantAnswerBox.style.display = "none";
+            return;
+          }
+          const formatted = formatNumber(result);
+          instantAnswerBox.style.display = "block";
+          instantAnswerBox.innerHTML = `
+            <div class="liquid-glass" style="padding:20px 24px;border-radius:18px;display:flex;align-items:center;gap:16px;border:1.5px solid rgba(108,46,183,0.5);">
+              <span class="material-symbols-rounded" style="font-size:32px;color:#a259f7;flex-shrink:0;">calculate</span>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:0.85em;color:#aaa;margin-bottom:4px;">Instant Answer</div>
+                <div style="font-size:1.1em;opacity:0.75;word-break:break-all;">${query.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</div>
+                <div style="font-size:2em;font-weight:700;color:#a259f7;line-height:1.2;">${formatted}</div>
+              </div>
+            </div>`;
+        }
+
+        // Patch performSearch to show instant answer
+        const origPerformSearchIA = window.performSearch;
+        window.performSearch = async function () {
+          const q = document.getElementById("searchInput").value.trim();
+          showInstantAnswer(q);
+          await origPerformSearchIA.apply(this, arguments);
+        };
+
+        // Show on input change
+        document.getElementById("searchInput").addEventListener("input", function () {
+          showInstantAnswer(this.value.trim());
+        });
+
+        // Show on page load if query is present
+        window.addEventListener("DOMContentLoaded", function () {
+          const q = document.getElementById("searchInput").value.trim();
+          showInstantAnswer(q);
+        });
+        // Also try immediately in case DOMContentLoaded already fired
+        showInstantAnswer((document.getElementById("searchInput") || {}).value || "");
+
+        // --- Toggle wiring ---
+        function updateInstantAnswersToggle(enabled) {
+          const checkbox = document.getElementById("enableInstantAnswers");
+          const slider = document.getElementById("instantAnswersSlider");
+          const knob = document.getElementById("instantAnswersKnob");
+          if (checkbox) checkbox.checked = enabled;
+          if (slider) slider.style.background = enabled ? "#6c2eb7" : "#3a1c71";
+          if (knob) knob.style.transform = enabled ? "translateX(20px)" : "translateX(0)";
+        }
+
+        // Restore toggle state from localStorage
+        const iaEnabled = localStorage.getItem("enableInstantAnswers") === "true";
+        updateInstantAnswersToggle(iaEnabled);
+
+        // Listen for toggle changes
+        document.addEventListener("change", function (e) {
+          if (e.target && e.target.id === "enableInstantAnswers") {
+            const enabled = e.target.checked;
+            localStorage.setItem("enableInstantAnswers", enabled ? "true" : "false");
+            updateInstantAnswersToggle(enabled);
+            const q = document.getElementById("searchInput").value.trim();
+            showInstantAnswer(q);
+          }
+        });
+
+        // Also handle click on the slider label area for better UX
+        document.addEventListener("click", function (e) {
+          const slider = document.getElementById("instantAnswersSlider");
+          const knob = document.getElementById("instantAnswersKnob");
+          if (e.target === slider || e.target === knob) {
+            const checkbox = document.getElementById("enableInstantAnswers");
+            if (checkbox) {
+              checkbox.checked = !checkbox.checked;
+              checkbox.dispatchEvent(new Event("change", { bubbles: true }));
+            }
+          }
+        });
+      })();
   
 
       document
@@ -7968,8 +8132,17 @@ if (query !== "@all") {
 
       try {
 
+        // Use country-specific Wikipedia language subdomain when available
+        const countryWikiLang = {
+          us: "en", gb: "en", ca: "en", au: "en", za: "en",
+          de: "de", fr: "fr", jp: "ja", cn: "zh", br: "pt",
+          in: "hi", ru: "ru", nl: "nl",
+        };
+        const wikiLang = countryWikiLang[window.currentCountry] || "en";
+        const wikiBase = `https://${wikiLang}.wikipedia.org`;
+
         const wikiRes = await fetch(
-          `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`
+          `${wikiBase}/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`
         );
 
         const wikiData = await wikiRes.json();
@@ -7977,8 +8150,8 @@ if (query !== "@all") {
         wikiResults = wikiData.query.search.map(item => ({
           title: item.title,
           description: item.snippet.replace(/<\/?[^>]+>/g,""),
-          link: `https://en.wikipedia.org/wiki/${encodeURIComponent(item.title)}`,
-          favicon: "https://en.wikipedia.org/static/favicon/wikipedia.ico"
+          link: `${wikiBase}/wiki/${encodeURIComponent(item.title)}`,
+          favicon: `${wikiBase}/static/favicon/wikipedia.ico`
         }));
 
       } catch(err){ console.log("Wiki error:", err); }
