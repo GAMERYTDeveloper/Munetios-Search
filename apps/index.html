@@ -105,10 +105,10 @@
 </head>
 <body>
     <munetios-app-launcher id="app">
-        <munetios-header slot="header" title="Munetios Apps Launcher">
+        <munetios-header slot="header" title="Munetios Apps Launcher" data-i18n-title="appsLauncher">
             <munetios-search-bar class="liquid-glass">
                 <span class="material-symbols-rounded">search</span>
-                <input type="search" placeholder="Search apps" id="searchApps" />
+                <input type="search" placeholder="Search apps" data-i18n-placeholder="searchApps" id="searchApps" />
             </munetios-search-bar>
         </munetios-header>
         <munetios-apps-list>
@@ -264,5 +264,6 @@
     // Load order on page load
     window.addEventListener('DOMContentLoaded', loadAppOrder);
     </script>
+  <script src="/local-i18n.js"></script>
 </body>
 </html>
