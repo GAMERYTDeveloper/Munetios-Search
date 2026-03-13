@@ -10,16 +10,10 @@
       content="default-src 'self'; style-src 'self' 'unsafe-inline' https://api.munetios.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com; script-src 'self' 'nonce-sfK3j1Lm9Qx7vN2a'; img-src 'self' data: blob:;"
     />
     <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,200..700,0..1,-25..200&display=swap"
-    />
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,80&display=swap");
-
       * {
         box-sizing: border-box;
-        font-family: "Google Sans Flex", sans-serif;
+        font-family: "Google Sans Flex", "Segoe UI", sans-serif;
         font-variation-settings: "wght" 500, "ROND" 80;
       }
 
@@ -42,7 +36,7 @@
 
       .app-shell {
         display: grid;
-        grid-template-columns: 270px 1fr;
+        grid-template-columns: 290px 1fr;
         min-height: 100vh;
       }
 
@@ -52,16 +46,38 @@
         padding: 20px;
       }
 
-      .sidebar h2 {
+      .sidebar h2,
+      .row {
         display: flex;
         align-items: center;
         gap: 8px;
       }
 
+      .row { justify-content: space-between; }
+
       .sidebar p,
       .muted {
         color: #e6ebffcc;
         line-height: 1.5;
+      }
+
+      .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .metric-card {
+        padding: 10px;
+        border-radius: 14px;
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.13), rgba(151, 132, 255, 0.08));
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .metric-card strong {
+        display: block;
+        font-size: 18px;
       }
 
       .workspace {
@@ -71,10 +87,14 @@
         gap: 14px;
       }
 
+      .topbar,
+      .panel {
+        border-radius: 24px;
+        padding: 18px;
+      }
+
       .topbar {
-        border-radius: 22px;
         min-height: 72px;
-        padding: 14px 18px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -86,36 +106,54 @@
         font-variation-settings: "wght" 700, "ROND" 80;
       }
 
-      .controls {
+      .controls,
+      .filters {
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
       }
 
       button,
-      .upload-btn {
+      .upload-btn,
+      input,
+      select {
         border: 1px solid rgba(255, 255, 255, 0.26);
         border-radius: 999px;
         color: white;
         background: linear-gradient(120deg, rgba(255, 255, 255, 0.18), rgba(95, 136, 255, 0.2));
-        padding: 10px 16px;
+        padding: 10px 14px;
+      }
+
+      input,
+      select {
+        border-radius: 14px;
+      }
+
+      input::placeholder { color: #f6f8ffcc; }
+
+      input[type="file"] { display: none; }
+
+      button,
+      .upload-btn { cursor: pointer; }
+
+      .status { margin: 10px 0 0; min-height: 24px; color: #f2f6ff; }
+
+      .folder-chips {
+        margin-top: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .chip {
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(126, 96, 255, 0.12));
         cursor: pointer;
       }
 
-      input[type="file"] {
-        display: none;
-      }
-
-      .panel {
-        border-radius: 24px;
-        padding: 22px;
-      }
-
-      .status {
-        margin: 0;
-        min-height: 24px;
-        color: #f2f6ff;
-      }
+      .chip.active { border-color: rgba(127, 250, 255, 0.85); }
 
       .file-list {
         display: grid;
@@ -134,46 +172,44 @@
         border: 1px solid rgba(255, 255, 255, 0.24);
       }
 
-      .file-meta h3 {
-        margin: 0;
-        font-size: 18px;
-      }
+      .file-meta h3 { margin: 0; font-size: 18px; }
+      .file-meta p { margin: 4px 0; color: #e8edffd1; font-size: 13px; }
 
-      .file-meta p {
-        margin: 3px 0;
-        color: #e8edffd1;
-        font-size: 13px;
-      }
-
-      .file-actions {
-        display: flex;
-        gap: 8px;
-      }
+      .file-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
       @media (max-width: 960px) {
-        .app-shell {
-          grid-template-columns: 1fr;
-        }
-
-        .workspace {
-          margin: 0 14px 14px;
-        }
+        .app-shell { grid-template-columns: 1fr; }
+        .workspace { margin: 0 14px 14px; }
       }
     </style>
   </head>
   <body>
     <div class="app-shell">
       <aside class="sidebar liquid-glass-custom">
-        <h2><span class="material-symbols-rounded">folder_lock</span> <span data-i18n="secureFolders">Secure Folders</span></h2>
+        <h2>🗂️ <span data-i18n="secureFolders">Secure Folders</span></h2>
         <p data-i18n="sidebarDesc">End-to-end encrypted vault for files, photos, and videos.</p>
         <p class="muted" data-i18n="sidebarStorage">Data stays encrypted in IndexedDB. Keys are stored in a hidden key vault reference.</p>
+        <div class="metric-grid">
+          <div class="metric-card">
+            <small data-i18n="metricFiles">Files</small>
+            <strong id="metricFiles">0</strong>
+          </div>
+          <div class="metric-card">
+            <small data-i18n="metricFolders">Folders</small>
+            <strong id="metricFolders">1</strong>
+          </div>
+          <div class="metric-card" style="grid-column: span 2;">
+            <small data-i18n="metricStorage">Encrypted storage</small>
+            <strong id="metricStorage">0 B</strong>
+          </div>
+        </div>
       </aside>
 
       <main class="workspace">
         <header class="topbar liquid-glass-custom">
           <div class="title-wrap">
             <h1 data-i18n="secureFolders">Secure Folders</h1>
-            <p class="muted" data-i18n="subtitle">Beautiful liquid glass labs experiment.</p>
+            <p class="muted" data-i18n="subtitle">Advanced liquid glass vault experiment.</p>
           </div>
           <div class="controls">
             <button id="langBtn">Español</button>
@@ -185,11 +221,28 @@
           <div class="controls">
             <label class="upload-btn" for="uploadInput"><span data-i18n="uploadFiles">Upload files</span></label>
             <input id="uploadInput" type="file" multiple accept="image/*,video/*,.pdf,.txt,.zip,.doc,.docx" />
+            <input id="folderInput" maxlength="32" placeholder="Folder" />
+            <button id="createFolderBtn" data-i18n="createFolder">Create folder</button>
           </div>
+          <div class="folder-chips" id="folderChips"></div>
           <p class="status" id="statusText"></p>
         </section>
 
         <section class="panel liquid-glass-custom">
+          <div class="filters">
+            <input id="searchInput" data-i18n-placeholder="searchPlaceholder" placeholder="Search files" />
+            <select id="typeFilter">
+              <option value="all" data-i18n="allTypes">All types</option>
+              <option value="image" data-i18n="images">Images</option>
+              <option value="video" data-i18n="videos">Videos</option>
+              <option value="document" data-i18n="documents">Documents</option>
+            </select>
+            <select id="sortFilter">
+              <option value="recent" data-i18n="sortRecent">Most recent</option>
+              <option value="name" data-i18n="sortName">Name A-Z</option>
+              <option value="size" data-i18n="sortSize">Largest size</option>
+            </select>
+          </div>
           <h2 data-i18n="vaultItems">Vault items</h2>
           <div id="fileList" class="file-list"></div>
         </section>
@@ -198,63 +251,134 @@
 
     <script nonce="sfK3j1Lm9Qx7vN2a">
       const DB_NAME = "munetios_secure_folders_lab";
-      const DB_VERSION = 1;
+      const DB_VERSION = 2;
       const FILE_STORE = "vault_files";
       const KEY_STORE = "vault_keys";
+      const FOLDER_STORE = "vault_folders";
       const KEY_SALT = "munetios-secure-folders-hidden-reference";
+      const LANG_KEY = "munetiosSecureFoldersLang";
+      const ACTIVE_FOLDER_KEY = "munetiosSecureFoldersActiveFolder";
+
       const translations = {
         en: {
           secureFolders: "Secure Folders",
           sidebarDesc: "End-to-end encrypted vault for files, photos, and videos.",
           sidebarStorage: "Data stays encrypted in IndexedDB. Keys are stored in a hidden key vault reference.",
-          subtitle: "Beautiful liquid glass labs experiment.",
+          subtitle: "Advanced liquid glass vault experiment.",
           backToLabs: "Back to Labs",
           uploadFiles: "Upload files",
+          createFolder: "Create folder",
           vaultItems: "Vault items",
           noFiles: "No files yet. Upload your first encrypted file.",
           uploaded: "Encrypted and stored successfully.",
           downloaded: "File decrypted and downloaded.",
           removed: "Item removed from encrypted vault.",
+          folderCreated: "Folder created.",
           languageBtn: "Español",
           type: "Type",
           size: "Size",
           updated: "Updated",
+          folder: "Folder",
           download: "Download",
-          delete: "Delete"
+          delete: "Delete",
+          searchPlaceholder: "Search files",
+          allTypes: "All types",
+          images: "Images",
+          videos: "Videos",
+          documents: "Documents",
+          sortRecent: "Most recent",
+          sortName: "Name A-Z",
+          sortSize: "Largest size",
+          allFolders: "All folders",
+          metricFiles: "Files",
+          metricFolders: "Folders",
+          metricStorage: "Encrypted storage"
         },
         es: {
           secureFolders: "Carpetas Seguras",
           sidebarDesc: "Bóveda cifrada de extremo a extremo para archivos, fotos y videos.",
           sidebarStorage: "Los datos quedan cifrados en IndexedDB. Las claves se guardan en una referencia oculta.",
-          subtitle: "Experimento de Labs con estilo liquid glass.",
+          subtitle: "Experimento avanzado de bóveda liquid glass.",
           backToLabs: "Volver a Labs",
           uploadFiles: "Subir archivos",
+          createFolder: "Crear carpeta",
           vaultItems: "Elementos de la bóveda",
           noFiles: "Aún no hay archivos. Sube tu primer archivo cifrado.",
           uploaded: "Cifrado y guardado correctamente.",
           downloaded: "Archivo descifrado y descargado.",
           removed: "Elemento eliminado de la bóveda cifrada.",
+          folderCreated: "Carpeta creada.",
           languageBtn: "English",
           type: "Tipo",
           size: "Tamaño",
           updated: "Actualizado",
+          folder: "Carpeta",
           download: "Descargar",
-          delete: "Eliminar"
+          delete: "Eliminar",
+          searchPlaceholder: "Buscar archivos",
+          allTypes: "Todos los tipos",
+          images: "Imágenes",
+          videos: "Videos",
+          documents: "Documentos",
+          sortRecent: "Más reciente",
+          sortName: "Nombre A-Z",
+          sortSize: "Tamaño mayor",
+          allFolders: "Todas las carpetas",
+          metricFiles: "Archivos",
+          metricFolders: "Carpetas",
+          metricStorage: "Almacenamiento cifrado"
         }
       };
 
-      let currentLang = "en";
+      let currentLang = localStorage.getItem(LANG_KEY) === "es" ? "es" : "en";
+      let activeFolder = localStorage.getItem(ACTIVE_FOLDER_KEY) || "all";
+      let cachedFiles = [];
 
-      function t(key) {
-        return translations[currentLang][key] || key;
+      const els = {
+        langBtn: document.getElementById("langBtn"),
+        homeBtn: document.getElementById("homeBtn"),
+        uploadInput: document.getElementById("uploadInput"),
+        folderInput: document.getElementById("folderInput"),
+        createFolderBtn: document.getElementById("createFolderBtn"),
+        folderChips: document.getElementById("folderChips"),
+        statusText: document.getElementById("statusText"),
+        fileList: document.getElementById("fileList"),
+        searchInput: document.getElementById("searchInput"),
+        typeFilter: document.getElementById("typeFilter"),
+        sortFilter: document.getElementById("sortFilter"),
+        metricFiles: document.getElementById("metricFiles"),
+        metricFolders: document.getElementById("metricFolders"),
+        metricStorage: document.getElementById("metricStorage")
+      };
+
+      function t(key) { return translations[currentLang][key] || key; }
+
+      function setStatus(messageKey) { els.statusText.textContent = t(messageKey); }
+
+      function toBase64(uint8) { return btoa(String.fromCharCode(...uint8)); }
+      function fromBase64(str) { return Uint8Array.from(atob(str), (ch) => ch.charCodeAt(0)); }
+
+      function formatSize(size) {
+        if (size < 1024) return `${size} B`;
+        if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
+        if (size < 1024 * 1024 * 1024) return `${(size / (1024 * 1024)).toFixed(2)} MB`;
+        return `${(size / (1024 * 1024 * 1024)).toFixed(2)} GB`;
+      }
+
+      function getKind(type = "") {
+        if (type.startsWith("image/")) return "image";
+        if (type.startsWith("video/")) return "video";
+        return "document";
       }
 
       function applyLanguage() {
         document.documentElement.lang = currentLang;
-        document.querySelectorAll("[data-i18n]").forEach((el) => {
-          el.textContent = t(el.dataset.i18n);
+        document.querySelectorAll("[data-i18n]").forEach((el) => { el.textContent = t(el.dataset.i18n); });
+        document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+          el.setAttribute("placeholder", t(el.dataset.i18nPlaceholder));
         });
-        document.getElementById("langBtn").textContent = t("languageBtn");
+        els.langBtn.textContent = t("languageBtn");
+        localStorage.setItem(LANG_KEY, currentLang);
       }
 
       function openDB() {
@@ -264,6 +388,7 @@
             const db = req.result;
             if (!db.objectStoreNames.contains(FILE_STORE)) db.createObjectStore(FILE_STORE, { keyPath: "id" });
             if (!db.objectStoreNames.contains(KEY_STORE)) db.createObjectStore(KEY_STORE, { keyPath: "keyId" });
+            if (!db.objectStoreNames.contains(FOLDER_STORE)) db.createObjectStore(FOLDER_STORE, { keyPath: "name" });
           };
           req.onsuccess = () => resolve(req.result);
           req.onerror = () => reject(req.error);
@@ -276,47 +401,101 @@
         return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, "0")).join("");
       }
 
-      function toBase64(uint8) {
-        return btoa(String.fromCharCode(...uint8));
+      async function getFolders() {
+        const db = await openDB();
+        const tx = db.transaction(FOLDER_STORE, "readonly");
+        const req = tx.objectStore(FOLDER_STORE).getAll();
+        const folders = await new Promise((resolve, reject) => {
+          req.onsuccess = () => resolve(req.result || []);
+          req.onerror = () => reject(req.error);
+        });
+        db.close();
+        const names = folders.map((f) => f.name).filter(Boolean).sort((a, b) => a.localeCompare(b));
+        return ["General", ...names.filter((n) => n !== "General")];
       }
 
-      function fromBase64(str) {
-        const binary = atob(str);
-        return Uint8Array.from(binary, (char) => char.charCodeAt(0));
-      }
-
-      function formatSize(size) {
-        if (size < 1024) return `${size} B`;
-        if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
-        return `${(size / (1024 * 1024)).toFixed(2)} MB`;
+      async function createFolder(name) {
+        const cleaned = (name || "").trim();
+        if (!cleaned) return;
+        const db = await openDB();
+        const tx = db.transaction(FOLDER_STORE, "readwrite");
+        tx.objectStore(FOLDER_STORE).put({ name: cleaned, updatedAt: Date.now() });
+        await new Promise((resolve, reject) => {
+          tx.oncomplete = resolve;
+          tx.onerror = () => reject(tx.error);
+        });
+        db.close();
       }
 
       async function listFiles() {
         const db = await openDB();
         const tx = db.transaction(FILE_STORE, "readonly");
-        const store = tx.objectStore(FILE_STORE);
-        const req = store.getAll();
+        const req = tx.objectStore(FILE_STORE).getAll();
         const records = await new Promise((resolve, reject) => {
           req.onsuccess = () => resolve(req.result || []);
           req.onerror = () => reject(req.error);
         });
         db.close();
+        cachedFiles = records;
+        renderFiles();
+      }
 
-        const list = document.getElementById("fileList");
-        list.innerHTML = "";
+      async function renderFolders() {
+        const folders = await getFolders();
+        els.folderChips.innerHTML = "";
+        const allChip = document.createElement("button");
+        allChip.className = `chip ${activeFolder === "all" ? "active" : ""}`;
+        allChip.textContent = t("allFolders");
+        allChip.addEventListener("click", () => {
+          activeFolder = "all";
+          localStorage.setItem(ACTIVE_FOLDER_KEY, activeFolder);
+          renderFolders();
+          renderFiles();
+        });
+        els.folderChips.appendChild(allChip);
 
+        folders.forEach((folder) => {
+          const chip = document.createElement("button");
+          chip.className = `chip ${activeFolder === folder ? "active" : ""}`;
+          chip.textContent = folder;
+          chip.addEventListener("click", () => {
+            activeFolder = folder;
+            localStorage.setItem(ACTIVE_FOLDER_KEY, activeFolder);
+            renderFolders();
+            renderFiles();
+          });
+          els.folderChips.appendChild(chip);
+        });
+      }
+
+      function renderFiles() {
+        const q = els.searchInput.value.trim().toLowerCase();
+        const type = els.typeFilter.value;
+        const sort = els.sortFilter.value;
+
+        let records = cachedFiles.filter((item) => {
+          const byFolder = activeFolder === "all" || (item.folder || "General") === activeFolder;
+          const byQuery = !q || item.name.toLowerCase().includes(q);
+          const byType = type === "all" || getKind(item.type) === type;
+          return byFolder && byQuery && byType;
+        });
+
+        if (sort === "recent") records.sort((a, b) => b.updatedAt - a.updatedAt);
+        if (sort === "name") records.sort((a, b) => a.name.localeCompare(b.name));
+        if (sort === "size") records.sort((a, b) => b.size - a.size);
+
+        els.fileList.innerHTML = "";
         if (!records.length) {
-          list.innerHTML = `<p class="muted">${t("noFiles")}</p>`;
-          return;
+          els.fileList.innerHTML = `<p class="muted">${t("noFiles")}</p>`;
         }
 
-        records.sort((a, b) => b.updatedAt - a.updatedAt);
         records.forEach((item) => {
           const wrapper = document.createElement("article");
           wrapper.className = "file-card";
           wrapper.innerHTML = `
             <div class="file-meta">
               <h3>${item.name}</h3>
+              <p>${t("folder")}: ${item.folder || "General"}</p>
               <p>${t("type")}: ${item.type || "application/octet-stream"}</p>
               <p>${t("size")}: ${formatSize(item.size)} · ${t("updated")}: ${new Date(item.updatedAt).toLocaleString(currentLang)}</p>
             </div>
@@ -325,11 +504,20 @@
               <button data-action="delete" data-id="${item.id}">${t("delete")}</button>
             </div>
           `;
-          list.appendChild(wrapper);
+          els.fileList.appendChild(wrapper);
         });
+
+        const totalBytes = cachedFiles.reduce((sum, item) => sum + (item.size || 0), 0);
+        els.metricFiles.textContent = String(cachedFiles.length);
+        els.metricStorage.textContent = formatSize(totalBytes);
+        const uniqueFolders = new Set(cachedFiles.map((f) => f.folder || "General"));
+        els.metricFolders.textContent = String(Math.max(1, uniqueFolders.size));
       }
 
       async function uploadFiles(files) {
+        const selectedFolder = activeFolder === "all" ? "General" : activeFolder;
+        await createFolder(selectedFolder);
+
         const db = await openDB();
         const tx = db.transaction([FILE_STORE, KEY_STORE], "readwrite");
         const fileStore = tx.objectStore(FILE_STORE);
@@ -347,6 +535,7 @@
           fileStore.put({
             id: fileId,
             keyRef: keyId,
+            folder: selectedFolder,
             name: file.name,
             type: file.type,
             size: file.size,
@@ -355,11 +544,7 @@
             cipher
           });
 
-          keyStore.put({
-            keyId,
-            material: toBase64(exportedKey),
-            createdAt: Date.now()
-          });
+          keyStore.put({ keyId, material: toBase64(exportedKey), createdAt: Date.now() });
         }
 
         await new Promise((resolve, reject) => {
@@ -377,11 +562,7 @@
           req.onsuccess = () => resolve(req.result);
           req.onerror = () => reject(req.error);
         });
-
-        if (!fileRecord) {
-          db.close();
-          return;
-        }
+        if (!fileRecord) { db.close(); return; }
 
         const keyRecord = await new Promise((resolve, reject) => {
           const req = tx.objectStore(KEY_STORE).get(fileRecord.keyRef);
@@ -423,30 +604,37 @@
         db.close();
       }
 
-      function setStatus(messageKey) {
-        document.getElementById("statusText").textContent = t(messageKey);
-      }
+      els.homeBtn.addEventListener("click", () => { window.location.href = "https://www.munetios.com/labs"; });
 
-      document.getElementById("homeBtn").addEventListener("click", () => {
-        window.location.href = "https://www.munetios.com/labs";
-      });
-
-      document.getElementById("langBtn").addEventListener("click", async () => {
+      els.langBtn.addEventListener("click", async () => {
         currentLang = currentLang === "en" ? "es" : "en";
         applyLanguage();
-        await listFiles();
+        await renderFolders();
+        renderFiles();
       });
 
-      document.getElementById("uploadInput").addEventListener("change", async (event) => {
+      els.createFolderBtn.addEventListener("click", async () => {
+        const folderName = els.folderInput.value.trim();
+        if (!folderName) return;
+        await createFolder(folderName);
+        activeFolder = folderName;
+        localStorage.setItem(ACTIVE_FOLDER_KEY, activeFolder);
+        els.folderInput.value = "";
+        await renderFolders();
+        setStatus("folderCreated");
+      });
+
+      els.uploadInput.addEventListener("change", async (event) => {
         const files = Array.from(event.target.files || []);
         if (!files.length) return;
         await uploadFiles(files);
         setStatus("uploaded");
         await listFiles();
+        await renderFolders();
         event.target.value = "";
       });
 
-      document.getElementById("fileList").addEventListener("click", async (event) => {
+      els.fileList.addEventListener("click", async (event) => {
         const target = event.target;
         if (!(target instanceof HTMLButtonElement)) return;
         const fileId = target.dataset.id;
@@ -464,12 +652,21 @@
         }
       });
 
-      if (!window.indexedDB || !window.crypto?.subtle) {
-        document.body.innerHTML = '<div style="padding:40px;color:white;">This experiment requires IndexedDB and Web Crypto support.</div>';
-      } else {
+      [els.searchInput, els.typeFilter, els.sortFilter].forEach((el) => el.addEventListener("input", renderFiles));
+      [els.typeFilter, els.sortFilter].forEach((el) => el.addEventListener("change", renderFiles));
+
+      async function init() {
+        if (!window.indexedDB || !window.crypto?.subtle) {
+          document.body.innerHTML = '<div style="padding:40px;color:white;">This experiment requires IndexedDB and Web Crypto support.</div>';
+          return;
+        }
         applyLanguage();
-        listFiles();
+        await createFolder("General");
+        await renderFolders();
+        await listFiles();
       }
+
+      init();
     </script>
   </body>
 </html>
