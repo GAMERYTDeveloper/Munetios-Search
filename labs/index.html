@@ -264,7 +264,12 @@
         <div class="labs-list">
           <h2>Search Labs:</h2>
           <div class="grid-list">
-            <p>No search labs available at the moment.</p>
+            <div class="box-labs liquid-glass">
+              <span class="material-symbols-rounded" style="font-size:40px;color:#a259f7;margin-bottom:8px;">calculate</span>
+              <h2>Instant Answers</h2>
+              <p>Get instant results for math expressions and quick facts right above your search results. E.g. searching <em>5*12</em> shows <em>60</em> instantly.</p>
+              <button class="btn" id="instantAnswersLabBtn">Try it in Search</button>
+            </div>
           </div>
           <h2>Other:</h2>
           <div class="grid-list">
@@ -299,6 +304,14 @@
         .getElementById("secureNotesBtn")
         .addEventListener("click", function () {
           window.location.href = "https://www.munetios.com/labs/notes";
+        });
+
+      document
+        .getElementById("instantAnswersLabBtn")
+        .addEventListener("click", function () {
+          // Enable Instant Answers and redirect to search
+          localStorage.setItem("enableInstantAnswers", "true");
+          window.location.href = "https://www.munetios.com/search/search.html";
         });
      
       document
