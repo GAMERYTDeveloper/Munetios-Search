@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="/favicon-new.ico" type="image/x-icon" />
     <link rel="icon" href="/favicon-new.ico" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="referrer" content="no-referrer" />
 
     <link rel="icon" sizes="32x32" href="/apple-touch-icon.png" type="image/png" />
     <link rel="icon" sizes="192x192" href="/apple-touch-icon.png" type="image/png" />
@@ -38,6 +38,7 @@
       https://bugs.mojang.com
       https://api.stackexchange.com
       https://hn.algolia.com
+      https://*.openstreetmap.org
       https://dev.to
       https://www.wikidata.org 
       https://api.github.com
@@ -690,6 +691,7 @@
           <button id="SafeSearchToggle" class="btn liquid-glass">Strict</button>
         </div>
         <div class="ai-overview-box liquid-glass" id="aiOverviewBox"></div>
+        <div id="instantAnswerBox" style="display:none;"></div>
         <div class="results" id="results">
           <div class="enter-a-search-query">
             <span class="material-symbols-rounded" style="font-size: 48px"
@@ -744,9 +746,17 @@
             align-items: center;
           "
         >
-        <p>
-          New Labs features coming soon!
-          </p>
+          <div style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.1);">
+            <div>
+              <strong>Instant Answers</strong>
+              <p style="margin:4px 0 0;font-size:0.88em;color:#ccc;">Instantly shows math results above search results. E.g. searching <em>5*12</em> shows <em>60</em>.</p>
+            </div>
+            <label style="position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0;">
+              <input type="checkbox" id="enableInstantAnswers" style="opacity:0;width:0;height:0;position:absolute;" />
+              <span id="instantAnswersSlider" style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#3a1c71;border-radius:24px;transition:background 0.2s;"></span>
+              <span id="instantAnswersKnob" style="position:absolute;content:'';height:18px;width:18px;left:3px;bottom:3px;background:white;border-radius:50%;transition:transform 0.2s;"></span>
+            </label>
+          </div>
         </div>
       </div>
     </div>
@@ -926,6 +936,9 @@
       <div class="flex items-center gap-2 p-2 hover:bg-gray-700" data-country="za">
         <div class="options-label">South Africa</div>
       </div>
+      <div class="flex items-center gap-2 p-2 hover:bg-gray-700" data-country="nl">
+        <div class="options-label">Netherlands</div>
+      </div>
     </div>
     <div class="liquid-glass hidden p-4 rounded-2xl flex flex-col gap-2" id="liquidGlassDropdown">
       <div class="flex items-center gap-2 p-2 hover:bg-gray-700" data-style="clear">
@@ -1002,6 +1015,30 @@
       body[data-liquid-glass="off"] .liquid-glass button:hover {
         background: #35324c !important;
         filter: brightness(1.1);
+      }
+      /* Offline spinner */
+      @keyframes offline-spin {
+        0%   { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      .offline-spinner-ring {
+        width: 38px;
+        height: 38px;
+        border: 3px solid rgba(162, 89, 247, 0.25);
+        border-top-color: #a259f7;
+        border-radius: 50%;
+        animation: offline-spin 0.85s linear infinite;
+        flex-shrink: 0;
+      }
+      /* Results loading spinner */
+      .results-spinner-ring {
+        width: 28px;
+        height: 28px;
+        border: 2.5px solid rgba(162, 89, 247, 0.2);
+        border-top-color: #a259f7;
+        border-radius: 50%;
+        animation: offline-spin 0.75s linear infinite;
+        flex-shrink: 0;
       }
     </style>
     <div
@@ -2571,6 +2608,7 @@
         br: "Brazil",
         ru: "Russia",
         za: "South Africa",
+        nl: "Netherlands",
       };
 
       // Blocked phrases per country (example, expand as needed)
@@ -2644,6 +2682,9 @@
       function setCountry(code) {
         localStorage.setItem("country", code);
         window.currentCountry = code;
+        // Update button label
+        const btn = document.getElementById("countryDropdownBtn");
+        if (btn) btn.textContent = countryMap[code] || "Choose Country";
         // Update UI (optional: highlight selected)
         Object.keys(countryMap).forEach((c) => {
           const el = document.querySelector(`[data-country="${c}"]`);
@@ -2797,7 +2838,10 @@
         if (schoolModeEnabled) {
           document.body.classList.add("school-mode");
           schoolModeToggle.checked = true;
-          window.location.hash = "";
+          // Only block incognito hash, not all hashes (let ?q= URL navigation work)
+          if (window.location.hash === "#incognito") {
+            window.location.hash = "";
+          }
           
           // Lock SafeSearch to strict
           safeSearchLevel = "strict";
@@ -3021,6 +3065,7 @@
           "enableRedditResults",
           "enableVoiceMode",
           "enableAIOverview",
+          "enableInstantAnswers",
           "searchLanguage",
           
         ];
@@ -3088,6 +3133,7 @@
           "enableRedditResults",
           "enableVoiceMode",
           "enableAIOverview",
+          "enableInstantAnswers",
           "searchLanguage",
         ].forEach((key) => {
           try { localStorage.removeItem(key); } catch {}
@@ -6590,11 +6636,206 @@
           .addEventListener("input", function () {
             renderAIOverview(this.value.trim());
           });
+
+      // --- Instant Answers (Labs feature) ---
+      (function () {
+        const instantAnswerBox = document.getElementById("instantAnswerBox");
+        if (!instantAnswerBox) return;
+
+        // Style the instant answer box
+        instantAnswerBox.style.margin = "0 0 16px 0";
+        instantAnswerBox.style.borderRadius = "18px";
+        instantAnswerBox.style.overflow = "hidden";
+
+        // Map of country code -> locale for number formatting
+        const countryLocaleMap = {
+          us: "en-US", gb: "en-GB", ca: "en-CA", au: "en-AU", za: "en-ZA",
+          de: "de-DE", fr: "fr-FR", jp: "ja-JP", cn: "zh-CN", br: "pt-BR",
+          in: "hi-IN", ru: "ru-RU", nl: "nl-NL",
+        };
+
+        /**
+         * Safely evaluate a simple math expression containing only numbers,
+         * basic operators (+, -, *, /, **, ^, %, (, )) and whitespace.
+         * Uses a recursive descent parser — no eval or Function constructor.
+         * Returns the numeric result or null if not a valid math expression.
+         */
+        function safeMathEval(expr) {
+          // Allow only digits, operators, parentheses, dot, whitespace, and ^ (power)
+          if (!/^[\d\s\+\-\*\/\^\%\(\)\.]+$/.test(expr)) return null;
+          // Normalise: strip spaces, replace ^ with ** marker "p"
+          const s = expr.replace(/\s+/g, "").replace(/\^/g, "p");
+          let pos = 0;
+
+          function parseAddSub() {
+            let v = parseMulDiv();
+            while (pos < s.length && (s[pos] === "+" || s[pos] === "-")) {
+              const op = s[pos++];
+              const r = parseMulDiv();
+              v = op === "+" ? v + r : v - r;
+            }
+            return v;
+          }
+
+          function parseMulDiv() {
+            let v = parsePow();
+            while (pos < s.length && (s[pos] === "*" || s[pos] === "/" || s[pos] === "%")) {
+              const op = s[pos++];
+              const r = parsePow();
+              if (op === "*") v *= r;
+              else if (op === "/") v /= r;
+              else v %= r;
+            }
+            return v;
+          }
+
+          function parsePow() {
+            // right-associative: a p b p c → a ** (b ** c)
+            const base = parseUnary();
+            if (pos < s.length && s[pos] === "p") {
+              pos++;
+              return Math.pow(base, parsePow());
+            }
+            return base;
+          }
+
+          function parseUnary() {
+            if (s[pos] === "-") { pos++; return -parsePrimary(); }
+            if (s[pos] === "+") { pos++; return parsePrimary(); }
+            return parsePrimary();
+          }
+
+          function parsePrimary() {
+            if (s[pos] === "(") {
+              pos++;
+              const v = parseAddSub();
+              if (s[pos] !== ")") throw new Error("Expected )");
+              pos++;
+              return v;
+            }
+            const start = pos;
+            while (pos < s.length && /[\d\.]/.test(s[pos])) pos++;
+            if (pos === start) throw new Error("Expected number at pos " + pos);
+            return parseFloat(s.slice(start, pos));
+          }
+
+          try {
+            const result = parseAddSub();
+            if (pos !== s.length || !isFinite(result) || isNaN(result)) return null;
+            return result;
+          } catch (e) {
+            return null;
+          }
+        }
+
+        /**
+         * Detect if the query looks like a math expression.
+         * Must contain at least one operator and at least one digit.
+         */
+        function isMathQuery(query) {
+          return /[\+\-\*\/\^\%]/.test(query) && /\d/.test(query);
+        }
+
+        /** Escape a string for safe insertion into HTML. */
+        function escapeHtml(str) {
+          return str
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
+        }
+
+        /**
+         * Format a number for display, respecting the user's country locale.
+         */
+        function formatNumber(num) {
+          const locale = countryLocaleMap[window.currentCountry] || "en-US";
+          try {
+            // Show up to 10 significant digits but trim unnecessary trailing zeros
+            return new Intl.NumberFormat(locale, { maximumSignificantDigits: 10 }).format(num);
+          } catch (e) {
+            return String(num);
+          }
+        }
+
+        function showInstantAnswer(query) {
+          if (localStorage.getItem("enableInstantAnswers") !== "true") {
+            instantAnswerBox.style.display = "none";
+            return;
+          }
+          if (!query || !isMathQuery(query)) {
+            instantAnswerBox.style.display = "none";
+            return;
+          }
+          const result = safeMathEval(query);
+          if (result === null) {
+            instantAnswerBox.style.display = "none";
+            return;
+          }
+          const formatted = formatNumber(result);
+          instantAnswerBox.style.display = "block";
+          instantAnswerBox.innerHTML = `
+            <div class="liquid-glass" style="padding:20px 24px;border-radius:18px;display:flex;align-items:center;gap:16px;border:1.5px solid rgba(108,46,183,0.5);">
+              <span class="material-symbols-rounded" style="font-size:32px;color:#a259f7;flex-shrink:0;">calculate</span>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:0.85em;color:#aaa;margin-bottom:4px;">Instant Answer</div>
+                <div style="font-size:1.1em;opacity:0.75;word-break:break-all;">${escapeHtml(query)}</div>
+                <div style="font-size:2em;font-weight:700;color:#a259f7;line-height:1.2;">${escapeHtml(formatted)}</div>
+              </div>
+            </div>`;
+        }
+
+        // Patch performSearch to show instant answer
+        const origPerformSearchIA = window.performSearch;
+        window.performSearch = async function () {
+          const q = document.getElementById("searchInput").value.trim();
+          showInstantAnswer(q);
+          await origPerformSearchIA.apply(this, arguments);
+        };
+
+        // Show on input change
+        document.getElementById("searchInput").addEventListener("input", function () {
+          showInstantAnswer(this.value.trim());
+        });
+
+        // Show on page load if query is present
+        window.addEventListener("DOMContentLoaded", function () {
+          const q = document.getElementById("searchInput").value.trim();
+          showInstantAnswer(q);
+        });
+
+        // --- Toggle wiring ---
+        function updateInstantAnswersToggle(enabled) {
+          const checkbox = document.getElementById("enableInstantAnswers");
+          const slider = document.getElementById("instantAnswersSlider");
+          const knob = document.getElementById("instantAnswersKnob");
+          if (checkbox) checkbox.checked = enabled;
+          if (slider) slider.style.background = enabled ? "#6c2eb7" : "#3a1c71";
+          if (knob) knob.style.transform = enabled ? "translateX(20px)" : "translateX(0)";
+        }
+
+        // Restore toggle state from localStorage
+        const iaEnabled = localStorage.getItem("enableInstantAnswers") === "true";
+        updateInstantAnswersToggle(iaEnabled);
+
+        // Listen for toggle changes
+        document.addEventListener("change", function (e) {
+          if (e.target && e.target.id === "enableInstantAnswers") {
+            const enabled = e.target.checked;
+            localStorage.setItem("enableInstantAnswers", enabled ? "true" : "false");
+            updateInstantAnswersToggle(enabled);
+            const q = document.getElementById("searchInput").value.trim();
+            showInstantAnswer(q);
+          }
+        });
+      })();
   
 
       document
         .getElementById("labsIcon")
         .addEventListener("click", function () {
+          window.location.href = "https://www.munetios.com/labs";
           const labsModal = document.getElementById("labsModal");
           if (labsModal) {
             labsModal.style.display = "flex";
@@ -6705,7 +6946,7 @@
                   bm.favicon ||
                   "https://www.google.com/s2/favicons?domain=" +
                     encodeURIComponent(bm.link)
-                }" alt="favicon">
+                }" alt="favicon" referrerpolicy="no-referrer">
                 <a class="result-link" href="${
                   bm.link
                 }" rel="noopener" target="_self">${bm.link}</a>
@@ -6816,7 +7057,7 @@
               found.favicon ||
               "https://www.google.com/s2/favicons?domain=" +
                 encodeURIComponent(found.link)
-            }" alt="favicon" style="width:18px;height:18px;border-radius:4px;">
+            }" alt="favicon"  referrerpolicy="no-referrer" style="width:18px;height:18px;border-radius:4px;">
             <span style="font-weight:600;font-size:1.05em;">${
               found.title
             }</span>
@@ -7427,14 +7668,23 @@
         }, true);
       })();
 
-      function renderResults(results) {
+      const PAGE_SIZE = 20;
+      window.__pagedResults = [];
+      window.__currentPage = 1;
+
+      function renderPage(page) {
+        const results = window.__pagedResults;
+        const totalPages = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
+        window.__currentPage = Math.max(1, Math.min(page, totalPages));
+        const start = (window.__currentPage - 1) * PAGE_SIZE;
+        const pageResults = results.slice(start, start + PAGE_SIZE);
         clearResults();
         if (!results.length) {
           const t = window.currentTranslations || translations.en;
           resultsContainer.innerHTML = `<div style="padding:32px 0;text-align:center;color:#aaa;">${t.noResults}</div>`;
           return;
         }
-        results.forEach((r) => {
+        pageResults.forEach((r) => {
           const div = document.createElement("div");
           div.className = "result";
           div.innerHTML = `
@@ -7443,7 +7693,7 @@
                   r.favicon ||
                   "https://www.google.com/s2/favicons?domain=" +
                     encodeURIComponent(r.link)
-                }" alt="favicon">
+                }" alt="favicon" referrerpolicy="no-referrer">
                 <a class="result-link" href="${r.link}" rel="noopener">${
                   r.link
                 }</a>
@@ -7464,6 +7714,38 @@
             `;
           resultsContainer.appendChild(div);
         });
+        if (typeof hideRemovedResults === "function") hideRemovedResults();
+        if (totalPages > 1) {
+          const paginationDiv = document.createElement("div");
+          paginationDiv.style.cssText = "display:flex;align-items:center;justify-content:center;gap:16px;padding:28px 0 8px;";
+          const prevBtn = document.createElement("button");
+          prevBtn.className = "btn liquid-glass";
+          prevBtn.innerHTML = '<span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;">arrow_back</span> Previous';
+          prevBtn.disabled = window.__currentPage <= 1;
+          prevBtn.style.opacity = window.__currentPage <= 1 ? "0.45" : "1";
+          prevBtn.style.cursor = window.__currentPage <= 1 ? "default" : "pointer";
+          prevBtn.onclick = () => { renderPage(window.__currentPage - 1); window.scrollTo(0, 0); };
+          const pageInfo = document.createElement("span");
+          pageInfo.textContent = `Page ${window.__currentPage} of ${totalPages}`;
+          pageInfo.style.cssText = "font-size:0.95em;opacity:0.65;min-width:110px;text-align:center;";
+          const nextBtn = document.createElement("button");
+          nextBtn.className = "btn liquid-glass";
+          nextBtn.innerHTML = 'Next <span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;">arrow_forward</span>';
+          nextBtn.disabled = window.__currentPage >= totalPages;
+          nextBtn.style.opacity = window.__currentPage >= totalPages ? "0.45" : "1";
+          nextBtn.style.cursor = window.__currentPage >= totalPages ? "default" : "pointer";
+          nextBtn.onclick = () => { renderPage(window.__currentPage + 1); window.scrollTo(0, 0); };
+          paginationDiv.appendChild(prevBtn);
+          paginationDiv.appendChild(pageInfo);
+          paginationDiv.appendChild(nextBtn);
+          resultsContainer.appendChild(paginationDiv);
+        }
+      }
+
+      function renderResults(results) {
+        window.__pagedResults = results;
+        window.__currentPage = 1;
+        renderPage(1);
       }
       document.getElementById("allResult").addEventListener("click", () => {
         performSearch();
@@ -7586,6 +7868,39 @@
         }
         return [];
       }
+
+      // Country-specific domain patterns to boost results from local sources
+      const countryDomainBoosts = {
+        us: ["nytimes.com", "cnn.com", "washingtonpost.com", "foxnews.com", "apnews.com", "usatoday.com", ".gov"],
+        gb: [".co.uk", ".uk", "bbc.co.uk", "bbc.com", "theguardian.com", "telegraph.co.uk", "independent.co.uk", "mirror.co.uk"],
+        de: [".de", "spiegel.de", "zeit.de", "faz.de", "heise.de", "golem.de", "stern.de", "welt.de", "sueddeutsche.de"],
+        fr: [".fr", "lemonde.fr", "lefigaro.fr", "liberation.fr", "bfmtv.com", "leparisien.fr", "20minutes.fr"],
+        nl: [".nl", "nu.nl", "nos.nl", "ad.nl", "volkskrant.nl", "telegraaf.nl", "rtlnieuws.nl", "nrc.nl", "trouw.nl", "fd.nl"],
+        in: [".in", "hindustantimes.com", "ndtv.com", "timesofindia.com", "thehindu.com", "indiatimes.com", "indianexpress.com", "livemint.com"],
+        jp: [".jp", "asahi.com", "yomiuri.co.jp", "nhk.or.jp", "mainichi.jp", "japantimes.co.jp"],
+        cn: [".cn", "xinhuanet.com", "chinadaily.com.cn", "people.com.cn", "qq.com", "baidu.com", "163.com"],
+        br: [".br", ".com.br", "globo.com", "uol.com.br", "terra.com.br", "r7.com", "folha.uol.com.br"],
+        ru: [".ru", "rt.com", "ria.ru", "rbc.ru", "kommersant.ru", "tass.ru", "interfax.ru"],
+        ca: [".ca", "cbc.ca", "globeandmail.com", "thestar.com", "nationalpost.com", "montrealgazette.com"],
+        au: [".au", ".com.au", "abc.net.au", "smh.com.au", "theage.com.au", "news.com.au", "theaustralian.com.au"],
+        za: [".za", ".co.za", "news24.com", "dailymaverick.co.za", "timeslive.co.za", "iol.co.za"],
+      };
+
+      // Country-specific Reddit subreddits for localised results
+      const countrySubreddits = {
+        gb: "unitedkingdom+AskABrit",
+        de: "de+germany",
+        fr: "france",
+        nl: "Netherlands+dutch",
+        in: "india+IndiaSpeaks",
+        jp: "japan",
+        cn: "China",
+        br: "brasil",
+        ru: "russia",
+        ca: "canada",
+        au: "australia",
+        za: "southafrica",
+      };
 
       // Ranking function to score results based on relevance to the search query
       function calculateRelevanceScore(result, query) {
@@ -7767,6 +8082,16 @@
           }
         }
 
+        // --- Country-specific domain boost ---
+        // Boost results from domains that match the selected country
+        const _country = window.currentCountry;
+        if (_country && countryDomainBoosts[_country]) {
+          const _patterns = countryDomainBoosts[_country];
+          if (_patterns.some(p => domain.includes(p) || link.includes(p))) {
+            score += 65;
+          }
+        }
+
         return score;
       }
 
@@ -7781,7 +8106,6 @@
     return;
   }
 
-  showSkeletonLoading();
   isLoading = true;
 
   try {
@@ -7808,6 +8132,28 @@
 
     }
 
+    // --- Show local results instantly, with a loading spinner for API results ---
+    {
+      const _spinnerWrapper = document.createElement("div");
+      _spinnerWrapper.id = "results-loading-spinner";
+      _spinnerWrapper.style.cssText = "display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:28px 0;";
+      _spinnerWrapper.innerHTML = '<div class="results-spinner-ring"></div><div style="opacity:0.55;font-size:0.88em;">Loading more results…</div>';
+      if (filteredLocal.length > 0) {
+        // Rank and show local results right away
+        const _rankedLocal = filteredLocal.map(r => ({ ...r, relevanceScore: calculateRelevanceScore(r, query) }));
+        _rankedLocal.sort((a, b) => b.relevanceScore - a.relevanceScore);
+        renderResults(_rankedLocal);
+        resultsContainer.appendChild(_spinnerWrapper);
+      } else {
+        resultsContainer.innerHTML = "";
+        const _centeredSpinner = document.createElement("div");
+        _centeredSpinner.id = "results-loading-spinner";
+        _centeredSpinner.style.cssText = "display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:72px 0;";
+        _centeredSpinner.innerHTML = '<div class="results-spinner-ring" style="width:36px;height:36px;"></div><div style="opacity:0.6;font-size:0.95em;">Searching…</div>';
+        resultsContainer.appendChild(_centeredSpinner);
+      }
+    }
+
     let redditResults = [];
     let hnResults = [];
     let stackResults = [];
@@ -7823,21 +8169,44 @@
 
       if (enableReddit && query !== "@all") {
 
-        const redditRes = await fetch(
-          `https://www.reddit.com/search.json?q=${encodeURIComponent(query)}&limit=5`
-        );
+        // Use country-specific subreddit when available for localised results
+        const _countrySub = countrySubreddits[window.currentCountry];
+        let _redditUrl;
+        let _globalRedditUrl = `https://www.reddit.com/search.json?q=${encodeURIComponent(query)}&limit=5`;
+        if (_countrySub) {
+          _redditUrl = `https://www.reddit.com/r/${_countrySub}/search.json?q=${encodeURIComponent(query)}&limit=5&restrict_sr=true`;
+        } else {
+          _redditUrl = _globalRedditUrl;
+        }
 
+        // Fetch country-specific subreddit results
+        const redditRes = await fetch(_redditUrl);
         const redditData = await redditRes.json();
 
         if (redditData.data?.children) {
-
           redditResults = redditData.data.children.map(item => ({
             title: item.data.title,
             description: `Reddit: ${item.data.subreddit_name_prefixed}`,
             link: `https://www.reddit.com${item.data.permalink}`,
             favicon: "https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png"
           }));
+        }
 
+        // For country-specific searches, also fetch global results and append
+        if (_countrySub && redditResults.length < 3) {
+          try {
+            const _globalRes = await fetch(_globalRedditUrl);
+            const _globalData = await _globalRes.json();
+            if (_globalData.data?.children) {
+              const _extra = _globalData.data.children.map(item => ({
+                title: item.data.title,
+                description: `Reddit: ${item.data.subreddit_name_prefixed}`,
+                link: `https://www.reddit.com${item.data.permalink}`,
+                favicon: "https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png"
+              }));
+              redditResults = [...redditResults, ..._extra];
+            }
+          } catch(_e) {}
         }
 
       }
@@ -7860,7 +8229,9 @@
           ?.filter(i => i.title && i.url)
           .map(i => ({
             title: i.title,
-            description: "Hacker News",
+            description: i._highlightResult && i._highlightResult.title && i._highlightResult.title.value
+              ? i._highlightResult.title.value.replace(/<[^>]+>/g, '').slice(0, 80)
+              : i.title.slice(0, 80),
             link: i.url,
             favicon: ""
           })) || [];
@@ -7968,8 +8339,17 @@ if (query !== "@all") {
 
       try {
 
+        // Use country-specific Wikipedia language subdomain when available
+        const countryWikiLang = {
+          us: "en", gb: "en", ca: "en", au: "en", za: "en",
+          de: "de", fr: "fr", jp: "ja", cn: "zh", br: "pt",
+          in: "hi", ru: "ru", nl: "nl",
+        };
+        const wikiLang = countryWikiLang[window.currentCountry] || "en";
+        const wikiBase = `https://${wikiLang}.wikipedia.org`;
+
         const wikiRes = await fetch(
-          `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`
+          `${wikiBase}/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`
         );
 
         const wikiData = await wikiRes.json();
@@ -7977,8 +8357,8 @@ if (query !== "@all") {
         wikiResults = wikiData.query.search.map(item => ({
           title: item.title,
           description: item.snippet.replace(/<\/?[^>]+>/g,""),
-          link: `https://en.wikipedia.org/wiki/${encodeURIComponent(item.title)}`,
-          favicon: "https://en.wikipedia.org/static/favicon/wikipedia.ico"
+          link: `${wikiBase}/wiki/${encodeURIComponent(item.title)}`,
+          favicon: `${wikiBase}/static/favicon/wikipedia.ico`
         }));
 
       } catch(err){ console.log("Wiki error:", err); }
@@ -8120,7 +8500,12 @@ if(query!=="@all"){
       ...githubResults, 
     ];
 
-    // Calculate relevance score for each result
+    // Apply country filter (remove blocked content for selected country)
+    if (typeof window.filterResultsByCountry === "function") {
+      filtered = window.filterResultsByCountry(filtered, window.currentCountry);
+    }
+
+    // Calculate relevance score for each result (includes country domain boost)
     filtered = filtered.map(result => ({
       ...result,
       relevanceScore: calculateRelevanceScore(result, query)
@@ -8149,8 +8534,7 @@ if(query!=="@all"){
       document.getElementById("popularResult").addEventListener("click", () => {
         const query = searchInput.value.trim();
         updateQueryParam(query);
-        showSkeletonLoading();
-        setTimeout(() => {
+        {
           const popularTitles = [
             "Munetios",
             "Google",
@@ -8196,7 +8580,7 @@ if(query!=="@all"){
             );
           }
           renderResults(filtered);
-        }, 300);
+        }
       });
       // --- Wiki Tab: Show Wikipedia results ---
       document
@@ -8204,9 +8588,7 @@ if(query!=="@all"){
         .addEventListener("click", async () => {
           const query = searchInput.value.trim();
           updateQueryParam(query);
-          showSkeletonLoading();
-          setTimeout(async () => {
-            let wikiResults = [];
+          let wikiResults = [];
             if (query) {
               try {
                 const wikiRes = await fetch(
@@ -8235,29 +8617,15 @@ if(query!=="@all"){
               resultsContainer.innerHTML =
                 '<div style="padding:32px 0;text-align:center;color:#aaa;">No Wikipedia results found.</div>';
             } else {
-              wikiResults.forEach((r) => {
-                const div = document.createElement("div");
-                div.className = "result";
-                div.innerHTML = `
-                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-                    <img class="result-favicon" src="${r.favicon}" alt="favicon">
-                    <a class="result-link" href="${r.link}" rel="noopener" target="_self">${r.link}</a>
-                    </div>
-                    <a class="result-title" href="${r.link}" rel="noopener" target="_self" style="font-size:1.3em;font-weight:700;display:inline-block;text-decoration:none;color:inherit;margin-bottom:8px;">${r.title}</a>
-                    <div class="result-description">${r.description}</div>
-                `;
-                resultsContainer.appendChild(div);
-              });
+              renderResults(wikiResults);
             }
-          }, 300);
         });
       document
         .getElementById("recommendedResult")
         .addEventListener("click", () => {
           const query = searchInput.value.trim();
           updateQueryParam(query);
-          showSkeletonLoading();
-          setTimeout(() => {
+          {
             const recommendedTitles = [
               "Munetios",
               "Copilot",
@@ -8304,14 +8672,13 @@ if(query!=="@all"){
               );
             }
             renderResults(filtered);
-          }, 300);
+          }
         });
 
       document.getElementById("blogsResult").addEventListener("click", () => {
         const query = searchInput.value.trim();
         updateQueryParam(query);
-        showSkeletonLoading();
-        setTimeout(() => {
+        {
           // Static blog data
           const staticBlogs = [
             {
@@ -8716,7 +9083,7 @@ if(query!=="@all"){
             );
           }
           renderResults(filtered);
-        }, 300);
+        }
       });
       document
         .getElementById("imagesResult")
@@ -8727,7 +9094,6 @@ if(query!=="@all"){
             clearResults();
             return;
           }
-          showSkeletonLoading();
           isLoading = true;
           try {
             let imageResults = [];
@@ -9179,7 +9545,6 @@ document
           .addEventListener("click", () => {
             const query = searchInput.value.trim();
             updateQueryParam(query);
-            showSkeletonLoading();
             
             // Clear results container and create map interface
             resultsContainer.innerHTML = "";
@@ -9544,7 +9909,6 @@ document
             clearResults();
             return;
           }
-          showSkeletonLoading();
           isLoading = true;
             try {
             // Static video data set (example)
@@ -10863,6 +11227,30 @@ document
           favicon: "",
           link: "https://www.munetios.com",
         },
+                {
+          title: "Munetios About",
+          description:
+            "Learn more about Munetios, our mission, and our team.",
+          url: "https://www.munetios.com/about",
+          favicon: "",
+          link: "https://www.munetios.com/about",
+        },
+                {
+          title: "Munetios Products",
+          description:
+            "Discover our range of products designed to enhance your productivity and privacy.",
+          url: "https://www.munetios.com/apps1",
+          favicon: "",
+          link: "https://www.munetios.com/apps1",
+        },
+                {
+          title: "Munetios Labs",
+          description:
+            "Explore experimental features and projects in Munetios Labs.",
+          url: "https://www.munetios.com/labs",
+          favicon: "",
+          link: "https://www.munetios.com/labs",
+        },
         {
           title: "Munetios OmniWrite",
           description:
@@ -10937,10 +11325,10 @@ document
        
         {
           title: "Munetios Games Hub",
-          description: "Coming soon but you can play munetios games.",
-          url: "https://www.munetios.com/games/",
+          description: "Munetios Games Hub - Play a variety of games in one place.",
+          url: "https://games.munetios.com/",
           favicon: "",
-          link: "https://www.munetios.com/games/",
+          link: "https://games.munetios.com/",
         },
         {
           title: "Munetios Notebook",
@@ -10987,6 +11375,14 @@ document
           link: "https://www.google.com",
         },
         {
+          title: "Google Images",
+          description:
+            "Search the world's images, including photos, illustrations, and more.",
+          url: "https://google.com/imghp",
+          favicon: "",
+          link: "https://google.com/imghp",
+        },
+        {
           title: "Gmail",
           description:
             "Email from Google. The most secure, private, and easy-to-use email service.",
@@ -10998,9 +11394,9 @@ document
           title: "Google Maps",
           description:
             "Find local businesses, view maps and get driving directions in Google Maps.",
-          url: "https://maps.google.com",
+          url: "https://google.com/maps",
           favicon: "",
-          link: "https://maps.google.com",
+          link: "https://google.com/maps",
         },
         {
           title: "YouTube",
@@ -19056,6 +19452,276 @@ document
           }
         }
       });
+
+      // --- Offline Detection ---
+      (function () {
+        const OFFLINE_HIDE_IDS = ["voiceModeBtn", "labsIcon", "bookmarksBtn"];
+
+        // _offlineState is the authoritative flag; updated by probe + browser events
+        var _offlineState = !navigator.onLine;
+
+        var _offlineSearchTimer = null;
+        var _offlineRetryInterval = null;
+        var _offlineRetryCount = 0;
+        var _offlineRetryDelay = 3;
+
+        // Real connectivity probe — fetch same-origin favicon with a timeout.
+        // A fetch failure alone is NOT enough to declare offline (service workers,
+        // redirects, etc. can cause errors on a working connection).
+        // We only declare offline when the fetch fails AND navigator.onLine is false.
+        function _probeConnectivity(cb) {
+          // If the browser already knows we're offline, skip the network round-trip.
+          if (!navigator.onLine) { cb(true); return; }
+          var timedOut = false;
+          var ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
+          var tid = setTimeout(function () {
+            timedOut = true;
+            if (ctrl) ctrl.abort();
+            // Timeout: only count as offline if navigator also says offline.
+            cb(!navigator.onLine);
+          }, 6000);
+          fetch("/favicon-new.ico?_nc=" + Date.now(), {
+            method: "HEAD",
+            cache: "no-store",
+            signal: ctrl ? ctrl.signal : undefined
+          }).then(function () {
+            if (timedOut) return;
+            clearTimeout(tid);
+            cb(false); // got a response — definitely online
+          }).catch(function () {
+            if (timedOut) return;
+            clearTimeout(tid);
+            // Fetch error: trust navigator.onLine as tiebreaker to avoid false positives.
+            cb(!navigator.onLine);
+          });
+        }
+
+        function _isOffline() { return _offlineState; }
+
+        function _applyOfflineTopbar() {
+          OFFLINE_HIDE_IDS.forEach(function (id) {
+            var el = document.getElementById(id);
+            if (el) el.style.display = "none";
+          });
+          // Reveal each one after a random delay (11–24 seconds)
+          OFFLINE_HIDE_IDS.forEach(function (id) {
+            var delay = Math.floor(Math.random() * 13000) + 11000; // 11-24 seconds
+            setTimeout(function () {
+              var el = document.getElementById(id);
+              if (el) el.style.display = "";
+            }, delay);
+          });
+          // Ensure all are revealed after 24 seconds
+          setTimeout(function () {
+            OFFLINE_HIDE_IDS.forEach(function (id) {
+              var el = document.getElementById(id);
+              if (el) el.style.display = "";
+            });
+          }, 24000);
+        }
+
+        function _restoreTopbar() {
+          OFFLINE_HIDE_IDS.forEach(function (id) {
+            var el = document.getElementById(id);
+            if (el) el.style.display = "";
+          });
+        }
+
+        function _clearOfflineTimers() {
+          if (_offlineSearchTimer) { clearTimeout(_offlineSearchTimer); _offlineSearchTimer = null; }
+          if (_offlineRetryInterval) { clearInterval(_offlineRetryInterval); _offlineRetryInterval = null; }
+        }
+
+        function _showOfflineSearchUI(phase, countdown) {
+          var rc = document.getElementById("results");
+          if (!rc) return;
+          var spinnerHtml = '<div class="offline-spinner-ring"></div>';
+          if (phase === "trying") {
+            rc.innerHTML =
+              '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:72px 32px;text-align:center;">' +
+              '  <span class="material-symbols-rounded" style="font-size:64px;opacity:0.65;">cloud_off</span>' +
+              '  <div style="font-size:1.15em;font-weight:600;">Trying to connect to Munetios Search</div>' +
+              spinnerHtml +
+              '</div>';
+          } else if (phase === "retrying") {
+            rc.innerHTML =
+              '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:72px 32px;text-align:center;">' +
+              '  <span class="material-symbols-rounded" style="font-size:64px;opacity:0.65;">cloud_off</span>' +
+              '  <div style="font-size:1.15em;font-weight:600;">Failed to connect to Munetios Search.</div>' +
+              '  <div id="offlineRetryText">Retrying in ' + countdown + 's</div>' +
+              spinnerHtml +
+              '</div>';
+          } else if (phase === "offline") {
+            rc.innerHTML =
+              '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:72px 32px;text-align:center;">' +
+              '  <span class="material-symbols-rounded" style="font-size:72px;opacity:0.65;">cloud_off</span>' +
+              '  <div style="font-size:1.3em;font-weight:700;">You\'re Offline</div>' +
+              '  <div style="opacity:0.8;">Please connect to the internet to continue searching</div>' +
+              '</div>';
+          }
+        }
+
+        function _startRetryPhase() {
+          _offlineRetryCount++;
+          if (_offlineRetryCount > 5) {
+            _clearOfflineTimers();
+            _showOfflineSearchUI("offline");
+            return;
+          }
+          var countdown = _offlineRetryDelay;
+          _showOfflineSearchUI("retrying", countdown);
+          _offlineRetryInterval = setInterval(function () {
+            // Re-probe on each tick to detect if connectivity restored
+            _probeConnectivity(function (isOff) {
+              if (!isOff) {
+                _offlineState = false;
+                _clearOfflineTimers();
+                _restoreTopbar();
+                if (typeof showToast === "function") showToast("Back online!");
+                return;
+              }
+            });
+            countdown--;
+            var el = document.getElementById("offlineRetryText");
+            if (el) el.textContent = "Retrying in " + countdown + "s";
+            if (countdown <= 0) {
+              clearInterval(_offlineRetryInterval);
+              _offlineRetryInterval = null;
+              _offlineRetryDelay = Math.min(_offlineRetryDelay * 2, 60);
+              _startRetryPhase();
+            }
+          }, 1000);
+        }
+
+        function _startOfflineSearchMachine() {
+          _offlineRetryCount = 0;
+          _offlineRetryDelay = 3;
+          _clearOfflineTimers();
+          var tryDuration = Math.floor(Math.random() * 6000) + 54000; // 54–59 seconds
+          _showOfflineSearchUI("trying");
+          _offlineSearchTimer = setTimeout(function () {
+            _probeConnectivity(function (isOff) {
+              if (!isOff) {
+                _offlineState = false;
+                _clearOfflineTimers();
+                _restoreTopbar();
+                return;
+              }
+              _startRetryPhase();
+            });
+          }, tryDuration);
+        }
+
+        // --- Patch window.performSearch (catches programmatic calls) ---
+        var _origPS = typeof window.performSearch === "function" ? window.performSearch : null;
+        if (_origPS) {
+          window.performSearch = async function () {
+            if (_offlineState && !navigator.onLine) { _startOfflineSearchMachine(); return; }
+            // If state was stale, reset it.
+            if (navigator.onLine) _offlineState = false;
+            _clearOfflineTimers();
+            return _origPS.apply(this, arguments);
+          };
+        }
+
+        // --- Capture-phase interceptors (catch all user-triggered search paths) ---
+
+        // Block Enter key on search input when offline
+        var _si = document.getElementById("searchInput");
+        if (_si) {
+          _si.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" && _offlineState && !navigator.onLine) {
+              e.stopImmediatePropagation();
+              e.preventDefault();
+              _startOfflineSearchMachine();
+            }
+          }, true);
+          // Suppress suggestions when offline
+          var _suppressSugg = function () {
+            if (_offlineState) {
+              var dd = document.getElementById("searchSuggestions");
+              if (dd) dd.style.display = "none";
+            }
+          };
+          _si.addEventListener("input", _suppressSugg, true);
+          _si.addEventListener("focus", _suppressSugg, true);
+        }
+
+        // Block All/search tab click when offline
+        var _allBtn = document.getElementById("allResult");
+        if (_allBtn) {
+          _allBtn.addEventListener("click", function (e) {
+            if (_offlineState && !navigator.onLine) {
+              e.stopImmediatePropagation();
+              _startOfflineSearchMachine();
+            }
+          }, true);
+        }
+
+        // Maps tab offline UI
+        var _mapsBtn = document.getElementById("mapsResult");
+        if (_mapsBtn) {
+          _mapsBtn.addEventListener("click", function (e) {
+            if (!_offlineState || navigator.onLine) return;
+            e.stopImmediatePropagation();
+            var rc = document.getElementById("results");
+            if (!rc) return;
+            var mapContainer = document.createElement("div");
+            mapContainer.style.cssText = "display:flex;width:100%;height:calc(100vh - 200px);min-height:500px;gap:0;";
+            var leftPanel = document.createElement("div");
+            leftPanel.style.cssText = "width:350px;min-width:350px;height:100%;overflow-y:auto;background:rgba(255,255,255,0.08);backdrop-filter:blur(2px);padding:32px 24px;box-shadow:2px 0 10px rgba(0,0,0,0.1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;";
+            leftPanel.innerHTML =
+              '<span class="material-symbols-rounded" style="font-size:56px;opacity:0.6;">wifi_off</span>' +
+              '<div style="font-size:1.1em;font-weight:600;">Oops, something went wrong</div>' +
+              '<div style="opacity:0.75;font-size:0.95em;">Maps require an internet connection. Please check your network and try again.</div>';
+            var rightPanel = document.createElement("div");
+            rightPanel.style.cssText = "flex:1;height:100%;display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(6,1fr);gap:2px;background:rgba(0,0,0,0.15);overflow:hidden;";
+            for (var i = 0; i < 48; i++) {
+              var cell = document.createElement("div");
+              var l = 20 + Math.floor(Math.random() * 18);
+              cell.style.cssText = "background:rgba(" + l + "," + l + "," + (l + 10) + ",0.4);";
+              rightPanel.appendChild(cell);
+            }
+            mapContainer.appendChild(leftPanel);
+            mapContainer.appendChild(rightPanel);
+            rc.innerHTML = "";
+            rc.appendChild(mapContainer);
+          }, true);
+        }
+
+        // Voice/mic button offline toast — DOM is already ready here, attach directly
+        var _micEl = document.getElementById("micIcon");
+        if (_micEl) {
+          _micEl.addEventListener("click", function (e) {
+            if (_offlineState && !navigator.onLine) {
+              e.stopImmediatePropagation();
+              if (typeof showToast === "function") showToast("Connect to the internet to voice search");
+            }
+          }, true);
+        }
+
+        // Browser online/offline events -> re-probe to confirm
+        window.addEventListener("online", function () {
+          _probeConnectivity(function (isOff) {
+            _offlineState = isOff;
+            if (!isOff) {
+              _restoreTopbar();
+              _clearOfflineTimers();
+              if (typeof showToast === "function") showToast("Back online!");
+            }
+          });
+        });
+        window.addEventListener("offline", function () {
+          _offlineState = true;
+          _applyOfflineTopbar();
+        });
+
+        // Initial real connectivity probe on load
+        _probeConnectivity(function (isOff) {
+          _offlineState = isOff;
+          if (isOff) _applyOfflineTopbar();
+        });
+      })();
     </script>
   </body>
 </html>
