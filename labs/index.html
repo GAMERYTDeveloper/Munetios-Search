@@ -274,6 +274,11 @@
               <p>Manage your secure, encrypted notes.</p>
               <button class="btn" id="secureNotesBtn">Try it</button>
             </div>
+            <div class="box-labs liquid-glass">
+              <h2>Secure Folders</h2>
+              <p>Upload files, photos, and videos with end-to-end encryption.</p>
+              <button class="btn" id="secureFoldersBtn">Try it</button>
+            </div>
           </div>
         </div>
       </div>
@@ -300,7 +305,12 @@
         .addEventListener("click", function () {
           window.location.href = "https://www.munetios.com/labs/notes";
         });
-     
+      document
+        .getElementById("secureFoldersBtn")
+        .addEventListener("click", function () {
+          window.location.href = "https://www.munetios.com/labs/secure-folders";
+        });
+
       document
         .getElementById("munetiosHome")
         .addEventListener("click", function () {
