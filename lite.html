@@ -6,6 +6,7 @@
       name="description"
       content="Munetios Search Lite - Fast, simple search experience."
     />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="keywords" content="Munetios, Search, Lite, Fast, Simple" />
     <meta name="author" content="Munetios" />
     <meta name="theme-color" content="#ffffff" />
@@ -18,7 +19,7 @@
           sans-serif;
       }
       body {
-        min-width: 922px;
+        min-width: 522px;
         margin: 0;
         padding: 0;
         background-color: #f5f5f5;
@@ -29,7 +30,7 @@
         padding: 6px 12px;
         display: flex;
         font-size: 17px;
-        min-width: 1000px;
+        min-width: 522px;
       }
       header a {
         color: #ffffff !important;
@@ -104,6 +105,27 @@
         display: flex;
         align-items: center;
       }
+      @media (max-width: 985px) {
+        .hide-1 {
+          display: none;
+        }
+      }
+      @media (max-width: 801px) {
+        .hide-2 {
+          display: none;
+        }
+      }
+      @media (max-width: 709px) {
+        .hide-3 {
+          display: none;
+        }
+        right {
+          display: none;
+        }
+        img {
+          height: 100px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -114,10 +136,10 @@
       <a href="https://maps.munetios.com">Maps</a>
       <a href="https://calendar.munetios.com">Calendar</a>
       <a href="https://photos.munetios.com">Photos</a>
-      <a href="https://tasks.munetios.com">Tasks</a>
-      <a href="https://calculator.munetios.com">Calculator</a>
-      <a href="https://games.munetios.com">Games Hub</a>
-      <a href="https://weather.munetios.com">Weather</a>
+      <a class="hide-3" href="https://tasks.munetios.com">Tasks</a>
+      <a class="hide-2" href="https://calculator.munetios.com">Calculator</a>
+      <a class="hide-1" href="https://games.munetios.com">Games Hub</a>
+      <a class="hide-1" href="https://weather.munetios.com">Weather</a>
       <a href="https://www.munetios.com/apps1">More Apps...</a>
       <right>
         <a href="https://www.munetios.com/policies/#/terms">Terms</a>
@@ -136,7 +158,6 @@
       <footer>
         <p>2026 Munetios</p>
       </footer>
-      <p>Lite version. Optimized for low bandwidth and performance.</p>
     </center>
     <script>
       // Get elements
