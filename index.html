@@ -3484,13 +3484,13 @@
                 addToHistory(
                   gt
                     ? gt("sorryMicrophone")
-                    : "Sorry, I could not get your Microphone.",
+                    : "Sorry, I could not get your Microphone. Please try again",
                   "system",
                 );
                 speak(
                   gt
                     ? gt("sorryMicrophone")
-                    : "Sorry, I could not get your Microphone.",
+                    : "Sorry, I could not get your Microphone. Please try again",
                 );
                 playSound("denied");
               } else if (e.error === "audio-capture") {
@@ -3500,13 +3500,13 @@
                 addToHistory(
                   gt
                     ? gt("sorryMicrophone")
-                    : "Sorry, I could not get your Microphone.",
+                    : "Sorry, I could not get your Microphone. Please try again",
                   "system",
                 );
                 speak(
                   gt
                     ? gt("sorryMicrophone")
-                    : "Sorry, I could not get your Microphone.",
+                    : "Sorry, I could not get your Microphone. Please try again",
                 );
                 showToast(
                   gt
@@ -3546,7 +3546,7 @@
             addToHistory(
               gt
                 ? gt("sorryMicrophone")
-                : "Sorry, I could not get your Microphone.",
+                : "Sorry, I could not get your Microphone. Please try again",
               "system",
             );
             showToast(
@@ -3557,7 +3557,7 @@
             speak(
               gt
                 ? gt("sorryMicrophone")
-                : "Sorry, I could not get your Microphone.",
+                : "Sorry, I could not get your Microphone. Please try again",
             );
             playSound("denied");
           }
@@ -4199,7 +4199,7 @@
             networkErrorShort: "Network error",
             unableToStartShort: "Unable to start",
             errorPrefix: "Error: ",
-            sorryMicrophone: "Sorry, I could not get your Microphone.",
+            sorryMicrophone: "Sorry, I could not get your Microphone. Please try again",
             micAccessDeniedFull:
               "Microphone access denied. Please allow microphone permissions.",
             micNotConnectedFull:
@@ -4372,7 +4372,7 @@
             networkErrorShort: "Error de red",
             unableToStartShort: "No se puede iniciar",
             errorPrefix: "Error: ",
-            sorryMicrophone: "Lo siento, no pude acceder a tu micrófono.",
+            sorryMicrophone: "Lo siento, no pude acceder a tu micrófono. Por favor, inténtalo de nuevo.",
             micAccessDeniedFull:
               "Acceso al micrófono denegado. Por favor, permite los permisos del micrófono.",
             micNotConnectedFull:
