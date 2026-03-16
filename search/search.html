@@ -940,6 +940,8 @@
         <div class="options-label">Netherlands</div>
       </div>
     </div>
+    <!-- Voice Dropdown -->
+    <div class="liquid-glass hidden" id="voiceDropdown" style="position:absolute;border-radius:12px;overflow:hidden;overflow-y:auto;max-height:260px;min-width:240px;z-index:10020;box-shadow:0 4px 16px rgba(0,0,0,0.25);"></div>
     <div class="liquid-glass hidden p-4 rounded-2xl flex flex-col gap-2" id="liquidGlassDropdown">
       <div class="flex items-center gap-2 p-2 hover:bg-gray-700" data-style="clear">
         <div class="options-label">Clear</div>
@@ -1172,6 +1174,17 @@
             <label for="liquidGlassDropdownBtn" class="font-semibold">Liquid Glass Style</label>
             <button id="liquidGlassDropdownBtn" class="btn liquid-glass ml-2" type="button">Choose Style</button>
           </div>
+          <!-- Voice Settings -->
+          <div class="mb-3">
+            <label class="font-semibold">Voice (Text-to-Speech)</label>
+            <div class="mt-2">
+              <button id="voiceDropdownBtn" class="btn liquid-glass" type="button" style="width:100%;justify-content:space-between;">
+                <span id="voiceDropdownLabel">Default voice</span>
+                <span class="material-symbols-rounded" style="font-size:18px;opacity:0.7;">expand_more</span>
+              </button>
+            </div>
+            <div style="font-size:0.82em;color:#aaa;margin-top:5px;">Only voices for your selected language. <b style="color:#fff;">✓</b> = local &nbsp; <b style="color:#a259f7;">☁</b> = cloud</div>
+          </div>
           <hr class="my-4" />
           <!-- Export/Import/Reset/Delete -->
           <div class="mb-3 flex flex-wrap gap-2">
@@ -1185,6 +1198,28 @@
       </div>
     </div>
     </div>
+
+    <!-- Floating Speak Button -->
+    <button id="speakBtn" class="liquid-glass" title="Speak search query" style="position:fixed;bottom:28px;right:28px;z-index:10070;width:56px;height:56px;border-radius:50%;backdrop-filter: blur(2px);background: linear-gradient(to bottom, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.06) 22%, rgba(255, 255, 255, 0.04) 50%, rgba(255, 255, 255, 0.06) 78%, rgba(255, 255, 255, 0.14) 100%) !important;  cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s,box-shadow 0.2s;" aria-label="Speak">
+      <span class="material-symbols-rounded" style="font-size:26px;color:#fff;">volume_up</span>
+    </button>
+
+    <!-- Voice Cloud Privacy Warning Modal -->
+    <div id="voicePrivacyWarningModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.45);z-index:10090;align-items:center;justify-content:center;">
+      <div class="liquid-glass" style="padding:32px 28px 24px 28px;border-radius:18px;max-width:440px;width:95%;color:#fff;position:relative;box-shadow:0 4px 32px rgba(0,0,0,0.3);">
+        <button id="voicePrivacyWarningClose" style="position:absolute;top:10px;right:10px;background:#a259f7;color:#fff;border:none;border-radius:50%;width:34px;height:34px;font-size:1.2em;cursor:pointer;display:flex;align-items:center;justify-content:center;">&times;</button>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <span class="material-symbols-rounded" style="font-size:32px;color:#f7b500;">cloud</span>
+          <span style="font-size:1.15em;font-weight:700;">Cloud Voice Privacy Warning</span>
+        </div>
+        <div id="voicePrivacyWarningBody" style="font-size:1em;line-height:1.6;margin-bottom:18px;"></div>
+        <div style="display:flex;gap:10px;justify-content:flex-end;">
+          <button id="voicePrivacyWarningCancel" class="btn liquid-glass" style="background:rgba(108,46,183,0.3);">Cancel</button>
+          <button id="voicePrivacyWarningAccept" class="btn liquid-glass" style="background:#a259f7;color:#fff;">I Understand, Use This Voice</button>
+        </div>
+      </div>
+    </div>
+
    
   <style>
     body.compact-mode {
@@ -3852,7 +3887,7 @@
           voiceModeUI = document.createElement("div");
           voiceModeUI.id = "voiceModeFloating";
           voiceModeUI.style.position = "fixed";
-          voiceModeUI.style.bottom = "32px";
+          voiceModeUI.style.bottom = "92px";
           voiceModeUI.style.right = "32px";
           voiceModeUI.style.zIndex = "10080";
           voiceModeUI.style.display = "flex";
@@ -3863,11 +3898,13 @@
             <span style="font-weight:700;font-size:1.1em;">Voice Mode</span>
             <button id="voiceModeClose" style="background:none;border:none;color:#fff;font-size:1.5em;cursor:pointer;">&times;</button>
             </div>
+            <div style="display:flex;justify-content:center;padding:14px 18px 4px 18px;">
+       
+            </div>
             <div id="voiceHistoryWrapper" style="background:rgba(25,0,71,0.13);backdrop-filter:blur(2px) saturate(180%);border-radius:0 0 18px 18px;box-shadow:0 2px 16px #0002;padding:12px 18px 12px 18px;max-width:340px;min-width:220px;max-height:260px;overflow-y:auto;">
             <div style="font-size:0.97em;color:#aaa;margin-bottom:6px;">Voice History</div>
-            <div id="voiceHistoryList" style="display:flex;flex-direction:column;gap:8px;"></div>
-            </div>
-            <button id="voiceMicBtn" class="liquid-glass" style="margin-top:12px;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+            <div id="voiceHistoryList" style="display:flex;flex-direction:column;gap:8px;"></div>     
+            </div><button id="voiceMicBtn" class="liquid-glass" style="width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 16px #a259f733;">
             <span class="material-symbols-rounded" style="font-size:2.2em;color:#fff;">mic</span>
             </button>
             `;
@@ -3953,11 +3990,18 @@
         }
           }
 
-          // Speak text
+          // Speak text — uses the voice selected in Settings (ttsVoiceName)
           function speak(text) {
         if ("speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
           const utter = new SpeechSynthesisUtterance(text);
           utter.lang = localStorage.getItem("searchLanguage") || "en";
+          const savedName = localStorage.getItem("ttsVoiceName") || "";
+          if (savedName) {
+            const voices = window.speechSynthesis.getVoices();
+            const v = voices.find(function (vv) { return vv.name === savedName; });
+            if (v) utter.voice = v;
+          }
           window.speechSynthesis.speak(utter);
         }
           }
@@ -19722,6 +19766,288 @@ document
           if (isOff) _applyOfflineTopbar();
         });
       })();
+    </script>
+
+    <script nonce="rjighegujregergrejge">
+    // ─── Voice Settings & Speak Button ────────────────────────────────────────
+
+    (function () {
+      "use strict";
+
+      // ── Helpers ──────────────────────────────────────────────────────────────
+
+      // Language code → BCP-47 prefix mapping used for voice filtering
+      const LANG_PREFIX_MAP = {
+        en: "en",
+        es: "es",
+        fr: "fr",
+        de: "de",
+        it: "it",
+        pt: "pt",
+        zh: "zh",
+        ja: "ja",
+        ko: "ko",
+        ar: "ar",
+        hi: "hi",
+        bn: "bn",
+        ru: "ru",
+        tr: "tr",
+      };
+
+      function getCurrentLangPrefix() {
+        const stored = localStorage.getItem("searchLanguage") || "en";
+        return LANG_PREFIX_MAP[stored] || stored;
+      }
+
+      // Returns true if the voice name/uri looks like a cloud/non-local voice
+      function isCloudVoice(voice) {
+        // If the browser explicitly marks this voice as local, trust it — never cloud.
+        if (voice.localService === true) return false;
+        const name = (voice.name || "").toLowerCase();
+        const uri  = (voice.voiceURI || "").toLowerCase();
+        // Flag as cloud only if the name/URI explicitly mentions a known cloud provider.
+        return /\bgoogle\b|\bmicrosoft\b|\bamazon\b|\bibm\b|\bwatson\b|tts\.online/.test(name + " " + uri);
+      }
+
+      function getCloudProvider(voice) {
+        const s = ((voice.name || "") + " " + (voice.voiceURI || "")).toLowerCase();
+        if (/google/.test(s))    return "Google";
+        if (/microsoft/.test(s)) return "Microsoft";
+        if (/amazon/.test(s))    return "Amazon";
+        if (/ibm|watson/.test(s)) return "IBM Watson";
+        return "a cloud provider";
+      }
+
+      // ── Voice Custom Dropdown ─────────────────────────────────────────────────
+
+      // Holds the current list of filtered voices so click handlers can look them up
+      var _voiceList = [];
+
+      function populateVoiceDropdown() {
+        const btn = document.getElementById("voiceDropdownBtn");
+        const label = document.getElementById("voiceDropdownLabel");
+        const dropdown = document.getElementById("voiceDropdown");
+        if (!btn || !dropdown) return;
+
+        const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+        const langPrefix = getCurrentLangPrefix();
+        const filtered = voices.filter(v => v.lang.toLowerCase().startsWith(langPrefix.toLowerCase()));
+        _voiceList = filtered;
+
+        dropdown.innerHTML = "";
+
+        const saved = localStorage.getItem("ttsVoiceName") || "";
+
+        // Helper to build a row
+        function makeRow(name, lang, cloud, isDefault) {
+          const row = document.createElement("div");
+          row.style.cssText = "display:flex;align-items:center;gap:10px;padding:10px 16px;cursor:pointer;transition:background 0.15s;border-bottom:1px solid rgba(162,89,247,0.12);";
+          row.dataset.voiceName = isDefault ? "" : name;
+          row.dataset.cloud = cloud ? "1" : "0";
+          const active = isDefault ? (saved === "") : (name === saved);
+          if (active) row.style.background = "rgba(108,46,183,0.35)";
+          row.innerHTML =
+            "<span style='flex:1;font-size:0.96em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'>" + (lang ? name + " <span style='opacity:.55;font-size:0.88em;'>" + lang + "</span>" : name) + "</span>" +
+            "<span style='font-size:0.9em;flex-shrink:0;" + (cloud ? "color:#a259f7;" : "color:#6ee87b;") + "'>" + (isDefault ? "" : (cloud ? "☁" : "✓")) + "</span>";
+          row.addEventListener("mouseenter", function () { if (!active) row.style.background = "rgba(108,46,183,0.2)"; });
+          row.addEventListener("mouseleave", function () { row.style.background = active ? "rgba(108,46,183,0.35)" : ""; });
+          row.addEventListener("click", function () {
+            dropdown.classList.add("hidden");
+            const chosenName = row.dataset.voiceName;
+            if (!chosenName) {
+              localStorage.removeItem("ttsVoiceName");
+              if (label) label.textContent = "Default voice";
+              populateVoiceDropdown();
+              return;
+            }
+            const isCloud = row.dataset.cloud === "1";
+            const voiceObj = _voiceList.find(function (vv) { return vv.name === chosenName; });
+            if (isCloud && voiceObj) {
+              showVoicePrivacyWarning(voiceObj,
+                function () {
+                  localStorage.setItem("ttsVoiceName", chosenName);
+                  if (label) label.textContent = chosenName;
+                  populateVoiceDropdown();
+                },
+                function () { populateVoiceDropdown(); }
+              );
+            } else {
+              localStorage.setItem("ttsVoiceName", chosenName);
+              if (label) label.textContent = chosenName;
+              populateVoiceDropdown();
+            }
+          });
+          return row;
+        }
+
+        // Default row
+        dropdown.appendChild(makeRow("Default voice", "", false, true));
+
+        if (!filtered.length) {
+          const empty = document.createElement("div");
+          empty.style.cssText = "padding:10px 16px;opacity:0.6;font-size:0.93em;";
+          empty.textContent = "No voices available for this language";
+          dropdown.appendChild(empty);
+        } else {
+          filtered.forEach(function (v) {
+            dropdown.appendChild(makeRow(v.name, v.lang, isCloudVoice(v), false));
+          });
+        }
+
+        // Sync button label
+        if (label) {
+          if (saved) {
+            const match = filtered.find(function (v) { return v.name === saved; });
+            label.textContent = match ? match.name : "Default voice";
+          } else {
+            label.textContent = "Default voice";
+          }
+        }
+      }
+
+      // Open/close voice dropdown
+      document.addEventListener("DOMContentLoaded", function () {
+        const voiceDropdownBtn = document.getElementById("voiceDropdownBtn");
+        const voiceDropdown = document.getElementById("voiceDropdown");
+        if (voiceDropdownBtn && voiceDropdown) {
+          voiceDropdownBtn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            populateVoiceDropdown();
+            voiceDropdown.classList.toggle("hidden");
+            const rect = voiceDropdownBtn.getBoundingClientRect();
+            voiceDropdown.style.position = "fixed";
+            voiceDropdown.style.top = (rect.bottom + 6) + "px";
+            voiceDropdown.style.left = rect.left + "px";
+            voiceDropdown.style.width = rect.width + "px";
+            voiceDropdown.style.zIndex = "10025";
+          });
+          document.addEventListener("mousedown", function (e) {
+            if (!voiceDropdown.contains(e.target) && e.target !== voiceDropdownBtn) {
+              voiceDropdown.classList.add("hidden");
+            }
+          });
+        }
+        populateVoiceDropdown();
+        // Re-populate when settings modal is opened
+        const settingsBtn = document.getElementById("settingsBtn");
+        if (settingsBtn) {
+          settingsBtn.addEventListener("click", function () { setTimeout(populateVoiceDropdown, 80); });
+        }
+        // Re-populate when language changes
+        document.querySelectorAll("[id$='Option']").forEach(function (el) {
+          el.addEventListener("click", function () { setTimeout(populateVoiceDropdown, 80); });
+        });
+      });
+
+      // Repopulate when voices change (async load in some browsers)
+      if (window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = populateVoiceDropdown;
+      }
+
+      // ── Voice Privacy Warning Modal ───────────────────────────────────────────
+
+      function showVoicePrivacyWarning(voice, onAccept, onCancel) {
+        const modal = document.getElementById("voicePrivacyWarningModal");
+        const body  = document.getElementById("voicePrivacyWarningBody");
+        if (!modal || !body) { if (typeof onAccept === "function") onAccept(); return; }
+        const provider = getCloudProvider(voice);
+        body.innerHTML =
+          "<b>The voice you selected (<em>" + voice.name + "</em>) is a cloud-based voice.</b><br><br>" +
+          "When you use this voice, the text you want to be spoken may be sent to <b>" + provider + "</b> servers for processing. " +
+          provider + " may process this data according to their privacy policy.<br><br>" +
+          "<b>Munetios does not send or store your data.</b> This is handled entirely by your browser's built-in speech synthesis and " + provider + ".<br><br>" +
+          "To keep everything private and local, choose a voice marked with <b>✓</b> instead of <b>☁</b>.";
+        modal.style.display = "flex";
+
+        function cleanup() { modal.style.display = "none"; }
+
+        document.getElementById("voicePrivacyWarningClose").onclick = function () { cleanup(); if (typeof onCancel === "function") onCancel(); };
+        document.getElementById("voicePrivacyWarningCancel").onclick = function () { cleanup(); if (typeof onCancel === "function") onCancel(); };
+        document.getElementById("voicePrivacyWarningAccept").onclick = function () { cleanup(); if (typeof onAccept === "function") onAccept(); };
+        modal.addEventListener("mousedown", function handler(e) {
+          if (e.target === modal) { cleanup(); modal.removeEventListener("mousedown", handler); if (typeof onCancel === "function") onCancel(); }
+        });
+      }
+
+      // ── Shared speak() utility ────────────────────────────────────────────────
+
+      window.munetiosTTSSpeak = function (text) {
+        if (!("speechSynthesis" in window)) return;
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        // Apply saved voice if set
+        const savedName = localStorage.getItem("ttsVoiceName") || "";
+        if (savedName) {
+          const voices = window.speechSynthesis.getVoices();
+          const v = voices.find(function (vv) { return vv.name === savedName; });
+          if (v) utter.voice = v;
+        }
+        utter.lang = localStorage.getItem("searchLanguage") || "en";
+        window.speechSynthesis.speak(utter);
+      };
+
+      // ── Speak Button ──────────────────────────────────────────────────────────
+
+      document.addEventListener("DOMContentLoaded", function () {
+        var speakBtn = document.getElementById("speakBtn");
+        if (!speakBtn) return;
+
+        var isSpeaking = false;
+
+        function updateSpeakBtnState(speaking) {
+          isSpeaking = speaking;
+          var icon = speakBtn.querySelector(".material-symbols-rounded");
+          if (icon) icon.textContent = speaking ? "volume_off" : "volume_up";
+          speakBtn.style.boxShadow = speaking ? "0 0 0 3px rgba(162,89,247,0.55), 0 4px 20px rgba(162,89,247,0.25)" : "";
+          speakBtn.title = speaking ? "Stop speaking" : "Speak search query";
+        }
+
+        speakBtn.addEventListener("click", function () {
+          if (!("speechSynthesis" in window)) {
+            if (typeof showToast === "function") showToast("Text-to-speech is not supported in this browser.");
+            return;
+          }
+          if (window.speechSynthesis.speaking) {
+            window.speechSynthesis.cancel();
+            updateSpeakBtnState(false);
+            return;
+          }
+          var input = document.getElementById("searchInput");
+          var query = input ? input.value.trim() : "";
+          var textToSpeak = query || "Munetios";
+
+          var savedName = localStorage.getItem("ttsVoiceName") || "";
+          if (savedName) {
+            var voices = window.speechSynthesis.getVoices();
+            var selectedVoice = voices.find(function (v) { return v.name === savedName; });
+            if (selectedVoice && isCloudVoice(selectedVoice)) {
+              showVoicePrivacyWarning(selectedVoice, function () {
+                doSpeak(textToSpeak);
+              }, null);
+              return;
+            }
+          }
+          doSpeak(textToSpeak);
+        });
+
+        function doSpeak(text) {
+          window.speechSynthesis.cancel();
+          var utter = new SpeechSynthesisUtterance(text);
+          var savedName = localStorage.getItem("ttsVoiceName") || "";
+          if (savedName) {
+            var voices = window.speechSynthesis.getVoices();
+            var v = voices.find(function (vv) { return vv.name === savedName; });
+            if (v) utter.voice = v;
+          }
+          utter.lang = localStorage.getItem("searchLanguage") || "en";
+          updateSpeakBtnState(true);
+          utter.onend = function () { updateSpeakBtnState(false); };
+          utter.onerror = function () { updateSpeakBtnState(false); };
+          window.speechSynthesis.speak(utter);
+        }
+      });
+
+    })();
     </script>
   </body>
 </html>
