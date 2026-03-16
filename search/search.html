@@ -6,12 +6,12 @@
     <title>Munetios Search 3.0</title>
     <link rel="shortcut icon" href="/favicon-new.ico" type="image/x-icon" />
     <link rel="icon" href="/favicon-new.ico" type="image/png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon-new.png" />
     <meta name="referrer" content="no-referrer" />
 
-    <link rel="icon" sizes="32x32" href="/apple-touch-icon.png" type="image/png" />
-    <link rel="icon" sizes="192x192" href="/apple-touch-icon.png" type="image/png" />
-    <link rel="icon" sizes="16x16" href="/apple-touch-icon.png" type="image/png" />
+    <link rel="icon" sizes="32x32" href="/apple-touch-icon-new.png" type="image/png" />
+    <link rel="icon" sizes="192x192" href="/apple-touch-icon-new.png" type="image/png" />
+    <link rel="icon" sizes="16x16" href="/apple-touch-icon-new.png" type="image/png" />
     <script src="https://cdn.tailwindcss.com"></script>
    <meta
   http-equiv="Content-Security-Policy"
@@ -43,7 +43,9 @@
       https://www.wikidata.org 
       https://api.github.com
       https://api.duckduckgo.com
-      https://www.reddit.com;
+      https://www.reddit.com
+      https://*.openfreemap.org
+      https://tiles.openfreemap.org;
 
     font-src 'self' https: data:;
 
@@ -499,15 +501,26 @@
          display: none !important;
         }
       }
-      .leaflet-control-attribution {
-        background: rgba(255, 255, 255, 0.1) !important;
+      .maplibregl-ctrl-group {
         backdrop-filter: blur(2px) saturate(180%) !important;
-        -webkit-backdrop-filter: blur(2px) saturate(180%) !important;
-        border-radius: 82px !important;
+        background: rgba(255, 255, 255, 0.1) !important;
         border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 82px !important;
+        color: white !important;
       }
-     
-    
+      .maplibregl-ctrl-attrib.maplibregl-compact, .maplibregl-ctrl-attrib.maplibregl-compact, .maplibregl-ctrl-attrib.maplibregl-compact-show, maplibregl-ctrl-attrib-button, maplibregl-ctrl-attrib-inner {
+        display: none !important;
+      }
+      .maplibregl-ctrl.maplibregl-ctrl-attrib {
+              backdrop-filter: blur(2px) saturate(180%) !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 82px !important;
+        color: white !important;
+      }
+      .maplibregl-ctrl.maplibregl-ctrl-attrib a {
+          color: white !important;
+      }
     </style>
   </head>
   <body>
@@ -9665,38 +9678,88 @@ document
             let map;
             let markers = [];
             
-            // Load Leaflet CSS and JS
-            if (!document.getElementById("leaflet-css")) {
-              const leafletCSS = document.createElement("link");
-              leafletCSS.id = "leaflet-css";
-              leafletCSS.rel = "stylesheet";
-              leafletCSS.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-              document.head.appendChild(leafletCSS);
-            }
-            
-            if (!window.L) {
-              const leafletJS = document.createElement("script");
-              leafletJS.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-              leafletJS.onload = initMap;
-              document.head.appendChild(leafletJS);
-            } else {
-              initMap();
+            // Load MapLibre GL JS + OpenFreeMap
+            if (!document.getElementById("maplibre-css")) {
+              const mlCSS = document.createElement("link");
+              mlCSS.id = "maplibre-css";
+              mlCSS.rel = "stylesheet";
+              mlCSS.href = "https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.css";
+              document.head.appendChild(mlCSS);
             }
 
             function initMap() {
-              // Initialize map centered on US
-              map = L.map('mapDiv').setView([37.0902, -95.7129], 4);
+              // Custom dark Munetios map style using OpenFreeMap vector tiles
+              const munetiosStyle = {
+                version: 8,
+                glyphs: "https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf",
+                sprite: "https://tiles.openfreemap.org/sprites/liberty/sprite",
+                sources: {
+                  ofm: {
+                    type: "vector",
+                    url: "https://tiles.openfreemap.org/planet"
+                  }
+                },
+                layers: [
+                  // Background
+                  { id: "background", type: "background", paint: { "background-color": "#0d0620" } },
+                  // Water
+                  { id: "water", type: "fill", source: "ofm", "source-layer": "water", paint: { "fill-color": "#12084a" } },
+                  // Ice / glacier
+                  { id: "landuse-ice", type: "fill", source: "ofm", "source-layer": "landuse", filter: ["==", "class", "ice"], paint: { "fill-color": "#1a1040" } },
+                  // Parks / green areas
+                  { id: "landuse-park", type: "fill", source: "ofm", "source-layer": "landuse", filter: ["in", "class", "park", "grass", "forest", "wood", "nature_reserve"], paint: { "fill-color": "#110c35" } },
+                  // General landuse
+                  { id: "landuse", type: "fill", source: "ofm", "source-layer": "landuse", filter: ["!in", "class", "ice", "park", "grass", "forest", "wood", "nature_reserve"], paint: { "fill-color": "#160d3a" } },
+                  // Buildings
+                  { id: "building", type: "fill", source: "ofm", "source-layer": "building", paint: { "fill-color": "#1e1248", "fill-outline-color": "#2d1a60" } },
+                  // Tunnel roads (casing)
+                  { id: "tunnel-casing", type: "line", source: "ofm", "source-layer": "transportation", filter: ["==", "brunnel", "tunnel"], layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": "#2a1660", "line-width": ["interpolate", ["linear"], ["zoom"], 6, 1, 14, 6] } },
+                  // Tunnel roads (fill)
+                  { id: "tunnel", type: "line", source: "ofm", "source-layer": "transportation", filter: ["==", "brunnel", "tunnel"], layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": "#1a0d50", "line-width": ["interpolate", ["linear"], ["zoom"], 6, 0.5, 14, 4] } },
+                  // Roads casing
+                  { id: "road-casing", type: "line", source: "ofm", "source-layer": "transportation", filter: ["!=", "brunnel", "tunnel"], layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": "#2a1a6e", "line-width": ["interpolate", ["linear"], ["zoom"], 5, 0.5, 14, 5] } },
+                  // Roads fill
+                  { id: "road", type: "line", source: "ofm", "source-layer": "transportation", filter: ["!=", "brunnel", "tunnel"], layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": "#3b2080", "line-width": ["interpolate", ["linear"], ["zoom"], 5, 0.3, 14, 3] } },
+                  // Major roads highlighted with subtle purple
+                  { id: "road-major", type: "line", source: "ofm", "source-layer": "transportation", filter: ["in", "class", "motorway", "trunk", "primary"], layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": "#6c2eb7", "line-width": ["interpolate", ["linear"], ["zoom"], 5, 0.8, 14, 5] } },
+                  // Boundaries
+                  { id: "boundary-country", type: "line", source: "ofm", "source-layer": "boundary", filter: ["==", "admin_level", 2], paint: { "line-color": "#a259f7", "line-width": 1.2, "line-opacity": 0.6 } },
+                  { id: "boundary-state", type: "line", source: "ofm", "source-layer": "boundary", filter: ["==", "admin_level", 4], paint: { "line-color": "#6c2eb7", "line-width": 0.7, "line-opacity": 0.5, "line-dasharray": [4, 3] } },
+                  // Water labels
+                  { id: "label-water", type: "symbol", source: "ofm", "source-layer": "water_name", layout: { "text-field": ["get", "name"], "text-font": ["Noto Sans Regular"], "text-size": 11 }, paint: { "text-color": "#7c8cde", "text-halo-color": "#0d0620", "text-halo-width": 1.5 } },
+                  // Place labels - cities/towns
+                  { id: "label-place", type: "symbol", source: "ofm", "source-layer": "place", filter: ["in", "class", "city", "town", "village"], layout: { "text-field": ["get", "name"], "text-font": ["Noto Sans Bold"], "text-size": ["interpolate", ["linear"], ["zoom"], 4, 10, 12, 16], "text-anchor": "center" }, paint: { "text-color": "#ffffff", "text-halo-color": "#0d0620", "text-halo-width": 2 } },
+                  // Country labels
+                  { id: "label-country", type: "symbol", source: "ofm", "source-layer": "place", filter: ["==", "class", "country"], layout: { "text-field": ["get", "name"], "text-font": ["Noto Sans Bold"], "text-size": ["interpolate", ["linear"], ["zoom"], 2, 9, 8, 16], "text-anchor": "center" }, paint: { "text-color": "#c4a0f7", "text-halo-color": "#0d0620", "text-halo-width": 2 } },
+                  // Road labels
+                  { id: "label-road", type: "symbol", source: "ofm", "source-layer": "transportation_name", layout: { "text-field": ["get", "name"], "text-font": ["Noto Sans Regular"], "text-size": 10, "symbol-placement": "line" }, paint: { "text-color": "#b8a0e8", "text-halo-color": "#0d0620", "text-halo-width": 1.5 } }
+                ]
+              };
 
-              // Add OpenStreetMap tile layer
-              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors | <a href="https://maps.munetios.com" target="_self" rel="noopener">Munetios Maps</a>',
-                maxZoom: 19
-              }).addTo(map);
+              map = new maplibregl.Map({
+                container: 'mapDiv',
+                style: munetiosStyle,
+                center: [-95.7129, 37.0902],
+                zoom: 3.5
+              });
+              map.addControl(new maplibregl.NavigationControl(), 'top-right');
+              map.addControl(new maplibregl.AttributionControl({
+                customAttribution: '<a href="https://openfreemap.org" target="_blank">OpenFreeMap</a> | <a href="https://maps.munetios.com" target="_self" rel="noopener">Munetios Maps</a>'
+              }), 'bottom-right');
 
               // Search for initial query if present
               if (query) {
                 searchLocation(query);
               }
+            }
+
+            if (!window.maplibregl) {
+              const mlJS = document.createElement("script");
+              mlJS.src = "https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.js";
+              mlJS.onload = initMap;
+              document.head.appendChild(mlJS);
+            } else {
+              initMap();
             }
             
             async function searchLocation(searchQuery) {
@@ -9717,16 +9780,16 @@ document
                 const locations = await response.json();
                 
                 // Clear existing markers
-                markers.forEach(marker => map.removeLayer(marker));
+                markers.forEach(marker => marker.remove());
                 markers = [];
-                
+
                 locationResults.innerHTML = "";
-                
+
                 if (locations.length === 0) {
                   locationResults.innerHTML = '<div style="padding:10px;color:#aaa;">No locations found.</div>';
                   return;
                 }
-                
+
                 // Display results
                 locations.forEach((location, index) => {
                   const resultDiv = document.createElement("div");
@@ -9734,45 +9797,56 @@ document
                   resultDiv.style.padding = "12px";
                   resultDiv.style.marginBottom = "10px";
                   resultDiv.style.background = "#f8f8f8";
+                  resultDiv.style.color = "#000";
                   resultDiv.style.borderRadius = "8px";
                   resultDiv.style.cursor = "pointer";
                   resultDiv.style.transition = "background 0.2s";
-                  
+
                   resultDiv.innerHTML = `
                     <div style="font-weight:600;margin-bottom:4px;">${location.display_name}</div>
                     <div style="font-size:0.9em;color:#666;">${location.type}</div>
                   `;
-                  
+
                   resultDiv.onmouseover = () => resultDiv.style.background = "#e8e8e8";
                   resultDiv.onmouseout = () => resultDiv.style.background = "#f8f8f8";
-                  
+
                   resultDiv.onclick = () => {
                     const lat = parseFloat(location.lat);
                     const lon = parseFloat(location.lon);
-                    
-                    // Center map on location
-                    map.setView([lat, lon], 15);
-                    
+
+                    // Fly map to location
+                    map.flyTo({ center: [lon, lat], zoom: 15 });
+
                     // Clear existing markers
-                    markers.forEach(marker => map.removeLayer(marker));
+                    markers.forEach(marker => marker.remove());
                     markers = [];
-                    
-                    // Add marker
-                    const marker = L.marker([lat, lon]).addTo(map);
-                    marker.bindPopup(`<b>${location.display_name}</b>`).openPopup();
+
+                    // Add marker with popup
+                    const popup = new maplibregl.Popup({ offset: 25 })
+                      .setHTML(`<b>${location.display_name}</b>`);
+                    const marker = new maplibregl.Marker()
+                      .setLngLat([lon, lat])
+                      .setPopup(popup)
+                      .addTo(map);
+                    popup.addTo(map);
                     markers.push(marker);
                   };
-                  
+
                   locationResults.appendChild(resultDiv);
-                  
-                  // Add marker to map for first result
+
+                  // Pan to + pin first result automatically
                   if (index === 0) {
                     const lat = parseFloat(location.lat);
                     const lon = parseFloat(location.lon);
-                    map.setView([lat, lon], 13);
-                    
-                    const marker = L.marker([lat, lon]).addTo(map);
-                    marker.bindPopup(`<b>${location.display_name}</b>`).openPopup();
+                    map.flyTo({ center: [lon, lat], zoom: 13 });
+
+                    const popup = new maplibregl.Popup({ offset: 25 })
+                      .setHTML(`<b>${location.display_name}</b>`);
+                    const marker = new maplibregl.Marker()
+                      .setLngLat([lon, lat])
+                      .setPopup(popup)
+                      .addTo(map);
+                    popup.addTo(map);
                     markers.push(marker);
                   }
                 });
