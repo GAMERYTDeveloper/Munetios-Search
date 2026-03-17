@@ -3484,13 +3484,13 @@
                 addToHistory(
                   gt
                     ? gt("sorryMicrophone")
-                    : "Sorry, I could not get your Microphone. Please try again",
+                    : "Sorry, I could not get your Microphone.",
                   "system",
                 );
                 speak(
                   gt
                     ? gt("sorryMicrophone")
-                    : "Sorry, I could not get your Microphone. Please try again",
+                    : "Sorry, I could not get your Microphone.",
                 );
                 playSound("denied");
               } else if (e.error === "audio-capture") {
@@ -3500,13 +3500,13 @@
                 addToHistory(
                   gt
                     ? gt("sorryMicrophone")
-                    : "Sorry, I could not get your Microphone. Please try again",
+                    : "Sorry, I could not get your Microphone.",
                   "system",
                 );
                 speak(
                   gt
                     ? gt("sorryMicrophone")
-                    : "Sorry, I could not get your Microphone. Please try again",
+                    : "Sorry, I could not get your Microphone.",
                 );
                 showToast(
                   gt
@@ -3546,7 +3546,7 @@
             addToHistory(
               gt
                 ? gt("sorryMicrophone")
-                : "Sorry, I could not get your Microphone. Please try again",
+                : "Sorry, I could not get your Microphone.",
               "system",
             );
             showToast(
@@ -3557,7 +3557,7 @@
             speak(
               gt
                 ? gt("sorryMicrophone")
-                : "Sorry, I could not get your Microphone. Please try again",
+                : "Sorry, I could not get your Microphone.",
             );
             playSound("denied");
           }
@@ -3618,21 +3618,21 @@
         });
       })();
 
-      // Logo change and Pi Day modal for March 14, 2026
+      // Logo change and ST Patricks day for March 17, 2026
       (function () {
         const now = new Date();
         if (
           now.getFullYear() === 2026 &&
           now.getMonth() === 2 &&
-          now.getDate() === 14
+          now.getDate() === 17
         ) {
           const logo = document.getElementById("canChangeLogoinDoodles");
           if (logo) {
-            logo.src = "pi.png";
+            logo.src = "patrick.png";
             logo.style.cursor = "pointer";
             logo.onclick = function () {
-              const piModal = document.getElementById("piDayModal");
-              if (piModal) piModal.classList.add("show");
+              window.location.href =
+                "https://www.munetios.com/search/search.html?q=What+is+Saint+Patrick%27s+Day#/all?q=What%20is%20ST%20Patricks";
             };
           }
           const closeBtn = document.getElementById("closePiDayModal");
@@ -4199,7 +4199,7 @@
             networkErrorShort: "Network error",
             unableToStartShort: "Unable to start",
             errorPrefix: "Error: ",
-            sorryMicrophone: "Sorry, I could not get your Microphone. Please try again",
+            sorryMicrophone: "Sorry, I could not get your Microphone.",
             micAccessDeniedFull:
               "Microphone access denied. Please allow microphone permissions.",
             micNotConnectedFull:
@@ -4372,7 +4372,7 @@
             networkErrorShort: "Error de red",
             unableToStartShort: "No se puede iniciar",
             errorPrefix: "Error: ",
-            sorryMicrophone: "Lo siento, no pude acceder a tu micrófono. Por favor, inténtalo de nuevo.",
+            sorryMicrophone: "Lo siento, no pude acceder a tu micrófono.",
             micAccessDeniedFull:
               "Acceso al micrófono denegado. Por favor, permite los permisos del micrófono.",
             micNotConnectedFull:
