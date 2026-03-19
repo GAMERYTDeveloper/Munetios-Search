@@ -6,12 +6,12 @@
     <title>Munetios Search 3.0</title>
     <link rel="shortcut icon" href="/favicon-new.ico" type="image/x-icon" />
     <link rel="icon" href="/favicon-new.ico" type="image/png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon-new.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="referrer" content="no-referrer" />
 
-    <link rel="icon" sizes="32x32" href="/apple-touch-icon-new.png" type="image/png" />
-    <link rel="icon" sizes="192x192" href="/apple-touch-icon-new.png" type="image/png" />
-    <link rel="icon" sizes="16x16" href="/apple-touch-icon-new.png" type="image/png" />
+    <link rel="icon" sizes="32x32" href="/apple-touch-icon.png" type="image/png" />
+    <link rel="icon" sizes="192x192" href="/apple-touch-icon.png" type="image/png" />
+    <link rel="icon" sizes="16x16" href="/apple-touch-icon.png" type="image/png" />
     <script src="https://cdn.tailwindcss.com"></script>
    <meta
   http-equiv="Content-Security-Policy"
@@ -511,7 +511,7 @@
       .maplibregl-ctrl-attrib.maplibregl-compact, .maplibregl-ctrl-attrib.maplibregl-compact, .maplibregl-ctrl-attrib.maplibregl-compact-show, maplibregl-ctrl-attrib-button, maplibregl-ctrl-attrib-inner {
         display: none !important;
       }
-      .maplibregl-ctrl.maplibregl-ctrl-attrib {
+      .maplibregl-ctrl.maplibregl-ctrl-attrib, .maplibregl-popup-content {
               backdrop-filter: blur(2px) saturate(180%) !important;
         background: rgba(255, 255, 255, 0.1) !important;
         border: 1px solid rgba(255, 255, 255, 0.2) !important;
@@ -522,6 +522,24 @@
           color: white !important;
       }
     </style>
+    <script nonce="rjighegujregergrejge">
+      // Apply saved font family from home page settings
+      (function () {
+        var font = localStorage.getItem("munetiosFontFamily") || "Google Sans Flex";
+        // Load the Google Font if it's not already linked (for non-default fonts)
+        var defaultFonts = ["Google Sans Flex", "Google Sans", "Segoe UI"];
+        if (defaultFonts.indexOf(font) === -1) {
+          var link = document.createElement("link");
+          link.rel = "stylesheet";
+          link.href = "https://fonts.googleapis.com/css2?family=" + font.replace(/ /g, "+") + ":wght@400;500;700&display=swap";
+          document.head.appendChild(link);
+        }
+        var style = document.createElement("style");
+        style.id = "munetios-font-override";
+        style.textContent = '* { font-family: "' + font + '", sans-serif !important; }';
+        document.head.appendChild(style);
+      })();
+    </script>
   </head>
   <body>
     <munetios-app class="search-app">
@@ -1094,6 +1112,22 @@
       >
         <span class="material-symbols-rounded">keyboard</span>
         <div class="options-label">Keyboard Shortcuts</div>
+      </div>
+      <div
+        class="flex items-center gap-2 p-2 hover:bg-gray-700"
+        id="customResultsOption"
+        style="cursor:pointer;"
+      >
+        <span class="material-symbols-rounded">add_circle</span>
+        <div class="options-label">Custom Results</div>
+      </div>
+      <div
+        class="flex items-center gap-2 p-2 hover:bg-gray-700"
+        id="customRankingOption"
+        style="cursor:pointer;"
+      >
+        <span class="material-symbols-rounded">tune</span>
+        <div class="options-label">Custom Ranking</div>
       </div>
     </div>
     <!-- Settings Modal -->
@@ -8149,6 +8183,33 @@
           }
         }
 
+        // --- Custom Result boost ---
+        if (result._customResult) {
+          score += (result._customBoost || 300);
+        }
+
+        // --- User-defined Custom Ranking rules ---
+        try {
+          const customRules = JSON.parse(localStorage.getItem("munetiosCustomRanking") || "[]");
+          if (Array.isArray(customRules)) {
+            for (const rule of customRules) {
+              const boost = Number(rule.boost) || 0;
+              if (rule.type === "domain") {
+                const pat = (rule.pattern || "").toLowerCase();
+                if (pat && (domain.includes(pat) || link.includes(pat))) {
+                  score += boost;
+                }
+              } else if (rule.type === "keyword") {
+                const qkw = (rule.queryKeyword || "").toLowerCase();
+                const urlPat = (rule.urlPattern || "").toLowerCase();
+                if (qkw && urlPat && queryLower.includes(qkw) && link.includes(urlPat)) {
+                  score += boost;
+                }
+              }
+            }
+          }
+        } catch (_) {}
+
         return score;
       }
 
@@ -8539,7 +8600,32 @@ if(query!=="@all"){
  
     /* ---------- COMBINE AND RANK ---------- */
 
+    // --- Custom Results (user-defined) ---
+    let customResultsMatched = [];
+    try {
+      const savedCustomResults = JSON.parse(localStorage.getItem("munetiosCustomResults") || "[]");
+      if (Array.isArray(savedCustomResults)) {
+        customResultsMatched = savedCustomResults.filter(cr => {
+          if (query === "@all") return true;
+          const qLow = query.toLowerCase();
+          const titleMatch = (cr.title || "").toLowerCase().includes(qLow);
+          const descMatch = (cr.description || "").toLowerCase().includes(qLow);
+          const urlMatch = (cr.url || "").toLowerCase().includes(qLow);
+          const kwMatch = Array.isArray(cr.keywords) && cr.keywords.some(k => qLow.includes(k.toLowerCase()) || k.toLowerCase().includes(qLow));
+          return titleMatch || descMatch || urlMatch || kwMatch;
+        }).map(cr => ({
+          title: cr.title,
+          description: cr.description || "",
+          link: cr.url,
+          favicon: "",
+          _customResult: true,
+          _customBoost: Number(cr.boost) || 300
+        }));
+      }
+    } catch (_) {}
+
     let filtered = [
+      ...customResultsMatched,
       ...filteredLocal,
  
     
@@ -19403,6 +19489,222 @@ document
               link: "https://www.theverge.com/tech/888866/raycast-glaze-vibe-code-app-store",
               favicon: "https://www.theverge.com/favicon.ico",
             },
+
+            // more education results
+            {
+              title: "Launchpad - Classlink",
+              description: "No Description Available.",
+              link: "https://launchpad.classlink.com",
+              favicon: ""
+            },
+            {
+              title: "ClassLink Launchpad",
+              description: "Launchpad is ClassLink's single sign-on portal for accessing school apps and resources.",
+              link: "https://launchpad.classlink.com",
+              favicon: ""
+            },
+            {
+              title: "IXL Learning",
+              description: "Personalized learning platform for K-12 with math, language arts, science, and social studies.",
+              link: "https://www.ixl.com",
+              favicon: ""
+            },
+            {
+              title: "i-Ready Dashboard",
+              description: "i-Ready is an adaptive assessment and instruction platform for reading and math.",
+              link: "https://login.i-ready.com",
+              favicon: ""
+            },
+          
+            {
+              title: "OpenAI API",
+              description: "Developer API for integrating ChatGPT and other OpenAI models into applications.",
+              link: "https://platform.openai.com",
+              favicon: ""
+            },
+            {
+              title: "IXL Analytics",
+              description: "Teacher dashboard for tracking student progress and performance on IXL assignments.",
+              link: "https://analytics.ixl.com",
+              favicon: ""
+            },
+            {
+              title: "ClassLink OneRoster",
+              description: "Standards-based student information system integration for ClassLink.",
+              link: "https://oneroster.org",
+              favicon: ""
+            },
+            {
+              title: "i-Ready Teacher Dashboard",
+              description: "i-Ready teacher portal for monitoring student progress and generating reports.",
+              link: "https://teacher.i-ready.com",
+              favicon: ""
+            },
+            {
+              title: "ChatGPT Playground",
+              description: "Experimental interface for testing ChatGPT with different parameters and prompts.",
+              link: "https://platform.openai.com/playground",
+              favicon: ""
+            },
+             
+                 {
+              title: "Launchpad SSEC - Classlink",
+              description: "No Description Available.",
+              link: "https://launchpad.classlink.com/ssec",
+              favicon: ""
+            },
+                 {
+              title: "SSEC",
+              description: "No Description Available.",
+              link: "https://ssec.org",
+              favicon: ""
+            },
+               {
+              title: "Abingdon High School",
+              description: "Abingdon High School provides quality education and programs for students in grades 9-12.",
+              link: "https://abingdonhighschool.org",
+              favicon: ""
+            },
+            {
+              title: "Figma Community",
+              description: "Explore templates, plugins, and design files from the Figma community.",
+              url: "https://www.figma.com/community",
+              favicon: "",
+              link: "https://www.figma.com/community",
+            },
+            {
+              title: "Dribbble - Design Inspiration",
+              description: "Discover design work & gain inspiration from top designers worldwide.",
+              url: "https://dribbble.com",
+              favicon: "",
+              link: "https://dribbble.com",
+            },
+            {
+              title: "Behance Portfolio",
+              description: "Showcase your creative work and get discovered by top brands and companies.",
+              url: "https://www.behance.net",
+              favicon: "",
+              link: "https://www.behance.net",
+            },
+            {
+              title: "Framer",
+              description: "A web builder for creative professionals. Design and ship sites/apps faster.",
+              url: "https://www.framer.com",
+              favicon: "",
+              link: "https://www.framer.com",
+            },
+            {
+              title: "Webflow",
+              description: "Build responsive websites visually without writing code.",
+              url: "https://webflow.com",
+              favicon: "",
+              link: "https://webflow.com",
+            },
+            {
+              title: "Adobe Photoshop Online",
+              description: "Professional photo editing and design directly in your browser.",
+              url: "https://photoshop.adobe.com",
+              favicon: "",
+              link: "https://photoshop.adobe.com",
+            },
+            {
+              title: "Pixelmator Pro",
+              description: "Professional image editing for Mac. Powerful and easy to use.",
+              url: "https://www.pixelmator.com/pro",
+              favicon: "",
+              link: "https://www.pixelmator.com/pro",
+            },
+            {
+              title: "Affinity Designer",
+              description: "Professional graphic design software for Windows and Mac.",
+              url: "https://affinity.serif.com/designer",
+              favicon: "",
+              link: "https://affinity.serif.com/designer",
+            },
+            {
+              title: "CorelDRAW",
+              description: "Create stunning vector illustrations, logos, and designs.",
+              url: "https://www.coreldraw.com",
+              favicon: "",
+              link: "https://www.coreldraw.com",
+            },
+            {
+              title: "Procreate",
+              description: "Powerful digital painting app designed for iPad.",
+              url: "https://procreate.art",
+              favicon: "",
+              link: "https://procreate.art",
+            },
+            {
+              title: "Clip Studio Paint",
+              description: "Professional comic and illustration software trusted by artists worldwide.",
+              url: "https://www.clipstudio.net",
+              favicon: "",
+              link: "https://www.clipstudio.net",
+            },
+            {
+              title: "Rebrandly",
+              description: "URL shortener with branding and analytics.",
+              url: "https://rebrandly.com",
+              favicon: "",
+              link: "https://rebrandly.com",
+            },
+            {
+              title: "Bit.ly",
+              description: "URL shortener for shortening, customizing, and tracking links.",
+              url: "https://bitly.com",
+              favicon: "",
+              link: "https://bitly.com",
+            },
+            {
+              title: "TinyURL",
+              description: "Create tiny URLs that are easier to share, use, and remember.",
+              url: "https://tinyurl.com",
+              favicon: "",
+              link: "https://tinyurl.com",
+            },
+            {
+              title: "QR Code Generator",
+              description: "Create custom QR codes for URLs, contacts, events, and more.",
+              url: "https://www.qr-code-generator.com",
+              favicon: "",
+              link: "https://www.qr-code-generator.com",
+            },
+            {
+              title: "Loom",
+              description: "Record and share video messages with instant playback.",
+              url: "https://www.loom.com",
+              favicon: "",
+              link: "https://www.loom.com",
+            },
+            {
+              title: "OBS Studio",
+              description: "Free and open-source software for video recording and live streaming.",
+              url: "https://obsproject.com",
+              favicon: "",
+              link: "https://obsproject.com",
+            },
+            {
+              title: "Camtasia",
+              description: "Screen recording and video editing software for professionals.",
+              url: "https://www.techsmith.com/camtasia.html",
+              favicon: "",
+              link: "https://www.techsmith.com/camtasia.html",
+            },
+            {
+              title: "Snagit",
+              description: "Screenshot and screen recording tool for Windows and Mac.",
+              url: "https://www.techsmith.com/snagit.html",
+              favicon: "",
+              link: "https://www.techsmith.com/snagit.html",
+            },
+            {
+              title: "CapCut",
+              description: "Easy-to-use video editing app for creating and sharing videos.",
+              url: "https://www.capcut.com",
+              favicon: "",
+              link: "https://www.capcut.com",
+            },
         
       ];
     </script>
@@ -20123,5 +20425,367 @@ document
 
     })();
     </script>
+
+    <script nonce="rjighegujregergrejge">
+    // ─── Custom Results & Custom Ranking ──────────────────────────────────────
+    document.addEventListener("DOMContentLoaded", function () {
+
+      // ── Helpers ──────────────────────────────────────────────────────────────
+      function getCustomResults() {
+        try { return JSON.parse(localStorage.getItem("munetiosCustomResults") || "[]"); } catch(_){ return []; }
+      }
+      function saveCustomResults(arr) {
+        localStorage.setItem("munetiosCustomResults", JSON.stringify(arr));
+      }
+      function getCustomRanking() {
+        try { return JSON.parse(localStorage.getItem("munetiosCustomRanking") || "[]"); } catch(_){ return []; }
+      }
+      function saveCustomRanking(arr) {
+        localStorage.setItem("munetiosCustomRanking", JSON.stringify(arr));
+      }
+      function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+
+      // ── Open / Close Custom Results Modal ────────────────────────────────────
+      function openCustomResultsModal() {
+        var modal = document.getElementById("customResultsModal");
+        modal.style.display = "flex";
+        clearCRForm();
+        renderCustomResultsList();
+      }
+      function closeCustomResultsModal() {
+        document.getElementById("customResultsModal").style.display = "none";
+      }
+
+      document.getElementById("customResultsClose").addEventListener("click", closeCustomResultsModal);
+      document.getElementById("customResultsModal").addEventListener("mousedown", function(e) {
+        if (e.target === this) closeCustomResultsModal();
+      });
+      document.getElementById("customResultsOption").addEventListener("click", function() {
+        var moreOptions = document.getElementById("moreOptions");
+        if (moreOptions) moreOptions.classList.add("hidden");
+        openCustomResultsModal();
+      });
+
+      // ── Custom Results Form ───────────────────────────────────────────────────
+      function clearCRForm() {
+        document.getElementById("cr_title").value = "";
+        document.getElementById("cr_url").value = "";
+        document.getElementById("cr_desc").value = "";
+        document.getElementById("cr_keywords").value = "";
+        document.getElementById("cr_boost").value = "300";
+        document.getElementById("cr_edit_id").value = "";
+        document.getElementById("customResultFormTitle").textContent = "Add Custom Result";
+        document.getElementById("cr_cancel_edit_btn").style.display = "none";
+      }
+
+      document.getElementById("cr_save_btn").addEventListener("click", function() {
+        var title = document.getElementById("cr_title").value.trim();
+        var url = document.getElementById("cr_url").value.trim();
+        var desc = document.getElementById("cr_desc").value.trim();
+        var kwRaw = document.getElementById("cr_keywords").value.trim();
+        var boost = parseInt(document.getElementById("cr_boost").value, 10) || 300;
+        var editId = document.getElementById("cr_edit_id").value;
+
+        if (!title || !url) { showToast("Title and URL are required."); return; }
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+          showToast("URL must start with http:// or https://");
+          return;
+        }
+
+        var keywords = kwRaw ? kwRaw.split(",").map(function(k){ return k.trim(); }).filter(Boolean) : [];
+        var arr = getCustomResults();
+
+        if (editId) {
+          var idx = arr.findIndex(function(r){ return r.id === editId; });
+          if (idx !== -1) {
+            arr[idx] = { id: editId, title: title, url: url, description: desc, keywords: keywords, boost: boost };
+          }
+          showToast("Custom result updated!");
+        } else {
+          arr.push({ id: genId(), title: title, url: url, description: desc, keywords: keywords, boost: boost });
+          showToast("Custom result added!");
+        }
+
+        saveCustomResults(arr);
+        clearCRForm();
+        renderCustomResultsList();
+      });
+
+      document.getElementById("cr_cancel_edit_btn").addEventListener("click", function() {
+        clearCRForm();
+      });
+
+      function renderCustomResultsList() {
+        var container = document.getElementById("customResultsList");
+        var arr = getCustomResults();
+        if (!arr.length) {
+          container.innerHTML = '<div style="color:#aaa;font-size:0.9em;text-align:center;padding:12px 0;">No custom results yet.</div>';
+          return;
+        }
+        container.innerHTML = "";
+        arr.forEach(function(cr) {
+          var div = document.createElement("div");
+          div.className = "liquid-glass";
+          div.style.cssText = "padding:12px 14px;border-radius:12px;display:flex;flex-direction:column;gap:4px;";
+          div.innerHTML =
+            '<div style="font-weight:600;font-size:0.97em;">' + escapeHtml(cr.title) + '</div>' +
+            '<div style="font-size:0.82em;color:#a259f7;word-break:break-all;">' + escapeHtml(cr.url) + '</div>' +
+            (cr.description ? '<div style="font-size:0.85em;color:#ccc;">' + escapeHtml(cr.description) + '</div>' : '') +
+            (cr.keywords && cr.keywords.length ? '<div style="font-size:0.8em;color:#aaa;">Keywords: ' + cr.keywords.map(escapeHtml).join(", ") + '</div>' : '') +
+            '<div style="font-size:0.8em;color:#aaa;">Priority boost: ' + cr.boost + '</div>' +
+            '<div style="display:flex;gap:8px;margin-top:6px;">' +
+              '<button class="btn liquid-glass cr-edit-btn" data-id="' + cr.id + '" style="font-size:0.85em;padding:5px 12px;">Edit</button>' +
+              '<button class="btn liquid-glass cr-delete-btn" data-id="' + cr.id + '" style="font-size:0.85em;padding:5px 12px;background:#e34133;color:#fff;">Delete</button>' +
+            '</div>';
+          container.appendChild(div);
+        });
+
+        container.querySelectorAll(".cr-edit-btn").forEach(function(btn) {
+          btn.addEventListener("click", function() {
+            var id = this.getAttribute("data-id");
+            var cr = getCustomResults().find(function(r){ return r.id === id; });
+            if (!cr) return;
+            document.getElementById("cr_title").value = cr.title || "";
+            document.getElementById("cr_url").value = cr.url || "";
+            document.getElementById("cr_desc").value = cr.description || "";
+            document.getElementById("cr_keywords").value = (cr.keywords || []).join(", ");
+            document.getElementById("cr_boost").value = cr.boost || 300;
+            document.getElementById("cr_edit_id").value = id;
+            document.getElementById("customResultFormTitle").textContent = "Edit Custom Result";
+            document.getElementById("cr_cancel_edit_btn").style.display = "";
+            document.getElementById("cr_title").focus();
+          });
+        });
+
+        container.querySelectorAll(".cr-delete-btn").forEach(function(btn) {
+          btn.addEventListener("click", function() {
+            var id = this.getAttribute("data-id");
+            var arr = getCustomResults().filter(function(r){ return r.id !== id; });
+            saveCustomResults(arr);
+            renderCustomResultsList();
+            showToast("Custom result deleted.");
+          });
+        });
+      }
+
+      // ── Open / Close Custom Ranking Modal ────────────────────────────────────
+      function openCustomRankingModal() {
+        var modal = document.getElementById("customRankingModal");
+        modal.style.display = "flex";
+        clearRRForm();
+        renderCustomRankingList();
+      }
+      function closeCustomRankingModal() {
+        document.getElementById("customRankingModal").style.display = "none";
+      }
+
+      document.getElementById("customRankingClose").addEventListener("click", closeCustomRankingModal);
+      document.getElementById("customRankingModal").addEventListener("mousedown", function(e) {
+        if (e.target === this) closeCustomRankingModal();
+      });
+      document.getElementById("customRankingOption").addEventListener("click", function() {
+        var moreOptions = document.getElementById("moreOptions");
+        if (moreOptions) moreOptions.classList.add("hidden");
+        openCustomRankingModal();
+      });
+
+      // ── Ranking Form type toggle ──────────────────────────────────────────────
+      function updateRRTypeUI() {
+        var isDomain = document.getElementById("rr_type_domain").checked;
+        document.getElementById("rr_domain").style.display = isDomain ? "" : "none";
+        document.getElementById("rr_keyword_row").style.display = isDomain ? "none" : "flex";
+      }
+      document.getElementById("rr_type_domain").addEventListener("change", updateRRTypeUI);
+      document.getElementById("rr_type_keyword").addEventListener("change", updateRRTypeUI);
+      updateRRTypeUI();
+
+      function clearRRForm() {
+        document.getElementById("rr_type_domain").checked = true;
+        document.getElementById("rr_domain").value = "";
+        document.getElementById("rr_query_keyword").value = "";
+        document.getElementById("rr_url_pattern").value = "";
+        document.getElementById("rr_boost").value = "100";
+        document.getElementById("rr_edit_id").value = "";
+        document.getElementById("customRankingFormTitle").textContent = "Add Ranking Rule";
+        document.getElementById("rr_cancel_edit_btn").style.display = "none";
+        updateRRTypeUI();
+      }
+
+      document.getElementById("rr_save_btn").addEventListener("click", function() {
+        var type = document.querySelector('input[name="rankRuleType"]:checked').value;
+        var boost = parseInt(document.getElementById("rr_boost").value, 10) || 100;
+        var editId = document.getElementById("rr_edit_id").value;
+        var rule = { id: editId || genId(), type: type, boost: boost };
+
+        if (type === "domain") {
+          var pat = document.getElementById("rr_domain").value.trim();
+          if (!pat) { showToast("Domain pattern is required."); return; }
+          rule.pattern = pat;
+          rule.label = (boost >= 0 ? "Boost" : "Lower") + " " + pat;
+        } else {
+          var qkw = document.getElementById("rr_query_keyword").value.trim();
+          var urlPat = document.getElementById("rr_url_pattern").value.trim();
+          if (!qkw || !urlPat) { showToast("Both query keyword and URL pattern are required."); return; }
+          rule.queryKeyword = qkw;
+          rule.urlPattern = urlPat;
+          rule.label = (boost >= 0 ? "Boost" : "Lower") + " " + urlPat + " for '" + qkw + "'";
+        }
+
+        var arr = getCustomRanking();
+        if (editId) {
+          var idx = arr.findIndex(function(r){ return r.id === editId; });
+          if (idx !== -1) arr[idx] = rule;
+          showToast("Ranking rule updated!");
+        } else {
+          arr.push(rule);
+          showToast("Ranking rule added!");
+        }
+        saveCustomRanking(arr);
+        clearRRForm();
+        renderCustomRankingList();
+      });
+
+      document.getElementById("rr_cancel_edit_btn").addEventListener("click", function() {
+        clearRRForm();
+      });
+
+      function renderCustomRankingList() {
+        var container = document.getElementById("customRankingList");
+        var arr = getCustomRanking();
+        if (!arr.length) {
+          container.innerHTML = '<div style="color:#aaa;font-size:0.9em;text-align:center;padding:12px 0;">No custom ranking rules yet.</div>';
+          return;
+        }
+        container.innerHTML = "";
+        arr.forEach(function(rule) {
+          var div = document.createElement("div");
+          div.className = "liquid-glass";
+          div.style.cssText = "padding:12px 14px;border-radius:12px;display:flex;flex-direction:column;gap:4px;";
+          var boostColor = rule.boost >= 0 ? "#4caf50" : "#e34133";
+          var detail = rule.type === "domain"
+            ? '<div style="font-size:0.85em;color:#ccc;">Domain: <span style="color:#a259f7;">' + escapeHtml(rule.pattern || "") + '</span></div>'
+            : '<div style="font-size:0.85em;color:#ccc;">Query: <span style="color:#a259f7;">' + escapeHtml(rule.queryKeyword || "") + '</span> → URL: <span style="color:#a259f7;">' + escapeHtml(rule.urlPattern || "") + '</span></div>';
+          div.innerHTML =
+            '<div style="font-weight:600;font-size:0.97em;">' + escapeHtml(rule.label || rule.type) + '</div>' +
+            detail +
+            '<div style="font-size:0.82em;color:' + boostColor + ';">Boost: ' + (rule.boost >= 0 ? "+" : "") + rule.boost + '</div>' +
+            '<div style="display:flex;gap:8px;margin-top:6px;">' +
+              '<button class="btn liquid-glass rr-edit-btn" data-id="' + rule.id + '" style="font-size:0.85em;padding:5px 12px;">Edit</button>' +
+              '<button class="btn liquid-glass rr-delete-btn" data-id="' + rule.id + '" style="font-size:0.85em;padding:5px 12px;background:#e34133;color:#fff;">Delete</button>' +
+            '</div>';
+          container.appendChild(div);
+        });
+
+        container.querySelectorAll(".rr-edit-btn").forEach(function(btn) {
+          btn.addEventListener("click", function() {
+            var id = this.getAttribute("data-id");
+            var rule = getCustomRanking().find(function(r){ return r.id === id; });
+            if (!rule) return;
+            if (rule.type === "domain") {
+              document.getElementById("rr_type_domain").checked = true;
+              document.getElementById("rr_domain").value = rule.pattern || "";
+            } else {
+              document.getElementById("rr_type_keyword").checked = true;
+              document.getElementById("rr_query_keyword").value = rule.queryKeyword || "";
+              document.getElementById("rr_url_pattern").value = rule.urlPattern || "";
+            }
+            document.getElementById("rr_boost").value = rule.boost || 100;
+            document.getElementById("rr_edit_id").value = id;
+            document.getElementById("customRankingFormTitle").textContent = "Edit Ranking Rule";
+            document.getElementById("rr_cancel_edit_btn").style.display = "";
+            updateRRTypeUI();
+          });
+        });
+
+        container.querySelectorAll(".rr-delete-btn").forEach(function(btn) {
+          btn.addEventListener("click", function() {
+            var id = this.getAttribute("data-id");
+            var arr = getCustomRanking().filter(function(r){ return r.id !== id; });
+            saveCustomRanking(arr);
+            renderCustomRankingList();
+            showToast("Ranking rule deleted.");
+          });
+        });
+      }
+
+      // ── HTML escape helper ────────────────────────────────────────────────────
+      function escapeHtml(str) {
+        return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+      }
+
+    });
+    </script>
+
+    <!-- Custom Results Modal -->
+    <div id="customResultsModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.6);z-index:10080;align-items:center;justify-content:center;">
+      <div class="liquid-glass" style="padding:28px 24px 20px;border-radius:18px;max-width:560px;width:95%;max-height:88vh;overflow-y:auto;color:#fff;position:relative;">
+        <button id="customResultsClose" style="position:absolute;top:10px;right:10px;background:#a259f7;color:#fff;border:none;border-radius:50%;width:34px;height:34px;font-size:1.2em;cursor:pointer;display:flex;align-items:center;justify-content:center;">&times;</button>
+        <h2 style="margin-top:0;font-size:1.4em;font-weight:700;">Custom Results</h2>
+        <p style="font-size:0.88em;color:#ccc;margin-bottom:14px;">Add your own results that appear when search keywords match. Stored locally in your browser.</p>
+        <!-- Add form -->
+        <div class="liquid-glass" style="padding:16px;border-radius:12px;margin-bottom:18px;">
+          <div style="font-size:1em;font-weight:600;margin-bottom:10px;" id="customResultFormTitle">Add Custom Result</div>
+          <input id="cr_title" type="text" placeholder="Title *" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.08);border:1px solid rgba(162,89,247,0.4);border-radius:8px;padding:8px 12px;color:#fff;font-size:0.95em;margin-bottom:8px;outline:none;" />
+          <input id="cr_url" type="url" placeholder="URL * (https://...)" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.08);border:1px solid rgba(162,89,247,0.4);border-radius:8px;padding:8px 12px;color:#fff;font-size:0.95em;margin-bottom:8px;outline:none;" />
+          <textarea id="cr_desc" placeholder="Description" rows="2" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.08);border:1px solid rgba(162,89,247,0.4);border-radius:8px;padding:8px 12px;color:#fff;font-size:0.95em;margin-bottom:8px;outline:none;resize:vertical;font-family:inherit;"></textarea>
+          <input id="cr_keywords" type="text" placeholder="Keywords (comma-separated, optional)" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.08);border:1px solid rgba(162,89,247,0.4);border-radius:8px;padding:8px 12px;color:#fff;font-size:0.95em;margin-bottom:8px;outline:none;" />
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <label style="font-size:0.9em;flex-shrink:0;">Priority boost:</label>
+            <input id="cr_boost" type="number" min="1" max="1000" value="300" style="width:90px;background:rgba(255,255,255,0.08);border:1px solid rgba(162,89,247,0.4);border-radius:8px;padding:6px 10px;color:#fff;font-size:0.95em;outline:none;" />
+            <span style="font-size:0.8em;color:#aaa;">(higher = appears first, max 1000)</span>
+          </div>
+          <input type="hidden" id="cr_edit_id" value="" />
+          <div style="display:flex;gap:8px;">
+            <button id="cr_save_btn" class="btn liquid-glass" style="background:#a259f7;color:#fff;">Save Result</button>
+            <button id="cr_cancel_edit_btn" class="btn liquid-glass" style="display:none;">Cancel Edit</button>
+          </div>
+        </div>
+        <!-- Existing custom results list -->
+        <div id="customResultsList" style="display:flex;flex-direction:column;gap:10px;"></div>
+      </div>
+    </div>
+
+    <!-- Custom Ranking Modal -->
+    <div id="customRankingModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.6);z-index:10080;align-items:center;justify-content:center;">
+      <div class="liquid-glass" style="padding:28px 24px 20px;border-radius:18px;max-width:560px;width:95%;max-height:88vh;overflow-y:auto;color:#fff;position:relative;">
+        <button id="customRankingClose" style="position:absolute;top:10px;right:10px;background:#a259f7;color:#fff;border:none;border-radius:50%;width:34px;height:34px;font-size:1.2em;cursor:pointer;display:flex;align-items:center;justify-content:center;">&times;</button>
+        <h2 style="margin-top:0;font-size:1.4em;font-weight:700;">Custom Ranking</h2>
+        <p style="font-size:0.88em;color:#ccc;margin-bottom:14px;">Boost or lower specific domains or keyword-based results. Rules are applied on top of the default ranking algorithm.</p>
+        <!-- Add rule form -->
+        <div class="liquid-glass" style="padding:16px;border-radius:12px;margin-bottom:18px;">
+          <div style="font-size:1em;font-weight:600;margin-bottom:10px;" id="customRankingFormTitle">Add Ranking Rule</div>
+          <div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;">
+            <label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:0.9em;">
+              <input type="radio" name="rankRuleType" id="rr_type_domain" value="domain" checked /> Domain boost
+            </label>
+            <label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:0.9em;">
+              <input type="radio" name="rankRuleType" id="rr_type_keyword" value="keyword" /> Query keyword boost
+            </label>
+          </div>
+          <input id="rr_domain" type="text" placeholder="Domain pattern (e.g. example.com)" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.08);border:1px solid rgba(162,89,247,0.4);border-radius:8px;padding:8px 12px;color:#fff;font-size:0.95em;margin-bottom:8px;outline:none;" />
+          <div id="rr_keyword_row" style="display:none;flex-direction:column;gap:8px;margin-bottom:8px;">
+            <input id="rr_query_keyword" type="text" placeholder="If search query contains... (e.g. programming)" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.08);border:1px solid rgba(162,89,247,0.4);border-radius:8px;padding:8px 12px;color:#fff;font-size:0.95em;outline:none;" />
+            <input id="rr_url_pattern" type="text" placeholder="...boost results matching URL (e.g. dev.to)" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.08);border:1px solid rgba(162,89,247,0.4);border-radius:8px;padding:8px 12px;color:#fff;font-size:0.95em;outline:none;" />
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;">
+            <label style="font-size:0.9em;flex-shrink:0;">Boost amount:</label>
+            <input id="rr_boost" type="number" min="-500" max="1000" value="100" style="width:90px;background:rgba(255,255,255,0.08);border:1px solid rgba(162,89,247,0.4);border-radius:8px;padding:6px 10px;color:#fff;font-size:0.95em;outline:none;" />
+            <span style="font-size:0.8em;color:#aaa;">(negative = lower ranking)</span>
+          </div>
+          <input type="hidden" id="rr_edit_id" value="" />
+          <div style="display:flex;gap:8px;">
+            <button id="rr_save_btn" class="btn liquid-glass" style="background:#a259f7;color:#fff;">Save Rule</button>
+            <button id="rr_cancel_edit_btn" class="btn liquid-glass" style="display:none;">Cancel Edit</button>
+          </div>
+        </div>
+        <!-- Existing rules list -->
+        <div id="customRankingList" style="display:flex;flex-direction:column;gap:10px;"></div>
+      </div>
+    </div>
+    <style>
+      .material-symbols-rounded {
+        font-family: 'Material Symbols Rounded' !important;
+      }
+    </style>
   </body>
 </html>
