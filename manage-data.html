@@ -8,7 +8,10 @@
       rel="stylesheet"
       href="https://api.munetios.com/beautiful-css/beautiful.css"
     />
-   <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,80&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,80&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded"
@@ -23,7 +26,7 @@
     />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; style-src 'self' https://api.munetios.com https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'nonce-eriuhgertsihgtuidfkgrtsdghjkghjkwerafuhjkwerfuihjkuh'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; frame-src https://www.munetios.com https://munetios.com"
+      content="default-src 'self'; style-src 'self' https://api.munetios.com https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://www.munetios.com data:; script-src 'self' 'nonce-eriuhgertsihgtuidfkgrtsdghjkghjkwerafuhjkwerfuihjkuh'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; frame-src https://www.munetios.com https://munetios.com"
     />
     <meta
       name="keywords"
@@ -35,768 +38,1778 @@
       * {
         box-sizing: border-box;
       }
+      input,
+      button,
+      textarea,
+      select,
+      geolocation {
+        font-family: "Google Sans Flex", "Google Sans", Roboto, sans-serif;
+        font-variation-settings: "ROND" 90;
+      }
       body {
         margin: 0;
         padding: 0;
-        background-color: #110433;
+        background-color: #190844;
         color: #ffffff;
         font-family: "Google Sans Flex", "Google Sans", Roboto, sans-serif;
         font-variation-settings: "ROND" 90;
+        overflow-x: auto;
       }
       icon {
         font-family: "Material Symbols Rounded";
         font-size: 28px;
       }
       .topbar {
-        border-radius: 0;
-        border-bottom-left-radius: 12px;
-        border-bottom-right-radius: 12px;
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
         padding: 0 16px;
+        height: 65px;
         position: fixed;
         top: 0;
-        left: 0;
-        right: 0;
         width: 100%;
         z-index: 1000;
       }
-      .top-left {
+      .topbar-left {
         display: flex;
         align-items: center;
+        gap: 10px;
       }
-      .top-right {
+      .menu-btn {
         display: flex;
         align-items: center;
-        gap: 16px;
-      }
-      .top-right icon {
+        justify-content: center;
+        min-width: 54px;
+        width: 54px;
+        height: 54px;
         cursor: pointer;
-        transition: color 0.3s;
+        border-radius: 48px;
       }
-      .top-right icon:hover {
-        color: #ffcc00;
+      .topbar-title {
+        padding: 8px 16px;
+        height: 54px;
+        border-radius: 48px;
+        font-size: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+      .spinner {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        border-top-color: rgba(140, 90, 255, 0.9);
+        animation: spinnerSpin 0.8s linear infinite;
+      }
+      @keyframes spinnerSpin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
       .topbar-middle {
+        width: 100%;
+        margin: 0 auto;
         display: flex;
-        gap: 16px;
+        justify-content: center;
       }
-      .navbar-item {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        cursor: pointer;
-        transition: color 0.3s;
-      }
-      .navbar-item:hover {
-        color: #ffcc00;
-      }
-      .content {
-        padding: 16px;
-        margin-top: 64px;
-      }
-      .content-page {
-        display: none;
-      }
-      .content-page.active {
-        display: block;
-      }
-      .search-bar {
+      .search-munetios-bar {
         display: flex;
         align-items: center;
-        gap: 8px;
-        padding: 8px;
+        gap: 12px;
+        padding: 8px 16px;
+        margin-left: 4px;
+        margin-right: 4px;
+        border-radius: 48px;
+        height: 54px;
+        max-width: 800px;
+        width: 100%;
       }
-      .search-bar input {
-        flex: 1;
+      .search-munetios-bar img {
+        width: 24px;
+        height: 24px;
+      }
+      .search-munetios-bar input {
+        width: 100%;
         border: none;
         background: transparent;
         color: #ffffff;
         font-size: 16px;
+        font-feature-settings: "ss01" 1;
         outline: none;
-        font-family: "Google Sans Flex", "Google Sans", Roboto, sans-serif;
-        font-variation-settings: "ROND" 90;
       }
-      button {
-        background: linear-gradient(
-          to bottom,
-          rgba(255, 255, 255, 0.16) 0%,
-          rgba(255, 255, 255, 0.06) 22%,
-          rgba(255, 255, 255, 0.04) 50%,
-          rgba(255, 255, 255, 0.06) 78%,
-          rgba(255, 255, 255, 0.14) 100%
-        );
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-        backdrop-filter: blur(2px) saturate(190%) brightness(105%)
-          contrast(100%);
-        -webkit-backdrop-filter: blur(1.75px) saturate(200%) brightness(125%)
-          contrast(100%);
-        border-radius: 50px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        padding: 8px 16px;
+      .search-munetios-bar input::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+      }
+      .search-actions {
+        display: flex;
+        gap: 1px;
+      }
+      .search-action-button {
+        padding: 6px 12px;
+        border-radius: 24px;
+        white-space: nowrap;
         cursor: pointer;
-        color: white;
-        font-family: "Google Sans Flex", "Google Sans", Roboto, sans-serif;
-        font-variation-settings: "ROND" 90;
-        transition:
-          background 0.3s,
-          color 0.3s;
+        transition: background-color 0.2s;
       }
-      button:hover {
-        background: linear-gradient(
-          to bottom,
-          rgba(255, 255, 255, 0.24) 0%,
-          rgba(255, 255, 255, 0.12) 22%,
-          rgba(255, 255, 255, 0.08) 50%,
-          rgba(255, 255, 255, 0.12) 78%,
-          rgba(255, 255, 255, 0.24) 100%
-        );
-        color: #ffcc00;
+      .search-action-button:hover {
+        background-color: rgba(140, 90, 255, 0.4);
       }
-      .settings-container {
+      .search-action-button p {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 500;
+      }
+      vl {
+        width: 1px;
+        background-color: rgba(255, 255, 255, 0.2);
+        margin: 0 8px;
+      }
+      .topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        white-space: nowrap;
+        height: 54px;
+      }
+      .topbar-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        min-width: 40px;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        border-radius: 48px;
+        transition: background-color 0.2s;
+      }
+      .topbar-item:has(.btn-label) {
+        width: auto;
+        padding: 0 12px;
+      }
+      .topbar-item:hover {
+        background-color: rgba(140, 90, 255, 0.4);
+      }
+      .topbar-item .btn-label {
+        font-size: 14px;
+        font-weight: 500;
+      }
+      #mobileMoreBtn {
+        display: none;
+      }
+      .sidebar {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 10px;
+        padding: 16px;
+        position: fixed;
+        left: 0;
+        top: 65px;
+        z-index: 10000;
+        width: 256px;
+        height: calc(100vh - 65px);
+        overflow-y: auto;
+        transition: left 0.3s;
+        scrollbar-width: none;
       }
-      .setting-item {
+      .sidebar-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+      .sidebar-item:hover {
+        background-color: rgba(140, 90, 255, 0.3);
+      }
+      .sidebar-item.active {
+        background-color: rgba(140, 90, 255, 0.45);
+      }
+      .sidebar-label {
+        font-size: 14px;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+      .content-container {
+        display: flex;
+        margin-top: 65px;
+        margin-left: 256px;
+        transition: margin-left 0.3s;
+      }
+      .sidebar.sidebar-collapsed {
+        left: -300px;
+      }
+      .content-container.sidebar-collapsed {
+        margin-left: 0;
+      }
+      .content {
+        max-width: 1000px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0 auto;
+        width: 100%;
+      }
+      /* Pages */
+      .page {
+        display: none;
+        flex-direction: column;
+      }
+      .page.active {
+        display: flex;
+      }
+      .page > h1 {
+        margin: 0 0 16px 0;
+        font-size: 28px;
+        font-weight: 500;
+      }
+      /* Action bar */
+      .action-bar {
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 14px 16px;
+        background-color: rgba(255, 255, 255, 0.08);
         display: flex;
         justify-content: space-between;
         align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
       }
-      @media (max-width: 700px) {
-        .topbar {
-          padding: 0 8px;
-          min-height: 56px;
-          font-size: 0.98em;
+      .action-bar-label {
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .action-bar-buttons {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      /* Buttons */
+      .btn {
+        padding: 6px 14px;
+        border-radius: 24px;
+        white-space: nowrap;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        cursor: pointer;
+        transition: background-color 0.2s;
+        font-size: 14px;
+      }
+      .btn:hover {
+        background-color: rgba(140, 90, 255, 0.4);
+      }
+      .btn-danger {
+        background: rgba(220, 53, 69, 0.15);
+        border-color: rgba(220, 53, 69, 0.45);
+        color: #ff9090;
+      }
+      .btn-danger:hover {
+        background: rgba(220, 53, 69, 0.35);
+      }
+      .btn-primary {
+        background: rgba(140, 90, 255, 0.3);
+        border-color: rgba(140, 90, 255, 0.6);
+      }
+      .btn-primary:hover {
+        background: rgba(140, 90, 255, 0.5);
+      }
+      /* Data list */
+      .data-list {
+        margin-top: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .data-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 11px 14px;
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        gap: 12px;
+      }
+      .data-item-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 0;
+        flex: 1;
+      }
+      .data-item-title {
+        font-size: 14px;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .data-item-sub {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.5);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .data-item-actions {
+        display: flex;
+        gap: 6px;
+        flex-shrink: 0;
+      }
+      .btn-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.7);
+        transition: background-color 0.2s;
+        text-decoration: none;
+      }
+      .btn-icon:hover {
+        background: rgba(220, 53, 69, 0.3);
+        border-color: rgba(220, 53, 69, 0.5);
+        color: #ff9090;
+      }
+      .btn-icon icon {
+        font-size: 18px;
+      }
+      /* Empty state */
+      .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 56px 20px;
+        gap: 10px;
+        color: rgba(255, 255, 255, 0.35);
+        text-align: center;
+      }
+      .empty-state icon {
+        font-size: 52px;
+        color: rgba(255, 255, 255, 0.18);
+      }
+      .empty-state p {
+        margin: 0;
+        font-size: 15px;
+      }
+      /* Other Data sub-sections */
+      .data-section {
+        margin-bottom: 28px;
+      }
+      .data-section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .data-section-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .data-section-title icon {
+        font-size: 22px;
+        color: rgba(180, 140, 255, 0.9);
+      }
+      .data-count-badge {
+        font-size: 11px;
+        font-weight: 600;
+        background: rgba(140, 90, 255, 0.25);
+        border: 1px solid rgba(140, 90, 255, 0.45);
+        border-radius: 20px;
+        padding: 2px 9px;
+        color: rgba(190, 160, 255, 1);
+      }
+      /* Settings */
+      .settings-group {
+        margin-bottom: 28px;
+      }
+      .settings-group-title {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.4);
+        margin-bottom: 10px;
+        padding-left: 4px;
+      }
+      .settings-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 16px;
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        margin-bottom: 6px;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .settings-row-info {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        flex: 1;
+        min-width: 0;
+      }
+      .settings-row-label {
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .settings-row-desc {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.42);
+        line-height: 1.4;
+      }
+      /* Custom dropdown */
+      .custom-dropdown {
+        position: relative;
+        display: inline-block;
+        flex-shrink: 0;
+      }
+      .custom-dropdown-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 14px;
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        cursor: pointer;
+        font-size: 14px;
+        font-family: "Google Sans Flex", "Google Sans", Roboto, sans-serif;
+        font-variation-settings: "ROND" 90;
+        color: white;
+        white-space: nowrap;
+        min-width: 150px;
+        justify-content: space-between;
+      }
+      .custom-dropdown-menu {
+        position: absolute;
+        right: 0;
+        top: calc(100% + 6px);
+        min-width: 100%;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        z-index: 500;
+        overflow: hidden;
+        display: none;
+        padding: 4px;
+      }
+      .custom-dropdown-menu.open {
+        display: block;
+      }
+      .custom-dropdown-option {
+        padding: 9px 14px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.15s;
+        white-space: nowrap;
+        border-radius: 10px;
+      }
+      .custom-dropdown-option:hover {
+        background-color: rgba(140, 90, 255, 0.3);
+      }
+      .custom-dropdown-option.selected {
+        color: rgba(190, 155, 255, 1);
+        font-weight: 600;
+      }
+      .dropdown-arrow {
+        font-family: "Material Symbols Rounded";
+        font-size: 20px;
+        line-height: 1;
+        transition: transform 0.2s;
+        display: inline-block;
+      }
+      .dropdown-arrow.rotated {
+        transform: rotate(180deg);
+      }
+      /* Confirm Modal */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: 30000000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        backdrop-filter: blur(4px);
+      }
+      .modal-overlay.hidden {
+        display: none;
+      }
+      .modal-box {
+        border-radius: 20px;
+        padding: 28px 24px;
+        max-width: 380px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+      }
+      .modal-icon icon {
+        font-size: 42px;
+        color: #ff8a8a;
+      }
+      .modal-title {
+        font-size: 18px;
+        font-weight: 600;
+        text-align: center;
+        margin: 4px 0 0;
+      }
+      .modal-desc {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.58);
+        text-align: center;
+        margin: 0;
+        line-height: 1.55;
+      }
+      .modal-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 8px;
+        width: 100%;
+      }
+      .modal-actions .btn {
+        min-width: 110px;
+        text-align: center;
+      }
+      /* Responsive */
+      @media (max-width: 1260px) {
+        .content {
+          max-width: 800px;
         }
-        .top-left h3 {
-          font-size: 1.1em;
-          margin-right: 8px;
+      }
+      @media (max-width: 1090px) {
+        .sidebar {
+          left: -300px;
         }
-        .topbar-middle {
-          gap: 8px;
+        .content-container {
+          margin-left: 0;
         }
-        .navbar-item span {
+      }
+      @media (max-width: 900px) {
+        .search-munetios-bar {
           display: none;
         }
-        .navbar-item icon {
-          font-size: 24px;
+        .topbar {
+          padding: 0 8px;
         }
+      }
+      @media (max-width: 810px) {
+        .content {
+          max-width: 600px;
+        }
+      }
+      @media (max-width: 768px) {
+        .content {
+          max-width: 100%;
+        }
+      }
+      @media (max-width: 600px) {
+        .btn-label {
+          display: none;
+        }
+        .topbar-item:has(.btn-label) {
+          width: 40px !important;
+          padding: 0 !important;
+        }
+        .settings-row {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+      @media (max-width: 500px) {
         .content {
           padding: 8px;
-          margin-top: 56px;
-        }
-        .settings-container {
-          gap: 10px;
-        }
-        .setting-item label {
-          font-size: 0.98em;
-        }
-        .history-item {
-          padding: 8px 8px;
-          font-size: 0.98em;
-        }
-        .search-bar {
-          gap: 4px;
-          padding: 6px;
-        }
-        .search-bar input {
           font-size: 15px;
         }
       }
-      @media (max-width: 480px) {
-        .topbar {
-          padding: 0 2vw;
-          min-height: 48px;
-        }
-        .top-left h3 {
-          font-size: 1em;
-        }
+      @media (max-width: 400px) {
         .content {
           padding: 4px;
-          margin-top: 48px;
+          font-size: 13px;
         }
-        .history-item {
-          padding: 6px 4px;
-          font-size: 0.95em;
+        .content h1 {
+          font-weight: 400;
+          font-size: 25px;
         }
-        .settings-container {
-          gap: 6px;
+      }
+      @media (max-width: 380px) {
+        .topbar-title {
+          display: none;
+        }
+      }
+      @media (max-width: 300px) {
+        .content {
+          padding: 2px;
+          font-size: 11px;
         }
       }
     </style>
   </head>
   <body>
-    <div class="topbar liquid-glass">
-      <div class="top-left">
-        <h3 id="backtoMunetios">Manage Data</h3>
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="menu-btn liquid-glass" id="menuBtn">
+          <icon>menu</icon>
+        </div>
+        <div class="topbar-title liquid-glass">Manage Data</div>
       </div>
       <div class="topbar-middle">
-        <div class="navbar-item" id="searchHistoryBtn">
+        <div class="search-munetios-bar liquid-glass">
+          <img
+            src="https://www.munetios.com/favicon-new.ico"
+            alt="Munetios Logo"
+          />
+          <input
+            type="text"
+            id="topbarSearchInput"
+            placeholder="Search Munetios"
+          />
+          <div class="search-actions">
+            <div class="search-action-button" id="searchBtn">
+              <p>Search</p>
+            </div>
+            <vl></vl>
+            <div class="search-action-button" id="searchNewTabBtn">
+              <p>Search in new tab</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="topbar-right liquid-glass">
+        <div class="topbar-item" id="backBtn">
+          <icon>arrow_back</icon>
+          <div class="btn-label">Go Back</div>
+        </div>
+        <div class="topbar-item" id="helpBtn">
+          <icon>help</icon>
+        </div>
+        <div class="topbar-item" id="mobileMoreBtn">
+          <icon>more_vert</icon>
+        </div>
+        <div class="topbar-item" id="appsBtn">
+          <icon>apps</icon>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-container">
+      <div class="sidebar liquid-glass">
+        <div class="sidebar-item active" id="searchHistoryBtn">
           <icon>history</icon>
-          <span>Search History</span>
+          <div class="sidebar-label">Search History</div>
         </div>
-        <div class="navbar-item" id="otherDataBtn">
-          <icon>folder</icon>
-          <span>Other Data</span>
+        <div class="sidebar-item" id="bookmarksBtn">
+          <icon>bookmark</icon>
+          <div class="sidebar-label">Bookmarks</div>
         </div>
-        <div class="navbar-item" id="dataSettingsBtn">
+        <div class="sidebar-item" id="otherDataBtn">
+          <icon>data_usage</icon>
+          <div class="sidebar-label">Other Data</div>
+        </div>
+        <div class="sidebar-item" id="settingsBtn">
           <icon>settings</icon>
-          <span>Data Settings</span>
+          <div class="sidebar-label">Settings</div>
         </div>
       </div>
-      <div class="top-right">
-        <icon id="helpIcon">help</icon>
-        <icon id="appsIcon">apps</icon>
-      </div>
-    </div>
-    <div class="content">
-      <div class="content-page active" id="searchHistoryContent">
-        <h2>Search History</h2>
-        <p>Here you can view your search history.</p>
-        <div class="search-bar liquid-glass">
-          <icon>search</icon>
-          <input type="text" placeholder="Search your history" />
-        </div>
-        <div class="history-list" id="historyList">
-          <!-- Search history items will be dynamically added here -->
-        </div>
-      </div>
-      <div class="content-page" id="otherDataContent">
-        <h2>Other Data</h2>
-        <div class="search-bar liquid-glass">
-          <icon>search</icon>
-          <input type="text" placeholder="Search other data" />
-        </div>
-        <h2>Not Interested Results</h2>
-        <div class="other-data-list" id="otherDataList">
-          <!-- Other data items will be dynamically added here -->
-        </div>
-        <h2>Bookmarks</h2>
-        <div class="bookmarks-list" id="bookmarksList">
-          <!-- Bookmark items will be dynamically added here -->
-        </div>
-      </div>
-      <div class="content-page" id="dataSettingsContent">
-        <h2>Data Settings</h2>
-        <div class="settings-container">
-          <div class="setting-item">
-            <label for="clearHistory">Clear Search History</label>
-            <button id="clearHistory">Clear</button>
+
+      <div class="content">
+        <!-- Page: Search History -->
+        <div class="page active" id="page-searchHistory">
+          <h1>Search History</h1>
+          <div class="action-bar">
+            <span class="action-bar-label">Actions</span>
+            <div class="action-bar-buttons">
+              <button class="btn" id="historyExportBtn">Export</button>
+              <button class="btn btn-danger" id="historyClearBtn">
+                Clear All
+              </button>
+            </div>
           </div>
-          <div class="setting-item">
-            <label for="clearBookmarks">Clear Bookmarks</label>
-            <button id="clearBookmarks">Clear</button>
-          </div>
-          <div class="setting-item">
-            <label for="clearRemovedResults"
-              >Clear Not Interested Results</label
+          <div class="data-list" id="searchHistoryList">
+            <div
+              style="display: flex; justify-content: center; padding: 40px 0"
             >
-            <button id="clearRemovedResults">Clear</button>
+              <div class="spinner"></div>
+            </div>
           </div>
-          <div class="setting-item">
-            <label for="clearAllData">Clear All Data</label>
-            <button id="clearAllData">Clear</button>
+        </div>
+
+        <!-- Page: Bookmarks -->
+        <div class="page" id="page-bookmarks">
+          <h1>Bookmarks</h1>
+          <div class="action-bar">
+            <span class="action-bar-label">Actions</span>
+            <div class="action-bar-buttons">
+              <button class="btn" id="bookmarksExportBtn">Export</button>
+              <button class="btn btn-danger" id="bookmarksClearBtn">
+                Delete All
+              </button>
+            </div>
+          </div>
+          <div class="data-list" id="bookmarksList">
+            <div
+              style="display: flex; justify-content: center; padding: 40px 0"
+            >
+              <div class="spinner"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Page: Other Data -->
+        <div class="page" id="page-otherData">
+          <h1>Other Data</h1>
+
+          <div class="data-section">
+            <div class="data-section-header">
+              <div class="data-section-title">
+                <icon>block</icon>
+                Not Interested Results
+                <span class="data-count-badge" id="removedResultsCount">0</span>
+              </div>
+              <button class="btn btn-danger" id="clearRemovedBtn">
+                Clear All
+              </button>
+            </div>
+            <div class="data-list" id="removedResultsList"></div>
+          </div>
+
+          <div class="data-section">
+            <div class="data-section-header">
+              <div class="data-section-title">
+                <icon>add_circle</icon>
+                Custom Results
+                <span class="data-count-badge" id="customResultsCount">0</span>
+              </div>
+              <button class="btn btn-danger" id="clearCustomResultsBtn">
+                Clear All
+              </button>
+            </div>
+            <div class="data-list" id="customResultsList"></div>
+          </div>
+        </div>
+
+        <!-- Page: Settings -->
+        <div class="page" id="page-settings">
+          <h1>Settings</h1>
+
+          <div class="settings-group">
+            <div class="settings-group-title">Search History</div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">Auto clear search history</div>
+                <div class="settings-row-desc">
+                  Automatically delete search history after a set period
+                </div>
+              </div>
+              <div class="custom-dropdown" id="autoClearDropdown">
+                <button
+                  class="custom-dropdown-btn liquid-glass"
+                  id="autoClearBtn"
+                  aria-haspopup="listbox"
+                  aria-expanded="false"
+                >
+                  <span id="autoClearSelected">Never</span>
+                  <span class="dropdown-arrow" id="autoClearArrow"
+                    >expand_more</span
+                  >
+                </button>
+                <div
+                  class="custom-dropdown-menu liquid-glass"
+                  id="autoClearMenu"
+                  role="listbox"
+                >
+                  <div
+                    class="custom-dropdown-option selected"
+                    data-value="never"
+                    role="option"
+                  >
+                    Never
+                  </div>
+                  <div
+                    class="custom-dropdown-option"
+                    data-value="1day"
+                    role="option"
+                  >
+                    After 1 day
+                  </div>
+                  <div
+                    class="custom-dropdown-option"
+                    data-value="1week"
+                    role="option"
+                  >
+                    After 1 week
+                  </div>
+                  <div
+                    class="custom-dropdown-option"
+                    data-value="1month"
+                    role="option"
+                  >
+                    After 1 month
+                  </div>
+                  <div
+                    class="custom-dropdown-option"
+                    data-value="3months"
+                    role="option"
+                  >
+                    After 3 months
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">Delete search history</div>
+                <div class="settings-row-desc">
+                  Permanently remove all your search history entries
+                </div>
+              </div>
+              <button class="btn btn-danger" id="settingsDeleteHistoryBtn">
+                Delete
+              </button>
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <div class="settings-group-title">Bookmarks</div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">Delete all bookmarks</div>
+                <div class="settings-row-desc">
+                  Remove all saved bookmarks permanently
+                </div>
+              </div>
+              <button class="btn btn-danger" id="settingsDeleteBookmarksBtn">
+                Delete
+              </button>
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <div class="settings-group-title">Other Data</div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">Delete all custom results</div>
+                <div class="settings-row-desc">
+                  Remove all your custom search result entries
+                </div>
+              </div>
+              <button class="btn btn-danger" id="settingsDeleteCustomBtn">
+                Delete
+              </button>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">
+                  Delete not interested results
+                </div>
+                <div class="settings-row-desc">
+                  Reset all results you've marked as not interested
+                </div>
+              </div>
+              <button class="btn btn-danger" id="settingsDeleteRemovedBtn">
+                Delete
+              </button>
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <div class="settings-group-title">Data Management</div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">Export all data</div>
+                <div class="settings-row-desc">
+                  Download all your Munetios data as a JSON file
+                </div>
+              </div>
+              <button class="btn btn-primary" id="settingsExportBtn">
+                Export
+              </button>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <div class="settings-row-label">Delete everything</div>
+                <div class="settings-row-desc">
+                  Permanently erase all Munetios data stored on this device
+                </div>
+              </div>
+              <button class="btn btn-danger" id="settingsDeleteEverythingBtn">
+                Delete All
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Confirm Modal -->
+    <div class="modal-overlay hidden" id="confirmModal">
+      <div class="modal-box liquid-glass">
+        <div class="modal-icon"><icon>warning</icon></div>
+        <h2 class="modal-title" id="modalTitle">Are you sure?</h2>
+        <p class="modal-desc" id="modalDesc">This action cannot be undone.</p>
+        <div class="modal-actions">
+          <button class="btn" id="modalCancelBtn">Cancel</button>
+          <button class="btn btn-danger" id="modalConfirmBtn">Confirm</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apps Modal -->
+    <div
+      class="modal-overlay hidden"
+      id="appsModal"
+      style="padding: 0; align-items: stretch"
+    >
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          height: 100%;
+          position: relative;
+        "
+      >
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            flex-shrink: 0;
+          "
+          class="liquid-glass"
+        >
+          <span style="font-size: 15px; font-weight: 500">Apps</span>
+          <div class="topbar-item" id="appsModalCloseBtn" title="Close">
+            <icon>close</icon>
+          </div>
+        </div>
+        <iframe
+          id="appsFrame"
+          src="https://www.munetios.com/apps"
+          style="flex: 1; width: 100%; border: none"
+          title="Munetios Apps"
+          sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal-overlay hidden" id="helpModal">
+      <div class="modal-box liquid-glass" style="max-width: 460px; gap: 16px">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+          "
+        >
+          <h2 style="margin: 0; font-size: 18px; font-weight: 600">
+            Manage Data — Help
+          </h2>
+          <div
+            class="topbar-item"
+            id="helpModalCloseBtn"
+            title="Close"
+            style="flex-shrink: 0"
+          >
+            <icon>close</icon>
+          </div>
+        </div>
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            text-align: left;
+          "
+        >
+          <div
+            style="
+              background: rgba(255, 255, 255, 0.06);
+              border: 1px solid rgba(255, 255, 255, 0.1);
+              border-radius: 10px;
+              padding: 12px 14px;
+            "
+          >
+            <div
+              style="
+                font-size: 13px;
+                font-weight: 600;
+                margin-bottom: 4px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+              "
+            >
+              <icon style="font-size: 18px">history</icon> Search History
+            </div>
+            <div
+              style="
+                font-size: 12px;
+                color: rgba(255, 255, 255, 0.55);
+                line-height: 1.5;
+              "
+            >
+              Your past searches stored locally in your browser. Only you can
+              see this data — it never leaves your device.
+            </div>
+          </div>
+          <div
+            style="
+              background: rgba(255, 255, 255, 0.06);
+              border: 1px solid rgba(255, 255, 255, 0.1);
+              border-radius: 10px;
+              padding: 12px 14px;
+            "
+          >
+            <div
+              style="
+                font-size: 13px;
+                font-weight: 600;
+                margin-bottom: 4px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+              "
+            >
+              <icon style="font-size: 18px">bookmark</icon> Bookmarks
+            </div>
+            <div
+              style="
+                font-size: 12px;
+                color: rgba(255, 255, 255, 0.55);
+                line-height: 1.5;
+              "
+            >
+              Pages you've saved for quick access. Stored entirely on this
+              device.
+            </div>
+          </div>
+          <div
+            style="
+              background: rgba(255, 255, 255, 0.06);
+              border: 1px solid rgba(255, 255, 255, 0.1);
+              border-radius: 10px;
+              padding: 12px 14px;
+            "
+          >
+            <div
+              style="
+                font-size: 13px;
+                font-weight: 600;
+                margin-bottom: 4px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+              "
+            >
+              <icon style="font-size: 18px">data_usage</icon> Other Data
+            </div>
+            <div
+              style="
+                font-size: 12px;
+                color: rgba(255, 255, 255, 0.55);
+                line-height: 1.5;
+              "
+            >
+              Includes results you've marked as <em>Not Interested</em> and any
+              <em>Custom Results</em> you've added to your searches.
+            </div>
+          </div>
+          <div
+            style="
+              background: rgba(255, 255, 255, 0.06);
+              border: 1px solid rgba(255, 255, 255, 0.1);
+              border-radius: 10px;
+              padding: 12px 14px;
+            "
+          >
+            <div
+              style="
+                font-size: 13px;
+                font-weight: 600;
+                margin-bottom: 4px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+              "
+            >
+              <icon style="font-size: 18px">lock</icon> Privacy
+            </div>
+            <div
+              style="
+                font-size: 12px;
+                color: rgba(255, 255, 255, 0.55);
+                line-height: 1.5;
+              "
+            >
+              All data on this page is stored locally on your device using
+              localStorage. Munetios never sends your personal data to any
+              server.
+            </div>
+          </div>
+        </div>
+        <button
+          class="btn"
+          id="helpModalCloseBottomBtn"
+          style="width: 100%; justify-content: center"
+        >
+          Got it
+        </button>
+      </div>
+    </div>
+
     <script nonce="eriuhgertsihgtuidfkgrtsdghjkghjkwerafuhjkwerfuihjkuh">
-      document
-        .getElementById("backtoMunetios")
-        .addEventListener("click", () => {
-          window.location.href = "index.html";
-        });
-      document.getElementById("helpIcon").addEventListener("click", () => {
-        // Remove existing modal if present
-        const existing = document.getElementById("helpModal");
-        if (existing) existing.remove();
+      // === Confirm Modal ===
+      let modalCallback = null;
+      const confirmModal = document.getElementById("confirmModal");
 
-        const modal = document.createElement("div");
-        modal.id = "helpModal";
-        modal.style.position = "fixed";
-        modal.style.top = "0";
-        modal.style.left = "0";
-        modal.style.width = "100vw";
-        modal.style.height = "100vh";
-        modal.style.background = "rgba(0,0,0,0.45)";
-        modal.style.display = "flex";
-        modal.style.alignItems = "center";
-        modal.style.justifyContent = "center";
-        modal.style.zIndex = "9999";
-
-        const box = document.createElement("div");
-        box.className = "liquid-glass";
-        box.style.padding = "32px 24px";
-        box.style.borderRadius = "12px";
-        box.style.boxShadow = "0 4px 32px rgba(0,0,0,0.18)";
-        box.style.maxWidth = "90vw";
-        box.style.minWidth = "260px";
-        box.style.textAlign = "center";
-        box.style.color = "#fff";
-        box.style.position = "relative";
-
-        const closeBtn = document.createElement("button");
-        closeBtn.textContent = "Close";
-        closeBtn.style.position = "absolute";
-        closeBtn.style.top = "8px";
-        closeBtn.style.right = "8px";
-        closeBtn.style.zIndex = "2";
-        closeBtn.onclick = () => modal.remove();
-
-        const msg = document.createElement("div");
-        msg.innerHTML = `
-            <h2 style="margin-top:0;">Help</h2>
-            <p>
-                <b>Manage Data</b> lets you view and clear your search history, bookmarks, and removed results.<br><br>
-                <b>Tabs:</b><br>
-                <b>Search History</b>: View and delete your search queries.<br>
-                <b>Other Data</b>: Manage removed results and bookmarks.<br>
-                <b>Data Settings</b>: Clear all or specific types of data.<br><br>
-                Use the search bars to filter items. Click the trash icon to delete individual entries.
-            </p>
-        `;
-
-        box.appendChild(closeBtn);
-        box.appendChild(msg);
-        modal.appendChild(box);
-        document.body.appendChild(modal);
-      });
-
-      // Apps icon: show iframe modal
-      document.getElementById("appsIcon").addEventListener("click", () => {
-        // Remove existing modal if present
-        const existing = document.getElementById("appsModal");
-        if (existing) existing.remove();
-
-        const modal = document.createElement("div");
-        modal.id = "appsModal";
-        modal.style.position = "fixed";
-        modal.style.top = "0";
-        modal.style.left = "0";
-        modal.style.width = "100vw";
-        modal.style.height = "100vh";
-        modal.style.background = "rgba(0,0,0,0.45)";
-        modal.style.display = "flex";
-        modal.style.alignItems = "center";
-        modal.style.justifyContent = "center";
-        modal.style.zIndex = "9999";
-
-        const box = document.createElement("div");
-        box.className = "liquid-glass";
-        box.style.padding = "0";
-        box.style.borderRadius = "12px";
-        box.style.boxShadow = "0 4px 32px rgba(0,0,0,0.18)";
-        box.style.maxWidth = "95vw";
-        box.style.maxHeight = "95vh";
-        box.style.overflow = "hidden";
-        box.style.position = "relative";
-
-        const closeBtn = document.createElement("button");
-        closeBtn.textContent = "Close";
-        closeBtn.style.position = "absolute";
-        closeBtn.style.top = "8px";
-        closeBtn.style.right = "8px";
-        closeBtn.style.zIndex = "2";
-        closeBtn.onclick = () => modal.remove();
-
-        const iframe = document.createElement("iframe");
-        iframe.src = "https://munetios.com/apps";
-        iframe.width = "500";
-        iframe.height = "768";
-        iframe.style.border = "none";
-        iframe.style.display = "block";
-        iframe.style.background = "#fff";
-        iframe.style.borderRadius = "12px";
-
-        box.appendChild(closeBtn);
-        box.appendChild(iframe);
-        modal.appendChild(box);
-        document.body.appendChild(modal);
-      });
-      function showConfirmModal(message, onConfirm) {
-        // Remove existing modal if present
-        const existing = document.getElementById("confirmModal");
-        if (existing) existing.remove();
-
-        const modal = document.createElement("div");
-        modal.id = "confirmModal";
-        modal.style.position = "fixed";
-        modal.style.top = "0";
-        modal.style.left = "0";
-        modal.style.width = "100vw";
-        modal.style.height = "100vh";
-        modal.style.background = "rgba(0,0,0,0.45)";
-        modal.style.display = "flex";
-        modal.style.alignItems = "center";
-        modal.style.justifyContent = "center";
-        modal.style.zIndex = "9999";
-
-        const box = document.createElement("div");
-        box.className = "liquid-glass";
-        box.style.padding = "32px 24px";
-        box.style.borderRadius = "12px";
-        box.style.boxShadow = "0 4px 32px rgba(0,0,0,0.18)";
-        box.style.maxWidth = "90vw";
-        box.style.minWidth = "260px";
-        box.style.textAlign = "center";
-        box.style.color = "#fff";
-
-        const msg = document.createElement("div");
-        msg.textContent = message;
-        msg.style.marginBottom = "24px";
-        msg.style.fontSize = "1.1em";
-
-        const btns = document.createElement("div");
-        btns.style.display = "flex";
-        btns.style.justifyContent = "center";
-        btns.style.gap = "16px";
-
-        const cancelBtn = document.createElement("button");
-        cancelBtn.textContent = "Cancel";
-        cancelBtn.onclick = () => modal.remove();
-
-        const okBtn = document.createElement("button");
-        okBtn.textContent = "Confirm";
-        okBtn.style.background = "#ff3333";
-        okBtn.style.color = "#fff";
-        okBtn.onclick = () => {
-          modal.remove();
-          onConfirm();
-        };
-
-        btns.appendChild(cancelBtn);
-        btns.appendChild(okBtn);
-
-        box.appendChild(msg);
-        box.appendChild(btns);
-        modal.appendChild(box);
-        document.body.appendChild(modal);
+      function showConfirm(title, desc, onConfirm) {
+        document.getElementById("modalTitle").textContent = title;
+        document.getElementById("modalDesc").textContent = desc;
+        confirmModal.classList.remove("hidden");
+        modalCallback = onConfirm;
       }
 
-      document.getElementById("clearHistory").addEventListener("click", () => {
-        showConfirmModal("Clear all search history?", () => {
-          setSearchHistory([]);
-          renderHistoryList();
-        });
-      });
-
       document
-        .getElementById("clearBookmarks")
+        .getElementById("modalCancelBtn")
         .addEventListener("click", () => {
-          showConfirmModal("Clear all bookmarks?", () => {
-            setBookmarks([]);
-            renderBookmarksList(
-              document.querySelectorAll(".search-bar input")[1].value,
-            );
-          });
+          confirmModal.classList.add("hidden");
+          modalCallback = null;
         });
 
       document
-        .getElementById("clearRemovedResults")
+        .getElementById("modalConfirmBtn")
         .addEventListener("click", () => {
-          showConfirmModal("Clear all Not Interested Results?", () => {
-            setRemovedResults([]);
-            renderOtherDataList(
-              document.querySelectorAll(".search-bar input")[1].value,
-            );
-          });
+          confirmModal.classList.add("hidden");
+          const cb = modalCallback;
+          modalCallback = null;
+          if (cb) cb();
         });
 
-      document.getElementById("clearAllData").addEventListener("click", () => {
-        showConfirmModal("Clear ALL data? This cannot be undone.", () => {
-          setSearchHistory([]);
-          setBookmarks([]);
-          setRemovedResults([]);
-          renderHistoryList();
-          renderBookmarksList(
-            document.querySelectorAll(".search-bar input")[1].value,
-          );
-          renderOtherDataList(
-            document.querySelectorAll(".search-bar input")[1].value,
-          );
-        });
+      confirmModal.addEventListener("click", (e) => {
+        if (e.target === confirmModal) {
+          confirmModal.classList.add("hidden");
+          modalCallback = null;
+        }
       });
-      function showContentPage(pageId) {
-        document.querySelectorAll(".content-page").forEach((page) => {
-          page.classList.remove("active");
+
+      // === Navigation ===
+      const pageMap = {
+        searchHistory: "page-searchHistory",
+        bookmarks: "page-bookmarks",
+        otherData: "page-otherData",
+        settings: "page-settings",
+      };
+      const sidebarMap = {
+        searchHistory: "searchHistoryBtn",
+        bookmarks: "bookmarksBtn",
+        otherData: "otherDataBtn",
+        settings: "settingsBtn",
+      };
+
+      function showPage(key) {
+        Object.keys(pageMap).forEach((k) => {
+          document.getElementById(pageMap[k]).classList.remove("active");
+          document.getElementById(sidebarMap[k]).classList.remove("active");
         });
-        const page = document.getElementById(pageId);
-        if (page) page.classList.add("active");
+        document.getElementById(pageMap[key]).classList.add("active");
+        document.getElementById(sidebarMap[key]).classList.add("active");
+        if (window.innerWidth <= 1090) {
+          document.querySelector(".sidebar").style.left = "";
+        }
+        if (key === "searchHistory") loadSearchHistory();
+        else if (key === "bookmarks") loadBookmarks();
+        else if (key === "otherData") loadOtherData();
       }
 
-      // Navigation button event listeners
       document
         .getElementById("searchHistoryBtn")
-        .addEventListener("click", () => {
-          showContentPage("searchHistoryContent");
-        });
+        .addEventListener("click", () => showPage("searchHistory"));
       document
-        .getElementById("dataSettingsBtn")
-        .addEventListener("click", () => {
-          showContentPage("dataSettingsContent");
-        });
-      document.getElementById("otherDataBtn").addEventListener("click", () => {
-        showContentPage("otherDataContent");
-      });
-      function getRemovedResults() {
-        const data = localStorage.getItem("removedResults");
-        try {
-          return data ? JSON.parse(data) : [];
-        } catch {
-          return [];
-        }
-      }
-
-      function setRemovedResults(results) {
-        localStorage.setItem("removedResults", JSON.stringify(results));
-      }
-
-      function getBookmarks() {
-        const data = localStorage.getItem("munetiosBookmarks");
-        try {
-          return data ? JSON.parse(data) : [];
-        } catch {
-          return [];
-        }
-      }
-
-      function setBookmarks(bookmarks) {
-        localStorage.setItem("munetiosBookmarks", JSON.stringify(bookmarks));
-      }
-
-      function renderOtherDataList(filter = "") {
-        const otherDataList = document.getElementById("otherDataList");
-        const removed = getRemovedResults();
-        otherDataList.innerHTML = "";
-        const filtered = filter
-          ? removed.filter((item) =>
-              (item.title || item.url || "")
-                .toLowerCase()
-                .includes(filter.toLowerCase()),
-            )
-          : removed;
-        if (filtered.length === 0) {
-          otherDataList.innerHTML =
-            '<p style="color:#aaa;">No removed results found.</p>';
-          return;
-        }
-        filtered.forEach((item, idx) => {
-          const div = document.createElement("div");
-          div.className = "history-item liquid-glass";
-          div.style.display = "flex";
-          div.style.alignItems = "center";
-          div.style.justifyContent = "space-between";
-          div.style.padding = "10px 16px";
-          div.style.margin = "8px 0";
-          div.style.borderRadius = "8px";
-
-          const span = document.createElement("span");
-          span.textContent = item.title || item.url || JSON.stringify(item);
-          span.style.overflow = "hidden";
-          span.style.textOverflow = "ellipsis";
-          span.style.whiteSpace = "nowrap";
-          span.style.flex = "1";
-
-          const delIcon = document.createElement("icon");
-          delIcon.textContent = "delete";
-          delIcon.style.cursor = "pointer";
-          delIcon.style.marginLeft = "16px";
-          delIcon.style.color = "#ff8888";
-          delIcon.title = "Delete this entry";
-          delIcon.onclick = () => {
-            const all = getRemovedResults();
-            const realIdx = removed.indexOf(item);
-            if (realIdx > -1) {
-              all.splice(realIdx, 1);
-              setRemovedResults(all);
-              renderOtherDataList(
-                document.querySelectorAll(".search-bar input")[1].value,
-              );
-            }
-          };
-
-          div.appendChild(span);
-          div.appendChild(delIcon);
-          otherDataList.appendChild(div);
-        });
-      }
-
-      function renderBookmarksList(filter = "") {
-        const bookmarksList = document.getElementById("bookmarksList");
-        const bookmarks = getBookmarks();
-        bookmarksList.innerHTML = "";
-        const filtered = filter
-          ? bookmarks.filter((item) =>
-              (item.title || item.url || "")
-                .toLowerCase()
-                .includes(filter.toLowerCase()),
-            )
-          : bookmarks;
-        if (filtered.length === 0) {
-          bookmarksList.innerHTML =
-            '<p style="color:#aaa;">No bookmarks found.</p>';
-          return;
-        }
-        filtered.forEach((item, idx) => {
-          const div = document.createElement("div");
-          div.className = "history-item liquid-glass";
-          div.style.display = "flex";
-          div.style.alignItems = "center";
-          div.style.justifyContent = "space-between";
-          div.style.padding = "10px 16px";
-          div.style.margin = "8px 0";
-          div.style.borderRadius = "8px";
-
-          const link = document.createElement("a");
-          link.textContent = item.title || item.url || JSON.stringify(item);
-          link.href = item.url || "#";
-          link.target = "_blank";
-          link.style.color = "#fff";
-          link.style.textDecoration = "none";
-          link.style.overflow = "hidden";
-          link.style.textOverflow = "ellipsis";
-          link.style.whiteSpace = "nowrap";
-          link.style.flex = "1";
-
-          const delIcon = document.createElement("icon");
-          delIcon.textContent = "delete";
-          delIcon.style.cursor = "pointer";
-          delIcon.style.marginLeft = "16px";
-          delIcon.style.color = "#ff8888";
-          delIcon.title = "Delete this bookmark";
-          delIcon.onclick = () => {
-            const all = getBookmarks();
-            const realIdx = bookmarks.indexOf(item);
-            if (realIdx > -1) {
-              all.splice(realIdx, 1);
-              setBookmarks(all);
-              renderBookmarksList(
-                document.querySelectorAll(".search-bar input")[1].value,
-              );
-            }
-          };
-
-          div.appendChild(link);
-          div.appendChild(delIcon);
-          bookmarksList.appendChild(div);
-        });
-      }
-
-      // Initial render for Other Data tab
-      renderOtherDataList();
-      renderBookmarksList();
-
-      // Search filter for Other Data tab
+        .getElementById("bookmarksBtn")
+        .addEventListener("click", () => showPage("bookmarks"));
       document
-        .querySelectorAll(".search-bar input")[1]
-        .addEventListener("input", function () {
-          renderOtherDataList(this.value);
-          renderBookmarksList(this.value);
-        });
+        .getElementById("otherDataBtn")
+        .addEventListener("click", () => showPage("otherData"));
+      document
+        .getElementById("settingsBtn")
+        .addEventListener("click", () => showPage("settings"));
 
-      // When switching to Other Data tab, re-render lists
-      document.getElementById("otherDataBtn").addEventListener("click", () => {
-        renderOtherDataList(
-          document.querySelectorAll(".search-bar input")[1].value,
-        );
-        renderBookmarksList(
-          document.querySelectorAll(".search-bar input")[1].value,
-        );
-      });
-      // Utility to get search history from localStorage
-      function getSearchHistory() {
-        const data = localStorage.getItem("munetiosSearchHistory");
-        try {
-          return data ? JSON.parse(data) : [];
-        } catch {
-          return [];
-        }
+      // === Search History ===
+      function loadSearchHistory() {
+        const list = document.getElementById("searchHistoryList");
+        const history =
+          JSON.parse(localStorage.getItem("munetiosSearchHistory")) || [];
+        list.innerHTML =
+          '<div style="display:flex;justify-content:center;padding:40px 0;"><div class="spinner"></div></div>';
+        setTimeout(() => {
+          list.innerHTML = "";
+          if (history.length === 0) {
+            list.innerHTML =
+              '<div class="empty-state"><icon>manage_search</icon><p>No search history found.</p></div>';
+            return;
+          }
+          history.forEach((item, index) => {
+            const el = document.createElement("div");
+            el.className = "data-item";
+            const info = document.createElement("div");
+            info.className = "data-item-info";
+            const titleEl = document.createElement("div");
+            titleEl.className = "data-item-title";
+            titleEl.textContent = item;
+            info.appendChild(titleEl);
+            const actions = document.createElement("div");
+            actions.className = "data-item-actions";
+            const removeBtn = document.createElement("button");
+            removeBtn.className = "btn-icon";
+            removeBtn.title = "Remove";
+            removeBtn.innerHTML = "<icon>close</icon>";
+            removeBtn.addEventListener("click", () => removeHistoryItem(index));
+            actions.appendChild(removeBtn);
+            el.appendChild(info);
+            el.appendChild(actions);
+            list.appendChild(el);
+          });
+        }, 300);
       }
 
-      // Utility to save search history to localStorage
-      function setSearchHistory(history) {
+      function removeHistoryItem(index) {
+        const history =
+          JSON.parse(localStorage.getItem("munetiosSearchHistory")) || [];
+        history.splice(index, 1);
         localStorage.setItem("munetiosSearchHistory", JSON.stringify(history));
+        loadSearchHistory();
       }
 
-      // Render search history list
-      function renderHistoryList(filter = "") {
-        const historyList = document.getElementById("historyList");
-        const history = getSearchHistory();
-        historyList.innerHTML = "";
-        const filtered = filter
-          ? history.filter((item) =>
-              item.toLowerCase().includes(filter.toLowerCase()),
-            )
-          : history;
-        if (filtered.length === 0) {
-          historyList.innerHTML =
-            '<p style="color:#aaa;">No history found.</p>';
+      document
+        .getElementById("historyClearBtn")
+        .addEventListener("click", () => {
+          showConfirm(
+            "Delete Search History?",
+            "All search history entries will be permanently removed.",
+            () => {
+              localStorage.removeItem("munetiosSearchHistory");
+              loadSearchHistory();
+            },
+          );
+        });
+
+      document
+        .getElementById("historyExportBtn")
+        .addEventListener("click", () => {
+          const history =
+            JSON.parse(localStorage.getItem("munetiosSearchHistory")) || [];
+          const blob = new Blob([JSON.stringify(history, null, 2)], {
+            type: "application/json",
+          });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "munetios-search-history.json";
+          a.click();
+          URL.revokeObjectURL(url);
+        });
+
+      // === Bookmarks ===
+      function loadBookmarks() {
+        const list = document.getElementById("bookmarksList");
+        const bookmarks =
+          JSON.parse(localStorage.getItem("munetiosBookmarks")) || [];
+        list.innerHTML =
+          '<div style="display:flex;justify-content:center;padding:40px 0;"><div class="spinner"></div></div>';
+        setTimeout(() => {
+          list.innerHTML = "";
+          if (bookmarks.length === 0) {
+            list.innerHTML =
+              '<div class="empty-state"><icon>bookmark_border</icon><p>No bookmarks saved yet.</p></div>';
+            return;
+          }
+          bookmarks.forEach((item, index) => {
+            const el = document.createElement("div");
+            el.className = "data-item";
+            const info = document.createElement("div");
+            info.className = "data-item-info";
+            const titleEl = document.createElement("div");
+            titleEl.className = "data-item-title";
+            const subEl = document.createElement("div");
+            subEl.className = "data-item-sub";
+            if (typeof item === "object" && item !== null) {
+              titleEl.textContent = item.title || item.url || "Bookmark";
+              if (item.url) subEl.textContent = item.url;
+            } else {
+              titleEl.textContent = String(item);
+            }
+            info.appendChild(titleEl);
+            if (subEl.textContent) info.appendChild(subEl);
+            const actions = document.createElement("div");
+            actions.className = "data-item-actions";
+            if (typeof item === "object" && item !== null && item.url) {
+              const openBtn = document.createElement("a");
+              openBtn.className = "btn-icon";
+              openBtn.title = "Open";
+              openBtn.href = item.url;
+              openBtn.target = "_blank";
+              openBtn.rel = "noopener noreferrer";
+              openBtn.innerHTML = "<icon>open_in_new</icon>";
+              actions.appendChild(openBtn);
+            }
+            const removeBtn = document.createElement("button");
+            removeBtn.className = "btn-icon";
+            removeBtn.title = "Remove";
+            removeBtn.innerHTML = "<icon>delete</icon>";
+            removeBtn.addEventListener("click", () => removeBookmark(index));
+            actions.appendChild(removeBtn);
+            el.appendChild(info);
+            el.appendChild(actions);
+            list.appendChild(el);
+          });
+        }, 300);
+      }
+
+      function removeBookmark(index) {
+        const bookmarks =
+          JSON.parse(localStorage.getItem("munetiosBookmarks")) || [];
+        bookmarks.splice(index, 1);
+        localStorage.setItem("munetiosBookmarks", JSON.stringify(bookmarks));
+        loadBookmarks();
+      }
+
+      document
+        .getElementById("bookmarksClearBtn")
+        .addEventListener("click", () => {
+          showConfirm(
+            "Delete All Bookmarks?",
+            "All saved bookmarks will be permanently removed.",
+            () => {
+              localStorage.removeItem("munetiosBookmarks");
+              loadBookmarks();
+            },
+          );
+        });
+
+      document
+        .getElementById("bookmarksExportBtn")
+        .addEventListener("click", () => {
+          const bookmarks =
+            JSON.parse(localStorage.getItem("munetiosBookmarks")) || [];
+          const blob = new Blob([JSON.stringify(bookmarks, null, 2)], {
+            type: "application/json",
+          });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "munetios-bookmarks.json";
+          a.click();
+          URL.revokeObjectURL(url);
+        });
+
+      // === Other Data ===
+      function loadOtherData() {
+        loadRemovedResults();
+        loadCustomResults();
+      }
+
+      function loadRemovedResults() {
+        const list = document.getElementById("removedResultsList");
+        const items = JSON.parse(localStorage.getItem("removedResults")) || [];
+        document.getElementById("removedResultsCount").textContent =
+          items.length;
+        list.innerHTML = "";
+        if (items.length === 0) {
+          list.innerHTML =
+            '<div class="empty-state" style="padding:32px 20px;"><icon>thumb_up</icon><p>No results marked as not interested.</p></div>';
           return;
         }
-        filtered.forEach((item, idx) => {
-          const div = document.createElement("div");
-          div.className = "history-item liquid-glass";
-          div.style.display = "flex";
-          div.style.alignItems = "center";
-          div.style.justifyContent = "space-between";
-          div.style.padding = "10px 16px";
-          div.style.margin = "8px 0";
-          div.style.borderRadius = "8px";
-
-          const span = document.createElement("span");
-          span.textContent = item;
-          span.style.overflow = "hidden";
-          span.style.textOverflow = "ellipsis";
-          span.style.whiteSpace = "nowrap";
-          span.style.flex = "1";
-
-          const delIcon = document.createElement("icon");
-          delIcon.textContent = "delete";
-          delIcon.style.cursor = "pointer";
-          delIcon.style.marginLeft = "16px";
-          delIcon.style.color = "#ff8888";
-          delIcon.title = "Delete this entry";
-          delIcon.onclick = () => {
-            const allHistory = getSearchHistory();
-            const realIdx = history.indexOf(item);
-            if (realIdx > -1) {
-              allHistory.splice(realIdx, 1);
-              setSearchHistory(allHistory);
-              renderHistoryList(
-                document.querySelector(".search-bar input").value,
-              );
-            }
-          };
-
-          div.appendChild(span);
-          div.appendChild(delIcon);
-          historyList.appendChild(div);
+        items.forEach((item, index) => {
+          const el = document.createElement("div");
+          el.className = "data-item";
+          const info = document.createElement("div");
+          info.className = "data-item-info";
+          const titleEl = document.createElement("div");
+          titleEl.className = "data-item-title";
+          titleEl.textContent =
+            typeof item === "object" && item !== null
+              ? item.url || item.title || JSON.stringify(item)
+              : String(item);
+          const subEl = document.createElement("div");
+          subEl.className = "data-item-sub";
+          if (
+            typeof item === "object" &&
+            item !== null &&
+            item.url &&
+            item.title
+          ) {
+            subEl.textContent = item.url;
+          }
+          info.appendChild(titleEl);
+          if (subEl.textContent) info.appendChild(subEl);
+          const actions = document.createElement("div");
+          actions.className = "data-item-actions";
+          const removeBtn = document.createElement("button");
+          removeBtn.className = "btn-icon";
+          removeBtn.title = "Remove";
+          removeBtn.innerHTML = "<icon>close</icon>";
+          removeBtn.addEventListener("click", () => removeRemovedResult(index));
+          actions.appendChild(removeBtn);
+          el.appendChild(info);
+          el.appendChild(actions);
+          list.appendChild(el);
         });
       }
 
-      // Initial render
-      renderHistoryList();
+      function removeRemovedResult(index) {
+        const items = JSON.parse(localStorage.getItem("removedResults")) || [];
+        items.splice(index, 1);
+        localStorage.setItem("removedResults", JSON.stringify(items));
+        loadRemovedResults();
+      }
 
-      // Search filter
       document
-        .querySelector(".search-bar input")
-        .addEventListener("input", function () {
-          renderHistoryList(this.value);
+        .getElementById("clearRemovedBtn")
+        .addEventListener("click", () => {
+          showConfirm(
+            "Clear Not Interested Results?",
+            "All entries will be removed and previously hidden results may reappear.",
+            () => {
+              localStorage.removeItem("removedResults");
+              loadRemovedResults();
+            },
+          );
         });
+
+      function loadCustomResults() {
+        const list = document.getElementById("customResultsList");
+        const items =
+          JSON.parse(localStorage.getItem("munetiosCustomResults")) || [];
+        document.getElementById("customResultsCount").textContent =
+          items.length;
+        list.innerHTML = "";
+        if (items.length === 0) {
+          list.innerHTML =
+            '<div class="empty-state" style="padding:32px 20px;"><icon>add_circle_outline</icon><p>No custom results added yet.</p></div>';
+          return;
+        }
+        items.forEach((item, index) => {
+          const el = document.createElement("div");
+          el.className = "data-item";
+          const info = document.createElement("div");
+          info.className = "data-item-info";
+          const titleEl = document.createElement("div");
+          titleEl.className = "data-item-title";
+          const subEl = document.createElement("div");
+          subEl.className = "data-item-sub";
+          if (typeof item === "object" && item !== null) {
+            titleEl.textContent = item.title || item.url || "Custom Result";
+            if (item.url) subEl.textContent = item.url;
+            else if (item.description) subEl.textContent = item.description;
+          } else {
+            titleEl.textContent = String(item);
+          }
+          info.appendChild(titleEl);
+          if (subEl.textContent) info.appendChild(subEl);
+          const actions = document.createElement("div");
+          actions.className = "data-item-actions";
+          if (typeof item === "object" && item !== null && item.url) {
+            const openBtn = document.createElement("a");
+            openBtn.className = "btn-icon";
+            openBtn.title = "Open";
+            openBtn.href = item.url;
+            openBtn.target = "_blank";
+            openBtn.rel = "noopener noreferrer";
+            openBtn.innerHTML = "<icon>open_in_new</icon>";
+            actions.appendChild(openBtn);
+          }
+          const removeBtn = document.createElement("button");
+          removeBtn.className = "btn-icon";
+          removeBtn.title = "Remove";
+          removeBtn.innerHTML = "<icon>delete</icon>";
+          removeBtn.addEventListener("click", () => removeCustomResult(index));
+          actions.appendChild(removeBtn);
+          el.appendChild(info);
+          el.appendChild(actions);
+          list.appendChild(el);
+        });
+      }
+
+      function removeCustomResult(index) {
+        const items =
+          JSON.parse(localStorage.getItem("munetiosCustomResults")) || [];
+        items.splice(index, 1);
+        localStorage.setItem("munetiosCustomResults", JSON.stringify(items));
+        loadCustomResults();
+      }
+
+      document
+        .getElementById("clearCustomResultsBtn")
+        .addEventListener("click", () => {
+          showConfirm(
+            "Delete All Custom Results?",
+            "All your custom search results will be permanently removed.",
+            () => {
+              localStorage.removeItem("munetiosCustomResults");
+              loadCustomResults();
+            },
+          );
+        });
+
+      // === Settings Actions ===
+      document
+        .getElementById("settingsDeleteHistoryBtn")
+        .addEventListener("click", () => {
+          showConfirm(
+            "Delete Search History?",
+            "All search history entries will be permanently removed.",
+            () => {
+              localStorage.removeItem("munetiosSearchHistory");
+            },
+          );
+        });
+
+      document
+        .getElementById("settingsDeleteBookmarksBtn")
+        .addEventListener("click", () => {
+          showConfirm(
+            "Delete All Bookmarks?",
+            "All saved bookmarks will be permanently removed.",
+            () => {
+              localStorage.removeItem("munetiosBookmarks");
+            },
+          );
+        });
+
+      document
+        .getElementById("settingsDeleteCustomBtn")
+        .addEventListener("click", () => {
+          showConfirm(
+            "Delete All Custom Results?",
+            "All your custom search results will be permanently removed.",
+            () => {
+              localStorage.removeItem("munetiosCustomResults");
+            },
+          );
+        });
+
+      document
+        .getElementById("settingsDeleteRemovedBtn")
+        .addEventListener("click", () => {
+          showConfirm(
+            "Delete Not Interested Results?",
+            "All entries will be removed and previously hidden results may reappear.",
+            () => {
+              localStorage.removeItem("removedResults");
+            },
+          );
+        });
+
+      document
+        .getElementById("settingsExportBtn")
+        .addEventListener("click", () => {
+          const data = {
+            searchHistory:
+              JSON.parse(localStorage.getItem("munetiosSearchHistory")) || [],
+            bookmarks:
+              JSON.parse(localStorage.getItem("munetiosBookmarks")) || [],
+            customResults:
+              JSON.parse(localStorage.getItem("munetiosCustomResults")) || [],
+            notInterestedResults:
+              JSON.parse(localStorage.getItem("removedResults")) || [],
+            settings: {
+              autoClearHistory:
+                localStorage.getItem("munetiosAutoClearHistory") || "never",
+            },
+            exportedAt: new Date().toISOString(),
+          };
+          const blob = new Blob([JSON.stringify(data, null, 2)], {
+            type: "application/json",
+          });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "munetios-data-export.json";
+          a.click();
+          URL.revokeObjectURL(url);
+        });
+      document
+        .getElementById("settingsDeleteEverythingBtn")
+        .addEventListener("click", () => {
+          showConfirm(
+            "Delete Everything?",
+            "WARNING: This action CANNOT BE UNDONE. You will permanently lose all your Munetios data including search history, bookmarks, custom results, not interested results, all settings, preferences, shortcuts, and any other stored information. Every piece of data on this device will be erased forever.",
+            () => {
+              showConfirm(
+                "Are you absolutely sure?",
+                "FINAL WARNING: This is your last chance to cancel. Once you proceed, ALL data will be deleted permanently and cannot be recovered under any circumstances. Search history, bookmarks, custom results, settings, shortcuts, preferences - everything will be gone forever.",
+                () => {
+                  localStorage.clear();
+                  showPage("searchHistory");
+                },
+              );
+            },
+          );
+        });
+
+      // === Auto Clear Dropdown ===
+      const autoClearLabels = {
+        never: "Never",
+        "1day": "After 1 day",
+        "1week": "After 1 week",
+        "1month": "After 1 month",
+        "3months": "After 3 months",
+      };
+
+      const autoClearBtn = document.getElementById("autoClearBtn");
+      const autoClearMenu = document.getElementById("autoClearMenu");
+      const autoClearArrow = document.getElementById("autoClearArrow");
+      const autoClearSelectedEl = document.getElementById("autoClearSelected");
+      const autoClearOptions = autoClearMenu.querySelectorAll(
+        ".custom-dropdown-option",
+      );
+
+      function setAutoClear(value) {
+        localStorage.setItem("munetiosAutoClearHistory", value);
+        autoClearSelectedEl.textContent = autoClearLabels[value] || "Never";
+        autoClearOptions.forEach((opt) => {
+          opt.classList.toggle("selected", opt.dataset.value === value);
+        });
+      }
+
+      setAutoClear(localStorage.getItem("munetiosAutoClearHistory") || "never");
+
+      autoClearBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isOpen = autoClearMenu.classList.contains("open");
+        autoClearMenu.classList.toggle("open");
+        autoClearArrow.classList.toggle("rotated", !isOpen);
+        autoClearBtn.setAttribute("aria-expanded", String(!isOpen));
+      });
+
+      autoClearOptions.forEach((opt) => {
+        opt.addEventListener("click", () => {
+          setAutoClear(opt.dataset.value);
+          autoClearMenu.classList.remove("open");
+          autoClearArrow.classList.remove("rotated");
+          autoClearBtn.setAttribute("aria-expanded", "false");
+        });
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!document.getElementById("autoClearDropdown").contains(e.target)) {
+          autoClearMenu.classList.remove("open");
+          autoClearArrow.classList.remove("rotated");
+          autoClearBtn.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      // === Topbar Search ===
+      const searchInput = document.getElementById("topbarSearchInput");
+      function doSearch(newTab) {
+        const q = searchInput.value.trim();
+        if (!q) return;
+        const url =
+          "https://www.munetios.com/search/search.html?q=" +
+          encodeURIComponent(q) +
+          "#/all?q=" +
+          encodeURIComponent(q);
+        if (newTab) window.open(url, "_blank", "noopener");
+        else window.location.href = url;
+      }
+      document
+        .getElementById("searchBtn")
+        .addEventListener("click", () => doSearch(false));
+      document
+        .getElementById("searchNewTabBtn")
+        .addEventListener("click", () => doSearch(true));
+      searchInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") doSearch(false);
+      });
+
+      // === Apps Modal ===
+      const appsModal = document.getElementById("appsModal");
+      document.getElementById("appsBtn").addEventListener("click", () => {
+        appsModal.classList.remove("hidden");
+      });
+      document
+        .getElementById("appsModalCloseBtn")
+        .addEventListener("click", () => {
+          appsModal.classList.add("hidden");
+        });
+      appsModal.addEventListener("click", (e) => {
+        if (e.target === appsModal) appsModal.classList.add("hidden");
+      });
+
+      // === Help Modal ===
+      const helpModal = document.getElementById("helpModal");
+      document.getElementById("helpBtn").addEventListener("click", () => {
+        helpModal.classList.remove("hidden");
+      });
+      document
+        .getElementById("helpModalCloseBtn")
+        .addEventListener("click", () => {
+          helpModal.classList.add("hidden");
+        });
+      document
+        .getElementById("helpModalCloseBottomBtn")
+        .addEventListener("click", () => {
+          helpModal.classList.add("hidden");
+        });
+      helpModal.addEventListener("click", (e) => {
+        if (e.target === helpModal) helpModal.classList.add("hidden");
+      });
+
+      // === Topbar Buttons ===
+      document.getElementById("backBtn").addEventListener("click", () => {
+        window.location.href = "https://www.munetios.com";
+      });
+
+      // === Menu (sidebar toggle for all screen sizes) ===
+      document.getElementById("menuBtn").addEventListener("click", () => {
+        const sidebar = document.querySelector(".sidebar");
+        const contentContainer = document.querySelector(".content-container");
+        if (window.innerWidth > 1090) {
+          // Desktop: toggle collapsed state
+          sidebar.classList.toggle("sidebar-collapsed");
+          contentContainer.classList.toggle("sidebar-collapsed");
+        } else {
+          // Mobile: slide in/out
+          sidebar.style.left = sidebar.style.left === "0px" ? "" : "0px";
+        }
+      });
+
+      // === Init ===
+      showPage("searchHistory");
     </script>
-    <style>
-      .history-item icon {
-        transition: color 0.2s;
-      }
-      .history-item icon:hover {
-        color: #ff3333;
-      }
-      .history-item {
-        background: rgba(255, 255, 255, 0.04);
-        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.08);
-      }
-    </style>
   </body>
 </html>
