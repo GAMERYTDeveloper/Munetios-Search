@@ -424,10 +424,12 @@
         }
       }
       @media (max-width: 675px) {
-        .logo-text {
+        .hide-mobile {
           display: none;
         }
-        
+        .min-w-\[120px\] {
+          min-width: 30px !important;
+        }
       }
       
       @media (max-width: 1120px) {
@@ -556,9 +558,10 @@
               <div class="flex items-center gap-[10px] liquid-glass px-3 py-3 rounded-full">
                 <a
                   href="https://www.munetios.com"
-                  class="flex items-center gap-[10px]"
+                  class="flex items-center gap-[10px] min-w-[120px]"
                 >
-                             <span class="material-symbols-rounded text-[28px]">menu</span>
+                <img src="https://www.munetios.com/apple-touch-icon-new.png" alt="Munetios Logo" width="28px" />
+                <span class="hide-mobile text-[20px]">Munetios</span>
                 </a>
               </div>
             </div>
@@ -584,6 +587,11 @@
                 title="Voice Search"
                 >mic</span
               >
+              <span
+                id="searchKbdBtn"
+                class="material-symbols-rounded cursor-pointer text-[24px]"
+                title="Virtual Keyboard"
+                >keyboard</span>
               <span
                 id="incognitoIcon"
                 class="material-symbols-rounded cursor-pointer text-[24px]"
@@ -1269,6 +1277,29 @@
 
    
   <style>
+    @keyframes vkScaleIn { from { opacity:0; transform:translateX(-50%) scale(0.93); } to { opacity:1; transform:translateX(-50%) scale(1); } }
+    .virtual-keyboard { position:fixed; bottom:80px; left:50%; transform:translateX(-50%); width:400px; max-width:97vw; background:rgba(18,6,45,0.40); backdrop-filter:blur(2px); border-radius:18px; z-index:20100; display:none; flex-direction:column; gap:0; box-shadow:0 8px 40px rgba(0,0,0,0.45); overflow:hidden; user-select:none; }
+    .virtual-keyboard.active { display:flex; animation:vkScaleIn 0.18s ease; }
+    .vk-header { display:flex; align-items:center; justify-content:space-between; padding:10px 16px 6px; cursor:grab; background:rgba(106,0,255,0.2); }
+    .vk-header:active { cursor:grabbing; }
+    .vk-title { font-weight:700; font-size:1em; color:#fff; }
+    .vk-close-btn { background:none; border:none; color:#fff; font-size:1.4em; cursor:pointer; padding:0 4px; line-height:1; opacity:0.8; }
+    .vk-close-btn:hover { opacity:1; }
+    .vk-tabs { display:flex; gap:0; border-bottom:1px solid rgba(255,255,255,0.1); }
+    .vk-tab { flex:1; padding:8px 4px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:0.92em; cursor:pointer; border-bottom:2px solid transparent; transition:color 0.15s,border-color 0.15s; }
+    .vk-tab.active { color:#fff; border-bottom-color:#a259f7; }
+    .vk-content { padding:10px 10px 6px; display:flex; flex-direction:column; gap:5px; }
+    .vk-row { display:flex; justify-content:center; gap:4px; }
+    .vk-key { min-width:28px; height:40px; background:rgba(255,255,255,0.1); border-radius:9px; border:none; color:#fff; font-size:1em; cursor:pointer; flex:1; max-width:36px; display:flex; align-items:center; justify-content:center; transition:background 0.1s; }
+    .vk-key:hover { background:rgba(162,89,247,0.45); }
+    .vk-key.special { min-width:42px; max-width:52px; flex:1.4; font-size:0.85em; }
+    .vk-key.wide { min-width:110px; max-width:200px; flex:4; font-size:1.2em; }
+    .vk-key.shift-active { background:rgba(162,89,247,0.55) !important; }
+    .vk-emoji-grid { display:flex; flex-wrap:wrap; gap:3px; max-height:190px; overflow-y:auto; padding:2px; }
+    .vk-emoji-key { width:36px; height:36px; font-size:20px; background:rgba(255,255,255,0.07); border:none; border-radius:7px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+    .vk-emoji-key:hover { background:rgba(162,89,247,0.35); }
+    .vk-notice { text-align:center; font-size:0.83em; color:#aaa; padding:10px 10px 6px; }
+    #searchKbdBtn { cursor:pointer; }
     body.compact-mode {
       font-size: 0.85rem;
       padding: 0.5rem;
@@ -1636,6 +1667,25 @@
           importData: "Import Data",
           resetSettings: "Reset All Settings",
           deleteAllData: "Delete All Data",
+          customResults: "Custom Results",
+          customRanking: "Custom Ranking",
+          keyboard: "Virtual Keyboard",
+          safeSearch: "SafeSearch",
+          strict: "Strict",
+          moderate: "Moderate",
+          off: "Off",
+          openNewWindow: "Open Results in New Window",
+          theme: "Theme",
+          language: "Language",
+          country: "Country",
+          liquidGlassStyle: "Liquid Glass Style",
+          voiceTts: "Voice (Text-to-Speech)",
+          clear: "Clear",
+          tinted: "Tinted",
+          frosted: "Frosted",
+          safeSearchStrict: "SafeSearch: Strict",
+          safeSearchModerate: "SafeSearch: Moderate",
+          safeSearchOff: "SafeSearch: Off",
         },
         es: {
           noResults: "No se encontraron resultados.",
@@ -1686,6 +1736,22 @@
           importData: "Importar datos",
           resetSettings: "Restablecer configuración",
           deleteAllData: "Eliminar todos los datos",
+          customResults: "Resultados personalizados",
+          customRanking: "Clasificación personalizada",
+          keyboard: "Teclado virtual",
+          safeSearch: "Búsqueda segura",
+          strict: "Estricto",
+          moderate: "Moderado",
+          off: "Apagado",
+          openNewWindow: "Abrir resultados en nueva ventana",
+          theme: "Tema",
+          language: "Idioma",
+          country: "País",
+          liquidGlassStyle: "Estilo de vidrio líquido",
+          voiceTts: "Voz (texto a voz)",
+          clear: "Claro",
+          tinted: "Teñido",
+          frosted: "Esmerilado",
         },
         fr: {
           noResults: "Aucun résultat trouvé.",
@@ -1736,6 +1802,22 @@
           importData: "Importer les données",
           resetSettings: "Réinitialiser les paramètres",
           deleteAllData: "Supprimer toutes les données",
+          customResults: "Résultats personnalisés",
+          customRanking: "Classement personnalisé",
+          keyboard: "Clavier virtuel",
+          safeSearch: "Recherche sécurisée",
+          strict: "Strict",
+          moderate: "Modéré",
+          off: "Désactivé",
+          openNewWindow: "Ouvrir les résultats dans une nouvelle fenêtre",
+          theme: "Thème",
+          language: "Langue",
+          country: "Pays",
+          liquidGlassStyle: "Style verre liquide",
+          voiceTts: "Voix (texte en parole)",
+          clear: "Transparent",
+          tinted: "Teinté",
+          frosted: "Givré",
         },
         de: {
           noResults: "Keine Ergebnisse gefunden.",
@@ -1786,6 +1868,22 @@
           importData: "Daten importieren",
           resetSettings: "Alle Einstellungen zurücksetzen",
           deleteAllData: "Alle Daten löschen",
+          customResults: "Benutzerdefinierte Ergebnisse",
+          customRanking: "Benutzerdefiniertes Ranking",
+          keyboard: "Virtuelle Tastatur",
+          safeSearch: "SafeSearch",
+          strict: "Streng",
+          moderate: "Moderat",
+          off: "Aus",
+          openNewWindow: "Ergebnisse in neuem Fenster öffnen",
+          theme: "Thema",
+          language: "Sprache",
+          country: "Land",
+          liquidGlassStyle: "Fluid-Glas-Stil",
+          voiceTts: "Stimme (Text-zu-Sprache)",
+          clear: "Klar",
+          tinted: "Getönt",
+          frosted: "Mattiert",
         },
         // Add more languages as needed...
       it: {
@@ -1837,6 +1935,22 @@
         importData: "Importa dati",
         resetSettings: "Reimposta tutte le impostazioni",
         deleteAllData: "Elimina tutti i dati",
+        customResults: "Risultati personalizzati",
+        customRanking: "Classificazione personalizzata",
+        keyboard: "Tastiera virtuale",
+        safeSearch: "Ricerca sicura",
+        strict: "Rigoroso",
+        moderate: "Moderato",
+        off: "Disattivato",
+        openNewWindow: "Apri risultati in nuova finestra",
+        theme: "Tema",
+        language: "Lingua",
+        country: "Paese",
+        liquidGlassStyle: "Stile vetro liquido",
+        voiceTts: "Voce (testo in voce)",
+        clear: "Trasparente",
+        tinted: "Colorato",
+        frosted: "Smerigliato",
       },
       pt: {
         noResults: "Nenhum resultado encontrado.",
@@ -1887,6 +2001,22 @@
         importData: "Importar dados",
         resetSettings: "Redefinir todas as configurações",
         deleteAllData: "Excluir todos os dados",
+        customResults: "Resultados personalizados",
+        customRanking: "Classificação personalizada",
+        keyboard: "Teclado virtual",
+        safeSearch: "Pesquisa segura",
+        strict: "Rigoroso",
+        moderate: "Moderado",
+        off: "Desligado",
+        openNewWindow: "Abrir resultados em nova janela",
+        theme: "Tema",
+        language: "Idioma",
+        country: "País",
+        liquidGlassStyle: "Estilo vidro líquido",
+        voiceTts: "Voz (texto em voz)",
+        clear: "Transparente",
+        tinted: "Tingido",
+        frosted: "Fosco",
       },
       zh: {
         noResults: "未找到结果。",
@@ -1937,6 +2067,22 @@
         importData: "导入数据",
         resetSettings: "重置所有设置",
         deleteAllData: "删除所有数据",
+        customResults: "自定义结果",
+        customRanking: "自定义排名",
+        keyboard: "虚拟键盘",
+        safeSearch: "安全搜索",
+        strict: "严格",
+        moderate: "适中",
+        off: "关闭",
+        openNewWindow: "在新窗口中打开结果",
+        theme: "主题",
+        language: "语言",
+        country: "国家",
+        liquidGlassStyle: "液态玻璃样式",
+        voiceTts: "语音（文字转语音）",
+        clear: "清晰",
+        tinted: "着色",
+        frosted: "磨砂",
       },
       ja: {
         noResults: "結果が見つかりませんでした。",
@@ -1987,6 +2133,22 @@
         importData: "データをインポート",
         resetSettings: "すべての設定をリセット",
         deleteAllData: "すべてのデータを削除",
+        customResults: "カスタム結果",
+        customRanking: "カスタムランキング",
+        keyboard: "仮想キーボード",
+        safeSearch: "セーフサーチ",
+        strict: "厳格",
+        moderate: "中程度",
+        off: "オフ",
+        openNewWindow: "新しいウィンドウで結果を開く",
+        theme: "テーマ",
+        language: "言語",
+        country: "国",
+        liquidGlassStyle: "液体ガラスのスタイル",
+        voiceTts: "音声（テキスト読み上げ）",
+        clear: "クリア",
+        tinted: "着色",
+        frosted: "すりガラス",
       },
       ko: {
         noResults: "결과를 찾을 수 없습니다.",
@@ -2037,6 +2199,22 @@
         importData: "데이터 가져오기",
         resetSettings: "모든 설정 초기화",
         deleteAllData: "모든 데이터 삭제",
+        customResults: "맞춤 결과",
+        customRanking: "맞춤 순위",
+        keyboard: "가상 키보드",
+        safeSearch: "세이프서치",
+        strict: "엄격",
+        moderate: "보통",
+        off: "끄기",
+        openNewWindow: "새 창에서 결과 열기",
+        theme: "테마",
+        language: "언어",
+        country: "국가",
+        liquidGlassStyle: "리퀴드 글래스 스타일",
+        voiceTts: "음성 (텍스트 음성 변환)",
+        clear: "투명",
+        tinted: "착색",
+        frosted: "서리 낀",
       },
       ar: {
         noResults: "لم يتم العثور على نتائج.",
@@ -2087,6 +2265,22 @@
         importData: "استيراد البيانات",
         resetSettings: "إعادة تعيين جميع الإعدادات",
         deleteAllData: "حذف جميع البيانات",
+        customResults: "نتائج مخصصة",
+        customRanking: "ترتيب مخصص",
+        keyboard: "لوحة مفاتيح افتراضية",
+        safeSearch: "البحث الآمن",
+        strict: "صارم",
+        moderate: "معتدل",
+        off: "إيقاف",
+        openNewWindow: "فتح النتائج في نافذة جديدة",
+        theme: "السمة",
+        language: "اللغة",
+        country: "الدولة",
+        liquidGlassStyle: "نمط الزجاج السائل",
+        voiceTts: "الصوت (تحويل النص إلى كلام)",
+        clear: "شفاف",
+        tinted: "ملون",
+        frosted: "مثلج",
       },
       hi: {
         noResults: "कोई परिणाम नहीं मिला।",
@@ -2137,6 +2331,22 @@
         importData: "डेटा आयात करें",
         resetSettings: "सभी सेटिंग्स रीसेट करें",
         deleteAllData: "सभी डेटा हटाएं",
+        customResults: "कस्टम परिणाम",
+        customRanking: "कस्टम रैंकिंग",
+        keyboard: "वर्चुअल कीबोर्ड",
+        safeSearch: "सुरक्षित खोज",
+        strict: "कड़ा",
+        moderate: "मध्यम",
+        off: "बंद",
+        openNewWindow: "नई विंडो में परिणाम खोलें",
+        theme: "थीम",
+        language: "भाषा",
+        country: "देश",
+        liquidGlassStyle: "लिक्विड ग्लास स्टाइल",
+        voiceTts: "आवाज़ (टेक्स्ट-टू-स्पीच)",
+        clear: "स्पष्ट",
+        tinted: "रंगीन",
+        frosted: "धुंधला",
       },
       bn: {
         noResults: "কোনও ফলাফল পাওয়া যায়নি।",
@@ -2187,6 +2397,22 @@
         importData: "ডেটা ইম্পোর্ট করুন",
         resetSettings: "সব সেটিংস রিসেট করুন",
         deleteAllData: "সব ডেটা মুছুন",
+        customResults: "কাস্টম ফলাফল",
+        customRanking: "কাস্টম র‍্যাংকিং",
+        keyboard: "ভার্চুয়াল কীবোর্ড",
+        safeSearch: "নিরাপদ অনুসন্ধান",
+        strict: "কঠোর",
+        moderate: "মাঝারি",
+        off: "বন্ধ",
+        openNewWindow: "নতুন উইন্ডোতে ফলাফল খুলুন",
+        theme: "থিম",
+        language: "ভাষা",
+        country: "দেশ",
+        liquidGlassStyle: "লিকুইড গ্লাস স্টাইল",
+        voiceTts: "কণ্ঠস্বর (টেক্সট-টু-স্পিচ)",
+        clear: "স্বচ্ছ",
+        tinted: "রঙিন",
+        frosted: "ঘোলাটে",
       },
       ru: {
         noResults: "Результаты не найдены.",
@@ -2237,6 +2463,22 @@
         importData: "Импорт данных",
         resetSettings: "Сбросить все настройки",
         deleteAllData: "Удалить все данные",
+        customResults: "Пользовательские результаты",
+        customRanking: "Пользовательский рейтинг",
+        keyboard: "Виртуальная клавиатура",
+        safeSearch: "Безопасный поиск",
+        strict: "Строгий",
+        moderate: "Умеренный",
+        off: "Выкл",
+        openNewWindow: "Открывать результаты в новом окне",
+        theme: "Тема",
+        language: "Язык",
+        country: "Страна",
+        liquidGlassStyle: "Стиль жидкого стекла",
+        voiceTts: "Голос (текст в речь)",
+        clear: "Прозрачный",
+        tinted: "Тонированный",
+        frosted: "Матовый",
       },
       tr: {
         noResults: "Sonuç bulunamadı.",
@@ -2287,6 +2529,22 @@
         importData: "Verileri İçe Aktar",
         resetSettings: "Tüm Ayarları Sıfırla",
         deleteAllData: "Tüm Verileri Sil",
+        customResults: "Özel Sonuçlar",
+        customRanking: "Özel Sıralama",
+        keyboard: "Sanal Klavye",
+        safeSearch: "Güvenli Arama",
+        strict: "Katı",
+        moderate: "Orta",
+        off: "Kapalı",
+        openNewWindow: "Sonuçları Yeni Pencerede Aç",
+        theme: "Tema",
+        language: "Dil",
+        country: "Ülke",
+        liquidGlassStyle: "Sıvı Cam Stili",
+        voiceTts: "Ses (Metinden Konuşmaya)",
+        clear: "Şeffaf",
+        tinted: "Renkli",
+        frosted: "Buzlu",
       },
       };
 
@@ -2314,6 +2572,7 @@
         window.currentLanguage = lang;
         window.currentTranslations = translations[lang] || translations.en;
         applyTranslations();
+        window.refreshSearchKeyboard && window.refreshSearchKeyboard();
       }
 
       // Apply translations to UI
@@ -2346,17 +2605,56 @@
         document.getElementById("searchHistoryOption").querySelector(".options-label").textContent = t.searchHistory;
         document.getElementById("helpOption").querySelector(".options-label").textContent = t.help;
         document.getElementById("keyboardShortcutsOption").querySelector(".options-label").textContent = t.keyboardShortcuts;
+        const mobileLabsEl = document.getElementById("mobileLabsOption");
+        if (mobileLabsEl) mobileLabsEl.querySelector(".options-label").textContent = t.labs;
+        const mobileBookmarksEl = document.getElementById("mobileBookmarks");
+        if (mobileBookmarksEl) mobileBookmarksEl.querySelector(".options-label").textContent = t.bookmarks;
+        const customResultsOption = document.getElementById("customResultsOption");
+        if (customResultsOption) customResultsOption.querySelector(".options-label").textContent = t.customResults;
+        const customRankingOption = document.getElementById("customRankingOption");
+        if (customRankingOption) customRankingOption.querySelector(".options-label").textContent = t.customRanking;
         // Settings modal
+        const settingsModalEl = document.getElementById("settingsModal");
+        if (settingsModalEl) settingsModalEl.querySelector("h2").textContent = t.settings;
         document.getElementById("themeDropdownBtn").textContent = t.chooseTheme;
         document.getElementById("languageDropdownBtn").textContent = t.chooseLanguage;
         document.getElementById("countryDropdownBtn").textContent = t.chooseCountry;
         document.getElementById("liquidGlassDropdownBtn").textContent = t.chooseStyle;
         document.querySelector('label[for="schoolModeToggle"]').textContent = t.schoolMode;
         document.querySelector('label[for="compactModeToggle"]').textContent = t.compactMode;
+        const newWindowLabel = document.querySelector('label[for="newWindowToggle"]');
+        if (newWindowLabel) newWindowLabel.textContent = t.openNewWindow;
+        const themeLabel = settingsModalEl && settingsModalEl.querySelector('label[for="themeDropdownBtn"]');
+        if (themeLabel) themeLabel.textContent = t.theme;
+        const langLabel = settingsModalEl && settingsModalEl.querySelector('label[for="languageDropdownBtn"]');
+        if (langLabel) langLabel.textContent = t.language;
+        const countryLabel = settingsModalEl && settingsModalEl.querySelector('label[for="countryDropdownBtn"]');
+        if (countryLabel) countryLabel.textContent = t.country;
+        const lgLabel = settingsModalEl && settingsModalEl.querySelector('label[for="liquidGlassDropdownBtn"]');
+        if (lgLabel) lgLabel.textContent = t.liquidGlassStyle;
         document.getElementById("exportDataBtn").textContent = t.exportData;
         document.getElementById("importDataBtn").textContent = t.importData;
         document.getElementById("resetSettingsBtn").textContent = t.resetSettings;
         document.getElementById("deleteAllDataBtn").textContent = t.deleteAllData;
+        // SafeSearch dropdown
+        const safeSearchStrict = document.getElementById("safeSearchStrict");
+        if (safeSearchStrict) safeSearchStrict.querySelector(".options-label").textContent = t.strict;
+        const safeSearchModerate = document.getElementById("safeSearchModerate");
+        if (safeSearchModerate) safeSearchModerate.querySelector(".options-label").textContent = t.moderate;
+        const safeSearchOff = document.getElementById("safeSearchOff");
+        if (safeSearchOff) safeSearchOff.querySelector(".options-label").textContent = t.off;
+        // Liquid Glass dropdown
+        const lgClear = document.querySelector("[data-style='clear'] .options-label");
+        if (lgClear) lgClear.textContent = t.clear;
+        const lgTinted = document.querySelector("[data-style='tinted'] .options-label");
+        if (lgTinted) lgTinted.textContent = t.tinted;
+        const lgFrosted = document.querySelector("[data-style='frosted'] .options-label");
+        if (lgFrosted) lgFrosted.textContent = t.frosted;
+        const lgOff = document.querySelector("[data-style='off'] .options-label");
+        if (lgOff) lgOff.textContent = t.off;
+        // Keyboard button
+        const searchKbdBtnEl = document.getElementById("searchKbdBtn");
+        if (searchKbdBtnEl) searchKbdBtnEl.title = t.keyboard;
         // Theme dropdown
         document.getElementById("themeSystem").querySelector(".options-label").textContent = t.system;
         document.getElementById("themeLight").querySelector(".options-label").textContent = t.light;
@@ -4029,11 +4327,11 @@
           window._voiceSynth = synth;
         }
         if (type === "listening") {
-          synth.triggerAttackRelease("C5", "8n");
+          synth.triggerAttackRelease(["G4", "C5"], "8n");
         } else if (type === "done") {
-          synth.triggerAttackRelease("C3", "8n");
+          synth.triggerAttackRelease("G4", "8n");
         } else if (type === "denied") {
-          synth.triggerAttackRelease("C4", "8n");
+          synth.triggerAttackRelease(["G4", "C4"], "8n");
         }
           }
 
@@ -7364,11 +7662,11 @@
         window._micSynth = synth;
           }
           if (type === "on") {
-        synth.triggerAttackRelease("C5", "8n");
-          } else if (type === "off") {
-        synth.triggerAttackRelease("C3", "8n");
+        synth.triggerAttackRelease(["G4", "C5"], "8n");
+          } else if (type === "done") {
+        synth.triggerAttackRelease("G4", "8n");
           } else if (type === "denied") {
-        synth.triggerAttackRelease("C4", "8n");
+        synth.triggerAttackRelease(["G4", "C4"], "8n");
           }
         }
 
@@ -7396,12 +7694,19 @@
           micWrapper.style.minHeight = "64px";
           micWrapper.style.userSelect = "none";
           micWrapper.innerHTML = `
-        <div id="micTranscript" style="flex:1;font-size:1.13em;font-weight:600;color:#fff;word-break:break-word;min-height:28px;display:flex;align-items:center;">
-        ${text || "Tap the microphone to speak"}
+        <div style="display:flex;flex-direction:column;width:100%;gap:10px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+            <div id="micTranscript" style="flex:1;font-size:1.13em;font-weight:600;color:#fff;word-break:break-word;min-height:28px;display:flex;align-items:center;">
+              ${text || "Tap the microphone to speak"}
+            </div> <button id="micCircleBtn" style="width:56px;height:56px;border-radius:50%;background:#a259f7;display:flex;align-items:center;justify-content:center;border:none;outline:none;box-shadow:0 2px 16px #a259f733;cursor:pointer;transition:box-shadow 0.2s;">
+              <span class="material-symbols-rounded" style="font-size:2em;color:#fff;">mic</span>
+            </button>
+            <button id="micWrapperCloseBtn" style="background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:1.3em;cursor:pointer;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">&times;</button>
+          </div>
+          <div style="display:flex;justify-content:center;">
+           
+          </div>
         </div>
-        <button id="micCircleBtn" style="width:56px;height:56px;border-radius:50%;background:#a259f7;display:flex;align-items:center;justify-content:center;border:none;outline:none;box-shadow:0 2px 16px #a259f733;cursor:pointer;transition:box-shadow 0.2s;">
-        <span class="material-symbols-rounded" style="font-size:2em;color:#fff;">mic</span>
-        </button>
         `;
           // Insert after aioverviewbox
           const overviewBox = document.querySelector(".aioverviewbox");
@@ -7415,6 +7720,12 @@
           }
           // Animate mic button if listening
           const micBtn = micWrapper.querySelector("#micCircleBtn");
+          // Close button
+          micWrapper.querySelector("#micWrapperCloseBtn").onclick = function () {
+        micWrapper.remove();
+        micWrapper = null;
+        stopListening();
+          };
           if (state === "on") {
         micBtn.style.boxShadow = "0 0 0 8px #a259f744";
           } else {
@@ -7453,14 +7764,8 @@
           } else if (/Safari\//.test(ua) && !/Chrome\//.test(ua)) {
         provider = "Apple";
           } else if (/Firefox\//.test(ua)) {
-        provider = "Unsupported";
-        isSupported = false;
-        // Firefox: check speech recognition flag
-        // If window.SpeechRecognition exists, allow continue
-        if (window.SpeechRecognition || window.webkitSpeechRecognition) {
-          isSupported = true;
-          provider = "No provider";
-        }
+        skipPrivacyModal = true
+      
           }
           if (skipPrivacyModal) {
         if (typeof onContinue === "function" && isSupported) onContinue();
@@ -7487,7 +7792,7 @@
         <b>Important:</b> When you use voice search, your speech may be sent to your browser’s built-in speech recognition service and processed by ${provider}. <br><br>
         <b>Munetios does not collect or store your voice data.</b> <br>
         ${provider} may process your voice input according to their privacy policy.<br><br>
-        <b>Munetios AI Speech Services is coming soon for private, local voice recognition.</b>
+        <b>Munetios SST is coming soon for private, local voice recognition.</b>
         ${!isSupported ? `<br><br><span style="color:#e34133;"><b>Note:</b> Voice search is not supported in Firefox unless the speech recognition flag is enabled.</span>` : ""}
           </div>
           <div style="display:flex;gap:12px;justify-content:flex-end;">
@@ -7537,6 +7842,7 @@
           event.results[event.results.length - 1][0].transcript.trim();
         lastTranscript = transcript;
         updateMicText(transcript);
+        playMicSound("done");
         // Fill search input and perform search
         searchInput.value = transcript;
         setTimeout(() => {
@@ -7551,8 +7857,7 @@
           recognition.onerror = function (event) {
         if (
           event.error === "not-allowed" ||
-          event.error === "denied" ||
-          event.error === "no-speech"
+          event.error === "denied"
         ) {
           playMicSound("denied");
           showMicWrapper(
@@ -7563,19 +7868,18 @@
             "Want to search your voice? Make sure you allow microphone access for Munetios to search with your voice.",
           );
           stopListening({ denied: true });
+        } else if (event.error === "no-speech") {
+          playMicSound("denied");
+          showMicWrapper("Didn't hear that — try again.", "off");
+          updateMicText("Didn't hear that — try again.");
+          stopListening({ denied: true });
         } else if (event.error === "audio-capture") {
           playMicSound("denied");
-          showMicWrapper(
-            "Microphone not found. Please connect a microphone to use voice search.",
-            "off",
-          );
-          updateMicText(
-            "Microphone not found. Please connect a microphone to use voice search.",
-          );
+          showMicWrapper("Didn't hear that — try again.", "off");
+          updateMicText("Didn't hear that — try again.");
           stopListening({ denied: true });
         } else if (event.error === "aborted") {
-          showMicWrapper("Oops Something went wrong", "off");
-          playMicSound("off");
+          showMicWrapper("Voice search was stopped.", "off");
           stopListening();
         } else if (event.error === "service-not-allowed") {
           playMicSound("denied");
@@ -7644,14 +7948,9 @@
         recognition = null;
           }
           if (options && options.denied) {
-        // Don't show "Microphone off" if denied
         return;
           }
-          playMicSound("off");
-          showMicWrapper(
-        "Microphone off. Tap the microphone button to speak.",
-        "off",
-          );
+          // Silently stop — no sound or message
         }
 
         micIcon.addEventListener("click", function () {
@@ -7668,17 +7967,6 @@
           });
         });
 
-        // Remove mic wrapper if click outside
-        document.addEventListener("mousedown", function (e) {
-          if (
-        micWrapper &&
-        !micWrapper.contains(e.target) &&
-        e.target !== micIcon
-          ) {
-        micWrapper.remove();
-        stopListening();
-          }
-        });
       })();
       const searchInput = document.getElementById("searchInput");
       const resultsContainer = document.getElementById("results");
@@ -20782,6 +21070,293 @@ document
         <div id="customRankingList" style="display:flex;flex-direction:column;gap:10px;"></div>
       </div>
     </div>
+    <!-- Virtual Keyboard -->
+    <div class="virtual-keyboard" id="searchVirtualKeyboard">
+      <div class="vk-header" id="searchVkHeader">
+        <span class="vk-title" id="searchVkTitle">Virtual Keyboard</span>
+        <button class="vk-close-btn" id="searchVkClose" title="Close">&times;</button>
+      </div>
+      <div class="vk-tabs">
+        <button class="vk-tab active" data-svk-tab="letters">ABC</button>
+        <button class="vk-tab" data-svk-tab="numbers">123</button>
+        <button class="vk-tab" data-svk-tab="symbols">#+=</button>
+        <button class="vk-tab" data-svk-tab="emoji">😀</button>
+      </div>
+      <div class="vk-content" id="searchVkContent"></div>
+    </div>
+
+    <script nonce="rjighegujregergrejge">
+    // --- Virtual Keyboard for Search Bar ---
+    (function () {
+      const keyboardLayouts = {
+        en:   { rows: [['q','w','e','r','t','y','u','i','o','p'],['a','s','d','f','g','h','j','k','l'],['z','x','c','v','b','n','m']], extras: [] },
+        es:   { rows: [['q','w','e','r','t','y','u','i','o','p'],['a','s','d','f','g','h','j','k','l'],['z','x','c','v','b','n','m']], extras: ['á','é','í','ó','ú','ñ','ü','¿','¡'] },
+        fr:   { rows: [['a','z','e','r','t','y','u','i','o','p'],['q','s','d','f','g','h','j','k','l'],['w','x','c','v','b','n','m']], extras: ['é','è','ê','à','â','ù','û','î','ô','ç','œ','æ'] },
+        de:   { rows: [['q','w','e','r','t','z','u','i','o','p'],['a','s','d','f','g','h','j','k','l'],['y','x','c','v','b','n','m']], extras: ['ä','ö','ü','ß'] },
+        it:   { rows: [['q','w','e','r','t','y','u','i','o','p'],['a','s','d','f','g','h','j','k','l'],['z','x','c','v','b','n','m']], extras: ['à','è','é','ì','î','ò','ó','ù'] },
+        pt:   { rows: [['q','w','e','r','t','y','u','i','o','p'],['a','s','d','f','g','h','j','k','l'],['z','x','c','v','b','n','m']], extras: ['ã','ç','â','ê','î','ô','õ','à','á','é','í','ó','ú'] },
+        zh:   { complex: true, rows: [['q','w','e','r','t','y','u','i','o','p'],['a','s','d','f','g','h','j','k','l'],['z','x','c','v','b','n','m']], extras: [] },
+        'zh-TW': { complex: true, rows: [['q','w','e','r','t','y','u','i','o','p'],['a','s','d','f','g','h','j','k','l'],['z','x','c','v','b','n','m']], extras: [] },
+        ja:   { complex: true, rows: [['q','w','e','r','t','y','u','i','o','p'],['a','s','d','f','g','h','j','k','l'],['z','x','c','v','b','n','m']], extras: [] },
+        ko:   { complex: true, rows: [['q','w','e','r','t','y','u','i','o','p'],['a','s','d','f','g','h','j','k','l'],['z','x','c','v','b','n','m']], extras: [] },
+        ar:   { rows: [['ض','ص','ث','ق','ف','غ','ع','ه','خ','ح'],['ش','س','ي','ب','ل','ا','ت','ن','م'],['ئ','ء','ؤ','ر','لا','ى','ة','و','ز']], extras: ['أ','إ','آ','ظ','ط','ذ','ك','ج','د'], rtl: true },
+        hi:   { complex: true, rows: [['q','w','e','r','t','y','u','i','o','p'],['a','s','d','f','g','h','j','k','l'],['z','x','c','v','b','n','m']], extras: [] },
+        bn:   { complex: true, rows: [['q','w','e','r','t','y','u','i','o','p'],['a','s','d','f','g','h','j','k','l'],['z','x','c','v','b','n','m']], extras: [] },
+        ru:   { rows: [['й','ц','у','к','е','н','г','ш','щ','з'],['ф','ы','в','а','п','р','о','л','д'],['э','я','ч','с','м','и','т','ь','б','ю']], extras: ['ё','ъ','ж','х'] },
+        tr:   { rows: [['q','w','e','r','t','y','u','ı','o','p'],['a','s','d','f','g','h','j','k','l'],['z','x','c','v','b','n','m']], extras: ['ğ','ş','ı','i','ö','ü','ç'] },
+      };
+      const numRows = [
+        ['1','2','3','4','5','6','7','8','9','0'],
+        ['-','/','(',')','$','&','@','"','.',','],
+        ['?','!','\'','+','=','_','\\','~','<','>'],
+      ];
+      const symRows = [
+        ['[',']','{','}','#','%','^','*','€','£'],
+        ['¥','©','®','™','°','±','§','¶','∞','≠'],
+        ['≤','≥','÷','×','√','π','←','→','↑','↓'],
+      ];
+      const emojis = [
+        '😀','😃','😄','😁','😆','😅','🤣','😂','😊','😇','😍','🤩','😘','😗','😋','😛',
+        '😝','🤪','😜','🤔','😏','😒','😞','😔','😟','😕','🙁','😣','😫','😩','🥺','😢',
+        '😭','😤','😠','😡','🤬','🤯','😱','😨','😰','😥','😓','🤗','🤭','🤫','😐','😶',
+        '👍','👎','👊','✊','🤛','🤜','🤞','✌️','👌','🤌','👈','👉','👆','👇','✋','🤚',
+        '👋','🤙','💪','🦾','🖐️','☝️','🤝','🙏','👏','🫶','❤️','🧡','💛','💚','💙','💜',
+        '🖤','🤍','🤎','💔','❣️','💕','💞','💓','💗','💖','💘','💝','💟','🔥','⭐','🌟',
+        '✨','💫','⚡','❄️','💧','🌊','🌈','🌙','☀️','🌤️','☁️','⛅','🌦️','🌧️','⛈️','🌪️',
+        '🍕','🍔','🌮','🌯','🥗','🍜','🍣','🍦','🍰','🎂','🍫','🍬','☕','🍵','🥤','🍺',
+        '🐶','🐱','🐭','🐰','🦊','🐻','🐼','🐨','🐯','🦁','🐮','🐷','🐸','🐵','🦄','🐧',
+        '🏠','🏡','🏢','🏰','🏯','🛕','🗼','🗽','🏟️','🏛️','⛩️','🌍','🌎','🌏','🗺️','🧭',
+        '🚗','🚕','🚙','🚌','🚎','🚐','🚑','🚒','✈️','🚀','🛸','🚂','🛳️','⛵','🛥️','🚁',
+        '💻','📱','⌨️','🖥️','🖨️','🖱️','📷','📸','🎥','📹','🎬','📺','📻','🔊','🔋','💾',
+        '🎮','🕹️','🎲','🎯','🎳','⚽','🏀','🏈','⚾','🥎','🏐','🏉','🎾','🏸','🥊','🤸',
+        '📚','📖','📝','✏️','🖊️','🖋️','📌','📎','🔗','📏','📐','🔨','🔧','🔩','⚙️','🔑',
+        '💡','🔦','🕯️','💰','💳','💎','🏆','🥇','🎖️','🎗️','🎁','🎉','🎊','🎈','🎆','🎇',
+        '🌹','🌻','🌼','🌷','🌸','🌺','🍀','🌿','🍃','🍂','🍁','🍄','🌵','🎋','🎍','🌴',
+      ];
+
+      let isShift = false;
+      let currentTab = 'letters';
+      const vk = document.getElementById('searchVirtualKeyboard');
+      const vkClose = document.getElementById('searchVkClose');
+      const vkContent = document.getElementById('searchVkContent');
+      const kbdBtn = document.getElementById('searchKbdBtn');
+      const searchInputEl = document.getElementById('searchInput');
+
+      function getCurrentLang() {
+        return localStorage.getItem('searchLanguage') || 'en';
+      }
+
+      function getLayout() {
+        return keyboardLayouts[getCurrentLang()] || keyboardLayouts.en;
+      }
+
+      function insertChar(ch) {
+        if (!searchInputEl) return;
+        const s = searchInputEl.selectionStart, e = searchInputEl.selectionEnd;
+        const v = searchInputEl.value;
+        searchInputEl.value = v.slice(0, s) + ch + v.slice(e);
+        searchInputEl.selectionStart = searchInputEl.selectionEnd = s + ch.length;
+        searchInputEl.focus();
+        if (isShift && currentTab === 'letters') { isShift = false; renderLetters(); }
+      }
+
+      function doBackspace() {
+        if (!searchInputEl) return;
+        const s = searchInputEl.selectionStart, e = searchInputEl.selectionEnd;
+        const v = searchInputEl.value;
+        if (s === e && s > 0) { searchInputEl.value = v.slice(0, s - 1) + v.slice(e); searchInputEl.selectionStart = searchInputEl.selectionEnd = s - 1; }
+        else if (s !== e) { searchInputEl.value = v.slice(0, s) + v.slice(e); searchInputEl.selectionStart = searchInputEl.selectionEnd = s; }
+        searchInputEl.focus();
+      }
+
+      function doEnter() {
+        searchInputEl && searchInputEl.dispatchEvent(new KeyboardEvent('keydown', { key:'Enter', keyCode:13, bubbles:true }));
+      }
+
+      function makeKey(ch, cls) {
+        const b = document.createElement('button');
+        b.className = 'vk-key' + (cls ? ' ' + cls : '');
+        b.textContent = ch;
+        b.addEventListener('mousedown', function(e) { e.preventDefault(); insertChar(ch); });
+        return b;
+      }
+
+      function makeSpecial(label, fn) {
+        const b = document.createElement('button');
+        b.className = 'vk-key special';
+        b.textContent = label;
+        b.addEventListener('mousedown', function(e) { e.preventDefault(); fn(); });
+        return b;
+      }
+
+      function renderLetters() {
+        vkContent.innerHTML = '';
+        const layout = getLayout();
+        if (layout.complex) {
+          const note = document.createElement('div');
+          note.className = 'vk-notice';
+          note.textContent = 'Use your system keyboard for this language (IME required). QWERTY shown as fallback.';
+          vkContent.appendChild(note);
+        }
+        layout.rows.forEach(function(row, ri) {
+          const rowDiv = document.createElement('div');
+          rowDiv.className = 'vk-row';
+          if (layout.rtl) rowDiv.style.direction = 'rtl';
+          if (ri === layout.rows.length - 1) {
+            const shiftBtn = document.createElement('button');
+            shiftBtn.className = 'vk-key special' + (isShift ? ' shift-active' : '');
+            shiftBtn.textContent = '⇧';
+            shiftBtn.addEventListener('mousedown', function(e) { e.preventDefault(); isShift = !isShift; renderLetters(); });
+            rowDiv.appendChild(shiftBtn);
+          }
+          row.forEach(function(ch) { rowDiv.appendChild(makeKey(isShift ? ch.toUpperCase() : ch)); });
+          if (ri === layout.rows.length - 1) {
+            const bs = document.createElement('button');
+            bs.className = 'vk-key special';
+            bs.textContent = '⌫';
+            bs.addEventListener('mousedown', function(e) { e.preventDefault(); doBackspace(); });
+            rowDiv.appendChild(bs);
+          }
+          vkContent.appendChild(rowDiv);
+        });
+        if (layout.extras && layout.extras.length) {
+          const er = document.createElement('div'); er.className = 'vk-row';
+          if (layout.rtl) er.style.direction = 'rtl';
+          layout.extras.forEach(function(ch) { er.appendChild(makeKey(isShift ? ch.toUpperCase() : ch)); });
+          vkContent.appendChild(er);
+        }
+        const br = document.createElement('div'); br.className = 'vk-row';
+        br.appendChild(makeSpecial('123', function() { switchTab('numbers'); }));
+        const sp = document.createElement('button'); sp.className = 'vk-key wide'; sp.textContent = '⎵';
+        sp.addEventListener('mousedown', function(e) { e.preventDefault(); insertChar(' '); });
+        br.appendChild(sp);
+        br.appendChild(makeSpecial('↵', doEnter));
+        vkContent.appendChild(br);
+      }
+
+      function renderNumbers() {
+        vkContent.innerHTML = '';
+        numRows.forEach(function(row) {
+          const r = document.createElement('div'); r.className = 'vk-row';
+          row.forEach(function(ch) { r.appendChild(makeKey(ch)); });
+          vkContent.appendChild(r);
+        });
+        const br = document.createElement('div'); br.className = 'vk-row';
+        br.appendChild(makeSpecial('ABC', function() { switchTab('letters'); }));
+        const sp = document.createElement('button'); sp.className = 'vk-key wide'; sp.textContent = '⎵';
+        sp.addEventListener('mousedown', function(e) { e.preventDefault(); insertChar(' '); });
+        br.appendChild(sp);
+        const bs = document.createElement('button'); bs.className = 'vk-key special'; bs.textContent = '⌫';
+        bs.addEventListener('mousedown', function(e) { e.preventDefault(); doBackspace(); });
+        br.appendChild(bs);
+        vkContent.appendChild(br);
+      }
+
+      function renderSymbols() {
+        vkContent.innerHTML = '';
+        symRows.forEach(function(row) {
+          const r = document.createElement('div'); r.className = 'vk-row';
+          row.forEach(function(ch) { r.appendChild(makeKey(ch)); });
+          vkContent.appendChild(r);
+        });
+        const br = document.createElement('div'); br.className = 'vk-row';
+        br.appendChild(makeSpecial('ABC', function() { switchTab('letters'); }));
+        const sp = document.createElement('button'); sp.className = 'vk-key wide'; sp.textContent = '⎵';
+        sp.addEventListener('mousedown', function(e) { e.preventDefault(); insertChar(' '); });
+        br.appendChild(sp);
+        const bs = document.createElement('button'); bs.className = 'vk-key special'; bs.textContent = '⌫';
+        bs.addEventListener('mousedown', function(e) { e.preventDefault(); doBackspace(); });
+        br.appendChild(bs);
+        vkContent.appendChild(br);
+      }
+
+      function renderEmoji() {
+        vkContent.innerHTML = '';
+        const grid = document.createElement('div'); grid.className = 'vk-emoji-grid';
+        emojis.forEach(function(em) {
+          const b = document.createElement('button'); b.className = 'vk-emoji-key'; b.textContent = em;
+          b.addEventListener('mousedown', function(ev) { ev.preventDefault(); insertChar(em); });
+          grid.appendChild(b);
+        });
+        vkContent.appendChild(grid);
+        const br = document.createElement('div'); br.className = 'vk-row'; br.style.marginTop = '8px';
+        br.appendChild(makeSpecial('ABC', function() { switchTab('letters'); }));
+        const sp = document.createElement('button'); sp.className = 'vk-key wide'; sp.textContent = '⎵';
+        sp.addEventListener('mousedown', function(e) { e.preventDefault(); insertChar(' '); });
+        br.appendChild(sp);
+        const bs = document.createElement('button'); bs.className = 'vk-key special'; bs.textContent = '⌫';
+        bs.addEventListener('mousedown', function(e) { e.preventDefault(); doBackspace(); });
+        br.appendChild(bs);
+        vkContent.appendChild(br);
+      }
+
+      function switchTab(tab) {
+        currentTab = tab;
+        document.querySelectorAll('.virtual-keyboard[id="searchVirtualKeyboard"] .vk-tab').forEach(function(t) {
+          t.classList.toggle('active', t.getAttribute('data-svk-tab') === tab);
+        });
+        if (tab === 'letters') renderLetters();
+        else if (tab === 'numbers') renderNumbers();
+        else if (tab === 'symbols') renderSymbols();
+        else if (tab === 'emoji') renderEmoji();
+      }
+
+      document.querySelectorAll('#searchVirtualKeyboard .vk-tab').forEach(function(tab) {
+        tab.addEventListener('mousedown', function(e) { e.preventDefault(); switchTab(tab.getAttribute('data-svk-tab')); });
+      });
+
+      if (kbdBtn) {
+        kbdBtn.addEventListener('click', function() {
+          const active = vk.classList.toggle('active');
+          if (active) { renderLetters(); if (searchInputEl) searchInputEl.focus(); }
+        });
+      }
+
+      if (vkClose) {
+        vkClose.addEventListener('mousedown', function(e) { e.preventDefault(); vk.classList.remove('active'); });
+      }
+
+      // Draggable
+      const vkHeader = document.getElementById('searchVkHeader');
+      let isDragging = false, dragX, dragY, vkX, vkY;
+      if (vkHeader) {
+        vkHeader.addEventListener('mousedown', function(e) {
+          if (e.target.closest('#searchVkClose')) return;
+          isDragging = true;
+          const r = vk.getBoundingClientRect();
+          dragX = e.clientX; dragY = e.clientY; vkX = r.left; vkY = r.top;
+          vk.style.transition = 'none'; e.preventDefault();
+        });
+        vkHeader.addEventListener('touchstart', function(e) {
+          if (e.target.closest('#searchVkClose')) return;
+          const t = e.touches[0]; isDragging = true;
+          const r = vk.getBoundingClientRect();
+          dragX = t.clientX; dragY = t.clientY; vkX = r.left; vkY = r.top;
+          vk.style.transition = 'none';
+        }, { passive: true });
+      }
+      document.addEventListener('mousemove', function(e) {
+        if (!isDragging) return;
+        vk.style.left = (vkX + e.clientX - dragX) + 'px';
+        vk.style.top = (vkY + e.clientY - dragY) + 'px';
+        vk.style.bottom = 'auto'; vk.style.transform = 'none';
+      });
+      document.addEventListener('mouseup', function() { isDragging = false; });
+      document.addEventListener('touchmove', function(e) {
+        if (!isDragging) return;
+        const t = e.touches[0];
+        vk.style.left = (vkX + t.clientX - dragX) + 'px';
+        vk.style.top = (vkY + t.clientY - dragY) + 'px';
+        vk.style.bottom = 'auto'; vk.style.transform = 'none';
+      }, { passive: true });
+      document.addEventListener('touchend', function() { isDragging = false; });
+
+      window.refreshSearchKeyboard = function() {
+        if (vk && vk.classList.contains('active') && currentTab === 'letters') renderLetters();
+      };
+    })();
+    </script>
+
     <style>
       .material-symbols-rounded {
         font-family: 'Material Symbols Rounded' !important;
