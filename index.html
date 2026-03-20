@@ -1490,6 +1490,13 @@
         background: rgba(245, 0, 87, 0.5);
       }
 
+      /* Locked / School Mode state */
+      .settings-item.locked {
+        opacity: 0.45;
+        pointer-events: none;
+        user-select: none;
+      }
+
       /* Confirm Modal */
       .confirm-modal {
         position: fixed;
@@ -1790,6 +1797,189 @@
         background: rgba(106, 0, 255, 0.3);
         color: white;
       }
+
+      /* Virtual Keyboard */
+      .virtual-keyboard {
+        position: fixed;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 380px;
+        max-width: 96vw;
+        background: rgba(18, 6, 45, 0.5);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 18px;
+        padding: 10px 10px 12px;
+        z-index: 3100;
+        display: none;
+        box-shadow:
+          0 12px 48px rgba(0, 0, 0, 0.55),
+          0 0 0 1px rgba(106, 0, 255, 0.18);
+        user-select: none;
+        touch-action: none;
+      }
+      .virtual-keyboard.active {
+        display: block;
+        animation: scaleIn 0.18s ease;
+      }
+      .vk-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: grab;
+        padding: 2px 6px 8px;
+        color: rgba(255, 255, 255, 0.65);
+        font-size: 13px;
+        letter-spacing: 0.3px;
+      }
+      .vk-header:active {
+        cursor: grabbing;
+      }
+      .vk-close {
+        cursor: pointer;
+        font-size: 18px !important;
+        color: rgba(255, 255, 255, 0.5);
+        transition: color 0.2s;
+        line-height: 1;
+      }
+      .vk-close:hover {
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .vk-tabs {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 9px;
+      }
+      .vk-tab {
+        flex: 1;
+        padding: 6px 4px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 9px;
+        color: rgba(255, 255, 255, 0.6);
+        cursor: pointer;
+        font-size: 13px;
+        font-family: inherit;
+        transition: all 0.18s;
+      }
+      .vk-tab:hover {
+        background: rgba(255, 255, 255, 0.14);
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .vk-tab.active {
+        background: rgba(106, 0, 255, 0.55);
+        border-color: rgba(106, 0, 255, 0.7);
+        color: #fff;
+      }
+      .vk-row {
+        display: flex;
+        justify-content: center;
+        gap: 4px;
+        margin-bottom: 5px;
+      }
+      .vk-key {
+        min-width: 28px;
+        height: 40px;
+        padding: 0 7px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 9px;
+        color: #fff;
+        font-size: 17px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          background 0.12s,
+          transform 0.08s;
+        font-family: inherit;
+        flex: 1;
+        max-width: 36px;
+      }
+      .vk-key:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+      .vk-key:active {
+        background: rgba(106, 0, 255, 0.5);
+        transform: scale(0.93);
+      }
+      .vk-key.special {
+        min-width: 42px;
+        max-width: 52px;
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.05);
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 12px;
+        flex: 1.4;
+      }
+      .vk-key.wide {
+        min-width: 110px;
+        max-width: 200px;
+        flex: 4;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.75);
+      }
+      .vk-key.shift-active {
+        background: rgba(106, 0, 255, 0.45) !important;
+        color: #fff;
+      }
+      .vk-emoji-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3px;
+        max-height: 190px;
+        overflow-y: auto;
+        padding: 2px 0;
+      }
+      .vk-emoji-grid::-webkit-scrollbar {
+        width: 4px;
+      }
+      .vk-emoji-grid::-webkit-scrollbar-thumb {
+        background: rgba(106, 0, 255, 0.4);
+        border-radius: 2px;
+      }
+      .vk-emoji-key {
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        cursor: pointer;
+        border-radius: 7px;
+        border: none;
+        background: transparent;
+        transition:
+          background 0.12s,
+          transform 0.08s;
+      }
+      .vk-emoji-key:hover {
+        background: rgba(255, 255, 255, 0.14);
+      }
+      .vk-emoji-key:active {
+        transform: scale(0.88);
+      }
+      .vk-imelist-note {
+        text-align: center;
+        color: rgba(255, 255, 255, 0.55);
+        font-size: 12px;
+        padding: 14px 12px 6px;
+        line-height: 1.5;
+      }
+      #keyboardBtn {
+        cursor: pointer;
+      }
+      .apps-btn {
+        padding: 6px 12px;
+        border-radius: 16px;
+        transition: background-color 0.3s ease;
+      }
+      .apps-btn:hover {
+        background-color: rgba(106, 0, 255, 0.2);
+      }
     </style>
   </head>
   <body>
@@ -1797,10 +1987,12 @@
       <div class="topbar-desktop">
         <div class="topbar-left liquid-glass">
           <div class="topbar-left-item">
-            <a href="https://www.munetios.com/about">About</a>
+            <a href="https://www.munetios.com/about" data-translate="about"
+              >About</a
+            >
           </div>
           <div class="topbar-left-item">
-            <a href="https://blog.munetios.com">Blog</a>
+            <a href="https://blog.munetios.com" data-translate="blog">Blog</a>
           </div>
         </div>
         <div class="topbar-right liquid-glass">
@@ -1808,11 +2000,21 @@
             <a href="#/" data-translate="navSearch">Search</a>
             <a href="#/images" data-translate="navImages">Images</a>
             <a class="hide-611" href="https://write.munetios.com">OmniWrite</a>
-            <a class="hide-700" href="https://calendar.munetios.com"
+            <a
+              class="hide-700"
+              href="https://calendar.munetios.com"
+              data-translate="calendar"
               >Calendar</a
             >
-            <a class="hide-700" href="https://games.munetios.com">Games</a>
-            <a href="https://www.munetios.com/labs"><icon>science</icon></a>
+            <a
+              class="hide-700"
+              href="https://games.munetios.com"
+              data-translate="games"
+              >Games</a
+            >
+            <a href="https://www.munetios.com/labs" id="labsLinkDesktop"
+              ><icon>science</icon></a
+            >
             <div id="appsBtn" class="apps-btn">
               <icon>apps</icon>
             </div>
@@ -1828,7 +2030,9 @@
           </div>
         </div>
         <div class="topbar-right liquid-glass">
-          <a href="https://www.munetios.com/labs"><icon>science</icon></a>
+          <a href="https://www.munetios.com/labs" id="labsLinkMobile"
+            ><icon>science</icon></a
+          >
           <div id="appsBtnMobile" class="apps-btn">
             <icon>apps</icon>
           </div>
@@ -1848,6 +2052,7 @@
           <icon>search</icon>
           <input type="text" placeholder="Search The Web" id="searchInput" />
           <icon id="micBtn" title="Use Voice Search">mic</icon>
+          <icon id="keyboardBtn" title="Use Virtual Keyboard">keyboard</icon>
           <icon id="cameraBtn" title="Use Image Search">camera_alt</icon>
           <button id="voiceModeBtn" class="voice-mode-btn">
             <icon>voice_chat</icon>
@@ -2157,6 +2362,7 @@
         >
         <a
           href="https://www.munetios.com/labs"
+          id="labsLinkFooter"
           style="
             color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
@@ -2333,6 +2539,10 @@
                   </button>
                 </div>
               </div>
+              <div class="settings-item" id="safeSearchSetting">
+                <span class="settings-label">SafeSearch</span>
+                <button id="safeSearchButton">Strict</button>
+              </div>
             </div>
             <div class="settings-page" id="appearanceSettingsPage">
               <h2>Appearance</h2>
@@ -2452,6 +2662,23 @@
                   <span class="settings-label">Manage Your Data</span>
                   <button id="manageDataBtn">Manage Data</button>
                 </div>
+                <div class="settings-item" id="schoolModeSetting">
+                  <span class="settings-label">School Mode</span>
+                  <div class="toggle-switch" id="schoolModeToggle"></div>
+                </div>
+                <p
+                  id="schoolModeSubLabel"
+                  style="
+                    font-size: 13px;
+                    color: rgba(255, 255, 255, 0.55);
+                    margin: 4px 0 0;
+                    padding: 0 4px;
+                    line-height: 1.4;
+                  "
+                >
+                  Locks SafeSearch to Strict and hides Labs. Disable via
+                  Reset&nbsp;All&nbsp;Settings.
+                </p>
               </div>
             </div>
             <div class="settings-page" id="advancedSettingsPage">
@@ -2596,6 +2823,11 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="dropdown-wrapper liquid-glass" id="safeSearchSelector">
+      <div class="dropdown-item" data-level="off">Off</div>
+      <div class="dropdown-item" data-level="moderate">Moderate</div>
+      <div class="dropdown-item" data-level="strict">Strict</div>
     </div>
     <div class="dropdown-wrapper liquid-glass" id="languageSelector">
       <div class="dropdown-item" id="englishButton">English</div>
@@ -2798,6 +3030,20 @@
         </button>
       </div>
     </div>
+    <!-- Virtual Keyboard -->
+    <div class="virtual-keyboard" id="virtualKeyboard">
+      <div class="vk-header" id="vkHeader">
+        <span id="vkTitle" data-translate="keyboardBtn">Keyboard</span>
+        <icon class="vk-close" id="vkClose">close</icon>
+      </div>
+      <div class="vk-tabs">
+        <button class="vk-tab active" data-vk-tab="letters">ABC</button>
+        <button class="vk-tab" data-vk-tab="numbers">123</button>
+        <button class="vk-tab" data-vk-tab="symbols">#+=</button>
+        <button class="vk-tab" data-vk-tab="emoji">😀</button>
+      </div>
+      <div class="vk-content" id="vkContent"></div>
+    </div>
     <!-- Left Sidebar -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div class="left-sidebar" id="leftSidebar">
@@ -2843,7 +3089,11 @@
           <span>Tasks</span>
         </a>
 
-        <a href="https://www.munetios.com/labs" class="sidebar-item">
+        <a
+          href="https://www.munetios.com/labs"
+          class="sidebar-item"
+          id="labsLinkSidebar"
+        >
           <icon>science</icon>
           <span>Labs</span>
         </a>
@@ -2894,8 +3144,10 @@
                 const synth = new Tone.Synth().toDestination();
                 synth.triggerAttackRelease("G4", "0.1");
               } else if (type === "denied") {
-                const synth = new Tone.Synth().toDestination();
-                synth.triggerAttackRelease("C4", "8n");
+                const synth1 = new Tone.Synth().toDestination();
+                const synth2 = new Tone.Synth().toDestination();
+                synth1.triggerAttackRelease("G4", "0.2");
+                synth2.triggerAttackRelease("C4", "0.2");
               }
             } catch (e) {
               console.log("Audio error:", e);
@@ -3339,6 +3591,8 @@
                 s.triggerAttackRelease("G4", "0.1");
               } else if (type === "denied") {
                 const s = new Tone.Synth().toDestination();
+                const s2 = new Tone.Synth().toDestination();
+                s2.triggerAttackRelease("G4", "0.2");
                 s.triggerAttackRelease("C5", "0.2");
               } else if (type === "success") {
                 const s = new Tone.Synth().toDestination();
@@ -4185,6 +4439,13 @@
             terms: "Terms",
             privacy: "Privacy",
             cookies: "Cookies",
+            products: "Products",
+            timeline: "Timeline",
+            whatsNew: "What's New",
+            docs: "Docs",
+            weather: "Weather",
+            youtubeChannel: "YouTube Channel",
+            keyboardBtn: "Keyboard",
 
             // Navigation tabs
             navSearch: "Search",
@@ -4358,6 +4619,13 @@
             terms: "Términos",
             privacy: "Privacidad",
             cookies: "Cookies",
+            products: "Productos",
+            timeline: "Cronología",
+            whatsNew: "Novedades",
+            docs: "Documentos",
+            weather: "Tiempo",
+            youtubeChannel: "Canal de YouTube",
+            keyboardBtn: "Teclado",
 
             // Navigation tabs
             navSearch: "Buscar",
@@ -4534,6 +4802,13 @@
             terms: "Conditions",
             privacy: "Confidentialité",
             cookies: "Cookies",
+            products: "Produits",
+            timeline: "Chronologie",
+            whatsNew: "Nouveautés",
+            docs: "Documents",
+            weather: "Météo",
+            youtubeChannel: "Chaîne YouTube",
+            keyboardBtn: "Clavier",
 
             // Navigation tabs
             navSearch: "Rechercher",
@@ -4712,6 +4987,13 @@
             terms: "Bedingungen",
             privacy: "Datenschutz",
             cookies: "Cookies",
+            products: "Produkte",
+            timeline: "Zeitstrahl",
+            whatsNew: "Was ist neu",
+            docs: "Dokumente",
+            weather: "Wetter",
+            youtubeChannel: "YouTube-Kanal",
+            keyboardBtn: "Tastatur",
 
             // Navigation tabs
             navSearch: "Suchen",
@@ -4891,6 +5173,13 @@
             terms: "Termini",
             privacy: "Privacy",
             cookies: "Cookie",
+            products: "Prodotti",
+            timeline: "Cronologia",
+            whatsNew: "Novità",
+            docs: "Documenti",
+            weather: "Meteo",
+            youtubeChannel: "Canale YouTube",
+            keyboardBtn: "Tastiera",
 
             // Navigation tabs
             navSearch: "Cerca",
@@ -5065,6 +5354,13 @@
             terms: "Termos",
             privacy: "Privacidade",
             cookies: "Cookies",
+            products: "Produtos",
+            timeline: "Linha do Tempo",
+            whatsNew: "O que há de novo",
+            docs: "Documentos",
+            weather: "Clima",
+            youtubeChannel: "Canal do YouTube",
+            keyboardBtn: "Teclado",
 
             // Navigation tabs
             navSearch: "Pesquisar",
@@ -5239,6 +5535,13 @@
             terms: "Voorwaarden",
             privacy: "Privacy",
             cookies: "Cookies",
+            products: "Producten",
+            timeline: "Tijdlijn",
+            whatsNew: "Nieuw",
+            docs: "Documenten",
+            weather: "Weer",
+            youtubeChannel: "YouTube-kanaal",
+            keyboardBtn: "Toetsenbord",
           },
           pl: {
             name: "Polish",
@@ -5359,6 +5662,13 @@
             terms: "Warunki",
             privacy: "Prywatność",
             cookies: "Ciasteczka",
+            products: "Produkty",
+            timeline: "Oś czasu",
+            whatsNew: "Co nowego",
+            docs: "Dokumenty",
+            weather: "Pogoda",
+            youtubeChannel: "Kanał YouTube",
+            keyboardBtn: "Klawiatura",
           },
           tr: {
             name: "Turkish",
@@ -5480,6 +5790,13 @@
             terms: "Şartlar",
             privacy: "Gizlilik",
             cookies: "Çerezler",
+            products: "Ürünler",
+            timeline: "Zaman Çizelgesi",
+            whatsNew: "Yenilikler",
+            docs: "Belgeler",
+            weather: "Hava Durumu",
+            youtubeChannel: "YouTube Kanalı",
+            keyboardBtn: "Klavye",
           },
           sv: {
             name: "Swedish",
@@ -5600,6 +5917,13 @@
             terms: "Villkor",
             privacy: "Integritet",
             cookies: "Kakor",
+            products: "Produkter",
+            timeline: "Tidslinje",
+            whatsNew: "Nyheter",
+            docs: "Dokument",
+            weather: "Väder",
+            youtubeChannel: "YouTube-kanal",
+            keyboardBtn: "Tangentbord",
           },
           no: {
             name: "Norwegian",
@@ -5721,6 +6045,13 @@
             terms: "Vilkår",
             privacy: "Personvern",
             cookies: "Informasjonskapsler",
+            products: "Produkter",
+            timeline: "Tidslinje",
+            whatsNew: "Nyheter",
+            docs: "Dokumenter",
+            weather: "Vær",
+            youtubeChannel: "YouTube-kanal",
+            keyboardBtn: "Tastatur",
           },
           da: {
             name: "Danish",
@@ -5842,6 +6173,13 @@
             terms: "Vilkår",
             privacy: "Privatliv",
             cookies: "Cookies",
+            products: "Produkter",
+            timeline: "Tidslinje",
+            whatsNew: "Nyheder",
+            docs: "Dokumenter",
+            weather: "Vejr",
+            youtubeChannel: "YouTube-kanal",
+            keyboardBtn: "Tastatur",
           },
           fi: {
             name: "Finnish",
@@ -5961,6 +6299,13 @@
             terms: "Ehdot",
             privacy: "Yksityisyys",
             cookies: "Evästeet",
+            products: "Tuotteet",
+            timeline: "Aikajana",
+            whatsNew: "Uutuudet",
+            docs: "Asiakirjat",
+            weather: "Sää",
+            youtubeChannel: "YouTube-kanava",
+            keyboardBtn: "Näppäimistö",
           },
           zh: {
             name: "Chinese (Simplified)",
@@ -6080,6 +6425,13 @@
             terms: "条款",
             privacy: "隐私",
             cookies: "Cookie",
+            products: "产品",
+            timeline: "时间线",
+            whatsNew: "新功能",
+            docs: "文档",
+            weather: "天气",
+            youtubeChannel: "YouTube频道",
+            keyboardBtn: "键盘",
 
             // Navigation tabs
             navSearch: "搜索",
@@ -6243,6 +6595,13 @@
             terms: "條款",
             privacy: "隱私",
             cookies: "Cookie",
+            products: "產品",
+            timeline: "時間軸",
+            whatsNew: "新功能",
+            docs: "文件",
+            weather: "天氣",
+            youtubeChannel: "YouTube頻道",
+            keyboardBtn: "鍵盤",
           },
           ja: {
             name: "Japanese",
@@ -6364,6 +6723,13 @@
             terms: "利用規約",
             privacy: "プライバシー",
             cookies: "Cookie",
+            products: "製品",
+            timeline: "タイムライン",
+            whatsNew: "新着情報",
+            docs: "ドキュメント",
+            weather: "天気",
+            youtubeChannel: "YouTubeチャンネル",
+            keyboardBtn: "キーボード",
 
             // Navigation tabs
             navSearch: "検索",
@@ -6540,6 +6906,13 @@
             terms: "약관",
             privacy: "개인정보 보호",
             cookies: "Cookie",
+            products: "제품",
+            timeline: "타임라인",
+            whatsNew: "새소식",
+            docs: "문서",
+            weather: "날씨",
+            youtubeChannel: "YouTube 체널",
+            keyboardBtn: "키보드",
 
             // Navigation tabs
             navSearch: "검색",
@@ -6711,6 +7084,13 @@
             terms: "الشروط",
             privacy: "الخصوصية",
             cookies: "ملفات تعريف الارتباط",
+            products: "المنتجات",
+            timeline: "الجدول الزمني",
+            whatsNew: "الجديد",
+            docs: "المستندات",
+            weather: "الطقس",
+            youtubeChannel: "قناة YouTube",
+            keyboardBtn: "لوحة المفاتيح",
 
             // Navigation tabs
             navSearch: "بحث",
@@ -6877,6 +7257,13 @@
             terms: "תנאים",
             privacy: "פרטיות",
             cookies: "Cookie",
+            products: "מוצרים",
+            timeline: "ציר הזמן",
+            whatsNew: "מה חדש",
+            docs: "מסמכים",
+            weather: "מזג אוויר",
+            youtubeChannel: "ערוץ YouTube",
+            keyboardBtn: "מקלדת",
           },
           ru: {
             name: "Russian",
@@ -6997,6 +7384,13 @@
             terms: "Условия",
             privacy: "Конфиденциальность",
             cookies: "Файлы cookie",
+            products: "Продукты",
+            timeline: "Хронология",
+            whatsNew: "Что нового",
+            docs: "Документы",
+            weather: "Погода",
+            youtubeChannel: "YouTube-канал",
+            keyboardBtn: "Клавиатура",
 
             // Navigation tabs
             navSearch: "Поиск",
@@ -7172,6 +7566,13 @@
             terms: "Умови",
             privacy: "Конфіденційність",
             cookies: "Файли cookie",
+            products: "Продукти",
+            timeline: "Хронологія",
+            whatsNew: "Що нового",
+            docs: "Документи",
+            weather: "Погода",
+            youtubeChannel: "YouTube-канал",
+            keyboardBtn: "Клавіатура",
           },
           el: {
             name: "Greek",
@@ -7293,6 +7694,13 @@
             terms: "Όροι",
             privacy: "Απόρρητο",
             cookies: "Cookie",
+            products: "Προϊόντα",
+            timeline: "Χρονολόγιο",
+            whatsNew: "Νέα",
+            docs: "Έγγραφα",
+            weather: "Καιρός",
+            youtubeChannel: "YouTube κανάλι",
+            keyboardBtn: "Πληκτρολόγιο",
           },
           cs: {
             name: "Czech",
@@ -7413,6 +7821,13 @@
             terms: "Podmínky",
             privacy: "Soukromí",
             cookies: "Cookies",
+            products: "Produkty",
+            timeline: "Časová osa",
+            whatsNew: "Co je nového",
+            docs: "Dokumenty",
+            weather: "Počasí",
+            youtubeChannel: "YouTube kanál",
+            keyboardBtn: "Klávesnice",
           },
           ro: {
             name: "Romanian",
@@ -7535,6 +7950,13 @@
             terms: "Termeni",
             privacy: "Confidențialitate",
             cookies: "Cookie-uri",
+            products: "Produse",
+            timeline: "Cronologie",
+            whatsNew: "Ce este nou",
+            docs: "Documente",
+            weather: "Vreme",
+            youtubeChannel: "Canal YouTube",
+            keyboardBtn: "Tastatură",
           },
           hu: {
             name: "Hungarian",
@@ -7656,6 +8078,13 @@
             terms: "Feltételek",
             privacy: "Adatvédelem",
             cookies: "Sütik",
+            products: "Termékek",
+            timeline: "Idővonal",
+            whatsNew: "Újdonságok",
+            docs: "Dokumentumok",
+            weather: "Időjárás",
+            youtubeChannel: "YouTube-csatórna",
+            keyboardBtn: "Billentyűzet",
           },
           hi: {
             name: "Hindi",
@@ -7776,6 +8205,13 @@
             terms: "शर्तें",
             privacy: "गोपनीयता",
             cookies: "कुकीज़",
+            products: "उत्पाद",
+            timeline: "समयरेखा",
+            whatsNew: "नया क्या है",
+            docs: "दस्तावेज़",
+            weather: "मौसम",
+            youtubeChannel: "YouTube चैनल",
+            keyboardBtn: "कीबोर्ड",
 
             // Navigation tabs
             navSearch: "खोजें",
@@ -7947,6 +8383,13 @@
             terms: "শর্তাবলী",
             privacy: "গোপনীয়তা",
             cookies: "কুকিজ",
+            products: "পণ্য",
+            timeline: "টাইমলাইন",
+            whatsNew: "নতুন কী",
+            docs: "ডকুমেন্ট",
+            weather: "আবহাওয়া",
+            youtubeChannel: "YouTube চ্যানেল",
+            keyboardBtn: "কীবোর্ড",
           },
           th: {
             name: "Thai",
@@ -8066,6 +8509,13 @@
             terms: "เงื่อนไข",
             privacy: "ความเป็นส่วนตัว",
             cookies: "คุกกี้",
+            products: "ผลิตภัณฑ์",
+            timeline: "ไทม์ไลน์",
+            whatsNew: "ใหม่",
+            docs: "เอกสาร",
+            weather: "สภาพอากาศ",
+            youtubeChannel: "YouTube ช่อง",
+            keyboardBtn: "แป้นพิมพ์",
           },
           vi: {
             name: "Vietnamese",
@@ -8183,9 +8633,16 @@
             openSettings: "Mở cài đặt",
 
             // Footer
-            terms: "Điều khoản",
+            terms: "§iều khoản",
             privacy: "Riêng tư",
             cookies: "Cookie",
+            products: "Sản phẩm",
+            timeline: "Dòng thời gian",
+            whatsNew: "Mới",
+            docs: "Tài liệu",
+            weather: "Thời tiết",
+            youtubeChannel: "Kênh YouTube",
+            keyboardBtn: "Bàn phím",
           },
           id: {
             name: "Indonesian",
@@ -8307,6 +8764,13 @@
             terms: "Syarat",
             privacy: "Privasi",
             cookies: "Cookie",
+            products: "Produk",
+            timeline: "Linimasa",
+            whatsNew: "Apa yang Baru",
+            docs: "Dokumen",
+            weather: "Cuaca",
+            youtubeChannel: "Saluran YouTube",
+            keyboardBtn: "Papan Ketik",
           },
           ms: {
             name: "Malay",
@@ -8427,6 +8891,13 @@
             terms: "Terma",
             privacy: "Privasi",
             cookies: "Kuki",
+            products: "Produk",
+            timeline: "Garis Masa",
+            whatsNew: "Apa yang Baru",
+            docs: "Dokumen",
+            weather: "Cuaca",
+            youtubeChannel: "Saluran YouTube",
+            keyboardBtn: "Papan Kekunci",
           },
         };
 
@@ -8862,6 +9333,41 @@
           const confirmCancelBtn = document.getElementById("confirmCancelBtn");
           if (confirmCancelBtn)
             confirmCancelBtn.textContent = t.cancel || translations.en.cancel;
+
+          // Footer links (matched by href)
+          const footerLinkMap = {
+            "policies/#/terms": t.terms || translations.en.terms,
+            "policies/#/privacy": t.privacy || translations.en.privacy,
+            "policies/#/cookies": t.cookies || translations.en.cookies,
+            "/about": t.about || translations.en.about,
+            "/apps": t.products || translations.en.products,
+            "blog.munetios.com": t.blog || translations.en.blog,
+            "/timeline": t.timeline || translations.en.timeline,
+            "whats-new": t.whatsNew || translations.en.whatsNew,
+            "manage-data": t.manageDataBtn || translations.en.manageDataBtn,
+            "munetios.com/search": t.navSearch || translations.en.navSearch,
+            "maps.munetios.com": t.maps || translations.en.maps,
+            "calendar.munetios.com": t.calendar || translations.en.calendar,
+            "tasks.munetios.com": t.tasks || translations.en.tasks,
+            "photos.munetios.com": t.photos || translations.en.photos,
+            "docs.munetios.com": t.docs || translations.en.docs,
+            "games.munetios.com": t.games || translations.en.games,
+            "weather.munetios.com": t.weather || translations.en.weather,
+            "munetios.com/labs": t.labs || translations.en.labs,
+            "youtube.com/@munetios":
+              t.youtubeChannel || translations.en.youtubeChannel,
+          };
+          document
+            .querySelectorAll(".footer-left a, .footer-right a")
+            .forEach(function (a) {
+              const href = a.getAttribute("href") || "";
+              for (const [pattern, text] of Object.entries(footerLinkMap)) {
+                if (href.includes(pattern)) {
+                  a.textContent = text;
+                  break;
+                }
+              }
+            });
         }
 
         // Load saved language (with navigator.language auto-detection on first visit)
@@ -8950,6 +9456,7 @@
             languageButton.textContent = translations[langCode].name;
             languageSelector.style.display = "none";
             applyTranslations(langCode);
+            window.refreshVirtualKeyboard && window.refreshVirtualKeyboard();
             window.showToast &&
               window.showToast(
                 `Language changed to ${translations[langCode].name}`,
@@ -8991,6 +9498,95 @@
           localStorage.setItem("munetiosDefaultSearchMode", "images");
           imageBtn.setAttribute("selected", "");
           webBtn?.removeAttribute("selected");
+        });
+      })();
+
+      // SafeSearch Functionality
+      (function () {
+        const btn = document.getElementById("safeSearchButton");
+        const selector = document.getElementById("safeSearchSelector");
+        const labels = { off: "Off", moderate: "Moderate", strict: "Strict" };
+
+        function setSafeSearch(level, silent) {
+          localStorage.setItem("safeSearchLevel", level);
+          if (btn) btn.textContent = labels[level] || "Strict";
+          if (!silent && window.showToast)
+            window.showToast("SafeSearch set to " + (labels[level] || level));
+        }
+
+        // Strict is the default — never off
+        const saved = localStorage.getItem("safeSearchLevel") || "strict";
+        if (btn) btn.textContent = labels[saved] || "Strict";
+        // Ensure it's stored
+        if (!localStorage.getItem("safeSearchLevel"))
+          localStorage.setItem("safeSearchLevel", "strict");
+
+        btn?.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const rect = btn.getBoundingClientRect();
+          selector.style.display =
+            selector.style.display === "block" ? "none" : "block";
+          selector.style.position = "fixed";
+          selector.style.top = rect.bottom + 5 + "px";
+          selector.style.left = rect.left + "px";
+          selector.style.zIndex = "3500";
+        });
+
+        selector?.querySelectorAll(".dropdown-item").forEach((item) => {
+          item.addEventListener("click", () => {
+            setSafeSearch(item.dataset.level);
+            selector.style.display = "none";
+          });
+        });
+
+        document.addEventListener("click", (e) => {
+          if (!btn?.contains(e.target) && !selector?.contains(e.target))
+            selector.style.display = "none";
+        });
+
+        // Expose so School Mode can call it
+        window.setSafeSearchLevel = setSafeSearch;
+      })();
+
+      // School Mode Functionality
+      (function () {
+        const toggle = document.getElementById("schoolModeToggle");
+        const schoolItem = document.getElementById("schoolModeSetting");
+        const safeItem = document.getElementById("safeSearchSetting");
+        const labsIds = [
+          "labsLinkDesktop",
+          "labsLinkMobile",
+          "labsLinkSidebar",
+          "labsLinkFooter",
+        ];
+
+        function applySchoolMode(on) {
+          labsIds.forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) el.style.display = on ? "none" : "";
+          });
+          if (on) {
+            window.setSafeSearchLevel &&
+              window.setSafeSearchLevel("strict", true);
+            safeItem?.classList.add("locked");
+            schoolItem?.classList.add("locked");
+            toggle?.classList.add("active");
+          } else {
+            safeItem?.classList.remove("locked");
+            schoolItem?.classList.remove("locked");
+            toggle?.classList.remove("active");
+          }
+        }
+
+        const isOn = localStorage.getItem("schoolMode") === "true";
+        applySchoolMode(isOn);
+
+        toggle?.addEventListener("click", () => {
+          // Once on, can only be cleared via Reset All Settings
+          if (localStorage.getItem("schoolMode") === "true") return;
+          localStorage.setItem("schoolMode", "true");
+          applySchoolMode(true);
+          window.showToast && window.showToast("School Mode enabled");
         });
       })();
 
@@ -9793,6 +10389,10 @@
                 }
               }
               keysToRemove.forEach((key) => localStorage.removeItem(key));
+              // Also clear non-prefixed feature keys
+              ["schoolMode", "safeSearchLevel"].forEach((k) =>
+                localStorage.removeItem(k),
+              );
               window.showToast &&
                 window.showToast(getTranslation("settingsReset"));
               setTimeout(() => location.reload(), 1000);
@@ -9885,6 +10485,944 @@
         if (sidebarOverlay) {
           sidebarOverlay.addEventListener("click", closeSidebar);
         }
+      })();
+
+      // Virtual Keyboard Functionality
+      (function () {
+        const keyboardLayouts = {
+          en: {
+            rows: [
+              ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+              ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+              ["z", "x", "c", "v", "b", "n", "m"],
+            ],
+            extras: [],
+          },
+          es: {
+            rows: [
+              ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+              ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+              ["z", "x", "c", "v", "b", "n", "m"],
+            ],
+            extras: ["á", "é", "í", "ó", "ú", "ñ", "ü", "¿", "¡"],
+          },
+          fr: {
+            rows: [
+              ["a", "z", "e", "r", "t", "y", "u", "i", "o", "p"],
+              ["q", "s", "d", "f", "g", "h", "j", "k", "l"],
+              ["w", "x", "c", "v", "b", "n", "m"],
+            ],
+            extras: [
+              "é",
+              "è",
+              "ê",
+              "à",
+              "â",
+              "ù",
+              "û",
+              "î",
+              "ô",
+              "ç",
+              "œ",
+              "æ",
+            ],
+          },
+          de: {
+            rows: [
+              ["q", "w", "e", "r", "t", "z", "u", "i", "o", "p"],
+              ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+              ["y", "x", "c", "v", "b", "n", "m"],
+            ],
+            extras: ["ä", "ö", "ü", "ß"],
+          },
+          it: {
+            rows: [
+              ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+              ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+              ["z", "x", "c", "v", "b", "n", "m"],
+            ],
+            extras: ["à", "è", "é", "ì", "î", "ò", "ó", "ù"],
+          },
+          pt: {
+            rows: [
+              ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+              ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+              ["z", "x", "c", "v", "b", "n", "m"],
+            ],
+            extras: [
+              "ã",
+              "ç",
+              "â",
+              "ê",
+              "î",
+              "ô",
+              "õ",
+              "à",
+              "á",
+              "é",
+              "í",
+              "ó",
+              "ú",
+            ],
+          },
+          nl: {
+            rows: [
+              ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+              ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+              ["z", "x", "c", "v", "b", "n", "m"],
+            ],
+            extras: ["é", "è", "ë", "ê", "ó", "ö", "ü", "ï", "ij"],
+          },
+          pl: {
+            rows: [
+              ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+              ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+              ["z", "x", "c", "v", "b", "n", "m"],
+            ],
+            extras: ["ą", "ć", "ę", "ł", "ń", "ó", "ś", "ź", "ż"],
+          },
+          tr: {
+            rows: [
+              ["q", "w", "e", "r", "t", "y", "u", "ı", "o", "p"],
+              ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+              ["z", "x", "c", "v", "b", "n", "m"],
+            ],
+            extras: ["ğ", "ş", "ı", "i", "ö", "ü", "ç"],
+          },
+          sv: {
+            rows: [
+              ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+              ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+              ["z", "x", "c", "v", "b", "n", "m"],
+            ],
+            extras: ["å", "ä", "ö"],
+          },
+          no: {
+            rows: [
+              ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+              ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+              ["z", "x", "c", "v", "b", "n", "m"],
+            ],
+            extras: ["æ", "ø", "å"],
+          },
+          da: {
+            rows: [
+              ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+              ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+              ["z", "x", "c", "v", "b", "n", "m"],
+            ],
+            extras: ["æ", "ø", "å"],
+          },
+          fi: {
+            rows: [
+              ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+              ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+              ["z", "x", "c", "v", "b", "n", "m"],
+            ],
+            extras: ["ä", "ö", "å"],
+          },
+          cs: {
+            rows: [
+              ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+              ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+              ["z", "x", "c", "v", "b", "n", "m"],
+            ],
+            extras: [
+              "á",
+              "č",
+              "ď",
+              "é",
+              "ě",
+              "í",
+              "ň",
+              "ó",
+              "ř",
+              "š",
+              "ť",
+              "ú",
+              "ů",
+              "ý",
+              "ž",
+            ],
+          },
+          ro: {
+            rows: [
+              ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+              ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+              ["z", "x", "c", "v", "b", "n", "m"],
+            ],
+            extras: ["ă", "â", "î", "ș", "ț"],
+          },
+          hu: {
+            rows: [
+              ["q", "w", "e", "r", "t", "z", "u", "i", "o", "p"],
+              ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+              ["y", "x", "c", "v", "b", "n", "m"],
+            ],
+            extras: ["á", "é", "í", "ó", "ő", "ö", "ú", "ű", "ü"],
+          },
+          ru: {
+            rows: [
+              ["й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з"],
+              ["ф", "ы", "в", "а", "п", "р", "о", "л", "д"],
+              ["э", "я", "ч", "с", "м", "и", "т", "ь", "б", "ю"],
+            ],
+            extras: ["ё", "ъ", "ж", "х"],
+          },
+          uk: {
+            rows: [
+              ["й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з"],
+              ["ф", "і", "в", "а", "п", "р", "о", "л", "д"],
+              ["є", "я", "ч", "с", "м", "и", "т", "ь", "б", "ю"],
+            ],
+            extras: ["ї", "ж", "х"],
+          },
+          el: {
+            rows: [
+              ["ς", "ε", "ρ", "τ", "υ", "θ", "ι", "ο", "π"],
+              ["α", "σ", "δ", "φ", "γ", "η", "ξ", "κ", "λ"],
+              ["ζ", "χ", "ψ", "ω", "β", "ν", "μ"],
+            ],
+            extras: ["ά", "έ", "ή", "ί", "ό", "ύ", "ώ", "ϊ", "ϋ"],
+          },
+          ar: {
+            rows: [
+              ["ض", "ص", "ث", "ق", "ف", "غ", "ع", "ه", "خ", "ح"],
+              ["ش", "س", "ي", "ب", "ل", "ا", "ت", "ن", "م"],
+              ["ئ", "ء", "ؤ", "ر", "لا", "ى", "ة", "و", "ز"],
+            ],
+            extras: ["أ", "إ", "آ", "ظ", "ط", "ذ", "ك", "ج", "د"],
+            rtl: true,
+          },
+          he: {
+            rows: [
+              ["ק", "ר", "א", "ט", "ו", "ן", "מ", "פ"],
+              ["ש", "ד", "ג", "כ", "ע", "י", "ח", "ל", "ך"],
+              ["ז", "ס", "ב", "ה", "נ", "מ", "צ", "ת", "ץ"],
+            ],
+            extras: ["ּ", "ף"],
+            rtl: true,
+          },
+          vi: {
+            rows: [
+              ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+              ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+              ["z", "x", "c", "v", "b", "n", "m"],
+            ],
+            extras: [
+              "à",
+              "á",
+              "â",
+              "ã",
+              "è",
+              "é",
+              "ê",
+              "ì",
+              "í",
+              "ò",
+              "ó",
+              "ô",
+              "õ",
+              "ù",
+              "ú",
+              "ý",
+              "ă",
+              "đ",
+              "ơ",
+              "ư",
+            ],
+          },
+          id: {
+            rows: [
+              ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+              ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+              ["z", "x", "c", "v", "b", "n", "m"],
+            ],
+            extras: [],
+          },
+          ms: {
+            rows: [
+              ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+              ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+              ["z", "x", "c", "v", "b", "n", "m"],
+            ],
+            extras: [],
+          },
+        };
+        const complexScriptLangs = new Set([
+          "zh",
+          "zh-TW",
+          "ja",
+          "ko",
+          "hi",
+          "bn",
+          "th",
+        ]);
+        const numRows = [
+          ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+          ["-", "/", "(", ")", "$", "&", "@", '"', ".", ","],
+          ["?", "!", "'", "+", "=", "_", "\\", "~", "<", ">"],
+        ];
+        const symRows = [
+          ["[", "]", "{", "}", "#", "%", "^", "*", "€", "£"],
+          ["¥", "©", "®", "™", "°", "±", "§", "¶", "∞", "≠"],
+          ["≤", "≥", "÷", "×", "√", "π", "μ", "←", "→", "↑"],
+        ];
+        const emojis = [
+          "😀",
+          "😃",
+          "😄",
+          "😁",
+          "😆",
+          "😅",
+          "🤣",
+          "😂",
+          "😊",
+          "😇",
+          "😍",
+          "🤩",
+          "😘",
+          "😗",
+          "😋",
+          "😛",
+          "😝",
+          "🤪",
+          "😜",
+          "🤔",
+          "😏",
+          "😒",
+          "😞",
+          "😔",
+          "😟",
+          "😕",
+          "🙁",
+          "😣",
+          "😫",
+          "😩",
+          "🥺",
+          "😢",
+          "😭",
+          "😤",
+          "😠",
+          "😡",
+          "🤬",
+          "🤯",
+          "😱",
+          "😨",
+          "😰",
+          "😥",
+          "😓",
+          "🤗",
+          "🤭",
+          "🤫",
+          "😐",
+          "😶",
+          "👍",
+          "👎",
+          "👊",
+          "✊",
+          "🤛",
+          "🤜",
+          "🤞",
+          "✌️",
+          "👌",
+          "🤌",
+          "👈",
+          "👉",
+          "👆",
+          "👇",
+          "✋",
+          "🤚",
+          "👋",
+          "🤙",
+          "💪",
+          "🦾",
+          "🖐️",
+          "☝️",
+          "🤝",
+          "🙏",
+          "👏",
+          "🫶",
+          "❤️",
+          "🧡",
+          "💛",
+          "💚",
+          "💙",
+          "💜",
+          "🖤",
+          "🤍",
+          "🤎",
+          "💔",
+          "❣️",
+          "💕",
+          "💞",
+          "💓",
+          "💗",
+          "💖",
+          "💘",
+          "💝",
+          "💟",
+          "🔥",
+          "⭐",
+          "🌟",
+          "✨",
+          "💫",
+          "⚡",
+          "❄️",
+          "💧",
+          "🌊",
+          "🌈",
+          "🌙",
+          "☀️",
+          "🌤️",
+          "☁️",
+          "⛅",
+          "🌦️",
+          "🌧️",
+          "⛈️",
+          "🌪️",
+          "🍕",
+          "🍔",
+          "🌮",
+          "🌯",
+          "🥗",
+          "🍜",
+          "🍣",
+          "🍦",
+          "🍰",
+          "🎂",
+          "🍫",
+          "🍬",
+          "☕",
+          "🍵",
+          "🥤",
+          "🍺",
+          "🐶",
+          "🐱",
+          "🐭",
+          "🐰",
+          "🦊",
+          "🐻",
+          "🐼",
+          "🐨",
+          "🐯",
+          "🦁",
+          "🐮",
+          "🐷",
+          "🐸",
+          "🐵",
+          "🦄",
+          "🐧",
+          "🏠",
+          "🏡",
+          "🏢",
+          "🏰",
+          "🏯",
+          "🛕",
+          "🗼",
+          "🗽",
+          "🏟️",
+          "🏛️",
+          "⛩️",
+          "🌍",
+          "🌎",
+          "🌏",
+          "🗺️",
+          "🧭",
+          "🚗",
+          "🚕",
+          "🚙",
+          "🚌",
+          "🚎",
+          "🚐",
+          "🚑",
+          "🚒",
+          "✈️",
+          "🚀",
+          "🛸",
+          "🚂",
+          "🛳️",
+          "⛵",
+          "🛥️",
+          "🚁",
+          "💻",
+          "📱",
+          "⌨️",
+          "🖥️",
+          "🖨️",
+          "🖱️",
+          "📷",
+          "📸",
+          "🎥",
+          "📹",
+          "🎬",
+          "📺",
+          "📻",
+          "🔊",
+          "🔋",
+          "💾",
+          "🎮",
+          "🕹️",
+          "🎲",
+          "🎯",
+          "🎳",
+          "⚽",
+          "🏀",
+          "🏈",
+          "⚾",
+          "🥎",
+          "🏐",
+          "🏉",
+          "🎾",
+          "🏸",
+          "🥊",
+          "🤸",
+          "📚",
+          "📖",
+          "📝",
+          "✏️",
+          "🖊️",
+          "🖋️",
+          "📌",
+          "📎",
+          "🔗",
+          "📏",
+          "📐",
+          "🔨",
+          "🔧",
+          "🔩",
+          "⚙️",
+          "🔑",
+          "💡",
+          "🔦",
+          "🕯️",
+          "💰",
+          "💳",
+          "💎",
+          "🏆",
+          "🥇",
+          "🎖️",
+          "🎗️",
+          "🎁",
+          "🎉",
+          "🎊",
+          "🎈",
+          "🎆",
+          "🎇",
+          "🌹",
+          "🌻",
+          "🌼",
+          "🌷",
+          "🌸",
+          "🌺",
+          "🍀",
+          "🌿",
+          "🍃",
+          "🍂",
+          "🍁",
+          "🍄",
+          "🌵",
+          "🎋",
+          "🎍",
+          "🌴",
+        ];
+
+        let isShift = false;
+        let currentTab = "letters";
+        const vk = document.getElementById("virtualKeyboard");
+        const vkClose = document.getElementById("vkClose");
+        const vkContent = document.getElementById("vkContent");
+        const keyboardBtn = document.getElementById("keyboardBtn");
+        const searchInput = document.getElementById("searchInput");
+
+        function getCurrentLang() {
+          return localStorage.getItem("munetiosLanguage") || "en";
+        }
+
+        function getLayout() {
+          const lang = getCurrentLang();
+          return keyboardLayouts[lang] || keyboardLayouts.en;
+        }
+
+        function isComplexScript() {
+          return complexScriptLangs.has(getCurrentLang());
+        }
+
+        function insertChar(char) {
+          if (!searchInput) return;
+          const start = searchInput.selectionStart;
+          const end = searchInput.selectionEnd;
+          const val = searchInput.value;
+          searchInput.value = val.slice(0, start) + char + val.slice(end);
+          searchInput.selectionStart = searchInput.selectionEnd =
+            start + char.length;
+          searchInput.focus();
+          if (isShift && currentTab === "letters") {
+            isShift = false;
+            renderLetters();
+          }
+        }
+
+        function doBackspace() {
+          if (!searchInput) return;
+          const start = searchInput.selectionStart;
+          const end = searchInput.selectionEnd;
+          const val = searchInput.value;
+          if (start === end && start > 0) {
+            searchInput.value = val.slice(0, start - 1) + val.slice(end);
+            searchInput.selectionStart = searchInput.selectionEnd = start - 1;
+          } else if (start !== end) {
+            searchInput.value = val.slice(0, start) + val.slice(end);
+            searchInput.selectionStart = searchInput.selectionEnd = start;
+          }
+          searchInput.focus();
+        }
+
+        function doEnter() {
+          const event = new KeyboardEvent("keydown", {
+            key: "Enter",
+            keyCode: 13,
+            which: 13,
+            bubbles: true,
+          });
+          if (searchInput) searchInput.dispatchEvent(event);
+        }
+
+        function makeKey(char, extraClass) {
+          const btn = document.createElement("button");
+          btn.className = "vk-key" + (extraClass ? " " + extraClass : "");
+          btn.textContent = char;
+          btn.addEventListener("mousedown", function (e) {
+            e.preventDefault();
+            insertChar(char);
+          });
+          return btn;
+        }
+
+        function makeSpecial(label, handler) {
+          const btn = document.createElement("button");
+          btn.className = "vk-key special";
+          btn.textContent = label;
+          btn.addEventListener("mousedown", function (e) {
+            e.preventDefault();
+            handler();
+          });
+          return btn;
+        }
+
+        function renderLetters() {
+          vkContent.innerHTML = "";
+          const layout = getLayout();
+          const isRTL = layout.rtl;
+
+          if (isComplexScript()) {
+            const note = document.createElement("div");
+            note.className = "vk-imelist-note";
+            const langName =
+              (window.getTranslation && window.getTranslation("name")) ||
+              getCurrentLang();
+            note.textContent =
+              "Use your system keyboard for " +
+              langName +
+              " input (IME required). QWERTY shown for Latin fallback.";
+            vkContent.appendChild(note);
+          }
+
+          layout.rows.forEach(function (row, rowIndex) {
+            const rowDiv = document.createElement("div");
+            rowDiv.className = "vk-row";
+            if (isRTL) rowDiv.style.direction = "rtl";
+
+            if (rowIndex === layout.rows.length - 1) {
+              const shiftBtn = document.createElement("button");
+              shiftBtn.className =
+                "vk-key special" + (isShift ? " shift-active" : "");
+              shiftBtn.textContent = "⇧";
+              shiftBtn.addEventListener("mousedown", function (e) {
+                e.preventDefault();
+                isShift = !isShift;
+                renderLetters();
+              });
+              rowDiv.appendChild(shiftBtn);
+            }
+
+            row.forEach(function (char) {
+              rowDiv.appendChild(makeKey(isShift ? char.toUpperCase() : char));
+            });
+
+            if (rowIndex === layout.rows.length - 1) {
+              const bsBtn = document.createElement("button");
+              bsBtn.className = "vk-key special";
+              bsBtn.textContent = "⌫";
+              bsBtn.addEventListener("mousedown", function (e) {
+                e.preventDefault();
+                doBackspace();
+              });
+              rowDiv.appendChild(bsBtn);
+            }
+            vkContent.appendChild(rowDiv);
+          });
+
+          if (layout.extras && layout.extras.length > 0) {
+            const extraRow = document.createElement("div");
+            extraRow.className = "vk-row";
+            if (isRTL) extraRow.style.direction = "rtl";
+            layout.extras.forEach(function (char) {
+              extraRow.appendChild(
+                makeKey(isShift ? char.toUpperCase() : char),
+              );
+            });
+            vkContent.appendChild(extraRow);
+          }
+
+          const bottomRow = document.createElement("div");
+          bottomRow.className = "vk-row";
+          const numSwitch = makeSpecial("123", function () {
+            switchTab("numbers");
+          });
+          const spaceBtn = document.createElement("button");
+          spaceBtn.className = "vk-key wide";
+          spaceBtn.textContent = "⎵";
+          spaceBtn.addEventListener("mousedown", function (e) {
+            e.preventDefault();
+            insertChar(" ");
+          });
+          const enterBtn = makeSpecial("↵", doEnter);
+          bottomRow.appendChild(numSwitch);
+          bottomRow.appendChild(spaceBtn);
+          bottomRow.appendChild(enterBtn);
+          vkContent.appendChild(bottomRow);
+        }
+
+        function renderNumbers() {
+          vkContent.innerHTML = "";
+          numRows.forEach(function (row) {
+            const rowDiv = document.createElement("div");
+            rowDiv.className = "vk-row";
+            row.forEach(function (char) {
+              rowDiv.appendChild(makeKey(char));
+            });
+            vkContent.appendChild(rowDiv);
+          });
+          const bottomRow = document.createElement("div");
+          bottomRow.className = "vk-row";
+          bottomRow.appendChild(
+            makeSpecial("ABC", function () {
+              switchTab("letters");
+            }),
+          );
+          const spaceBtn = document.createElement("button");
+          spaceBtn.className = "vk-key wide";
+          spaceBtn.textContent = "⎵";
+          spaceBtn.addEventListener("mousedown", function (e) {
+            e.preventDefault();
+            insertChar(" ");
+          });
+          bottomRow.appendChild(spaceBtn);
+          const bsBtn = document.createElement("button");
+          bsBtn.className = "vk-key special";
+          bsBtn.textContent = "⌫";
+          bsBtn.addEventListener("mousedown", function (e) {
+            e.preventDefault();
+            doBackspace();
+          });
+          bottomRow.appendChild(bsBtn);
+          vkContent.appendChild(bottomRow);
+        }
+
+        function renderSymbols() {
+          vkContent.innerHTML = "";
+          symRows.forEach(function (row) {
+            const rowDiv = document.createElement("div");
+            rowDiv.className = "vk-row";
+            row.forEach(function (char) {
+              rowDiv.appendChild(makeKey(char));
+            });
+            vkContent.appendChild(rowDiv);
+          });
+          const bottomRow = document.createElement("div");
+          bottomRow.className = "vk-row";
+          bottomRow.appendChild(
+            makeSpecial("ABC", function () {
+              switchTab("letters");
+            }),
+          );
+          const spaceBtn = document.createElement("button");
+          spaceBtn.className = "vk-key wide";
+          spaceBtn.textContent = "⎵";
+          spaceBtn.addEventListener("mousedown", function (e) {
+            e.preventDefault();
+            insertChar(" ");
+          });
+          bottomRow.appendChild(spaceBtn);
+          const bsBtn = document.createElement("button");
+          bsBtn.className = "vk-key special";
+          bsBtn.textContent = "⌫";
+          bsBtn.addEventListener("mousedown", function (e) {
+            e.preventDefault();
+            doBackspace();
+          });
+          bottomRow.appendChild(bsBtn);
+          vkContent.appendChild(bottomRow);
+        }
+
+        function renderEmoji() {
+          vkContent.innerHTML = "";
+          const grid = document.createElement("div");
+          grid.className = "vk-emoji-grid";
+          emojis.forEach(function (em) {
+            const btn = document.createElement("button");
+            btn.className = "vk-emoji-key";
+            btn.textContent = em;
+            btn.addEventListener("mousedown", function (ev) {
+              ev.preventDefault();
+              insertChar(em);
+            });
+            grid.appendChild(btn);
+          });
+          vkContent.appendChild(grid);
+          const bottomRow = document.createElement("div");
+          bottomRow.className = "vk-row";
+          bottomRow.style.marginTop = "8px";
+          bottomRow.appendChild(
+            makeSpecial("ABC", function () {
+              switchTab("letters");
+            }),
+          );
+          const spaceBtn = document.createElement("button");
+          spaceBtn.className = "vk-key wide";
+          spaceBtn.textContent = "⎵";
+          spaceBtn.addEventListener("mousedown", function (e) {
+            e.preventDefault();
+            insertChar(" ");
+          });
+          bottomRow.appendChild(spaceBtn);
+          const bsBtn = document.createElement("button");
+          bsBtn.className = "vk-key special";
+          bsBtn.textContent = "⌫";
+          bsBtn.addEventListener("mousedown", function (e) {
+            e.preventDefault();
+            doBackspace();
+          });
+          bottomRow.appendChild(bsBtn);
+          vkContent.appendChild(bottomRow);
+        }
+
+        function switchTab(tab) {
+          currentTab = tab;
+          document.querySelectorAll(".vk-tab").forEach(function (t) {
+            t.classList.toggle("active", t.getAttribute("data-vk-tab") === tab);
+          });
+          renderTab(tab);
+        }
+
+        function renderTab(tab) {
+          if (tab === "letters") renderLetters();
+          else if (tab === "numbers") renderNumbers();
+          else if (tab === "symbols") renderSymbols();
+          else if (tab === "emoji") renderEmoji();
+        }
+
+        document.querySelectorAll(".vk-tab").forEach(function (tab) {
+          tab.addEventListener("mousedown", function (e) {
+            e.preventDefault();
+            switchTab(tab.getAttribute("data-vk-tab"));
+          });
+        });
+
+        if (keyboardBtn) {
+          keyboardBtn.addEventListener("click", function () {
+            const isActive = vk.classList.toggle("active");
+            if (isActive) {
+              renderTab(currentTab);
+              if (searchInput) searchInput.focus();
+            }
+          });
+        }
+
+        if (vkClose) {
+          vkClose.addEventListener("mousedown", function (e) {
+            e.preventDefault();
+            vk.classList.remove("active");
+          });
+        }
+
+        // Draggable keyboard
+        const vkHeader = document.getElementById("vkHeader");
+        let isDragging = false;
+        let dragStartX, dragStartY, vkStartX, vkStartY;
+
+        if (vkHeader) {
+          vkHeader.addEventListener("mousedown", function (e) {
+            if (e.target.closest("#vkClose")) return;
+            isDragging = true;
+            const rect = vk.getBoundingClientRect();
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            vkStartX = rect.left;
+            vkStartY = rect.top;
+            vk.style.transition = "none";
+            e.preventDefault();
+          });
+
+          vkHeader.addEventListener(
+            "touchstart",
+            function (e) {
+              if (e.target.closest("#vkClose")) return;
+              const touch = e.touches[0];
+              isDragging = true;
+              const rect = vk.getBoundingClientRect();
+              dragStartX = touch.clientX;
+              dragStartY = touch.clientY;
+              vkStartX = rect.left;
+              vkStartY = rect.top;
+              vk.style.transition = "none";
+            },
+            { passive: true },
+          );
+        }
+
+        document.addEventListener("mousemove", function (e) {
+          if (!isDragging) return;
+          const dx = e.clientX - dragStartX;
+          const dy = e.clientY - dragStartY;
+          vk.style.left = vkStartX + dx + "px";
+          vk.style.top = vkStartY + dy + "px";
+          vk.style.bottom = "auto";
+          vk.style.transform = "none";
+        });
+
+        document.addEventListener("mouseup", function () {
+          isDragging = false;
+        });
+
+        document.addEventListener(
+          "touchmove",
+          function (e) {
+            if (!isDragging) return;
+            const touch = e.touches[0];
+            vk.style.left = vkStartX + touch.clientX - dragStartX + "px";
+            vk.style.top = vkStartY + touch.clientY - dragStartY + "px";
+            vk.style.bottom = "auto";
+            vk.style.transform = "none";
+          },
+          { passive: true },
+        );
+
+        document.addEventListener("touchend", function () {
+          isDragging = false;
+        });
+
+        // Refresh keyboard layout when language changes
+        window.refreshVirtualKeyboard = function () {
+          if (
+            vk &&
+            vk.classList.contains("active") &&
+            currentTab === "letters"
+          ) {
+            renderLetters();
+          }
+        };
       })();
 
       // Text-to-Speech UI functionality
