@@ -11731,89 +11731,104 @@
 
           // Check for IE
           if (/MSIE|Trident/.test(ua)) {
-            return true;
+        return true;
           }
 
           // Check for old Edge (< 79, before Chromium-based)
           if (/Edge\/([0-9]+)/.test(ua)) {
-            var match = ua.match(/Edge\/([0-9]+)/);
-            if (match && parseInt(match[1]) < 79) {
-              return true;
-            }
+        var match = ua.match(/Edge\/([0-9]+)/);
+        if (match && parseInt(match[1], 10) < 79) {
+          return true;
+        }
           }
 
           // Check for very old Chrome (< 40)
           if (/Chrome\/([0-9]+)/.test(ua)) {
-            var match = ua.match(/Chrome\/([0-9]+)/);
-            if (match && parseInt(match[1]) < 40) {
-              return true;
-            }
+        var match = ua.match(/Chrome\/([0-9]+)/);
+        if (match && parseInt(match[1], 10) < 40) {
+          return true;
+        }
           }
 
           // Check for very old Firefox (< 40)
           if (/Firefox\/([0-9]+)/.test(ua)) {
-            var match = ua.match(/Firefox\/([0-9]+)/);
-            if (match && parseInt(match[1]) < 40) {
-              return true;
-            }
+        var match = ua.match(/Firefox\/([0-9]+)/);
+        if (match && parseInt(match[1], 10) < 40) {
+          return true;
+        }
           }
 
           // Check for very old Safari (< 10)
           if (/Version\/([0-9]+).*Safari/.test(ua)) {
-            var match = ua.match(/Version\/([0-9]+).*Safari/);
-            if (match && parseInt(match[1]) < 10) {
-              return true;
-            }
+        var match = ua.match(/Version\/([0-9]+).*Safari/);
+        if (match && parseInt(match[1], 10) < 10) {
+          return true;
+        }
           }
 
           // Check for old Opera (< 27, before Chromium-based)
           if (/OPR\/([0-9]+)/.test(ua)) {
-            var match = ua.match(/OPR\/([0-9]+)/);
-            if (match && parseInt(match[1]) < 27) {
-              return true;
-            }
+        var match = ua.match(/OPR\/([0-9]+)/);
+        if (match && parseInt(match[1], 10) < 27) {
+          return true;
+        }
           }
 
           return false;
         }
 
-        if (isOldBrowser()) {
+        // Use DOMContentLoaded for modern browsers, fallback to window.onload for IE
+        function showModal() {
           var modal = document.createElement("div");
           modal.style.cssText =
-            "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:10000;";
+        "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:10000;";
+
+          // IE fallback for flex
+          if (typeof document.documentMode === "number") {
+        modal.style.display = "block";
+        modal.style.textAlign = "center";
+          }
 
           var modalContent = document.createElement("div");
           modalContent.style.cssText =
-            "background:white;padding:30px;border-radius:8px;text-align:center;max-width:400px;box-shadow:0 4px 6px rgba(0,0,0,0.1);";
+        "background:white;padding:30px;border-radius:8px;text-align:center;max-width:400px;box-shadow:0 4px 6px rgba(0,0,0,0.1);margin:auto;";
 
           var title = document.createElement("h2");
-          title.textContent = "Unsupported Browser";
+          title.appendChild(document.createTextNode("Unsupported Browser"));
           title.style.cssText = "margin:0 0 10px 0;color:#333;";
 
           var message = document.createElement("p");
-          message.textContent =
-            "Your browser is outdated. Please upgrade for the best experience.";
+          message.appendChild(
+        document.createTextNode(
+          "Your browser is outdated. Please upgrade for the best experience."
+        )
+          );
           message.style.cssText =
-            "margin:0 0 20px 0;color:#666;font-size:14px;";
+        "margin:0 0 20px 0;color:#666;font-size:14px;";
 
           var buttonContainer = document.createElement("div");
           buttonContainer.style.cssText =
-            "display:flex;gap:10px;justify-content:center;";
+        "display:flex;gap:10px;justify-content:center;";
+          // IE fallback for flex
+          if (typeof document.documentMode === "number") {
+        buttonContainer.style.display = "block";
+        buttonContainer.style.textAlign = "center";
+          }
 
           var liteBtn = document.createElement("button");
-          liteBtn.textContent = "Go to Lite Version";
+          liteBtn.appendChild(document.createTextNode("Go to Supported Version"));
           liteBtn.style.cssText =
-            "padding:10px 20px;background:#007bff;color:white;border:none;border-radius:4px;cursor:pointer;font-weight:bold;";
+        "padding:10px 20px;background:#007bff;color:white;border:none;border-radius:4px;cursor:pointer;font-weight:bold;margin:5px;";
           liteBtn.onclick = function () {
-            window.location.href = "lite.html";
+        window.location.href = "old.html";
           };
 
           var tryBtn = document.createElement("button");
-          tryBtn.textContent = "Try Anyway";
+          tryBtn.appendChild(document.createTextNode("Try Anyway"));
           tryBtn.style.cssText =
-            "padding:10px 20px;background:#6c757d;color:white;border:none;border-radius:4px;cursor:pointer;font-weight:bold;";
+        "padding:10px 20px;background:#6c757d;color:white;border:none;border-radius:4px;cursor:pointer;font-weight:bold;margin:5px;";
           tryBtn.onclick = function () {
-            modal.remove();
+        if (modal.parentNode) modal.parentNode.removeChild(modal);
           };
 
           buttonContainer.appendChild(liteBtn);
@@ -11822,7 +11837,38 @@
           modalContent.appendChild(message);
           modalContent.appendChild(buttonContainer);
           modal.appendChild(modalContent);
+
+          // For IE, append to body after window.onload to ensure body exists
+          if (typeof document.documentMode === "number") {
+        window.attachEvent
+          ? window.attachEvent("onload", function () {
           document.body.appendChild(modal);
+            })
+          : window.onload = function () {
+          document.body.appendChild(modal);
+            };
+          } else {
+        document.body.appendChild(modal);
+          }
+        }
+
+        if (isOldBrowser()) {
+          if (
+        typeof document.documentMode === "number" &&
+        (!document.body || !document.body.appendChild)
+          ) {
+        // Wait for body in IE
+        window.attachEvent
+          ? window.attachEvent("onload", showModal)
+          : window.onload = showModal;
+          } else if (
+        document.readyState === "loading" &&
+        document.addEventListener
+          ) {
+        document.addEventListener("DOMContentLoaded", showModal);
+          } else {
+        showModal();
+          }
         }
       })();
     </script>
