@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Munetios Search Lite - Fast, simple search experience."
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="Munetios, Search, Lite, Fast, Simple" />
+    <meta name="author" content="Munetios" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>Munetios Home Lite</title>
+    <style>
+      * {
+        font-family:
+          Segoe UI,
+          arial,
+          sans-serif;
+      }
+      body {
+        min-width: 522px;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+      }
+    header {
+      background-color: #003366;
+      color: #ffffff;
+      padding: 6px 12px;
+      display: flex;
+      font-size: 17px;
+      min-width: 522px;
+    }
+    header a {
+      color: #ffffff !important;
+      text-decoration: none;
+      margin-right: 12px;
+      white-space: nowrap;
+    }
+    header a:hover {
+      text-decoration: underline;
+    }
+    header a:visited {
+      color: #3366cc;
+    }
+      .search-box {
+        border: 1px solid #d3d3d3;
+        padding: 4px;
+        width: 580px;
+        display: flex;
+        align-items: center;
+        max-width: 100%;
+        background-color: #ffffff;
+        margin: 16px auto;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+      .search-box input {
+        border: none;
+        outline: none;
+        width: 100%;
+        font-size: 13px;
+        padding: 6px 8px;
+        font-family:
+          Segoe UI,
+          arial,
+          sans-serif;
+      }
+      button {
+        padding: 6px 10px;
+        cursor: pointer;
+        border-radius: 4px;
+        border: 1px solid #d3d3d3;
+        background-color: #f5f5f5;
+        font-family:
+          Segoe UI,
+          arial,
+          sans-serif;
+        font-size: 13px;
+        margin: 4px;
+        color: #333333;
+      }
+      button:hover {
+        border: 1px solid #b3b3b3;
+        background-color: #efefef;
+      }
+      button:active {
+        background-color: #e8e8e8;
+      }
+      footer {
+        margin-top: 32px;
+        font-size: 11px;
+        color: #808080;
+      }
+      footer a {
+        color: #0066cc;
+        text-decoration: none;
+        margin: 0 6px;
+      }
+      footer a:hover {
+        text-decoration: underline;
+      }
+      footer a:visited {
+        color: #7030a0;
+      }
+      right {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+      }
+      @media (max-width: 985px) {
+        .hide-1 {
+          display: none;
+        }
+      }
+      @media (max-width: 801px) {
+        .hide-2 {
+          display: none;
+        }
+      }
+      @media (max-width: 709px) {
+        .hide-3 {
+          display: none;
+        }
+        right {
+          display: none;
+        }
+        img {
+          height: 100px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="https://www.munetios.com/search/search">Search</a>
+        <a href="https://www.munetios.com/search/search.html#/images">Images</a>
+                <a href="https://www.munetios.com/search/search.html#/videos">Videos</a>
+                        <a href="https://maps.munetios.com">Maps</a>
+      <a href="https://www.munetios.com/apps1">More Apps...</a>
+      <right>
+        <a href="https://www.munetios.com/policies/#/terms">Terms</a>
+        <a href="https://www.munetios.com/policies/#/privacy">Privacy</a>
+      </right>
+    </header>
+    <center>
+      <br />
+      <img src="munetios-logo.png" height="150" alt="Munetios Logo" />
+      <div class="search-box">
+        <input type="search" placeholder="Search Munetios" /><svg xmlns="http://www.w3.org/2000/svg" id="virtualkeyboardBtn" height="24px" viewBox="0 0 24 24" width="24px" fill="#000"><path d="M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z"/><path d="M0 0h24v24H0zm0 0h24v24H0z" fill="none"/></svg>  <button id="searchBtn">Search</button>
+      </div>
+      <br />
+    
+      <button id="ImLuckyBtn">I'm Feeling Lucky</button>
+      <footer>
+        <p>2026 Munetios</p>
+      </footer>
+    </center>
+    <script>
+    // Get elements
+    var searchInput = document.querySelector(".search-box input");
+    var searchBtn = document.getElementById("searchBtn");
+    var luckyBtn = document.getElementById("ImLuckyBtn");
+    var vkBtn = document.getElementById("virtualkeyboardBtn");
+
+    // Polyfill for addEventListener for IE8 and below
+    function addEvent(el, ev, fn) {
+      if (el.addEventListener) {
+        el.addEventListener(ev, fn, false);
+      } else if (el.attachEvent) {
+        el.attachEvent("on" + ev, fn);
+      }
+    }
+
+    // Polyfill for trim for IE8 and below
+    if (!String.prototype.trim) {
+      String.prototype.trim = function () {
+        return this.replace(/^\s+|\s+$/g, "");
+      };
+    }
+
+    // Polyfill for Array.prototype.indexOf for IE8 and below
+    if (!Array.prototype.indexOf) {
+      Array.prototype.indexOf = function (searchElement, fromIndex) {
+        var k;
+        if (this == null) {
+        throw new TypeError('"this" is null or not defined');
+        }
+        var O = Object(this);
+        var len = O.length >>> 0;
+        if (len === 0) {
+        return -1;
+        }
+        var n = +fromIndex || 0;
+        if (Math.abs(n) === Infinity) {
+        n = 0;
+        }
+        if (n >= len) {
+        return -1;
+        }
+        k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+        while (k < len) {
+        if (k in O && O[k] === searchElement) {
+          return k;
+        }
+        k++;
+        }
+        return -1;
+      };
+    }
+
+    // Search URL pattern
+    function getSearchUrl(q) {
+      var encoded = encodeURIComponent(q);
+      return (
+        "https://www.munetios.com/search/search.html?q=" +
+        encoded +
+        "#/all?q=" +
+        encoded
+      );
+    }
+
+    // Search button handler
+    function doSearch() {
+      var q = searchInput.value.trim();
+      if (q) {
+        window.location.href = getSearchUrl(q);
+      }
+    }
+
+    // I'm Feeling Lucky handler (simulate local: just go to first result page)
+    function doLucky() {
+      var q = searchInput.value.trim();
+      if (q) {
+      } else {
+        // Random URLs and queries
+        var randomUrls = [
+        "https://munetios.com",
+        "https://write.munetios.com",
+        "https://calendar.munetios.com",
+        "https://blog.munetios.com",
+        "https://tasks.munetios.com",
+        "https://www.munetios.com/about",
+        "https://www.munetios.com/policies/#/",
+        "https://www.munetios.com/policies/#/terms",
+        ];
+        var randomQueries = [
+        "productivity",
+        "ai tools",
+        "calendar tips",
+        "writing apps",
+        "privacy policy",
+        "task management",
+        "blog posts",
+        "about munetios",
+        ];
+        if (Math.random() < 0.5) {
+        // Visit a random URL
+        var url = randomUrls[Math.floor(Math.random() * randomUrls.length)];
+        window.location.href = url;
+        } else {
+        // Search a random query
+        var rq =
+          randomQueries[Math.floor(Math.random() * randomQueries.length)];
+        window.location.href = getSearchUrl(rq);
+        }
+      }
+    }
+
+    // Virtual Keyboard
+    function createVirtualKeyboard() {
+      // Remove existing keyboard if present
+      var oldKb = document.getElementById("munetios-virtual-kb");
+      if (oldKb) oldKb.parentNode.removeChild(oldKb);
+
+      var kb = document.createElement("div");
+      kb.id = "munetios-virtual-kb";
+      kb.style.position = "fixed";
+      kb.style.left = "50%";
+      kb.style.top = "60%";
+      kb.style.transform = "translate(-50%, 0)";
+      kb.style.background = "#fff";
+      kb.style.border = "1px solid #ccc";
+      kb.style.boxShadow = "0 2px 8px rgba(0,0,0,0.15)";
+      kb.style.padding = "10px";
+      kb.style.zIndex = 9999;
+      kb.style.userSelect = "none";
+      kb.style.fontFamily = "Segoe UI, Arial, sans-serif";
+      kb.style.borderRadius = "8px";
+      kb.style.textAlign = "center";
+
+      var keys = [
+        ["1","2","3","4","5","6","7","8","9","0","Back"],
+        ["q","w","e","r","t","y","u","i","o","p"],
+        ["a","s","d","f","g","h","j","k","l"],
+        ["z","x","c","v","b","n","m"],
+        ["Space","Close"]
+      ];
+
+      for (var i = 0; i < keys.length; i++) {
+        var row = document.createElement("div");
+        for (var j = 0; j < keys[i].length; j++) {
+          (function(key) {
+            var btn = document.createElement("button");
+            btn.type = "button";
+            btn.style.margin = "2px";
+            btn.style.padding = "8px 12px";
+            btn.style.fontSize = "15px";
+            btn.style.borderRadius = "4px";
+            btn.style.border = "1px solid #bbb";
+            btn.style.background = "#f5f5f5";
+            btn.style.cursor = "pointer";
+            btn.style.minWidth = key === "Space" ? "80px" : "32px";
+            btn.style.outline = "none";
+            btn.appendChild(document.createTextNode(key));
+            addEvent(btn, "click", function() {
+              if (key === "Back") {
+                // Remove last character
+                var val = searchInput.value;
+                searchInput.value = val.substring(0, val.length - 1);
+                try { searchInput.focus(); } catch(e){}
+              } else if (key === "Space") {
+                searchInput.value += " ";
+                try { searchInput.focus(); } catch(e){}
+              } else if (key === "Close") {
+                if (kb.parentNode) kb.parentNode.removeChild(kb);
+              } else {
+                searchInput.value += key;
+                try { searchInput.focus(); } catch(e){}
+              }
+            });
+            row.appendChild(btn);
+          })(keys[i][j]);
+        }
+        kb.appendChild(row);
+      }
+      document.body.appendChild(kb);
+    }
+
+    addEvent(vkBtn, "click", function(e) {
+      if (document.getElementById("munetios-virtual-kb")) {
+        document.getElementById("munetios-virtual-kb").parentNode.removeChild(document.getElementById("munetios-virtual-kb"));
+      } else {
+        createVirtualKeyboard();
+      }
+      if (searchInput && searchInput.focus) try { searchInput.focus(); } catch(e){}
+      if (e && e.preventDefault) e.preventDefault();
+      return false;
+    });
+
+    // Event listeners
+    addEvent(searchBtn, "click", doSearch);
+    addEvent(luckyBtn, "click", doLucky);
+    addEvent(searchInput, "keydown", function (e) {
+      e = e || window.event;
+      var key = e.key || e.keyCode;
+      if (key === "Enter" || key === 13) doSearch();
+    });
+    </script>
+  </body>
+</html>
