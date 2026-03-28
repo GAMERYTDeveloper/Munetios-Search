@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /search/search.html
+Disallow: /archive.html
+Disallow: /old.html
 Sitemap: https://www.munetios.com/sitemap.xml
 
-# This site is safe site and official and verified
 
