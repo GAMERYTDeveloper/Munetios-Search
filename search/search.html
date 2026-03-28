@@ -39,11 +39,14 @@
       https://api.stackexchange.com
       https://hn.algolia.com
       https://*.openstreetmap.org
-      https://dev.to
+      https://*.wikimedia.org
       https://www.wikidata.org 
+      https://dev.to
       https://api.github.com
-      https://api.duckduckgo.com
+      https://*.duckduckgo.com
+      https://duckduckgo.com
       https://www.reddit.com
+      https://api.openverse.org
       https://*.openfreemap.org
       https://tiles.openfreemap.org;
 
@@ -84,7 +87,8 @@
       }
       body {
         font-family: "Google Sans Flex", sans-serif;
-
+        overflow-x: hidden;
+        overflow-y: auto;
         margin: 0;
         padding: 0;
         background-color: #190047;
@@ -544,6 +548,7 @@
     </script>
   </head>
   <body>
+    <loading-progress></loading-progress>
     <munetios-app class="search-app">
       <header
         class="flex items-center p-4 h-[68px] sticky top-0 z-10"
@@ -725,9 +730,15 @@
       </div>
 
       <div class="content">
-        <div class="safesearch-setting">
-          <label for="SafeSearchLabel">SafeSearch</label>
-          <button id="SafeSearchToggle" class="btn liquid-glass">Strict</button>
+        <div class="flex-col items-start sm:items-center flex gap-4 sm:flex-row">
+          <div class="safesearch-setting">
+            <label for="SafeSearchLabel">SafeSearch</label>
+            <button id="SafeSearchToggle" class="btn liquid-glass">Strict</button>
+          </div>
+          <div class="country-selector-setting flex items-center gap-2">
+            <label for="CountrySelectorLabel">Country</label>
+            <button id="CountrySelectorToggle" class="btn liquid-glass" aria-haspopup="listbox" aria-expanded="false">Global</button>
+          </div>
         </div>
         <div class="ai-overview-box liquid-glass" id="aiOverviewBox"></div>
         <div id="instantAnswerBox" style="display:none;"></div>
@@ -1319,6 +1330,76 @@
     
   </style>
     <script nonce="rjighegujregergrejge">
+    // --- Country Selector Dropdown Logic ---
+    (function () {
+      const countryBtn = document.getElementById("CountrySelectorToggle");
+      const countryDropdown = document.getElementById("countryDropdown");
+      const countrySettingsBtn = document.getElementById("countryDropdownBtn");
+      let selectedCountry = localStorage.getItem("country") || "us";
+
+      function setCountryLabel(code) {
+      let label = "Global";
+      if (code && code !== "global") {
+        const el = countryDropdown.querySelector(`[data-country='${code}'] .options-label`);
+        if (el) label = el.textContent;
+      }
+      countryBtn.textContent = label + (code === "global" ? " 🌐" : "");
+      if (countrySettingsBtn) countrySettingsBtn.textContent = label;
+      }
+
+      setCountryLabel(selectedCountry);
+
+      function selectCountry(code) {
+      selectedCountry = code;
+      localStorage.setItem("country", selectedCountry);
+      setCountryLabel(selectedCountry);
+      countryDropdown.classList.add("hidden");
+      if (typeof setCountry === "function") setCountry(selectedCountry);
+      if (typeof performSearch === "function") performSearch();
+      }
+
+      countryBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      countryDropdown.classList.toggle("hidden");
+      const rect = countryBtn.getBoundingClientRect();
+      countryDropdown.style.position = "absolute";
+      countryDropdown.style.left = rect.left + window.scrollX + "px";
+      countryDropdown.style.top = rect.bottom + window.scrollY + 6 + "px";
+      countryDropdown.style.zIndex = 10050;
+      });
+
+      if (countrySettingsBtn) {
+      countrySettingsBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        countryDropdown.classList.toggle("hidden");
+        const rect = countrySettingsBtn.getBoundingClientRect();
+        countryDropdown.style.position = "absolute";
+        countryDropdown.style.left = rect.left + window.scrollX + "px";
+        countryDropdown.style.top = rect.bottom + window.scrollY + 8 + "px";
+        countryDropdown.style.zIndex = 10050;
+      });
+      }
+
+      document.addEventListener("mousedown", function (e) {
+      if (!countryDropdown.contains(e.target) && e.target !== countryBtn && e.target !== countrySettingsBtn) {
+        countryDropdown.classList.add("hidden");
+      }
+      });
+
+      countryDropdown.querySelectorAll("[data-country]").forEach(function (el) {
+      el.addEventListener("click", function () {
+        const code = el.getAttribute("data-country");
+        selectCountry(code);
+      });
+      });
+
+      // On load, sync with localStorage and trigger filter
+      window.addEventListener("DOMContentLoaded", function () {
+      const code = localStorage.getItem("country") || "us";
+      setCountryLabel(code);
+      if (typeof setCountry === "function") setCountry(code);
+      });
+    })();
        (function () {
       // IndexedDB helpers for theme settings
       const DB_NAME = "munetios-searchsettings";
@@ -2818,7 +2899,7 @@
           /\bass\b/i,
           /d[\u0061a][m\u006D][n\u006E]/i,
           /p[\u0072r][n\u006E]/i,
-          /c[\u0075u][m\u006D]/i,
+  
           /n[\u0069i][g\u0067]{2}[e\u0065][r\u0072]/i,
           /f[\u0061a][g\u0067]/i,
           /c[\u0075u][n\u006E][t\u0074]/i,
@@ -2855,6 +2936,7 @@
           /n[\u0069i][g\u0067]{2}[a\u0065]/i,
           // Clickbait/spammy
           /free\s+money/i,
+          /wtfpl/i,
           /work\s+from\s+home/i,
           /lose\s+weight/i,
           /miracle\s+pill/i,
@@ -2894,12 +2976,11 @@
           /explosive/i,
           /child\s*(porn|abuse|molest)/i,
         ];
-
         function matchesAny(text, patterns) {
           if (!text) return false;
           return patterns.some((re) => re.test(text));
         }
-        
+
         // Spammy / low-quality domains blocked in strict mode
         const spammyDomains = [
           // Ad-farms & clickbait
@@ -2925,6 +3006,8 @@
         ];
 
         return results.filter((r) => {
+          // Always allow local results and custom results (never filter them out)
+          if (r._customResult === true || r._localResult === true) return true;
           const fields = [r.title, r.description, r.url].join(" ");
           if (safeSearchLevel === "strict") {
             if (matchesAny(fields, strictPatterns)) return false;
@@ -2939,13 +3022,13 @@
           }
           return true;
         });
-      }
-      
-      // Patch renderResults to filter
-      const origRenderResultsSafeSearch = renderResults;
-      renderResults = function (results) {
+            }
+
+            // Patch renderResults to filter
+            const origRenderResultsSafeSearch = renderResults;
+            renderResults = function (results) {
         origRenderResultsSafeSearch(filterResults(results));
-      };
+            };
       // --- Open Results in New Window Toggle ---
       const newWindowToggle = document.getElementById("newWindowToggle");
       if (newWindowToggle) {
@@ -2989,79 +3072,219 @@
         ru: "Russia",
         za: "South Africa",
         nl: "Netherlands",
+        es: "Spain",
+        it: "Italy",
+        se: "Sweden",
+        no: "Norway",
+        fi: "Finland",
+        dk: "Denmark",
+        pl: "Poland",
+        mx: "Mexico",
+        ar: "Argentina",
+        tr: "Turkey",
+        id: "Indonesia",
+        kr: "South Korea",
       };
 
       // Blocked phrases per country (example, expand as needed)
-      // These lists are for demonstration and may not reflect current real-world restrictions.
-      // Update as needed for accuracy.
       const countryBlockedPhrases = {
         cn: [
           "munetios maps",
-           "munetios ai",
-  "facebook",
-  "instagram",
-  "twitter (X)",
-  "youtube",
-  "whatsapp",
-  "reddit",
-  "discord",
-  "tiktok",
-  "snapchat",
-  "telegram",
-  "google",
-  "gmail",
-  "blogspot",
-  "blogger",
-  "wikipedia",
-  "github copilot",
-  "dropbox",
-  "slack",
-  "tumblr",
-  "pinterest",
-  "vimeo",
-  "flickr",
-  "soundcloud",
-  "quora",
-  "medium",
-  "netflix",
-  "twitch",
-  "zoom",
-  "signal",
-  "messenger",
-  "linkedin"
-],
-
-        ru:[
-  "facebook",
-  "instagram",
-  "twitter (X)",
-  "roblox",
-  "munetios",
-  "proton"
-],
+          "munetios ai",
+          "facebook",
+          "instagram",
+          "twitter (X)",
+          "youtube",
+          "whatsapp",
+          "reddit",
+          "discord",
+          "tiktok",
+          "snapchat",
+          "telegram",
+          "google",
+          "gmail",
+          "blogspot",
+          "blogger",
+          "wikipedia",
+          "github copilot",
+          "dropbox",
+          "slack",
+          "tumblr",
+          "pinterest",
+          "vimeo",
+          "flickr",
+          "soundcloud",
+          "quora",
+          "medium",
+          "netflix",
+          "twitch",
+          "zoom",
+          "signal",
+          "messenger",
+          "linkedin"
+        ],
+        ru: [
+          "facebook",
+          "instagram",
+          "twitter (X)",
+          "roblox",
+          "munetios",
+          "proton"
+        ],
         in: [
           "tiktok",
           "WeChat",
           "UC Browser"
         ],
-        tr: [],
         ir: [
-  "facebook",
-  "twitter (X)",
-  "instagram",
-  "youtube",
-  "telegram",
-  "whatsapp",
-  "signal",
-  "discord"
-],
+          "facebook",
+          "twitter (X)",
+          "instagram",
+          "youtube",
+          "telegram",
+          "whatsapp",
+          "signal",
+          "discord"
+        ],
+        tr: [],
+        es: [],
+        it: [],
+        se: [],
+        no: [],
+        fi: [],
+        dk: [],
+        pl: [],
+        mx: [],
+        ar: [],
+        id: [],
+        kr: [],
         // Add more as needed
+      };
+
+      // Wikipedia language code per country
+      const countryWikiLang = {
+        us: "en",
+        gb: "en",
+        ca: "en",
+        au: "en",
+        in: "en",
+        de: "de",
+        fr: "fr",
+        jp: "ja",
+        cn: "zh",
+        br: "pt",
+        ru: "ru",
+        za: "en",
+        nl: "nl",
+        es: "es",
+        it: "it",
+        se: "sv",
+        no: "no",
+        fi: "fi",
+        dk: "da",
+        pl: "pl",
+        mx: "es",
+        ar: "es",
+        tr: "tr",
+        id: "id",
+        kr: "ko",
+      };
+
+      // Reddit subreddits per country for local results
+      const countrySubreddits = {
+        us: "unitedstates+AskAnAmerican",
+        gb: "unitedkingdom+AskABrit",
+        ca: "canada",
+        au: "australia",
+        in: "india+IndiaSpeaks",
+        de: "de+germany",
+        fr: "france",
+        jp: "japan",
+        cn: "China",
+        br: "brasil",
+        ru: "russia",
+        za: "southafrica",
+        nl: "Netherlands+dutch",
+        es: "spain+espanol",
+        it: "italy+italia",
+        se: "sweden",
+        no: "norway",
+        fi: "suomi+finland",
+        dk: "denmark",
+        pl: "polska+poland",
+        mx: "mexico",
+        ar: "argentina",
+        tr: "turkey",
+        id: "indonesia",
+        kr: "korea",
+      };
+
+      // Stack Overflow site/language per country (for future expansion)
+      const countryStackLang = {
+        us: "en",
+        gb: "en",
+        ca: "en",
+        au: "en",
+        in: "en",
+        de: "de",
+        fr: "fr",
+        jp: "ja",
+        cn: "zh",
+        br: "pt",
+        ru: "ru",
+        za: "en",
+        nl: "nl",
+        es: "es",
+        it: "it",
+        se: "sv",
+        no: "no",
+        fi: "fi",
+        dk: "da",
+        pl: "pl",
+        mx: "es",
+        ar: "es",
+        tr: "tr",
+        id: "id",
+        kr: "ko",
+      };
+
+      // GitHub trending language per country (for future expansion)
+      const countryGithubLang = {
+        us: "en",
+        gb: "en",
+        ca: "en",
+        au: "en",
+        in: "en",
+        de: "de",
+        fr: "fr",
+        jp: "ja",
+        cn: "zh",
+        br: "pt",
+        ru: "ru",
+        za: "en",
+        nl: "nl",
+        es: "es",
+        it: "it",
+        se: "sv",
+        no: "no",
+        fi: "fi",
+        dk: "da",
+        pl: "pl",
+        mx: "es",
+        ar: "es",
+        tr: "tr",
+        id: "id",
+        kr: "ko",
       };
 
       // Set current country
       function setCountry(code) {
         localStorage.setItem("country", code);
         window.currentCountry = code;
+        window.currentWikiLang = countryWikiLang[code] || "en";
+        window.currentRedditSubreddits = countrySubreddits[code] || "";
+        window.currentStackLang = countryStackLang[code] || "en";
+        window.currentGithubLang = countryGithubLang[code] || "en";
         // Update button label
         const btn = document.getElementById("countryDropdownBtn");
         if (btn) btn.textContent = countryMap[code] || "Choose Country";
@@ -3073,7 +3296,7 @@
         else el.classList.remove("bg-purple-700");
           }
         });
-        // Re-run search to filter results
+        // Re-run search to filter results and update region
         if (typeof performSearch === "function") performSearch();
       }
 
@@ -3131,6 +3354,303 @@
         const country = localStorage.getItem("country") || "us";
         setCountry(country);
       });
+
+      // --- Patch performSearch to use country for Wikipedia, Reddit, Stack Overflow, GitHub, and ranking ---
+      // (This code must be placed before the main performSearch definition)
+      // Save original performSearch if not already patched
+      if (!window._originalPerformSearch) window._originalPerformSearch = window.performSearch;
+      window.performSearch = async function () {
+        const query = searchInput.value.trim();
+        updateQueryParam(query);
+
+        if (!query) {
+          clearResults();
+          return;
+        }
+
+        isLoading = true;
+
+        try {
+          let allResults = getResultsFromDOM();
+
+          let filteredLocal;
+          if (query === "@all") {
+        filteredLocal = allResults.filter(r => r.title && r.description);
+          } else {
+        filteredLocal = allResults.filter(r =>
+          (r.title || "").toLowerCase().includes(query.toLowerCase()) ||
+          (r.description || "").toLowerCase().includes(query.toLowerCase()) ||
+          (r.link || "").toLowerCase().includes(query.toLowerCase())
+        );
+          }
+
+          // --- Show local results instantly, with a loading spinner for API results ---
+          {
+        const _spinnerWrapper = document.createElement("div");
+        _spinnerWrapper.id = "results-loading-spinner";
+        _spinnerWrapper.style.cssText = "display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:28px 0;";
+        _spinnerWrapper.innerHTML = '<div class="results-spinner-ring"></div><div style="opacity:0.55;font-size:0.88em;">Loading more results…</div>';
+        if (filteredLocal.length > 0) {
+          resultsContainer.appendChild(_spinnerWrapper);
+        } else {
+          clearResults();
+          resultsContainer.appendChild(_spinnerWrapper);
+        }
+          }
+
+          let redditResults = [];
+          let hnResults = [];
+          let stackResults = [];
+          let wikiResults = [];
+          let githubResults = [];
+          let ddgResults = [];
+          let mojangBugResults = [];
+          let wikidataResults = [];
+          let minecraftWikiResults = [];
+          let devtoResults = [];
+
+          // --- REDDIT ---
+          try {
+        const enableReddit = localStorage.getItem("enableRedditResults") === "true";
+        if (enableReddit && query !== "@all") {
+          // Use country-specific subreddits if available
+          const subreddits = window.currentRedditSubreddits || "";
+          const subredditParam = subreddits ? `&restrict_sr=on&sr_name=${encodeURIComponent(subreddits)}` : "";
+          const redditRes = await fetch(
+            `https://www.reddit.com/search.json?q=${encodeURIComponent(query)}${subredditParam}&limit=5`
+          );
+          const redditData = await redditRes.json();
+          redditResults = (redditData.data?.children || []).map(item => ({
+            title: item.data.title,
+            description: item.data.selftext || item.data.subreddit_name_prefixed,
+            link: "https://reddit.com" + item.data.permalink,
+            favicon: "https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png"
+          }));
+        }
+          } catch (err) { console.log("Reddit error:", err); }
+
+          // --- HACKER NEWS ---
+          if (query !== "@all") {
+        try {
+          const hnRes = await fetch(
+            `https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(query)}&hitsPerPage=5`
+          );
+          const hnData = await hnRes.json();
+          hnResults = (hnData.hits || []).map(item => ({
+            title: item.title,
+            description: item.url || "Hacker News",
+            link: item.url || `https://news.ycombinator.com/item?id=${item.objectID}`,
+            favicon: ""
+          }));
+        } catch (err) { console.log("HN error:", err); }
+          }
+
+          // --- STACK OVERFLOW ---
+          if (query !== "@all") {
+        try {
+          // Use country language if available (for future expansion)
+          const stackLang = window.currentStackLang || "en";
+          const stackSite = stackLang === "en" ? "stackoverflow" : stackLang + ".stackoverflow";
+          const stackRes = await fetch(
+            `https://api.stackexchange.com/2.3/search/advanced?order=desc&sort=relevance&q=${encodeURIComponent(query)}&site=stackoverflow&pagesize=5`
+          );
+          const stackData = await stackRes.json();
+          stackResults = (stackData.items || []).map(item => ({
+            title: item.title,
+            description: item.tags?.join(", ") || "Stack Overflow",
+            link: item.link,
+            favicon: "https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico"
+          }));
+        } catch (err) { console.log("Stack error:", err); }
+          }
+
+          // --- MOJANG BUG TRACKER (RSS) ---
+          if (query !== "@all") {
+        try {
+          const rssURL =
+            `https://bugs.mojang.com/issues/?jql=text~"${encodeURIComponent(query)}"&rss=true`;
+          const res = await fetch(rssURL);
+          const text = await res.text();
+          const parser = new DOMParser();
+          const xml = parser.parseFromString(text, "text/xml");
+          const items = xml.querySelectorAll("item");
+          mojangBugResults = Array.from(items).slice(0, 5).map(item => ({
+            title: item.querySelector("title")?.textContent || "",
+            description: "Official Mojang Bug Tracker",
+            link: item.querySelector("link")?.textContent || "",
+            favicon: ""
+          }));
+        } catch (err) {
+          console.log("Mojang RSS error:", err);
+        }
+          }
+
+          // --- WIKIDATA ---
+          if (query !== "@all") {
+        try {
+          const wdRes = await fetch(
+            `https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${encodeURIComponent(query)}&language=${window.currentWikiLang || "en"}&format=json&origin=*`
+          );
+          const wdData = await wdRes.json();
+          if (wdData.search) {
+            wikidataResults = wdData.search.map(item => ({
+          title: item.label,
+          description: item.description || "Wikidata",
+          link: `https://www.wikidata.org/wiki/${item.id}`,
+          favicon: ""
+            }));
+          }
+        } catch (err) {
+          console.log("Wikidata error:", err);
+        }
+          }
+
+          // --- WIKIPEDIA ---
+          if (query !== "@all") {
+        try {
+          const wikiLang = window.currentWikiLang || "en";
+          const wikiBase = `https://${wikiLang}.wikipedia.org`;
+          const wikiRes = await fetch(
+            `${wikiBase}/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`
+          );
+          const wikiData = await wikiRes.json();
+          wikiResults = (wikiData.query?.search || []).map(item => ({
+            title: item.title,
+            description: item.snippet?.replace(/<\/?[^>]+(>|$)/g, "") || "Wikipedia",
+            link: `${wikiBase}/wiki/${encodeURIComponent(item.title.replace(/ /g, "_"))}`,
+            favicon: `${wikiBase}/static/favicon/wikipedia.ico`
+          }));
+        } catch (err) { console.log("Wiki error:", err); }
+          }
+
+          // --- MINECRAFT WIKI (MediaWiki API) ---
+          if (query !== "@all") {
+        try {
+          const mcWikiRes = await fetch(
+            `https://minecraft.wiki/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`
+          );
+          const mcWikiData = await mcWikiRes.json();
+          if (mcWikiData.query && mcWikiData.query.search) {
+            minecraftWikiResults = mcWikiData.query.search.map(item => ({
+          title: item.title,
+          description: item.snippet?.replace(/<\/?[^>]+(>|$)/g, "") || "Minecraft Wiki",
+          link: `https://minecraft.wiki/w/${encodeURIComponent(item.title.replace(/ /g, "_"))}`,
+          favicon: "https://minecraft.wiki/favicon.ico"
+            }));
+          }
+        } catch (err) {
+          console.log("Minecraft Wiki fetch error:", err);
+        }
+          }
+
+          // --- DEV.TO ---
+          if (query !== "@all") {
+        try {
+          const devRes = await fetch(
+            `https://dev.to/api/articles?per_page=5&tag=${encodeURIComponent(query)}`
+          );
+          const devData = await devRes.json();
+          devtoResults = devData.map(a => ({
+            title: a.title,
+            description: a.description || "Dev.to",
+            link: a.url,
+            favicon: ""
+          }));
+        } catch (err) { console.log(err); }
+          }
+
+          // --- GITHUB ---
+          if (query !== "@all") {
+        try {
+          // Use trending language if available (for future expansion)
+          const githubLang = window.currentGithubLang || "en";
+          const githubRes = await fetch(
+            `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&sort=stars&order=desc&per_page=5`
+          );
+          const githubData = await githubRes.json();
+          githubResults = githubData.items?.map(repo => ({
+            title: repo.full_name,
+            description: repo.description || "GitHub",
+            link: repo.html_url,
+            favicon: "https://github.githubassets.com/favicons/favicon.svg"
+          })) || [];
+        } catch (err) { console.log("GitHub error:", err); }
+          }
+
+          // --- DUCKDUCKGO INSTANT ANSWER (PRIVACY SAFE) ---
+          if (query !== "@all") {
+        try {
+          const ddgRes = await fetch(
+            `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_redirect=1&no_html=1`
+          );
+          const ddgData = await ddgRes.json();
+          if (ddgData.AbstractURL) {
+            ddgResults = [{
+          title: ddgData.Heading,
+          description: ddgData.AbstractText,
+          link: ddgData.AbstractURL,
+          favicon: ""
+            }];
+          }
+        } catch (err) { console.log("DDG error:", err); }
+          }
+
+          // --- Custom Results (user-defined) ---
+          let customResultsMatched = [];
+          try {
+        const savedCustomResults = JSON.parse(localStorage.getItem("munetiosCustomResults") || "[]");
+        if (Array.isArray(savedCustomResults)) {
+          customResultsMatched = savedCustomResults.filter(cr => {
+            const titleMatch = (cr.title || "").toLowerCase().includes(query.toLowerCase());
+            const descMatch = (cr.description || "").toLowerCase().includes(query.toLowerCase());
+            const urlMatch = (cr.link || "").toLowerCase().includes(query.toLowerCase());
+            const kwMatch = (cr.keywords || []).some(kw => query.toLowerCase().includes(kw.toLowerCase()));
+            return titleMatch || descMatch || urlMatch || kwMatch;
+          }).map(cr => ({
+            ...cr,
+            _customBoost: Number(cr.boost) || 300
+          }));
+        }
+          } catch (_) {}
+
+          let filtered = [
+        ...customResultsMatched,
+        ...filteredLocal,
+        ...wikiResults,
+        ...wikidataResults,
+        ...minecraftWikiResults,
+        ...devtoResults,
+        ...hnResults,
+        ...mojangBugResults,
+        ...redditResults,
+        ...ddgResults,
+        ...stackResults,
+        ...githubResults,
+          ];
+
+          // Apply country filter (remove blocked content for selected country)
+          if (typeof window.filterResultsByCountry === "function") {
+        filtered = window.filterResultsByCountry(filtered, window.currentCountry);
+          }
+
+          // Calculate relevance score for each result (includes country domain boost)
+          filtered = filtered.map(result => ({
+        ...result,
+        relevanceScore: calculateRelevanceScore(result, query)
+          }));
+
+          // Sort by relevance score (highest first)
+          filtered.sort((a, b) => b.relevanceScore - a.relevanceScore);
+
+          renderResults(filtered);
+
+        } catch (e) {
+          clearResults();
+          resultsContainer.innerHTML = `<div style="padding:32px;text-align:center;color:#e66;">Failed to load</div>`;
+        } finally {
+          isLoading = false;
+        }
+      };
 
       // --- Liquid Glass Style Functionality ---
       function setLiquidGlassStyle(style) {
@@ -8608,7 +9128,6 @@
 
       
          async function performSearch() {
-
   const query = searchInput.value.trim();
   updateQueryParam(query);
 
@@ -8620,17 +9139,11 @@
   isLoading = true;
 
   try {
-
     let allResults = getResultsFromDOM();
-
     let filteredLocal;
-
     if (query === "@all") {
-
       filteredLocal = allResults.filter(r => r.title && r.description);
-
     } else {
-
       filteredLocal = allResults.filter(r =>
         r.title &&
         r.description &&
@@ -8640,17 +9153,14 @@
           (r.link && r.link.toLowerCase().includes(query.toLowerCase()))
         )
       );
-
     }
-
-    // --- Show local results instantly, with a loading spinner for API results ---
+    // Show local results instantly, with a loading spinner for API results
     {
       const _spinnerWrapper = document.createElement("div");
       _spinnerWrapper.id = "results-loading-spinner";
       _spinnerWrapper.style.cssText = "display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:28px 0;";
       _spinnerWrapper.innerHTML = '<div class="results-spinner-ring"></div><div style="opacity:0.55;font-size:0.88em;">Loading more results…</div>';
       if (filteredLocal.length > 0) {
-        // Rank and show local results right away
         const _rankedLocal = filteredLocal.map(r => ({ ...r, relevanceScore: calculateRelevanceScore(r, query) }));
         _rankedLocal.sort((a, b) => b.relevanceScore - a.relevanceScore);
         renderResults(_rankedLocal);
@@ -8665,333 +9175,184 @@
       }
     }
 
+    // --- Fetch all APIs in parallel ---
+    const enableReddit = localStorage.getItem("enableRedditResults") === "true";
+    const _countrySub = countrySubreddits[window.currentCountry];
+    let _redditUrl, _globalRedditUrl;
+    if (_countrySub) {
+      _redditUrl = `https://www.reddit.com/r/${_countrySub}/search.json?q=${encodeURIComponent(query)}&limit=5&restrict_sr=true`;
+    } else {
+      _redditUrl = `https://www.reddit.com/search.json?q=${encodeURIComponent(query)}&limit=5`;
+    }
+    _globalRedditUrl = `https://www.reddit.com/search.json?q=${encodeURIComponent(query)}&limit=5`;
+
+    const countryWikiLang = {
+      us: "en", gb: "en", ca: "en", au: "en", za: "en",
+      de: "de", fr: "fr", jp: "ja", cn: "zh", br: "pt",
+      in: "hi", ru: "ru", nl: "nl",
+    };
+    const wikiLang = countryWikiLang[window.currentCountry] || "en";
+    const wikiBase = `https://${wikiLang}.wikipedia.org`;
+
+    // Prepare all fetches
+    const fetches = [
+      // Reddit
+      (enableReddit && query !== "@all") ? fetch(_redditUrl).then(r => r.json()).catch(() => null) : Promise.resolve(null),
+      // Reddit global fallback
+      (enableReddit && query !== "@all" && _countrySub) ? fetch(_globalRedditUrl).then(r => r.json()).catch(() => null) : Promise.resolve(null),
+      // Hacker News
+      (query !== "@all") ? fetch(`https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(query)}&hitsPerPage=40`).then(r => r.json()).catch(() => null) : Promise.resolve(null),
+      // Stack Overflow
+      (query !== "@all") ? fetch(`https://api.stackexchange.com/2.3/search/advanced?order=desc&sort=relevance&q=${encodeURIComponent(query)}&site=stackoverflow&pagesize=5`).then(r => r.json()).catch(() => null) : Promise.resolve(null),
+      // Mojang Bug Tracker
+      (query !== "@all") ? fetch(`https://bugs.mojang.com/issues/?jql=text~"${encodeURIComponent(query)}"&rss=true`).then(r => r.text()).catch(() => null) : Promise.resolve(null),
+      // Wikidata
+      (query !== "@all") ? fetch(`https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${encodeURIComponent(query)}&language=en&format=json&origin=*`).then(r => r.json()).catch(() => null) : Promise.resolve(null),
+      // Wikipedia
+      (query !== "@all") ? fetch(`${wikiBase}/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`).then(r => r.json()).catch(() => null) : Promise.resolve(null),
+      // Minecraft Wiki
+      (query !== "@all") ? fetch(`https://minecraft.wiki/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`).then(r => r.json()).catch(() => null) : Promise.resolve(null),
+      // Dev.to
+      (query !== "@all") ? fetch(`https://dev.to/api/articles?per_page=5&tag=${encodeURIComponent(query)}`).then(r => r.json()).catch(() => null) : Promise.resolve(null),
+      // GitHub
+      (query !== "@all") ? fetch(`https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&per_page=5`).then(r => r.json()).catch(() => null) : Promise.resolve(null),
+      // DuckDuckGo
+      (query !== "@all") ? fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1`).then(r => r.json()).catch(() => null) : Promise.resolve(null),
+    ];
+
+    const [
+      redditData,
+      redditGlobalData,
+      hnData,
+      stackData,
+      mojangText,
+      wdData,
+      wikiData,
+      mcWikiData,
+      devData,
+      githubData,
+      ddgData
+    ] = await Promise.all(fetches);
+
+    // --- Parse results ---
     let redditResults = [];
+    if (redditData && redditData.data?.children) {
+      redditResults = redditData.data.children.map(item => ({
+        title: item.data.title,
+        description: `Reddit: ${item.data.subreddit_name_prefixed}`,
+        link: `https://www.reddit.com${item.data.permalink}`,
+        favicon: "https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png"
+      }));
+    }
+    // For country-specific searches, also fetch global results and append
+    if (redditGlobalData && redditGlobalData.data?.children && redditResults.length < 3) {
+      const _extra = redditGlobalData.data.children.map(item => ({
+        title: item.data.title,
+        description: `Reddit: ${item.data.subreddit_name_prefixed}`,
+        link: `https://www.reddit.com${item.data.permalink}`,
+        favicon: "https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png"
+      }));
+      redditResults = [...redditResults, ..._extra];
+    }
+
     let hnResults = [];
-    let stackResults = [];
-    let wikiResults = [];
-    let githubResults = [];
-    let ddgResults = [];
-
-    /* ---------- REDDIT ---------- */
-
-    try {
-
-      const enableReddit = localStorage.getItem("enableRedditResults") === "true";
-
-      if (enableReddit && query !== "@all") {
-
-        // Use country-specific subreddit when available for localised results
-        const _countrySub = countrySubreddits[window.currentCountry];
-        let _redditUrl;
-        let _globalRedditUrl = `https://www.reddit.com/search.json?q=${encodeURIComponent(query)}&limit=5`;
-        if (_countrySub) {
-          _redditUrl = `https://www.reddit.com/r/${_countrySub}/search.json?q=${encodeURIComponent(query)}&limit=5&restrict_sr=true`;
-        } else {
-          _redditUrl = _globalRedditUrl;
-        }
-
-        // Fetch country-specific subreddit results
-        const redditRes = await fetch(_redditUrl);
-        const redditData = await redditRes.json();
-
-        if (redditData.data?.children) {
-          redditResults = redditData.data.children.map(item => ({
-            title: item.data.title,
-            description: `Reddit: ${item.data.subreddit_name_prefixed}`,
-            link: `https://www.reddit.com${item.data.permalink}`,
-            favicon: "https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png"
-          }));
-        }
-
-        // For country-specific searches, also fetch global results and append
-        if (_countrySub && redditResults.length < 3) {
-          try {
-            const _globalRes = await fetch(_globalRedditUrl);
-            const _globalData = await _globalRes.json();
-            if (_globalData.data?.children) {
-              const _extra = _globalData.data.children.map(item => ({
-                title: item.data.title,
-                description: `Reddit: ${item.data.subreddit_name_prefixed}`,
-                link: `https://www.reddit.com${item.data.permalink}`,
-                favicon: "https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png"
-              }));
-              redditResults = [...redditResults, ..._extra];
-            }
-          } catch(_e) {}
-        }
-
-      }
-
-    } catch(err){ console.log("Reddit error:", err); }
-
-    /* ---------- HACKER NEWS ---------- */
-
-    if (query !== "@all") {
-
-      try {
-
-        const hnRes = await fetch(
-          `https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(query)}&hitsPerPage=40`
-        );
-
-        const hnData = await hnRes.json();
-
-        hnResults = hnData.hits
-          ?.filter(i => i.title && i.url)
-          .map(i => ({
-            title: i.title,
-            description: i._highlightResult && i._highlightResult.title && i._highlightResult.title.value
-              ? i._highlightResult.title.value.replace(/<[^>]+>/g, '').slice(0, 80)
-              : i.title.slice(0, 80),
-            link: i.url,
-            favicon: ""
-          })) || [];
-
-      } catch(err){ console.log("HN error:", err); }
-
-    }
-
-    /* ---------- STACK OVERFLOW ---------- */
-
-    if (query !== "@all") {
-
-      try {
-
-        const stackRes = await fetch(
-          `https://api.stackexchange.com/2.3/search/advanced?order=desc&sort=relevance&q=${encodeURIComponent(query)}&site=stackoverflow&pagesize=5`
-        );
-
-        const stackData = await stackRes.json();
-
-        stackResults = stackData.items?.map(item => ({
-          title: item.title,
-          description: item.tags ? "Tags: " + item.tags.join(", ") : "",
-          link: item.link,
-          favicon: "https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico"
+    if (hnData && hnData.hits) {
+      hnResults = hnData.hits
+        ?.filter(i => i.title && i.url)
+        .map(i => ({
+          title: i.title,
+          description: i._highlightResult && i._highlightResult.title && i._highlightResult.title.value
+            ? i._highlightResult.title.value.replace(/<[^>]+>/g, '').slice(0, 80)
+            : i.title.slice(0, 80),
+          link: i.url,
+          favicon: ""
         })) || [];
-
-      } catch(err){ console.log("Stack error:", err); }
-
     }
-/* ---------- MOJANG BUG TRACKER (REAL RESULTS via RSS) ---------- */
 
-let mojangBugResults = [];
+    let stackResults = [];
+    if (stackData && stackData.items) {
+      stackResults = stackData.items.map(item => ({
+        title: item.title,
+        description: item.tags ? "Tags: " + item.tags.join(", ") : "",
+        link: item.link,
+        favicon: "https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico"
+      }));
+    }
 
-if (query !== "@all") {
+    let mojangBugResults = [];
+    if (mojangText) {
+      try {
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(mojangText, "text/xml");
+        const items = xml.querySelectorAll("item");
+        mojangBugResults = Array.from(items).slice(0,5).map(item => ({
+          title: item.querySelector("title")?.textContent || "",
+          description: "Official Mojang Bug Tracker",
+          link: item.querySelector("link")?.textContent || "",
+          favicon: ""
+        }));
+      } catch (err) { console.log("Mojang RSS error:", err); }
+    }
 
-  try {
-
-    const rssURL =
-      `https://bugs.mojang.com/issues/?jql=text~"${encodeURIComponent(query)}"&rss=true`;
-
-    const res = await fetch(rssURL);
-
-    const text = await res.text();
-
-    const parser = new DOMParser();
-    const xml = parser.parseFromString(text, "text/xml");
-
-    const items = xml.querySelectorAll("item");
-
-    mojangBugResults = Array.from(items).slice(0,5).map(item => ({
-
-      title: item.querySelector("title")?.textContent || "",
-
-      description: "Official Mojang Bug Tracker",
-
-      link: item.querySelector("link")?.textContent || "",
-
-      favicon: ""
-
-    }));
-
-  } catch(err){
-
-    console.log("Mojang RSS error:", err);
-
-  }
-
-}
-
-    /* ---------- WIKIDATA ---------- */
-
-let wikidataResults = [];
-
-if (query !== "@all") {
-
-  try {
-
-    const wdRes = await fetch(
-      `https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${encodeURIComponent(query)}&language=en&format=json&origin=*`
-    );
-
-    const wdData = await wdRes.json();
-
-    if (wdData.search) {
-
+    let wikidataResults = [];
+    if (wdData && wdData.search) {
       wikidataResults = wdData.search.map(item => ({
         title: item.label,
         description: item.description || "Wikidata",
         link: `https://www.wikidata.org/wiki/${item.id}`,
         favicon: ""
       }));
-
     }
 
-  } catch(err) {
-    console.log("Wikidata error:", err);
-  }
-
-}
-
-    /* ---------- WIKIPEDIA ---------- */
-
-    if (query !== "@all") {
-
-      try {
-
-        // Use country-specific Wikipedia language subdomain when available
-        const countryWikiLang = {
-          us: "en", gb: "en", ca: "en", au: "en", za: "en",
-          de: "de", fr: "fr", jp: "ja", cn: "zh", br: "pt",
-          in: "hi", ru: "ru", nl: "nl",
-        };
-        const wikiLang = countryWikiLang[window.currentCountry] || "en";
-        const wikiBase = `https://${wikiLang}.wikipedia.org`;
-
-        const wikiRes = await fetch(
-          `${wikiBase}/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`
-        );
-
-        const wikiData = await wikiRes.json();
-
-        wikiResults = wikiData.query.search.map(item => ({
-          title: item.title,
-          description: item.snippet.replace(/<\/?[^>]+>/g,""),
-          link: `${wikiBase}/wiki/${encodeURIComponent(item.title)}`,
-          favicon: `${wikiBase}/static/favicon/wikipedia.ico`
-        }));
-
-      } catch(err){ console.log("Wiki error:", err); }
-
-    }
-    /* ---------- MINECRAFT WIKI (MediaWiki API) ---------- */
-
-let minecraftWikiResults = [];
-
-if (query !== "@all") {
-
-  try {
-
-    const mcWikiRes = await fetch(
-      `https://minecraft.wiki/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`
-    );
-
-    const mcWikiData = await mcWikiRes.json();
-
-    if (mcWikiData.query && mcWikiData.query.search) {
-
-      minecraftWikiResults = mcWikiData.query.search.map(item => ({
-
+    let wikiResults = [];
+    if (wikiData && wikiData.query && wikiData.query.search) {
+      wikiResults = wikiData.query.search.map(item => ({
         title: item.title,
-
-        description: item.snippet.replace(/<\/?[^>]+(>|$)/g,""),
-
-        link: `https://minecraft.wiki/w/${encodeURIComponent(item.title)}`,
-
-        favicon: "https://minecraft.wiki/favicon.ico"
-
+        description: item.snippet.replace(/<\/?[^>]+>/g, ""),
+        link: `${wikiBase}/wiki/${encodeURIComponent(item.title)}`,
+        favicon: `${wikiBase}/static/favicon/wikipedia.ico`
       }));
-
     }
 
-  } catch(err) {
-
-    console.log("Minecraft Wiki fetch error:", err);
-
-  }
-
-}
-
-
-let devtoResults=[];
-
-if(query!=="@all"){
-
-  try{
-
-    const devRes=await fetch(
-      `https://dev.to/api/articles?per_page=5&tag=${encodeURIComponent(query)}`
-    );
-
-    const devData=await devRes.json();
-
-    devtoResults=devData.map(a=>({
-
-      title:a.title,
-      description:a.description||"Dev.to",
-      link:a.url,
-      favicon:""
-
-    }));
-
-  }catch(err){console.log(err);}
-
-}
-
-
-    /* ---------- GITHUB ---------- */
-
-    if (query !== "@all") {
-
-      try {
-
-        const githubRes = await fetch(
-          `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&per_page=5`
-        );
-
-        const githubData = await githubRes.json();
-
-        githubResults = githubData.items?.map(repo => ({
-          title: repo.full_name,
-          description: repo.description || "",
-          link: repo.html_url,
-          favicon: "https://github.githubassets.com/favicons/favicon.svg"
-        })) || [];
-
-      } catch(err){ console.log("GitHub error:", err); }
-
+    let minecraftWikiResults = [];
+    if (mcWikiData && mcWikiData.query && mcWikiData.query.search) {
+      minecraftWikiResults = mcWikiData.query.search.map(item => ({
+        title: item.title,
+        description: item.snippet.replace(/<\/?[^>]+(>|$)/g, ""),
+        link: `https://minecraft.wiki/w/${encodeURIComponent(item.title)}`,
+        favicon: "https://minecraft.wiki/favicon.ico"
+      }));
     }
 
-    /* ---------- DUCKDUCKGO INSTANT ANSWER (PRIVACY SAFE) ---------- */
-
-    if (query !== "@all") {
-
-      try {
-
-        const ddgRes = await fetch(
-          `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1`
-        );
-
-        const ddgData = await ddgRes.json();
-
-        if (ddgData.AbstractURL) {
-
-          ddgResults.push({
-            title: ddgData.Heading,
-            description: ddgData.AbstractText,
-            link: ddgData.AbstractURL,
-            favicon: "https://duckduckgo.com/favicon.ico"
-          });
-
-        }
-
-      } catch(err){ console.log("DDG error:", err); }
-
+    let devtoResults = [];
+    if (devData && Array.isArray(devData)) {
+      devtoResults = devData.map(a => ({
+        title: a.title,
+        description: a.description || "Dev.to",
+        link: a.url,
+        favicon: ""
+      }));
     }
 
- 
-    /* ---------- COMBINE AND RANK ---------- */
+    let githubResults = [];
+    if (githubData && githubData.items) {
+      githubResults = githubData.items.map(repo => ({
+        title: repo.full_name,
+        description: repo.description || "",
+        link: repo.html_url,
+        favicon: "https://github.githubassets.com/favicons/favicon.svg"
+      }));
+    }
+
+    let ddgResults = [];
+    if (ddgData && ddgData.AbstractURL) {
+      ddgResults.push({
+        title: ddgData.Heading,
+        description: ddgData.AbstractText,
+        link: ddgData.AbstractURL,
+        favicon: "https://duckduckgo.com/favicon.ico"
+      });
+    }
 
     // --- Custom Results (user-defined) ---
     let customResultsMatched = [];
@@ -9020,20 +9381,16 @@ if(query!=="@all"){
     let filtered = [
       ...customResultsMatched,
       ...filteredLocal,
- 
-    
-     ...devtoResults,
+      ...devtoResults,
       ...hnResults,
       ...mojangBugResults,
       ...redditResults,
-
-       ...minecraftWikiResults,
-         ...wikidataResults,
-           ...wikiResults,
-
+      ...minecraftWikiResults,
+      ...wikidataResults,
+      ...wikiResults,
       ...ddgResults,
       ...stackResults,
-      ...githubResults, 
+      ...githubResults,
     ];
 
     // Apply country filter (remove blocked content for selected country)
@@ -9053,16 +9410,11 @@ if(query!=="@all"){
     renderResults(filtered);
 
   } catch(e){
-
     clearResults();
     resultsContainer.innerHTML = `<div style="padding:32px;text-align:center;color:#e66;">Failed to load</div>`;
-
   } finally {
-
     isLoading = false;
-
   }
-
 }
 
       // Remove duplicate event listeners and keep only one for each button with correct logic
@@ -9634,6 +9986,28 @@ if(query!=="@all"){
           try {
             let imageResults = [];
 
+  // 🌍 Openverse Images
+  try {
+    const openverseRes = await fetch(
+      `https://api.openverse.org/v1/images?q=${encodeURIComponent(query)}`
+    );
+    const openverseData = await openverseRes.json();
+
+    if (openverseData.results) {
+      openverseData.results.forEach((img) => {
+        imageResults.push({
+          title: img.title || "Openverse Image",
+          description: "Openverse",
+          link: img.foreign_landing_url,
+          image: img.url,
+          thumbnail: img.thumbnail,
+          favicon: "https://openverse.org/favicon.ico",
+        });
+      });
+    }
+  } catch (err) {
+    console.warn("Openverse failed", err);
+  }
             // Wikipedia images
             try {
               const wikiRes = await fetch(
@@ -9662,6 +10036,25 @@ if(query!=="@all"){
                         "https://en.wikipedia.org/static/favicon/wikipedia.ico",
                     })),
                 );
+              }
+            } catch (err) {}       // Wikimedia Commons images
+            try {
+              const commonsRes = await fetch(
+              `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrlimit=20&prop=imageinfo&iiprop=url|extmetadata&format=json&origin=*`
+              );
+              const commonsData = await commonsRes.json();
+              if (commonsData.query && commonsData.query.pages) {
+              Object.values(commonsData.query.pages).forEach((p) => {
+                if (p.imageinfo && p.imageinfo[0] && p.imageinfo[0].url) {
+                imageResults.push({
+                  title: p.title,
+                  description: "Wikimedia Commons",
+                  link: p.imageinfo[0].descriptionurl,
+                  image: p.imageinfo[0].url,
+                  favicon: "https://commons.wikimedia.org/favicon.ico",
+                });
+                }
+              });
               }
             } catch (err) {}
             // Static dataset of images (add your own images here)
@@ -9786,6 +10179,31 @@ if(query!=="@all"){
               }
             } catch (err) {}
 
+  // 🔍 DuckDuckGo Images
+  try {
+    const ddgRes = await fetch(
+      `https://duckduckgo.com/i.js?q=${encodeURIComponent(query)}&o=json&p=1`
+    );
+    const ddgData = await ddgRes.json();
+
+    if (ddgData.results) {
+      ddgData.results.forEach((img) => {
+        imageResults.push({
+          title: img.title || "Image",
+          description: "DuckDuckGo",
+          link: img.url,
+          image: img.image,
+          thumbnail: img.thumbnail,
+          favicon: "https://duckduckgo.com/favicon.ico",
+        });
+      });
+    }
+  } catch (err) {
+    console.warn("DuckDuckGo failed", err);
+  }
+
+
+     
             // GitHub images (repo owner avatars)
             try {
               const githubRes = await fetch(
@@ -9822,42 +10240,51 @@ if(query!=="@all"){
               modal.style.height = "100vh";
               modal.style.background = "rgba(0,0,0,0.55)";
               modal.style.display = "flex";
-              modal.style.alignItems = "center";
+              modal.style.flexDirection = "column";
               modal.style.justifyContent = "center";
+              modal.style.alignItems = "center";
               modal.style.zIndex = "10060";
+              // Zoom levels in percent
+              const zoomLevels = [50, 67, 75, 90, 100, 110, 125, 150, 175, 200, 250, 300, 400, 500];
+              let zoomIndex = zoomLevels.indexOf(100);
+              if (zoomIndex === -1) zoomIndex = 4; // fallback to 100%
               modal.innerHTML = `
-                <div class="liquid-glass" style="max-width:900px;width:100%;max-height:96vh;overflow:auto;border-radius:22px;position:relative;padding:0;">
-                    <button id="imageViewModalClose" style="position:absolute;top:10px;right:10px;z-index:2;background:#a259f7;color:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:1.3em;cursor:pointer;display:flex;align-items:center;justify-content:center;">
-                        &times;
-                    </button>
-                    <div style="padding:0 0 0 0;">
-                        <img src="${img.image}" alt="${
-                          img.title
-                        }" style="display:block;width:100%;max-width:100%;max-height:800px;object-fit:contain;border-radius:22px 22px 0 0;background:#fff;">
-                    </div>
-                    <div style="padding:24px 32px 24px 32px;">
-                        <div style="font-size:1.18em;font-weight:700;margin-bottom:8px;word-break:break-word;">${
-                          img.title || ""
-                        }</div>
-                        <div style="font-size:1em;color:#aaa;margin-bottom:18px;word-break:break-word;">${
-                          img.description || ""
-                        }</div>
-                        <div style="display:flex;gap:14px;">
-                            <a href="${
-                              img.link
-                            }" target="_self" rel="noopener" class="btn liquid-glass" style="background:#a259f7;color:#fff;">Visit</a>
-                            <button class="btn liquid-glass" id="imageViewReportBtn" style="background:#e34133;color:#fff;">Report</button>
-                        </div>
-                    </div>
+                <div style="position:absolute;top:0;left:0;width:100vw;height:100vh;pointer-events:none;"></div>
+                <div style="position:absolute;top:0;left:0;width:100vw;display:flex;align-items:center;justify-content:space-between;padding:32px 48px 0 48px;z-index:2;">
+                  <div class="liquid-glass" style="font-size:1.5em;font-weight:700;color:#fff; padding: 6px 10px;text-shadow:0 2px 8px #000b;max-width:60vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${img.title || ""}</div>
+                  <div style="display:flex;gap:18px;align-items:center; padding: 6px 10px;" class="liquid-glass">
+                    <a href="${img.link}" class="!hidden sm:!flex" target="_self" rel="noopener" title="Visit" style="color:#fff;background:transparent;border:none;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:1.3em;"><span class="material-symbols-rounded">open_in_new</span></a>
+                    <button id="imageViewPrintBtn" title="Print" style="color:#fff;background:transparent;border:none;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:1.3em;cursor:pointer;"><span class="material-symbols-rounded">print</span></button>
+                    <button id="imageViewZoomBtn" title="Zoom" style="color:#fff;background:transparent;border:none;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:1.3em;cursor:pointer;"><span class="material-symbols-rounded">zoom_in</span></button>
+                    <button class="!hidden sm:!flex" id="imageViewInfoBtn" title="Info" style="color:#fff;background:transparent;border:none;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:1.3em;cursor:pointer;"><span class="material-symbols-rounded">info</span></button>
+                    <button id="imageViewReportBtn" title="Report" style="color:#fff;background:transparent;border:none;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:1.3em;cursor:pointer;"><span class="material-symbols-rounded">flag</span></button>
+                    <button id="imageViewModalClose" title="Close" style="color:#fff;background:transparent;border:none;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:1.3em;cursor:pointer;margin-left:8px;"><span class="material-symbols-rounded">close</span></button>
+                  </div>
                 </div>
-            `;
+                <div style="flex:1;display:flex;align-items:center;justify-content:center;width:100vw;max-height:calc(100vh - 120px);">
+                  <img id="imageViewModalImg" src="${img.image}" alt="${img.title}" style="max-width:90vw;max-height:70vh;object-fit:contain;border-radius:18px;background:#fff;box-shadow:0 4px 32px #0008;transition:transform 0.2s;" />
+                </div>
+                <div id="imageViewZoomLabel" style="position:absolute;bottom:32px;left:48px;z-index:2;display:flex;align-items:center;gap:8px; padding: 4px 7px;user-select:none;" class="liquid-glass">
+                  <span class="material-symbols-rounded" style="color:#fff;font-size:1.3em;">zoom_in</span>
+                  <span id="zoomPercentLabel" style="color:#fff;font-size:1.1em;">Zoom: 100%</span>
+                </div>
+              `;
               document.body.appendChild(modal);
               document.body.style.overflow = "hidden";
-              modal.querySelector("#imageViewModalClose").onclick =
-                function () {
-                  modal.remove();
-                  document.body.style.overflow = "";
-                };
+              // Helper to update zoom
+              function setZoom(newIndex) {
+                zoomIndex = Math.max(0, Math.min(zoomLevels.length - 1, newIndex));
+                const percent = zoomLevels[zoomIndex];
+                imageEl.style.transform = `scale(${percent / 100})`;
+                imageEl.style.cursor = percent > 100 ? "zoom-out" : "zoom-in";
+                zoomLabel.textContent = `Zoom: ${percent}%`;
+              }
+              // Close button
+              modal.querySelector("#imageViewModalClose").onclick = function () {
+                modal.remove();
+                document.body.style.overflow = "";
+              };
+              // Overlay click to close
               modal.addEventListener("mousedown", function (e) {
                 if (e.target === modal) {
                   modal.remove();
@@ -9866,7 +10293,6 @@ if(query!=="@all"){
               });
               // Report button logic
               modal.querySelector("#imageViewReportBtn").onclick = function () {
-                // Remove modal before showing report
                 modal.remove();
                 document.body.style.overflow = "";
                 showReportModal({
@@ -9876,6 +10302,80 @@ if(query!=="@all"){
                   favicon: img.favicon || "",
                 });
               };
+                // Print button logic
+                modal.querySelector("#imageViewPrintBtn").onclick = function () {
+                // Create a popup window with the image and print it
+                const popup = window.open("", "printImage", "width=800,height=600");
+                if (popup) {
+                  popup.document.write(`
+                  <html>
+                    <head>
+                    <title>Print Image</title>
+                    <style>
+                      body { margin:0; padding:0; display:flex; align-items:center; justify-content:center; background:#fff; }
+                      img { max-width:100vw; max-height:100vh; }
+                    </style>
+                    </head>
+                    <body>
+                    <img src="${img.image}" alt="${img.title || ''}">
+                    <script nonce="rjighegujregergrejge">
+                      window.onload = function() {
+                      setTimeout(function() { window.print(); }, 100);
+                      };
+                    <\/script>
+                    </body>
+                  </html>
+                  `);
+                  popup.document.close();
+                }
+                };
+              // Info button logic
+              modal.querySelector("#imageViewInfoBtn").onclick = function () {
+                let info = `<b>Title:</b> ${img.title || ''}`;
+                if (img.description) info += `<br><b>Description:</b> ${img.description}`;
+                if (img.link) info += `<br><b>Link:</b> <a href='${img.link}' target='_blank' style='color:#a259f7;'>${img.link}</a>`;
+                showToast(info);
+              };
+              // Zoom logic
+              const imageEl = modal.querySelector('#imageViewModalImg');
+              const zoomLabel = modal.querySelector('#zoomPercentLabel');
+              setZoom(zoomIndex);
+              // Zoom button click: cycle up
+              modal.querySelector("#imageViewZoomBtn").onclick = function () {
+                setZoom(Math.min(zoomLevels.length - 1, zoomIndex + 1));
+              };
+              // Image click: cycle up
+              imageEl.onclick = function () {
+                setZoom(Math.min(zoomLevels.length - 1, zoomIndex + 1));
+              };
+              // Mouse wheel with Ctrl: zoom in/out
+              imageEl.addEventListener('wheel', function(e) {
+                if (e.ctrlKey) {
+                  e.preventDefault();
+                  if (e.deltaY < 0) {
+                    // Zoom in
+                    setZoom(Math.min(zoomLevels.length - 1, zoomIndex + 1));
+                  } else if (e.deltaY > 0) {
+                    // Zoom out
+                    setZoom(Math.max(0, zoomIndex - 1));
+                  }
+                }
+              }, { passive: false });
+              // Keyboard: Ctrl++ or Ctrl+-
+              modal.addEventListener('keydown', function(e) {
+                if (e.ctrlKey) {
+                  if (e.key === '+' || e.key === '=' || e.key === 'Add') {
+                    setZoom(Math.min(zoomLevels.length - 1, zoomIndex + 1));
+                    e.preventDefault();
+                  } else if (e.key === '-' || e.key === '_' || e.key === 'Subtract') {
+                    setZoom(Math.max(0, zoomIndex - 1));
+                    e.preventDefault();
+                  }
+                }
+              });
+              // Focus modal for keyboard events
+              modal.tabIndex = 0;
+              modal.focus();
             }
 
             // Attach click event to each image card
@@ -9980,12 +10480,13 @@ if(query!=="@all"){
                 grid.style.display = "grid";
                 grid.style.gridTemplateColumns =
                   "repeat(auto-fill, minmax(260px, 1fr))";
-                grid.style.gap = "18px";
+                grid.style.gap = "3px";
                 grid.style.justifyItems = "center";
                 grid.style.alignItems = "start";
-                grid.style.width = "100vw";
+                grid.style.width = "98vw";
+                grid.style.margin = "0 auto";
                 grid.style.boxSizing = "border-box";
-                grid.style.padding = "18px 0 32px 0";
+                grid.style.padding = "8px 0 3px 0";
 
                 const imagesToShow = filteredImages.slice(
                   0,
@@ -9999,6 +10500,7 @@ if(query!=="@all"){
                   div.style.border = "none";
                   div.style.padding = "6px 0 0 0";
                   div.style.margin = "0";
+                  div.style.backdropFilter = "none"
                   div.style.display = "flex";
                   div.style.flexDirection = "column";
                   div.style.alignItems = "center";
@@ -10012,7 +10514,7 @@ if(query!=="@all"){
                         <img src="${img.image}" alt="${img.title}" style="width:100%;max-width:340px;max-height:240px;min-height:120px;object-fit:cover;border-radius:12px;box-shadow:0 2px 8px #0002;background:#fff;">
                     </a>
                     <div style="width:100%;padding:4px 0 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-                        <a href="${img.link}" rel="noopener" target="_self" style="font-size:0.98em;color:#a259f7;text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;max-width:100%;">${img.title}</a>
+                        <a href="${img.link}" rel="noopener" target="_self" style="font-size:0.91em;color:#a259f7;text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;max-width:100%;">${img.title}</a>
                     </div>
                     `;
                   // Show image viewer modal on image click
@@ -10250,13 +10752,14 @@ document
               }
               
               locationResults.innerHTML = '<div style="padding:10px;color:#aaa;">Searching...</div>';
-              
-              try {
-                // Use Nominatim API for geocoding
+                
+                try {
+                // Use Photon API for geocoding
                 const response = await fetch(
-                  `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}&limit=10`
+                  `https://photon.komoot.io/api/?q=${encodeURIComponent(searchQuery)}&limit=10`
                 );
-                const locations = await response.json();
+                const data = await response.json();
+                const locations = data.features || [];
                 
                 // Clear existing markers
                 markers.forEach(marker => marker.remove());
@@ -10270,7 +10773,17 @@ document
                 }
 
                 // Display results
-                locations.forEach((location, index) => {
+                locations.forEach((feature, index) => {
+                  const props = feature.properties || {};
+                  const coords = feature.geometry?.coordinates || [];
+                  const displayName = [
+                  props.name,
+                  props.city,
+                  props.state,
+                  props.country
+                  ].filter(Boolean).join(", ");
+                  const type = props.osm_value || props.osm_type || "";
+
                   const resultDiv = document.createElement("div");
                   resultDiv.className = "location-result";
                   resultDiv.style.padding = "12px";
@@ -10282,60 +10795,60 @@ document
                   resultDiv.style.transition = "background 0.2s";
 
                   resultDiv.innerHTML = `
-                    <div style="font-weight:600;margin-bottom:4px;">${location.display_name}</div>
-                    <div style="font-size:0.9em;color:#666;">${location.type}</div>
+                  <div style="font-weight:600;margin-bottom:4px;">${displayName || "(No name)"}</div>
+                  <div style="font-size:0.9em;color:#666;">${type}</div>
                   `;
 
                   resultDiv.onmouseover = () => resultDiv.style.background = "#e8e8e8";
                   resultDiv.onmouseout = () => resultDiv.style.background = "#f8f8f8";
 
                   resultDiv.onclick = () => {
-                    const lat = parseFloat(location.lat);
-                    const lon = parseFloat(location.lon);
+                  const lon = coords[0];
+                  const lat = coords[1];
 
-                    // Fly map to location
-                    map.flyTo({ center: [lon, lat], zoom: 15 });
+                  // Fly map to location
+                  map.flyTo({ center: [lon, lat], zoom: 15 });
 
-                    // Clear existing markers
-                    markers.forEach(marker => marker.remove());
-                    markers = [];
+                  // Clear existing markers
+                  markers.forEach(marker => marker.remove());
+                  markers = [];
 
-                    // Add marker with popup
-                    const popup = new maplibregl.Popup({ offset: 25 })
-                      .setHTML(`<b>${location.display_name}</b>`);
-                    const marker = new maplibregl.Marker()
-                      .setLngLat([lon, lat])
-                      .setPopup(popup)
-                      .addTo(map);
-                    popup.addTo(map);
-                    markers.push(marker);
+                  // Add marker with popup
+                  const popup = new maplibregl.Popup({ offset: 25 })
+                    .setHTML(`<b>${displayName}</b>`);
+                  const marker = new maplibregl.Marker()
+                    .setLngLat([lon, lat])
+                    .setPopup(popup)
+                    .addTo(map);
+                  popup.addTo(map);
+                  markers.push(marker);
                   };
 
                   locationResults.appendChild(resultDiv);
 
                   // Pan to + pin first result automatically
                   if (index === 0) {
-                    const lat = parseFloat(location.lat);
-                    const lon = parseFloat(location.lon);
-                    map.flyTo({ center: [lon, lat], zoom: 13 });
+                  const lon = coords[0];
+                  const lat = coords[1];
+                  map.flyTo({ center: [lon, lat], zoom: 13 });
 
-                    const popup = new maplibregl.Popup({ offset: 25 })
-                      .setHTML(`<b>${location.display_name}</b>`);
-                    const marker = new maplibregl.Marker()
-                      .setLngLat([lon, lat])
-                      .setPopup(popup)
-                      .addTo(map);
-                    popup.addTo(map);
-                    markers.push(marker);
+                  const popup = new maplibregl.Popup({ offset: 25 })
+                    .setHTML(`<b>${displayName}</b>`);
+                  const marker = new maplibregl.Marker()
+                    .setLngLat([lon, lat])
+                    .setPopup(popup)
+                    .addTo(map);
+                  popup.addTo(map);
+                  markers.push(marker);
                   }
                 });
                 
-              } catch (error) {
+                } catch (error) {
                 locationResults.innerHTML = '<div style="padding:10px;color:#e66;">Failed to search locations.</div>';
                 console.error("Location search error:", error);
+                }
               }
-            }
-            
+              
             // Handle form submit
             mapSearchForm.onsubmit = function(e) {
               e.preventDefault();
@@ -10451,52 +10964,77 @@ document
         break;
         }
       });
+// On page load, handle hash or ?q=
+(function initSearchPage() {
+  let lastQuery = "";
+  let isInitialLoad = true;
+function getQueryFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  let q = params.get("q");
 
-      // On page load, handle hash or ?q=
-      window.addEventListener("DOMContentLoaded", () => {
-        const params = new URLSearchParams(window.location.search);
-        const q = params.get("q") || "";
-        if (window.location.hash.startsWith("#/")) {
-          // Parse hash and trigger correct tab
-          const hash = window.location.hash;
-          const match = hash.match(/^#\/(\w+)(\?q=(.*))?/);
-          if (match) {
-        const tab = match[1];
-        const query = match[3] ? decodeURIComponent(match[3]) : "";
-        if (query) searchInput.value = query;
-        updateDocumentTitle(tab, query);
-        switch (tab) {
-          case "all":
-            document.getElementById("allResult").click();
-            break;
-          case "popular":
-            document.getElementById("popularResult").click();
-            break;
-          case "recommended":
-            document.getElementById("recommendedResult").click();
-            break;
-          case "images":
-            document.getElementById("imagesResult").click();
-            break;
-          case "videos":
-            document.getElementById("videosResult").click();
-            break;
-          case "maps":
-            document.getElementById("mapsResult").click();
-            break;
-          case "blogs":
-            document.getElementById("blogsResult").click();
-                break;
-            }
-            return;
-          }
-        }
-        // If no hash but ?q= is present, trigger default search
-        if (q.trim()) {
-          searchInput.value = q;
-          document.getElementById("allResult").click();
-        }
-      });
+  // fallback to hash
+  if (!q && window.location.hash.includes("?")) {
+    const hashParams = new URLSearchParams(window.location.hash.split("?")[1]);
+    q = hashParams.get("q");
+  }
+
+  // ✅ only normalize + → space (cheap operation)
+  return q ? q.replace(/\+/g, " ").trim() : "";
+}
+  function getTabFromHash() {
+    const match = window.location.hash.match(/^#\/(\w+)/);
+    return match ? match[1] : "all";
+  }
+
+  function runSearch(tab, query) {
+    if (!query || query === lastQuery) return; // ✅ prevent duplicates
+    lastQuery = query;
+
+    const input = document.getElementById("searchInput");
+    if (input) input.value = query;
+
+    updateDocumentTitle(tab, query);
+
+    if (typeof performSearch === "function") {
+      performSearch(query);
+    }
+  }
+
+  function boot() {
+    const query = getQueryFromURL();
+    const tab = getTabFromHash();
+
+    if (query) {
+      // ✅ convert ?q= → hash ONCE (prevents double run)
+      if (!window.location.hash.startsWith("#/")) {
+        window.location.hash = `#/all?q=${encodeURIComponent(query)}`;
+        return; // let hashchange handle it
+      }
+
+      runSearch(tab, query);
+    }
+
+    isInitialLoad = false;
+  }
+
+  // run once
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
+
+  // handle hash navigation
+  window.addEventListener("hashchange", () => {
+    const query = getQueryFromURL();
+    const tab = getTabFromHash();
+
+    // ✅ skip duplicate initial trigger
+    if (isInitialLoad) return;
+
+    runSearch(tab, query);
+  });
+})();
       document
         .getElementById("videosResult")
         .addEventListener("click", async () => {
@@ -11672,19 +12210,25 @@ document
       };
       // On page load, set input value from ?q= if present and perform search if not blank
       window.addEventListener("DOMContentLoaded", () => {
-        const params = new URLSearchParams(window.location.search);
-        const q = params.get("q") || "";
-        searchInput.value = q;
-        if (q.trim()) {
-          performSearch();
+        let q = "";
+        if (window.location.search && window.location.search.includes("?q=")) {
+          const params = new URLSearchParams(window.location.search);
+          q = params.get("q") || "";
+        } else if (window.location.href.includes("?q=")) {
+          // For file:/// URLs, parse manually
+          const href = window.location.href;
+          const qMatch = href.match(/[?&]q=([^&#]*)/);
+          if (qMatch) {
+            q = decodeURIComponent(qMatch[1].replace(/\+/g, " "));
+          }
         }
-      });
-
-      // On page load, set input value from ?q= if present
-      window.addEventListener("DOMContentLoaded", () => {
-        const params = new URLSearchParams(window.location.search);
-        const q = params.get("q") || "";
-        searchInput.value = q;
+        var input = typeof searchInput !== "undefined" ? searchInput : document.getElementById("searchInput");
+        if (input) {
+          input.value = q;
+          if (q.trim()) {
+            performSearch();
+          }
+        }
       });
 
       // Simple toast
@@ -12102,7 +12646,7 @@ document
         {
           title: "Google Docs",
           description:
-            "Create and edit documents online, collaborate with others in real time.",
+            "Google Docs is an online word processor for creating, editing, and sharing documents securely.",
           url: "https://docs.google.com/document",
           favicon: "",
           link: "https://docs.google.com/document",
@@ -21452,6 +21996,59 @@ document
         if (vk && vk.classList.contains('active') && currentTab === 'letters') renderLetters();
       };
     })();
+  /*
+    Loading Progress Bar (fast, repeating, solid inner bar)
+    - Shows a fast-moving solid color bar that animates from left to right and repeats.
+    - Call showLoadingBar() to show, hideLoadingBar() to hide.
+  */
+
+  (function () {
+    // Create bar if not present
+    let bar = document.getElementById("munetiosLoadingBar");
+    if (!bar) {
+      bar = document.createElement("div");
+      bar.id = "munetiosLoadingBar";
+      bar.style.cssText =
+        "position:fixed;top:0;left:0;width:100vw;height:4px;z-index:10050;pointer-events:none;background:transparent;display:none;";
+      const inner = document.createElement("div");
+      inner.id = "munetiosLoadingBarInner";
+      inner.style.cssText =
+        "position:absolute;top:0;left:0;height:100%;width:50vw;max-width:320px;background:#a259f7;border-radius:2px;box-shadow:0 0 8px #a259f7cc;animation:munetiosLoadingBarMove 0.8s linear infinite;";
+      bar.appendChild(inner);
+      document.body.appendChild(bar);
+
+      // Add keyframes
+      const style = document.createElement("style");
+      style.textContent = `
+        @keyframes munetiosLoadingBarMove {
+          0% { left: -20vw; }
+          100% { left: 100vw; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    // Show/hide API
+    window.showLoadingBar = function () {
+      bar.style.display = "";
+    };
+    window.hideLoadingBar = function () {
+      bar.style.display = "none";
+    };
+
+    // Optionally, show on search start/hide on search end
+    if (window.performSearch) {
+      const origPS = window.performSearch;
+      window.performSearch = async function () {
+        showLoadingBar();
+        try {
+          return await origPS.apply(this, arguments);
+        } finally {
+          hideLoadingBar();
+        }
+      };
+    }
+  })();
     </script>
 
     <style>
