@@ -6155,6 +6155,103 @@
           },
           {
             keywords: [
+              /what\s+is\s+my\s+user\s+agent/i,
+              /show\s+my\s+user\s+agent/i,
+              /user\s+agent/i,
+              /what\s+browser\s+am\s+i\s+using/i,
+              /what\s+is\s+my\s+browser/i,
+              /which\s+browser\s+am\s+i\s+using/i,
+              /browser\s+info/i,
+              /browser\s+information/i,
+              /browser\s+details/i,
+              /browser\s+version/i,
+              /browser\s+type/i,
+              /browser\s+name/i,
+              /browser\s+os/i,
+              /os\s+info/i,
+              /os\s+information/i,
+              /os\s+details/i,
+              /operating\s+system\s+info/i,
+              /operating\s+system\s+information/i,
+              /operating\s+system\s+details/i,
+              /platform\s+info/i,
+              /platform\s+information/i,
+              /platform\s+details/i,
+              /device\s+info/i,
+              /device\s+information/i,
+              /device\s+details/i,
+              /system\s+info/i,
+              /system\s+information/i,
+              /system\s+details/i
+            ],
+            answer: (() => {
+              const ua = navigator.userAgent;
+              const platform = navigator.platform || "";
+              let browser = "Unknown";
+              let version = "";
+              let os = "Unknown";
+              // Browser detection
+              if (/Edg\//.test(ua)) {
+                browser = "Microsoft Edge";
+                version = ua.match(/Edg\/([\d\.]+)/)?.[1] || "";
+              } else if (/OPR\//.test(ua)) {
+                browser = "Opera";
+                version = ua.match(/OPR\/([\d\.]+)/)?.[1] || "";
+              } else if (/Vivaldi/.test(ua)) {
+                browser = "Vivaldi";
+                version = ua.match(/Vivaldi\/([\d\.]+)/)?.[1] || "";
+              } else if (/Brave\//.test(ua)) {
+                browser = "Brave";
+                version = ua.match(/Brave\/([\d\.]+)/)?.[1] || "";
+              } else if (/Chrome\//.test(ua) && !/Chromium/.test(ua)) {
+                browser = "Google Chrome";
+                version = ua.match(/Chrome\/([\d\.]+)/)?.[1] || "";
+              } else if (/Firefox\//.test(ua)) {
+                browser = "Mozilla Firefox";
+                version = ua.match(/Firefox\/([\d\.]+)/)?.[1] || "";
+              } else if (/Safari\//.test(ua) && !/Chrome\//.test(ua)) {
+                browser = "Safari";
+                version = ua.match(/Version\/([\d\.]+)/)?.[1] || "";
+              } else if (/MSIE /.test(ua) || /Trident\//.test(ua)) {
+                browser = "Internet Explorer";
+                version = ua.match(/(MSIE |rv:)([\d\.]+)/)?.[2] || "";
+              } else if (/MunetiosBrowser\//.test(ua)) {
+                browser = "Munetios Browser";
+                version = ua.match(/MunetiosBrowser\/([\d\.]+)/)?.[1] || "";
+              }
+
+              // OS detection
+              if (/Windows NT 10/.test(ua)) os = "Windows 10/11";
+              else if (/Windows NT 6\.3/.test(ua)) os = "Windows 8.1";
+              else if (/Windows NT 6\.2/.test(ua)) os = "Windows 8";
+              else if (/Windows NT 6\.1/.test(ua)) os = "Windows 7";
+              else if (/Mac OS X 10[._]\d+/.test(ua)) os = "macOS";
+              else if (/Android/.test(ua)) os = "Android";
+              else if (/iPhone|iPad|iPod/.test(ua)) os = "iOS";
+              else if (/Linux/.test(ua)) os = "Linux";
+              else if (/CrOS/.test(ua)) os = "Chrome OS";
+              else if (/MunetiosOS/.test(ua)) os = "Munetios OS";
+              else if (/MunetiosPhone/.test(ua)) os = "Munetios Phone";
+              // Device type
+              let device = "Desktop";
+              if (/Mobile|Android|iPhone|iPad|iPod/.test(ua)) device = "Mobile";
+              // Build answer
+              return `
+                <div style="font-size:1.08em;line-height:1.7;">
+                  <b>Browser:</b> ${browser}${version ? " " + version : ""}<br>
+                  <b>Operating System:</b> ${os}<br>
+                  <b>Device Type:</b> ${device}<br>
+                  <b>User Agent:</b> <span style="word-break:break-all;">${ua}</span><br>
+                  <b>Platform:</b> ${platform}
+                </div>
+                <div style="font-size:0.95em;color:#aaa;margin-top:8px;">
+                  This information is detected by your browser and sent to websites for compatibility and analytics.
+                </div>
+              `;
+            })(),
+          },
+          {
+            keywords: [
               /when\s+is\s+new\s+year'?s?\s+day/i,
               /what\s+day\s+is\s+new\s+year'?s?\s+day/i,
               /new\s+year'?s?\s+day/i,
