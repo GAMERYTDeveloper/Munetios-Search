@@ -3280,6 +3280,7 @@
               let errorMessage = "";
               if (
                 e.error === "not-allowed" ||
+                e.error === "service-not-allowed" ||
                 e.error === "permission-denied"
               ) {
                 errorMessage = window.getTranslation
@@ -3302,6 +3303,13 @@
                 spokenWords.textContent = window.getTranslation
                   ? window.getTranslation("noSpeechShort")
                   : "No speech detected";
+              } else if (e.error === "unsupported") {
+                errorMessage = window.getTranslation
+                  ? window.getTranslation("unsupportedBrowserFull")
+                  : "Voice search is not supported in your operating system or browser.";
+                spokenWords.textContent = window.getTranslation
+                  ? window.getTranslation("unsupportedBrowserShort")
+                  : "Unsupported browser";
               } else if (e.error === "network") {
                 errorMessage = window.getTranslation
                   ? window.getTranslation("networkErrorFull")
@@ -3388,6 +3396,7 @@
             gt ? gt("voiceNotSupportedShort") : "Voice search not supported",
             gt ? gt("micAccessDeniedShort") : "Microphone access denied",
             gt ? gt("micNotConnectedShort") : "Microphone not connected",
+            gt ? gt("unsupportedBrowserShort") : "Unsupported browser",
             gt ? gt("noSpeechShort") : "No speech detected",
             gt ? gt("networkErrorShort") : "Network error",
             gt ? gt("unableToStartVoice") : "Unable to start voice recognition",
@@ -3886,6 +3895,7 @@
       // Logo change and ST Patricks day for March 17, 2026
       (function () {
         const now = new Date();
+        // St. Patrick's Day: March 17, 2026
         if (
           now.getFullYear() === 2026 &&
           now.getMonth() === 2 &&
@@ -3893,24 +3903,40 @@
         ) {
           const logo = document.getElementById("canChangeLogoinDoodles");
           if (logo) {
-            logo.src = "patrick.png";
-            logo.style.cursor = "pointer";
-            logo.onclick = function () {
-              window.location.href =
-                "https://www.munetios.com/search/search.html?q=What+is+Saint+Patrick%27s+Day#/all?q=What%20is%20ST%20Patricks";
-            };
+        logo.src = "patrick.png";
+        logo.style.cursor = "pointer";
+        logo.onclick = function () {
+          window.location.href =
+            "https://www.munetios.com/search/search.html?q=What+is+Saint+Patrick%27s+Day#/all?q=What%20is%20ST%20Patricks";
+        };
           }
           const closeBtn = document.getElementById("closePiDayModal");
           if (closeBtn) {
-            closeBtn.onclick = function () {
-              document.getElementById("piDayModal").classList.remove("show");
-            };
+        closeBtn.onclick = function () {
+          document.getElementById("piDayModal").classList.remove("show");
+        };
           }
           const piModal = document.getElementById("piDayModal");
           if (piModal) {
-            piModal.addEventListener("click", function (e) {
-              if (e.target === piModal) piModal.classList.remove("show");
-            });
+        piModal.addEventListener("click", function (e) {
+          if (e.target === piModal) piModal.classList.remove("show");
+        });
+          }
+        }
+        // April Fools' Day: April 1, 2026
+        if (
+          now.getFullYear() === 2026 &&
+          now.getMonth() === 3 &&
+          now.getDate() === 1
+        ) {
+          const logo = document.getElementById("canChangeLogoinDoodles");
+          if (logo) {
+        logo.src = "april.png";
+        logo.style.cursor = "pointer";
+        logo.onclick = function () {
+          window.location.href =
+            "https://www.munetios.com/search/search.html?q=April+Fools%27+Day#/all?q=April%20Fools%27%20Day";
+        };
           }
         }
       })();
@@ -4466,8 +4492,8 @@
             listening: "Listening...",
             voiceNotSupportedShort: "Voice not supported",
             micAccessDeniedShort: "Microphone access denied",
-            micNotConnectedShort: "Microphone not connected",
-            noSpeechShort: "No speech detected",
+            micNotConnectedShort: "Didn't hear that. Try again.",
+            noSpeechShort: "Didn't hear that. Try again.",
             networkErrorShort: "Network error",
             unableToStartShort: "Unable to start",
             errorPrefix: "Error: ",
@@ -4476,7 +4502,7 @@
               "Microphone access denied. Please allow microphone permissions.",
             micNotConnectedFull:
               "Microphone not connected. Please connect a microphone.",
-            noSpeechFull: "No speech detected. Please try again.",
+            noSpeechFull: "Didn't hear that. Please try again.",
             networkErrorFull: "Network error. Please check your connection.",
             audioErrorText: "Audio capture error: ",
             voiceNotSupportedFull:
