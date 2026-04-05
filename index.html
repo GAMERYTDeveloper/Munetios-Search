@@ -43,7 +43,7 @@
     <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' https://cdn.tailwindcss.com https://api.munetios.com https://cdn.jsdelivr.net 'nonce-IKDjefjewhCujHJeuji3jhekowdijzizkcej' 'wasm-unsafe-eval'; style-src 'self' https://fonts.googleapis.com https://api.munetios.com 'unsafe-inline'; img-src * data:; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://www.munetios.com; connect-src 'self' data:  https://cdn.jsdelivr.net; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:;"
+      content="default-src 'self'; script-src 'self' https://cdn.tailwindcss.com https://api.munetios.com https://cdn.jsdelivr.net 'nonce-IKDjefjewhCujHJeuji3jhekowdijzizkcej' 'wasm-unsafe-eval'; style-src 'self' https://fonts.googleapis.com https://api.munetios.com 'unsafe-inline'; img-src * data:; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://www.munetios.com; connect-src 'self' data:  https://cdn.jsdelivr.net; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; media-src 'self' https:;"
     />
     <meta
       http-equiv="Content-Security-Policy"
@@ -131,6 +131,12 @@
         animation: gradientMove 10s ease-in-out infinite;
         min-height: 100vh;
         color: white;
+        display: flex;
+        flex-direction: column;
+      }
+      .content-container {
+        flex: 1;
+   
       }
 
       @keyframes gradientMove {
@@ -167,7 +173,7 @@
         justify-content: space-between;
       }
       .topbar-left {
-        padding: 17px 18px;
+        padding:13px 18px;
         display: flex;
         align-items: center;
         gap: 15px;
@@ -203,7 +209,7 @@
       .topbar-container icon {
         cursor: pointer;
       }
-      @media (max-width: 570px) {
+      @media (max-width: 600px) {
         .topbar-desktop {
           display: none;
         }
@@ -257,6 +263,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        min-height: 100%;
         padding: 20px;
         gap: 15px;
         max-width: 1500px;
@@ -358,7 +365,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 2000;
+        z-index: 5000;
         transition:
           opacity 0.3s ease,
           visibility 0.3s ease;
@@ -616,17 +623,32 @@
           right: 20px;
         }
       }
-      @media (max-width: 827px) {
+      @media (max-width: 908px) {
         .hide-700 {
           display: none;
         }
-        .logo-container img {
+      
+      }
+      @media (max-width: 850px) {
+         .logo-container img {
           width: 300px !important;
         }
       }
-      @media (max-width: 611px) {
+      @media (max-width: 700px) {
         .hide-611 {
           display: none;
+        }
+      }
+      @media (max-width: 360px) {
+         .logo-container img {
+          width: 200px !important;
+        }
+        .search-bar input:focus {
+          width: 100% !important;
+        }
+        .search-bar input:focus ~ #micBtn,
+        .search-bar input:focus ~ #keyboardBtn {
+          display: none !important;
         }
       }
       @media (max-width: 405px) {
@@ -637,12 +659,127 @@
           padding: 8px 5px;
         }
       }
+      .munetios-brand-nav {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 4px 8px;
+        border-radius: 10px;
+        transition: background 0.2s ease;
+        cursor: default;
+      }
+      .munetios-brand-label {
+        font-size: 15px;
+        font-weight: 600;
+        color: white;
+        letter-spacing: 0.2px;
+      }
       .footer-content {
-        padding: 20px;
-        text-align: left;
         font-size: 14px;
-        border-top: 1px solid rgba(106, 0, 255, 0.4);
+        border-top: 1px solid rgba(106, 0, 255, 0.35);
         margin-top: 40px;
+        padding: 40px 32px 24px;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr 1.2fr 1fr;
+        gap: 32px;
+        margin-bottom: 32px;
+      }
+      .footer-col-title {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.45);
+        margin-bottom: 14px;
+      }
+      .footer-col-brand {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .footer-brand-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 4px;
+      }
+      .footer-brand-name {
+        font-size: 18px;
+        font-weight: 700;
+        color: white;
+      }
+      .footer-tagline {
+        font-size: 13px;
+        color: rgba(255,255,255,0.5);
+        line-height: 1.5;
+        max-width: 200px;
+      }
+      .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+      }
+      .footer-link {
+        color: rgba(255,255,255,0.65);
+        font-size: 13.5px;
+        text-decoration: none;
+        transition: color 0.2s ease, padding-left 0.2s ease;
+        cursor: pointer;
+      }
+      .footer-link:hover {
+        color: white;
+        padding-left: 4px;
+      }
+      .footer-divider {
+        height: 1px;
+        background: rgba(106,0,255,0.25);
+        margin: 8px 0;
+      }
+      .footer-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 20px;
+        border-top: 1px solid rgba(106,0,255,0.2);
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .footer-bottom-left {
+        font-size: 12.5px;
+        color: rgba(255,255,255,0.4);
+      }
+      .footer-bottom-right {
+        display: flex;
+        gap: 16px;
+      }
+      .footer-bottom-right a {
+        font-size: 12.5px;
+        color: rgba(255,255,255,0.45);
+        transition: color 0.2s ease;
+      }
+      .footer-bottom-right a:hover {
+        color: white;
+      }
+      @media (max-width: 900px) {
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 24px;
+        }
+      }
+      @media (max-width: 560px) {
+        .footer-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        .footer-content {
+          padding: 28px 18px 18px;
+        }
+        .footer-bottom {
+          flex-direction: column;
+          align-items: flex-start;
+        }
       }
       .footer-left {
         display: flex;
@@ -1117,6 +1254,7 @@
         border-radius: 14px;
         max-height: 500px;
         overflow-y: auto;
+        z-index: 9999999;
       }
 
       /* Settings Modal Styles */
@@ -1131,7 +1269,7 @@
         display: none;
         align-items: center;
         justify-content: center;
-        z-index: 2500;
+        z-index: 5000;
       }
 
       .settings-modal.active {
@@ -1509,7 +1647,7 @@
         display: none;
         align-items: center;
         justify-content: center;
-        z-index: 3000;
+        z-index: 5000;
       }
 
       .confirm-modal.active {
@@ -1980,6 +2118,345 @@
       .apps-btn:hover {
         background-color: rgba(106, 0, 255, 0.2);
       }
+
+
+      /* =============================================
+         RACE CAR GAME — Advanced 3D WebGL Overlay
+         ============================================= */
+      .racecar-overlay {
+        position: fixed;
+        inset: 0;
+        background: #000;
+        z-index: 2501;
+        display: none;
+        flex-direction: column;
+      }
+      .racecar-overlay.active {
+        display: flex;
+        animation: fadeIn 0.2s ease;
+      }
+      .racecar-top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 18px;
+        height: 50px;
+        background: rgba(8, 3, 20, 0.97);
+        border-bottom: 1px solid rgba(106, 0, 255, 0.35);
+        flex-shrink: 0;
+        gap: 10px;
+        z-index: 10;
+      }
+      .racecar-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+      .racecar-title icon {
+        font-size: 22px;
+        color: #c060ff;
+      }
+      .racecar-top-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .racecar-canvas-wrap {
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+        background: #000;
+      }
+      #raceCanvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+      }
+      .racecar-bottom-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 18px;
+        height: 54px;
+        background: rgba(8, 3, 20, 0.97);
+        border-top: 1px solid rgba(106, 0, 255, 0.35);
+        flex-shrink: 0;
+        gap: 8px;
+        z-index: 10;
+      }
+      .racecar-bottom-left {
+        font-size: 13px;
+        color: rgba(200, 160, 255, 0.75);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-shrink: 0;
+      }
+      .racecar-bottom-left icon { font-size: 17px; color: #9050e0; }
+      .racecar-bottom-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+      .racecar-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 7px 14px;
+        border-radius: 50px;
+        background: rgba(70, 10, 170, 0.38);
+        border: 1px solid rgba(106, 0, 255, 0.45);
+        color: white;
+        cursor: pointer;
+        font-size: 12px;
+        font-family: inherit;
+        font-weight: 500;
+        transition: background 0.18s, transform 0.12s;
+        white-space: nowrap;
+        user-select: none;
+      }
+      .racecar-btn:hover { background: rgba(106, 0, 255, 0.55); transform: translateY(-1px); }
+      .racecar-btn:active { transform: scale(0.96); }
+      .racecar-btn icon { font-size: 17px; }
+      .racecar-btn.danger { background: rgba(190, 15, 55, 0.38); border-color: rgba(230, 30, 80, 0.5); }
+      .racecar-btn.danger:hover { background: rgba(220, 25, 65, 0.6); }
+      .racecar-btn.active-toggle { background: rgba(106,0,255,0.65); border-color: rgba(160,80,255,0.8); }
+      /* Loading screen */
+      .racecar-loading {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(ellipse at center, #0d0520 0%, #020108 100%);
+        z-index: 20;
+        gap: 22px;
+      }
+      .racecar-loading.hidden { display: none; }
+      .racecar-loading-logo {
+        font-size: 56px;
+        animation: raceLoadBounce 1.2s ease-in-out infinite;
+      }
+      @keyframes raceLoadBounce {
+        0%,100% { transform: translateY(0) scale(1); }
+        50%      { transform: translateY(-10px) scale(1.08); }
+      }
+      .racecar-spinner {
+        width: 60px; height: 60px;
+        border-radius: 50%;
+        border: 4px solid rgba(106,0,255,0.15);
+        border-top-color: #a040ff;
+        animation: spinLoad 0.9s linear infinite;
+      }
+      @keyframes spinLoad { to { transform: rotate(360deg); } }
+      .racecar-loading-title {
+        font-size: 22px; font-weight: 700; color: white;
+        letter-spacing: 2px; text-transform: uppercase;
+      }
+      .racecar-loading-label {
+        color: rgba(190,150,255,0.85);
+        font-size: 14px;
+        letter-spacing: 0.4px;
+      }
+      .racecar-loading-bar-wrap {
+        width: 260px; height: 5px;
+        background: rgba(255,255,255,0.07);
+        border-radius: 3px; overflow: hidden;
+      }
+      .racecar-loading-bar {
+        height: 100%; width: 0%;
+        background: linear-gradient(90deg, #5500cc, #b060ff, #ff40aa);
+        border-radius: 3px;
+        transition: width 0.35s cubic-bezier(.4,0,.2,1);
+      }
+      .racecar-loading-credit {
+        font-size: 11px;
+        color: rgba(255,255,255,0.3);
+        margin-top: 4px;
+      }
+      /* HUD */
+      .racecar-hud {
+        position: absolute;
+        top: 10px; left: 0; right: 0;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 14px;
+        pointer-events: none;
+        z-index: 5;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .racecar-hud-item {
+        background: rgba(6,2,18,0.7);
+        border: 1px solid rgba(106,0,255,0.28);
+        border-radius: 22px;
+        padding: 5px 13px;
+        color: white;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-weight: 600;
+      }
+      .racecar-hud-item icon { font-size: 15px; color: #a060f0; }
+      .racecar-hud-speed-val { font-size: 16px; font-weight: 800; color: #e0c0ff; }
+      /* Speedometer arc HUD */
+      .racecar-speedo {
+        position: absolute;
+        bottom: 16px; right: 16px;
+        width: 100px; height: 60px;
+        pointer-events: none;
+        z-index: 5;
+      }
+      /* RT badge */
+      .rt-badge {
+        position: absolute;
+        top: 10px; right: 14px;
+        font-size: 11px;
+        font-weight: 700;
+        color: #ffdd44;
+        background: rgba(80,50,0,0.6);
+        border: 1px solid rgba(255,200,0,0.5);
+        border-radius: 20px;
+        padding: 3px 9px;
+        letter-spacing: 1px;
+        pointer-events: none;
+        z-index: 6;
+        display: none;
+      }
+      .rt-badge.visible { display: block; }
+      /* Pause / Game Over */
+      .racecar-pause-screen {
+        position: absolute; inset: 0;
+        background: rgba(0,0,0,0.72);
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 15;
+        gap: 14px;
+      }
+      .racecar-pause-screen.visible { display: flex; animation: scaleIn 0.22s ease; }
+      .racecar-pause-title {
+        font-size: 42px; font-weight: 800;
+        color: white;
+        text-shadow: 0 0 30px rgba(160,60,255,0.9), 0 0 8px rgba(255,80,160,0.5);
+        letter-spacing: 2px;
+      }
+      .racecar-pause-subtitle { font-size: 15px; color: rgba(200,170,255,0.85); }
+      .racecar-pause-stats {
+        display: flex; gap: 20px;
+        font-size: 13px; color: rgba(255,255,255,0.6);
+        flex-wrap: wrap; justify-content: center;
+      }
+      .racecar-pause-stat-val { color: #d0a0ff; font-weight: 700; font-size: 16px; }
+      .racecar-pause-btns {
+        display: flex; gap: 10px; margin-top: 8px;
+        flex-wrap: wrap; justify-content: center;
+      }
+      /* Touch controls */
+      .racecar-touch-controls {
+        display: none;
+        position: absolute;
+        bottom: 8px; left: 0; right: 0;
+        justify-content: space-between;
+        padding: 0 12px;
+        z-index: 8;
+        pointer-events: none;
+      }
+      .racecar-touch-group { display: flex; gap: 5px; pointer-events: all; }
+      .racecar-touch-btn {
+        width: 62px; height: 62px;
+        border-radius: 50%;
+        background: rgba(80,0,200,0.28);
+        border: 2px solid rgba(120,40,255,0.5);
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer;
+        user-select: none; -webkit-user-select: none;
+        color: white;
+        font-family: "Material Symbols Rounded";
+        font-size: 28px;
+        transition: background 0.12s;
+        touch-action: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .racecar-touch-btn:active { background: rgba(106,0,255,0.65); }
+      /* Settings panel */
+      .racecar-settings-panel {
+        position: absolute;
+        top: 60px; right: 14px;
+        width: 230px;
+        background: rgba(8,3,22,0.96);
+        border: 1px solid rgba(106,0,255,0.4);
+        border-radius: 14px;
+        padding: 16px;
+        z-index: 12;
+        display: none;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .racecar-settings-panel.visible { display: flex; animation: scaleIn 0.18s ease; }
+      .racecar-settings-row {
+        display: flex; align-items: center; justify-content: space-between;
+        font-size: 13px; color: rgba(255,255,255,0.8);
+      }
+      .racecar-settings-row label { color: rgba(200,160,255,0.9); font-size: 12px; }
+      .racecar-seg {
+        display: flex; border-radius: 20px; overflow: hidden;
+        border: 1px solid rgba(106,0,255,0.4);
+      }
+      .racecar-seg button {
+        flex: 1; padding: 5px 10px;
+        background: transparent;
+        border: none;
+        color: rgba(255,255,255,0.55);
+        cursor: pointer;
+        font-size: 12px; font-family: inherit;
+        transition: background 0.15s, color 0.15s;
+      }
+      .racecar-seg button.active { background: rgba(106,0,255,0.6); color: white; font-weight: 700; }
+      /* Mobile responsive */
+      @media (max-width: 768px) {
+        .racecar-touch-controls { display: flex; }
+        .racecar-top-bar { height: 44px; padding: 0 10px; }
+        .racecar-title { font-size: 13px; letter-spacing: 0.5px; }
+        .racecar-bottom-bar { height: 48px; padding: 0 8px; gap: 5px; }
+        .racecar-btn { padding: 6px 10px; font-size: 11px; }
+        .racecar-btn .btn-txt { display: none; }
+        .racecar-btn icon { font-size: 18px; }
+        .racecar-hud { padding: 0 8px; gap: 4px; }
+        .racecar-hud-item { padding: 4px 9px; font-size: 11px; }
+        .racecar-hud-speed-val { font-size: 14px; }
+        .racecar-touch-btn { width: 58px; height: 58px; font-size: 26px; }
+        .racecar-speedometer { width: 80px; height: 50px; }
+        .racecar-settings-panel { width: 200px; right: 8px; top: 52px; }
+        .racecar-bottom-left .ctrl-txt { display: none; }
+      }
+      @media (max-width: 480px) {
+        .racecar-touch-btn { width: 52px; height: 52px; font-size: 24px; }
+        .racecar-bottom-bar { height: 44px; }
+        .racecar-top-bar { height: 40px; }
+        .racecar-hud-item { padding: 3px 7px; font-size: 10px; }
+        .racecar-hud-speed-val { font-size: 12px; }
+        .racecar-pause-title { font-size: 30px; }
+      }
+      @media (max-height: 480px) and (orientation: landscape) {
+        .racecar-touch-controls { bottom: 4px; }
+        .racecar-touch-btn { width: 48px; height: 48px; font-size: 22px; }
+        .racecar-top-bar { height: 38px; }
+        .racecar-bottom-bar { height: 40px; }
+        .racecar-hud { top: 6px; }
+      }
     </style>
   </head>
   <body>
@@ -1987,12 +2464,11 @@
       <div class="topbar-desktop">
         <div class="topbar-left liquid-glass">
           <div class="topbar-left-item">
-            <a href="https://www.munetios.com/about" data-translate="about"
-              >About</a
-            >
-          </div>
-          <div class="topbar-left-item">
-            <a href="https://blog.munetios.com" data-translate="blog">Blog</a>
+            <div class="menu-btn" id="menuBtnDesktop"><icon>menu</icon></div>
+            <div class="munetios-brand-nav">
+              <img src="munetios-logo-icon.png" width="22" height="22" alt="Munetios" style="border-radius:4px;" />
+              <span class="munetios-brand-label">Munetios</span>
+            </div>
           </div>
         </div>
         <div class="topbar-right liquid-glass">
@@ -2110,325 +2586,75 @@
       </div>
     </div>
     <div class="footer-content liquid-glass">
-      <div class="footer-left">
-        <p>&copy; 2026 Munetios&trade;</p>
-        |
-        <a
-          href="https://www.munetios.com/policies/#/terms"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Terms</a
-        >
-        <a
-          href="https://www.munetios.com/policies/#/privacy"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Privacy</a
-        >
-        <a
-          href="https://www.munetios.com/policies/#/cookies"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Cookies</a
-        >
-        |
-        <a
-          href="https://www.munetios.com/about"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >About</a
-        >
-        <a
-          href="https://www.munetios.com/apps1"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Products</a
-        >
-        <a
-          href="https://blog.munetios.com"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Blog</a
-        >
-        <a
-          href="https://www.munetios.com/timeline/"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Timeline</a
-        >
-        <a
-          href="https://www.munetios.com/doodles"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Doodles</a
-        >
-        <a
-          href="https://www.munetios.com/whats-new"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >What's New</a
-        >
-        <a
-          href="https://www.munetios.com/manage-data"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Manage Data</a
-        >
-
-        |
-        <a
-          href="https://www.munetios.com/search"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Search</a
-        >
-
-        <a
-          href="https://write.munetios.com"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >OmniWrite</a
-        >
-        <a
-          href="https://maps.munetios.com"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Maps</a
-        >
-        <a
-          href="https://calendar.munetios.com"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Calendar</a
-        >
-        <a
-          href="https://notes.munetios.com"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >SupaNotes</a
-        >
-        <a
-          href="https://calculator.munetios.com"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Calculator</a
-        >
-        <a
-          href="https://tasks.munetios.com"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Tasks</a
-        >
-        <a
-          href="https://photos.munetios.com"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Photos</a
-        >
-
-        <a
-          href="https://notebook.munetios.com"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Notebook</a
-        >
-        <a
-          href="https://tetris.munetios.com"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Tetris</a
-        >
-        <a
-          href="https://docs.munetios.com"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Docs</a
-        >
-        <a
-          href="https://games.munetios.com"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Games</a
-        >
-        <a
-          href="https://weather.munetios.com"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Weather</a
-        >
-        <a
-          href="https://www.munetios.com/labs"
-          id="labsLinkFooter"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Labs</a
-        >
-        |
-        <a
-          href="https://www.youtube.com/@munetios"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >YouTube Channel</a
-        >
-        <a
-          href="https://x.com/munetios"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >X/Twitter</a
-        >
-        <a
-          href="https://discord.gg/sNgVNf9MdB"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >Discord</a
-        >
-        <a
-          href="https://github.com/munetios"
-          style="
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-          "
-          onmouseover="this.style.color = 'white'"
-          onmouseout="this.style.color = 'rgba(255, 255, 255, 0.8)'"
-          >GitHub</a
-        >
+      <div class="footer-grid">
+        <!-- Brand -->
+        <div class="footer-col-brand">
+          <div class="footer-brand-row">
+            <img src="munetios-logo-icon.png" width="32" height="32" alt="Munetios" style="border-radius:6px;" />
+            <span class="footer-brand-name">Munetios</span>
+          </div>
+          <p class="footer-tagline" data-translate="footerTagline">Search the web without Google watching. No tracking, no profiling, no ads.</p>
+        </div>
+        <!-- Company -->
+        <div>
+          <div class="footer-col-title" data-translate="footerCompany">Company</div>
+          <div class="footer-links">
+            <a class="footer-link" href="https://www.munetios.com/about">About</a>
+            <a class="footer-link" href="https://blog.munetios.com">Blog</a>
+            <a class="footer-link" href="https://www.munetios.com/timeline/">Timeline</a>
+            <a class="footer-link" href="https://www.munetios.com/whats-new">What's New</a>
+            <a class="footer-link" href="https://www.munetios.com/doodles">Doodles</a>
+            <a class="footer-link" href="https://www.munetios.com/labs" id="labsLinkFooter">Labs</a>
+          </div>
+        </div>
+        <!-- Products -->
+        <div>
+          <div class="footer-col-title" data-translate="footerProducts">Products</div>
+          <div class="footer-links">
+            <a class="footer-link" href="https://www.munetios.com/search">Search</a>
+            <a class="footer-link" href="https://write.munetios.com">OmniWrite</a>
+            <a class="footer-link" href="https://maps.munetios.com">Maps</a>
+            <a class="footer-link" href="https://calendar.munetios.com">Calendar</a>
+            <a class="footer-link" href="https://notes.munetios.com">SupaNotes</a>
+            <a class="footer-link" href="https://calculator.munetios.com">Calculator</a>
+            <a class="footer-link" href="https://tasks.munetios.com">Tasks</a>
+            <a class="footer-link" href="https://photos.munetios.com">Photos</a>
+            <a class="footer-link" href="https://notebook.munetios.com">Notebook</a>
+            <a class="footer-link" href="https://docs.munetios.com">Docs</a>
+            <a class="footer-link" href="https://games.munetios.com">Games</a>
+            <a class="footer-link" href="https://weather.munetios.com">Weather</a>
+            <a class="footer-link" href="https://tetris.munetios.com">Tetris</a>
+            <a class="footer-link" href="https://www.munetios.com/apps1">All Products</a>
+          </div>
+        </div>
+        <!-- Legal & Social -->
+        <div>
+          <div class="footer-col-title" data-translate="footerLegal">Legal</div>
+          <div class="footer-links">
+            <a class="footer-link" href="https://www.munetios.com/policies/#/terms">Terms</a>
+            <a class="footer-link" href="https://www.munetios.com/policies/#/privacy">Privacy</a>
+            <a class="footer-link" href="https://www.munetios.com/policies/#/cookies">Cookies</a>
+            <a class="footer-link" href="https://www.munetios.com/manage-data">Manage Data</a>
+          </div>
+          <div class="footer-divider"></div>
+          <div class="footer-col-title" style="margin-top:8px;" data-translate="footerSocial">Social</div>
+          <div class="footer-links">
+            <a class="footer-link" href="https://www.youtube.com/@munetios">YouTube</a>
+            <a class="footer-link" href="https://x.com/munetios">X / Twitter</a>
+            <a class="footer-link" href="https://discord.gg/sNgVNf9MdB">Discord</a>
+            <a class="footer-link" href="https://github.com/munetios">GitHub</a>
+          </div>
+        </div>
       </div>
+      <div class="footer-bottom">
+        <span class="footer-bottom-left">&copy; 2026 Munetios&trade;</span>
+        <div class="footer-bottom-right">
+          <a href="https://www.munetios.com/policies/#/terms">Terms</a>
+          <a href="https://www.munetios.com/policies/#/privacy">Privacy</a>
+          <a href="https://www.munetios.com/policies/#/cookies">Cookies</a>
+        </div>
+      </div>
+
     </div>
     <div class="floating-button">
       <div class="settings-btn">
@@ -2948,6 +3174,130 @@
       accept=".json"
       style="display: none"
     />
+    <!-- Race Car Game Overlay -->
+    <div class="racecar-overlay" id="racecarOverlay">
+      <!-- Top bar -->
+      <div class="racecar-top-bar">
+        <div class="racecar-title">
+          <icon>sports_motorsports</icon>
+          <span>Race Car 3D</span>
+        </div>
+        <div class="racecar-top-right">
+          <button class="racecar-btn" id="racecarSettingsBtn" title="Settings"><icon>settings</icon><span class="btn-txt"> Settings</span></button>
+          <button class="racecar-btn" id="racecarRTBtn" title="Toggle Ray Tracing"><icon>wb_incandescent</icon><span class="btn-txt"> RT Off</span></button>
+          <button class="racecar-btn" id="racecarFullscreenBtn" title="Fullscreen"><icon>fullscreen</icon></button>
+        </div>
+      </div>
+      <!-- Canvas area -->
+      <div class="racecar-canvas-wrap">
+        <!-- Loading -->
+        <div class="racecar-loading" id="racecarLoading">
+          <div class="racecar-loading-logo">🏎️</div>
+          <div class="racecar-spinner"></div>
+          <div class="racecar-loading-title">Race Car 3D</div>
+          <div class="racecar-loading-label" id="racecarLoadingLabel">Initializing engine…</div>
+          <div class="racecar-loading-bar-wrap">
+            <div class="racecar-loading-bar" id="racecarLoadingBar"></div>
+          </div>
+          <div class="racecar-loading-credit">Music: SoundHelix Song 4 — SoundHelix</div>
+        </div>
+        <!-- RT badge -->
+        <div class="rt-badge" id="rtBadge">⚡ RAY TRACING</div>
+        <!-- HUD -->
+        <div class="racecar-hud" id="racecarHud" style="display:none">
+          <div class="racecar-hud-item">
+            <icon>speed</icon>
+            <span class="racecar-hud-speed-val" id="raceHudSpeed">0</span>
+            <span id="raceHudSpeedUnit">MPH</span>
+          </div>
+          <div class="racecar-hud-item"><icon>emoji_events</icon><span id="raceHudScore">0 pts</span></div>
+          <div class="racecar-hud-item"><icon>timer</icon><span id="raceHudLap">Lap 1</span></div>
+          <div class="racecar-hud-item"><icon>favorite</icon><span id="raceHudLives">❤️❤️❤️❤️❤️</span></div>
+        </div>
+        <!-- Speedometer canvas -->
+        <canvas class="racecar-speedo" id="speedoCanvas" width="120" height="72"></canvas>
+        <!-- WebGL Canvas -->
+        <canvas id="raceCanvas"></canvas>
+        <!-- Pause/GameOver -->
+        <div class="racecar-pause-screen" id="racecarPauseScreen">
+          <div class="racecar-pause-title" id="racecarPauseTitle">PAUSED</div>
+          <div class="racecar-pause-subtitle" id="racecarPauseSubtitle">Game paused</div>
+          <div class="racecar-pause-stats" id="racecarPauseStats"></div>
+          <div class="racecar-pause-btns">
+            <button class="racecar-btn" id="racecarResumeBtn"><icon>play_arrow</icon><span class="btn-txt">Resume</span></button>
+            <button class="racecar-btn" id="racecarRestartBtn"><icon>refresh</icon><span class="btn-txt">Restart</span></button>
+          </div>
+        </div>
+        <!-- Touch controls -->
+        <div class="racecar-touch-controls" id="racecarTouchControls">
+          <div class="racecar-touch-group">
+            <div class="racecar-touch-btn" id="touchLeft">arrow_back</div>
+          </div>
+          <div class="racecar-touch-group" style="flex-direction:column;gap:5px;align-items:center">
+            <div class="racecar-touch-btn" id="touchAccel">arrow_upward</div>
+            <div class="racecar-touch-btn" id="touchBrake">arrow_downward</div>
+          </div>
+          <div class="racecar-touch-group">
+            <div class="racecar-touch-btn" id="touchRight">arrow_forward</div>
+          </div>
+        </div>
+        <!-- Settings panel -->
+        <div class="racecar-settings-panel" id="racecarSettingsPanel">
+          <div style="font-size:13px;font-weight:700;color:white;margin-bottom:4px;">Game Settings</div>
+          <div class="racecar-settings-row">
+            <label>Speed Unit</label>
+            <div class="racecar-seg" id="speedUnitSeg">
+              <button class="active" data-unit="mph">MPH</button>
+              <button data-unit="kmh">KM/H</button>
+            </div>
+          </div>
+          <div class="racecar-settings-row">
+            <label>Ray Tracing</label>
+            <div class="racecar-seg" id="rtToggleSeg">
+              <button data-rt="on">ON</button>
+              <button class="active" data-rt="off">OFF</button>
+            </div>
+          </div>
+          <div class="racecar-settings-row">
+            <label>Music</label>
+            <div class="racecar-seg" id="musicToggleSeg">
+              <button class="active" data-music="on">ON</button>
+              <button data-music="off">OFF</button>
+            </div>
+          </div>
+          <div class="racecar-settings-row">
+            <label>Difficulty</label>
+            <div class="racecar-seg" id="diffSeg">
+              <button data-diff="easy">Easy</button>
+              <button class="active" data-diff="normal">Normal</button>
+              <button data-diff="hard">Hard</button>
+            </div>
+          </div>
+          <div class="racecar-settings-row">
+            <label>Time of Day</label>
+            <div class="racecar-seg" id="dayNightSeg">
+              <button class="active" data-tod="day">☀️ Day</button>
+              <button data-tod="night">🌙 Night</button>
+            </div>
+          </div>
+          <div style="font-size:10px;color:rgba(200,160,255,0.45);margin-top:4px;text-align:center;">
+            Music: SoundHelix Song 4 · SoundHelix
+          </div>
+        </div>
+      </div>
+      <!-- Bottom bar -->
+      <div class="racecar-bottom-bar">
+        <div class="racecar-bottom-left">
+          <icon>keyboard</icon>
+          <span class="ctrl-txt" id="racecarControlHint">WASD / Arrows to drive · P = Pause</span>
+        </div>
+        <div class="racecar-bottom-right">
+          <button class="racecar-btn" id="racecarPauseBtn"><icon>pause</icon><span class="btn-txt"> Pause</span></button>
+          <button class="racecar-btn" id="racecarRestartBtnBottom"><icon>refresh</icon><span class="btn-txt"> Restart</span></button>
+          <button class="racecar-btn danger" id="racecarCloseBtn"><icon>close</icon><span class="btn-txt"> Close</span></button>
+        </div>
+      </div>
+    </div>
     <div class="modal" id="addShortcutModal">
       <div class="modal-content">
         <h2>Add Shortcut</h2>
@@ -3108,6 +3458,10 @@
           <icon>science</icon>
           <span>Labs</span>
         </a>
+        <div class="sidebar-item" id="raceCarSidebarBtn">
+          <icon>sports_motorsports</icon>
+          <span>Race Car Game</span>
+        </div>
       </div>
     </div>
     <script nonce="IKDjefjewhCujHJeuji3jhekowdijzizkcej">
@@ -3118,6 +3472,15 @@
           script.src =
             "https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";
           document.head.appendChild(script);
+        }
+      })();
+
+      // Three.js loader (inline)
+      (function () {
+        if (!window.THREE) {
+          var s = document.createElement("script");
+          s.src = "https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js";
+          document.head.appendChild(s);
         }
       })();
 
@@ -4484,6 +4847,13 @@
             youtubeChannel: "YouTube Channel",
             keyboardBtn: "Keyboard",
 
+            // Footer section titles
+            footerTagline: "Search the web without Google watching. No tracking, no profiling, no ads.",
+            footerCompany: "Company",
+            footerProducts: "Products",
+            footerLegal: "Legal",
+            footerSocial: "Social",
+
             // Navigation tabs
             navSearch: "Search",
             navImages: "Images",
@@ -4663,6 +5033,13 @@
             weather: "Tiempo",
             youtubeChannel: "Canal de YouTube",
             keyboardBtn: "Teclado",
+
+            // Footer section titles
+            footerTagline: "Busca en la web sin que Google te vigile. Sin rastreo, sin perfiles, sin anuncios.",
+            footerCompany: "Empresa",
+            footerProducts: "Productos",
+            footerLegal: "Legal",
+            footerSocial: "Social",
 
             // Navigation tabs
             navSearch: "Buscar",
@@ -4846,6 +5223,13 @@
             weather: "Météo",
             youtubeChannel: "Chaîne YouTube",
             keyboardBtn: "Clavier",
+
+            // Footer section titles
+            footerTagline: "Recherchez sur le web sans être surveillé par Google. Sans suivi, sans profilage, sans publicités.",
+            footerCompany: "Entreprise",
+            footerProducts: "Produits",
+            footerLegal: "Légal",
+            footerSocial: "Réseaux sociaux",
 
             // Navigation tabs
             navSearch: "Rechercher",
@@ -5031,6 +5415,13 @@
             weather: "Wetter",
             youtubeChannel: "YouTube-Kanal",
             keyboardBtn: "Tastatur",
+
+            // Footer section titles
+            footerTagline: "Suchen Sie im Web ohne Google-Überwachung. Kein Tracking, kein Profiling, keine Werbung.",
+            footerCompany: "Unternehmen",
+            footerProducts: "Produkte",
+            footerLegal: "Rechtliches",
+            footerSocial: "Soziale Medien",
 
             // Navigation tabs
             navSearch: "Suchen",
@@ -5218,6 +5609,13 @@
             youtubeChannel: "Canale YouTube",
             keyboardBtn: "Tastiera",
 
+            // Footer section titles
+            footerTagline: "Cerca sul web senza che Google ti osservi. Nessun tracciamento, nessuna profilazione, nessuna pubblicità.",
+            footerCompany: "Azienda",
+            footerProducts: "Prodotti",
+            footerLegal: "Note legali",
+            footerSocial: "Social",
+
             // Navigation tabs
             navSearch: "Cerca",
             navImages: "Immagini",
@@ -5399,6 +5797,13 @@
             youtubeChannel: "Canal do YouTube",
             keyboardBtn: "Teclado",
 
+            // Footer section titles
+            footerTagline: "Pesquise na web sem o Google te rastrear. Sem rastreamento, sem criação de perfis, sem anúncios.",
+            footerCompany: "Empresa",
+            footerProducts: "Produtos",
+            footerLegal: "Legal",
+            footerSocial: "Redes sociais",
+
             // Navigation tabs
             navSearch: "Pesquisar",
             navImages: "Imagens",
@@ -5579,6 +5984,15 @@
             weather: "Weer",
             youtubeChannel: "YouTube-kanaal",
             keyboardBtn: "Toetsenbord",
+            // Footer section titles
+            footerTagline: "Zoek op het web zonder Google-surveillance. Geen tracking, geen profilering, geen reclame.",
+            footerCompany: "Bedrijf",
+            footerProducts: "Producten",
+            footerLegal: "Juridisch",
+            footerSocial: "Sociaal",
+            // Navigation tabs
+            navSearch: "Zoeken",
+            navImages: "Afbeeldingen",
           },
           pl: {
             name: "Polish",
@@ -5706,6 +6120,15 @@
             weather: "Pogoda",
             youtubeChannel: "Kanał YouTube",
             keyboardBtn: "Klawiatura",
+            // Footer section titles
+            footerTagline: "Przeszukuj sieć bez inwigilacji Google. Bez śledzenia, bez profilowania, bez reklam.",
+            footerCompany: "Firma",
+            footerProducts: "Produkty",
+            footerLegal: "Prawne",
+            footerSocial: "Społeczność",
+            // Navigation tabs
+            navSearch: "Szukaj",
+            navImages: "Obrazy",
           },
           tr: {
             name: "Turkish",
@@ -5834,6 +6257,15 @@
             weather: "Hava Durumu",
             youtubeChannel: "YouTube Kanalı",
             keyboardBtn: "Klavye",
+            // Footer section titles
+            footerTagline: "Google izlemeden web'de arama yapın. Takip yok, profilleme yok, reklam yok.",
+            footerCompany: "Şirket",
+            footerProducts: "Ürünler",
+            footerLegal: "Hukuki",
+            footerSocial: "Sosyal",
+            // Navigation tabs
+            navSearch: "Ara",
+            navImages: "Görseller",
           },
           sv: {
             name: "Swedish",
@@ -5961,6 +6393,15 @@
             weather: "Väder",
             youtubeChannel: "YouTube-kanal",
             keyboardBtn: "Tangentbord",
+            // Footer section titles
+            footerTagline: "Sök på webben utan Google-övervakning. Ingen spårning, ingen profilering, inga annonser.",
+            footerCompany: "Företag",
+            footerProducts: "Produkter",
+            footerLegal: "Juridiskt",
+            footerSocial: "Socialt",
+            // Navigation tabs
+            navSearch: "Sök",
+            navImages: "Bilder",
           },
           no: {
             name: "Norwegian",
@@ -6089,6 +6530,15 @@
             weather: "Vær",
             youtubeChannel: "YouTube-kanal",
             keyboardBtn: "Tastatur",
+            // Footer section titles
+            footerTagline: "Søk på nettet uten Google-overvåking. Ingen sporing, ingen profilering, ingen reklame.",
+            footerCompany: "Selskap",
+            footerProducts: "Produkter",
+            footerLegal: "Juridisk",
+            footerSocial: "Sosiale medier",
+            // Navigation tabs
+            navSearch: "Søk",
+            navImages: "Bilder",
           },
           da: {
             name: "Danish",
@@ -6217,6 +6667,15 @@
             weather: "Vejr",
             youtubeChannel: "YouTube-kanal",
             keyboardBtn: "Tastatur",
+            // Footer section titles
+            footerTagline: "Søg på nettet uden Google-overvågning. Ingen sporing, ingen profilering, ingen annoncer.",
+            footerCompany: "Virksomhed",
+            footerProducts: "Produkter",
+            footerLegal: "Juridisk",
+            footerSocial: "Sociale medier",
+            // Navigation tabs
+            navSearch: "Søg",
+            navImages: "Billeder",
           },
           fi: {
             name: "Finnish",
@@ -6343,6 +6802,15 @@
             weather: "Sää",
             youtubeChannel: "YouTube-kanava",
             keyboardBtn: "Näppäimistö",
+            // Footer section titles
+            footerTagline: "Etsi verkosta ilman Googlen seurantaa. Ei seurantaa, ei profilointia, ei mainoksia.",
+            footerCompany: "Yritys",
+            footerProducts: "Tuotteet",
+            footerLegal: "Oikeudellinen",
+            footerSocial: "Sosiaalinen",
+            // Navigation tabs
+            navSearch: "Etsi",
+            navImages: "Kuvat",
           },
           zh: {
             name: "Chinese (Simplified)",
@@ -6469,6 +6937,13 @@
             weather: "天气",
             youtubeChannel: "YouTube频道",
             keyboardBtn: "键盘",
+
+            // Footer section titles
+            footerTagline: "无需谷歌监控地搜索网络。无追踪，无画像，无广告。",
+            footerCompany: "公司",
+            footerProducts: "产品",
+            footerLegal: "法律",
+            footerSocial: "社交",
 
             // Navigation tabs
             navSearch: "搜索",
@@ -6639,6 +7114,15 @@
             weather: "天氣",
             youtubeChannel: "YouTube頻道",
             keyboardBtn: "鍵盤",
+            // Footer section titles
+            footerTagline: "無需 Google 監控地搜尋網路。無追蹤，無畫像，無廣告。",
+            footerCompany: "公司",
+            footerProducts: "產品",
+            footerLegal: "法律",
+            footerSocial: "社交",
+            // Navigation tabs
+            navSearch: "搜尋",
+            navImages: "圖片",
           },
           ja: {
             name: "Japanese",
@@ -6767,6 +7251,13 @@
             weather: "天気",
             youtubeChannel: "YouTubeチャンネル",
             keyboardBtn: "キーボード",
+
+            // Footer section titles
+            footerTagline: "Googleの監視なしにウェブを検索。追跡なし、プロファイリングなし、広告なし。",
+            footerCompany: "会社",
+            footerProducts: "製品",
+            footerLegal: "法的情報",
+            footerSocial: "ソーシャル",
 
             // Navigation tabs
             navSearch: "検索",
@@ -6951,6 +7442,13 @@
             youtubeChannel: "YouTube 체널",
             keyboardBtn: "키보드",
 
+            // Footer section titles
+            footerTagline: "Google 감시 없이 웹을 검색하세요. 추적 없음, 프로파일링 없음, 광고 없음.",
+            footerCompany: "회사",
+            footerProducts: "제품",
+            footerLegal: "법적 정보",
+            footerSocial: "소셜",
+
             // Navigation tabs
             navSearch: "검색",
             navImages: "이미지",
@@ -7129,6 +7627,13 @@
             youtubeChannel: "قناة YouTube",
             keyboardBtn: "لوحة المفاتيح",
 
+            // Footer section titles
+            footerTagline: "تصفح الويب دون مراقبة جوجل. بدون تتبع، بدون تصنيف، بدون إعلانات.",
+            footerCompany: "الشركة",
+            footerProducts: "المنتجات",
+            footerLegal: "قانوني",
+            footerSocial: "اجتماعي",
+
             // Navigation tabs
             navSearch: "بحث",
             navImages: "صور",
@@ -7301,6 +7806,15 @@
             weather: "מזג אוויר",
             youtubeChannel: "ערוץ YouTube",
             keyboardBtn: "מקלדת",
+            // Footer section titles
+            footerTagline: "חפש ברשת ללא מעקב של Google. ללא מעקב, ללא פרופיל, ללא פרסומות.",
+            footerCompany: "חברה",
+            footerProducts: "מוצרים",
+            footerLegal: "משפטי",
+            footerSocial: "רשתות חברתיות",
+            // Navigation tabs
+            navSearch: "חיפוש",
+            navImages: "תמונות",
           },
           ru: {
             name: "Russian",
@@ -7428,6 +7942,13 @@
             weather: "Погода",
             youtubeChannel: "YouTube-канал",
             keyboardBtn: "Клавиатура",
+
+            // Footer section titles
+            footerTagline: "Ищите в интернете без слежки Google. Без отслеживания, без профилирования, без рекламы.",
+            footerCompany: "Компания",
+            footerProducts: "Продукты",
+            footerLegal: "Правовая информация",
+            footerSocial: "Социальные сети",
 
             // Navigation tabs
             navSearch: "Поиск",
@@ -7610,6 +8131,15 @@
             weather: "Погода",
             youtubeChannel: "YouTube-канал",
             keyboardBtn: "Клавіатура",
+            // Footer section titles
+            footerTagline: "Шукайте в інтернеті без стеження Google. Без відстеження, без профілювання, без реклами.",
+            footerCompany: "Компанія",
+            footerProducts: "Продукти",
+            footerLegal: "Правова інформація",
+            footerSocial: "Соціальні мережі",
+            // Navigation tabs
+            navSearch: "Пошук",
+            navImages: "Зображення",
           },
           el: {
             name: "Greek",
@@ -7738,6 +8268,15 @@
             weather: "Καιρός",
             youtubeChannel: "YouTube κανάλι",
             keyboardBtn: "Πληκτρολόγιο",
+            // Footer section titles
+            footerTagline: "Αναζητήστε στον ιστό χωρίς Google. Χωρίς παρακολούθηση, χωρίς προφίλ, χωρίς διαφημίσεις.",
+            footerCompany: "Εταιρεία",
+            footerProducts: "Προϊόντα",
+            footerLegal: "Νομικά",
+            footerSocial: "Κοινωνικά δίκτυα",
+            // Navigation tabs
+            navSearch: "Αναζήτηση",
+            navImages: "Εικόνες",
           },
           cs: {
             name: "Czech",
@@ -7865,6 +8404,15 @@
             weather: "Počasí",
             youtubeChannel: "YouTube kanál",
             keyboardBtn: "Klávesnice",
+            // Footer section titles
+            footerTagline: "Prohledávejte web bez sledování Google. Žádné sledování, žádné profilování, žádné reklamy.",
+            footerCompany: "Společnost",
+            footerProducts: "Produkty",
+            footerLegal: "Právní",
+            footerSocial: "Sociální sítě",
+            // Navigation tabs
+            navSearch: "Hledat",
+            navImages: "Obrázky",
           },
           ro: {
             name: "Romanian",
@@ -7994,6 +8542,15 @@
             weather: "Vreme",
             youtubeChannel: "Canal YouTube",
             keyboardBtn: "Tastatură",
+            // Footer section titles
+            footerTagline: "Căutați pe web fără supravegherea Google. Fără urmărire, fără profilare, fără reclame.",
+            footerCompany: "Companie",
+            footerProducts: "Produse",
+            footerLegal: "Legal",
+            footerSocial: "Social",
+            // Navigation tabs
+            navSearch: "Căutare",
+            navImages: "Imagini",
           },
           hu: {
             name: "Hungarian",
@@ -8122,6 +8679,15 @@
             weather: "Időjárás",
             youtubeChannel: "YouTube-csatórna",
             keyboardBtn: "Billentyűzet",
+            // Footer section titles
+            footerTagline: "Böngésszen a weben Google megfigyelése nélkül. Nincs nyomkövetés, nincs profilalkotás, nincs hirdetés.",
+            footerCompany: "Cég",
+            footerProducts: "Termékek",
+            footerLegal: "Jogi",
+            footerSocial: "Közösségi",
+            // Navigation tabs
+            navSearch: "Keresés",
+            navImages: "Képek",
           },
           hi: {
             name: "Hindi",
@@ -8249,6 +8815,12 @@
             weather: "मौसम",
             youtubeChannel: "YouTube चैनल",
             keyboardBtn: "कीबोर्ड",
+            // Footer section titles
+            footerTagline: "Google की निगरानी के बिना वेब खोजें। कोई ट्रैकिंग नहीं, कोई प्रोफाइलिंग नहीं, कोई विज्ञापन नहीं।",
+            footerCompany: "कंपनी",
+            footerProducts: "उत्पाद",
+            footerLegal: "कानूनी",
+            footerSocial: "सोशल",
 
             // Navigation tabs
             navSearch: "खोजें",
@@ -8427,6 +8999,15 @@
             weather: "আবহাওয়া",
             youtubeChannel: "YouTube চ্যানেল",
             keyboardBtn: "কীবোর্ড",
+            // Footer section titles
+            footerTagline: "Google-এর নজরদারি ছাড়াই ওয়েব অনুসন্ধান করুন। কোনো ট্র্যাকিং নেই, কোনো প্রোফাইলিং নেই, কোনো বিজ্ঞাপন নেই।",
+            footerCompany: "কোম্পানি",
+            footerProducts: "পণ্য",
+            footerLegal: "আইনি",
+            footerSocial: "সামাজিক",
+            // Navigation tabs
+            navSearch: "অনুসন্ধান",
+            navImages: "ছবি",
           },
           th: {
             name: "Thai",
@@ -8553,6 +9134,15 @@
             weather: "สภาพอากาศ",
             youtubeChannel: "YouTube ช่อง",
             keyboardBtn: "แป้นพิมพ์",
+            // Footer section titles
+            footerTagline: "ค้นหาเว็บโดยไม่มี Google สอดส่อง ไม่มีการติดตาม ไม่มีการสร้างโปรไฟล์ ไม่มีโฆษณา",
+            footerCompany: "บริษัท",
+            footerProducts: "ผลิตภัณฑ์",
+            footerLegal: "กฎหมาย",
+            footerSocial: "สังคม",
+            // Navigation tabs
+            navSearch: "ค้นหา",
+            navImages: "รูปภาพ",
           },
           vi: {
             name: "Vietnamese",
@@ -8935,6 +9525,15 @@
             weather: "Cuaca",
             youtubeChannel: "Saluran YouTube",
             keyboardBtn: "Papan Kekunci",
+            // Footer section titles
+            footerTagline: "Cari di web tanpa Google memerhati anda. Tiada penjejakan, tiada pemprofilan, tiada iklan.",
+            footerCompany: "Syarikat",
+            footerProducts: "Produk",
+            footerLegal: "Undang-undang",
+            footerSocial: "Sosial",
+            // Navigation tabs
+            navSearch: "Cari",
+            navImages: "Imej",
           },
         };
 
@@ -9395,7 +9994,7 @@
               t.youtubeChannel || translations.en.youtubeChannel,
           };
           document
-            .querySelectorAll(".footer-left a, .footer-right a")
+            .querySelectorAll(".footer-link, .footer-bottom-right a")
             .forEach(function (a) {
               const href = a.getAttribute("href") || "";
               for (const [pattern, text] of Object.entries(footerLinkMap)) {
@@ -9448,7 +10047,7 @@
           languageSelector.style.position = "fixed";
           languageSelector.style.top = rect.bottom + 5 + "px";
           languageSelector.style.left = rect.left + "px";
-          languageSelector.style.zIndex = "3500";
+          languageSelector.style.zIndex = "9999999";
         });
 
         // Language selection
@@ -10513,6 +11112,11 @@
 
         if (menuBtn) {
           menuBtn.addEventListener("click", openSidebar);
+        }
+
+        const menuBtnDesktop = document.getElementById("menuBtnDesktop");
+        if (menuBtnDesktop) {
+          menuBtnDesktop.addEventListener("click", openSidebar);
         }
 
         if (sidebarClose) {
@@ -11750,6 +12354,1018 @@
       })();
     </script>
     <script nonce="IKDjefjewhCujHJeuji3jhekowdijzizkcej">
+      // =============================================
+      // RACE CAR 3D — Three.js + Tone.js
+      // =============================================
+      (function () {
+        'use strict';
+
+        /* ── DOM refs ── */
+        const overlay        = document.getElementById('racecarOverlay');
+        const canvas         = document.getElementById('raceCanvas');
+        const speedoCanvas   = document.getElementById('speedoCanvas');
+        const loadingEl      = document.getElementById('racecarLoading');
+        const loadingLabel   = document.getElementById('racecarLoadingLabel');
+        const loadingBar     = document.getElementById('racecarLoadingBar');
+        const hudEl          = document.getElementById('racecarHud');
+        const hudSpeedVal    = document.getElementById('raceHudSpeed');
+        const hudSpeedUnit   = document.getElementById('raceHudSpeedUnit');
+        const hudScore       = document.getElementById('raceHudScore');
+        const hudLap         = document.getElementById('raceHudLap');
+        const hudLives       = document.getElementById('raceHudLives');
+        const pauseScreen    = document.getElementById('racecarPauseScreen');
+        const pauseTitle     = document.getElementById('racecarPauseTitle');
+        const pauseSubtitle  = document.getElementById('racecarPauseSubtitle');
+        const pauseStats     = document.getElementById('racecarPauseStats');
+        const resumeBtn      = document.getElementById('racecarResumeBtn');
+        const restartBtn     = document.getElementById('racecarRestartBtn');
+        const restartBtnB    = document.getElementById('racecarRestartBtnBottom');
+        const pauseBtn       = document.getElementById('racecarPauseBtn');
+        const closeBtn       = document.getElementById('racecarCloseBtn');
+        const sidebarBtn     = document.getElementById('raceCarSidebarBtn');
+        const controlHint    = document.getElementById('racecarControlHint');
+        const settingsBtn    = document.getElementById('racecarSettingsBtn');
+        const settingsPanel  = document.getElementById('racecarSettingsPanel');
+        const rtBtn          = document.getElementById('racecarRTBtn');
+        const rtBadge        = document.getElementById('rtBadge');
+        const fsBtn          = document.getElementById('racecarFullscreenBtn');
+        const speedUnitSeg   = document.getElementById('speedUnitSeg');
+        const rtToggleSeg    = document.getElementById('rtToggleSeg');
+        const musicToggleSeg = document.getElementById('musicToggleSeg');
+        const diffSeg        = document.getElementById('diffSeg');
+
+        /* ── Settings ── */
+        let useKMH = false, rtEnabled = false, musicOn = true, difficulty = 'normal';
+
+        /* ── Three.js objects ── */
+        let scene, camera, renderer;
+        let playerGroup, wheelMeshes = [], exhaustLight;
+        let roadMesh, roadTex;
+        let treesGroup, housesGroup, sunMesh, skyMesh, starPoints;
+        let ambientLight, sunLight;
+        let rtLight, rtReflPlane;
+
+        /* ── Game state ── */
+        let animFrame = null;
+        let paused = false, gameOver = false, initiated = false;
+        let score = 0, lives = 5, lapCount = 1;
+        let rawSpeed = 0, totalTime = 0, lastTs = 0;
+        let invTimer = 0, combo = 0, diffTimer = 0;
+        let obstacleSpawnTimer = 0, obstacleInterval = 2.0;
+        let highScore = parseInt(localStorage.getItem('munetiosRacerHS3D') || '0', 10);
+        let playerLane = 1, playerX = 0, targetPlayerX = 0;
+        let playerTilt = 0, camShake = 0;
+        let laneChangeDebounce = false;
+        let obstacles = [], sparks = [];
+        let dayMode = true;
+        let curvature = 0, curveTarget = 0, curvePhase = 0;
+        let crashAnimActive = false;
+
+        /* ── Constants ── */
+        const LANE_X      = [-2.3, 0, 2.3];
+        const PLAYER_Z    = 5.5;
+        const ROAD_W      = 8.5;
+        const ROAD_LEN    = 600;
+        const SPEED_SCALE = 0.14;
+        const OB_COLORS   = [0x3b56e8, 0x1b9648, 0xe07018, 0x8c1abc, 0x0d96a4, 0xcc2866];
+        const DIFF = {
+          easy:   {startSpeed:70,  maxSpeed:280, accelRate:10, spawnMin:0.9 },
+          normal: {startSpeed:100, maxSpeed:400, accelRate:16, spawnMin:0.55},
+          hard:   {startSpeed:160, maxSpeed:520, accelRate:24, spawnMin:0.35},
+        };
+
+        /* ── Audio ── */
+        let audioReady = false, bgAudio = null;
+        let engineSynth = null, engineFilter = null, engineGain = null;
+        let skidSynth = null, crashSynth = null, scoreSynth = null;
+
+        /* ═══════════════════ THREE.JS SCENE ═══════════════════ */
+
+        function initThree() {
+          if (!window.THREE) return false;
+          const T = THREE;
+          const wrap = canvas.parentElement;
+          const W = wrap.clientWidth, H = wrap.clientHeight;
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+          scene = new T.Scene();
+          scene.background = new T.Color(0x050012);
+          scene.fog = new T.FogExp2(0x070220, 0.009);
+
+          camera = new T.PerspectiveCamera(68, W / H, 0.1, 600);
+          camera.position.set(0, 4.8, 10.5);
+          camera.lookAt(0, 1, -50);
+
+          renderer = new T.WebGLRenderer({ canvas, antialias: true, alpha: false });
+          renderer.setPixelRatio(dpr);
+          renderer.setSize(W, H);
+          renderer.shadowMap.enabled = true;
+          renderer.shadowMap.type = T.PCFSoftShadowMap;
+          renderer.toneMapping = T.ACESFilmicToneMapping;
+          renderer.toneMappingExposure = 1.05;
+
+          buildLights();
+          buildSky();
+          buildRoad();
+          buildPlayerCar();
+          buildTrees();
+          buildHouses();
+          buildRTReflection();
+          return true;
+        }
+
+        /* ── Lights ── */
+        function buildLights() {
+          const T = THREE;
+          ambientLight = new T.AmbientLight(dayMode ? 0xfff5e8 : 0x221040, dayMode ? 1.8 : 1.1);
+          scene.add(ambientLight);
+
+          sunLight = new T.DirectionalLight(dayMode ? 0xfffcd0 : 0xffffff, dayMode ? 2.2 : 1.3);
+          sunLight.position.set(dayMode ? 55 : 4, dayMode ? 85 : 12, dayMode ? -180 : 5);
+          sunLight.castShadow = true;
+          sunLight.shadow.mapSize.set(1024, 1024);
+          sunLight.shadow.camera.near = 0.5; sunLight.shadow.camera.far = 300;
+          sunLight.shadow.camera.left = -25; sunLight.shadow.camera.right = 25;
+          sunLight.shadow.camera.top = 25; sunLight.shadow.camera.bottom = -25;
+          scene.add(sunLight);
+
+          // Headlight (only visible at night)
+          const hl = new T.SpotLight(0xfff8c8, dayMode ? 0.0 : 0.7, 50, Math.PI / 9, 0.4);
+          hl.position.set(0, 1.2, PLAYER_Z - 1.5);
+          hl.target.position.set(0, 0, PLAYER_Z - 40);
+          scene.add(hl); scene.add(hl.target);
+
+          // Exhaust glow
+          exhaustLight = new T.PointLight(0xff5500, 0.8, 3.5);
+          exhaustLight.position.set(0, 0.5, PLAYER_Z + 1.6);
+          scene.add(exhaustLight);
+
+          // RT purple fill (toggleable)
+          rtLight = new T.PointLight(0x9955ff, 2.5, 18);
+          rtLight.position.set(0, 4, PLAYER_Z);
+          rtLight.visible = false;
+          scene.add(rtLight);
+        }
+
+        /* ── Sky dome + stars ── */
+        function buildSky() {
+          const T = THREE;
+          // Remove previous sky objects if rebuilding
+          if (skyMesh)   { scene.remove(skyMesh);   skyMesh.geometry.dispose();   skyMesh.material.map && skyMesh.material.map.dispose(); skyMesh.material.dispose(); skyMesh = null; }
+          if (sunMesh)   { scene.remove(sunMesh);   sunMesh.traverse(o => { if(o.isMesh){ o.geometry.dispose(); o.material.dispose(); } }); sunMesh = null; }
+          if (starPoints){ scene.remove(starPoints); starPoints.geometry.dispose(); starPoints.material.dispose(); starPoints = null; }
+
+          const c = document.createElement('canvas'); c.width = 2; c.height = 256;
+          const ctx = c.getContext('2d');
+          const grd = ctx.createLinearGradient(0, 0, 0, 256);
+
+          if (dayMode) {
+            grd.addColorStop(0,    '#1565c0');
+            grd.addColorStop(0.45, '#42a5f5');
+            grd.addColorStop(0.80, '#87ceeb');
+            grd.addColorStop(1,    '#d0ecf8');
+            ctx.fillStyle = grd; ctx.fillRect(0, 0, 2, 256);
+            scene.background = new T.Color(0x87ceeb);
+            scene.fog = new T.FogExp2(0xaad4ee, 0.005);
+
+            // Sun sphere
+            const sunGrp = new T.Group();
+            const sunGeo = new T.SphereGeometry(5.5, 14, 14);
+            const sunMat = new T.MeshBasicMaterial({ color: 0xfffde0 });
+            sunGrp.add(new T.Mesh(sunGeo, sunMat));
+            // Halo
+            const haloMat = new T.MeshBasicMaterial({ color: 0xffee88, transparent: true, opacity: 0.16 });
+            sunGrp.add(new T.Mesh(new T.SphereGeometry(8, 12, 12), haloMat));
+            sunGrp.position.set(55, 85, -180);
+            scene.add(sunGrp);
+            sunMesh = sunGrp;
+          } else {
+            grd.addColorStop(0,    '#020008');
+            grd.addColorStop(0.40, '#07031a');
+            grd.addColorStop(0.78, '#130525');
+            grd.addColorStop(1,    '#4a1508');
+            ctx.fillStyle = grd; ctx.fillRect(0, 0, 2, 256);
+            scene.background = new T.Color(0x050012);
+            scene.fog = new T.FogExp2(0x070220, 0.009);
+
+            // Stars
+            const N = 1400, pos = new Float32Array(N * 3);
+            for (let i = 0; i < N; i++) {
+              const th = Math.random() * Math.PI * 2;
+              const ph = Math.acos(-(Math.random() * 0.9 + 0.05));
+              const r  = 360 + Math.random() * 15;
+              pos[i*3]   = r * Math.sin(ph) * Math.cos(th);
+              pos[i*3+1] = r * Math.cos(ph);
+              pos[i*3+2] = r * Math.sin(ph) * Math.sin(th);
+            }
+            const sg = new T.BufferGeometry();
+            sg.setAttribute('position', new T.BufferAttribute(pos, 3));
+            starPoints = new T.Points(sg, new T.PointsMaterial({ color: 0xffffff, size: 1.1, sizeAttenuation: true }));
+            scene.add(starPoints);
+          }
+
+          const skyGeo = new T.SphereGeometry(380, 18, 9);
+          skyGeo.scale(-1, 1, 1);
+          const skyTex = new T.CanvasTexture(c);
+          skyMesh = new T.Mesh(skyGeo, new T.MeshBasicMaterial({ map: skyTex, side: T.BackSide }));
+          scene.add(skyMesh);
+        }
+
+        /* ── Road ── */
+        function buildRoad() {
+          const T = THREE;
+          // Canvas texture with lane markings
+          const tc = document.createElement('canvas'); tc.width = 512; tc.height = 1024;
+          const ctx = tc.getContext('2d');
+          ctx.fillStyle = '#1a191f'; ctx.fillRect(0, 0, 512, 1024);
+          // Kerb stripes
+          for (let k = 0; k < 24; k++) {
+            ctx.fillStyle = k % 2 === 0 ? '#cc1111' : '#dddddd';
+            ctx.fillRect(0, k * 43, 18, 43);
+            ctx.fillRect(494, k * 43, 18, 43);
+          }
+          // Lane dashes
+          ctx.strokeStyle = 'rgba(200,205,210,0.5)'; ctx.lineWidth = 6; ctx.setLineDash([72, 56]);
+          ctx.beginPath(); ctx.moveTo(171, 0); ctx.lineTo(171, 1024); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(341, 0); ctx.lineTo(341, 1024); ctx.stroke();
+          ctx.strokeStyle = 'rgba(210,210,215,0.45)'; ctx.lineWidth = 5; ctx.setLineDash([]);
+          ctx.beginPath(); ctx.moveTo(256, 0); ctx.lineTo(256, 1024); ctx.stroke();
+          // Noise grain
+          for (let i = 0; i < 3000; i++) {
+            ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.06})`;
+            ctx.fillRect(Math.random() * 512, Math.random() * 1024, 1, 1);
+          }
+
+          roadTex = new T.CanvasTexture(tc);
+          roadTex.wrapS = T.RepeatWrapping;
+          roadTex.wrapT = T.RepeatWrapping;
+          roadTex.repeat.set(1, 12);
+
+          roadMesh = new T.Mesh(
+            new T.PlaneGeometry(ROAD_W, ROAD_LEN),
+            new T.MeshLambertMaterial({ map: roadTex })
+          );
+          roadMesh.rotation.x = -Math.PI / 2;
+          roadMesh.position.set(0, -0.005, -ROAD_LEN / 2 + PLAYER_Z);
+          roadMesh.receiveShadow = true;
+          scene.add(roadMesh);
+
+          // Grass
+          const grassMat = new T.MeshLambertMaterial({ color: 0x0d3011 });
+          [-1, 1].forEach(side => {
+            const m = new T.Mesh(new T.PlaneGeometry(50, ROAD_LEN), grassMat);
+            m.rotation.x = -Math.PI / 2;
+            m.position.set(side * (ROAD_W / 2 + 25), -0.008, -ROAD_LEN / 2 + PLAYER_Z);
+            scene.add(m);
+          });
+
+          // Guard rails
+          const grMat = new T.MeshPhongMaterial({ color: 0x9aa0aa, shininess: 60 });
+          [-1, 1].forEach(side => {
+            const m = new T.Mesh(new T.BoxGeometry(0.14, 0.38, ROAD_LEN), grMat);
+            m.position.set(side * (ROAD_W / 2 + 0.07), 0.19, -ROAD_LEN / 2 + PLAYER_Z);
+            m.castShadow = true;
+            scene.add(m);
+          });
+        }
+
+        /* ── Player car (F1-style — improved) ── */
+        function buildPlayerCar() {
+          const T = THREE;
+          playerGroup = new T.Group();
+          wheelMeshes = [];
+
+          const bodyMat  = new T.MeshPhongMaterial({ color: 0xe01010, shininess: 300, specular: 0xff8080 });
+          const bodyDark = new T.MeshPhongMaterial({ color: 0x9a0808, shininess: 180, specular: 0x660000 });
+          const cockMat  = new T.MeshPhongMaterial({ color: 0x080e20, shininess: 40 });
+          const windMat  = new T.MeshPhongMaterial({ color: 0x8ab4f8, shininess: 280, transparent: true, opacity: 0.60 });
+          const wingMat  = new T.MeshPhongMaterial({ color: 0xcc0c0c, shininess: 200, specular: 0xff5555 });
+          const wMat     = new T.MeshPhongMaterial({ color: 0x0c0c12, shininess: 12 });
+          const hubMat   = new T.MeshPhongMaterial({ color: 0x8899aa, shininess: 110 });
+          const chromeMat= new T.MeshPhongMaterial({ color: 0xb8c8d8, shininess: 400, specular: 0xffffff });
+          const accentMat= new T.MeshPhongMaterial({ color: 0xffd700, shininess: 200 });
+
+          function box(w, h, d, mat, x, y, z) {
+            const m = new T.Mesh(new T.BoxGeometry(w, h, d), mat);
+            m.position.set(x, y, z); m.castShadow = true; playerGroup.add(m); return m;
+          }
+
+          // ── Main body ──
+          box(1.10, 0.27, 2.90, bodyMat,  0,    0.27,  0.00);  // central hull
+          box(0.25, 0.15, 1.15, bodyDark, -0.67, 0.20, -0.10); // left pod
+          box(0.25, 0.15, 1.15, bodyDark,  0.67, 0.20, -0.10); // right pod
+          box(0.04, 0.05, 2.80, accentMat, -0.52, 0.34, 0.00); // left accent stripe
+          box(0.04, 0.05, 2.80, accentMat,  0.52, 0.34, 0.00); // right accent stripe
+
+          // ── Cockpit ──
+          box(0.50, 0.30, 0.88, cockMat,  0, 0.55, -0.08);    // cockpit surround
+          box(0.36, 0.15, 0.52, windMat,  0, 0.70, -0.30);    // windshield
+          box(0.52, 0.06, 0.60, accentMat, 0, 0.41, -0.08);   // cockpit base trim
+
+          // ── Front wing assembly ──
+          box(1.70, 0.055, 0.44, wingMat, 0, 0.12, -1.32);    // main plane
+          box(0.055, 0.20, 0.44, bodyDark, -0.85, 0.18, -1.32); // left endplate
+          box(0.055, 0.20, 0.44, bodyDark,  0.85, 0.18, -1.32); // right endplate
+          box(1.50, 0.042, 0.32, wingMat, 0, 0.19, -1.28);    // secondary plane
+
+          // ── Rear wing assembly ──
+          box(1.56, 0.36, 0.13, wingMat, 0, 0.66, 1.26);      // main rear wing
+          box(1.56, 0.042, 0.13, wingMat, 0, 0.38, 1.26);     // lower rear plane
+          box(0.09, 0.45, 0.34, bodyDark, -0.74, 0.52, 1.22); // left endplate
+          box(0.09, 0.45, 0.34, bodyDark,  0.74, 0.52, 1.22); // right endplate
+
+          // ── Side mirrors ──
+          box(0.07, 0.07, 0.13, chromeMat, -0.57, 0.73, 0.25);
+          box(0.07, 0.07, 0.13, chromeMat,  0.57, 0.73, 0.25);
+
+          // ── Diffuser ──
+          box(0.88, 0.09, 0.34, bodyDark, 0, 0.06, 1.48);
+
+          // ── Nose cone ──
+          const noseGeo = new T.CylinderGeometry(0.03, 0.19, 0.60, 6);
+          noseGeo.rotateZ(Math.PI / 2);
+          const noseM = new T.Mesh(noseGeo, bodyMat);
+          noseM.position.set(0, 0.22, -1.62); noseM.castShadow = true; playerGroup.add(noseM);
+
+          // ── Exhaust pipes ──
+          const exGeo = new T.CylinderGeometry(0.048, 0.048, 0.18, 8);
+          [-0.19, 0.19].forEach(xo => {
+            const ex = new T.Mesh(exGeo, chromeMat);
+            ex.rotation.x = Math.PI / 2; ex.position.set(xo, 0.50, 1.32); ex.castShadow = true; playerGroup.add(ex);
+          });
+
+          // ── Wheels (4 corners) ──
+          const wGeo   = new T.CylinderGeometry(0.285, 0.285, 0.22, 18);
+          const hGeo   = new T.CylinderGeometry(0.13, 0.13, 0.24, 8);
+          const rimGeo = new T.TorusGeometry(0.21, 0.025, 6, 16);
+          [[-0.70, 0.285, -0.82], [0.70, 0.285, -0.82], [-0.70, 0.285, 0.82], [0.70, 0.285, 0.82]].forEach(([x, y, z]) => {
+            const wg = new T.Group();
+            const tyre = new T.Mesh(wGeo, wMat); tyre.rotation.z = Math.PI / 2; tyre.castShadow = true;
+            const hub  = new T.Mesh(hGeo, hubMat); hub.rotation.z = Math.PI / 2;
+            const rim  = new T.Mesh(rimGeo, chromeMat); rim.rotation.y = Math.PI / 2;
+            wg.add(tyre); wg.add(hub); wg.add(rim);
+            // 5 spokes
+            for (let s = 0; s < 5; s++) {
+              const angle = (s / 5) * Math.PI * 2;
+              const spoke = new T.Mesh(new T.BoxGeometry(0.20, 0.04, 0.04), hubMat);
+              spoke.rotation.z = Math.PI / 2;
+              spoke.position.set(0, Math.sin(angle) * 0.12, Math.cos(angle) * 0.12);
+              wg.add(spoke);
+            }
+            wg.position.set(x, y, z);
+            playerGroup.add(wg); wheelMeshes.push(wg);
+          });
+
+          playerGroup.position.set(LANE_X[1], 0, PLAYER_Z);
+          scene.add(playerGroup);
+        }
+
+        /* ── Trees ── */
+        function buildTrees() {
+          treesGroup = new THREE.Group();
+          scene.add(treesGroup);
+          for (let i = 0; i < 22; i++) {
+            const z = -i * 13 - 6;
+            addTree(-(ROAD_W / 2 + 1.8 + Math.random() * 1.4), z);
+            addTree(  ROAD_W / 2 + 1.8 + Math.random() * 1.4,  z - 6.5);
+          }
+        }
+        function addTree(x, z) {
+          const T = THREE;
+          const g = new T.Group();
+          const trMat = new T.MeshLambertMaterial({ color: 0x3a1805 });
+          const lfMat = new T.MeshLambertMaterial({ color: 0x0c3b0d });
+          const trunk = new T.Mesh(new T.CylinderGeometry(0.12, 0.20, 1.2, 6), trMat);
+          trunk.position.y = 0.6; g.add(trunk);
+          const c1 = new T.Mesh(new T.ConeGeometry(0.65, 1.5, 7), lfMat); c1.position.y = 2.0; g.add(c1);
+          const c2 = new T.Mesh(new T.ConeGeometry(0.85, 1.2, 7), lfMat); c2.position.y = 1.3; g.add(c2);
+          g.position.set(x, 0, z);
+          treesGroup.add(g);
+        }
+
+        /* ── Houses / Buildings ── */
+        function buildHouses() {
+          const T = THREE;
+          housesGroup = new T.Group();
+          scene.add(housesGroup);
+          const wallPalette = [0xd4b896, 0xe8d5b8, 0xc8b0a0, 0xbfb2a0, 0xd0c8b8, 0xc4a87c, 0xe0d0b0, 0xb8a890];
+          const roofPalette = [0x882222, 0x6b4422, 0x334466, 0x556644, 0x884422, 0x443322, 0x722222, 0x445566];
+          for (let i = 0; i < 14; i++) {
+            const z = -i * 22 - 10;
+            addHouse(-(ROAD_W / 2 + 6.0 + Math.random() * 2.5), z + Math.random() * 5, wallPalette[i % 8], roofPalette[i % 8]);
+            addHouse(  ROAD_W / 2 + 6.0 + Math.random() * 2.5,  z - 11 + Math.random() * 5, wallPalette[(i + 3) % 8], roofPalette[(i + 4) % 8]);
+          }
+        }
+        function addHouse(x, z, wallCol, roofCol) {
+          const T = THREE;
+          const g = new T.Group();
+          const w = 2.8 + Math.random() * 1.8, h = 2.4 + Math.random() * 1.6, d = 3.0 + Math.random() * 1.4;
+          const wallMat = new T.MeshLambertMaterial({ color: wallCol });
+          const roofMat = new T.MeshLambertMaterial({ color: roofCol });
+          const winMat  = new T.MeshBasicMaterial({ color: dayMode ? 0x88aadd : 0xfff4cc });
+          const doorMat = new T.MeshLambertMaterial({ color: 0x5c3317 });
+          const trimMat = new T.MeshLambertMaterial({ color: 0xffffff });
+
+          // Walls
+          const body = new T.Mesh(new T.BoxGeometry(w, h, d), wallMat);
+          body.position.y = h / 2; body.castShadow = true; body.receiveShadow = true; g.add(body);
+
+          // Roof (pyramid)
+          const roof = new T.Mesh(new T.CylinderGeometry(0.01, w * 0.75, h * 0.55, 4), roofMat);
+          roof.position.y = h + h * 0.275; roof.rotation.y = Math.PI / 4; roof.castShadow = true; g.add(roof);
+
+          // Window trim + glass
+          [[-w * 0.27, w * 0.27]].forEach(row => row.forEach(wx => {
+            const tr = new T.Mesh(new T.BoxGeometry(0.68, 0.72, 0.06), trimMat);
+            tr.position.set(wx, h * 0.58, d / 2 + 0.01); g.add(tr);
+            const win = new T.Mesh(new T.BoxGeometry(0.52, 0.56, 0.06), winMat);
+            win.position.set(wx, h * 0.58, d / 2 + 0.04); g.add(win);
+          }));
+
+          // Door
+          const door = new T.Mesh(new T.BoxGeometry(0.60, 1.10, 0.05), doorMat);
+          door.position.set(0, 0.55, d / 2 + 0.03); g.add(door);
+
+          g.position.set(x, 0, z);
+          housesGroup.add(g);
+        }
+
+        /* ── RT reflection plane ── */
+        function buildRTReflection() {
+          const T = THREE;
+          const mat = new T.MeshStandardMaterial({ color: 0x111028, metalness: 1.0, roughness: 0.06, opacity: 0.18, transparent: true });
+          rtReflPlane = new T.Mesh(new T.PlaneGeometry(ROAD_W - 0.5, ROAD_LEN), mat);
+          rtReflPlane.rotation.x = -Math.PI / 2;
+          rtReflPlane.position.set(0, -0.001, -ROAD_LEN / 2 + PLAYER_Z);
+          rtReflPlane.visible = false;
+          scene.add(rtReflPlane);
+        }
+
+        /* ── Obstacle cars ── */
+        function buildObstacleCar(colorHex) {
+          const T = THREE;
+          const g = new T.Group();
+          const bMat  = new T.MeshPhongMaterial({ color: colorHex, shininess: 140, specular: 0x333333 });
+          const rMat  = new T.MeshPhongMaterial({ color: 0x0a0a14, shininess: 40 });
+          const wMat  = new T.MeshPhongMaterial({ color: 0x111013, shininess: 15 });
+          const tlMat = new T.MeshBasicMaterial({ color: 0xff0808 });
+
+          function bx(w, h, d, mat, x, y, z) {
+            const m = new T.Mesh(new T.BoxGeometry(w, h, d), mat);
+            m.position.set(x, y, z); m.castShadow = true; g.add(m);
+          }
+          bx(0.96, 0.28, 2.1,  bMat,  0, 0.28,  0);
+          bx(0.64, 0.20, 0.82, rMat,  0, 0.60, -0.08);
+          bx(0.14, 0.09, 0.04, tlMat, -0.26, 0.30, 1.07);
+          bx(0.14, 0.09, 0.04, tlMat,  0.26, 0.30, 1.07);
+
+          const wGeo = new T.CylinderGeometry(0.24, 0.24, 0.20, 12);
+          [[-0.58, 0.24, -0.60], [0.58, 0.24, -0.60], [-0.58, 0.24, 0.62], [0.58, 0.24, 0.62]].forEach(([x, y, z]) => {
+            const w = new T.Mesh(wGeo, wMat); w.rotation.z = Math.PI / 2; w.position.set(x, y, z); g.add(w);
+          });
+          return g;
+        }
+
+        function spawnObstacle() {
+          const lane  = Math.floor(Math.random() * 3);
+          const color = OB_COLORS[Math.floor(Math.random() * OB_COLORS.length)];
+          const mesh  = buildObstacleCar(color);
+          mesh.position.set(LANE_X[lane], 0, -170);
+          scene.add(mesh);
+          obstacles.push({ lane, mesh, passed: false });
+        }
+
+        /* ── Explosion sparks ── */
+        function spawnExplosion(wx, wz) {
+          const T = THREE;
+          for (let i = 0; i < 30; i++) {
+            const a = Math.random() * Math.PI * 2;
+            const spd = 4 + Math.random() * 9;
+            const col = Math.random() < 0.5 ? 0xff4400 : 0xffaa00;
+            const m   = new T.Mesh(new T.SphereGeometry(0.07 + Math.random() * 0.10, 3, 3), new T.MeshBasicMaterial({ color: col }));
+            m.position.set(wx, 0.6, wz);
+            scene.add(m);
+            const life = 0.45 + Math.random() * 0.6;
+            sparks.push({ mesh: m, vx: Math.cos(a) * spd, vy: (1 + Math.random() * 2) * spd * 0.4, vz: Math.sin(a) * spd, life, maxLife: life });
+          }
+        }
+
+        /* ── Dispose helper ── */
+        function disposeGroup(g) {
+          g.traverse(o => {
+            if (o.isMesh) {
+              o.geometry.dispose();
+              if (Array.isArray(o.material)) o.material.forEach(m => m.dispose());
+              else o.material.dispose();
+            }
+          });
+        }
+
+        /* ── Resize ── */
+        function resizeRenderer() {
+          if (!renderer) return;
+          const wrap = canvas.parentElement;
+          const W = wrap.clientWidth, H = wrap.clientHeight;
+          camera.aspect = W / H; camera.updateProjectionMatrix();
+          renderer.setSize(W, H);
+        }
+
+        /* ═══════════════════ AUDIO ═══════════════════ */
+
+        function initAudio() {
+          if (audioReady) return;
+          try {
+            if (window.Tone) {
+              Tone.start().then(() => {
+                const lim = new Tone.Limiter(-4).toDestination();
+                engineGain   = new Tone.Gain(0.0).connect(lim);
+                engineFilter = new Tone.Filter(520, 'lowpass').connect(engineGain);
+                engineSynth  = new Tone.Oscillator({ type: 'sawtooth', frequency: 50 }).connect(engineFilter);
+                engineSynth.start();
+                skidSynth  = new Tone.NoiseSynth({ noise: { type: 'white' }, envelope: { attack: 0.006, decay: 0.14, sustain: 0, release: 0.06 }, volume: -14 }).toDestination();
+                crashSynth = new Tone.MembraneSynth({ pitchDecay: 0.14, octaves: 5, envelope: { attack: 0.001, decay: 0.30, sustain: 0, release: 0.12 }, volume: -6 }).toDestination();
+                scoreSynth = new Tone.Synth({ oscillator: { type: 'triangle' }, envelope: { attack: 0.003, decay: 0.10, sustain: 0, release: 0.05 }, volume: -9 }).toDestination();
+                audioReady = true;
+              });
+            }
+          } catch (e) {}
+          if (musicOn) startBGMusic();
+        }
+
+        function teardownTone() {
+          try {
+            if (engineSynth)  { engineSynth.stop(); engineSynth.dispose();  engineSynth = null; }
+            if (engineFilter) { engineFilter.dispose(); engineFilter = null; }
+            if (engineGain)   { engineGain.dispose();  engineGain = null; }
+            if (skidSynth)    { skidSynth.dispose();   skidSynth = null; }
+            if (crashSynth)   { crashSynth.dispose();  crashSynth = null; }
+            if (scoreSynth)   { scoreSynth.dispose();  scoreSynth = null; }
+          } catch (e) {}
+          audioReady = false;
+        }
+
+        function startBGMusic() {
+          if (bgAudio) { bgAudio.currentTime = 0; bgAudio.play().catch(() => {}); return; }
+          bgAudio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3');
+          bgAudio.loop = true; bgAudio.volume = 0.32;
+          bgAudio.play().catch(() => {});
+        }
+        function stopBGMusic() { if (bgAudio) { bgAudio.pause(); bgAudio.currentTime = 0; } }
+        function playEngine(speed) {
+          if (!audioReady || !engineGain || !engineSynth) return;
+          try { const t = Math.min(speed / 400, 1); engineSynth.frequency.rampTo(40 + t * 180, 0.1); engineGain.gain.rampTo(0.04 + t * 0.12, 0.05); } catch (e) {}
+        }
+        function playSkid()     { if (!audioReady || !skidSynth)  return; try { skidSynth.triggerAttackRelease('8n'); } catch (e) {} }
+        function playCrash()    { if (!audioReady || !crashSynth) return; try { crashSynth.triggerAttackRelease('C1', '8n'); } catch (e) {} }
+        function playScore(c)   { if (!audioReady || !scoreSynth) return; const n = ['C5','E5','G5','B5','D6','F6']; try { scoreSynth.triggerAttackRelease(n[Math.min(c, 5)], '16n'); } catch (e) {} }
+        function playLevelUp()  {
+          if (!audioReady || !scoreSynth) return;
+          try { scoreSynth.triggerAttackRelease('G5', '8n'); setTimeout(() => { try { scoreSynth.triggerAttackRelease('B5', '8n'); } catch (e) {} }, 120); setTimeout(() => { try { scoreSynth.triggerAttackRelease('E6', '4n'); } catch (e) {} }, 240); } catch (e) {}
+        }
+
+        /* ═══════════════════ HUD / SPEEDOMETER ═══════════════════ */
+
+        function updateHUD() {
+          const disp = useKMH ? Math.round(rawSpeed) : Math.round(rawSpeed * 0.621371);
+          hudSpeedVal.textContent  = disp;
+          hudSpeedUnit.textContent = useKMH ? 'KM/H' : 'MPH';
+          hudScore.textContent     = score.toLocaleString() + ' pts';
+          hudLap.textContent       = 'Lap ' + lapCount;
+          hudLives.textContent     = '❤️'.repeat(lives) + '🖤'.repeat(Math.max(0, 5 - lives));
+          drawSpeedometer(disp, useKMH ? 320 : 200);
+        }
+
+        function drawSpeedometer(val, maxVal) {
+          const sc = speedoCanvas; if (!sc) return;
+          const ctx = sc.getContext('2d');
+          const cx = sc.width / 2, cy = sc.height * 0.88, r = sc.height * 0.75;
+          ctx.clearRect(0, 0, sc.width, sc.height);
+          ctx.beginPath(); ctx.arc(cx, cy, r, -Math.PI * 1.1, -Math.PI * 0.05, false);
+          ctx.strokeStyle = 'rgba(100,50,200,0.3)'; ctx.lineWidth = 5; ctx.stroke();
+          const frac = Math.min(val / maxVal, 1);
+          const endA = -Math.PI * 1.1 + frac * (Math.PI * 0.05 + Math.PI * 1.1);
+          const grd = ctx.createLinearGradient(0, 0, sc.width, 0);
+          grd.addColorStop(0, '#5500cc'); grd.addColorStop(0.6, '#aa40ff'); grd.addColorStop(1, '#ff40aa');
+          ctx.beginPath(); ctx.arc(cx, cy, r, -Math.PI * 1.1, endA, false);
+          ctx.strokeStyle = grd; ctx.lineWidth = 5; ctx.stroke();
+          ctx.fillStyle = 'rgba(230,200,255,0.9)';
+          ctx.font = `bold ${Math.round(sc.height * 0.28)}px sans-serif`;
+          ctx.textAlign = 'center'; ctx.fillText(val, cx, cy - 2);
+        }
+
+        /* ═══════════════════ RESET ═══════════════════ */
+
+        function resetGame() {
+          const d = DIFF[difficulty];
+          score = 0; lives = 5; lapCount = 1; combo = 0;
+          rawSpeed = d.startSpeed;
+          obstacles.forEach(o => { scene.remove(o.mesh); disposeGroup(o.mesh); });
+          obstacles.length = 0;
+          sparks.forEach(s => { scene.remove(s.mesh); s.mesh.geometry.dispose(); s.mesh.material.dispose(); });
+          sparks.length = 0;
+          obstacleSpawnTimer = 0; obstacleInterval = 2.0;
+          diffTimer = 0; invTimer = 0;
+          playerLane = 1; playerX = LANE_X[1]; targetPlayerX = LANE_X[1];
+          playerTilt = 0; camShake = 0;
+          if (playerGroup) { playerGroup.position.set(LANE_X[1], 0, PLAYER_Z); playerGroup.rotation.set(0,0,0); playerGroup.scale.setScalar(1); playerGroup.visible = true; }
+          curvature = 0; curveTarget = 0; curvePhase = 0; crashAnimActive = false;
+          gameOver = false; paused = false;
+          pauseScreen.classList.remove('visible');
+          hudEl.style.display = '';
+          updateHUD();
+        }
+
+        /* ═══════════════════ GAME LOOP ═══════════════════ */
+
+        const keys = { left: false, right: false, up: false, down: false };
+
+        function gameLoop(ts) {
+          if (!initiated || paused || gameOver || crashAnimActive) return;
+          animFrame = requestAnimationFrame(gameLoop);
+          const dt = Math.min((ts - (lastTs || ts)) / 1000, 0.05);
+          lastTs = ts; totalTime += dt; diffTimer += dt; obstacleSpawnTimer += dt;
+
+          const d = DIFF[difficulty];
+          if (diffTimer > 6) {
+            diffTimer = 0;
+            rawSpeed = Math.min(d.maxSpeed, rawSpeed + d.accelRate);
+            obstacleInterval = Math.max(d.spawnMin, obstacleInterval - 0.07);
+            if (Math.round(rawSpeed) % 80 === 0) { lapCount++; playLevelUp(); }
+          }
+
+          // W held = continuous speed boost
+          if (keys.up) rawSpeed = Math.min(d.maxSpeed * 1.4, rawSpeed + d.accelRate * 5 * dt);
+          const turbo = keys.up ? 1.35 : 1.0;
+          const worldSpd = rawSpeed * SPEED_SCALE * turbo;
+
+          // Road curve
+          curvePhase += dt * 0.16;
+          curveTarget = Math.sin(curvePhase) * 2.2 + Math.sin(curvePhase * 0.38) * 0.9;
+          curvature += (curveTarget - curvature) * dt * 0.6;
+
+          // Scroll road texture
+          if (roadTex) { roadTex.offset.y -= worldSpd * dt * 0.12; roadTex.offset.x += curvature * dt * 0.007; }
+
+          // Lane change
+          if (keys.left  && playerLane > 0 && !laneChangeDebounce) { playerLane--; targetPlayerX = LANE_X[playerLane]; laneChangeDebounce = true; setTimeout(() => laneChangeDebounce = false, 260); playSkid(); }
+          if (keys.right && playerLane < 2 && !laneChangeDebounce) { playerLane++; targetPlayerX = LANE_X[playerLane]; laneChangeDebounce = true; setTimeout(() => laneChangeDebounce = false, 260); playSkid(); }
+
+          playerX    += (targetPlayerX - playerX) * 8 * dt;
+          playerTilt += (-(targetPlayerX - playerX) * 0.8 - playerTilt) * 7 * dt;
+
+          if (playerGroup) {
+            playerGroup.position.x = playerX;
+            playerGroup.rotation.z = playerTilt * 0.28;
+            playerGroup.rotation.y = -playerTilt * 0.06;
+          }
+
+          // Wheel spin
+          wheelMeshes.forEach(w => { w.rotation.x += worldSpd * dt * 3.5; });
+
+          // Exhaust pulse
+          if (exhaustLight) {
+            exhaustLight.intensity = 0.4 + 0.5 * Math.sin(totalTime * 28) * (0.5 + Math.random() * 0.5);
+            exhaustLight.position.x = playerX;
+          }
+          if (rtLight) rtLight.position.x = playerX;
+
+          // Camera shake
+          if (camShake > 0) {
+            camera.position.x = (Math.random() - 0.5) * camShake * 0.3;
+            camera.position.y = 4.8 + (Math.random() - 0.5) * camShake * 0.15;
+            camShake = Math.max(0, camShake - 0.6);
+          } else {
+            camera.position.x += (-curvature * 0.42 - camera.position.x) * 4 * dt;
+            camera.position.y += (4.8 - camera.position.y) * 5 * dt;
+            camera.rotation.z += (-curvature * 0.015 - camera.rotation.z) * 4 * dt;
+          }
+
+          // Scroll trees + houses
+          if (treesGroup) {
+            treesGroup.children.forEach(t => {
+              t.position.z += worldSpd * dt;
+              t.position.x += curvature * dt * 0.22;
+              if (t.position.z > PLAYER_Z + 14) { t.position.z -= 290; t.position.x = (t.position.x > 0 ? 1 : -1) * (ROAD_W / 2 + 1.8 + Math.random() * 1.4); }
+            });
+          }
+          if (housesGroup) {
+            housesGroup.children.forEach(h => {
+              h.position.z += worldSpd * dt;
+              h.position.x += curvature * dt * 0.28;
+              if (h.position.z > PLAYER_Z + 18) { h.position.z -= 310; h.position.x = (h.position.x > 0 ? 1 : -1) * (ROAD_W / 2 + 6.0 + Math.random() * 2.5); }
+            });
+          }
+
+          playEngine(rawSpeed * turbo);
+
+          // Spawn
+          if (obstacleSpawnTimer > obstacleInterval) {
+            obstacleSpawnTimer = 0;
+            spawnObstacle();
+            if (rawSpeed > 250) spawnObstacle();
+          }
+
+          // Update obstacles
+          for (let i = obstacles.length - 1; i >= 0; i--) {
+            const o = obstacles[i];
+            o.mesh.position.z += worldSpd * dt;
+
+            if (!o.passed && o.mesh.position.z > PLAYER_Z - 0.5) {
+              o.passed = true; combo++;
+              score += 10 * (1 + Math.floor(combo / 5));
+              playScore(Math.min(combo - 1, 5));
+              updateHUD();
+            }
+            if (o.mesh.position.z > PLAYER_Z + 16) {
+              scene.remove(o.mesh); disposeGroup(o.mesh); obstacles.splice(i, 1); continue;
+            }
+
+            // Collision
+            if (invTimer <= 0 && o.lane === playerLane) {
+              const dz = Math.abs(o.mesh.position.z - PLAYER_Z);
+              const dx = Math.abs(o.mesh.position.x - playerX);
+              if (dz < 1.9 && dx < 1.05) {
+                spawnExplosion(playerX, PLAYER_Z);
+                scene.remove(o.mesh); disposeGroup(o.mesh); obstacles.splice(i, 1);
+                lives--; combo = 0; invTimer = 2.2; camShake = 1.0;
+                playCrash(); updateHUD();
+                if (lives <= 0) {
+                  // Cancel main loop immediately
+                  cancelAnimationFrame(animFrame); animFrame = null;
+                  if (score > highScore) { highScore = score; localStorage.setItem('munetiosRacerHS3D', highScore); }
+                  stopBGMusic();
+                  if (engineGain) try { engineGain.gain.rampTo(0, 0.35); } catch (e) {}
+                  crashAnimActive = true;
+                  // Extra explosions radiating from crash point
+                  for (let ei = 0; ei < 5; ei++) {
+                    setTimeout(() => spawnExplosion(playerX + (Math.random()-0.5)*3, PLAYER_Z + (Math.random()-0.5)*3), ei * 220);
+                  }
+                  let ct = 0;
+                  (function crashAnim() {
+                    if (!crashAnimActive) return;
+                    ct += 0.018;
+                    if (playerGroup) {
+                      playerGroup.rotation.y += 0.20;
+                      playerGroup.rotation.z += 0.07;
+                      playerGroup.position.y = Math.max(-1.8, playerGroup.position.y - 0.045);
+                      playerGroup.scale.setScalar(Math.max(0.25, 1 - ct * 0.38));
+                    }
+                    // Update sparks during crash anim
+                    for (let si = sparks.length - 1; si >= 0; si--) {
+                      const s = sparks[si]; s.life -= 0.018;
+                      s.mesh.position.x += s.vx * 0.018; s.mesh.position.y += s.vy * 0.018; s.vy -= 15 * 0.018;
+                      s.mesh.position.z += s.vz * 0.018;
+                      s.mesh.material.opacity = s.life / s.maxLife; s.mesh.material.transparent = true;
+                      if (s.life <= 0) { scene.remove(s.mesh); s.mesh.geometry.dispose(); s.mesh.material.dispose(); sparks.splice(si, 1); }
+                    }
+                    if (renderer) renderer.render(scene, camera);
+                    if (ct < 2.0) { requestAnimationFrame(crashAnim); }
+                    else {
+                      crashAnimActive = false;
+                      gameOver = true;
+                      pauseTitle.textContent = 'GAME OVER';
+                      pauseSubtitle.textContent = '💥 Your car crashed!';
+                      pauseStats.innerHTML = `<div><span class="racecar-pause-stat-val">${score.toLocaleString()}</span> pts</div><div>Best: <span class="racecar-pause-stat-val">${highScore.toLocaleString()}</span></div><div>Speed: <span class="racecar-pause-stat-val">${useKMH ? Math.round(rawSpeed) : Math.round(rawSpeed * 0.621)} ${useKMH ? 'KM/H' : 'MPH'}</span></div>`;
+                      resumeBtn.style.display = 'none';
+                      pauseScreen.classList.add('visible');
+                    }
+                  })();
+                }
+              }
+            }
+          }
+
+          if (invTimer > 0) invTimer -= dt;
+          if (playerGroup) playerGroup.visible = invTimer <= 0 || Math.floor(totalTime * 18) % 2 === 0;
+
+          // Update sparks
+          for (let i = sparks.length - 1; i >= 0; i--) {
+            const s = sparks[i];
+            s.life -= dt;
+            s.mesh.position.x += s.vx * dt;
+            s.mesh.position.y += s.vy * dt; s.vy -= 15 * dt;
+            s.mesh.position.z += s.vz * dt;
+            s.mesh.material.opacity = s.life / s.maxLife;
+            s.mesh.material.transparent = true;
+            if (s.life <= 0) { scene.remove(s.mesh); s.mesh.geometry.dispose(); s.mesh.material.dispose(); sparks.splice(i, 1); }
+          }
+
+          renderer.render(scene, camera);
+          updateHUD();
+        }
+
+        /* ═══════════════════ RT TOGGLE ═══════════════════ */
+
+        function applyRT(on) {
+          rtEnabled = on;
+          rtBadge.classList.toggle('visible', on);
+          rtBtn.classList.toggle('active-toggle', on);
+          rtBtn.querySelector('icon').textContent = on ? 'wb_sunny' : 'wb_incandescent';
+          rtBtn.querySelector('.btn-txt').textContent = on ? ' RT On' : ' RT Off';
+          if (rtLight) rtLight.visible = on;
+          if (rtReflPlane) rtReflPlane.visible = on;
+          if (renderer) renderer.toneMappingExposure = on ? 1.28 : 1.05;
+          rtToggleSeg.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.rt === (on ? 'on' : 'off')));
+        }
+
+        /* ═══════════════════ DAY / NIGHT ═══════════════════ */
+
+        function applyDayNight(day) {
+          dayMode = day;
+          if (scene) buildSky();
+          if (ambientLight) {
+            ambientLight.color.setHex(day ? 0xfff5e8 : 0x221040);
+            ambientLight.intensity = day ? 1.8 : 1.1;
+          }
+          if (sunLight) {
+            sunLight.color.setHex(day ? 0xfffcd0 : 0xffffff);
+            sunLight.intensity = day ? 2.2 : 1.3;
+            sunLight.position.set(day ? 55 : 4, day ? 85 : 12, day ? -180 : 5);
+          }
+          // Update grass colour
+          if (scene) {
+            scene.traverse(obj => {
+              if (obj.isMesh && obj.material && !Array.isArray(obj.material)) {
+                const hex = obj.material.color && obj.material.color.getHex();
+                if (hex === 0x0d3011 || hex === 0x1a3e1a || hex === 0x2d6b2d)
+                  obj.material.color.setHex(day ? 0x2d6b2d : 0x0d3011);
+              }
+            });
+          }
+          const dnSeg = document.getElementById('dayNightSeg');
+          if (dnSeg) dnSeg.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.tod === (day ? 'day' : 'night')));
+        }
+
+        /* ═══════════════════ LOADING ═══════════════════ */
+
+        function runLoading(cb) {
+          const steps = [
+            [0,   'Initializing Three.js renderer…'],
+            [12,  'Compiling 3D shaders…'],
+            [26,  'Building road geometry…'],
+            [40,  'Placing car meshes…'],
+            [54,  'Loading textures…'],
+            [68,  'Initializing lighting…'],
+            [80,  'Setting up physics…'],
+            [92,  'Starting audio pipeline…'],
+            [100, 'READY!'],
+          ];
+          let i = 0;
+          (function next() { if (i >= steps.length) { cb(); return; } const [p, l] = steps[i++]; loadingBar.style.width = p + '%'; loadingLabel.textContent = l; setTimeout(next, 220 + Math.random() * 160); })();
+        }
+
+        /* ═══════════════════ FULLSCREEN ═══════════════════ */
+
+        function enterFullscreen() { const el = overlay; if (el.requestFullscreen) el.requestFullscreen(); else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen(); }
+        function exitFullscreen()  { if (document.exitFullscreen) document.exitFullscreen().catch(() => {}); else if (document.webkitExitFullscreen) document.webkitExitFullscreen(); }
+        document.addEventListener('fullscreenchange', () => { const ic = fsBtn.querySelector('icon'); if (ic) ic.textContent = document.fullscreenElement ? 'fullscreen_exit' : 'fullscreen'; });
+
+        /* ═══════════════════ OPEN / CLOSE ═══════════════════ */
+
+        function openGame() {
+          overlay.classList.add('active');
+          loadingEl.classList.remove('hidden');
+          hudEl.style.display = 'none';
+          pauseScreen.classList.remove('visible');
+          settingsPanel.classList.remove('visible');
+          resumeBtn.style.display = '';
+          controlHint.textContent = window.matchMedia('(max-width:768px)').matches ? 'Tap arrows to steer · P = Pause' : 'A/D or ← → lanes · W/↑ turbo · P pause';
+
+          initSWBlob();
+          enterFullscreen();
+          resizeRenderer();
+
+          runLoading(() => {
+            if (!window.THREE) { loadingLabel.textContent = 'Three.js failed to load — please refresh.'; return; }
+            if (!scene || !renderer) { if (!initThree()) { loadingLabel.textContent = '3D init failed.'; return; } }
+            loadingEl.classList.add('hidden');
+            hudEl.style.display = '';
+            initiated = true;
+            initAudio();
+            resetGame();
+            lastTs = performance.now();
+            animFrame = requestAnimationFrame(gameLoop);
+          });
+
+          document.getElementById('leftSidebar')?.classList.remove('active');
+          document.getElementById('sidebarOverlay')?.classList.remove('active');
+        }
+
+        function closeGame() {
+          exitFullscreen();
+          overlay.classList.remove('active');
+          paused = true; initiated = false;
+          if (animFrame) cancelAnimationFrame(animFrame);
+          stopBGMusic();
+          teardownTone();
+        }
+
+        /* ── SW blob ── */
+        function initSWBlob() {
+          try {
+            const code = `const C='mnr3d-v2';self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll([]))); self.skipWaiting();});self.addEventListener('activate',e=>{e.waitUntil(clients.claim());});`;
+            if ('serviceWorker' in navigator) navigator.serviceWorker.register(URL.createObjectURL(new Blob([code], { type: 'application/javascript' })), { scope: '/' }).catch(() => {});
+          } catch (e) {}
+        }
+
+        /* ═══════════════════ INPUT ═══════════════════ */
+
+        const KEY = { ArrowLeft: 'left', a: 'left', A: 'left', ArrowRight: 'right', d: 'right', D: 'right', ArrowUp: 'up', w: 'up', W: 'up', ArrowDown: 'down', s: 'down', S: 'down' };
+        document.addEventListener('keydown', e => {
+          if (!initiated || !overlay.classList.contains('active')) return;
+          const k = KEY[e.key]; if (k) { keys[k] = true; e.preventDefault(); }
+          if (e.key === 'Escape' || e.key === 'p' || e.key === 'P') { if (!gameOver) togglePause(); }
+          if (e.key === 'f' || e.key === 'F') enterFullscreen();
+        });
+        document.addEventListener('keyup', e => { const k = KEY[e.key]; if (k) keys[k] = false; });
+
+        function bindTouch(id, key) {
+          const el = document.getElementById(id); if (!el) return;
+          el.addEventListener('touchstart', e => { e.preventDefault(); keys[key] = true; }, { passive: false });
+          el.addEventListener('touchend',   e => { e.preventDefault(); keys[key] = false; }, { passive: false });
+          el.addEventListener('touchcancel', () => keys[key] = false);
+          el.addEventListener('mousedown',  () => keys[key] = true);
+          el.addEventListener('mouseup',    () => keys[key] = false);
+          el.addEventListener('mouseleave', () => keys[key] = false);
+        }
+        bindTouch('touchLeft', 'left'); bindTouch('touchRight', 'right');
+        bindTouch('touchAccel', 'up');  bindTouch('touchBrake', 'down');
+
+        let swipeX = 0;
+        canvas.addEventListener('touchstart', e => { swipeX = e.touches[0].clientX; }, { passive: true });
+        canvas.addEventListener('touchend', e => {
+          const dx = e.changedTouches[0].clientX - swipeX;
+          if (Math.abs(dx) > 30) {
+            if (dx < 0 && playerLane > 0) { playerLane--; targetPlayerX = LANE_X[playerLane]; playSkid(); }
+            if (dx > 0 && playerLane < 2) { playerLane++; targetPlayerX = LANE_X[playerLane]; playSkid(); }
+          }
+        }, { passive: true });
+
+        window.addEventListener('resize', () => { if (overlay.classList.contains('active')) resizeRenderer(); });
+
+        /* ═══════════════════ PAUSE / RESTART ═══════════════════ */
+
+        function togglePause() {
+          paused = !paused;
+          if (paused) {
+            pauseTitle.textContent = 'PAUSED'; pauseSubtitle.textContent = 'Take a breath…';
+            pauseStats.innerHTML = `<div>Score: <span class="racecar-pause-stat-val">${score.toLocaleString()}</span></div><div>Best: <span class="racecar-pause-stat-val">${highScore.toLocaleString()}</span></div>`;
+            resumeBtn.style.display = ''; pauseScreen.classList.add('visible');
+            pauseBtn.innerHTML = '<icon>play_arrow</icon><span class="btn-txt"> Resume</span>';
+            if (bgAudio) bgAudio.volume = 0.1;
+            if (engineGain) try { engineGain.gain.rampTo(0, 0.2); } catch (e) {}
+          } else {
+            pauseScreen.classList.remove('visible');
+            pauseBtn.innerHTML = '<icon>pause</icon><span class="btn-txt"> Pause</span>';
+            if (bgAudio && musicOn) bgAudio.volume = 0.32;
+            if (engineGain) try { engineGain.gain.rampTo(0.04 + (rawSpeed / 400) * 0.12, 0.2); } catch (e) {}
+            lastTs = performance.now();
+            animFrame = requestAnimationFrame(gameLoop);
+          }
+        }
+
+        function doRestart() {
+          if (!initiated) return;
+          paused = false; crashAnimActive = false; if (animFrame) cancelAnimationFrame(animFrame);
+          resetGame();
+          pauseBtn.innerHTML = '<icon>pause</icon><span class="btn-txt"> Pause</span>';
+          resumeBtn.style.display = '';
+          if (bgAudio && musicOn) { bgAudio.currentTime = 0; bgAudio.play().catch(() => {}); bgAudio.volume = 0.32; }
+          lastTs = performance.now();
+          animFrame = requestAnimationFrame(gameLoop);
+        }
+
+        /* ═══════════════════ SETTINGS ═══════════════════ */
+
+        function setupSegment(seg, cb) {
+          if (!seg) return;
+          seg.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', () => { seg.querySelectorAll('button').forEach(b => b.classList.remove('active')); btn.classList.add('active'); cb(btn); });
+          });
+        }
+        setupSegment(speedUnitSeg,   btn => { useKMH = btn.dataset.unit === 'kmh'; updateHUD(); });
+        setupSegment(rtToggleSeg,    btn => applyRT(btn.dataset.rt === 'on'));
+        setupSegment(musicToggleSeg, btn => { musicOn = btn.dataset.music === 'on'; if (musicOn) startBGMusic(); else stopBGMusic(); });
+        setupSegment(diffSeg,        btn => { difficulty = btn.dataset.diff; if (initiated) doRestart(); });
+
+        /* ── Button wiring ── */
+        if (sidebarBtn)  sidebarBtn.addEventListener('click', openGame);
+        if (closeBtn)    closeBtn.addEventListener('click', closeGame);
+        if (pauseBtn)    pauseBtn.addEventListener('click', () => { if (!gameOver) togglePause(); });
+        if (restartBtn)  restartBtn.addEventListener('click', doRestart);
+        if (restartBtnB) restartBtnB.addEventListener('click', doRestart);
+        if (resumeBtn)   resumeBtn.addEventListener('click', () => { if (paused) togglePause(); });
+        if (rtBtn)       rtBtn.addEventListener('click', () => applyRT(!rtEnabled));
+        if (fsBtn)       fsBtn.addEventListener('click', () => document.fullscreenElement ? exitFullscreen() : enterFullscreen());
+        if (settingsBtn) settingsBtn.addEventListener('click', e => { e.stopPropagation(); settingsPanel.classList.toggle('visible'); });
+        document.addEventListener('click', e => {
+          if (settingsPanel.classList.contains('visible') && !settingsPanel.contains(e.target) && e.target !== settingsBtn)
+            settingsPanel.classList.remove('visible');
+        });
+      })();
+    </script>
+    <script nonce="IKDjefjewhCujHJeuji3jhekowdijzizkcej">
+
       // Detect old browsers and show modal
       (function () {
         function isOldBrowser() {
