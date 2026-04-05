@@ -2816,7 +2816,7 @@
         setLanguage(lang);
       });
       // --- SafeSearch Filtering ---
-      let safeSearchLevel = localStorage.getItem("safeSearchLevel") || "moderate";
+      let safeSearchLevel = localStorage.getItem("safeSearchLevel") || "strict";
       // SafeSearch dropdown logic
       const safeSearchToggle = document.getElementById("SafeSearchToggle");
       const safeSearchDropdown = document.getElementById("safeSearchDropdown");
@@ -2879,7 +2879,7 @@
           safeSearchToggle.style.cursor = "not-allowed";
           safeSearchToggle.title = "SafeSearch is locked to Strict in School Mode";
         } else {
-          safeSearchLevel = localStorage.getItem("safeSearchLevel") || "moderate";
+          safeSearchLevel = localStorage.getItem("safeSearchLevel") || "strict";
           safeSearchToggle.textContent =
             safeSearchLevel.charAt(0).toUpperCase() + safeSearchLevel.slice(1);
           safeSearchToggle.style.opacity = "";
@@ -2951,7 +2951,9 @@
 
         const moderatePatterns = [
           // 18+ content, sex, harmful
-          /18\+/i,
+          /sex/i,
+          /porn/i,
+          /xxx/i,
           /escort/i,
           /adult/i,
           /nude/i,
@@ -3017,40 +3019,10 @@
               if (spammyDomains.some(sd => rDomain === sd || rDomain.endsWith("." + sd))) return false;
             } catch (e) {}
           } else if (safeSearchLevel === "moderate") {
-            // Hide 18+ and similar, but for 'porn'/'pornography' and swear words show #### instead of hiding
-            if (/18\+|escort|adult|nude|nsfw|suicide|kill\s+yourself|self\s*harm|violence|murder|abuse|rape|drugs?|overdose|gambling|casino|betting|gun|weapon|terror|bomb|explosive|child\s*(porn|abuse|molest)/i.test(fields)) return false;
-            // Mask 'porn' or 'pornography' in title/desc/url/link
-            if (/porn|pornography/i.test(fields)) {
-              if (r.title) r.title = r.title.replace(/porn|pornography/gi, '####');
-              if (r.description) r.description = r.description.replace(/porn|pornography/gi, '####');
-              if (r.url) r.url = r.url.replace(/porn|pornography/gi, '####');
-              if (r.link) r.link = r.link.replace(/porn|pornography/gi, '####');
-            }
-            // Mask swear words (strictPatterns) in title/desc/url/link
-            strictPatterns.forEach((pattern) => {
-              if (pattern.test(fields)) {
-                if (r.title) r.title = r.title.replace(pattern, match => '#'.repeat(match.length));
-                if (r.description) r.description = r.description.replace(pattern, match => '#'.repeat(match.length));
-                if (r.url) r.url = r.url.replace(pattern, match => '#'.repeat(match.length));
-                if (r.link) r.link = r.link.replace(pattern, match => '#'.repeat(match.length));
-              }
-            });
+            if (matchesAny(fields, moderatePatterns)) return false;
           }
           return true;
         });
-                  // Blur images that are spoilers (contain 'spoiler' in alt or class)
-                  const origRenderResultsBlur = renderResults;
-                  renderResults = function (results) {
-                    setTimeout(() => {
-                      document.querySelectorAll('img').forEach(img => {
-                        if ((img.alt && /spoiler/i.test(img.alt)) || (img.className && /spoiler/i.test(img.className))) {
-                          img.style.filter = 'blur(16px)';
-                          img.title = 'Spoiler image';
-                        }
-                      });
-                    }, 0);
-                    origRenderResultsBlur(results);
-                  };
             }
 
             // Patch renderResults to filter
@@ -3413,8 +3385,19 @@
         );
           }
 
-          // Clear results immediately — no spinner            
+          // --- Show local results instantly, with a loading spinner for API results ---
+          {
+        const _spinnerWrapper = document.createElement("div");
+        _spinnerWrapper.id = "results-loading-spinner";
+        _spinnerWrapper.style.cssText = "display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:28px 0;";
+        _spinnerWrapper.innerHTML = '<div class="results-spinner-ring"></div><div style="opacity:0.55;font-size:0.88em;">Loading more results…</div>';
+        if (filteredLocal.length > 0) {
+          resultsContainer.appendChild(_spinnerWrapper);
+        } else {
           clearResults();
+          resultsContainer.appendChild(_spinnerWrapper);
+        }
+          }
 
           let redditResults = [];
           let hnResults = [];
@@ -7796,66 +7779,26 @@
             instantAnswerBox.style.display = "none";
             return;
           }
-          if (!query) {
+          if (!query || !isMathQuery(query)) {
             instantAnswerBox.style.display = "none";
             return;
           }
-
-          // 1. Math expression — synchronous, show immediately
-          if (isMathQuery(query)) {
-            const result = safeMathEval(query);
-            if (result !== null) {
-              const formatted = formatNumber(result);
-              instantAnswerBox.style.display = "block";
-              instantAnswerBox.innerHTML = `
-                <div class="liquid-glass" style="padding:20px 24px;border-radius:18px;display:flex;align-items:center;gap:16px;border:1.5px solid rgba(108,46,183,0.5);">
-                  <span class="material-symbols-rounded" style="font-size:32px;color:#a259f7;flex-shrink:0;">calculate</span>
-                  <div style="flex:1;min-width:0;">
-                    <div style="font-size:0.85em;color:#aaa;margin-bottom:4px;">Instant Answer</div>
-                    <div style="font-size:1.1em;opacity:0.75;word-break:break-all;">${escapeHtml(query)}</div>
-                    <div style="font-size:2em;font-weight:700;color:#a259f7;line-height:1.2;">${escapeHtml(formatted)}</div>
-                  </div>
-                </div>`;
-              return;
-            }
+          const result = safeMathEval(query);
+          if (result === null) {
+            instantAnswerBox.style.display = "none";
+            return;
           }
-
-          // 2. Wikipedia summary — async, only show if article found
-          const _wikiQuery = query;
-          const countryWikiLang2 = {
-            us: "en", gb: "en", ca: "en", au: "en", za: "en",
-            de: "de", fr: "fr", jp: "ja", cn: "zh", br: "pt",
-            in: "hi", ru: "ru", nl: "nl",
-          };
-          const wikiLang2 = countryWikiLang2[window.currentCountry] || "en";
-          fetch(`https://${wikiLang2}.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(_wikiQuery)}`)
-            .then(r => r.ok ? r.json() : null)
-            .catch(() => null)
-            .then(data => {
-              // Only show if query hasn't changed
-              if (!data || !data.extract || document.getElementById("searchInput").value.trim() !== _wikiQuery) return;
-              if (localStorage.getItem("enableInstantAnswers") !== "true") return;
-              const pageUrl = data.content_urls && data.content_urls.desktop && data.content_urls.desktop.page
-                ? data.content_urls.desktop.page
-                : `https://${wikiLang2}.wikipedia.org/wiki/${encodeURIComponent(data.title || _wikiQuery)}`;
-              const thumb = data.thumbnail && data.thumbnail.source ? data.thumbnail.source : "";
-              instantAnswerBox.style.display = "block";
-              instantAnswerBox.innerHTML = `
-                <div class="liquid-glass" style="padding:20px 24px;border-radius:18px;display:flex;align-items:flex-start;gap:16px;border:1.5px solid rgba(108,46,183,0.5);">
-                  ${thumb ? `<img src="${thumb}" alt="" style="width:72px;height:72px;object-fit:cover;border-radius:10px;flex-shrink:0;" referrerpolicy="no-referrer">` : `<span class="material-symbols-rounded" style="font-size:32px;color:#a259f7;flex-shrink:0;margin-top:4px;">menu_book</span>`}
-                  <div style="flex:1;min-width:0;">
-                    <div style="font-size:0.85em;color:#aaa;margin-bottom:4px;display:flex;align-items:center;gap:6px;">
-                      <img src="https://en.wikipedia.org/static/favicon/wikipedia.ico" style="width:14px;height:14px;border-radius:2px;" referrerpolicy="no-referrer">
-                      Source: <a href="${pageUrl}" target="_blank" rel="noopener" style="color:#a259f7;">Wikipedia</a>
-                    </div>
-                    <div style="font-size:1.15em;font-weight:700;margin-bottom:6px;">${escapeHtml(data.title || _wikiQuery)}</div>
-                    <div style="font-size:0.97em;opacity:0.82;line-height:1.55;">${escapeHtml((data.extract || "").slice(0, 320))}${data.extract && data.extract.length > 320 ? "…" : ""}</div>
-                    <a href="${pageUrl}" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;font-size:0.88em;color:#a259f7;">Read more on Wikipedia →</a>
-                  </div>
-                </div>`;
-            });
-          // Hide while fetching (don't show stale answer)
-          instantAnswerBox.style.display = "none";
+          const formatted = formatNumber(result);
+          instantAnswerBox.style.display = "block";
+          instantAnswerBox.innerHTML = `
+            <div class="liquid-glass" style="padding:20px 24px;border-radius:18px;display:flex;align-items:center;gap:16px;border:1.5px solid rgba(108,46,183,0.5);">
+              <span class="material-symbols-rounded" style="font-size:32px;color:#a259f7;flex-shrink:0;">calculate</span>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:0.85em;color:#aaa;margin-bottom:4px;">Instant Answer</div>
+                <div style="font-size:1.1em;opacity:0.75;word-break:break-all;">${escapeHtml(query)}</div>
+                <div style="font-size:2em;font-weight:700;color:#a259f7;line-height:1.2;">${escapeHtml(formatted)}</div>
+              </div>
+            </div>`;
         }
 
         // Patch performSearch to show instant answer
@@ -8746,77 +8689,36 @@
           resultsContainer.innerHTML = `<div style="padding:32px 0;text-align:center;color:#aaa;">${t.noResults}</div>`;
           return;
         }
-
-        // --- Domain grouping: collapse when a root domain has >= 10 results on this page ---
-        function getRootDomain(link) {
-          try {
-            const h = new URL(link).hostname.replace(/^www\./, "");
-            // Keep only last two parts (e.g. wikipedia.org, not en.wikipedia.org)
-            const parts = h.split(".");
-            return parts.length > 2 ? parts.slice(-2).join(".") : h;
-          } catch (e) { return link; }
-        }
-
-        // Count per root domain in this page
-        const domainCount = {};
-        pageResults.forEach(r => {
-          const d = getRootDomain(r.link || "");
-          domainCount[d] = (domainCount[d] || 0) + 1;
-        });
-
-        // Group results: domains with >= 10 occurrences get collapsed
-        const DOMAIN_COLLAPSE_THRESHOLD = 10;
-        const domainGroupRendered = {}; // track how many extra hits we've hidden per domain
-
         pageResults.forEach((r) => {
-          const rootDomain = getRootDomain(r.link || "");
-          const shouldGroup = domainCount[rootDomain] >= DOMAIN_COLLAPSE_THRESHOLD;
-
-          if (shouldGroup) {
-            if (!domainGroupRendered[rootDomain]) {
-              domainGroupRendered[rootDomain] = { shown: 0, hidden: [] };
-            }
-            const grp = domainGroupRendered[rootDomain];
-            if (grp.shown < 3) {
-              // Show first 3 normally
-              grp.shown++;
-              const div = document.createElement("div");
-              div.className = "result";
-              div.setAttribute("data-domain-group", rootDomain);
-              div.innerHTML = buildResultHTML(r);
-              resultsContainer.appendChild(div);
-            } else {
-              // Hide the rest — they get revealed on "Show more"
-              grp.hidden.push(r);
-            }
-          } else {
-            const div = document.createElement("div");
-            div.className = "result";
-            div.innerHTML = buildResultHTML(r);
-            resultsContainer.appendChild(div);
-          }
+          const div = document.createElement("div");
+          div.className = "result";
+          div.innerHTML = `
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                <img class="result-favicon" src="${
+                  r.favicon ||
+                  "https://www.google.com/s2/favicons?domain=" +
+                    encodeURIComponent(r.link)
+                }" alt="favicon" referrerpolicy="no-referrer">
+                <a class="result-link" href="${r.link}" rel="noopener">${
+                  r.link
+                }</a>
+                </div>
+                <a class="result-title" href="${
+                  r.link
+                }" rel="noopener" style="font-size:1.3em;font-weight:700;display:inline-block;text-decoration:none;color:inherit;margin-bottom:8px;">${
+                  r.title
+                }</a>
+                <div class="result-description">${r.description}</div>
+                <div class="result-more-icon" title="More">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;">
+                <circle cx="12" cy="5" r="1.5"/>
+                <circle cx="12" cy="12" r="1.5"/>
+                <circle cx="12" cy="19" r="1.5"/>
+                </svg>
+                </div>
+            `;
+          resultsContainer.appendChild(div);
         });
-
-        // Append "Show more from domain" buttons for each grouped domain
-        Object.entries(domainGroupRendered).forEach(([domain, grp]) => {
-          if (grp.hidden.length === 0) return;
-          const showMoreBtn = document.createElement("div");
-          showMoreBtn.className = "result";
-          showMoreBtn.style.cssText = "text-align:center;cursor:pointer;padding:14px 20px;background:rgba(108,46,183,0.10);border-style:dashed;";
-          showMoreBtn.innerHTML = `<span class="material-symbols-rounded" style="vertical-align:middle;font-size:18px;margin-right:6px;">expand_more</span>Show ${grp.hidden.length} more results from <b>${domain}</b>`;
-          showMoreBtn.onclick = function () {
-            grp.hidden.forEach(r => {
-              const div = document.createElement("div");
-              div.className = "result";
-              div.innerHTML = buildResultHTML(r);
-              showMoreBtn.before(div);
-            });
-            showMoreBtn.remove();
-            if (typeof hideRemovedResults === "function") hideRemovedResults();
-          };
-          resultsContainer.appendChild(showMoreBtn);
-        });
-
         if (typeof hideRemovedResults === "function") hideRemovedResults();
         if (totalPages > 1) {
           const paginationDiv = document.createElement("div");
@@ -8845,58 +8747,11 @@
         }
       }
 
-      // Helper: build HTML for a single result card
-      function buildResultHTML(r) {
-        return `
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-          <img class="result-favicon" src="${
-            r.favicon ||
-            "https://www.google.com/s2/favicons?domain=" +
-              encodeURIComponent(r.link)
-          }" alt="favicon" referrerpolicy="no-referrer">
-          <a class="result-link" href="${r.link}" rel="noopener">${
-            r.link
-          }</a>
-          </div>
-          <a class="result-title" href="${
-            r.link
-          }" rel="noopener" style="font-size:1.3em;font-weight:700;display:inline-block;text-decoration:none;color:inherit;margin-bottom:8px;">${
-            r.title
-          }</a>
-          <div class="result-description">${r.description}</div>
-          <div class="result-more-icon" title="More">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;">
-          <circle cx="12" cy="5" r="1.5"/>
-          <circle cx="12" cy="12" r="1.5"/>
-          <circle cx="12" cy="19" r="1.5"/>
-          </svg>
-          </div>
-        `;
-      }
-
       function renderResults(results) {
         window.__pagedResults = results;
         window.__currentPage = 1;
         renderPage(1);
       }
-
-      // Pre-initialize the static videos dataset for the All-tab carousel.
-      // The full array is defined inside the videosResult click handler, but we
-      // need it available immediately. We force a silent init the first time
-      // performSearch runs by checking window._munetiosStaticVideos.
-      // The videosResult listener sets it when first clicked; until then we use [].
-      if (!window._munetiosStaticVideos) window._munetiosStaticVideos = [];
-
-      // Eagerly populate the static videos dataset at DOMContentLoaded so the
-      // All-tab carousel works on the very first search (before Videos tab is clicked).
-      document.addEventListener("DOMContentLoaded", function _initVideosDataset() {
-        if (window._munetiosStaticVideos && window._munetiosStaticVideos.length) return;
-        // Trigger the videosResult click once off-screen to populate the array, then
-        // immediately restore the All tab UI.  We use a flag to suppress rendering.
-        window._videosInitOnly = true;
-        document.getElementById("videosResult")?.click();
-        window._videosInitOnly = false;
-      });
       document.getElementById("allResult").addEventListener("click", () => {
         performSearch();
       });
@@ -9300,8 +9155,26 @@
         )
       );
     }
-    // Clear results immediately — no spinner, instant feedback
-    clearResults();
+    // Show local results instantly, with a loading spinner for API results
+    {
+      const _spinnerWrapper = document.createElement("div");
+      _spinnerWrapper.id = "results-loading-spinner";
+      _spinnerWrapper.style.cssText = "display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:28px 0;";
+      _spinnerWrapper.innerHTML = '<div class="results-spinner-ring"></div><div style="opacity:0.55;font-size:0.88em;">Loading more results…</div>';
+      if (filteredLocal.length > 0) {
+        const _rankedLocal = filteredLocal.map(r => ({ ...r, relevanceScore: calculateRelevanceScore(r, query) }));
+        _rankedLocal.sort((a, b) => b.relevanceScore - a.relevanceScore);
+        renderResults(_rankedLocal);
+        resultsContainer.appendChild(_spinnerWrapper);
+      } else {
+        resultsContainer.innerHTML = "";
+        const _centeredSpinner = document.createElement("div");
+        _centeredSpinner.id = "results-loading-spinner";
+        _centeredSpinner.style.cssText = "display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:72px 0;";
+        _centeredSpinner.innerHTML = '<div class="results-spinner-ring" style="width:36px;height:36px;"></div><div style="opacity:0.6;font-size:0.95em;">Searching…</div>';
+        resultsContainer.appendChild(_centeredSpinner);
+      }
+    }
 
     // --- Fetch all APIs in parallel ---
     const enableReddit = localStorage.getItem("enableRedditResults") === "true";
@@ -9536,98 +9409,6 @@
     filtered.sort((a, b) => b.relevanceScore - a.relevanceScore);
 
     renderResults(filtered);
-
-    // --- Video & Image carousels for All tab ---
-    // Build video carousel from static dataset filtered by query
-    (function injectMediaCarousels() {
-      const qLow = query.toLowerCase();
-      const qWords = qLow.split(/\s+/).filter(w => w.length > 1);
-
-      function scoreMedia(item) {
-        const t = ((item.title || "") + " " + (item.description || "")).toLowerCase();
-        let s = 0;
-        if (t.includes(qLow)) s += 40;
-        qWords.forEach(w => { if (t.includes(w)) s += 10; });
-        return s;
-      }
-
-      // Videos (static dataset is defined inside the videosResult click handler,
-      // so we maintain a small copy for carousel use)
-      if (!window._munetiosStaticVideos || !window._munetiosStaticVideos.length) return; // dataset not yet available
-      const videosMatched = window._munetiosStaticVideos
-        .map(v => ({ ...v, _score: scoreMedia(v) }))
-        .filter(v => v._score > 0)
-        .sort((a, b) => b._score - a._score)
-        .slice(0, 10);
-
-      if (videosMatched.length >= 2) {
-        const topScore = filtered.length > 0 ? (filtered[0].relevanceScore || 0) : 0;
-        const videoScore = videosMatched[0]._score;
-        // If videos are highly relevant, insert at top; otherwise append at bottom
-        const insertAtTop = videoScore >= 30 && videoScore >= topScore * 0.6;
-
-        const carousel = document.createElement("div");
-        carousel.className = "result";
-        carousel.style.cssText = "padding:18px 20px;margin:18px 0;";
-        const carouselHTML = `
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-            <span class="material-symbols-rounded" style="font-size:22px;color:#a259f7;">videocam</span>
-            <span style="font-weight:700;font-size:1.05em;">Videos</span>
-            <a href="#" id="_videoCarouselMore" style="margin-left:auto;font-size:0.88em;color:#a259f7;opacity:0.8;">See all videos</a>
-          </div>
-          <div id="_videoCarouselList" style="display:flex;gap:14px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin;">
-            ${videosMatched.map(v => {
-              const ytMatch = (v.link||"").match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_\-]+)/);
-              const thumb = v.thumbnail || (ytMatch ? `https://img.youtube.com/vi/${ytMatch[1]}/mqdefault.jpg` : "");
-              return `<div class="video-carousel-item" data-link="${v.link}" style="flex-shrink:0;width:180px;cursor:pointer;">
-                <img src="${thumb}" alt="${v.title}" style="width:180px;height:101px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px #0003;" loading="lazy">
-                <div style="font-size:0.88em;font-weight:600;margin-top:5px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${v.title}</div>
-              </div>`;
-            }).join("")}
-          </div>`;
-        carousel.innerHTML = carouselHTML;
-
-        // Wire up clicks
-        carousel.querySelectorAll(".video-carousel-item").forEach((el, idx) => {
-          el.onclick = function () {
-            // Reuse the same modal logic from videos tab
-            const v = videosMatched[idx];
-            document.getElementById("videoViewModal")?.remove();
-            const ytMatch = (v.link||"").match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_\-]+)/);
-            const ytId = ytMatch ? ytMatch[1] : "";
-            const embedUrl = ytId ? `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1` : "";
-            const modal = document.createElement("div");
-            modal.id = "videoViewModal";
-            modal.style.cssText = "position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:10061;";
-            modal.innerHTML = `<div class="liquid-glass" style="max-width:860px;width:100%;max-height:96vh;overflow:auto;border-radius:22px;position:relative;padding:24px;">
-              <button onclick="this.closest('#videoViewModal').remove()" style="position:absolute;top:10px;right:10px;background:#a259f7;color:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:1.3em;cursor:pointer;">&times;</button>
-              <div style="font-size:1.1em;font-weight:700;margin-bottom:10px;">${v.title}</div>
-              ${embedUrl ? `<div style="position:relative;padding-top:56.25%;"><iframe src="${embedUrl}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:12px;" allow="autoplay;encrypted-media" allowfullscreen></iframe></div>` : `<a href="${v.link}" target="_blank" rel="noopener" style="color:#a259f7;">Open video</a>`}
-            </div>`;
-            modal.addEventListener("mousedown", e => { if (e.target === modal) modal.remove(); });
-            document.body.appendChild(modal);
-          };
-        });
-
-        // Wire "See all videos" link
-        const moreBtn = carousel.querySelector("#_videoCarouselMore");
-        if (moreBtn) {
-          moreBtn.onclick = function (e) {
-            e.preventDefault();
-            document.getElementById("videosResult")?.click();
-          };
-        }
-
-        if (insertAtTop) {
-          resultsContainer.insertBefore(carousel, resultsContainer.firstChild);
-        } else {
-          // Insert before pagination if exists
-          const paginationDiv = resultsContainer.querySelector("div[style*='justify-content:center']");
-          if (paginationDiv) resultsContainer.insertBefore(carousel, paginationDiv);
-          else resultsContainer.appendChild(carousel);
-        }
-      }
-    })();
 
   } catch(e){
     clearResults();
@@ -11120,46 +10901,38 @@ document
       }
 
       document.getElementById("allResult").addEventListener("click", () => {
-        window._activeTab = "all";
         setCustomHash("all", searchInput.value.trim());
         updateDocumentTitle("all", searchInput.value.trim());
         performSearch();
       });
       document.getElementById("popularResult").addEventListener("click", () => {
-        window._activeTab = "popular";
         setCustomHash("popular", searchInput.value.trim());
         updateDocumentTitle("popular", searchInput.value.trim());
       });
       document
         .getElementById("recommendedResult")
         .addEventListener("click", () => {
-          window._activeTab = "recommended";
           setCustomHash("recommended", searchInput.value.trim());
           updateDocumentTitle("recommended", searchInput.value.trim());
         });
       document.getElementById("imagesResult").addEventListener("click", () => {
-        window._activeTab = "images";
         setCustomHash("images", searchInput.value.trim());
         updateDocumentTitle("images", searchInput.value.trim());
       });
       document.getElementById("videosResult").addEventListener("click", () => {
-        window._activeTab = "videos";
         setCustomHash("videos", searchInput.value.trim());
         updateDocumentTitle("videos", searchInput.value.trim());
       });
       document.getElementById("mapsResult").addEventListener("click", () => {
-        window._activeTab = "maps";
         setCustomHash("maps", searchInput.value.trim());
         updateDocumentTitle("maps", searchInput.value.trim());
       });
       document.getElementById("blogsResult").addEventListener("click", () => {
-        window._activeTab = "blogs";
         setCustomHash("blogs", searchInput.value.trim());
         updateDocumentTitle("blogs", searchInput.value.trim());
       });
 
       // On hashchange, auto-select tab and fill query
-      window._activeTab = "all";
       window.addEventListener("hashchange", () => {
         const hash = window.location.hash;
         const match = hash.match(/^#\/(\w+)(\?q=(.*))?/);
@@ -11168,9 +10941,6 @@ document
         const query = match[3] ? decodeURIComponent(match[3]) : "";
         if (query) searchInput.value = query;
         updateDocumentTitle(tab, query);
-        // Don't re-click if we're already on this tab (prevents loop + going back to All)
-        if (window._activeTab === tab) return;
-        window._activeTab = tab;
         switch (tab) {
           case "all":
         document.getElementById("allResult").click();
@@ -11226,22 +10996,8 @@ function getQueryFromURL() {
 
     updateDocumentTitle(tab, query);
 
-    // Route to the correct tab handler — do NOT always call performSearch (all-tab)
-    const tabMap = {
-      all: "allResult",
-      popular: "popularResult",
-      recommended: "recommendedResult",
-      images: "imagesResult",
-      videos: "videosResult",
-      maps: "mapsResult",
-      wiki: "wikiResult",
-      blogs: "blogsResult",
-    };
-    const btnId = tabMap[tab] || "allResult";
-    const btn = document.getElementById(btnId);
-    if (btn) {
-      window._activeTab = tab; // mark before click to suppress re-entry
-      btn.click();
+    if (typeof performSearch === "function") {
+      performSearch(query);
     }
   }
 
@@ -12152,12 +11908,6 @@ function getQueryFromURL() {
               source: "YouTube",
               },
             ];
-
-            // Expose for the All-tab video carousel
-            window._munetiosStaticVideos = staticVideos;
-
-            // If triggered only to populate the dataset (not to display), stop here.
-            if (window._videosInitOnly) return;
 
             // Filter static videos by query
             const videos = staticVideos.filter(
