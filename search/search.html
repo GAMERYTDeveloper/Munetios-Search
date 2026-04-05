@@ -734,7 +734,7 @@
         <div class="flex-col items-start sm:items-center flex gap-4 sm:flex-row">
           <div class="safesearch-setting">
             <label for="SafeSearchLabel">SafeSearch</label>
-            <button id="SafeSearchToggle" class="btn liquid-glass">Strict</button>
+            <button id="SafeSearchToggle" class="btn liquid-glass">Moderate</button>
           </div>
           <div class="country-selector-setting flex items-center gap-2">
             <label for="CountrySelectorLabel">Country</label>
@@ -2816,7 +2816,7 @@
         setLanguage(lang);
       });
       // --- SafeSearch Filtering ---
-      let safeSearchLevel = localStorage.getItem("safeSearchLevel") || "strict";
+      let safeSearchLevel = localStorage.getItem("safeSearchLevel") || "moderate";
       // SafeSearch dropdown logic
       const safeSearchToggle = document.getElementById("SafeSearchToggle");
       const safeSearchDropdown = document.getElementById("safeSearchDropdown");
@@ -2879,7 +2879,7 @@
           safeSearchToggle.style.cursor = "not-allowed";
           safeSearchToggle.title = "SafeSearch is locked to Strict in School Mode";
         } else {
-          safeSearchLevel = localStorage.getItem("safeSearchLevel") || "strict";
+          safeSearchLevel = localStorage.getItem("safeSearchLevel") || "moderate";
           safeSearchToggle.textContent =
             safeSearchLevel.charAt(0).toUpperCase() + safeSearchLevel.slice(1);
           safeSearchToggle.style.opacity = "";
@@ -3006,23 +3006,36 @@
           "driverupdate.org", "pcspeedup.com",
         ];
 
-        return results.filter((r) => {
+        return results.map((r) => {
           // Always allow local results and custom results (never filter them out)
-          if (r._customResult === true || r._localResult === true) return true;
+          if (r._customResult === true || r._localResult === true) return r;
           const fields = [r.title, r.description, r.url].join(" ");
           if (safeSearchLevel === "strict") {
-            if (matchesAny(fields, strictPatterns)) return false;
-            if (matchesAny(fields, moderatePatterns)) return false;
+            if (matchesAny(fields, strictPatterns)) return null;
+            if (matchesAny(fields, moderatePatterns)) return null;
             // Block spammy domains
             try {
               const rDomain = new URL(r.link || "").hostname.toLowerCase().replace(/^www\./, "");
-              if (spammyDomains.some(sd => rDomain === sd || rDomain.endsWith("." + sd))) return false;
+              if (spammyDomains.some(sd => rDomain === sd || rDomain.endsWith("." + sd))) return null;
             } catch (e) {}
           } else if (safeSearchLevel === "moderate") {
-            if (matchesAny(fields, moderatePatterns)) return false;
+            const allModeratePatterns = strictPatterns.concat(moderatePatterns);
+            function censorText(text) {
+              if (!text) return text;
+              let result = text;
+              allModeratePatterns.forEach(function(re) {
+                result = result.replace(new RegExp(re.source, re.flags.includes('g') ? re.flags : re.flags + 'g'), "####");
+              });
+              return result;
+            }
+            r = Object.assign({}, r);
+            r.title = censorText(r.title);
+            r.description = censorText(r.description);
+            r.url = censorText(r.url);
+            r.link = censorText(r.link);
           }
-          return true;
-        });
+          return r;
+        }).filter(Boolean);
             }
 
             // Patch renderResults to filter
@@ -8708,7 +8721,7 @@
                 }" rel="noopener" style="font-size:1.3em;font-weight:700;display:inline-block;text-decoration:none;color:inherit;margin-bottom:8px;">${
                   r.title
                 }</a>
-                <div class="result-description">${r.description}</div>
+                <div class="result-description">${r.description && r.description.length > 180 ? r.description.slice(0, 180) + '…' : (r.description || '')}</div>
                 <div class="result-more-icon" title="More">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;">
                 <circle cx="12" cy="5" r="1.5"/>
