@@ -25,7 +25,10 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
       rel="stylesheet"
     />
-      <script src="https://www.munetios.com/munetios-pronounce.js"></script>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@material/web@2.4.1/all.js/+esm"
+    ></script>
     <link rel="apple-touch-icon" href="apple-touch-icon-new.png" />
     <!-- Do favicon 16, 32-->
     <link
@@ -87,7 +90,7 @@
       name="keywords"
       content="privacy search engine, google alternative, private search, no tracking search engine, munetios search"
     />
-    <meta name="theme-color" content="#6a00ff" />
+    <meta name="theme-color" content="#7c4dff" />
 
     <meta name="robots" content="index, follow" />
     <meta
@@ -170,6 +173,45 @@
         font-family: "Material Symbols Rounded";
         font-size: 24px;
         vertical-align: middle;
+      }
+      button,
+      [role="button"],
+      input,
+      select,
+      textarea,
+      a,
+      icon {
+        outline: none;
+      }
+      button:focus-visible,
+      [role="button"]:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      textarea:focus-visible,
+      a:focus-visible,
+      icon:focus-visible,
+      .theme-card:focus-visible,
+      .settings-sidebar-item:focus-visible,
+      .button-group:focus-visible,
+      .toggle-switch:focus-visible,
+      .dropdown-item:focus-visible {
+        outline: 3px solid rgba(255, 255, 255, 0.92);
+        outline-offset: 3px;
+        box-shadow: 0 0 0 6px rgba(106, 0, 255, 0.28);
+      }
+      .theme-card {
+        appearance: none;
+        border: 2px solid rgba(106, 0, 255, 0.2);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
       }
       a {
         all: unset;
@@ -1348,6 +1390,7 @@
         align-items: center;
         gap: 12px;
         padding: 12px 20px;
+        border-radius: 50px;
         cursor: pointer;
         transition: all 0.3s ease;
         color: rgba(255, 255, 255, 0.7);
@@ -2837,75 +2880,127 @@
         padding: 48px 40px 28px;
       }
 
-      /* ---- DYNAMIC: full-width, edge-to-edge, compact modern ---- */
-      html[data-theme="dynamic"] body {
+      /* ---- MATERIAL 3: Material Web tokens, rounded surfaces, restrained elevation ---- */
+      html[data-theme="material-3"] {
+        --md-sys-color-primary: #d0bcff;
+        --md-sys-color-on-primary: #381e72;
+        --md-sys-color-primary-container: #4f378b;
+        --md-sys-color-on-primary-container: #eadcff;
+        --md-sys-color-secondary: #ccc2dc;
+        --md-sys-color-on-secondary: #332d41;
+        --md-sys-color-secondary-container: #4a4458;
+        --md-sys-color-on-secondary-container: #e8def8;
+        --md-sys-color-surface: #141218;
+        --md-sys-color-surface-container-low: rgba(31, 27, 36, 0.76);
+        --md-sys-color-surface-container: rgba(33, 29, 41, 0.84);
+        --md-sys-color-surface-container-high: rgba(43, 37, 53, 0.9);
+        --md-sys-color-surface-container-highest: rgba(54, 47, 65, 0.96);
+        --md-sys-color-on-surface: #e6e0e9;
+        --md-sys-color-on-surface-variant: #cac4d0;
+        --md-sys-color-outline: rgba(147, 143, 153, 0.55);
+        --md-sys-color-outline-variant: rgba(74, 69, 78, 0.7);
+        --md-sys-elevation-level1:
+          0 1px 2px rgba(0, 0, 0, 0.3),
+          0 2px 8px rgba(0, 0, 0, 0.14);
+        --md-sys-elevation-level2:
+          0 2px 6px rgba(0, 0, 0, 0.24),
+          0 8px 22px rgba(0, 0, 0, 0.16);
+      }
+      html[data-theme="material-3"] body {
         max-width: none;
+        background:
+          radial-gradient(circle at top, rgba(208, 188, 255, 0.18), transparent 32%),
+          linear-gradient(180deg, #141218 0%, #1a1625 100%);
       }
-      html[data-theme="dynamic"] .content-container {
-        width: 100%;
+      html[data-theme="material-3"] .content {
+        max-width: 1280px;
+        gap: 18px;
+        padding: 28px 24px 40px;
       }
-      html[data-theme="dynamic"] .content {
-        max-width: 100%;
-        padding: 24px 48px;
-        gap: 14px;
-        align-items: flex-start;
+      html[data-theme="material-3"] .search-bar,
+      html[data-theme="material-3"] .topbar-left,
+      html[data-theme="material-3"] .topbar-right {
+        border-radius: 28px !important;
       }
-      html[data-theme="dynamic"] .search-bar {
-        border-radius: 12px !important;
-        padding: 6px 20px !important;
-        max-width: 860px;
-        width: calc(100% - 0px);
-        margin-left: 0;
-        margin-right: 0;
+      html[data-theme="material-3"] .search-bar {
+        background: var(--md-sys-color-surface-container-high);
+        border: 1px solid var(--md-sys-color-outline-variant);
+        box-shadow: var(--md-sys-elevation-level1);
+        padding: 8px 22px !important;
       }
-      html[data-theme="dynamic"] .search-button,
-      html[data-theme="dynamic"] .voice-mode-btn {
-        border-radius: 12px !important;
+      html[data-theme="material-3"] .liquid-glass,
+      html[data-theme="material-3"] .modal-content,
+      html[data-theme="material-3"] .settings-modal-content,
+      html[data-theme="material-3"] .voice-mode-wrapper,
+      html[data-theme="material-3"] .image-search-wrapper,
+      html[data-theme="material-3"] .apps-container,
+      html[data-theme="material-3"] .confirm-modal-content {
+        background: var(--md-sys-color-surface-container) !important;
+        border: 1px solid var(--md-sys-color-outline-variant) !important;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        box-shadow: var(--md-sys-elevation-level2);
       }
-      html[data-theme="dynamic"] .search-buttons {
-        justify-content: flex-start;
-        gap: 10px;
-        margin-top: 10px;
+      html[data-theme="material-3"] .tabs a,
+      html[data-theme="material-3"] .topbar-right a,
+      html[data-theme="material-3"] .topbar-left-item a,
+      html[data-theme="material-3"] .settings-sidebar-item,
+      html[data-theme="material-3"] .button-group {
+        border-radius: 999px !important;
+        color: var(--md-sys-color-on-surface-variant);
       }
-      html[data-theme="dynamic"] .logo-container {
-        margin-top: 36px;
-        justify-content: flex-start;
+      html[data-theme="material-3"] .tabs a:hover,
+      html[data-theme="material-3"] .topbar-right a:hover,
+      html[data-theme="material-3"] .topbar-left-item a:hover,
+      html[data-theme="material-3"] .tabs a.active,
+      html[data-theme="material-3"] .topbar-right a.active,
+      html[data-theme="material-3"] .settings-sidebar-item.active,
+      html[data-theme="material-3"] .button-group[selected] {
+        background: var(--md-sys-color-secondary-container);
+        color: var(--md-sys-color-on-secondary-container);
       }
-      html[data-theme="dynamic"] .logo-container img {
-        width: 380px !important;
+      html[data-theme="material-3"] .search-button,
+      html[data-theme="material-3"] .voice-mode-btn,
+      html[data-theme="material-3"] .settings-button,
+      html[data-theme="material-3"] .add-shortcut-btn,
+      html[data-theme="material-3"] .action-button,
+      html[data-theme="material-3"] .settings-item button,
+      html[data-theme="material-3"] .modal-content .modal-button.confirm {
+        background: var(--md-sys-color-primary);
+        color: var(--md-sys-color-on-primary);
+        border: 1px solid transparent;
+        border-radius: 20px !important;
+        box-shadow: var(--md-sys-elevation-level1);
       }
-      html[data-theme="dynamic"] .topbar-left,
-      html[data-theme="dynamic"] .topbar-right {
-        border-radius: 12px;
+      html[data-theme="material-3"] .theme-card,
+      html[data-theme="material-3"] .shortcut-card,
+      html[data-theme="material-3"] .settings-item,
+      html[data-theme="material-3"] .add-shortcut-btn-settings,
+      html[data-theme="material-3"] .font-feature-toggle,
+      html[data-theme="material-3"] .url-input {
+        background: var(--md-sys-color-surface-container-high);
+        border: 1px solid var(--md-sys-color-outline-variant);
+        border-radius: 24px;
+        color: var(--md-sys-color-on-surface);
       }
-      html[data-theme="dynamic"] .tabs a,
-      html[data-theme="dynamic"] .topbar-right a,
-      html[data-theme="dynamic"] .topbar-left-item a {
-        border-radius: 10px !important;
+      html[data-theme="material-3"] .theme-card.selected {
+        background: var(--md-sys-color-primary-container);
+        border-color: transparent;
+        box-shadow: var(--md-sys-elevation-level1);
       }
-      html[data-theme="dynamic"] .settings-button {
-        border-radius: 12px !important;
+      html[data-theme="material-3"] .theme-name,
+      html[data-theme="material-3"] .shortcut-name,
+      html[data-theme="material-3"] .settings-label,
+      html[data-theme="material-3"] .settings-page h2,
+      html[data-theme="material-3"] .modal-content h2 {
+        color: var(--md-sys-color-on-surface);
       }
-      html[data-theme="dynamic"] .modal-content,
-      html[data-theme="dynamic"] .settings-modal-content {
-        border-radius: 14px;
-      }
-      html[data-theme="dynamic"] .shortcut-card,
-      html[data-theme="dynamic"] .add-shortcut-btn-settings {
-        border-radius: 12px !important;
-      }
-      html[data-theme="dynamic"] .settings-item {
-        border-radius: 10px !important;
-      }
-      html[data-theme="dynamic"] .shortcuts {
-        justify-content: flex-start;
-        gap: 8px;
-      }
-      html[data-theme="dynamic"] .add-shortcut-btn {
-        border-radius: 12px !important;
-      }
-      html[data-theme="dynamic"] .footer-content {
-        padding: 32px 48px 20px;
+      html[data-theme="material-3"] .shortcut-url,
+      html[data-theme="material-3"] .footer-link,
+      html[data-theme="material-3"] .footer-tagline,
+      html[data-theme="material-3"] .footer-bottom-left,
+      html[data-theme="material-3"] .footer-bottom-right a {
+        color: var(--md-sys-color-on-surface-variant);
       }
 
       /* ---- BLUEISH: full-width, soft mid-radius ---- */
@@ -3023,610 +3118,8 @@
           "opsz" 24 !important;
       }
 
-      /* ---- LEGACY: 900px fixed body centered, solid panels, filled icons, 4px radius ---- */
-      html[data-theme="legacy"] body {
-        max-width: 900px;
-        width: 900px;
-        min-width: 900px;
-        overflow-x: auto;
-        margin-left: auto !important;
-        color: #000 !important;
-        margin-right: auto !important;
-      }
-      html[data-theme="legacy"] .content {
-        max-width: 100% !important;
-        padding: 16px;
-        gap: 12px;
-      }
-      html[data-theme="legacy"] .search-bar {
-        border-radius: 4px !important;
-        max-width: 100%;
-        margin-left: 8px;
-        margin-right: 8px;
-        width: calc(100% - 16px) !important;
-        padding: 5px 14px !important;
-      }
-      html[data-theme="legacy"] .search-button,
-      html[data-theme="legacy"] .voice-mode-btn {
-        border-radius: 4px !important;
-      }
-      html[data-theme="legacy"] .search-buttons {
-        gap: 8px;
-      }
-      html[data-theme="legacy"] .logo-container {
-        margin-top: 30px;
-      }
-      html[data-theme="legacy"] .logo-container img {
-        width: 340px !important;
-      }
-      html[data-theme="legacy"] .topbar-left,
-      html[data-theme="legacy"] .topbar-right {
-        border-radius: 4px;
-      }
-      html[data-theme="legacy"] .tabs a,
-      html[data-theme="legacy"] .topbar-right a,
-      html[data-theme="legacy"] .topbar-left-item a {
-        border-radius: 3px !important;
-        padding: 6px 10px;
-      }
-      html[data-theme="legacy"] .settings-button {
-        border-radius: 4px !important;
-      }
-      html[data-theme="legacy"] .topbar-desktop {
-        padding: 6px 10px;
-      }
-      html[data-theme="legacy"] .topbar-left {
-        padding: 8px 12px;
-      }
-      html[data-theme="legacy"] .topbar-right {
-        padding: 6px 10px;
-      }
-      /* Solid instead of liquid-glass */
-      html[data-theme="legacy"] .liquid-glass {
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-        background: rgba(13, 13, 26, 0.98) !important;
-        border-color: rgba(255, 255, 255, 0.08) !important;
-      }
-      html[data-theme="legacy"] .footer-content {
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-        background: rgba(13, 13, 26, 0.98) !important;
-      }
-      html[data-theme="legacy"] .topbar-desktop,
-      html[data-theme="legacy"] .topbar-mobile {
-        background-color: rgba(13, 13, 26, 1) !important;
-      }
-      html[data-theme="legacy"] .modal-content,
-      html[data-theme="legacy"] .settings-modal-content,
-      html[data-theme="legacy"] .voice-mode-wrapper,
-      html[data-theme="legacy"] .image-search-wrapper,
-      html[data-theme="legacy"] .apps-container,
-      html[data-theme="legacy"] .confirm-modal-content {
-        border-radius: 4px !important;
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-      }
-      html[data-theme="legacy"] .shortcut-card,
-      html[data-theme="legacy"] .add-shortcut-btn,
-      html[data-theme="legacy"] .add-shortcut-btn-settings,
-      html[data-theme="legacy"] .settings-item,
-      html[data-theme="legacy"] .button-group,
-      html[data-theme="legacy"] .action-button,
-      html[data-theme="legacy"] .settings-sidebar-item {
-        border-radius: 4px !important;
-      }
-      html[data-theme="legacy"] .shortcuts {
-        gap: 6px;
-      }
-      html[data-theme="legacy"] .add-shortcut-btn {
-        border-radius: 4px !important;
-        width: 50px;
-        height: 50px;
-      }
-      /* Filled icons */
-      html[data-theme="legacy"] icon {
-        font-variation-settings:
-          "FILL" 1,
-          "wght" 400,
-          "GRAD" 0,
-          "opsz" 24 !important;
-      }
-
-      /* ---- OLDER: 2011/2012 Dark UI Style - Flat, minimal, solid backgrounds ---- */
-      html[data-theme="older"] body {
-        max-width: none !important;
-        margin: 0 auto !important;
-        min-width: 900px !important ;
-        width: 900px !important;
-        background: #1a1a1a !important;
-        color: #e0e0e0 !important;
-        min-height: 100vh !important;
-        animation: none !important;
-      }
-
-      html[data-theme="older"] .content-container {
-        width: 100% !important;
-        max-width: none !important;
-      }
-
-      html[data-theme="older"] .content {
-        max-width: 900px !important;
-        margin: 0 auto !important;
-        padding: 16px !important;
-        gap: 10px !important;
-        width: 100% !important;
-        flex-direction: column !important;
-        align-items: center !important;
-      }
-
-      html[data-theme="older"] .search-bar {
-        border-radius: 2px !important;
-        max-width: 700px !important;
-        width: 100% !important;
-        margin: 0 auto !important;
-        padding: 6px 10px !important;
-        background: #2a2a2a !important;
-        border: 1px solid #444 !important;
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5) !important;
-        display: flex !important;
-        gap: 6px !important;
-        align-items: center !important;
-      }
-
-      html[data-theme="older"] .search-bar input {
-        color: #e0e0e0 !important;
-        background: #2a2a2a !important;
-        border: none !important;
-      }
-
-      html[data-theme="older"] .search-bar input::placeholder {
-        color: #888 !important;
-      }
-
-      html[data-theme="older"] .search-bar icon {
-        color: #999 !important;
-        font-size: 20px !important;
-        flex-shrink: 0 !important;
-      }
-
-      html[data-theme="older"] .search-buttons {
-        gap: 8px !important;
-        margin-top: 12px !important;
-        width: 100% !important;
-        max-width: 700px !important;
-        justify-content: center !important;
-        flex-wrap: wrap !important;
-      }
-
-      html[data-theme="older"] .search-button,
-      html[data-theme="older"] .voice-mode-btn {
-        border-radius: 3px !important;
-        background: #333333 !important;
-        border: 1px solid #555 !important;
-        color: #ddd !important;
-        padding: 8px 18px !important;
-        font-size: 13px !important;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
-        cursor: pointer !important;
-        transition: all 0.2s !important;
-      }
-
-      html[data-theme="older"] .search-button:hover,
-      html[data-theme="older"] .voice-mode-btn:hover {
-        background: #3a3a3a !important;
-        border-color: #666 !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important;
-      }
-
-      html[data-theme="older"] .search-button:active,
-      html[data-theme="older"] .voice-mode-btn:active {
-        background: #2a2a2a !important;
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5) !important;
-      }
-
-      html[data-theme="older"] .logo-container {
-        margin: 24px auto 20px !important;
-        display: flex !important;
-        justify-content: center !important;
-      }
-
-      html[data-theme="older"] .logo-container img {
-        width: 360px !important;
-        max-width: 90% !important;
-        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5)) !important;
-      }
-
-      html[data-theme="older"] .topbar-container {
-        background: #262626 !important;
-        border-bottom: 1px solid #444 !important;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
-        position: sticky !important;
-        top: 0 !important;
-        z-index: 1000 !important;
-      }
-
-      html[data-theme="older"] .topbar-desktop,
-      html[data-theme="older"] .topbar-mobile {
-        background: transparent !important;
-        padding: 0 !important;
-        display: flex !important;
-      }
-
-      html[data-theme="older"] .topbar-desktop {
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        padding: 8px 16px !important;
-      }
-
-      html[data-theme="older"] .topbar-mobile {
-        display: none !important;
-      }
-
-      html[data-theme="older"] .topbar-left,
-      html[data-theme="older"] .topbar-right {
-        border-radius: 0 !important;
-        background: transparent !important;
-        border: none !important;
-        padding: 0 !important;
-        display: flex !important;
-        gap: 0 !important;
-        align-items: center !important;
-      }
-
-      html[data-theme="older"] .topbar-left-item {
-        display: flex !important;
-        align-items: center !important;
-        gap: 8px !important;
-      }
-
-      html[data-theme="older"] .tabs a,
-      html[data-theme="older"] .topbar-right a,
-      html[data-theme="older"] .topbar-left-item a {
-        border-radius: 0 !important;
-        padding: 6px 12px !important;
-        color: #bbb !important;
-        border: none !important;
-        background: transparent !important;
-        font-size: 13px !important;
-        transition: all 0.2s !important;
-        white-space: nowrap !important;
-      }
-
-      html[data-theme="older"] .tabs a:hover,
-      html[data-theme="older"] .topbar-right a:hover,
-      html[data-theme="older"] .topbar-left-item a:hover {
-        background: #3a3a3a !important;
-        color: #fff !important;
-      }
-
-      html[data-theme="older"] .tabs a.active,
-      html[data-theme="older"] .topbar-right a.active {
-        background: #444 !important;
-        color: #fff !important;
-        border-bottom: 2px solid #0066cc !important;
-      }
-
-      html[data-theme="older"] .settings-button {
-        border-radius: 3px !important;
-        background: #333333 !important;
-        border: 1px solid #555 !important;
-        color: #ddd !important;
-        padding: 8px 12px !important;
-        font-size: 12px !important;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 6px !important;
-      }
-
-      html[data-theme="older"] .settings-button:hover {
-        background: #3a3a3a !important;
-        border-color: #666 !important;
-      }
-
-      html[data-theme="older"] .settings-button icon {
-        font-size: 16px !important;
-      }
-
-      /* Solid backgrounds instead of liquid-glass */
-      html[data-theme="older"] .liquid-glass {
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-        background: #2a2a2a !important;
-        border: 1px solid #444 !important;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
-      }
-
-      html[data-theme="older"] .footer-content {
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-        background: #262626 !important;
-        border-top: 1px solid #444 !important;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-        color: #bbb !important;
-        padding: 20px 16px !important;
-        margin-top: auto !important;
-      }
-
-      html[data-theme="older"] .footer-grid {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr 1fr 1fr !important;
-        gap: 20px !important;
-        margin-bottom: 20px !important;
-      }
-
-      html[data-theme="older"] .footer-col-title {
-        font-size: 11px !important;
-        color: #999 !important;
-        text-transform: uppercase !important;
-        font-weight: bold !important;
-        margin-bottom: 10px !important;
-        letter-spacing: 0.5px !important;
-      }
-
-      html[data-theme="older"] .footer-link {
-        color: #0099ff !important;
-        text-decoration: none !important;
-        font-size: 12px !important;
-        line-height: 1.6 !important;
-        transition: color 0.2s !important;
-      }
-
-      html[data-theme="older"] .footer-link:hover {
-        color: #00ccff !important;
-        text-decoration: underline !important;
-      }
-
-      html[data-theme="older"] .footer-link:visited {
-        color: #0066cc !important;
-      }
-
-      html[data-theme="older"] .footer-bottom {
-        border-top: 1px solid #444 !important;
-        padding-top: 12px !important;
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        font-size: 12px !important;
-        color: #888 !important;
-      }
-
-      html[data-theme="older"] .modal-content,
-      html[data-theme="older"] .settings-modal-content,
-      html[data-theme="older"] .voice-mode-wrapper,
-      html[data-theme="older"] .image-search-wrapper,
-      html[data-theme="older"] .apps-container,
-      html[data-theme="older"] .confirm-modal-content {
-        border-radius: 2px !important;
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-        background: #2a2a2a !important;
-        border: 1px solid #444 !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6) !important;
-        color: #e0e0e0 !important;
-      }
-
-      html[data-theme="older"] .modal-content h2,
-      html[data-theme="older"] .settings-modal-content h2 {
-        color: #fff !important;
-        font-size: 16px !important;
-        margin-bottom: 12px !important;
-      }
-
-      html[data-theme="older"] .modal-button.confirm {
-        background: #0066cc !important;
-        border: 1px solid #0055aa !important;
-        color: #fff !important;
-        padding: 6px 14px !important;
-        font-size: 12px !important;
-      }
-
-      html[data-theme="older"] .modal-button.confirm:hover {
-        background: #0077ee !important;
-      }
-
-      html[data-theme="older"] .modal-button.cancel {
-        background: #333333 !important;
-        border: 1px solid #555 !important;
-        color: #ddd !important;
-        padding: 6px 14px !important;
-        font-size: 12px !important;
-      }
-
-      html[data-theme="older"] .modal-button.cancel:hover {
-        background: #3a3a3a !important;
-      }
-
-      html[data-theme="older"] .shortcut-card,
-      html[data-theme="older"] .add-shortcut-btn,
-      html[data-theme="older"] .add-shortcut-btn-settings,
-      html[data-theme="older"] .settings-item,
-      html[data-theme="older"] .button-group,
-      html[data-theme="older"] .action-button,
-      html[data-theme="older"] .settings-sidebar-item {
-        border-radius: 2px !important;
-        background: #2a2a2a !important;
-        border: 1px solid #444 !important;
-        color: #e0e0e0 !important;
-      }
-
-      html[data-theme="older"] .settings-item {
-        padding: 12px !important;
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-      }
-
-      html[data-theme="older"] .settings-sidebar-item {
-        padding: 10px 12px !important;
-        cursor: pointer !important;
-        transition: background 0.2s !important;
-      }
-
-      html[data-theme="older"] .settings-sidebar-item:hover {
-        background: #333 !important;
-      }
-
-      html[data-theme="older"] .settings-sidebar-item.active {
-        background: #0066cc !important;
-        color: #fff !important;
-      }
-
-      html[data-theme="older"] .button-group {
-        padding: 6px 12px !important;
-        cursor: pointer !important;
-        font-size: 12px !important;
-        transition: all 0.2s !important;
-      }
-
-      html[data-theme="older"] .button-group:hover {
-        background: #333 !important;
-      }
-
-      html[data-theme="older"] .button-group[selected] {
-        background: #0066cc !important;
-        border-color: #0055aa !important;
-        color: #fff !important;
-      }
-
-      html[data-theme="older"] .shortcuts {
-        gap: 6px !important;
-        margin-top: 16px !important;
-        width: 100% !important;
-        max-width: 700px !important;
-        justify-content: center !important;
-        flex-wrap: wrap !important;
-      }
-
-      html[data-theme="older"] .add-shortcut-btn {
-        width: 48px !important;
-        height: 48px !important;
-        background: #333333 !important;
-        border: 1px solid #555 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        flex-direction: column !important;
-        cursor: pointer !important;
-        transition: all 0.2s !important;
-        gap: 2px !important;
-      }
-
-      html[data-theme="older"] .add-shortcut-btn:hover {
-        background: #3a3a3a !important;
-        border-color: #666 !important;
-      }
-
-      html[data-theme="older"] .shortcut-label {
-        font-size: 10px !important;
-        color: #ccc !important;
-      }
-
-      html[data-theme="older"] h1,
-      html[data-theme="older"] h2,
-      html[data-theme="older"] h3,
-      html[data-theme="older"] h4,
-      html[data-theme="older"] h5,
-      html[data-theme="older"] h6 {
-        color: #fff !important;
-        font-weight: bold !important;
-      }
-
-      html[data-theme="older"] input[type="text"],
-      html[data-theme="older"] input[type="url"],
-      html[data-theme="older"] input[type="color"] {
-        background: #2a2a2a !important;
-        border: 1px solid #444 !important;
-        color: #e0e0e0 !important;
-        padding: 6px 8px !important;
-        border-radius: 2px !important;
-      }
-
-      html[data-theme="older"] input[type="text"]:focus,
-      html[data-theme="older"] input[type="url"]:focus {
-        border-color: #0066cc !important;
-        outline: none !important;
-        box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2) !important;
-      }
-
-      html[data-theme="older"] .settings-label {
-        color: #e0e0e0 !important;
-        font-weight: normal !important;
-        font-size: 13px !important;
-      }
-
-      html[data-theme="older"] .topbar-mobile {
-        display: none !important;
-      }
-
-      @media (max-width: 900px) {
-        html[data-theme="older"] .topbar-desktop {
-          display: flex !important;
-        }
-        html[data-theme="older"] .topbar-mobile {
-          display: none !important;
-        }
-      }
-
-      html[data-theme="older"] .voice-history-item {
-        background: #2a2a2a !important;
-        border-left: 3px solid #0066cc !important;
-        color: #ddd !important;
-        padding: 8px !important;
-      }
-
-      html[data-theme="older"] .toggle-switch {
-        background: #444 !important;
-        border: 1px solid #555 !important;
-      }
-
-      html[data-theme="older"] .toggle-switch.active {
-        background: #00aa44 !important;
-        border-color: #00dd66 !important;
-      }
-
-      html[data-theme="older"] .toggle-switch::after {
-        background: #fff !important;
-      }
-
-      /* Filled icons (no outline) + color adjustment */
-      html[data-theme="older"] icon {
-        font-variation-settings:
-          "FILL" 1,
-          "wght" 400,
-          "GRAD" 0,
-          "opsz" 24 !important;
-        color: #bbb !important;
-      }
-
-      html[data-theme="older"] .search-bar icon {
-        color: #999 !important;
-      }
-
-      html[data-theme="older"] .action-button {
-        background: #333333 !important;
-        border: 1px solid #555 !important;
-        color: #ddd !important;
-        padding: 8px 14px !important;
-        font-size: 12px !important;
-        cursor: pointer !important;
-        transition: all 0.2s !important;
-      }
-
-      html[data-theme="older"] .action-button:hover {
-        background: #3a3a3a !important;
-      }
-
-      html[data-theme="older"] .action-button.danger {
-        background: #663333 !important;
-        border-color: #885555 !important;
-      }
-
-      html[data-theme="older"] .action-button.danger:hover {
-        background: #774444 !important;
-      }
+      /* ---- MUNETIOS DEFAULT: richer custom glass theme, rounder corners, smoother hover states ---- */
+   
       vl {
         width: 1px;
         background-color: #8523ac !important;
@@ -4591,13 +4084,14 @@
         ) !important;
       }
     </style>
+    <script src="https://www.munetios.com/munetios-pronounce.js"></script>
   </head>
   <body>
     <div class="topbar-container">
       <div class="topbar-desktop">
         <div class="topbar-left liquid-glass">
           <div class="topbar-left-item">
-            <div class="menu-btn" id="menuBtnDesktop"><icon>menu</icon></div>
+            <div class="menu-btn" id="menuBtnDesktop" role="button" tabindex="0" aria-label="Open menu"><icon>menu</icon></div>
             <div class="munetios-brand-nav">
               <img
                 src="munetios-logo-icon.png"
@@ -4615,18 +4109,18 @@
             <a href="#/maps" data-translate="navMaps">Maps</a>
             <a href="#/news" data-translate="navNews">News</a>
             <a href="#/wiki" data-translate="navWiki">Wiki</a>
-            <a id="mobileMoreDropdownBtn"><span data-translate="navMore">More</span> <icon>expand_more</icon></a>
+            <a id="mobileMoreDropdownBtn" role="button" tabindex="0" aria-label="Open more navigation"><span data-translate="navMore">More</span> <icon>expand_more</icon></a>
           </div>
         </div>
         <div class="topbar-right liquid-glass">
           <div class="topbar-left-item">
-            <div id="bookmarksBtn" class="apps-btn">
+            <div id="bookmarksBtn" class="apps-btn" role="button" tabindex="0" aria-label="Open bookmarks">
               <icon>bookmark</icon>
             </div>
             <a href="https://www.munetios.com/labs" id="labsLinkDesktop"
               ><icon>science</icon></a
             >
-            <div id="appsBtn" class="apps-btn">
+            <div id="appsBtn" class="apps-btn" role="button" tabindex="0" aria-label="Open apps">
               <icon>apps</icon>
             </div>
           </div>
@@ -4659,7 +4153,7 @@
       </div>
       <div class="topbar-mobile">
         <div class="topbar-left liquid-glass">
-          <div class="menu-btn" id="menuBtn"><icon>menu</icon></div>
+          <div class="menu-btn" id="menuBtn" role="button" tabindex="0" aria-label="Open menu"><icon>menu</icon></div>
           <div class="munetios-brand-nav">
             <img
               src="munetios-logo-icon.png"
@@ -4675,7 +4169,7 @@
           <a href="https://www.munetios.com/labs" id="labsLinkMobile"
             ><icon>science</icon></a
           >
-          <div id="appsBtnMobile" class="apps-btn">
+          <div id="appsBtnMobile" class="apps-btn" role="button" tabindex="0" aria-label="Open apps">
             <icon>apps</icon>
           </div>
         </div>
@@ -4693,9 +4187,9 @@
         <div class="search-bar liquid-glass">
           <icon>search</icon>
           <input type="text" placeholder="Search The Web" id="searchInput" />
-          <icon id="micBtn" title="Use Voice Search">mic</icon>
-          <icon id="keyboardBtn" title="Use Virtual Keyboard">keyboard</icon>
-          <icon id="cameraBtn" title="Use Image Search">camera_alt</icon>
+          <icon id="micBtn" title="Use Voice Search" role="button" tabindex="0" aria-label="Use voice search">mic</icon>
+          <icon id="keyboardBtn" title="Use Virtual Keyboard" role="button" tabindex="0" aria-label="Use virtual keyboard">keyboard</icon>
+          <icon id="cameraBtn" title="Use Image Search" role="button" tabindex="0" aria-label="Use image search">camera_alt</icon>
           <button id="voiceModeBtn" class="voice-mode-btn">
             <icon>voice_chat</icon>
             <div class="btn-label">Voice Mode</div>
@@ -5094,9 +4588,9 @@
         </div>
       </div>
       <!-- Voice Search Modal -->
-      <div class="modal" id="voiceSearchModal">
+      <div class="modal" id="voiceSearchModal" role="dialog" aria-modal="true" aria-labelledby="voiceSearchTitle">
         <div class="modal-content" style="max-width: 400px; text-align: center">
-          <h2>Voice Search</h2>
+          <h2 id="voiceSearchTitle">Voice Search</h2>
           <div style="margin: 20px 0; display: flex; justify-content: center">
             <button
               id="micToggleBtn"
@@ -5156,33 +4650,33 @@
           </div>
         </div>
       </div>
-      <div class="settings-modal" id="settingsModal">
+      <div class="settings-modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
         <div class="settings-modal-content">
           <div class="settings-modal-header">
-            <h2>Settings</h2>
-            <div class="settings-modal-close">
+            <h2 id="settingsTitle">Settings</h2>
+            <div class="settings-modal-close" role="button" tabindex="0" aria-label="Close settings">
               <icon id="closeBtn">close</icon>
             </div>
           </div>
           <div class="settings-container">
             <div class="settings-sidebar">
-              <div class="settings-sidebar-item" id="searchSettingsBtn">
+              <div class="settings-sidebar-item" id="searchSettingsBtn" role="button" tabindex="0">
                 <icon>settings</icon>
                 <div class="menu-text">General</div>
               </div>
-              <div class="settings-sidebar-item" id="appearanceSettingsBtn">
+              <div class="settings-sidebar-item" id="appearanceSettingsBtn" role="button" tabindex="0">
                 <icon>palette</icon>
                 <div class="menu-text">Appearance</div>
               </div>
-              <div class="settings-sidebar-item" id="shortcutsSettingsBtn">
+              <div class="settings-sidebar-item" id="shortcutsSettingsBtn" role="button" tabindex="0">
                 <icon>apps</icon>
                 <div class="menu-text">Shortcuts</div>
               </div>
-              <div class="settings-sidebar-item" id="privacySettingsBtn">
+              <div class="settings-sidebar-item" id="privacySettingsBtn" role="button" tabindex="0">
                 <icon>lock</icon>
                 <div class="menu-text">Privacy</div>
               </div>
-              <div class="settings-sidebar-item" id="advancedSettingsBtn">
+              <div class="settings-sidebar-item" id="advancedSettingsBtn" role="button" tabindex="0">
                 <icon>search_gear</icon>
                 <div class="menu-text">Advanced</div>
               </div>
@@ -5317,6 +4811,9 @@
                     <div
                       class="toggle-switch"
                       id="reduceTransparencyToggle"
+                      role="switch"
+                      tabindex="0"
+                      aria-checked="false"
                     ></div>
                   </div>
                 </div>
@@ -5353,7 +4850,7 @@
                   </div>
                   <div class="settings-item" id="schoolModeSetting">
                     <span class="settings-label">School Mode</span>
-                    <div class="toggle-switch" id="schoolModeToggle"></div>
+                    <div class="toggle-switch" id="schoolModeToggle" role="switch" tabindex="0" aria-checked="false"></div>
                   </div>
                   <p
                     id="schoolModeSubLabel"
@@ -5375,7 +4872,7 @@
                 <div class="settings-group">
                   <div class="settings-item">
                     <span class="settings-label">Text to Speech</span>
-                    <div class="toggle-switch" id="ttsToggle"></div>
+                    <div class="toggle-switch" id="ttsToggle" role="switch" tabindex="0" aria-checked="false"></div>
                   </div>
                   <p
                     class="tts-sublabel"
@@ -7243,7 +6740,7 @@
             { name: "Munetios", url: "https://www.munetios.com" },
             { name: "Google", url: "https://www.google.com" },
             { name: "YouTube", url: "https://www.youtube.com" },
-            { name: "ChatGPT", url: "https://chat.openai.com" },
+            { name: "ChatGPT", url: "https://chatgpt.com" },
             { name: "Facebook", url: "https://www.facebook.com" },
             { name: "Instagram", url: "https://www.instagram.com" },
             { name: "Discord", url: "https://discord.com" },
@@ -19913,10 +19410,12 @@
               safeItem?.classList.add("locked");
               schoolItem?.classList.add("locked");
               toggle?.classList.add("active");
+              toggle?.setAttribute("aria-checked", "true");
             } else {
               safeItem?.classList.remove("locked");
               schoolItem?.classList.remove("locked");
               toggle?.classList.remove("active");
+              toggle?.setAttribute("aria-checked", "false");
             }
           }
 
@@ -19934,6 +19433,39 @@
 
         // Theme Picker
         (function () {
+          function enableKeyboardButton(el) {
+            if (!el) return;
+            el.addEventListener("keydown", function (e) {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                el.click();
+              }
+            });
+          }
+
+          [
+            "menuBtnDesktop",
+            "mobileMoreDropdownBtn",
+            "bookmarksBtn",
+            "appsBtn",
+            "menuBtn",
+            "appsBtnMobile",
+            "micBtn",
+            "keyboardBtn",
+            "cameraBtn",
+            "closeBtn",
+            "searchSettingsBtn",
+            "appearanceSettingsBtn",
+            "shortcutsSettingsBtn",
+            "privacySettingsBtn",
+            "advancedSettingsBtn",
+            "reduceTransparencyToggle",
+            "schoolModeToggle",
+            "ttsToggle",
+          ].forEach(function (id) {
+            enableKeyboardButton(document.getElementById(id));
+          });
+
           var THEMES = [
             {
               id: "munetios-default",
@@ -19941,7 +19473,7 @@
               font: "Google Sans Flex",
               bgCss: "",
               swatch:
-                "linear-gradient(135deg, #0e0a14 0%, #380e74 50%, #1c064e 100%)",
+                "linear-gradient(135deg, #0d0914 0%, #32106c 55%, #4d8bff 100%)",
             },
             {
               id: "super-beautiful",
@@ -19952,12 +19484,12 @@
                 "linear-gradient(135deg, #1a0050 0%, #6a00ff 50%, #c060ff 100%)",
             },
             {
-              id: "dynamic",
-              name: "Dynamic",
+              id: "material-3",
+              name: "Material Design 3",
               font: "Google Sans Flex",
               bgCss: "",
               swatch:
-                "linear-gradient(135deg, #0a0a20 0%, #3010a0 50%, #8030f0 100%)",
+                "linear-gradient(135deg, #141218 0%, #4f378b 55%, #d0bcff 100%)",
             },
             {
               id: "blueish",
@@ -19976,23 +19508,8 @@
                 "body { background: #16213e !important; animation: none !important; }",
               swatch: "linear-gradient(135deg, #16213e 0%, #1a2a5e 100%)",
             },
-            {
-              id: "legacy",
-              name: "Legacy",
-              font: "Arial",
-              bgCss:
-                "body { background: #0d0d1a !important; animation: none !important; }",
-              swatch: "linear-gradient(135deg, #0d0d1a 0%, #1a1a30 100%)",
-            },
-            {
-              id: "older",
-              name: "Older",
-              font: "Arial",
-              bgCss:
-                "body { background: #000000 !important; animation: none !important; }",
-              swatch: "#111111",
-            },
           ];
+          var REMOVED_THEMES = new Set(["dynamic", "legacy", "older"]);
 
           // Create theme background style element early (must precede munetios-bg-styles)
           var themeStyleEl = document.getElementById("munetios-theme-styles");
@@ -20007,9 +19524,10 @@
               THEMES.find(function (t) {
                 return t.id === themeId;
               }) || THEMES[0];
+            var normalizedThemeId = theme.id;
 
             // Set data-theme attribute for CSS scoping
-            document.documentElement.setAttribute("data-theme", theme.id);
+            document.documentElement.setAttribute("data-theme", normalizedThemeId);
 
             // Apply theme background CSS
             themeStyleEl.textContent = theme.bgCss || "";
@@ -20022,13 +19540,19 @@
               // Clear custom bg so the theme background shows
               localStorage.removeItem("munetiosBgColor");
               localStorage.removeItem("munetiosBgImage");
-              localStorage.setItem("munetiosTheme", themeId);
+              localStorage.setItem("munetiosTheme", normalizedThemeId);
             } else {
               // Page load: only set font from theme if the user has NOT manually overridden it
               var userFontOverride =
                 localStorage.getItem("munetiosFontUserOverride") === "true";
               if (!userFontOverride) {
                 localStorage.setItem("munetiosFontFamily", theme.font);
+              }
+              if (
+                themeId !== normalizedThemeId ||
+                REMOVED_THEMES.has(themeId)
+              ) {
+                localStorage.setItem("munetiosTheme", normalizedThemeId);
               }
               // Don't clear bg color/image on load — user may have customised them
             }
@@ -20068,6 +19592,10 @@
                 "selected",
                 card.dataset.themeId === theme.id,
               );
+              card.setAttribute(
+                "aria-pressed",
+                String(card.dataset.themeId === theme.id),
+              );
             });
 
             window.showToast &&
@@ -20079,13 +19607,25 @@
             var grid = document.getElementById("themesGrid");
             if (!grid) return;
             grid.innerHTML = "";
-            var currentTheme =
-              localStorage.getItem("munetiosTheme") || "munetios-default";
+            var currentTheme = localStorage.getItem("munetiosTheme");
+            if (
+              !currentTheme ||
+              REMOVED_THEMES.has(currentTheme) ||
+              !THEMES.some(function (theme) {
+                return theme.id === currentTheme;
+              })
+            ) {
+              currentTheme = "munetios-default";
+              localStorage.setItem("munetiosTheme", currentTheme);
+            }
             THEMES.forEach(function (theme) {
-              var card = document.createElement("div");
+              var card = document.createElement("button");
+              card.type = "button";
               card.className =
                 "theme-card" + (theme.id === currentTheme ? " selected" : "");
               card.dataset.themeId = theme.id;
+              card.setAttribute("aria-pressed", theme.id === currentTheme);
+              card.setAttribute("aria-label", "Apply " + theme.name + " theme");
               card.innerHTML =
                 '<div class="theme-swatch" style="background:' +
                 theme.swatch +
@@ -20101,8 +19641,17 @@
           }
 
           // Apply saved theme on page load (sets localStorage values before appearance IIFE reads them)
-          var savedTheme =
-            localStorage.getItem("munetiosTheme") || "munetios-default";
+          var savedTheme = localStorage.getItem("munetiosTheme");
+          if (
+            !savedTheme ||
+            REMOVED_THEMES.has(savedTheme) ||
+            !THEMES.some(function (theme) {
+              return theme.id === savedTheme;
+            })
+          ) {
+            savedTheme = "munetios-default";
+            localStorage.setItem("munetiosTheme", savedTheme);
+          }
           applyTheme(savedTheme, false);
 
           // Render cards once DOM is ready
@@ -20151,6 +19700,10 @@
           if (reduceTransparency) {
             reduceTransparencyToggle?.classList.add("active");
           }
+          reduceTransparencyToggle?.setAttribute(
+            "aria-checked",
+            String(reduceTransparency),
+          );
 
           // Apply saved settings
           applyAppearanceSettings();
@@ -20176,6 +19729,10 @@
             reduceTransparencyToggle.classList.toggle("active");
             const isActive =
               reduceTransparencyToggle.classList.contains("active");
+            reduceTransparencyToggle.setAttribute(
+              "aria-checked",
+              String(isActive),
+            );
             localStorage.setItem("munetiosReduceTransparency", isActive);
             applyReduceTransparency(isActive);
           });
@@ -22106,10 +21663,14 @@
             ttsToggle.classList.toggle("active");
             const isActive = ttsToggle.classList.contains("active");
             localStorage.setItem("munetiosTTS", isActive);
+            ttsToggle.setAttribute("aria-checked", String(isActive));
             updateTTSListener(isActive);
           });
 
           // Init listener on page load if previously enabled
+          if (ttsToggle) {
+            ttsToggle.setAttribute("aria-checked", String(ttsSaved));
+          }
           updateTTSListener(ttsSaved);
         })();
         // Initialize appearance settings on page load
