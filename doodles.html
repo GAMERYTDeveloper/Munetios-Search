@@ -1,24 +1,30 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Munetios Doodles</title>
-       <link
+    <link
       rel="stylesheet"
       href="https://api.munetios.com/beautiful-css/beautiful.css"
     />
-    <meta name="description" content="A collection of Munetios doodles for logo changes and creative inspiration.">
-     <link
+    <meta
+      name="description"
+      content="A collection of Munetios doodles for logo changes and creative inspiration."
+    />
+    <link
       href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,90&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
       rel="stylesheet"
     />
-  
+
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded"
       rel="stylesheet"
     />
-    <link rel="apple-touch-icon" href="https://www.munetios.com/apple-touch-icon-new.png" />
+    <link
+      rel="apple-touch-icon"
+      href="https://www.munetios.com/apple-touch-icon-new.png"
+    />
     <!-- Do favicon 16, 32-->
     <link
       rel="icon"
@@ -32,698 +38,965 @@
       href="https://www.munetios.com/favicon-32x32.png"
       type="image/x-icon"
     />
-    <link rel="icon" href="https://www.munetios.com/favicon-new.ico" type="image/x-icon" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*.munetios.com https://fonts.googleapis.com https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://*.munetios.com https://*.googleapis.com https://*.gstatic.com; font-src 'self' https://*.googleapis.com https://*.gstatic.com; connect-src 'self' https://*.munetios.com; img-src 'self' https:; frame-src 'self' https://*.munetios.com">
+    <link
+      rel="icon"
+      href="https://www.munetios.com/favicon-new.ico"
+      type="image/x-icon"
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' https://*.munetios.com https://fonts.googleapis.com https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://*.munetios.com https://*.googleapis.com https://*.gstatic.com; font-src 'self' https://*.googleapis.com https://*.gstatic.com; connect-src 'self' https://*.munetios.com; img-src 'self' https:; frame-src 'self' https://*.munetios.com"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            font-family: 'Google Sans Flex', 'Google Sans', sans-serif;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: "Google Sans Flex", "Google Sans", sans-serif;
+        box-sizing: border-box;
+      }
+      body {
+        background: linear-gradient(
+          135deg,
+          #0c052e 0%,
+          #160a40 50%,
+          #0c052e 100%
+        );
+        color: #ffffff;
+        min-height: 100vh;
+      }
+      @media (prefers-color-scheme: light) {
         body {
-            background: linear-gradient(135deg, #0c052e 0%, #160a40 50%, #0c052e 100%);
-            color: #ffffff;
-            min-height: 100vh;
+          background: linear-gradient(
+            135deg,
+            #f0f4ff 0%,
+            #eaeeff 50%,
+            #f0f4ff 100%
+          );
+          color: #1a1030;
         }
-        @media (prefers-color-scheme: light) {
-            body {
-                background: linear-gradient(135deg, #f0f4ff 0%, #eaeeff 50%, #f0f4ff 100%);
-                color: #1a1030;
-            }
-        }
+      }
 
-        /* ── Topbar ── */
-        .topbar {
-            display: flex;
-            align-items: center;
-            padding: 10px 20px;
-            justify-content: space-between;
-            position: sticky;
-            top: 10px;
-            z-index: 1000;
-            margin: 10px 16px 0;
-        }
-        .topbar-left { display: flex; align-items: center; }
-        .logo { display: flex; align-items: center; gap: 10px; }
-        .logo-text { font-size: 1.5rem; font-weight: 600; }
-        .topbar-right { display: flex; align-items: center; gap: 8px; }
-        .topbar-item {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 44px;
-            height: 44px;
-            transition: opacity 0.2s;
-        }
-        .topbar-item:hover { opacity: 0.75; }
-        .topbar-item:focus-visible { outline: 2px solid rgba(167,139,250,0.7); outline-offset: 2px; }
+      /* ── Topbar ── */
+      .topbar {
+        display: flex;
+        align-items: center;
+        padding: 10px 20px;
+        justify-content: space-between;
+        position: sticky;
+        top: 10px;
+        z-index: 1000;
+        margin: 10px 16px 0;
+      }
+      .topbar-left {
+        display: flex;
+        align-items: center;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .logo-text {
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+      .topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .topbar-item {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        transition: opacity 0.2s;
+      }
+      .topbar-item:hover {
+        opacity: 0.75;
+      }
+      .topbar-item:focus-visible {
+        outline: 2px solid rgba(167, 139, 250, 0.7);
+        outline-offset: 2px;
+      }
 
-        /* ── Main ── */
-        main {
-            padding: 32px 20px 80px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        .doodles-header {
-            text-align: center;
-            margin-bottom: 44px;
-        }
+      /* ── Main ── */
+      main {
+        padding: 32px 20px 80px;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+      .doodles-header {
+        text-align: center;
+        margin-bottom: 44px;
+      }
+      .doodles-header h1 {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 700;
+        margin-bottom: 10px;
+        background: linear-gradient(
+          100deg,
+          #a78bfa4f 0%,
+          #818df883 50%,
+          #c3b5fd70 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      @media (prefers-color-scheme: light) {
         .doodles-header h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 700;
-            margin-bottom: 10px;
-            background: linear-gradient(100deg, #a78bfa4f 0%, #818df883 50%, #c3b5fd70 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+          background: linear-gradient(
+            100deg,
+            #6c28d98e 0%,
+            #4e46e562 50%,
+            #7c3aed81 100%
+          );
+          -webkit-background-clip: text;
+          background-clip: text;
         }
-        @media (prefers-color-scheme: light) {
-            .doodles-header h1 {
-                background: linear-gradient(100deg, #6c28d98e 0%, #4e46e562 50%, #7c3aed81 100%);
-                -webkit-background-clip: text;
-                background-clip: text;
-            }
-        }
-        .doodles-header p { font-size: 1.05rem; opacity: 0.65; }
+      }
+      .doodles-header p {
+        font-size: 1.05rem;
+        opacity: 0.65;
+      }
 
-        /* ── Doodle Grid ── */
-        .doodles-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-            gap: 22px;
-        }
+      /* ── Doodle Grid ── */
+      .doodles-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+        gap: 22px;
+      }
 
-        /* ── Doodle Card ── */
-        .doodle-card {
-            border-radius: 24px;
-            overflow: hidden;
-            cursor: default;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease;
-        }
-        .doodle-card.has-link { cursor: pointer; }
-        .doodle-card.has-link:hover { transform: translateY(-5px); }
-        .doodle-card.card-hidden { display: none; }
+      /* ── Doodle Card ── */
+      .doodle-card {
+        border-radius: 24px;
+        overflow: hidden;
+        cursor: default;
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease;
+      }
+      .doodle-card.has-link {
+        cursor: pointer;
+      }
+      .doodle-card.has-link:hover {
+        transform: translateY(-5px);
+      }
+      .doodle-card.card-hidden {
+        display: none;
+      }
 
+      .doodle-image-wrap {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 28px;
+        background: linear-gradient(
+          145deg,
+          rgba(167, 139, 250, 0.08) 0%,
+          rgba(129, 140, 248, 0.04) 100%
+        );
+      }
+      @media (prefers-color-scheme: light) {
         .doodle-image-wrap {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 28px;
-            background: linear-gradient(145deg, rgba(167,139,250,0.08) 0%, rgba(129,140,248,0.04) 100%);
+          background: linear-gradient(
+            145deg,
+            rgba(109, 40, 217, 0.06) 0%,
+            rgba(79, 70, 229, 0.03) 100%
+          );
         }
-        @media (prefers-color-scheme: light) {
-            .doodle-image-wrap {
-                background: linear-gradient(145deg, rgba(109,40,217,0.06) 0%, rgba(79,70,229,0.03) 100%);
-            }
-        }
-        .doodle-image-wrap img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            pointer-events: none;
-            user-select: none;
-        }
-        .img-placeholder {
-            font-size: 5rem;
-            line-height: 1;
-            text-align: center;
-            user-select: none;
-        }
-        .doodle-info { padding: 16px 20px 20px; flex: 1; }
-        .doodle-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 4px; }
-        .doodle-date { font-size: 0.85rem; opacity: 0.6; }
+      }
+      .doodle-image-wrap img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        pointer-events: none;
+        user-select: none;
+      }
+      .img-placeholder {
+        font-size: 5rem;
+        line-height: 1;
+        text-align: center;
+        user-select: none;
+      }
+      .doodle-info {
+        padding: 16px 20px 20px;
+        flex: 1;
+      }
+      .doodle-title {
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      .doodle-date {
+        font-size: 0.85rem;
+        opacity: 0.6;
+      }
 
-        /* ── Search Overlay ── */
+      /* ── Search Overlay ── */
+      .search-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 2000;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 80px 16px 40px;
+        overflow-y: auto;
+        background: linear-gradient(
+          180deg,
+          rgba(12, 5, 46, 0.88) 0%,
+          rgba(12, 5, 46, 0.72) 100%
+        );
+        transition: opacity 0.25s ease;
+        opacity: 1;
+      }
+      @media (prefers-color-scheme: light) {
         .search-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 2000;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 80px 16px 40px;
-            overflow-y: auto;
-            background: linear-gradient(180deg, rgba(12,5,46,0.88) 0%, rgba(12,5,46,0.72) 100%);
-            transition: opacity 0.25s ease;
-            opacity: 1;
+          background: linear-gradient(
+            180deg,
+            rgba(232, 230, 255, 0.9) 0%,
+            rgba(220, 218, 255, 0.75) 100%
+          );
         }
-        @media (prefers-color-scheme: light) {
-            .search-overlay {
-                background: linear-gradient(180deg, rgba(232,230,255,0.9) 0%, rgba(220,218,255,0.75) 100%);
-            }
-        }
-        .search-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        .search-panel {
-            width: 100%;
-            max-width: 700px;
-            border-radius: 28px;
-            padding: 28px 28px 32px;
-        }
-        .search-hd {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .search-hd h2 { font-size: 1.35rem; font-weight: 600; }
-        .close-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: inherit;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            transition: opacity 0.2s;
-        }
-        .close-btn:hover { opacity: 0.65; }
+      }
+      .search-overlay.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .search-panel {
+        width: 100%;
+        max-width: 700px;
+        border-radius: 28px;
+        padding: 28px 28px 32px;
+      }
+      .search-hd {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+      .search-hd h2 {
+        font-size: 1.35rem;
+        font-weight: 600;
+      }
+      .close-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        transition: opacity 0.2s;
+      }
+      .close-btn:hover {
+        opacity: 0.65;
+      }
 
-        .search-bar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 11px 18px;
-            margin-bottom: 16px;
-        }
-        .search-bar input {
-            flex: 1;
-            border: none;
-            background: transparent;
-            outline: none;
-            font-size: 1rem;
-            font-family: 'Google Sans Flex', 'Google Sans', sans-serif;
-            color: inherit;
-        }
-        .search-bar input::placeholder { opacity: 0.45; }
+      .search-bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 18px;
+        margin-bottom: 16px;
+      }
+      .search-bar input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        outline: none;
+        font-size: 1rem;
+        font-family: "Google Sans Flex", "Google Sans", sans-serif;
+        color: inherit;
+      }
+      .search-bar input::placeholder {
+        opacity: 0.45;
+      }
 
-        /* ── Search Controls ── */
-        .search-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 24px;
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
+      /* ── Search Controls ── */
+      .search-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 24px;
+        font-size: 0.9rem;
+        opacity: 0.8;
+      }
 
-        /* ── Custom Dropdown ── */
-        .custom-dropdown { position: relative; }
-        .dropdown-selected {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding: 7px 14px;
-            cursor: pointer;
-            user-select: none;
-            font-size: 0.88rem;
-            white-space: nowrap;
-            transition: opacity 0.2s;
-        }
-        .dropdown-selected:hover { opacity: 0.75; }
-        .dropdown-selected .material-symbols-rounded {
-            font-size: 1.1rem;
-            transition: transform 0.2s;
-        }
-        .custom-dropdown.dd-open .dropdown-selected .material-symbols-rounded {
-            transform: rotate(180deg);
-        }
-        .dropdown-menu {
-            position: fixed;
-            min-width: 150px;
-            border-radius: 18px;
-            overflow: hidden;
-            z-index: 10000;
-            transition: opacity 0.15s, transform 0.15s;
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .dropdown-menu.hidden {
-            opacity: 0;
-            transform: translateY(-6px);
-            pointer-events: none;
-        }
-        .dropdown-item {
-            padding: 11px 16px;
-            cursor: pointer;
-            font-size: 0.88rem;
-            transition: opacity 0.15s;
-        }
-        .dropdown-item:hover { opacity: 0.7; }
-        .dropdown-item.dd-active { font-weight: 600; }
+      /* ── Custom Dropdown ── */
+      .custom-dropdown {
+        position: relative;
+      }
+      .dropdown-selected {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 7px 14px;
+        cursor: pointer;
+        user-select: none;
+        font-size: 0.88rem;
+        white-space: nowrap;
+        transition: opacity 0.2s;
+      }
+      .dropdown-selected:hover {
+        opacity: 0.75;
+      }
+      .dropdown-selected .material-symbols-rounded {
+        font-size: 1.1rem;
+        transition: transform 0.2s;
+      }
+      .custom-dropdown.dd-open .dropdown-selected .material-symbols-rounded {
+        transform: rotate(180deg);
+      }
+      .dropdown-menu {
+        position: fixed;
+        min-width: 150px;
+        border-radius: 18px;
+        overflow: hidden;
+        z-index: 10000;
+        transition:
+          opacity 0.15s,
+          transform 0.15s;
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .dropdown-menu.hidden {
+        opacity: 0;
+        transform: translateY(-6px);
+        pointer-events: none;
+      }
+      .dropdown-item {
+        padding: 11px 16px;
+        cursor: pointer;
+        font-size: 0.88rem;
+        transition: opacity 0.15s;
+      }
+      .dropdown-item:hover {
+        opacity: 0.7;
+      }
+      .dropdown-item.dd-active {
+        font-weight: 600;
+      }
 
-        /* ── Search Results Grid ── */
-        .search-results {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-            gap: 14px;
-        }
-        .search-results .doodle-card { border-radius: 20px; }
-        .no-results {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 40px 20px;
-            opacity: 0.55;
-        }
+      /* ── Search Results Grid ── */
+      .search-results {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+        gap: 14px;
+      }
+      .search-results .doodle-card {
+        border-radius: 20px;
+      }
+      .no-results {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 40px 20px;
+        opacity: 0.55;
+      }
 
-        /* ── Misc ── */
-        .material-symbols-rounded { font-size: 1.4rem; }
+      /* ── Misc ── */
+      .material-symbols-rounded {
+        font-size: 1.4rem;
+      }
 
-        /* ── Iframe Overlay ── */
+      /* ── Iframe Overlay ── */
+      .iframe-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 3000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: linear-gradient(
+          180deg,
+          rgba(12, 5, 46, 0.9) 0%,
+          rgba(12, 5, 46, 0.72) 100%
+        );
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        transition: opacity 0.25s ease;
+      }
+      @media (prefers-color-scheme: light) {
         .iframe-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 3000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background: linear-gradient(180deg, rgba(12,5,46,0.90) 0%, rgba(12,5,46,0.72) 100%);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            transition: opacity 0.25s ease;
+          background: linear-gradient(
+            180deg,
+            rgba(232, 230, 255, 0.92) 0%,
+            rgba(220, 218, 255, 0.78) 100%
+          );
         }
-        @media (prefers-color-scheme: light) {
-            .iframe-overlay {
-                background: linear-gradient(180deg, rgba(232,230,255,0.92) 0%, rgba(220,218,255,0.78) 100%);
-            }
-        }
-        .iframe-overlay.hidden { opacity: 0; pointer-events: none; }
-        .iframe-panel {
-            width: 100%;
-            max-width: 920px;
-            height: calc(100vh - 60px);
-            border-radius: 28px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .iframe-hd {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 20px;
-            flex-shrink: 0;
-        }
-        .iframe-title { font-size: 1.1rem; font-weight: 600; }
-        .iframe-wrap { flex: 1; overflow: hidden; }
-        .iframe-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+      }
+      .iframe-overlay.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .iframe-panel {
+        width: 100%;
+        max-width: 920px;
+        height: calc(100vh - 60px);
+        border-radius: 28px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .iframe-hd {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 20px;
+        flex-shrink: 0;
+      }
+      .iframe-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+      .iframe-wrap {
+        flex: 1;
+        overflow: hidden;
+      }
+      .iframe-wrap iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+      }
 
-        /* ── Footer ── */
-        footer {
-            text-align: center;
-            padding: 32px 20px 40px;
-            font-size: 0.88rem;
-            opacity: 0.55;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-        footer a { color: inherit; text-underline-offset: 3px; }
-        footer a:hover { opacity: 0.7; }
+      /* ── Footer ── */
+      footer {
+        text-align: center;
+        padding: 32px 20px 40px;
+        font-size: 0.88rem;
+        opacity: 0.55;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      footer a {
+        color: inherit;
+        text-underline-offset: 3px;
+      }
+      footer a:hover {
+        opacity: 0.7;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="topbar liquid-glass">
-        <div class="topbar-left">
-            <div class="logo">
-                <img src="https://www.munetios.com/munetios-logo-icon.png" alt="Munetios Logo" width="45" height="45" />
-                <div class="logo-text">Munetios Doodles</div>
-            </div>
+      <div class="topbar-left">
+        <div class="logo">
+          <img
+            src="https://www.munetios.com/munetios-logo-icon.png"
+            alt="Munetios Logo"
+            width="45"
+            height="45"
+          />
+          <div class="logo-text">Munetios Doodles</div>
         </div>
-        <div class="topbar-right">
-            <div class="topbar-item liquid-glass" id="searchBtn" role="button" tabindex="0" aria-label="Search doodles">
-                <span class="material-symbols-rounded">search</span>
-            </div>
+      </div>
+      <div class="topbar-right">
+        <div
+          class="topbar-item liquid-glass"
+          id="searchBtn"
+          role="button"
+          tabindex="0"
+          aria-label="Search doodles"
+        >
+          <span class="material-symbols-rounded">search</span>
         </div>
+      </div>
     </div>
 
     <!-- Search Overlay -->
-    <div id="searchOverlay" class="search-overlay hidden" role="dialog" aria-modal="true" aria-label="Search Doodles">
-        <div class="search-panel liquid-glass">
-            <div class="search-hd">
-                <h2>Search Doodles</h2>
-                <button class="close-btn liquid-glass" id="closeSearch" aria-label="Close search">
-                    <span class="material-symbols-rounded">close</span>
-                </button>
-            </div>
-            <div class="search-bar liquid-glass">
-                <span class="material-symbols-rounded" aria-hidden="true">search</span>
-                <input type="text" id="searchInput" placeholder="Search doodles…" autocomplete="off" spellcheck="false" aria-label="Search doodles" />
-            </div>
-            <div class="search-controls">
-                <span>Sort by date:</span>
-                <div class="custom-dropdown" id="sortDropdown">
-                    <div class="dropdown-selected liquid-glass" id="dropdownSelected" tabindex="0" role="button" aria-haspopup="listbox" aria-expanded="false">
-                        <span id="selectedSort">Newest First</span>
-                        <span class="material-symbols-rounded" aria-hidden="true">expand_more</span>
-                    </div>
-                </div>
-            </div>
-            <div id="searchResults" class="search-results" aria-live="polite"></div>
+    <div
+      id="searchOverlay"
+      class="search-overlay hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Search Doodles"
+    >
+      <div class="search-panel liquid-glass">
+        <div class="search-hd">
+          <h2>Search Doodles</h2>
+          <button
+            class="close-btn liquid-glass"
+            id="closeSearch"
+            aria-label="Close search"
+          >
+            <span class="material-symbols-rounded">close</span>
+          </button>
         </div>
+        <div class="search-bar liquid-glass">
+          <span class="material-symbols-rounded" aria-hidden="true"
+            >search</span
+          >
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search doodles…"
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="Search doodles"
+          />
+        </div>
+        <div class="search-controls">
+          <span>Sort by date:</span>
+          <div class="custom-dropdown" id="sortDropdown">
+            <div
+              class="dropdown-selected liquid-glass"
+              id="dropdownSelected"
+              tabindex="0"
+              role="button"
+              aria-haspopup="listbox"
+              aria-expanded="false"
+            >
+              <span id="selectedSort">Newest First</span>
+              <span class="material-symbols-rounded" aria-hidden="true"
+                >expand_more</span
+              >
+            </div>
+          </div>
+        </div>
+        <div id="searchResults" class="search-results" aria-live="polite"></div>
+      </div>
     </div>
 
     <!-- Dropdown Menu Portal – at body level so backdrop-filter renders correctly -->
-    <div class="dropdown-menu liquid-glass hidden" id="dropdownMenu" role="listbox" aria-label="Sort options">
-        <div class="dropdown-item dd-active" data-value="newest" role="option" aria-selected="true">Newest First</div>
-        <div class="dropdown-item" data-value="oldest" role="option" aria-selected="false">Oldest First</div>
+    <div
+      class="dropdown-menu liquid-glass hidden"
+      id="dropdownMenu"
+      role="listbox"
+      aria-label="Sort options"
+    >
+      <div
+        class="dropdown-item dd-active"
+        data-value="newest"
+        role="option"
+        aria-selected="true"
+      >
+        Newest First
+      </div>
+      <div
+        class="dropdown-item"
+        data-value="oldest"
+        role="option"
+        aria-selected="false"
+      >
+        Oldest First
+      </div>
     </div>
 
     <!-- Iframe Overlay -->
-    <div id="iframeOverlay" class="iframe-overlay hidden" role="dialog" aria-modal="true" aria-label="Doodle viewer">
-        <div class="iframe-panel liquid-glass">
-            <div class="iframe-hd">
-                <span id="iframeTitle" class="iframe-title"></span>
-                <button class="close-btn liquid-glass" id="closeIframe" aria-label="Close doodle viewer">
-                    <span class="material-symbols-rounded">close</span>
-                </button>
-            </div>
-            <div class="iframe-wrap">
-                <iframe id="doodleIframe" src="" title="Doodle viewer" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"></iframe>
-            </div>
+    <div
+      id="iframeOverlay"
+      class="iframe-overlay hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Doodle viewer"
+    >
+      <div class="iframe-panel liquid-glass">
+        <div class="iframe-hd">
+          <span id="iframeTitle" class="iframe-title"></span>
+          <button
+            class="close-btn liquid-glass"
+            id="closeIframe"
+            aria-label="Close doodle viewer"
+          >
+            <span class="material-symbols-rounded">close</span>
+          </button>
         </div>
+        <div class="iframe-wrap">
+          <iframe
+            id="doodleIframe"
+            src=""
+            title="Doodle viewer"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
+          ></iframe>
+        </div>
+      </div>
     </div>
 
     <!-- Main content -->
     <main>
-        <div class="doodles-header">
-            <h1>Doodles</h1>
-            <p>Special Munetios logo variations for holidays &amp; milestones</p>
-        </div>
-        <div class="doodles-grid" id="doodlesGrid"></div>
+      <div class="doodles-header">
+        <h1>Doodles</h1>
+        <p>Special Munetios logo variations for holidays &amp; milestones</p>
+      </div>
+      <div class="doodles-grid" id="doodlesGrid"></div>
     </main>
 
     <footer>
-        <a href="/">← Back to Home</a>
-        <span aria-hidden="true">·</span>
-        <span>Munetios Doodles</span>
-            <span aria-hidden="true">·</span>
-            <a href="https://youtube.com/@munetios">YouTube Channel</a>
-             <span aria-hidden="true">·</span>
-             <a href="https://twitter.com/munetios">X</a>
+      <a href="/">← Back to Home</a>
+      <span aria-hidden="true">·</span>
+      <span>Munetios Doodles</span>
+      <span aria-hidden="true">·</span>
+      <a href="https://youtube.com/@munetios">YouTube Channel</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://twitter.com/munetios">X</a>
     </footer>
 
     <script>
-        const DOODLES = [
-            {
-                id: 'easter-2026',
-                title: "Easter",
-                date: new Date(2026, 3, 5),
-                dateStr: "April 5, 2026",
-                image: "https://www.munetios.com/easter.png",
-                emoji: "🐰",
-                alt: "Munetios Easter 2026 Doodle"
+      const DOODLES = [
+        {
+          id: "mothersday-2026",
+          title: "Mother's Day",
+          date: new Date(2026, 4, 10),
+          dateStr: "May 10, 2026",
+          image: "https://www.munetios.com/mothers.png",
+          emoji: "👩‍👧‍👦",
+          alt: "Munetios Mother's Day 2026 Doodle",
+        },
+        {
+          id: "arbor-day-2026",
+          title: "Arbor Day",
+          date: new Date(2026, 3, 24),
+          dateStr: "April 24, 2026",
+          image: "https://www.munetios.com/arbor.png",
+          emoji: "🌳",
+          alt: "Munetios Arbor Day 2026 Doodle",
+        },
+        {
+          id: "administrative-professionals-day-2026",
+          title: "Administrative Professionals Day",
+          date: new Date(2026, 3, 22),
+          dateStr: "April 22, 2026",
+          image: "https://www.munetios.com/admin.png",
+          emoji: "🧑‍💼",
+          alt: "Munetios Administrative Professionals Day 2026 Doodle",
+        },
+        {
+          id: "earthday-2026",
+          title: "Earth Day",
+          date: new Date(2026, 3, 20),
+          dateStr: "April 20, 2026",
+          image: "https://www.munetios.com/earth.png",
+          emoji: "🌍",
+          alt: "Munetios Earth Day 2026 Doodle",
+        },
+        {
+          id: "easter-2026",
+          title: "Easter",
+          date: new Date(2026, 3, 5),
+          dateStr: "April 5, 2026",
+          image: "https://www.munetios.com/easter.png",
+          emoji: "🐰",
+          alt: "Munetios Easter 2026 Doodle",
+        },
+        {
+          id: "aprilfools-2026",
+          title: "April Fools' Day",
+          date: new Date(2026, 3, 1),
+          dateStr: "April 1, 2026",
+          image: "https://www.munetios.com/april.png",
+          emoji: "🤡",
+          alt: "Munetios April Fools' Day 2026 Doodle",
+        },
+        {
+          id: "stpatricks-2026",
+          title: "St. Patrick's Day",
+          date: new Date(2026, 2, 17),
+          dateStr: "March 17, 2026",
+          image: "https://www.munetios.com/patrick.png",
+          emoji: "☘️",
+          alt: "Munetios St. Patrick's Day 2026 Doodle",
+        },
+        {
+          id: "piday-2026",
+          title: "Pi Day",
+          date: new Date(2026, 2, 14),
+          dateStr: "March 14, 2026",
+          image: "https://www.munetios.com/pi.png",
+          emoji: "π",
+          alt: "Munetios Pi Day 2026 Doodle",
+        },
+        {
+          id: "valentines-2026",
+          title: "Valentine's Day",
+          date: new Date(2026, 1, 14),
+          dateStr: "February 14, 2026",
+          image: "https://www.munetios.com/valentines.png",
+          emoji: "💝",
+          alt: "Munetios Valentine's Day 2026 Doodle",
+          link: "valentines.html",
+        },
+        {
+          id: "anniversary-1yr",
+          title: "1 Year Anniversary",
+          date: new Date(2026, 1, 9),
+          dateStr: "February 9, 2026",
+          image: "https://www.munetios.com/1year.png",
+          emoji: "🎂",
+          alt: "Munetios 1 Year Anniversary Doodle",
+          link: "https://www.munetios.com/timeline/2025/advanced",
+        },
+        {
+          id: "mlk-2026",
+          title: "Martin Luther King Jr. Day",
+          date: new Date(2026, 0, 19),
+          dateStr: "January 19, 2026",
+          image: "https://www.munetios.com/mlk.png",
+          emoji: "✊",
+          alt: "Munetios Martin Luther King Jr. Day 2026 Doodle",
+        },
+        {
+          id: "newyear-2026",
+          title: "New Year's Day",
+          date: new Date(2026, 0, 1),
+          dateStr: "January 1, 2026",
+          image: "https://www.munetios.com/newyears.png",
+          emoji: "🎆",
+          alt: "Munetios New Year's Day 2026 Doodle",
+        },
+        {
+          id: "christmas-2025",
+          title: "Christmas",
+          date: new Date(2025, 11, 25),
+          dateStr: "December 25, 2025",
+          image: "https://www.munetios.com/christmas.png",
+          emoji: "🎄",
+          alt: "Munetios Christmas 2025 Doodle",
+          link: "christmas.html",
+        },
+        {
+          id: "thanksgiving-2025",
+          title: "Thanksgiving",
+          date: new Date(2025, 10, 27),
+          dateStr: "November 27, 2025",
+          image: "https://www.munetios.com/thanksgiving.png",
+          emoji: "🦃",
+          alt: "Munetios Thanksgiving 2025 Doodle",
+          link: "https://www.munetios.com/pacmanthanksgiving.html",
+        },
+        {
+          id: "veterans-2025",
+          title: "Veterans Day",
+          date: new Date(2025, 10, 11),
+          dateStr: "November 11, 2025",
+          image: "https://www.munetios.com/Veterans.png",
+          emoji: "🎖️",
+          alt: "Munetios Veterans Day 2025 Doodle",
+        },
+      ];
 
-            },
-            {
-                id: 'aprilfools-2026',
-                title: "April Fools' Day",
-                date: new Date(2026, 3, 1),
-                dateStr: "April 1, 2026",
-                image: "https://www.munetios.com/april.png",
-                emoji: "🤡",
-                alt: "Munetios April Fools' Day 2026 Doodle"
+      let sortOrder = "newest";
+      let searchQuery = "";
 
-            },
-            {
-                id: 'stpatricks-2026',
-                title: "St. Patrick's Day",
-                date: new Date(2026, 2, 17),
-                dateStr: "March 17, 2026",
-                image: "https://www.munetios.com/patrick.png",
-                emoji: "☘️",
-                alt: "Munetios St. Patrick's Day 2026 Doodle"
-            },
-            {
-                id: 'piday-2026',
-                title: "Pi Day",
-                date: new Date(2026, 2, 14),
-                dateStr: "March 14, 2026",
-                image: "https://www.munetios.com/pi.png",
-                emoji: "π",
-                alt: "Munetios Pi Day 2026 Doodle"
-            },
-            {
-                id: 'valentines-2026',
-                title: "Valentine's Day",
-                date: new Date(2026, 1, 14),
-                dateStr: "February 14, 2026",
-                image: "https://www.munetios.com/valentines.png",
-                emoji: "💝",
-                alt: "Munetios Valentine's Day 2026 Doodle",
-                link: "valentines.html"
-            },
-            {
-                id: 'anniversary-1yr',
-                title: "1 Year Anniversary",
-                date: new Date(2026, 1, 9),
-                dateStr: "February 9, 2026",
-                image: "https://www.munetios.com/1year.png",
-                emoji: "🎂",
-                alt: "Munetios 1 Year Anniversary Doodle",
-                link: "https://www.munetios.com/timeline/2025/advanced"
-            },
-            {
-                id: 'mlk-2026',
-                title: "Martin Luther King Jr. Day",
-                date: new Date(2026, 0, 19),
-                dateStr: "January 19, 2026",
-                image: "https://www.munetios.com/mlk.png",
-                emoji: "✊",
-                alt: "Munetios Martin Luther King Jr. Day 2026 Doodle"
-            },
-            {
-                id: 'newyear-2026',
-                title: "New Year's Day",
-                date: new Date(2026, 0, 1),
-                dateStr: "January 1, 2026",
-                image: "https://www.munetios.com/newyears.png",
-                emoji: "🎆",
-                alt: "Munetios New Year's Day 2026 Doodle"
-            },
-            {
-                id: 'christmas-2025',
-                title: "Christmas",
-                date: new Date(2025, 11, 25),
-                dateStr: "December 25, 2025",
-                image: "https://www.munetios.com/christmas.png",
-                emoji: "🎄",
-                alt: "Munetios Christmas 2025 Doodle",
-                link: "christmas.html"
-            },
-            {
-                id: 'thanksgiving-2025',
-                title: "Thanksgiving",
-                date: new Date(2025, 10, 27),
-                dateStr: "November 27, 2025",
-                image: "https://www.munetios.com/thanksgiving.png",
-                emoji: "🦃",
-                alt: "Munetios Thanksgiving 2025 Doodle",
-                link: "https://www.munetios.com/pacmanthanksgiving.html"
-            },
-            {
-                id: 'veterans-2025',
-                title: "Veterans Day",
-                date: new Date(2025, 10, 11),
-                dateStr: "November 11, 2025",
-                image: "https://www.munetios.com/Veterans.png",
-                emoji: "🎖️",
-                alt: "Munetios Veterans Day 2025 Doodle"
-            }
-        ];
+      function applySortFilter(list) {
+        const q = searchQuery.trim().toLowerCase();
+        const filtered = q
+          ? list.filter(
+              (d) =>
+                d.title.toLowerCase().includes(q) ||
+                d.dateStr.toLowerCase().includes(q),
+            )
+          : list;
+        return filtered
+          .slice()
+          .sort((a, b) =>
+            sortOrder === "newest" ? b.date - a.date : a.date - b.date,
+          );
+      }
 
-        let sortOrder = 'newest';
-        let searchQuery = '';
-
-        function applySortFilter(list) {
-            const q = searchQuery.trim().toLowerCase();
-            const filtered = q
-                ? list.filter(d => d.title.toLowerCase().includes(q) || d.dateStr.toLowerCase().includes(q))
-                : list;
-            return filtered.slice().sort((a, b) =>
-                sortOrder === 'newest' ? b.date - a.date : a.date - b.date
-            );
+      function buildCard(doodle) {
+        const card = document.createElement("div");
+        card.className = "doodle-card liquid-glass";
+        if (doodle.link) {
+          card.classList.add("has-link");
+          card.addEventListener("click", () =>
+            openIframe(doodle.link, doodle.title),
+          );
         }
 
-        function buildCard(doodle) {
-            const card = document.createElement('div');
-            card.className = 'doodle-card liquid-glass';
-            if (doodle.link) {
-                card.classList.add('has-link');
-                card.addEventListener('click', () => openIframe(doodle.link, doodle.title));
-            }
+        const wrap = document.createElement("div");
+        wrap.className = "doodle-image-wrap";
 
-            const wrap = document.createElement('div');
-            wrap.className = 'doodle-image-wrap';
+        const img = document.createElement("img");
+        img.src = doodle.image;
+        img.alt = doodle.alt;
+        img.loading = "lazy";
+        img.onerror = function () {
+          this.style.display = "none";
+          const ph = document.createElement("div");
+          ph.className = "img-placeholder";
+          ph.textContent = doodle.emoji;
+          wrap.appendChild(ph);
+        };
+        wrap.appendChild(img);
+        card.appendChild(wrap);
 
-            const img = document.createElement('img');
-            img.src = doodle.image;
-            img.alt = doodle.alt;
-            img.loading = 'lazy';
-            img.onerror = function () {
-                this.style.display = 'none';
-                const ph = document.createElement('div');
-                ph.className = 'img-placeholder';
-                ph.textContent = doodle.emoji;
-                wrap.appendChild(ph);
-            };
-            wrap.appendChild(img);
-            card.appendChild(wrap);
+        const info = document.createElement("div");
+        info.className = "doodle-info";
+        const titleEl = document.createElement("div");
+        titleEl.className = "doodle-title";
+        titleEl.textContent = doodle.title;
+        const dateEl = document.createElement("div");
+        dateEl.className = "doodle-date";
+        dateEl.textContent = doodle.dateStr;
+        info.appendChild(titleEl);
+        info.appendChild(dateEl);
+        card.appendChild(info);
 
-            const info = document.createElement('div');
-            info.className = 'doodle-info';
-            const titleEl = document.createElement('div');
-            titleEl.className = 'doodle-title';
-            titleEl.textContent = doodle.title;
-            const dateEl = document.createElement('div');
-            dateEl.className = 'doodle-date';
-            dateEl.textContent = doodle.dateStr;
-            info.appendChild(titleEl);
-            info.appendChild(dateEl);
-            card.appendChild(info);
+        return card;
+      }
 
-            return card;
+      function renderGrid() {
+        const grid = document.getElementById("doodlesGrid");
+        grid.innerHTML = "";
+        applySortFilter(DOODLES).forEach((d) => grid.appendChild(buildCard(d)));
+      }
+
+      function renderSearchResults() {
+        const container = document.getElementById("searchResults");
+        container.innerHTML = "";
+        const items = applySortFilter(DOODLES);
+        if (!items.length) {
+          const msg = document.createElement("div");
+          msg.className = "no-results";
+          msg.textContent = "No doodles found.";
+          container.appendChild(msg);
+          return;
         }
+        items.forEach((d) => container.appendChild(buildCard(d)));
+      }
 
-        function renderGrid() {
-            const grid = document.getElementById('doodlesGrid');
-            grid.innerHTML = '';
-            applySortFilter(DOODLES).forEach(d => grid.appendChild(buildCard(d)));
+      renderGrid();
+
+      /* ── Iframe overlay ── */
+      const iframeOverlay = document.getElementById("iframeOverlay");
+      const doodleIframe = document.getElementById("doodleIframe");
+      const iframeTitleEl = document.getElementById("iframeTitle");
+
+      function openIframe(url, title) {
+        doodleIframe.src = url;
+        iframeTitleEl.textContent = title;
+        iframeOverlay.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+      function closeIframeOverlay() {
+        iframeOverlay.classList.add("hidden");
+        doodleIframe.src = "";
+        document.body.style.overflow = "";
+      }
+
+      document
+        .getElementById("closeIframe")
+        .addEventListener("click", closeIframeOverlay);
+      iframeOverlay.addEventListener("click", (e) => {
+        if (e.target === iframeOverlay) closeIframeOverlay();
+      });
+
+      /* ── Search overlay ── */
+      const overlay = document.getElementById("searchOverlay");
+      const searchBtn = document.getElementById("searchBtn");
+      const closeBtn = document.getElementById("closeSearch");
+      const searchInput = document.getElementById("searchInput");
+
+      function openSearch() {
+        overlay.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+        renderSearchResults();
+        setTimeout(() => searchInput.focus(), 80);
+      }
+      function closeSearch() {
+        overlay.classList.add("hidden");
+        document.body.style.overflow = "";
+      }
+
+      searchBtn.addEventListener("click", openSearch);
+      searchBtn.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openSearch();
         }
-
-        function renderSearchResults() {
-            const container = document.getElementById('searchResults');
-            container.innerHTML = '';
-            const items = applySortFilter(DOODLES);
-            if (!items.length) {
-                const msg = document.createElement('div');
-                msg.className = 'no-results';
-                msg.textContent = 'No doodles found.';
-                container.appendChild(msg);
-                return;
-            }
-            items.forEach(d => container.appendChild(buildCard(d)));
+      });
+      closeBtn.addEventListener("click", closeSearch);
+      overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) closeSearch();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          if (!iframeOverlay.classList.contains("hidden")) closeIframeOverlay();
+          else closeSearch();
         }
+      });
 
-        renderGrid();
+      searchInput.addEventListener("input", () => {
+        searchQuery = searchInput.value;
+        renderSearchResults();
+      });
 
-        /* ── Iframe overlay ── */
-        const iframeOverlay = document.getElementById('iframeOverlay');
-        const doodleIframe = document.getElementById('doodleIframe');
-        const iframeTitleEl = document.getElementById('iframeTitle');
+      /* ── Custom Dropdown (portal) ── */
+      const sortDropdown = document.getElementById("sortDropdown");
+      const dropdownSelected = document.getElementById("dropdownSelected");
+      const dropdownMenu = document.getElementById("dropdownMenu");
+      const selectedSortLabel = document.getElementById("selectedSort");
+      const dropdownItems = dropdownMenu.querySelectorAll(".dropdown-item");
 
-        function openIframe(url, title) {
-            doodleIframe.src = url;
-            iframeTitleEl.textContent = title;
-            iframeOverlay.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
+      function positionDropdown() {
+        const rect = dropdownSelected.getBoundingClientRect();
+        dropdownMenu.style.top = rect.bottom + 6 + "px";
+        dropdownMenu.style.left = rect.left + "px";
+        dropdownMenu.style.minWidth = Math.max(150, rect.width) + "px";
+      }
+
+      function toggleDropdown() {
+        const isOpen = !dropdownMenu.classList.contains("hidden");
+        if (!isOpen) positionDropdown();
+        dropdownMenu.classList.toggle("hidden", isOpen);
+        sortDropdown.classList.toggle("dd-open", !isOpen);
+        dropdownSelected.setAttribute("aria-expanded", String(!isOpen));
+      }
+
+      dropdownSelected.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleDropdown();
+      });
+      dropdownSelected.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggleDropdown();
         }
-        function closeIframeOverlay() {
-            iframeOverlay.classList.add('hidden');
-            doodleIframe.src = '';
-            document.body.style.overflow = '';
-        }
+      });
 
-        document.getElementById('closeIframe').addEventListener('click', closeIframeOverlay);
-        iframeOverlay.addEventListener('click', e => { if (e.target === iframeOverlay) closeIframeOverlay(); });
-
-        /* ── Search overlay ── */
-        const overlay = document.getElementById('searchOverlay');
-        const searchBtn = document.getElementById('searchBtn');
-        const closeBtn = document.getElementById('closeSearch');
-        const searchInput = document.getElementById('searchInput');
-
-        function openSearch() {
-            overlay.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            renderSearchResults();
-            setTimeout(() => searchInput.focus(), 80);
-        }
-        function closeSearch() {
-            overlay.classList.add('hidden');
-            document.body.style.overflow = '';
-        }
-
-        searchBtn.addEventListener('click', openSearch);
-        searchBtn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openSearch(); } });
-        closeBtn.addEventListener('click', closeSearch);
-        overlay.addEventListener('click', e => { if (e.target === overlay) closeSearch(); });
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') {
-                if (!iframeOverlay.classList.contains('hidden')) closeIframeOverlay();
-                else closeSearch();
-            }
+      dropdownItems.forEach((item) => {
+        item.addEventListener("click", () => {
+          sortOrder = item.dataset.value;
+          selectedSortLabel.textContent = item.textContent;
+          dropdownItems.forEach((i) => {
+            i.classList.remove("dd-active");
+            i.setAttribute("aria-selected", "false");
+          });
+          item.classList.add("dd-active");
+          item.setAttribute("aria-selected", "true");
+          dropdownMenu.classList.add("hidden");
+          sortDropdown.classList.remove("dd-open");
+          dropdownSelected.setAttribute("aria-expanded", "false");
+          renderSearchResults();
+          renderGrid();
         });
+      });
 
-        searchInput.addEventListener('input', () => {
-            searchQuery = searchInput.value;
-            renderSearchResults();
-        });
-
-        /* ── Custom Dropdown (portal) ── */
-        const sortDropdown = document.getElementById('sortDropdown');
-        const dropdownSelected = document.getElementById('dropdownSelected');
-        const dropdownMenu = document.getElementById('dropdownMenu');
-        const selectedSortLabel = document.getElementById('selectedSort');
-        const dropdownItems = dropdownMenu.querySelectorAll('.dropdown-item');
-
-        function positionDropdown() {
-            const rect = dropdownSelected.getBoundingClientRect();
-            dropdownMenu.style.top = (rect.bottom + 6) + 'px';
-            dropdownMenu.style.left = rect.left + 'px';
-            dropdownMenu.style.minWidth = Math.max(150, rect.width) + 'px';
+      document.addEventListener("click", (e) => {
+        if (
+          !sortDropdown.contains(e.target) &&
+          !dropdownMenu.contains(e.target)
+        ) {
+          dropdownMenu.classList.add("hidden");
+          sortDropdown.classList.remove("dd-open");
+          dropdownSelected.setAttribute("aria-expanded", "false");
         }
-
-        function toggleDropdown() {
-            const isOpen = !dropdownMenu.classList.contains('hidden');
-            if (!isOpen) positionDropdown();
-            dropdownMenu.classList.toggle('hidden', isOpen);
-            sortDropdown.classList.toggle('dd-open', !isOpen);
-            dropdownSelected.setAttribute('aria-expanded', String(!isOpen));
-        }
-
-        dropdownSelected.addEventListener('click', e => { e.stopPropagation(); toggleDropdown(); });
-        dropdownSelected.addEventListener('keydown', e => {
-            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDropdown(); }
-        });
-
-        dropdownItems.forEach(item => {
-            item.addEventListener('click', () => {
-                sortOrder = item.dataset.value;
-                selectedSortLabel.textContent = item.textContent;
-                dropdownItems.forEach(i => { i.classList.remove('dd-active'); i.setAttribute('aria-selected', 'false'); });
-                item.classList.add('dd-active');
-                item.setAttribute('aria-selected', 'true');
-                dropdownMenu.classList.add('hidden');
-                sortDropdown.classList.remove('dd-open');
-                dropdownSelected.setAttribute('aria-expanded', 'false');
-                renderSearchResults();
-                renderGrid();
-            });
-        });
-
-        document.addEventListener('click', e => {
-            if (!sortDropdown.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                dropdownMenu.classList.add('hidden');
-                sortDropdown.classList.remove('dd-open');
-                dropdownSelected.setAttribute('aria-expanded', 'false');
-            }
-        });
+      });
     </script>
-</body>
+  </body>
 </html>
