@@ -6699,6 +6699,54 @@
             }
           }
         })();
+        // Earth Day (April 20, 2026), Admin Professionals Day (April 22), Arbor Day (April 24), Mother's Day (May 10, 2026)
+        (function () {
+          const now = new Date();
+          const year = now.getFullYear();
+          const month = now.getMonth(); // 0-indexed
+          const day = now.getDate();
+          const logo = document.getElementById("canChangeLogoinDoodles");
+
+          // Earth Day: April 20, 2026
+          if (year === 2026 && month === 3 && day === 20 && logo) {
+            logo.src = "earth.png";
+            logo.style.cursor = "pointer";
+            logo.onclick = function () {
+              window.location.href =
+          "https://www.munetios.com/search/search.html?q=Earth+Day#/all?q=Earth%20Day";
+            };
+          }
+
+          // Administrative Professionals Day: April 22, 2026
+          if (year === 2026 && month === 3 && day === 22 && logo) {
+            logo.src = "admin.png";
+            logo.style.cursor = "pointer";
+            logo.onclick = function () {
+              window.location.href =
+          "https://www.munetios.com/search/search.html?q=Administrative+Professionals+Day#/all?q=Administrative%20Professionals%20Day";
+            };
+          }
+
+          // Arbor Day: April 24, 2026
+          if (year === 2026 && month === 3 && day === 24 && logo) {
+            logo.src = "arbor.png";
+            logo.style.cursor = "pointer";
+            logo.onclick = function () {
+              window.location.href =
+          "https://www.munetios.com/search/search.html?q=Arbor+Day#/all?q=Arbor%20Day";
+            };
+          }
+
+          // Mother's Day: May 10, 2026
+          if (year === 2026 && month === 4 && day === 10 && logo) {
+            logo.src = "mothers.png";
+            logo.style.cursor = "pointer";
+            logo.onclick = function () {
+              window.location.href =
+          "https://www.munetios.com/search/search.html?q=Mother%27s+Day#/all?q=Mother%27s%20Day";
+            };
+          }
+        })();
 
         // Logo change and click redirect for Feb 9-12, 2026
         (function () {
