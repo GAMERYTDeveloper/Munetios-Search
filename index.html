@@ -4853,7 +4853,7 @@
                 </div>
                 <div class="settings-item" id="safeSearchSetting">
                   <span class="settings-label">SafeSearch</span>
-                  <button id="safeSearchButton">Strict</button>
+                  <button id="safeSearchButton">Moderate</button>
                 </div>
                 <div class="settings-item" id="countrySetting">
                   <span class="settings-label" id="countrySettingLabel"
@@ -5316,6 +5316,38 @@
         <div class="dropdown-item" data-country="ru">Russia</div>
         <div class="dropdown-item" data-country="za">South Africa</div>
         <div class="dropdown-item" data-country="nl">Netherlands</div>
+        <div class="dropdown-item" data-country="es">Spain</div>
+        <div class="dropdown-item" data-country="it">Italy</div>
+        <div class="dropdown-item" data-country="se">Sweden</div>
+        <div class="dropdown-item" data-country="no">Norway</div>
+        <div class="dropdown-item" data-country="fi">Finland</div>
+        <div class="dropdown-item" data-country="dk">Denmark</div>
+        <div class="dropdown-item" data-country="pl">Poland</div>
+        <div class="dropdown-item" data-country="mx">Mexico</div>
+        <div class="dropdown-item" data-country="ar">Argentina</div>
+        <div class="dropdown-item" data-country="tr">Turkey</div>
+        <div class="dropdown-item" data-country="id">Indonesia</div>
+        <div class="dropdown-item" data-country="kr">South Korea</div>
+        <div class="dropdown-item" data-country="ie">Ireland</div>
+        <div class="dropdown-item" data-country="ch">Switzerland</div>
+        <div class="dropdown-item" data-country="at">Austria</div>
+        <div class="dropdown-item" data-country="be">Belgium</div>
+        <div class="dropdown-item" data-country="pt">Portugal</div>
+        <div class="dropdown-item" data-country="nz">New Zealand</div>
+        <div class="dropdown-item" data-country="sg">Singapore</div>
+        <div class="dropdown-item" data-country="my">Malaysia</div>
+        <div class="dropdown-item" data-country="ph">Philippines</div>
+        <div class="dropdown-item" data-country="th">Thailand</div>
+        <div class="dropdown-item" data-country="vn">Vietnam</div>
+        <div class="dropdown-item" data-country="ua">Ukraine</div>
+        <div class="dropdown-item" data-country="ro">Romania</div>
+        <div class="dropdown-item" data-country="cz">Czech Republic</div>
+        <div class="dropdown-item" data-country="hu">Hungary</div>
+        <div class="dropdown-item" data-country="il">Israel</div>
+        <div class="dropdown-item" data-country="ae">United Arab Emirates</div>
+        <div class="dropdown-item" data-country="sa">Saudi Arabia</div>
+        <div class="dropdown-item" data-country="eg">Egypt</div>
+        <div class="dropdown-item" data-country="pk">Pakistan</div>
       </div>
       <div class="dropdown-wrapper liquid-glass" id="fontFamilySelector">
         <div class="dropdown-item" data-font="Google Sans Flex">
@@ -19461,17 +19493,17 @@
 
           function setSafeSearch(level, silent) {
             localStorage.setItem("safeSearchLevel", level);
-            if (btn) btn.textContent = labels[level] || "Strict";
+            if (btn) btn.textContent = labels[level] || "Moderate";
             if (!silent && window.showToast)
               window.showToast("SafeSearch set to " + (labels[level] || level));
           }
 
           // Strict is the default — never off
-          const saved = localStorage.getItem("safeSearchLevel") || "strict";
-          if (btn) btn.textContent = labels[saved] || "Strict";
+          const saved = localStorage.getItem("safeSearchLevel") || "moderate";
+          if (btn) btn.textContent = labels[saved] || "Moderate";
           // Ensure it's stored
           if (!localStorage.getItem("safeSearchLevel"))
-            localStorage.setItem("safeSearchLevel", "strict");
+            localStorage.setItem("safeSearchLevel", "moderate");
 
           btn?.addEventListener("click", (e) => {
             e.stopPropagation();
@@ -19521,6 +19553,38 @@
             ru: "Russia",
             za: "South Africa",
             nl: "Netherlands",
+            es: "Spain",
+            it: "Italy",
+            se: "Sweden",
+            no: "Norway",
+            fi: "Finland",
+            dk: "Denmark",
+            pl: "Poland",
+            mx: "Mexico",
+            ar: "Argentina",
+            tr: "Turkey",
+            id: "Indonesia",
+            kr: "South Korea",
+            ie: "Ireland",
+            ch: "Switzerland",
+            at: "Austria",
+            be: "Belgium",
+            pt: "Portugal",
+            nz: "New Zealand",
+            sg: "Singapore",
+            my: "Malaysia",
+            ph: "Philippines",
+            th: "Thailand",
+            vn: "Vietnam",
+            ua: "Ukraine",
+            ro: "Romania",
+            cz: "Czech Republic",
+            hu: "Hungary",
+            il: "Israel",
+            ae: "United Arab Emirates",
+            sa: "Saudi Arabia",
+            eg: "Egypt",
+            pk: "Pakistan",
           };
 
           function getCountryLabel() {
