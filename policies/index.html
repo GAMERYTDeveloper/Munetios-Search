@@ -57,11 +57,17 @@
     <link rel="apple-touch-icon" href="/favicon-new.ico" />
     <!-- Munetios beautiful css link -->
      <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css" />
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:FILL@0..1" />
      <!--m CSP-->
      <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://api.munetios.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.munetios.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://api.munetios.com; connect-src 'self' https://api.munetios.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';" />
   
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,80&display=swap');
+      * {
+           font-feature-settings: "ss01" 1;
+                 font-family: "Google Sans Flex", sans-serif;
+                 font-variation-settings: 'ROND' 50;
+      }
       body {
         font-family: "Google Sans Flex", sans-serif;
         margin: 0;
@@ -69,8 +75,17 @@
         background-color: #270e33ff;
         color: #e9e9e9;
       }
+      body.sidebar-open::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: rgba(14, 4, 26, 0.48);
+        backdrop-filter: blur(5px);
+        z-index: 900;
+      }
       h1,h2,h3,h4,h5,h6 {
         font-variation-settings: 'ROND' 80;
+        font-feature-settings: "ss01" 1;
       }
       button {
         all: unset;
@@ -83,6 +98,11 @@
       button:hover {
         cursor: pointer;
         background: rgba(255, 255, 255, 0.2);
+      }
+      .material-symbols-rounded {
+        font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
+        font-size: 22px;
+        line-height: 1;
       }
       .btn {
         border-radius: 40px;
@@ -115,13 +135,22 @@
         gap: 15px;
       }
       .content {
+        display: none;
         margin-left: 280px;
         margin-top: 80px;
+        max-width: calc(100% - 340px);
         border-radius: 18px;
         padding: 32px 36px;
         font-size: 18px;
         line-height: 1.7;
         transition: box-shadow 0.3s;
+      }
+      .content.active-section {
+        display: block;
+      }
+      body.sidebar-collapsed .content {
+        margin-left: 24px;
+        max-width: calc(100% - 48px);
       }
       .content h1 {
         font-size: 2.2em;
@@ -157,6 +186,10 @@
         margin-top: 40px;
         border-radius: 0 0 18px 18px;
       }
+      body.sidebar-collapsed footer {
+        margin-left: 24px;
+        margin-right: 24px;
+      }
       .sidebar {
         position: fixed;
         top: 70px;
@@ -169,6 +202,12 @@
         display: flex;
         flex-direction: column;
         gap: 15px;
+        transition: transform 0.25s ease, opacity 0.25s ease;
+      }
+      body.sidebar-collapsed .sidebar {
+        transform: translateX(calc(-100% - 36px));
+        opacity: 0;
+        pointer-events: none;
       }
       .menu-btn,
       .top-right {
@@ -177,6 +216,171 @@
         display: flex;
         align-items: center;
         gap: 8px;
+      }
+      .top-right {
+        gap: 10px;
+      }
+      .icon-btn {
+        width: 44px;
+        height: 44px;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .action-link {
+        color: inherit;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .section-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 0 0 26px;
+        align-items: center;
+      }
+      .policy-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(5px);
+      }
+      .home-grid,
+      .archive-grid,
+      .search-results {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+      }
+      .search-results {
+        grid-template-columns: 1fr;
+      }
+      .feature-card,
+      .archive-card,
+      .search-result-card {
+        padding: 18px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(5px);
+      }
+      .feature-card h3,
+      .archive-card h3,
+      .search-result-card h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+      }
+      .feature-card p,
+      .archive-card p,
+      .search-result-card p {
+        margin: 0 0 14px;
+      }
+      .card-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .inline-btn {
+        padding: 10px 14px;
+      }
+      .search-panel {
+        position: fixed;
+        inset: 92px 20px 20px 20px;
+        max-width: 920px;
+        margin-left: auto;
+        z-index: 3000;
+        display: none;
+        padding: 22px;
+        overflow: auto;
+      }
+      .search-panel.visible,
+      .dropdown-menu.visible {
+        display: block;
+      }
+      .search-panel-header {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      .search-input-wrap {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 1;
+        padding: 12px 14px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(5px);
+      }
+      .search-input {
+        width: 100%;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #fff;
+        font-size: 16px;
+      }
+      .search-input::placeholder {
+        color: rgba(255, 255, 255, 0.72);
+      }
+      .empty-state {
+        color: rgba(255, 255, 255, 0.82);
+      }
+      .search-snippet mark,
+      .search-hit {
+        background: rgba(154, 186, 255, 0.28);
+        color: #fff;
+        padding: 0 3px;
+        border-radius: 4px;
+      }
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      body.search-open::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: rgba(14, 4, 26, 0.56);
+        backdrop-filter: blur(5px);
+        z-index: 2500;
+      }
+      @media print {
+        body * {
+          visibility: hidden !important;
+        }
+        .content.printing,
+        .content.printing * {
+          visibility: visible !important;
+        }
+        .content.printing {
+          position: absolute;
+          inset: 0;
+          margin: 0 !important;
+          padding: 24px !important;
+          max-width: none !important;
+          background: #fff !important;
+          color: #111 !important;
+          box-shadow: none !important;
+        }
       }
       .item {
         padding: 10px 14px;
@@ -198,9 +402,46 @@
         z-index: 100000;
         position: absolute;
         max-height: 500px;
+        min-width: 220px;
         overflow-y: auto;
         display: none;
         border-radius: 12px;
+      }
+      .archive-viewer {
+        position: fixed;
+        inset: 92px 20px 20px 20px;
+        max-width: 920px;
+        margin-left: auto;
+        z-index: 3000;
+        display: none;
+        padding: 22px;
+        overflow: auto;
+      }
+      .archive-viewer.visible {
+        display: block;
+      }
+      .archive-viewer-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      .archive-viewer-meta {
+        color: rgba(255, 255, 255, 0.78);
+        margin: 6px 0 0;
+      }
+      .archive-viewer-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .archive-viewer-body {
+        padding: 20px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(5px);
       }
       #languageDropdownMenu {
         top: 70px;
@@ -223,47 +464,93 @@
           right: 10px;
         }
       }
+      @media (max-width: 840px) {
+        .topbar {
+          padding: 10px;
+        }
+        .sidebar {
+          top: 78px;
+          left: 10px;
+          width: min(78vw, 280px);
+          height: calc(100% - 88px);
+          transform: translateX(-120%);
+          opacity: 0;
+          pointer-events: none;
+          transition: transform 0.25s ease, opacity 0.25s ease;
+          z-index: 1200;
+        }
+        .sidebar.open {
+          transform: translateX(0);
+          opacity: 1;
+          pointer-events: auto;
+        }
+        .content {
+          margin-left: 10px;
+          margin-right: 10px;
+          max-width: none;
+          padding: 24px 20px;
+        }
+        body.sidebar-collapsed .content {
+          margin-left: 10px;
+          margin-right: 10px;
+          max-width: none;
+        }
+        footer {
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+        body.sidebar-collapsed footer {
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+        .logo-text {
+          display: none;
+        }
+        .search-panel {
+          inset: 84px 10px 14px 10px;
+          padding: 18px;
+        }
+        .archive-viewer {
+          inset: 84px 10px 14px 10px;
+          padding: 18px;
+        }
+        .search-panel-header {
+          flex-wrap: wrap;
+        }
+        .archive-viewer-header {
+          flex-wrap: wrap;
+        }
+      }
+      .topbar-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .logo-text {
+        padding: 14px;
+      }
+      .top-right {
+        padding: 3px !important;
+      }
     </style>
   </head>
   <body>
     <header class="topbar">
+      <div class="topbar-left">
       <div class="menu-btn liquid-glass">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
+        <span class="material-symbols-rounded" aria-hidden="true">menu</span>
       </div>
-
+      <div class="logo-text liquid-glass">
+        <div>Munetios Policies</div>
+      </div></div>
       <div class="top-right liquid-glass">
-        <button id="languageDropdownButton" class="language-button">
-          Language
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
+        <button id="searchButton" class="icon-btn liquid-glass" type="button" aria-label="Search policies" title="Search policies">
+          <span class="material-symbols-rounded" aria-hidden="true">search</span>
         </button>
-        
-        <a href="https://www.munetios.com" style="color: inherit; text-decoration: none" class="hide-400"
+        <button id="languageDropdownButton" class="icon-btn liquid-glass language-button" type="button" aria-label="Language" title="Language">
+          <span class="material-symbols-rounded" aria-hidden="true">translate</span>
+        </button>
+        <a href="https://www.munetios.com" class="action-link hide-400"
           >Munetios.com</a>
         </div>
       </div>
@@ -275,8 +562,8 @@
         <div class="item" id="termsItem">Terms of Service</div>
         <div class="item" id="cookiesItem">Cookies Policy</div>
         <div class="item" id="aboutItem">About Us</div>
-        <div class="item" id="apps">Apps</div>
-        <div class="item" id="gdpr">GDPR</div>
+        <div class="item" id="appsItem">Apps</div>
+        <div class="item" id="gdprItem">GDPR</div>
         <div class="item" id="brandingItem">Branding</div>
         <div class="item" id="trust-safety">Trust & Safety</div>
         <div class="item" id="contactItem">Contact Us</div>
@@ -284,12 +571,41 @@
     </aside>
     <div class="content liquid-glass" id="home">
       <h1>Welcome to Munetios Policies</h1>
-      <p>This is the home section. Please navigate using the menu above.</p>
-      <p>Here you can find information about our policies and guidelines.</p>
+      <div class="section-toolbar">
+        <button class="btn inline-btn" type="button" data-download-current>
+          <span class="material-symbols-rounded" aria-hidden="true">picture_as_pdf</span>
+          <span>Download PDF</span>
+        </button>
+        <button class="btn inline-btn" type="button" data-open-search>
+          <span class="material-symbols-rounded" aria-hidden="true">search</span>
+          <span>Search Policies</span>
+        </button>
+      </div>
+      <p>Browse the latest Munetios policy documents, search specific clauses, switch language labels, and export the active page as a PDF.</p>
+      <div class="home-grid">
+        <section class="feature-card">
+          <h3>Quick Access</h3>
+          <p>Open the main policy sections directly from the sidebar or jump through search results from the top-right search action.</p>
+        </section>
+        <section class="feature-card">
+          <h3>Live Language Labels</h3>
+          <p>The interface now translates from the current page text, so changing policy labels later will not reset them back to old hardcoded wording.</p>
+        </section>
+        <section class="feature-card">
+          <h3>Archived Versions</h3>
+          <p>When policy content changes, the page keeps a local history of older versions for quick access and PDF export.</p>
+        </section>
+      </div>
+      <h2>Archived Versions</h2>
+      <p id="archiveSummary">Recent archived versions from this browser are listed below.</p>
+      <div class="archive-grid" id="archiveList"></div>
     </div>
    <div class="content liquid-glass" id="privacy">
   <h1>Privacy Policy</h1>
-  <p>Last updated: March 25, 2026</p>
+  <div class="policy-meta">
+    <div class="pill"><span class="material-symbols-rounded" aria-hidden="true">history</span><span>Last updated: March 25, 2026</span></div>
+    <button class="pill" type="button" data-download-section="privacy"><span class="material-symbols-rounded" aria-hidden="true">picture_as_pdf</span><span>Download PDF</span></button>
+  </div>
 
   <p>
     Munetios is built with privacy as a core principle. We do not collect,
@@ -530,7 +846,10 @@
 
     <div class="content liquid-glass" id="terms">
       <h1>Terms of Service</h1>
-      <p>Last updated: January 30, 2026</p>
+      <div class="policy-meta">
+        <div class="pill"><span class="material-symbols-rounded" aria-hidden="true">history</span><span>Last updated: January 30, 2026</span></div>
+        <button class="pill" type="button" data-download-section="terms"><span class="material-symbols-rounded" aria-hidden="true">picture_as_pdf</span><span>Download PDF</span></button>
+      </div>
 
      <h2>Acceptance of Terms</h2>
       <p>
@@ -568,8 +887,11 @@ Any modification of page content, JavaScript execution, cryptographic operations
         use of the services after any changes constitutes your acceptance of the
         new terms.
       </p>
+      <h2 class="section-archive-heading">Archived Versions</h2>
+      <p class="section-archive-summary" id="termsArchiveSummary">Recent archived versions for Terms of Service from this browser are listed below.</p>
+      <div class="archive-grid" id="termsArchiveList" data-archive-section="terms"></div>
     </div>
-    <div class="content liquid-glass" id="gpdr">
+    <div class="content liquid-glass" id="gdprPolicy">
       <h1>GDPR Compliance</h1>
       <p>
         If you are located in the European Economic Area (EEA), Munetios
@@ -608,79 +930,14 @@ Any modification of page content, JavaScript execution, cryptographic operations
     </div>
     <div class="content liquid-glass" id="apps">
       <h1>Our Apps</h1>
-      <p>Note: This is outdated list, see at <a href="https://www.munetios.com/apps1.html">the products page</a></p>
-      <ul>
-        <li>Munetios Search</li>
-        <li>Munetios Calculator</li>
-        <li>Munetios Docs</li>
-        <li>Munetios Calendar</li>
-        <li>Munetios Tasks</li>
-        <li>Munetios Notes</li>
-        <li>Munetios Photos</li>
-        <li>Munetios Weather</li>
-        <li>Munetios Notebook</li>
-        <li>97529 Office (Early)</li>
-        <li>Munetios WorkSheets</li>
-      </ul>
-      <h2>Coming soon:</h2>
-      <ul>
-        <li>Munetios Mail</li>
-        <li>Munetios Chat</li>
-        <li>Munetios Drive</li>
-        <li>Munetios Accounts</li>
-        <li>Munetios Protection</li>
-        <li>Munetios Present (Slides)</li>
-        <li>Munetios Forms</li>
-        <li>Munetios Pages (Sites)</li>
-        <li>Munetios Script</li>
-        <li>Munetios Paint</li>
-        <li>Munetios Whiteboard</li>
-        <li>Munetios MindMap</li>
-        <li>Munetios FontMaker</li>
-        <li>Munetios Video Editor</li>
-        <li>Munetios AppMaker</li>
-        <li>Munetios Clock</li>
-        <li>Munetios Vids</li>
-        <li>Munetios Books</li>
-        <li>Munetios News</li>
-        <li>Munetios Stocks</li>
-        <li>Munetios Games Hub</li>
-        <li>Munetios WorkFlow</li>
-
-        <li>Munetios Music (SuperVidPlayer Music)</li>
-        <li>Munetios Contacts</li>
-        <li>Munetios OS</li>
-        <li>Munetios Health</li>
-        <li>Munetios Home</li>
-        <li>Munetios Maps</li>
-        <li>Munetios Translator</li>
-        <li>Munetios WorkSpace</li>
-        <li>Munetios Kids</li>
-        <li>Munetios Admin (WorkSpace only)</li>
-        <li>Munetios Browser</li>
-        <li>Munetios Wallet</li>
-        <li>Munetios Media Tools</li>
-        <li>Munetios Terminal (OS only)</li>
-        <li>Munetios Media Player (OS only)</li>
-        <li>Munetios Passwords</li>
-        <li>Munetios Wiki</li>
-        <li>Munetios Help Center</li>
-        <li>Munetios Dev Studio</li>
-        <li>Munetios Earth</li>
-        <li>Munetios Travel</li>
-        <li>Munetios Apps Hub</li>
-        <li>Munetios GameMaker</li>
-        <li>SuperVidPlayer</li>
-        <li>YouDriveCar</li>
-        <li>Munetios AI</li>
-      </ul>
-      <p>
-        All our apps are designed with user privacy and security as top
-        priorities.
-      </p>
+      <p>For Apps and Products, Go to this page <a href="https://www.munetios.com/apps1.html">here</a>.</p>
     </div>
     <div class="content liquid-glass" id="cookiesPolicy">
       <h1>Cookies Policy</h1>
+      <div class="policy-meta">
+        <div class="pill"><span class="material-symbols-rounded" aria-hidden="true">history</span><span>Last updated: January 30, 2026</span></div>
+        <button class="pill" type="button" data-download-section="cookiesPolicy"><span class="material-symbols-rounded" aria-hidden="true">picture_as_pdf</span><span>Download PDF</span></button>
+      </div>
       <p>Munetios uses first party cookies only for essential functionality.</p>
       <h3>Which cookies are used?</h3>
       <ul>
@@ -697,6 +954,9 @@ Any modification of page content, JavaScript execution, cryptographic operations
         experience. They are not used for tracking, analytics, advertising, or
         profiling purposes.
       </p>
+      <h2 class="section-archive-heading">Archived Versions</h2>
+      <p class="section-archive-summary" id="cookiesArchiveSummary">Recent archived versions for Cookies Policy from this browser are listed below.</p>
+      <div class="archive-grid" id="cookiesArchiveList" data-archive-section="cookiesPolicy"></div>
 
     </div>
     <div class="content liquid-glass" id="branding">
@@ -744,9 +1004,9 @@ Any modification of page content, JavaScript execution, cryptographic operations
 
       <!-- Visual Comparison -->
       <div style="display: flex; gap: 40px; flex-wrap: wrap; margin-top: 20px">
-        <!-- ✅ DO Section -->
+        <!-- âœ… DO Section -->
         <div style="flex: 1; min-width: 260px">
-          <h3 style="margin-bottom: 6px">✅ Do</h3>
+          <h3 style="margin-bottom: 6px">âœ… Do</h3>
           <ul>
             <li>Use the logo in its original form and proportion.</li>
             <li>Maintain clear space around the logo.</li>
@@ -819,9 +1079,9 @@ Any modification of page content, JavaScript execution, cryptographic operations
           </div>
         </div>
 
-        <!-- ❌ DON'T Section -->
+        <!-- âŒ DON'T Section -->
         <div style="flex: 1; min-width: 260px">
-          <h3 style="margin-bottom: 6px">❌ Don't</h3>
+          <h3 style="margin-bottom: 6px">âŒ Don't</h3>
           <ul>
             <li>Do not stretch, distort, or rotate the logo.</li>
             <li>Do not recolor the logo with non-brand colors.</li>
@@ -1056,7 +1316,7 @@ Any modification of page content, JavaScript execution, cryptographic operations
                     right: 10px;
                     font-size: 20px;
                   "
-                  >🔥</span
+                  >ðŸ”¥</span
                 >
                 <p style="font-size: 12px; color: #f66">Emoji overlay</p>
               </div>
@@ -1112,10 +1372,44 @@ Any modification of page content, JavaScript execution, cryptographic operations
     </div>
     <footer class="liquid-glass">
       <p>
-        &copy; 2026 Munetios™️.
+        &copy; 2026 Munetios.
       </p>
       <a style="color: white;" href="https://www.munetios.com">Home</a>
     </footer>
+    <section class="search-panel liquid-glass" id="searchPanel" aria-label="Search policies">
+      <div class="search-panel-header">
+        <div class="search-input-wrap">
+          <span class="material-symbols-rounded" aria-hidden="true">search</span>
+          <label class="visually-hidden" for="policySearchInput">Search policies</label>
+          <input id="policySearchInput" class="search-input" type="search" placeholder="Search policies" autocomplete="off" />
+        </div>
+        <button class="btn inline-btn" id="closeSearchButton" type="button">
+          <span class="material-symbols-rounded" aria-hidden="true">close</span>
+          <span>Close</span>
+        </button>
+      </div>
+      <p id="searchStatus" class="empty-state">Search across policy titles, headings, and paragraph text.</p>
+      <div class="search-results" id="searchResults"></div>
+    </section>
+    <section class="archive-viewer liquid-glass" id="archiveViewer" aria-label="Archived policy version">
+      <div class="archive-viewer-header">
+        <div>
+          <h2 id="archiveViewerTitle">Archived Version</h2>
+          <p class="archive-viewer-meta" id="archiveViewerMeta">Preview archived policy content.</p>
+        </div>
+        <div class="archive-viewer-actions">
+          <button class="btn inline-btn" id="archiveViewerDownload" type="button">
+            <span class="material-symbols-rounded" aria-hidden="true">picture_as_pdf</span>
+            <span>Download PDF</span>
+          </button>
+          <button class="btn inline-btn" id="archiveViewerClose" type="button">
+            <span class="material-symbols-rounded" aria-hidden="true">close</span>
+            <span>Close</span>
+          </button>
+        </div>
+      </div>
+      <div class="archive-viewer-body" id="archiveViewerBody"></div>
+    </section>
     <div class="dropdown-menu liquid-glass" id="languageDropdownMenu">
       <div class="dropdown-item" id="englishItem">
         English
@@ -1151,634 +1445,1563 @@ Any modification of page content, JavaScript execution, cryptographic operations
         Arabic
       </div>
     </div>
-    <!-- Download Script -->
     <script>
-      // Language translations
-      const translations = {
-        en: {
-          home: "Home",
-          privacy: "Privacy Policy",
-          terms: "Terms of Service",
-          cookies: "Cookies Policy",
-          about: "About Us",
-          gdpr: "GDPR",
-          apps: "Apps",
-          branding: "Branding",
-          trust: "Trust & Safety",
-          contact: "Contact Us",
-          munetiosCom: "Munetios.com",
-          english: "English",
-          spanish: "Spanish",
-          french: "French",
-          german: "German",
-          italian: "Italian",
-          portuguese: "Portuguese",
-          japanese: "Japanese",
-          korean: "Korean",
-          chinese: "Chinese",
-          russian: "Russian",
-          arabic: "Arabic",
-          homeTitle: "Welcome to Munetios Policies",
-          privacyTitle: "Privacy Policy",
-          termsTitle: "Terms of Service",
-          cookiesTitle: "Cookies Policy",
-          aboutTitle: "About Us",
-          appsTitle: "Our Apps",
-          brandingTitle: "Branding",
-          trustTitle: "Trust & Safety",
-          contactTitle: "Contact Us",
-          gdprTitle: "GDPR Compliance",
-        },
-        es: {
-          home: "Inicio",
-          privacy: "Política de Privacidad",
-          terms: "Términos de Servicio",
-          cookies: "Política de Cookies",
-          about: "Acerca de Nosotros",
-          gdpr: "GDPR",
-          apps: "Aplicaciones",
-          branding: "Marca",
-          trust: "Confianza y Seguridad",
-          contact: "Contáctenos",
-          munetiosCom: "Munetios.com",
-          english: "English",
-          spanish: "Español",
-          french: "Français",
-          german: "Deutsch",
-          italian: "Italiano",
-          portuguese: "Português",
-          japanese: "日本語",
-          korean: "한국어",
-          chinese: "中文",
-          russian: "Русский",
-          arabic: "العربية",
-          homeTitle: "Bienvenido a Políticas de Munetios",
-          privacyTitle: "Política de Privacidad",
-          termsTitle: "Términos de Servicio",
-          cookiesTitle: "Política de Cookies",
-          aboutTitle: "Acerca de Nosotros",
-          appsTitle: "Nuestras Aplicaciones",
-          brandingTitle: "Marca",
-          trustTitle: "Confianza y Seguridad",
-          contactTitle: "Contáctenos",
-          gdprTitle: "Cumplimiento de GDPR",
-        },
-        fr: {
-          home: "Accueil",
-          privacy: "Politique de Confidentialité",
-          terms: "Conditions d'Utilisation",
-          cookies: "Politique sur les Cookies",
-          about: "À Propos",
-          gdpr: "RGPD",
-          apps: "Applications",
-          branding: "Marque",
-          trust: "Confiance et Sécurité",
-          contact: "Nous Contacter",
-          munetiosCom: "Munetios.com",
-          english: "English",
-          spanish: "Español",
-          french: "Français",
-          german: "Deutsch",
-          italian: "Italiano",
-          portuguese: "Português",
-          japanese: "日本語",
-          korean: "한국어",
-          chinese: "中文",
-          russian: "Русский",
-          arabic: "العربية",
-          homeTitle: "Bienvenue dans les Politiques de Munetios",
-          privacyTitle: "Politique de Confidentialité",
-          termsTitle: "Conditions d'Utilisation",
-          cookiesTitle: "Politique sur les Cookies",
-          aboutTitle: "À Propos",
-          appsTitle: "Nos Applications",
-          brandingTitle: "Marque",
-          trustTitle: "Confiance et Sécurité",
-          contactTitle: "Nous Contacter",
-          gdprTitle: "Conformité RGPD",
-        },
-        de: {
-          home: "Startseite",
-          privacy: "Datenschutzrichtlinie",
-          terms: "Nutzungsbedingungen",
-          cookies: "Cookie-Richtlinie",
-          about: "Über Uns",
-          gdpr: "DSGVO",
-          apps: "Anwendungen",
-          branding: "Marke",
-          trust: "Vertrauen und Sicherheit",
-          contact: "Kontaktieren Sie Uns",
-          munetiosCom: "Munetios.com",
-          english: "English",
-          spanish: "Español",
-          french: "Français",
-          german: "Deutsch",
-          italian: "Italiano",
-          portuguese: "Português",
-          japanese: "日本語",
-          korean: "한국어",
-          chinese: "中文",
-          russian: "Русский",
-          arabic: "العربية",
-          homeTitle: "Willkommen zu Munetios Richtlinien",
-          privacyTitle: "Datenschutzrichtlinie",
-          termsTitle: "Nutzungsbedingungen",
-          cookiesTitle: "Cookie-Richtlinie",
-          aboutTitle: "Über Uns",
-          appsTitle: "Unsere Anwendungen",
-          brandingTitle: "Marke",
-          trustTitle: "Vertrauen und Sicherheit",
-          contactTitle: "Kontaktieren Sie Uns",
-          gdprTitle: "DSGVO-Konformität",
-        },
-        it: {
-          home: "Home",
-          privacy: "Politica sulla Privacy",
-          terms: "Termini di Servizio",
-          cookies: "Politica sui Cookie",
-          about: "Chi Siamo",
-          gdpr: "GDPR",
-          apps: "Applicazioni",
-          branding: "Marchio",
-          trust: "Fiducia e Sicurezza",
-          contact: "Contattaci",
-          munetiosCom: "Munetios.com",
-          english: "English",
-          spanish: "Español",
-          french: "Français",
-          german: "Deutsch",
-          italian: "Italiano",
-          portuguese: "Português",
-          japanese: "日本語",
-          korean: "한국어",
-          chinese: "中文",
-          russian: "Русский",
-          arabic: "العربية",
-          homeTitle: "Benvenuto alle Politiche di Munetios",
-          privacyTitle: "Politica sulla Privacy",
-          termsTitle: "Termini di Servizio",
-          cookiesTitle: "Politica sui Cookie",
-          aboutTitle: "Chi Siamo",
-          appsTitle: "Le Nostre Applicazioni",
-          brandingTitle: "Marchio",
-          trustTitle: "Fiducia e Sicurezza",
-          contactTitle: "Contattaci",
-          gdprTitle: "Conformità GDPR",
-        },
-        pt: {
-          home: "Início",
-          privacy: "Política de Privacidade",
-          terms: "Termos de Serviço",
-          cookies: "Política de Cookies",
-          about: "Sobre Nós",
-          gdpr: "GDPR",
-          apps: "Aplicativos",
-          branding: "Marca",
-          trust: "Confiança e Segurança",
-          contact: "Entre em Contato",
-          munetiosCom: "Munetios.com",
-          english: "English",
-          spanish: "Español",
-          french: "Français",
-          german: "Deutsch",
-          italian: "Italiano",
-          portuguese: "Português",
-          japanese: "日本語",
-          korean: "한국어",
-          chinese: "中文",
-          russian: "Русский",
-          arabic: "العربية",
-          homeTitle: "Bem-vindo às Políticas de Munetios",
-          privacyTitle: "Política de Privacidade",
-          termsTitle: "Termos de Serviço",
-          cookiesTitle: "Política de Cookies",
-          aboutTitle: "Sobre Nós",
-          appsTitle: "Nossos Aplicativos",
-          brandingTitle: "Marca",
-          trustTitle: "Confiança e Segurança",
-          contactTitle: "Entre em Contato",
-          gdprTitle: "Conformidade com GDPR",
-        },
-        ja: {
-          home: "ホーム",
-          privacy: "プライバシーポリシー",
-          terms: "利用規約",
-          cookies: "クッキーポリシー",
-          about: "当社について",
-          gdpr: "GDPR",
-          apps: "アプリ",
-          branding: "ブランド",
-          trust: "信頼とセキュリティ",
-          contact: "お問い合わせ",
-          munetiosCom: "Munetios.com",
-          english: "English",
-          spanish: "Español",
-          french: "Français",
-          german: "Deutsch",
-          italian: "Italiano",
-          portuguese: "Português",
-          japanese: "日本語",
-          korean: "한국어",
-          chinese: "中文",
-          russian: "Русский",
-          arabic: "العربية",
-          homeTitle: "Munetios ポリシーへようこそ",
-          privacyTitle: "プライバシーポリシー",
-          termsTitle: "利用規約",
-          cookiesTitle: "クッキーポリシー",
-          aboutTitle: "当社について",
-          appsTitle: "アプリ一覧",
-          brandingTitle: "ブランド",
-          trustTitle: "信頼とセキュリティ",
-          contactTitle: "お問い合わせ",
-          gdprTitle: "GDPR準拠",
-        },
-        ko: {
-          home: "홈",
-          privacy: "개인정보 보호정책",
-          terms: "서비스 약관",
-          cookies: "쿠키 정책",
-          about: "저희 소개",
-          gdpr: "GDPR",
-          apps: "앱",
-          branding: "브랜드",
-          trust: "신뢰 및 안전",
-          contact: "문의하기",
-          munetiosCom: "Munetios.com",
-          english: "English",
-          spanish: "Español",
-          french: "Français",
-          german: "Deutsch",
-          italian: "Italiano",
-          portuguese: "Português",
-          japanese: "日本語",
-          korean: "한국어",
-          chinese: "中文",
-          russian: "Русский",
-          arabic: "العربية",
-          homeTitle: "Munetios 정책에 오신 것을 환영합니다",
-          privacyTitle: "개인정보 보호정책",
-          termsTitle: "서비스 약관",
-          cookiesTitle: "쿠키 정책",
-          aboutTitle: "저희 소개",
-          appsTitle: "앱",
-          brandingTitle: "브랜드",
-          trustTitle: "신뢰 및 안전",
-          contactTitle: "문의하기",
-          gdprTitle: "GDPR 준수",
-        },
-        zh: {
-          home: "首页",
-          privacy: "隐私政策",
-          terms: "服务条款",
-          cookies: "Cookie政策",
-          about: "关于我们",
-          gdpr: "GDPR",
-          apps: "应用",
-          branding: "品牌",
-          trust: "信任与安全",
-          contact: "联系我们",
-          munetiosCom: "Munetios.com",
-          english: "English",
-          spanish: "Español",
-          french: "Français",
-          german: "Deutsch",
-          italian: "Italiano",
-          portuguese: "Português",
-          japanese: "日本語",
-          korean: "한국어",
-          chinese: "中文",
-          russian: "Русский",
-          arabic: "العربية",
-          homeTitle: "欢迎来到Munetios政策",
-          privacyTitle: "隐私政策",
-          termsTitle: "服务条款",
-          cookiesTitle: "Cookie政策",
-          aboutTitle: "关于我们",
-          appsTitle: "我们的应用",
-          brandingTitle: "品牌",
-          trustTitle: "信任与安全",
-          contactTitle: "联系我们",
-          gdprTitle: "GDPR合规",
-        },
-        ru: {
-          home: "Главная",
-          privacy: "Политика Конфиденциальности",
-          terms: "Условия Использования",
-          cookies: "Политика Использования Cookies",
-          about: "О Нас",
-          gdpr: "GDPR",
-          apps: "Приложения",
-          branding: "Брендинг",
-          trust: "Доверие и Безопасность",
-          contact: "Свяжитесь с Нами",
-          munetiosCom: "Munetios.com",
-          english: "English",
-          spanish: "Español",
-          french: "Français",
-          german: "Deutsch",
-          italian: "Italiano",
-          portuguese: "Português",
-          japanese: "日本語",
-          korean: "한국어",
-          chinese: "中文",
-          russian: "Русский",
-          arabic: "العربية",
-          homeTitle: "Добро пожаловать в Политики Munetios",
-          privacyTitle: "Политика Конфиденциальности",
-          termsTitle: "Условия Использования",
-          cookiesTitle: "Политика Использования Cookies",
-          aboutTitle: "О Нас",
-          appsTitle: "Наши Приложения",
-          brandingTitle: "Брендинг",
-          trustTitle: "Доверие и Безопасность",
-          contactTitle: "Свяжитесь с Нами",
-          gdprTitle: "Соответствие GDPR",
-        },
-        ar: {
-          home: "الرئيسية",
-          privacy: "سياسة الخصوصية",
-          terms: "شروط الخدمة",
-          cookies: "سياسة ملفات تعريف الارتباط",
-          about: "من نحن",
-          gdpr: "GDPR",
-          apps: "التطبيقات",
-          branding: "العلامة التجارية",
-          trust: "الثقة والأمان",
-          contact: "تواصل معنا",
-          munetiosCom: "Munetios.com",
-          english: "English",
-          spanish: "Español",
-          french: "Français",
-          german: "Deutsch",
-          italian: "Italiano",
-          portuguese: "Português",
-          japanese: "日本語",
-          korean: "한국어",
-          chinese: "中文",
-          russian: "Русский",
-          arabic: "العربية",
-          homeTitle: "مرحبا بك في سياسات Munetios",
-          privacyTitle: "سياسة الخصوصية",
-          termsTitle: "شروط الخدمة",
-          cookiesTitle: "سياسة ملفات تعريف الارتباط",
-          aboutTitle: "من نحن",
-          appsTitle: "تطبيقاتنا",
-          brandingTitle: "العلامة التجارية",
-          trustTitle: "الثقة والأمان",
-          contactTitle: "تواصل معنا",
-          gdprTitle: "امتثال GDPR",
-        },
-      };
-
-      let currentLanguage = localStorage.getItem("munetiosLanguage") || "en";
-
-      function translateUI(lang) {
-        currentLanguage = lang;
-        localStorage.setItem("munetiosLanguage", lang);
-        const t = translations[lang] || translations.en;
-
-        // Translate sidebar items
-        const sidebarItems = [
-          "homeItem", "privacyItem", "termsItem", "cookiesItem", 
-          "aboutItem", "gdpr", "apps", "brandingItem", "trust-safety", "contactItem"
+      (() => {
+        const sectionConfig = [
+          { navId: "homeItem", sectionId: "home" },
+          { navId: "privacyItem", sectionId: "privacy" },
+          { navId: "termsItem", sectionId: "terms" },
+          { navId: "cookiesItem", sectionId: "cookiesPolicy" },
+          { navId: "aboutItem", sectionId: "about" },
+          { navId: "appsItem", sectionId: "apps" },
+          { navId: "gdprItem", sectionId: "gdprPolicy" },
+          { navId: "brandingItem", sectionId: "branding" },
+          { navId: "trust-safety", sectionId: "trust" },
+          { navId: "contactItem", sectionId: "contact" }
         ];
-        
-        sidebarItems.forEach(id => {
-          const el = document.getElementById(id);
-          if (el) {
-            const key = id.replace("Item", "").replace("-safety", "trust").toLowerCase();
-            if (translations[lang][key]) {
-              el.textContent = translations[lang][key];
-            }
-          }
-        });
 
-     
-        const munetiosLink = document.querySelector('.top-right a');
-        if (munetiosLink) munetiosLink.textContent = t.munetiosCom;
-
-        // Translate dropdown items
-        const dropdownItems = {
-          englishItem: "english",
-          spanishItem: "spanish",
-          frenchItem: "french",
-          germanItem: "german",
-          italianItem: "italian",
-          portugueseItem: "portuguese",
-          japaneseItem: "japanese",
-          koreanItem: "korean",
-          chineseItem: "chinese",
-          russianItem: "russian",
-          arabicItem: "arabic"
-        };
-        
-        Object.entries(dropdownItems).forEach(([id, key]) => {
-          const el = document.getElementById(id);
-          if (el && t[key]) {
-            el.textContent = t[key];
-          }
-        });
-
-        // Translate h1 titles in content sections
-        const contentTitles = {
-          home: "homeTitle",
-          privacy: "privacyTitle",
-          terms: "termsTitle",
-          cookiesPolicy: "cookiesTitle",
-          about: "aboutTitle",
-          apps: "appsTitle",
-          branding: "brandingTitle",
-          trust: "trustTitle",
-          contact: "contactTitle",
-          gpdr: "gdprTitle"
+        const archiveStorageKey = "munetios-policy-archive-v2";
+        const supportedLanguages = ["en", "es", "fr", "de", "it", "pt", "ja", "ko", "zh", "ru", "ar"];
+        const languageCodeByItemId = {
+          englishItem: "en",
+          spanishItem: "es",
+          frenchItem: "fr",
+          germanItem: "de",
+          italianItem: "it",
+          portugueseItem: "pt",
+          japaneseItem: "ja",
+          koreanItem: "ko",
+          chineseItem: "zh",
+          russianItem: "ru",
+          arabicItem: "ar"
         };
 
-        Object.entries(contentTitles).forEach(([contentId, titleKey]) => {
-          const section = document.getElementById(contentId);
-          if (section) {
-            const h1 = section.querySelector("h1");
-            if (h1 && t[titleKey]) {
-              h1.textContent = t[titleKey];
+        const uiDictionary = {
+          es: {
+            phrases: {
+              "Privacy Policy": "Politica de privacidad",
+              "Terms of Service": "Terminos del servicio",
+              "Cookies Policy": "Politica de cookies",
+              "About Us": "Sobre nosotros",
+              "Trust & Safety": "Confianza y seguridad",
+              "Contact Us": "Contactanos",
+              "Munetios Policies": "Politicas de Munetios",
+              "Download PDF": "Descargar PDF",
+              "Search Policies": "Buscar politicas",
+              "Quick Access": "Acceso rapido",
+              "Live Language Labels": "Etiquetas de idioma en vivo",
+              "Archived Versions": "Versiones archivadas",
+              "Search policies": "Buscar politicas",
+              "Close": "Cerrar",
+              "Language": "Idioma",
+              "Home": "Inicio",
+              "Apps": "Aplicaciones",
+              "Branding": "Marca",
+              "GDPR": "RGPD",
+              "Archived Version": "Version archivada",
+              "Preview archived policy content.": "Vista previa del contenido archivado de la politica.",
+              "Search across policy titles, headings, and paragraph text.": "Busca en titulos de politicas, encabezados y texto de parrafos.",
+              "Recent archived versions from this browser are listed below.": "Las versiones archivadas recientes de este navegador se muestran abajo.",
+              "No archived versions have been stored on this browser yet.": "Todavia no hay versiones archivadas guardadas en este navegador.",
+              "Open Section": "Abrir seccion",
+              "Preview": "Vista previa",
+              "Version from": "Version de",
+              "Current language": "Idioma actual",
+              "Last updated": "Ultima actualizacion",
+              "Search results": "Resultados de busqueda",
+              "No results found.": "No se encontraron resultados.",
+              "Type to search policy content.": "Escribe para buscar contenido de politicas.",
+              "Policy archive": "Archivo de politicas",
+              "Logo download started.": "La descarga del logo ha comenzado."
+            },
+            words: {
+              welcome: "bienvenido",
+              to: "a",
+              latest: "mas recientes",
+              policy: "politica",
+              policies: "politicas",
+              browse: "explora",
+              search: "buscar",
+              switch: "cambiar",
+              labels: "etiquetas",
+              and: "y",
+              export: "exportar",
+              active: "activa",
+              page: "pagina",
+              recent: "recientes",
+              archived: "archivadas",
+              versions: "versiones",
+              browser: "navegador",
+              privacy: "privacidad",
+              terms: "terminos",
+              service: "servicio",
+              cookies: "cookies",
+              about: "sobre",
+              us: "nosotros",
+              trust: "confianza",
+              safety: "seguridad",
+              contact: "contacto",
+              language: "idioma",
+              download: "descargar",
+              close: "cerrar",
+              version: "version"
             }
+          },
+          fr: {
+            phrases: {
+              "Privacy Policy": "Politique de confidentialite",
+              "Terms of Service": "Conditions d'utilisation",
+              "Cookies Policy": "Politique relative aux cookies",
+              "About Us": "A propos de nous",
+              "Trust & Safety": "Confiance et securite",
+              "Contact Us": "Contactez-nous",
+              "Munetios Policies": "Politiques Munetios",
+              "Download PDF": "Telecharger le PDF",
+              "Search Policies": "Rechercher des politiques",
+              "Quick Access": "Acces rapide",
+              "Live Language Labels": "Libelles linguistiques dynamiques",
+              "Archived Versions": "Versions archivees",
+              "Search policies": "Rechercher des politiques",
+              "Close": "Fermer",
+              "Language": "Langue",
+              "Home": "Accueil",
+              "Apps": "Applications",
+              "Branding": "Marque",
+              "GDPR": "RGPD",
+              "Archived Version": "Version archivee",
+              "Preview archived policy content.": "Apercu du contenu archive de la politique.",
+              "Search across policy titles, headings, and paragraph text.": "Recherchez dans les titres, intertitres et paragraphes des politiques.",
+              "Recent archived versions from this browser are listed below.": "Les versions archivees recentes de ce navigateur sont listees ci-dessous.",
+              "No archived versions have been stored on this browser yet.": "Aucune version archivee n'a encore ete stockee sur ce navigateur.",
+              "Open Section": "Ouvrir la section",
+              "Preview": "Apercu",
+              "Version from": "Version du",
+              "Current language": "Langue actuelle",
+              "Last updated": "Derniere mise a jour",
+              "Search results": "Resultats de recherche",
+              "No results found.": "Aucun resultat trouve.",
+              "Type to search policy content.": "Saisissez pour rechercher dans le contenu des politiques.",
+              "Policy archive": "Archive des politiques",
+              "Logo download started.": "Le telechargement du logo a commence."
+            },
+            words: {
+              welcome: "bienvenue",
+              to: "a",
+              latest: "dernieres",
+              policy: "politique",
+              policies: "politiques",
+              browse: "parcourez",
+              search: "rechercher",
+              switch: "changer",
+              labels: "libelles",
+              and: "et",
+              export: "exporter",
+              active: "active",
+              page: "page",
+              recent: "recentes",
+              archived: "archivees",
+              versions: "versions",
+              browser: "navigateur",
+              privacy: "confidentialite",
+              terms: "conditions",
+              service: "service",
+              cookies: "cookies",
+              about: "a propos",
+              trust: "confiance",
+              safety: "securite",
+              contact: "contact",
+              language: "langue",
+              download: "telecharger",
+              close: "fermer",
+              version: "version"
+            }
+          },
+          de: {
+            phrases: {
+              "Privacy Policy": "Datenschutzrichtlinie",
+              "Terms of Service": "Nutzungsbedingungen",
+              "Cookies Policy": "Cookie-Richtlinie",
+              "About Us": "Uber uns",
+              "Trust & Safety": "Vertrauen und Sicherheit",
+              "Contact Us": "Kontakt",
+              "Munetios Policies": "Munetios-Richtlinien",
+              "Download PDF": "PDF herunterladen",
+              "Search Policies": "Richtlinien suchen",
+              "Quick Access": "Schnellzugriff",
+              "Live Language Labels": "Dynamische Sprachbezeichnungen",
+              "Archived Versions": "Archivierte Versionen",
+              "Search policies": "Richtlinien suchen",
+              "Close": "Schliessen",
+              "Language": "Sprache",
+              "Home": "Start",
+              "Apps": "Apps",
+              "Branding": "Marke",
+              "GDPR": "DSGVO",
+              "Archived Version": "Archivierte Version",
+              "Preview archived policy content.": "Archivierten Richtlinieninhalt anzeigen.",
+              "Search across policy titles, headings, and paragraph text.": "Durchsuche Richtlinientitel, Uberschriften und Absatztext.",
+              "Recent archived versions from this browser are listed below.": "Unten sind aktuelle archivierte Versionen aus diesem Browser aufgefuhrt.",
+              "No archived versions have been stored on this browser yet.": "In diesem Browser wurden noch keine archivierten Versionen gespeichert.",
+              "Open Section": "Abschnitt offnen",
+              "Preview": "Vorschau",
+              "Version from": "Version vom",
+              "Current language": "Aktuelle Sprache",
+              "Last updated": "Zuletzt aktualisiert",
+              "Search results": "Suchergebnisse",
+              "No results found.": "Keine Ergebnisse gefunden.",
+              "Type to search policy content.": "Tippe, um Richtlinieninhalte zu durchsuchen.",
+              "Policy archive": "Richtlinienarchiv",
+              "Logo download started.": "Logo-Download gestartet."
+            },
+            words: {
+              welcome: "willkommen",
+              to: "bei",
+              latest: "aktuelle",
+              policy: "richtlinie",
+              policies: "richtlinien",
+              browse: "durchsuche",
+              search: "suchen",
+              switch: "wechseln",
+              labels: "bezeichnungen",
+              and: "und",
+              export: "exportieren",
+              active: "aktive",
+              page: "seite",
+              recent: "aktuelle",
+              archived: "archivierte",
+              versions: "versionen",
+              browser: "browser",
+              privacy: "datenschutz",
+              terms: "bedingungen",
+              service: "dienst",
+              cookies: "cookies",
+              about: "uber",
+              trust: "vertrauen",
+              safety: "sicherheit",
+              contact: "kontakt",
+              language: "sprache",
+              download: "herunterladen",
+              close: "schliessen",
+              version: "version"
+            }
+          },
+          it: {
+            phrases: {
+              "Privacy Policy": "Informativa sulla privacy",
+              "Terms of Service": "Termini di servizio",
+              "Cookies Policy": "Informativa sui cookie",
+              "About Us": "Chi siamo",
+              "Trust & Safety": "Affidabilita e sicurezza",
+              "Contact Us": "Contattaci",
+              "Munetios Policies": "Politiche Munetios",
+              "Download PDF": "Scarica PDF",
+              "Search Policies": "Cerca politiche",
+              "Quick Access": "Accesso rapido",
+              "Live Language Labels": "Etichette lingua dinamiche",
+              "Archived Versions": "Versioni archiviate",
+              "Search policies": "Cerca politiche",
+              "Close": "Chiudi",
+              "Language": "Lingua",
+              "Home": "Home",
+              "Apps": "App",
+              "Branding": "Branding",
+              "GDPR": "GDPR",
+              "Archived Version": "Versione archiviata",
+              "Preview archived policy content.": "Anteprima del contenuto archiviato della politica.",
+              "Search across policy titles, headings, and paragraph text.": "Cerca tra titoli delle politiche, intestazioni e testo dei paragrafi.",
+              "Recent archived versions from this browser are listed below.": "Le versioni archiviate recenti di questo browser sono elencate sotto.",
+              "No archived versions have been stored on this browser yet.": "Nessuna versione archiviata e ancora stata salvata in questo browser.",
+              "Open Section": "Apri sezione",
+              "Preview": "Anteprima",
+              "Version from": "Versione del",
+              "Current language": "Lingua corrente",
+              "Last updated": "Ultimo aggiornamento",
+              "Search results": "Risultati di ricerca",
+              "No results found.": "Nessun risultato trovato.",
+              "Type to search policy content.": "Digita per cercare il contenuto delle politiche.",
+              "Policy archive": "Archivio politiche",
+              "Logo download started.": "Download del logo avviato."
+            },
+            words: {
+              welcome: "benvenuto",
+              to: "in",
+              latest: "ultime",
+              policy: "politica",
+              policies: "politiche",
+              browse: "sfoglia",
+              search: "cerca",
+              switch: "cambia",
+              labels: "etichette",
+              and: "e",
+              export: "esporta",
+              active: "attiva",
+              page: "pagina",
+              recent: "recenti",
+              archived: "archiviate",
+              versions: "versioni",
+              browser: "browser",
+              privacy: "privacy",
+              terms: "termini",
+              service: "servizio",
+              cookies: "cookie",
+              about: "chi",
+              trust: "fiducia",
+              safety: "sicurezza",
+              contact: "contatto",
+              language: "lingua",
+              download: "scarica",
+              close: "chiudi",
+              version: "versione"
+            }
+          },
+          pt: {
+            phrases: {
+              "Privacy Policy": "Politica de privacidade",
+              "Terms of Service": "Termos de servico",
+              "Cookies Policy": "Politica de cookies",
+              "About Us": "Sobre nos",
+              "Trust & Safety": "Confianca e seguranca",
+              "Contact Us": "Fale conosco",
+              "Munetios Policies": "Politicas Munetios",
+              "Download PDF": "Baixar PDF",
+              "Search Policies": "Pesquisar politicas",
+              "Quick Access": "Acesso rapido",
+              "Live Language Labels": "Rotulos de idioma ao vivo",
+              "Archived Versions": "Versoes arquivadas",
+              "Search policies": "Pesquisar politicas",
+              "Close": "Fechar",
+              "Language": "Idioma",
+              "Home": "Inicio",
+              "Apps": "Apps",
+              "Branding": "Marca",
+              "GDPR": "RGPD",
+              "Archived Version": "Versao arquivada",
+              "Preview archived policy content.": "Visualize o conteudo arquivado da politica.",
+              "Search across policy titles, headings, and paragraph text.": "Pesquise em titulos de politicas, cabecalhos e texto de paragrafos.",
+              "Recent archived versions from this browser are listed below.": "Versoes arquivadas recentes deste navegador aparecem abaixo.",
+              "No archived versions have been stored on this browser yet.": "Nenhuma versao arquivada foi salva neste navegador ainda.",
+              "Open Section": "Abrir secao",
+              "Preview": "Visualizar",
+              "Version from": "Versao de",
+              "Current language": "Idioma atual",
+              "Last updated": "Ultima atualizacao",
+              "Search results": "Resultados da pesquisa",
+              "No results found.": "Nenhum resultado encontrado.",
+              "Type to search policy content.": "Digite para pesquisar o conteudo das politicas.",
+              "Policy archive": "Arquivo de politicas",
+              "Logo download started.": "Download do logo iniciado."
+            },
+            words: {
+              welcome: "bem-vindo",
+              to: "a",
+              latest: "mais recentes",
+              policy: "politica",
+              policies: "politicas",
+              browse: "navegue",
+              search: "pesquisar",
+              switch: "trocar",
+              labels: "rotulos",
+              and: "e",
+              export: "exportar",
+              active: "ativa",
+              page: "pagina",
+              recent: "recentes",
+              archived: "arquivadas",
+              versions: "versoes",
+              browser: "navegador",
+              privacy: "privacidade",
+              terms: "termos",
+              service: "servico",
+              cookies: "cookies",
+              about: "sobre",
+              trust: "confianca",
+              safety: "seguranca",
+              contact: "contato",
+              language: "idioma",
+              download: "baixar",
+              close: "fechar",
+              version: "versao"
+            }
+          },
+          ja: {
+            phrases: {
+              "Privacy Policy": "プライバシーポリシー",
+              "Terms of Service": "利用規約",
+              "Cookies Policy": "クッキーポリシー",
+              "About Us": "私たちについて",
+              "Trust & Safety": "信頼と安全",
+              "Contact Us": "お問い合わせ",
+              "Munetios Policies": "Munetiosポリシー",
+              "Download PDF": "PDFをダウンロード",
+              "Search Policies": "ポリシーを検索",
+              "Quick Access": "クイックアクセス",
+              "Live Language Labels": "ライブ言語ラベル",
+              "Archived Versions": "アーカイブ版",
+              "Search policies": "ポリシーを検索",
+              "Close": "閉じる",
+              "Language": "言語",
+              "Home": "ホーム",
+              "Apps": "アプリ",
+              "Branding": "ブランド",
+              "GDPR": "GDPR",
+              "Archived Version": "アーカイブ版",
+              "Preview archived policy content.": "アーカイブされたポリシー内容を表示します。",
+              "Search across policy titles, headings, and paragraph text.": "ポリシーのタイトル、見出し、本文を検索します。",
+              "Recent archived versions from this browser are listed below.": "このブラウザーの最近のアーカイブ版を以下に表示します。",
+              "No archived versions have been stored on this browser yet.": "このブラウザーにはまだアーカイブ版が保存されていません。",
+              "Open Section": "セクションを開く",
+              "Preview": "プレビュー",
+              "Version from": "版",
+              "Current language": "現在の言語",
+              "Last updated": "最終更新",
+              "Search results": "検索結果",
+              "No results found.": "結果が見つかりません。",
+              "Type to search policy content.": "入力してポリシー内容を検索します。",
+              "Policy archive": "ポリシーアーカイブ",
+              "Logo download started.": "ロゴのダウンロードを開始しました。"
+            },
+            words: {}
+          },
+          ko: {
+            phrases: {
+              "Privacy Policy": "개인정보 처리방침",
+              "Terms of Service": "서비스 약관",
+              "Cookies Policy": "쿠키 정책",
+              "About Us": "회사 소개",
+              "Trust & Safety": "신뢰와 안전",
+              "Contact Us": "문의하기",
+              "Munetios Policies": "Munetios 정책",
+              "Download PDF": "PDF 다운로드",
+              "Search Policies": "정책 검색",
+              "Quick Access": "빠른 접근",
+              "Live Language Labels": "실시간 언어 라벨",
+              "Archived Versions": "보관된 버전",
+              "Search policies": "정책 검색",
+              "Close": "닫기",
+              "Language": "언어",
+              "Home": "홈",
+              "Apps": "앱",
+              "Branding": "브랜딩",
+              "GDPR": "GDPR",
+              "Archived Version": "보관된 버전",
+              "Preview archived policy content.": "보관된 정책 내용을 미리 봅니다.",
+              "Search across policy titles, headings, and paragraph text.": "정책 제목, 헤딩, 문단 텍스트를 검색합니다.",
+              "Recent archived versions from this browser are listed below.": "이 브라우저의 최근 보관 버전이 아래에 표시됩니다.",
+              "No archived versions have been stored on this browser yet.": "이 브라우저에는 아직 보관된 버전이 저장되지 않았습니다.",
+              "Open Section": "섹션 열기",
+              "Preview": "미리보기",
+              "Version from": "버전",
+              "Current language": "현재 언어",
+              "Last updated": "마지막 업데이트",
+              "Search results": "검색 결과",
+              "No results found.": "결과를 찾을 수 없습니다.",
+              "Type to search policy content.": "입력하여 정책 내용을 검색합니다.",
+              "Policy archive": "정책 보관함",
+              "Logo download started.": "로고 다운로드를 시작했습니다."
+            },
+            words: {}
+          },
+          zh: {
+            phrases: {
+              "Privacy Policy": "隐私政策",
+              "Terms of Service": "服务条款",
+              "Cookies Policy": "Cookie政策",
+              "About Us": "关于我们",
+              "Trust & Safety": "信任与安全",
+              "Contact Us": "联系我们",
+              "Munetios Policies": "Munetios政策",
+              "Download PDF": "下载PDF",
+              "Search Policies": "搜索政策",
+              "Quick Access": "快速访问",
+              "Live Language Labels": "实时语言标签",
+              "Archived Versions": "存档版本",
+              "Search policies": "搜索政策",
+              "Close": "关闭",
+              "Language": "语言",
+              "Home": "首页",
+              "Apps": "应用",
+              "Branding": "品牌",
+              "GDPR": "GDPR",
+              "Archived Version": "存档版本",
+              "Preview archived policy content.": "预览已存档的政策内容。",
+              "Search across policy titles, headings, and paragraph text.": "在政策标题、标题和段落文本中搜索。",
+              "Recent archived versions from this browser are listed below.": "此浏览器中的最近存档版本显示如下。",
+              "No archived versions have been stored on this browser yet.": "此浏览器中尚未存储任何存档版本。",
+              "Open Section": "打开部分",
+              "Preview": "预览",
+              "Version from": "版本来自",
+              "Current language": "当前语言",
+              "Last updated": "最后更新",
+              "Search results": "搜索结果",
+              "No results found.": "未找到结果。",
+              "Type to search policy content.": "输入以搜索政策内容。",
+              "Policy archive": "政策存档",
+              "Logo download started.": "已开始下载徽标。"
+            },
+            words: {}
+          },
+          ru: {
+            phrases: {
+              "Privacy Policy": "Политика конфиденциальности",
+              "Terms of Service": "Условия обслуживания",
+              "Cookies Policy": "Политика использования cookie",
+              "About Us": "О нас",
+              "Trust & Safety": "Доверие и безопасность",
+              "Contact Us": "Связаться с нами",
+              "Munetios Policies": "Политики Munetios",
+              "Download PDF": "Скачать PDF",
+              "Search Policies": "Поиск по политикам",
+              "Quick Access": "Быстрый доступ",
+              "Live Language Labels": "Динамические языковые метки",
+              "Archived Versions": "Архивные версии",
+              "Search policies": "Поиск по политикам",
+              "Close": "Закрыть",
+              "Language": "Язык",
+              "Home": "Главная",
+              "Apps": "Приложения",
+              "Branding": "Брендинг",
+              "GDPR": "GDPR",
+              "Archived Version": "Архивная версия",
+              "Preview archived policy content.": "Предпросмотр архивного содержимого политики.",
+              "Search across policy titles, headings, and paragraph text.": "Поиск по названиям политик, заголовкам и тексту абзацев.",
+              "Recent archived versions from this browser are listed below.": "Ниже перечислены недавние архивные версии из этого браузера.",
+              "No archived versions have been stored on this browser yet.": "В этом браузере еще не сохранены архивные версии.",
+              "Open Section": "Открыть раздел",
+              "Preview": "Предпросмотр",
+              "Version from": "Версия от",
+              "Current language": "Текущий язык",
+              "Last updated": "Последнее обновление",
+              "Search results": "Результаты поиска",
+              "No results found.": "Ничего не найдено.",
+              "Type to search policy content.": "Введите запрос для поиска по содержимому политик.",
+              "Policy archive": "Архив политик",
+              "Logo download started.": "Загрузка логотипа началась."
+            },
+            words: {}
+          },
+          ar: {
+            phrases: {
+              "Privacy Policy": "سياسة الخصوصية",
+              "Terms of Service": "شروط الخدمة",
+              "Cookies Policy": "سياسة ملفات تعريف الارتباط",
+              "About Us": "معلومات عنا",
+              "Trust & Safety": "الثقة والسلامة",
+              "Contact Us": "اتصل بنا",
+              "Munetios Policies": "سياسات Munetios",
+              "Download PDF": "تنزيل PDF",
+              "Search Policies": "البحث في السياسات",
+              "Quick Access": "وصول سريع",
+              "Live Language Labels": "تسميات اللغة المباشرة",
+              "Archived Versions": "النسخ المؤرشفة",
+              "Search policies": "البحث في السياسات",
+              "Close": "اغلاق",
+              "Language": "اللغة",
+              "Home": "الرئيسية",
+              "Apps": "التطبيقات",
+              "Branding": "العلامة التجارية",
+              "GDPR": "اللائحة العامة لحماية البيانات",
+              "Archived Version": "نسخة مؤرشفة",
+              "Preview archived policy content.": "معاينة محتوى السياسة المؤرشف.",
+              "Search across policy titles, headings, and paragraph text.": "ابحث في عناوين السياسات والعناوين الفرعية ونص الفقرات.",
+              "Recent archived versions from this browser are listed below.": "تظهر ادناه النسخ المؤرشفة الحديثة من هذا المتصفح.",
+              "No archived versions have been stored on this browser yet.": "لم يتم حفظ اي نسخ مؤرشفة في هذا المتصفح بعد.",
+              "Open Section": "افتح القسم",
+              "Preview": "معاينة",
+              "Version from": "نسخة من",
+              "Current language": "اللغة الحالية",
+              "Last updated": "اخر تحديث",
+              "Search results": "نتائج البحث",
+              "No results found.": "لم يتم العثور على نتائج.",
+              "Type to search policy content.": "اكتب للبحث في محتوى السياسات.",
+              "Policy archive": "ارشيف السياسات",
+              "Logo download started.": "بدا تنزيل الشعار."
+            },
+            words: {}
           }
-        });
-      }
+        };
 
-      // Sidebar toggle logic
-      const sidebar = document.querySelector(".sidebar");
-      const menuBtn = document.querySelector(".menu-btn");
-      const contentEls = document.querySelectorAll(".content");
-      const footer = document.querySelector("footer");
-      let sidebarOpen = true;
+        const directionByLanguage = { ar: "rtl" };
+        const dom = {
+          html: document.documentElement,
+          body: document.body,
+          sidebar: document.querySelector(".sidebar"),
+          menuButton: document.querySelector(".menu-btn"),
+          topbarTitle: document.querySelector(".logo-text div"),
+          topLink: document.querySelector(".top-right .action-link"),
+          footerLink: document.querySelector("footer a"),
+          searchButton: document.getElementById("searchButton"),
+          searchPanel: document.getElementById("searchPanel"),
+          searchInput: document.getElementById("policySearchInput"),
+          searchResults: document.getElementById("searchResults"),
+          searchStatus: document.getElementById("searchStatus"),
+          closeSearchButton: document.getElementById("closeSearchButton"),
+          languageButton: document.getElementById("languageDropdownButton"),
+          languageMenu: document.getElementById("languageDropdownMenu"),
+          archiveList: document.getElementById("archiveList"),
+          archiveSummary: document.getElementById("archiveSummary"),
+          archiveViewer: document.getElementById("archiveViewer"),
+          archiveViewerTitle: document.getElementById("archiveViewerTitle"),
+          archiveViewerMeta: document.getElementById("archiveViewerMeta"),
+          archiveViewerBody: document.getElementById("archiveViewerBody"),
+          archiveViewerDownload: document.getElementById("archiveViewerDownload"),
+          archiveViewerClose: document.getElementById("archiveViewerClose"),
+          downloadLogoButton: document.getElementById("downloadLogoBtn"),
+          downloadStatus: document.getElementById("downloadStatus")
+        };
 
-      function setSidebarState(open) {
-        sidebarOpen = open;
-        if (window.innerWidth < 1190) {
-          sidebar.style.display = open ? "block" : "none";
-          sidebar.style.position = "fixed";
-          sidebar.style.left = open ? "0" : "-220px";
-          sidebar.style.top = "0";
-          sidebar.style.zIndex = "2000";
-          sidebar.style.background = "#270e33ff";
-          sidebar.style.boxShadow = open ? "0 0 0 9999px #0008" : "none";
-          document.body.style.overflow = open ? "hidden" : "";
-          contentEls.forEach(el => {
-        el.style.marginLeft = open ? "220px" : "0";
-        el.style.filter = open ? "blur(2px)" : "";
-          });
-          if (footer) {
-        footer.style.marginLeft = open ? "220px" : "0";
-        footer.style.filter = open ? "blur(2px)" : "";
+        const state = {
+          currentSection: "home",
+          currentLanguage: "en",
+          archivePreview: null,
+          archiveStore: loadArchiveStore()
+        };
+
+        function normalizeWhitespace(value) {
+          return (value || "").replace(/\s+/g, " ").trim();
+        }
+
+        function normalizeLookup(value) {
+          return normalizeWhitespace(value).toLowerCase();
+        }
+
+        function getDictionary(language) {
+          return uiDictionary[language] || { phrases: {}, words: {} };
+        }
+
+        function captureOriginalText(element) {
+          if (!element) {
+            return "";
           }
-        } else {
-          sidebar.style.display = open ? "block" : "none";
-          sidebar.style.position = "fixed";
-          sidebar.style.left = open ? "10px" : "-220px";
-          sidebar.style.top = "70px";
-          sidebar.style.zIndex = "1000";
-          sidebar.style.background = "";
-          sidebar.style.boxShadow = "";
-          document.body.style.overflow = "";
-          contentEls.forEach(el => {
-        el.style.marginLeft = open ? "280px" : "0";
-        el.style.filter = "";
+          if (!Object.prototype.hasOwnProperty.call(element.dataset, "sourceText")) {
+            element.dataset.sourceText = element.textContent;
+          }
+          return element.dataset.sourceText;
+        }
+
+        function captureOriginalAttribute(element, attributeName) {
+          if (!element) {
+            return "";
+          }
+          const safeAttributeKey = attributeName
+            .split(/[^a-zA-Z0-9]+/)
+            .filter(Boolean)
+            .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+            .join("");
+          const key = "sourceAttr" + safeAttributeKey;
+          if (!Object.prototype.hasOwnProperty.call(element.dataset, key)) {
+            element.dataset[key] = element.getAttribute(attributeName) || "";
+          }
+          return element.dataset[key];
+        }
+
+        function matchCase(source, target) {
+          if (!source || !target) {
+            return target;
+          }
+          if (source === source.toUpperCase()) {
+            return target.toUpperCase();
+          }
+          if (source[0] === source[0].toUpperCase()) {
+            return target.charAt(0).toUpperCase() + target.slice(1);
+          }
+          return target;
+        }
+
+        function translateWord(token, language) {
+          const translated = getDictionary(language).words[token.toLowerCase()];
+          return translated ? matchCase(token, translated) : token;
+        }
+
+        function translateText(sourceText, language) {
+          const original = normalizeWhitespace(sourceText);
+          if (!original || language === "en") {
+            return original;
+          }
+          const dictionary = getDictionary(language);
+          if (dictionary.phrases[original]) {
+            return dictionary.phrases[original];
+          }
+          const normalizedPhrase = Object.entries(dictionary.phrases).find(([key]) => normalizeLookup(key) === normalizeLookup(original));
+          if (normalizedPhrase) {
+            return normalizedPhrase[1];
+          }
+          return original.replace(/[A-Za-z]+(?:['-][A-Za-z]+)*/g, (token) => translateWord(token, language));
+        }
+
+        function setTranslatedText(element, language) {
+          if (!element) {
+            return;
+          }
+          element.textContent = translateText(captureOriginalText(element), language);
+        }
+
+        function setTranslatedAttribute(element, attributeName, language) {
+          if (!element) {
+            return;
+          }
+          element.setAttribute(attributeName, translateText(captureOriginalAttribute(element, attributeName), language));
+        }
+
+        function getSection(sectionId) {
+          return document.getElementById(sectionId);
+        }
+
+        function getSectionTitle(sectionId) {
+          const section = getSection(sectionId);
+          return normalizeWhitespace(section?.querySelector("h1")?.textContent || sectionId);
+        }
+
+        function showSection(sectionId, options = {}) {
+          const nextSectionId = getSection(sectionId) ? sectionId : "home";
+          sectionConfig.forEach((entry) => {
+            const section = getSection(entry.sectionId);
+            const nav = document.getElementById(entry.navId);
+            const active = entry.sectionId === nextSectionId;
+            if (section) {
+              section.classList.toggle("active-section", active);
+            }
+            if (nav) {
+              nav.classList.toggle("active", active);
+            }
           });
-          if (footer) {
-        footer.style.marginLeft = open ? "280px" : "0";
-        footer.style.filter = "";
+          state.currentSection = nextSectionId;
+          if (!options.skipHistory) {
+            const nextHash = nextSectionId === "home" ? "" : "#" + nextSectionId;
+            history.replaceState(null, "", nextHash || window.location.pathname);
+          }
+          closeSearchPanel();
+          closeLanguageMenu();
+          closeArchivePreview();
+          if (window.innerWidth <= 840) {
+            closeSidebar();
+          }
+          window.scrollTo({ top: 0, behavior: options.instant ? "auto" : "smooth" });
+        }
+
+        function openSidebar() {
+          if (window.innerWidth <= 840) {
+            dom.sidebar.classList.add("open");
+            dom.body.classList.add("sidebar-open");
+            return;
+          }
+          dom.body.classList.remove("sidebar-collapsed");
+        }
+
+        function closeSidebar() {
+          if (window.innerWidth <= 840) {
+            dom.sidebar.classList.remove("open");
+            dom.body.classList.remove("sidebar-open");
+            return;
+          }
+          dom.body.classList.add("sidebar-collapsed");
+        }
+
+        function toggleSidebar() {
+          if (window.innerWidth <= 840) {
+            if (dom.sidebar.classList.contains("open")) {
+              closeSidebar();
+            } else {
+              openSidebar();
+            }
+            return;
+          }
+
+          dom.body.classList.toggle("sidebar-collapsed");
+          dom.sidebar.classList.remove("open");
+          dom.body.classList.remove("sidebar-open");
+        }
+
+        function syncSidebarForViewport() {
+          if (window.innerWidth <= 840) {
+            dom.body.classList.remove("sidebar-collapsed");
+            dom.sidebar.classList.remove("open");
+            dom.body.classList.remove("sidebar-open");
+            return;
+          }
+          dom.sidebar.classList.remove("open");
+          dom.body.classList.remove("sidebar-open");
+        }
+
+        function openSearchPanel() {
+          dom.searchPanel.classList.add("visible");
+          dom.body.classList.add("search-open");
+          renderSearchResults(dom.searchInput.value);
+          dom.searchInput.focus();
+        }
+
+        function closeSearchPanel() {
+          dom.searchPanel.classList.remove("visible");
+          if (!dom.archiveViewer.classList.contains("visible")) {
+            dom.body.classList.remove("search-open");
           }
         }
-      }
 
-      menuBtn.addEventListener("click", () => {
-        setSidebarState(!sidebarOpen);
-      });
-
-      // Hide sidebar overlay when clicking outside
-      document.addEventListener("click", (e) => {
-        if (
-          window.innerWidth < 1190 &&
-          sidebarOpen &&
-          !sidebar.contains(e.target) &&
-          !menuBtn.contains(e.target)
-        ) {
-          setSidebarState(false);
+        function closeLanguageMenu() {
+          dom.languageMenu.classList.remove("visible");
         }
-      });
 
-      // Responsive sidebar on resize
-      window.addEventListener("resize", () => {
-        if (window.innerWidth < 1190) {
-          setSidebarState(false);
-        } else {
-          setSidebarState(true);
+        function openArchivePreview(snapshot) {
+          state.archivePreview = snapshot;
+          dom.archiveViewerTitle.textContent = snapshot.title;
+          dom.archiveViewerMeta.textContent = translateText("Version from", state.currentLanguage) + " " + formatDate(snapshot.archivedAt || snapshot.capturedAt);
+          dom.archiveViewerBody.innerHTML = snapshot.html;
+          dom.archiveViewer.classList.add("visible");
+          dom.body.classList.add("search-open");
         }
-      });
 
-      // Initial sidebar state
-      window.addEventListener("DOMContentLoaded", () => {
-        if (window.innerWidth < 1190) {
-          setSidebarState(false);
-        } else {
-          setSidebarState(true);
+        function closeArchivePreview() {
+          state.archivePreview = null;
+          dom.archiveViewer.classList.remove("visible");
+          if (!dom.searchPanel.classList.contains("visible")) {
+            dom.body.classList.remove("search-open");
+          }
         }
-      });
-      const downloadBtn = document.getElementById("downloadLogoBtn");
-      const statusMsg = document.getElementById("downloadStatus");
-      downloadBtn.addEventListener("click", () => {
-        const fileUrl = "./munetios-logo.png";
-        const fileName = "munetios-Logo.png";
-        const a = document.createElement("a");
-        a.href = fileUrl;
-        a.setAttribute("download", fileName);
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        statusMsg.textContent = "✅ Download initiated...";
-      });
-      const sections = [
-        { id: "homeItem", section: "home", hash: "#/home" },
-        { id: "privacyItem", section: "privacy", hash: "#/privacy" },
-        { id: "cookiesItem", section: "cookiesPolicy", hash: "#/cookies" },
-        { id: "termsItem", section: "terms", hash: "#/terms" },
-        { id: "aboutItem", section: "about", hash: "#/about" },
-        { id: "gdpr", section: "gpdr", hash: "#/gdpr" },
-        { id: "apps", section: "apps", hash: "#/apps" },
-        { id: "brandingItem", section: "branding", hash: "#/branding" },
-        { id: "trust-safety", section: "trust", hash: "#/trust" },
-        { id: "contactItem", section: "contact", hash: "#/contact" },
-      ];
 
-      function showSection(sectionId) {
-        document.querySelectorAll(".content").forEach((sec) => {
-          sec.style.display = sec.id === sectionId ? "block" : "none";
-        });
-      }
-
-      function handleHashChange() {
-        const hash = location.hash || "#/home";
-        const match = sections.find((s) => s.hash === hash);
-        showSection(match ? match.section : "home");
-      }
-
-      sections.forEach(({ id, hash }) => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.style.cursor = "pointer";
-          el.addEventListener("click", () => {
-            location.hash = hash;
+        function getSearchDocuments() {
+          return sectionConfig.map((entry) => {
+            const section = getSection(entry.sectionId);
+            const chunks = Array.from(section.querySelectorAll("h1, h2, h3, p, li"))
+              .map((node) => normalizeWhitespace(node.textContent))
+              .filter(Boolean);
+            return {
+              sectionId: entry.sectionId,
+              title: getSectionTitle(entry.sectionId),
+              content: chunks.join(" "),
+              chunks
+            };
           });
         }
-      });
 
-      // Language dropdown functionality
-      const languageButton = document.getElementById("languageDropdownButton");
-      const languageDropdown = document.getElementById("languageDropdownMenu");
-      const languageItems = {
-        englishItem: "en",
-        spanishItem: "es",
-        frenchItem: "fr",
-        germanItem: "de",
-        italianItem: "it",
-        portugueseItem: "pt",
-        japaneseItem: "ja",
-        koreanItem: "ko",
-        chineseItem: "zh",
-        russianItem: "ru",
-        arabicItem: "ar",
-      };
+        function escapeRegExp(value) {
+          return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        }
 
-      languageButton.addEventListener("click", (e) => {
-        e.stopPropagation();
-        languageDropdown.style.display =
-          languageDropdown.style.display === "block" ? "none" : "block";
-      });
+        function highlightSnippet(text, tokens) {
+          let output = text;
+          tokens.forEach((token) => {
+            output = output.replace(new RegExp("(" + escapeRegExp(token) + ")", "ig"), "<mark>$1</mark>");
+          });
+          return output;
+        }
 
-      Object.entries(languageItems).forEach(([itemId, langCode]) => {
-        const item = document.getElementById(itemId);
-        if (item) {
-          item.addEventListener("click", () => {
-            translateUI(langCode);
-            languageDropdown.style.display = "none";
+        function renderSearchResults(query) {
+          const normalizedQuery = normalizeWhitespace(query);
+          dom.searchResults.innerHTML = "";
+          if (!normalizedQuery) {
+            dom.searchStatus.textContent = translateText("Type to search policy content.", state.currentLanguage);
+            return;
+          }
+
+          const tokens = normalizedQuery.toLowerCase().split(/\s+/).filter(Boolean);
+          const results = getSearchDocuments()
+            .map((entry) => {
+              const haystack = (entry.title + " " + entry.content).toLowerCase();
+              const score = tokens.reduce((total, token) => total + (haystack.includes(token) ? 1 : 0), 0);
+              if (!score) {
+                return null;
+              }
+              const snippet = entry.chunks.find((chunk) => tokens.some((token) => chunk.toLowerCase().includes(token))) || entry.content;
+              return {
+                ...entry,
+                score,
+                snippet: snippet.slice(0, 220)
+              };
+            })
+            .filter(Boolean)
+            .sort((left, right) => right.score - left.score);
+
+          if (!results.length) {
+            dom.searchStatus.textContent = translateText("No results found.", state.currentLanguage);
+            return;
+          }
+
+          dom.searchStatus.textContent = translateText("Search results", state.currentLanguage) + ": " + results.length;
+
+          results.forEach((result) => {
+            const card = document.createElement("article");
+            card.className = "search-result-card";
+
+            const title = document.createElement("h3");
+            title.textContent = result.title;
+
+            const snippet = document.createElement("p");
+            snippet.className = "search-snippet";
+            snippet.innerHTML = highlightSnippet(result.snippet, tokens);
+
+            const actions = document.createElement("div");
+            actions.className = "card-actions";
+
+            const openButton = document.createElement("button");
+            openButton.className = "btn inline-btn";
+            openButton.type = "button";
+            openButton.textContent = translateText("Open Section", state.currentLanguage);
+            openButton.addEventListener("click", () => showSection(result.sectionId));
+
+            actions.appendChild(openButton);
+            card.append(title, snippet, actions);
+            dom.searchResults.appendChild(card);
           });
         }
-      });
 
-      document.addEventListener("click", (e) => {
-        if (
-          !languageButton.contains(e.target) &&
-          !languageDropdown.contains(e.target)
-        ) {
-          languageDropdown.style.display = "none";
+        function hashString(value) {
+          let hash = 0;
+          for (let index = 0; index < value.length; index += 1) {
+            hash = (hash << 5) - hash + value.charCodeAt(index);
+            hash |= 0;
+          }
+          return String(hash);
         }
-      });
 
-      window.addEventListener("hashchange", handleHashChange);
-      window.addEventListener("DOMContentLoaded", () => {
-        translateUI(currentLanguage);
-        handleHashChange();
-      });
+        function loadArchiveStore() {
+          try {
+            const parsed = JSON.parse(localStorage.getItem(archiveStorageKey) || "");
+            if (parsed && typeof parsed === "object") {
+              return {
+                current: parsed.current || {},
+                archives: parsed.archives || {}
+              };
+            }
+          } catch (error) {
+          }
+          return { current: {}, archives: {} };
+        }
+
+        function saveArchiveStore() {
+          localStorage.setItem(archiveStorageKey, JSON.stringify(state.archiveStore));
+        }
+
+        function buildSnapshots() {
+          return sectionConfig.map((entry) => {
+            const section = getSection(entry.sectionId);
+            const text = normalizeWhitespace(section.textContent);
+            return {
+              sectionId: entry.sectionId,
+              title: getSectionTitle(entry.sectionId),
+              html: section.innerHTML,
+              text,
+              hash: hashString(text),
+              capturedAt: new Date().toISOString()
+            };
+          });
+        }
+
+        function updateArchiveStore() {
+          let changed = false;
+          buildSnapshots().forEach((snapshot) => {
+            const previous = state.archiveStore.current[snapshot.sectionId];
+            if (previous && previous.hash !== snapshot.hash) {
+              const archiveList = state.archiveStore.archives[snapshot.sectionId] || [];
+              if (!archiveList.some((item) => item.hash === previous.hash)) {
+                archiveList.unshift({ ...previous, archivedAt: new Date().toISOString() });
+                state.archiveStore.archives[snapshot.sectionId] = archiveList.slice(0, 12);
+              }
+              changed = true;
+            }
+            if (!previous || previous.hash !== snapshot.hash) {
+              state.archiveStore.current[snapshot.sectionId] = snapshot;
+              changed = true;
+            }
+          });
+          if (changed) {
+            saveArchiveStore();
+          }
+        }
+
+        function flattenArchives() {
+          return Object.values(state.archiveStore.archives)
+            .flat()
+            .sort((left, right) => new Date(right.archivedAt || right.capturedAt) - new Date(left.archivedAt || left.capturedAt));
+        }
+
+        function getArchivesForSection(sectionId) {
+          return (state.archiveStore.archives[sectionId] || [])
+            .slice()
+            .sort((left, right) => new Date(right.archivedAt || right.capturedAt) - new Date(left.archivedAt || left.capturedAt));
+        }
+
+        function formatDate(value) {
+          try {
+            return new Date(value).toLocaleString(undefined, {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              hour: "numeric",
+              minute: "2-digit"
+            });
+          } catch (error) {
+            return value;
+          }
+        }
+
+        function renderArchives() {
+          const entries = flattenArchives();
+          dom.archiveList.innerHTML = "";
+          if (!entries.length) {
+            dom.archiveSummary.textContent = translateText("No archived versions have been stored on this browser yet.", state.currentLanguage);
+          } else {
+            dom.archiveSummary.textContent = translateText("Recent archived versions from this browser are listed below.", state.currentLanguage);
+
+            entries.forEach((entry) => {
+              const card = document.createElement("article");
+              card.className = "archive-card";
+
+              const title = document.createElement("h3");
+              title.textContent = entry.title;
+
+              const meta = document.createElement("p");
+              meta.textContent = translateText("Version from", state.currentLanguage) + " " + formatDate(entry.archivedAt || entry.capturedAt);
+
+              const actions = document.createElement("div");
+              actions.className = "card-actions";
+
+              const previewButton = document.createElement("button");
+              previewButton.className = "btn inline-btn";
+              previewButton.type = "button";
+              previewButton.textContent = translateText("Preview", state.currentLanguage);
+              previewButton.addEventListener("click", () => openArchivePreview(entry));
+
+              const downloadButton = document.createElement("button");
+              downloadButton.className = "btn inline-btn";
+              downloadButton.type = "button";
+              downloadButton.textContent = translateText("Download PDF", state.currentLanguage);
+              downloadButton.addEventListener("click", () => downloadHtmlAsPdf(entry.title, entry.html));
+
+              actions.append(previewButton, downloadButton);
+              card.append(title, meta, actions);
+              dom.archiveList.appendChild(card);
+            });
+          }
+
+          document.querySelectorAll("[data-archive-section]").forEach((listElement) => {
+            const sectionId = listElement.dataset.archiveSection;
+            const summaryElement = document.getElementById(sectionId === "terms" ? "termsArchiveSummary" : sectionId === "cookiesPolicy" ? "cookiesArchiveSummary" : "");
+            const sectionEntries = getArchivesForSection(sectionId);
+            listElement.innerHTML = "";
+
+            if (summaryElement) {
+              summaryElement.textContent = sectionEntries.length
+                ? translateText("Recent archived versions from this browser are listed below.", state.currentLanguage)
+                : translateText("No archived versions have been stored on this browser yet.", state.currentLanguage);
+            }
+
+            sectionEntries.forEach((entry) => {
+              const card = document.createElement("article");
+              card.className = "archive-card";
+
+              const title = document.createElement("h3");
+              title.textContent = entry.title;
+
+              const meta = document.createElement("p");
+              meta.textContent = translateText("Version from", state.currentLanguage) + " " + formatDate(entry.archivedAt || entry.capturedAt);
+
+              const actions = document.createElement("div");
+              actions.className = "card-actions";
+
+              const previewButton = document.createElement("button");
+              previewButton.className = "btn inline-btn";
+              previewButton.type = "button";
+              previewButton.textContent = translateText("Preview", state.currentLanguage);
+              previewButton.addEventListener("click", () => openArchivePreview(entry));
+
+              const downloadButton = document.createElement("button");
+              downloadButton.className = "btn inline-btn";
+              downloadButton.type = "button";
+              downloadButton.textContent = translateText("Download PDF", state.currentLanguage);
+              downloadButton.addEventListener("click", () => downloadHtmlAsPdf(entry.title, entry.html));
+
+              actions.append(previewButton, downloadButton);
+              card.append(title, meta, actions);
+              listElement.appendChild(card);
+            });
+          });
+        }
+
+        function escapeHtml(value) {
+          return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
+        }
+
+        function wrapCanvasText(context, text, maxWidth) {
+          const words = normalizeWhitespace(text).split(" ").filter(Boolean);
+          const lines = [];
+          let currentLine = "";
+
+          words.forEach((word) => {
+            const nextLine = currentLine ? currentLine + " " + word : word;
+            if (!currentLine || context.measureText(nextLine).width <= maxWidth) {
+              currentLine = nextLine;
+              return;
+            }
+            lines.push(currentLine);
+            currentLine = word;
+          });
+
+          if (currentLine) {
+            lines.push(currentLine);
+          }
+          return lines.length ? lines : [""];
+        }
+
+        function extractPdfBlocks(title, html) {
+          const container = document.createElement("div");
+          container.innerHTML = html;
+          const blocks = [{ type: "title", text: normalizeWhitespace(title) }];
+
+          container.querySelectorAll("h1, h2, h3, p, li").forEach((node) => {
+            const text = normalizeWhitespace(node.textContent);
+            if (!text) {
+              return;
+            }
+            if (node.tagName === "H1") {
+              blocks.push({ type: "heading-1", text });
+              return;
+            }
+            if (node.tagName === "H2") {
+              blocks.push({ type: "heading-2", text });
+              return;
+            }
+            if (node.tagName === "H3") {
+              blocks.push({ type: "heading-3", text });
+              return;
+            }
+            if (node.tagName === "LI") {
+              blocks.push({ type: "list-item", text: "\u2022 " + text });
+              return;
+            }
+            blocks.push({ type: "paragraph", text });
+          });
+
+          return blocks;
+        }
+
+        function getPdfBlockStyle(type) {
+          if (type === "title") {
+            return { font: "700 32px Google Sans Flex", lineHeight: 44, color: "#111111", gapBefore: 0, gapAfter: 20 };
+          }
+          if (type === "heading-1") {
+            return { font: "700 26px Google Sans Flex", lineHeight: 36, color: "#111111", gapBefore: 10, gapAfter: 12 };
+          }
+          if (type === "heading-2") {
+            return { font: "700 22px Google Sans Flex", lineHeight: 32, color: "#111111", gapBefore: 14, gapAfter: 10 };
+          }
+          if (type === "heading-3") {
+            return { font: "700 18px Google Sans Flex", lineHeight: 27, color: "#222222", gapBefore: 12, gapAfter: 8 };
+          }
+          if (type === "list-item") {
+            return { font: "400 16px Google Sans Flex", lineHeight: 24, color: "#222222", gapBefore: 3, gapAfter: 5 };
+          }
+          return { font: "400 16px Google Sans Flex", lineHeight: 25, color: "#222222", gapBefore: 0, gapAfter: 12 };
+        }
+
+        function createPdfPageCanvas(width, height) {
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const context = canvas.getContext("2d");
+          context.fillStyle = "#ffffff";
+          context.fillRect(0, 0, width, height);
+          context.textBaseline = "top";
+          return { canvas, context };
+        }
+
+        function renderPdfPages(title, html) {
+          const pageWidth = 794;
+          const pageHeight = 1123;
+          const marginX = 72;
+          const marginTop = 72;
+          const marginBottom = 84;
+          const maxTextWidth = pageWidth - marginX * 2;
+          const blocks = extractPdfBlocks(title, html);
+          const pages = [];
+
+          let page = createPdfPageCanvas(pageWidth, pageHeight);
+          let y = marginTop;
+
+          const startNewPage = () => {
+            pages.push(page.canvas);
+            page = createPdfPageCanvas(pageWidth, pageHeight);
+            y = marginTop;
+          };
+
+          blocks.forEach((block) => {
+            const style = getPdfBlockStyle(block.type);
+            page.context.font = style.font;
+            page.context.fillStyle = style.color;
+            const lines = wrapCanvasText(page.context, block.text, maxTextWidth);
+            const blockHeight = style.gapBefore + lines.length * style.lineHeight + style.gapAfter;
+
+            if (y + blockHeight > pageHeight - marginBottom) {
+              startNewPage();
+              page.context.font = style.font;
+              page.context.fillStyle = style.color;
+            }
+
+            y += style.gapBefore;
+            lines.forEach((line) => {
+              page.context.fillText(line, marginX, y);
+              y += style.lineHeight;
+            });
+            y += style.gapAfter;
+          });
+
+          pages.push(page.canvas);
+
+          pages.forEach((canvas, pageIndex) => {
+            const context = canvas.getContext("2d");
+            context.fillStyle = "#666666";
+            context.font = "400 14px Google Sans Flex";
+            const label = "Page " + (pageIndex + 1) + " / " + pages.length;
+            context.fillText(label, pageWidth - 112, pageHeight - 42);
+          });
+
+          return pages;
+        }
+
+        function dataUrlToBytes(dataUrl) {
+          const base64 = dataUrl.split(",")[1] || "";
+          const binary = atob(base64);
+          const bytes = new Uint8Array(binary.length);
+          for (let index = 0; index < binary.length; index += 1) {
+            bytes[index] = binary.charCodeAt(index);
+          }
+          return bytes;
+        }
+
+        function asciiBytes(value) {
+          return new TextEncoder().encode(value);
+        }
+
+        function joinByteArrays(parts) {
+          const totalLength = parts.reduce((sum, part) => sum + part.length, 0);
+          const merged = new Uint8Array(totalLength);
+          let offset = 0;
+          parts.forEach((part) => {
+            merged.set(part, offset);
+            offset += part.length;
+          });
+          return merged;
+        }
+
+        function buildPdfFromImagePages(imagePages) {
+          const pageWidth = 595.28;
+          const pageHeight = 841.89;
+          const objectNumbers = {
+            catalog: 1,
+            pages: 2
+          };
+          const pageEntries = [];
+          let nextObjectNumber = 3;
+
+          imagePages.forEach((page) => {
+            pageEntries.push({
+              pageObject: nextObjectNumber,
+              contentObject: nextObjectNumber + 1,
+              imageObject: nextObjectNumber + 2,
+              width: page.width,
+              height: page.height,
+              imageBytes: page.bytes
+            });
+            nextObjectNumber += 3;
+          });
+
+          const objects = new Map();
+          objects.set(
+            objectNumbers.catalog,
+            asciiBytes("<< /Type /Catalog /Pages 2 0 R >>")
+          );
+          objects.set(
+            objectNumbers.pages,
+            asciiBytes("<< /Type /Pages /Count " + pageEntries.length + " /Kids [" + pageEntries.map((entry) => entry.pageObject + " 0 R").join(" ") + "] >>")
+          );
+
+          pageEntries.forEach((entry, index) => {
+            const imageName = "/Im" + (index + 1);
+            const contentStream = "q\n" + pageWidth.toFixed(2) + " 0 0 " + pageHeight.toFixed(2) + " 0 0 cm\n" + imageName + " Do\nQ";
+            const contentBytes = asciiBytes(contentStream);
+            objects.set(
+              entry.contentObject,
+              joinByteArrays([
+                asciiBytes("<< /Length " + contentBytes.length + " >>\nstream\n"),
+                contentBytes,
+                asciiBytes("\nendstream")
+              ])
+            );
+            objects.set(
+              entry.imageObject,
+              joinByteArrays([
+                asciiBytes("<< /Type /XObject /Subtype /Image /Width " + entry.width + " /Height " + entry.height + " /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length " + entry.imageBytes.length + " >>\nstream\n"),
+                entry.imageBytes,
+                asciiBytes("\nendstream")
+              ])
+            );
+            objects.set(
+              entry.pageObject,
+              asciiBytes("<< /Type /Page /Parent 2 0 R /MediaBox [0 0 " + pageWidth.toFixed(2) + " " + pageHeight.toFixed(2) + "] /Resources << /XObject << " + imageName + " " + entry.imageObject + " 0 R >> >> /Contents " + entry.contentObject + " 0 R >>")
+            );
+          });
+
+          const orderedObjects = Array.from(objects.entries()).sort((left, right) => left[0] - right[0]);
+          const parts = [new Uint8Array([37, 80, 68, 70, 45, 49, 46, 52, 10, 37, 226, 227, 207, 211, 10])];
+          const offsets = [0];
+          let currentOffset = parts[0].length;
+
+          orderedObjects.forEach(([objectNumber, body]) => {
+            offsets[objectNumber] = currentOffset;
+            const header = asciiBytes(objectNumber + " 0 obj\n");
+            const footer = asciiBytes("\nendobj\n");
+            parts.push(header, body, footer);
+            currentOffset += header.length + body.length + footer.length;
+          });
+
+          const xrefOffset = currentOffset;
+          const objectCount = orderedObjects.length + 1;
+          const xrefLines = ["xref", "0 " + objectCount, "0000000000 65535 f "];
+          for (let objectNumber = 1; objectNumber < objectCount; objectNumber += 1) {
+            const paddedOffset = String(offsets[objectNumber] || 0).padStart(10, "0");
+            xrefLines.push(paddedOffset + " 00000 n ");
+          }
+          parts.push(asciiBytes(xrefLines.join("\n") + "\n"));
+          parts.push(
+            asciiBytes(
+              "trailer\n<< /Size " + objectCount + " /Root 1 0 R >>\nstartxref\n" + xrefOffset + "\n%%EOF"
+            )
+          );
+
+          return new Blob([joinByteArrays(parts)], { type: "application/pdf" });
+        }
+
+        function downloadBlob(blob, filename) {
+          const url = URL.createObjectURL(blob);
+          const anchor = document.createElement("a");
+          anchor.href = url;
+          anchor.download = filename;
+          document.body.appendChild(anchor);
+          anchor.click();
+          anchor.remove();
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+        }
+
+        function downloadHtmlAsPdf(title, html) {
+          const safeTitle = normalizeWhitespace(title) || "document";
+          const pages = renderPdfPages(safeTitle, html);
+          const imagePages = pages.map((canvas) => ({
+            width: canvas.width,
+            height: canvas.height,
+            bytes: dataUrlToBytes(canvas.toDataURL("image/jpeg", 0.92))
+          }));
+          const pdfBlob = buildPdfFromImagePages(imagePages);
+          const fileName = safeTitle.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "document";
+          downloadBlob(pdfBlob, fileName + ".pdf");
+        }
+
+        function downloadCurrentSectionPdf(sectionId) {
+          const section = getSection(sectionId || state.currentSection);
+          if (!section) {
+            return;
+          }
+          downloadHtmlAsPdf(getSectionTitle(section.id), section.innerHTML);
+        }
+
+        function setDownloadStatus(message) {
+          if (dom.downloadStatus) {
+            dom.downloadStatus.textContent = translateText(message, state.currentLanguage);
+          }
+        }
+
+        function applyLanguage(language) {
+          state.currentLanguage = supportedLanguages.includes(language) ? language : "en";
+          dom.html.lang = state.currentLanguage;
+          dom.html.dir = directionByLanguage[state.currentLanguage] || "ltr";
+
+          [
+            dom.topbarTitle,
+            dom.topLink,
+            dom.footerLink,
+            dom.searchStatus,
+            dom.archiveSummary,
+            dom.archiveViewerTitle,
+            dom.archiveViewerMeta
+          ].forEach((element) => setTranslatedText(element, state.currentLanguage));
+
+          [
+            dom.searchButton,
+            dom.languageButton
+          ].forEach((element) => {
+            setTranslatedAttribute(element, "aria-label", state.currentLanguage);
+            setTranslatedAttribute(element, "title", state.currentLanguage);
+          });
+          setTranslatedAttribute(dom.searchInput, "placeholder", state.currentLanguage);
+
+          sectionConfig.forEach((entry) => {
+            setTranslatedText(document.getElementById(entry.navId), state.currentLanguage);
+            setTranslatedText(getSection(entry.sectionId)?.querySelector("h1"), state.currentLanguage);
+          });
+
+          document.querySelectorAll("#home h2, #home h3, #home p, #home button span:last-child, .policy-meta .pill span:last-child, .section-archive-heading, .section-archive-summary, #searchPanel label, #closeSearchButton span:last-child, #languageDropdownMenu .dropdown-item, footer p").forEach((element) => {
+            setTranslatedText(element, state.currentLanguage);
+          });
+
+          if (state.archivePreview) {
+            dom.archiveViewerMeta.textContent = translateText("Version from", state.currentLanguage) + " " + formatDate(state.archivePreview.archivedAt || state.archivePreview.capturedAt);
+          }
+
+          renderArchives();
+          renderSearchResults(dom.searchInput.value);
+          setDownloadStatus(dom.downloadStatus?.dataset.sourceText || "");
+        }
+
+        function initializeTranslations() {
+          [
+            dom.topbarTitle,
+            dom.topLink,
+            dom.footerLink,
+            dom.searchStatus,
+            dom.archiveSummary,
+            dom.archiveViewerTitle,
+            dom.archiveViewerMeta,
+            dom.downloadStatus
+          ].forEach((element) => captureOriginalText(element));
+
+          [dom.searchButton, dom.languageButton].forEach((element) => {
+            captureOriginalAttribute(element, "aria-label");
+            captureOriginalAttribute(element, "title");
+          });
+          captureOriginalAttribute(dom.searchInput, "placeholder");
+
+          document.querySelectorAll("#home h2, #home h3, #home p, #home button span:last-child, .policy-meta .pill span:last-child, .section-archive-heading, .section-archive-summary, #searchPanel label, #closeSearchButton span:last-child, #languageDropdownMenu .dropdown-item, .sidebar .item, .content > h1, footer p").forEach((element) => {
+            captureOriginalText(element);
+          });
+        }
+
+        function wireNavigation() {
+          sectionConfig.forEach((entry) => {
+            const nav = document.getElementById(entry.navId);
+            if (nav) {
+              nav.addEventListener("click", () => showSection(entry.sectionId));
+            }
+          });
+
+          document.querySelectorAll("[data-open-search]").forEach((button) => {
+            button.addEventListener("click", openSearchPanel);
+          });
+
+          document.querySelectorAll('a[href="#contactItem"]').forEach((link) => {
+            link.addEventListener("click", (event) => {
+              event.preventDefault();
+              showSection("contact");
+            });
+          });
+        }
+
+        function wireSearch() {
+          dom.searchButton.addEventListener("click", openSearchPanel);
+          dom.closeSearchButton.addEventListener("click", closeSearchPanel);
+          dom.searchInput.addEventListener("input", (event) => renderSearchResults(event.target.value));
+        }
+
+        function wireLanguages() {
+          dom.languageButton.addEventListener("click", (event) => {
+            event.stopPropagation();
+            dom.languageMenu.classList.toggle("visible");
+          });
+
+          Object.entries(languageCodeByItemId).forEach(([itemId, language]) => {
+            const item = document.getElementById(itemId);
+            if (item) {
+              item.addEventListener("click", () => {
+                applyLanguage(language);
+                closeLanguageMenu();
+              });
+            }
+          });
+        }
+
+        function wireDownloads() {
+          document.querySelectorAll("[data-download-current]").forEach((button) => {
+            button.addEventListener("click", () => downloadCurrentSectionPdf(state.currentSection));
+          });
+
+          document.querySelectorAll("[data-download-section]").forEach((button) => {
+            button.addEventListener("click", () => downloadCurrentSectionPdf(button.dataset.downloadSection));
+          });
+
+          dom.archiveViewerDownload.addEventListener("click", () => {
+            if (state.archivePreview) {
+              downloadHtmlAsPdf(state.archivePreview.title, state.archivePreview.html);
+            }
+          });
+
+          dom.archiveViewerClose.addEventListener("click", closeArchivePreview);
+
+          if (dom.downloadLogoButton) {
+            dom.downloadLogoButton.addEventListener("click", () => {
+              const anchor = document.createElement("a");
+              anchor.href = "/munetios-logo.png";
+              anchor.download = "munetios-logo.png";
+              document.body.appendChild(anchor);
+              anchor.click();
+              anchor.remove();
+              setDownloadStatus("Logo download started.");
+            });
+          }
+        }
+
+        function wireSidebar() {
+          dom.menuButton.addEventListener("click", toggleSidebar);
+          window.addEventListener("resize", syncSidebarForViewport);
+        }
+
+        function wireDismissals() {
+          document.addEventListener("click", (event) => {
+            if (!dom.languageMenu.contains(event.target) && !dom.languageButton.contains(event.target)) {
+              closeLanguageMenu();
+            }
+            if (window.innerWidth <= 840 && !dom.sidebar.contains(event.target) && !dom.menuButton.contains(event.target)) {
+              closeSidebar();
+            }
+          });
+
+          document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+              closeSearchPanel();
+              closeLanguageMenu();
+              closeArchivePreview();
+              closeSidebar();
+            }
+          });
+
+          window.addEventListener("hashchange", () => {
+            showSection(window.location.hash.replace(/^#/, "") || "home", { skipHistory: true, instant: true });
+          });
+        }
+
+        function closeLanguageMenu() {
+          dom.languageMenu.classList.remove("visible");
+        }
+
+        function initialize() {
+          initializeTranslations();
+          updateArchiveStore();
+          wireNavigation();
+          wireSearch();
+          wireLanguages();
+          wireDownloads();
+          wireSidebar();
+          wireDismissals();
+          syncSidebarForViewport();
+          renderArchives();
+          applyLanguage("en");
+          showSection(window.location.hash.replace(/^#/, "") || "home", { skipHistory: true, instant: true });
+          setDownloadStatus("");
+        }
+
+        initialize();
+      })();
     </script>
+
   </body>
 </html>
