@@ -1,44 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!doctype html>
+<html lang="en" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Munetios Apps Launcher</title>
-    <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css">
- <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,90&amp;family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&amp;display=swap" rel="stylesheet">
- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&display=swap" />
- <script>
-    // Detect if in iframe and force all <a> links to open in top window
-    if (window.top !== window.self) {
-        window.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('a').forEach(function(link) {
-                link.setAttribute('target', '_top');
-            });
+    <link
+      rel="stylesheet"
+      href="https://api.munetios.com/beautiful-css/beautiful.css"
+    />
+
+    <script>
+      // Detect if in iframe and force all <a> links to open in top window
+      if (window.top !== window.self) {
+        window.addEventListener("DOMContentLoaded", function () {
+          document.querySelectorAll("a").forEach(function (link) {
+            link.setAttribute("target", "_top");
+          });
         });
-    }
- </script>
-<style>
-    body,button,input,select,textarea {
-            font-variation-settings: 'wght' 480, 'GRAD' 30, 'ROND' 80, 'opsz' 18;
-        font-family: 'Google Sans Flex', sans-serif;
-    }
-    body {
+      }
+    </script>
+    <style>
+      body,
+      button,
+      input,
+      select,
+      textarea {
+        font-variation-settings:
+          "wght" 480,
+          "GRAD" 30,
+          "ROND" 80,
+          "opsz" 18;
+        font-family: "Google Sans Flex", sans-serif;
+      }
+      body {
         background-color: #f5f5f5;
         margin: 0;
         padding: 0;
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-    munetios-header {
+      }
+      munetios-header {
         width: 100%;
         box-sizing: border-box;
         padding: 12px 16px;
         margin-bottom: 10px;
         height: 56px;
-
-    }
-    munetios-search-bar {
+      }
+      munetios-search-bar {
         width: 100%;
         box-sizing: border-box;
         padding: 10px 16px;
@@ -46,32 +55,31 @@
         display: flex;
         align-items: center;
         gap: 8px;
-    
-    }
-    munetios-search-bar input {
+      }
+      munetios-search-bar input {
         border: none;
         outline: none;
         background: transparent;
         width: 100%;
         font-size: 16px;
-    }
-    munetios-app-launcher {
+      }
+      munetios-app-launcher {
         width: 500px;
         overflow: hidden;
-    }
-    munetios-apps-list {
+      }
+      munetios-apps-list {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
         gap: 50px;
         padding: 16px;
         box-sizing: border-box;
-    }
-    a {
+      }
+      a {
         text-decoration: none;
         color: #ffffff;
         font-weight: 500;
-    }
-    munetios-app-button {
+      }
+      munetios-app-button {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -84,189 +92,594 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         cursor: pointer;
         transition: transform 0.1s ease-in-out;
-    }
-    munetios-app-button:hover {
+      }
+      munetios-app-button:hover {
         transform: translateY(-4px);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-    munetios-app-button img {
+      }
+      munetios-app-button img {
         width: 82px;
         height: 82px;
         margin-bottom: 8px;
         border-radius: 12px;
-    }
-    @media (prefers-color-scheme: dark) {
+      }
+      @media (prefers-color-scheme: dark) {
         body {
-            background-color: #1d0035;
-            color: #e0e0e0;
+          background-color: #1d0035;
+          color: #e0e0e0;
         }
-    }
-</style>
-</head>
-<body>
+      }
+      .material-symbols-rounded {
+        font-family: "Material Symbols Rounded";
+      }
+    </style>
+    <script src="/languages/language.js" defer></script>
+  </head>
+  <body>
     <munetios-app-launcher id="app">
-        <munetios-header slot="header" title="Munetios Apps Launcher">
-            <munetios-search-bar class="liquid-glass">
-                <span class="material-symbols-rounded">search</span>
-                <input type="search" placeholder="Search apps" id="searchApps" />
-            </munetios-search-bar>
-        </munetios-header>
-        <munetios-apps-list>
-            <munetios-app-button>
-                <img src="https://www.munetios.com/apple-touch-icon-new.png" alt="App Icon" slot="icon" />
-                <a href="https://www.munetios.com/search/search.html" slot="title">Search</a>
-            </munetios-app-button>
-            <munetios-app-button>
-                <img src="image copy 6.png" style="height: 82px !important; width: 82px !important;" alt="App Icon" slot="icon" />
-                <a href="https://ai.munetios.com" slot="title">Munetios AI</a>
-            </munetios-app-button>
-            <munetios-app-button>
-                <img src="https://write.munetios.com/apple-touch-icon.png" style="height: 90px !important; width: 90px !important;" alt="App Icon" slot="icon" />
-                <a href="https://write.munetios.com/" target="_top" slot="title">OmniWrite</a>
-            </munetios-app-button>
-                <munetios-app-button>
-                <img src="https://notes.munetios.com/apple-touch-icon.png" style="height: 90px !important; width: 90px !important;" alt="App Icon" slot="icon" />
-                <a href="https://notes.munetios.com">SupaNotes</a>
-            </munetios-app-button>
-            <munetios-app-button>
-                <img src="https://calendar.munetios.com/new/favicon.ico" style="height: 82px !important; width: 82px !important;" alt="App Icon" slot="icon" />
-                <a href="https://calendar.munetios.com" target="_top" slot="title">Calendar</a>
-            </munetios-app-button>
-            <munetios-app-button>
-                <img src="https://maps.munetios.com/apple-touch-icon-new.png" style="height: 90px !important; width: 90px !important;" alt="App Icon" slot="icon" />
-                <a href="https://maps.munetios.com" target="_top" slot="title">Maps</a>
-            </munetios-app-button>
-                    <munetios-app-button>
-                <img src="https://calendar.munetios.com/new/meals/apple-touch-icon.png" style="height: 82px !important; width: 82px !important;" alt="App Icon" slot="icon" />
-                <a href="https://calendar.munetios.com/new/meals" target="_top" slot="title">Meals</a>
-            </munetios-app-button>
-            <munetios-app-button>
-                <img src="image copy 17.png" style="height: 82px !important; width: 82px !important;" alt="App Icon" slot="icon" />
-                <a href="https://photos.munetios.com" target="_top" slot="title">Photos</a>
-            </munetios-app-button>
-        </munetios-apps-list>
-        <hr>
-        <munetios-apps-list>
-            <munetios-app-button>
-                <img src="image3.png" style="height: 90px !important; width: 60px !important;" alt="App Icon" slot="icon" />
-                <a href="https://notebook.munetios.com" target="_top" slot="title">Notebook</a>
-            </munetios-app-button>
-            <munetios-app-button>
-                <img src="image copy 41.png" style="height: 82px !important; width: 82px !important;" alt="App Icon" slot="icon" />
-                <a href="https://games.munetios.com/">Games Hub</a>
-            </munetios-app-button>
-      
-            <munetios-app-button>
-                <img src="https://weather.munetios.com/apple-touch-icon.png" alt="App Icon" slot="icon" style="height: 82px !important; width: 82px !important;" />
-                <a href="https://weather.munetios.com">Weather</a>
-            </munetios-app-button>
-            <munetios-app-button>
-                <img src="image copy.png" style="height: 82px !important; width: 82px !important;" alt="App Icon" slot="icon" />
-                <a href="https://tasks.munetios.com">Tasks</a>
-            </munetios-app-button>
-        </munetios-apps-list>
+      <munetios-header slot="header" title="Munetios Apps Launcher">
+        <munetios-search-bar class="liquid-glass">
+          <icon class="material-symbols-rounded">search</icon>
+          <input type="search" placeholder="Search apps" id="searchApps" />
+        </munetios-search-bar>
+      </munetios-header>
+      <munetios-apps-list>
+        <munetios-app-button>
+          <img
+            src="https://www.munetios.com/apple-touch-icon-new.png"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://www.munetios.com/search/search.html" slot="title"
+            >Search</a
+          >
+        </munetios-app-button>
+        <munetios-app-button>
+          <img
+            src="image copy 6.png"
+            style="height: 82px !important; width: 82px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://ai.munetios.com" slot="title">Munetios AI</a>
+        </munetios-app-button>
+        <munetios-app-button>
+          <img
+            src="https://write.munetios.com/apple-touch-icon.png"
+            style="height: 90px !important; width: 90px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://write.munetios.com/" target="_top" slot="title"
+            >OmniWrite</a
+          >
+        </munetios-app-button>
+        <munetios-app-button>
+          <img
+            src="https://notes.munetios.com/apple-touch-icon.png"
+            style="height: 90px !important; width: 90px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://notes.munetios.com">SupaNotes</a>
+        </munetios-app-button>
+        <munetios-app-button>
+          <img
+            src="https://calendar.munetios.com/new/favicon.ico"
+            style="height: 82px !important; width: 82px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://calendar.munetios.com" target="_top" slot="title"
+            >Calendar</a
+          >
+        </munetios-app-button>
+        <munetios-app-button>
+          <img
+            src="https://maps.munetios.com/apple-touch-icon-new.png"
+            style="height: 90px !important; width: 90px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://maps.munetios.com" target="_top" slot="title"
+            >Maps</a
+          >
+        </munetios-app-button>
+        <munetios-app-button>
+          <img
+            src="https://calendar.munetios.com/new/meals/apple-touch-icon.png"
+            style="height: 82px !important; width: 82px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a
+            href="https://calendar.munetios.com/new/meals"
+            target="_top"
+            slot="title"
+            >Meals</a
+          >
+        </munetios-app-button>
+        <munetios-app-button>
+          <img
+            src="image copy 17.png"
+            style="height: 82px !important; width: 82px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://photos.munetios.com" target="_top" slot="title"
+            >Photos</a
+          >
+        </munetios-app-button>
+      </munetios-apps-list>
+      <hr />
+      <munetios-apps-list>
+        <munetios-app-button>
+          <img
+            src="image3.png"
+            style="height: 90px !important; width: 60px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://notebook.munetios.com" target="_top" slot="title"
+            >Notebook</a
+          >
+        </munetios-app-button>
+        <munetios-app-button>
+          <img
+            src="image copy 41.png"
+            style="height: 82px !important; width: 82px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://games.munetios.com/">Games Hub</a>
+        </munetios-app-button>
+
+        <munetios-app-button>
+          <img
+            src="https://weather.munetios.com/apple-touch-icon.png"
+            alt="App Icon"
+            slot="icon"
+            style="height: 82px !important; width: 82px !important"
+          />
+          <a href="https://weather.munetios.com">Weather</a>
+        </munetios-app-button>
+        <munetios-app-button>
+          <img
+            src="image copy.png"
+            style="height: 82px !important; width: 82px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://tasks.munetios.com">Tasks</a>
+        </munetios-app-button>
+      </munetios-apps-list>
     </munetios-app-launcher>
-    
+
     <script>
-    const searchInput = document.getElementById('searchApps');
-    const appButtons = document.querySelectorAll('munetios-app-button');
-    searchInput.addEventListener('input', () => {
+      // Language support
+      const LANGUAGES = {
+        en: "English",
+        es: "Español",
+        fr: "Français",
+        de: "Deutsch",
+        it: "Italiano",
+        pt: "Português",
+        ru: "Русский",
+        zh: "中文",
+        ja: "日本語",
+        ko: "한국어",
+        ar: "العربية",
+        hi: "हिन्दी",
+        tr: "Türkçe",
+        nl: "Nederlands",
+      };
+      // App label translations (fallback map)
+      const LABELS = {
+        searchPlaceholder: {
+          en: "Search apps...",
+          es: "Buscar aplicaciones...",
+          fr: "Rechercher des apps...",
+          de: "Apps suchen...",
+          it: "Cerca app...",
+          pt: "Pesquisar apps...",
+          ru: "Поиск приложений...",
+          zh: "搜索应用...",
+          ja: "アプリを検索...",
+          ko: "앱 검색...",
+          ar: "ابحث في التطبيقات...",
+          hi: "ऐप्स खोजें...",
+          tr: "Uygulama ara...",
+          nl: "Apps zoeken...",
+        },
+        notebook: {
+          en: "Notebook",
+          es: "Bloc de notas",
+          fr: "Cahier",
+          de: "Notizbuch",
+          it: "Taccuino",
+          pt: "Bloco de notas",
+          ru: "Блокнот",
+          zh: "笔记本",
+          ja: "ノート",
+          ko: "노트",
+          ar: "دفتر الملاحظات",
+          hi: "नोटबुक",
+          tr: "Not Defteri",
+          nl: "Notitieboek",
+        },
+        games: {
+          en: "Games Hub",
+          es: "Centro de juegos",
+          fr: "Hub de jeux",
+          de: "Spiele",
+          it: "Hub giochi",
+          pt: "Central de jogos",
+          ru: "Игры",
+          zh: "游戏中心",
+          ja: "ゲームハブ",
+          ko: "게임 허브",
+          ar: "مركز الألعاب",
+          hi: "गेम्स हब",
+          tr: "Oyun Merkezi",
+          nl: "Spelencentrum",
+        },
+        weather: {
+          en: "Weather",
+          es: "Clima",
+          fr: "Météo",
+          de: "Wetter",
+          it: "Meteo",
+          pt: "Tempo",
+          ru: "Погода",
+          zh: "天气",
+          ja: "天気",
+          ko: "날씨",
+          ar: "الطقس",
+          hi: "मौसम",
+          tr: "Hava Durumu",
+          nl: "Weer",
+        },
+        tasks: {
+          en: "Tasks",
+          es: "Tareas",
+          fr: "Tâches",
+          de: "Aufgaben",
+          it: "Attività",
+          pt: "Tarefas",
+          ru: "Задачи",
+          zh: "任务",
+          ja: "タスク",
+          ko: "작업",
+          ar: "المهام",
+          hi: "कार्य",
+          tr: "Görevler",
+          nl: "Taken",
+        },
+        calendar: {
+          en: "Calendar",
+          es: "Calendario",
+          fr: "Calendrier",
+          de: "Kalender",
+          it: "Calendario",
+          pt: "Calendário",
+          ru: "Календарь",
+          zh: "日历",
+          ja: "カレンダー",
+          ko: "캘린더",
+          ar: "التقويم",
+          hi: "कैलेंडर",
+          tr: "Takvim",
+          nl: "Agenda",
+        },
+        photos: {
+          en: "Photos",
+          es: "Fotos",
+          fr: "Photos",
+          de: "Fotos",
+          it: "Foto",
+          pt: "Fotos",
+          ru: "Фотографии",
+          zh: "照片",
+          ja: "写真",
+          ko: "사진",
+          ar: "الصور",
+          hi: "फोटो",
+          tr: "Fotoğraflar",
+          nl: "Foto's",
+        },
+        maps: {
+          en: "Maps",
+          es: "Mapas",
+          fr: "Cartes",
+          de: "Karten",
+          it: "Mappe",
+          pt: "Mapas",
+          ru: "Карты",
+          zh: "地图",
+          ja: "地図",
+          ko: "지도",
+          ar: "خرائط",
+          hi: "नक्शे",
+          tr: "Haritalar",
+          nl: "Kaarten",
+        },
+        meals: {
+          en: "Meals",
+          es: "Comidas",
+          fr: "Repas",
+          de: "Mahlzeiten",
+          it: "Pasti",
+          pt: "Refeições",
+          ru: "Питание",
+          zh: "餐食",
+          ja: "食事",
+          ko: "식사",
+          ar: "وجبات",
+          hi: "भोजन",
+          tr: "Yemekler",
+          nl: "Maaltijden",
+        },
+        search: {
+          en: "Search",
+          es: "Buscar",
+          fr: "Rechercher",
+          de: "Suchen",
+          it: "Cerca",
+          pt: "Pesquisar",
+          ru: "Поиск",
+          zh: "搜索",
+          ja: "検索",
+          ko: "검색",
+          ar: "بحث",
+          hi: "खोज",
+          tr: "Ara",
+          nl: "Zoeken",
+        },
+        ai: {
+          en: "Munetios AI",
+          es: "IA Munetios",
+          fr: "IA Munetios",
+          de: "KI Munetios",
+          it: "IA Munetios",
+          pt: "IA Munetios",
+          ru: "ИИ Munetios",
+          zh: "Munetios 人工智能",
+          ja: "Munetios AI",
+          ko: "Munetios AI",
+          ar: "Munetios الذكاء الاصطناعي",
+          hi: "Munetios एआई",
+          tr: "Munetios Yapay Zeka",
+          nl: "Munetios AI",
+        },
+      };
+
+      // Loaded language JSON for current language (if available)
+      let LANG_DATA = null;
+
+      function getLanguage() {
+        let lang = localStorage.getItem("munetiosLanguage");
+        if (!lang || !LANGUAGES[lang]) lang = "en";
+        return lang;
+      }
+
+      async function loadLanguageFile(lang) {
+        try {
+          const res = await fetch(`/languages/${lang}.json`);
+          if (!res.ok) return (LANG_DATA = null);
+          LANG_DATA = await res.json();
+        } catch (e) {
+          LANG_DATA = null;
+        }
+      }
+
+      function translate(labelKey) {
+        const lang = getLanguage();
+        // 1) Check explicit LABELS map (app-specific)
+        if (LABELS[labelKey]) {
+          if (LABELS[labelKey][lang]) return LABELS[labelKey][lang];
+          if (LABELS[labelKey]["en"]) return LABELS[labelKey]["en"];
+        }
+        // 2) Check loaded language JSON for common places
+        if (LANG_DATA) {
+          if (LANG_DATA.apps && LANG_DATA.apps[labelKey])
+            return LANG_DATA.apps[labelKey];
+          if (LANG_DATA.labels && LANG_DATA.labels[labelKey])
+            return LANG_DATA.labels[labelKey];
+          if (LANG_DATA.attributes && LANG_DATA.attributes[labelKey])
+            return LANG_DATA.attributes[labelKey];
+        }
+        // 3) Fallback to the key
+        return labelKey;
+      }
+
+      // Set translated labels (idempotent)
+      function setLabels() {
+        const searchInput = document.getElementById("searchApps");
+        if (searchInput)
+          searchInput.placeholder = translate("searchPlaceholder");
+        const appButtons = document.querySelectorAll("munetios-app-button");
+        appButtons.forEach((button) => {
+          const link = button.querySelector("a");
+          if (!link) return;
+          const href = link.getAttribute("href") || "";
+          if (href.includes("notebook"))
+            link.textContent = translate("notebook");
+          else if (href.includes("games"))
+            link.textContent = translate("games");
+          else if (href.includes("weather"))
+            link.textContent = translate("weather");
+          else if (href.includes("tasks"))
+            link.textContent = translate("tasks");
+          else if (
+            href.includes("calendar.munetios.com") &&
+            !href.includes("calendar.munetios.com/new/meals")
+          )
+            link.textContent = translate("calendar");
+          else if (href.includes("meals"))
+            link.textContent = translate("meals");
+          else if (href.includes("ai")) link.textContent = translate("ai");
+          else if (href.includes("search"))
+            link.textContent = translate("search");
+          else if (href.includes("photos"))
+            link.textContent = translate("photos");
+          else if (href.includes("maps")) link.textContent = translate("maps");
+        });
+      }
+
+      // Load language file for current language then apply labels (non-blocking fallback)
+      loadLanguageFile(getLanguage()).then(() => setLabels());
+      // Apply fallback labels immediately for snappy UI
+      setLabels();
+
+      // --- SEARCH ---
+      const searchInput = document.getElementById("searchApps");
+      const appButtons = document.querySelectorAll("munetios-app-button");
+      searchInput.addEventListener("input", () => {
         const query = searchInput.value.toLowerCase();
-        appButtons.forEach(button => {
-            const title = button.querySelector('a').textContent.toLowerCase();
-            if (title.includes(query)) {
-                button.style.display = 'flex';
-            } else {
-                button.style.display = 'none';
-            }
-        });
-    });
-    // Make the whole app button clickable
-    appButtons.forEach(button => {
-        const link = button.querySelector('a');
-        button.style.cursor = 'pointer';
-        button.addEventListener('click', (e) => {
-            // Prevent double navigation if the <a> is clicked directly
-            if (e.target.tagName.toLowerCase() !== 'a') {
-                window.open(link.href, '_top');
-            }
-        });
-    });
-    // Enable drag-and-drop reordering and moving between lists
-    const appLists = document.querySelectorAll('munetios-apps-list');
+        appButtons.forEach((button) => {
+          const link = button.querySelector("a");
+          if (!link) return;
+          let matches = false;
 
-    appLists.forEach(list => {
-        list.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            const afterElement = getDragAfterElement(list, e.clientY);
-            const dragging = document.querySelector('.dragging');
-            if (afterElement == null) {
-                list.appendChild(dragging);
-            } else {
-                list.insertBefore(dragging, afterElement);
+          // 1) direct text match of the rendered label
+          const labelText = (link.textContent || "").toLowerCase();
+          if (labelText.includes(query)) matches = true;
+
+          // 2) match href
+          if (!matches && link.href && link.href.toLowerCase().includes(query))
+            matches = true;
+
+          // 3) check fallback LABELS translations across languages
+          if (!matches) {
+            for (const key in LABELS) {
+              const map = LABELS[key];
+              for (const lcode in map) {
+                if (map[lcode] && map[lcode].toLowerCase().includes(query)) {
+                  matches = true;
+                  break;
+                }
+              }
+              if (matches) break;
             }
-        });
-    });
+          }
 
-    appButtons.forEach(button => {
-        button.setAttribute('draggable', 'true');
-        button.addEventListener('dragstart', () => {
-            button.classList.add('dragging');
-        });
-        button.addEventListener('dragend', () => {
-            button.classList.remove('dragging');
-        });
-    });
+          // 4) check loaded language JSON (labels/apps/attributes)
+          if (!matches && LANG_DATA) {
+            const checkObj = (obj) => {
+              if (!obj) return false;
+              for (const k in obj) {
+                const v = obj[k];
+                if (typeof v === "string" && v.toLowerCase().includes(query))
+                  return true;
+              }
+              return false;
+            };
+            if (
+              checkObj(LANG_DATA.labels) ||
+              checkObj(LANG_DATA.apps) ||
+              checkObj(LANG_DATA.attributes)
+            )
+              matches = true;
+          }
 
-    function getDragAfterElement(container, y) {
-        const draggableElements = [...container.querySelectorAll('munetios-app-button:not(.dragging)')];
-        return draggableElements.reduce((closest, child) => {
+          button.style.display = matches ? "flex" : "none";
+        });
+      });
+      // Make the whole app button clickable
+      appButtons.forEach((button) => {
+        const link = button.querySelector("a");
+        button.style.cursor = "pointer";
+        button.addEventListener("click", (e) => {
+          // Prevent double navigation if the <a> is clicked directly
+          if (e.target.tagName.toLowerCase() !== "a") {
+            window.open(link.href, "_top");
+          }
+        });
+      });
+      // Enable drag-and-drop reordering and moving between lists
+      const appLists = document.querySelectorAll("munetios-apps-list");
+
+      appLists.forEach((list) => {
+        list.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          const afterElement = getDragAfterElement(list, e.clientY);
+          const dragging = document.querySelector(".dragging");
+          if (afterElement == null) {
+            list.appendChild(dragging);
+          } else {
+            list.insertBefore(dragging, afterElement);
+          }
+        });
+      });
+
+      appButtons.forEach((button) => {
+        button.setAttribute("draggable", "true");
+        button.addEventListener("dragstart", () => {
+          button.classList.add("dragging");
+        });
+        button.addEventListener("dragend", () => {
+          button.classList.remove("dragging");
+        });
+      });
+
+      function getDragAfterElement(container, y) {
+        const draggableElements = [
+          ...container.querySelectorAll("munetios-app-button:not(.dragging)"),
+        ];
+        return draggableElements.reduce(
+          (closest, child) => {
             const box = child.getBoundingClientRect();
             const offset = y - box.top - box.height / 2;
             if (offset < 0 && offset > closest.offset) {
-                return { offset: offset, element: child };
+              return { offset: offset, element: child };
             } else {
-                return closest;
+              return closest;
             }
-        }, { offset: -Infinity }).element;
-    }
+          },
+          { offset: -Infinity },
+        ).element;
+      }
 
-    // Save app order to localStorage
-    function saveAppOrder() {
-        const lists = document.querySelectorAll('munetios-apps-list');
+      // Save app order to localStorage
+      function saveAppOrder() {
+        const lists = document.querySelectorAll("munetios-apps-list");
         const order = [];
         lists.forEach((list, idx) => {
-            const ids = [];
-            list.querySelectorAll('munetios-app-button').forEach(btn => {
-                ids.push(btn.querySelector('a').href);
-            });
-            order.push(ids);
+          const ids = [];
+          list.querySelectorAll("munetios-app-button").forEach((btn) => {
+            ids.push(btn.querySelector("a").href);
+          });
+          order.push(ids);
         });
-        localStorage.setItem('munetiosAppOrder', JSON.stringify(order));
-    }
+        localStorage.setItem("munetiosAppOrder", JSON.stringify(order));
+      }
 
-    // Load app order from localStorage
-    function loadAppOrder() {
-        const order = JSON.parse(localStorage.getItem('munetiosAppOrder') || 'null');
+      // Load app order from localStorage
+      function loadAppOrder() {
+        const order = JSON.parse(
+          localStorage.getItem("munetiosAppOrder") || "null",
+        );
         if (!order) return;
-        const lists = document.querySelectorAll('munetios-apps-list');
+        const lists = document.querySelectorAll("munetios-apps-list");
         order.forEach((ids, idx) => {
-            const list = lists[idx];
-            if (!list) return;
-            ids.forEach(href => {
-                const btn = Array.from(document.querySelectorAll('munetios-app-button')).find(b => b.querySelector('a').href === href);
-                if (btn) list.appendChild(btn);
-            });
+          const list = lists[idx];
+          if (!list) return;
+          ids.forEach((href) => {
+            const btn = Array.from(
+              document.querySelectorAll("munetios-app-button"),
+            ).find((b) => b.querySelector("a").href === href);
+            if (btn) list.appendChild(btn);
+          });
         });
-    }
+      }
 
-    // Save order after drag end
-    appButtons.forEach(button => {
-        button.addEventListener('dragend', saveAppOrder);
-    });
+      // Save order after drag end
+      appButtons.forEach((button) => {
+        button.addEventListener("dragend", saveAppOrder);
+      });
 
-    // Load order on page load
-    window.addEventListener('DOMContentLoaded', loadAppOrder);
+      // Load order on page load
+      window.addEventListener("DOMContentLoaded", loadAppOrder);
     </script>
-</body>
+  </body>
 </html>
