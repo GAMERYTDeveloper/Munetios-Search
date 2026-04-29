@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-    <ShortName>Munetios Search</ShortName>
+    <ShortName>Munetios</ShortName>
+    <LongName>Munetios</LongName>
     <Description>The official privacy-first search engine of Munetios.</Description>
-    <InputEncoding>UTF-8</InputEncoding>
 
-    <Url 
+    <InputEncoding>UTF-8</InputEncoding>
+    <OutputEncoding>UTF-8</OutputEncoding>
+
+    <Url
         type="text/html"
         method="GET"
-        template="https://www.munetios.com/search/search.html?q={searchTerms}">
+        template="https://www.munetios.com/search/search.html?q={searchTerms}#/all?q={searchTerms}">
     </Url>
 
+
+
     <Image height="16" width="16" type="image/png">
-        https://www.munetios.com/favicon-new.ico
+        https://www.munetios.com/favicon-16x16.png
     </Image>
+
+    <Image height="32" width="32" type="image/png">
+        https://www.munetios.com/favicon-32x32.png
+    </Image>
+
+    <Image height="48" width="48" type="image/x-icon">
+        https://www.munetios.com/favicon.ico
+    </Image>
+
+    <SearchForm>https://www.munetios.com/search/search.html</SearchForm>
 
     <Developer>Munetios</Developer>
     <Attribution>© 2026 Munetios</Attribution>
