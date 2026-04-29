@@ -45,6 +45,14 @@ window.localResults = [
     favicon: "",
     link: "https://calendar.munetios.com",
   },
+    {
+    title: "Munetios Meals",
+    description:
+      "Munetios Meals: Privacy focused meal planning app.",
+    url: "https://calendar.munetios.com/new/meals",
+    favicon: "https://calendar.munetios.com/new/meals/favicon.ico",
+    link: "https://calendar.munetios.com/new/meals",
+  },
   {
     title: "Munetios Calendar Legacy",
     description: "Legacy calendar.",
