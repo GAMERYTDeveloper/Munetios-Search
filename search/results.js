@@ -61,6 +61,14 @@ window.localResults = [
     link: "https://maps.munetios.com",
   },
   {
+    title: "Munetios Meals",
+    description:
+      "Munetios Meals is a productivity and privacy focused meal planning app.",
+    url: "https://calendar.munetios.com/new/meals",
+    favicon: "",
+    link: "https://calendar.munetios.com/new/meals",
+  },
+  {
     title: "Munetios AI",
     description: "Munetios AI - Coming Soon.",
     url: "https://ai.munetios.com",
