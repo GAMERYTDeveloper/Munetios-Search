@@ -12856,7 +12856,7 @@ function getQueryFromURL() {
             }
             if (data.timestamps.length >= RATE_LIMIT) {
               // Instead of showing modal, redirect to 429.html
-              window.location.href = "429.html";
+             showToast('Too Many Requests')
               throw new Error("429 Too Many Requests");
             }
             // Add this request
