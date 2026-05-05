@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Munetios</title>
+
+    
     <link
       rel="stylesheet"
       href="https://api.munetios.com/beautiful-css/beautiful.css"
@@ -19,6 +21,10 @@
     />
     <!-- Google Fonts: Add stylesets support for variable fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Google+Sans+Text:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
+      rel="stylesheet"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
@@ -197,7 +203,7 @@
     <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' https://cdn.tailwindcss.com https://api.munetios.com https://cdn.jsdelivr.net 'nonce-IKDjefjewhCujHJeuji3jhekowdijzizkcej' 'wasm-unsafe-eval'; style-src 'self' https://fonts.googleapis.com https://api.munetios.com https://cdn.jsdelivr.net 'unsafe-inline'; img-src * data:; font-src 'self' https://fonts.gstatic.com https://api.munetios.com https://cdn.jsdelivr.net; frame-src 'self' https://www.munetios.com; connect-src 'self' data: https://cdn.jsdelivr.net https://photon.komoot.io https://hn.algolia.com https://en.wikipedia.org https://*.openfreemap.org https://tiles.openfreemap.org https://server.arcgisonline.com; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; media-src 'self' https:;"
+      content="default-src 'self'; script-src 'self' https://cdn.tailwindcss.com https://*.munetios.com https://cdn.jsdelivr.net  'nonce-IKDjefjewhCujHJeuji3jhekowdijzizkcej' 'wasm-unsafe-eval'; style-src 'self' https://fonts.googleapis.com https://api.munetios.com https://cdn.jsdelivr.net 'unsafe-inline'; img-src * data:; font-src 'self' https://fonts.gstatic.com https://api.munetios.com https://cdn.jsdelivr.net; frame-src 'self' https://www.munetios.com; connect-src 'self' data: https://cdn.jsdelivr.net https://photon.komoot.io https://hn.algolia.com https://en.wikipedia.org https://*.openfreemap.org https://tiles.openfreemap.org https://server.arcgisonline.com; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; media-src 'self' https:;"
     />
     <meta
       http-equiv="Content-Security-Policy"
@@ -322,7 +328,7 @@
         justify-content: space-between;
       }
       icon {
-        font-family: "Material Symbols Rounded";
+        font-family: "Material Symbols Rounded" !important;
         font-size: 24px;
         vertical-align: middle;
       }
@@ -3998,7 +4004,7 @@
         position: fixed;
         inset: 0;
         z-index: 99990;
-        background: rgba(0, 0, 0, 0.55);
+        background: rgb(0 0 0 / 16%);
         backdrop-filter: blur(2px);
         align-items: flex-start;
         justify-content: flex-end;
@@ -4253,7 +4259,7 @@
                 alt="Munetios"
                 style="border-radius: 4px"
               />
-              <span class="munetios-brand-label">Munetios</span>
+              <span class="munetios-brand-label" translate="no">Munetios</span>
             </div>
             <vl></vl>
             <a href="#/" data-translate="navSearch">Search</a>
@@ -4315,7 +4321,7 @@
               alt="Munetios"
               style="border-radius: 4px"
             />
-            <span class="munetios-brand-label">Munetios</span>
+            <span class="munetios-brand-label" translate="no">Munetios</span>
           </div>
         </div>
         <div class="topbar-right liquid-glass">
@@ -4393,7 +4399,7 @@
         <div class="shortcuts" id="shortcutsList">
           <div class="add-shortcut-btn">
             <icon>add_circle</icon>
-            <div class="shortcut-label">Add</div>
+            <div class="shortcut-label" data-translate="add">Add</div>
           </div>
         </div>
       </div>
@@ -4454,6 +4460,11 @@
       </div>
       <!-- News Page -->
       <div class="news-content news-page" id="newsPage">
+          <div class="page-block-overlay" id="pageBlock-school-news" style="display:none">
+            <icon class="page-block-icon">school</icon>
+            <div class="page-block-title" data-translate="schoolNewsBlockTitle">News not available</div>
+            <div class="page-block-desc" data-translate="schoolNewsBlockDesc">News is not available in School Mode.</div>
+          </div>
           <div class="page-block-overlay" id="pageBlock-news">
             <icon class="page-block-icon">lock</icon>
             <div class="page-block-title">Too Many Requests</div>
@@ -4541,8 +4552,8 @@
                 </div>
               </div>
               <div class="maps-attribution" id="mapsAttribution">
-                <span id="mapsAttrOsm">&copy; 2026 Munetios | <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">&copy; OpenStreetMap contributors</a> | <a href="https://openmaptiles.org/" target="_blank" rel="noopener noreferrer">&copy; OpenMapTiles</a> | Tiles by <a href="https://www.openfreemap.org/" target="_blank" rel="noopener noreferrer">OpenFreeMap</a></span>
-                <span id="mapsAttrSat" style="display:none">&copy; 2026 Munetios | Imagery &copy; <a href="https://www.esri.com/" target="_blank" rel="noopener noreferrer">Esri</a>, Maxar, Earthstar Geographics | <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">&copy; OpenStreetMap contributors</a></span>
+                <span id="mapsAttrOsm" translate="no">&copy; 2026 Munetios | <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">&copy; OpenStreetMap contributors</a> | <a href="https://openmaptiles.org/" target="_blank" rel="noopener noreferrer">&copy; OpenMapTiles</a> | Tiles by <a href="https://www.openfreemap.org/" target="_blank" rel="noopener noreferrer">OpenFreeMap</a></span>
+                <span id="mapsAttrSat" style="display:none" translate="no">&copy; 2026 Munetios | Imagery &copy; <a href="https://www.esri.com/" target="_blank" rel="noopener noreferrer">Esri</a>, Maxar, Earthstar Geographics | <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">&copy; OpenStreetMap contributors</a></span>
               </div>
             </div>
           </div>
@@ -4585,7 +4596,7 @@
                 alt="Munetios"
                 style="border-radius: 6px"
               />
-              <span class="footer-brand-name">Munetios</span>
+              <span class="footer-brand-name" translate="no">Munetios</span>
             </div>
             <p class="footer-tagline" data-translate="footerTagline">
               Search the web without Google watching. No tracking, no profiling,
@@ -4723,6 +4734,18 @@
               id="countryStatusLabel"
               style="font-size: 11px; color: rgba(255, 255, 255, 0.38)"
               >Country: United States</span
+            >
+            <a
+              id="changeCountryLink"
+              href="#"
+              style="font-size: 11px; color: #4d8bff; text-decoration: none;"
+              >Change country</a
+            >
+            <span
+              id="offerLanguageStatusLabel"
+              style="font-size: 11px; color: rgba(255, 255, 255, 0.38); cursor: pointer;"
+              title="Change language"
+              >Munetios offers in English</span
             >
           </div>
           <div class="footer-bottom-right">
@@ -5304,6 +5327,7 @@
         id="countrySelector"
         style="max-height: 320px; overflow-y: auto"
       >
+        <div class="dropdown-item" data-country="auto">Auto</div>
         <div class="dropdown-item" data-country="us">United States</div>
         <div class="dropdown-item" data-country="gb">United Kingdom</div>
         <div class="dropdown-item" data-country="ca">Canada</div>
@@ -5400,6 +5424,7 @@
         <div class="dropdown-item" data-font="Anton">Anton</div>
         <div class="dropdown-item" data-font="Bebas Neue">Bebas Neue</div>
         <div class="dropdown-item" data-font="Segoe UI">Segoe UI (Windows)</div>
+                <div class="dropdown-item" data-font="Google Sans Text">Google Sans Text</div>
       </div>
       <div class="confirm-modal" id="confirmModal">
         <div class="confirm-modal-content">
@@ -5688,11 +5713,11 @@
                 rel="noopener noreferrer"
               >
                 <icon>open_in_new</icon>
-                View on Wikipedia
+                <span>View on Wikipedia</span>
               </a>
               <button class="wiki-read-btn" id="wikiReadBookmarkBtn">
                 <icon>bookmark_add</icon>
-                Bookmark
+                <span>Bookmark</span>
               </button>
             </div>
             <div class="wiki-read-close" id="wikiReadClose">
@@ -6817,10 +6842,28 @@
             const mode = getCurrentMode();
             const searchInput = document.getElementById("searchInput");
             const searchBtn = document.getElementById("doSearch");
+            const translateText = (key, fallback) => {
+              if (window.getCurrentTranslation) {
+                const value = window.getCurrentTranslation(key);
+                if (value) return value;
+              }
+              if (!window.getTranslation) return fallback;
+              const value = window.getTranslation(key);
+              return value && value !== key ? value : fallback;
+            };
+            const searchImagesText = translateText(
+              "searchImages",
+              translateText("imageSearch", "Search Images"),
+            );
+            const webSearchText = translateText(
+              "searchPlaceholder",
+              "Search The Web",
+            );
+            const searchButtonText = translateText("searchButton", "Search");
 
             if (mode === "images") {
-              searchInput.placeholder = "Search Images";
-              searchBtn.textContent = "Search Images";
+              searchInput.placeholder = searchImagesText;
+              searchBtn.textContent = searchImagesText;
 
               // Update active tab styling
               document.querySelectorAll('a[href="#/"]').forEach((link) => {
@@ -6832,8 +6875,8 @@
                   link.classList.add("active");
                 });
             } else {
-              searchInput.placeholder = "Search The Web";
-              searchBtn.textContent = "Search";
+              searchInput.placeholder = webSearchText;
+              searchBtn.textContent = searchButtonText;
 
               // Update active tab styling
               document
@@ -6846,6 +6889,7 @@
               });
             }
           }
+          window.updateSearchModeLabels = updateUI;
 
           // Function to perform search based on current mode
           function doSearch() {
@@ -6994,6 +7038,8 @@
               shortcutBtn.target = "_blank";
               shortcutBtn.rel = "noopener noreferrer";
               shortcutBtn.className = "add-shortcut-btn";
+              shortcutBtn.setAttribute("translate", "no");
+              shortcutBtn.classList.add("notranslate");
 
               const icon = document.createElement("img");
               icon.src = `https://www.google.com/s2/favicons?sz=64&domain_url=${shortcut.url}`;
@@ -7004,6 +7050,8 @@
 
               const label = document.createElement("div");
               label.className = "shortcut-label";
+              label.setAttribute("translate", "no");
+              label.classList.add("notranslate");
               label.textContent = shortcut.name;
 
               shortcutBtn.appendChild(icon);
@@ -7014,11 +7062,18 @@
             // Add "Add Shortcut" button
             const addShortcutBtn = document.createElement("div");
             addShortcutBtn.className = "add-shortcut-btn";
-            addShortcutBtn.innerHTML = `<icon>add_circle</icon><div class="shortcut-label">Add</div>`;
+            addShortcutBtn.innerHTML = `<icon>add_circle</icon><div class="shortcut-label">${
+              window.getTranslation ? window.getTranslation("add") : "Add"
+            }</div>`;
+            const addShortcutLabel =
+              addShortcutBtn.querySelector(".shortcut-label");
+            if (addShortcutLabel) addShortcutLabel.dataset.translate = "add";
             addShortcutBtn.onclick = () => {
               document.getElementById("addShortcutModal").classList.add("show");
             };
             shortcutsList.appendChild(addShortcutBtn);
+            window.protectFromMachineTranslation &&
+              window.protectFromMachineTranslation(shortcutsList);
           }
 
           // Make renderShortcuts and loadShortcuts globally accessible
@@ -7193,6 +7248,91 @@
           const languageButton = document.getElementById("languageButton");
           const languageSelector = document.getElementById("languageSelector");
 
+          window.setupMunetiosDropdownA11y = function (button, menu, options) {
+            if (!button || !menu) return;
+            const opts = options || {};
+            const itemSelector = opts.itemSelector || ".dropdown-item";
+            const closeMenu =
+              opts.closeMenu ||
+              function () {
+                menu.style.display = "none";
+                button.setAttribute("aria-expanded", "false");
+              };
+            const openMenu =
+              opts.openMenu ||
+              function () {
+                const rect = button.getBoundingClientRect();
+                menu.style.display = "block";
+                menu.style.position = "fixed";
+                menu.style.top = rect.bottom + 5 + "px";
+                menu.style.left = rect.left + "px";
+                menu.style.zIndex = opts.zIndex || "9999999";
+                button.setAttribute("aria-expanded", "true");
+              };
+            const getItems = function () {
+              return Array.from(menu.querySelectorAll(itemSelector)).filter(
+                function (item) {
+                  return item.offsetParent !== null || menu.style.display === "block";
+                },
+              );
+            };
+            const focusItem = function (index) {
+              const items = getItems();
+              if (!items.length) return;
+              const next = (index + items.length) % items.length;
+              items.forEach(function (item, itemIndex) {
+                item.tabIndex = itemIndex === next ? 0 : -1;
+              });
+              items[next].focus({ preventScroll: true });
+            };
+            button.setAttribute("aria-haspopup", "listbox");
+            button.setAttribute("aria-expanded", "false");
+            menu.setAttribute("role", "listbox");
+            getItems().forEach(function (item) {
+              item.setAttribute("role", "option");
+              item.tabIndex = -1;
+            });
+            button.addEventListener("keydown", function (e) {
+              if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+                e.preventDefault();
+                openMenu();
+                focusItem(e.key === "ArrowDown" ? 0 : getItems().length - 1);
+              } else if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                openMenu();
+                focusItem(0);
+              } else if (e.key === "Escape") {
+                closeMenu();
+              }
+            });
+            menu.addEventListener("keydown", function (e) {
+              const items = getItems();
+              const currentIndex = items.indexOf(document.activeElement);
+              if (e.key === "ArrowDown") {
+                e.preventDefault();
+                focusItem(currentIndex + 1);
+              } else if (e.key === "ArrowUp") {
+                e.preventDefault();
+                focusItem(currentIndex - 1);
+              } else if (e.key === "Home") {
+                e.preventDefault();
+                focusItem(0);
+              } else if (e.key === "End") {
+                e.preventDefault();
+                focusItem(items.length - 1);
+              } else if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                if (document.activeElement && document.activeElement.click) {
+                  document.activeElement.click();
+                }
+              } else if (e.key === "Escape") {
+                e.preventDefault();
+                closeMenu();
+                button.focus({ preventScroll: true });
+              }
+            });
+          };
+
           const translations = {
             en: {
               name: "English",
@@ -7253,6 +7393,16 @@
               // Text to Speech
               ttsLabel: "Text to Speech",
               ttsDescription: "Speak text when clicking buttons or labels",
+              schoolMode: "School Mode",
+              schoolModeDescription:
+                "Locks SafeSearch to Strict and hides Labs. Disable via Reset All Settings.",
+              countrySetTo: "Country set to {country}",
+              schoolModeEnabled: "School Mode enabled",
+              schoolNewsBlockTitle: "News not available",
+              schoolNewsBlockDesc: "News is not available in School Mode.",
+              auto: "Auto",
+              autoCountryLabel: "Auto: {country}",
+              offersIn: "Munetios offers in {language}",
 
               // Confirmation Messages
               deleteSearchHistoryConfirm:
@@ -7276,8 +7426,60 @@
 
               // Image Search
               imageSearch: "Image Search",
+              searchImages: "Search Images",
               uploadImagePrompt: "Click to upload an image or drag & drop",
               extractedText: "Extracted Text:",
+              bookmarkLocation: "Bookmark Location",
+              locationBookmarkTitle: "Map - {lat}, {lng}",
+              locationBookmarkDescription: "Lat: {lat}, Lng: {lng} (Zoom {zoom})",
+              noBookmarksYet: "No bookmarks yet.",
+              bookmarksEmptyHint: "Save articles, maps, and news stories.",
+              bookmarkedPrefix: "Bookmarked: {title}",
+              alreadyBookmarked: "Already bookmarked",
+              untitled: "Untitled",
+              languageChanged: "Language changed to {language}",
+              searchLocations: "Search Locations",
+              searchNews: "Search News",
+              refresh: "Refresh",
+              save: "Save",
+              comments: "comments",
+              pointsShort: "pts",
+              hnThread: "HN Thread",
+              searchWikipedia: "Search Wikipedia",
+              searchVideos: "Search Videos",
+              mapLayer: "Map",
+              satelliteLayer: "Satellite",
+              tooManyRequests: "Too Many Requests",
+              completeCaptcha: "Complete CAPTCHA",
+              tooManyRequestsCaptcha: "Too many requests. Complete CAPTCHA to continue.",
+              failedToLoadNews: "Failed to load news. Please try again.",
+              noStoriesFound: "No stories found.",
+              loading: "Loading...",
+              locationSearchUnavailable: "Location search unavailable.",
+              tooManyRequestsTryAgain: "Too many requests. Try again in {seconds}s.",
+              unknown: "Unknown",
+              useMyLocation: "Use my location",
+              readAloud: "Read Aloud",
+              read: "Read",
+              stop: "Stop",
+              viewOnWikipedia: "View on Wikipedia",
+              article: "Article",
+              searchingWikipedia: "Searching Wikipedia...",
+              noResultsFound: "No results found.",
+              failedToLoadResults: "Failed to load results.",
+              loadingArticle: "Loading article...",
+              noContentAvailable: "No content available.",
+              failedToLoadArticle: "Failed to load article.",
+              refreshCaptcha: "Refresh CAPTCHA",
+              captchaLimitDesc: "You've reached the request limit. Complete the CAPTCHA below to continue.",
+              enterText: "Enter text",
+              continue: "Continue",
+              incorrectCaptcha: "Incorrect. Please try again.",
+              autoUnblocksIn: "Auto-unblocks in {minutes}m {seconds}s",
+              limitResetUnlock: "Limit reset - complete CAPTCHA to unlock.",
+              mapTilesBlocked: "Map tiles have been temporarily blocked. Complete the CAPTCHA to continue or wait for the limit to reset.",
+              wikiBlocked: "Wikipedia search has been temporarily blocked. Complete the CAPTCHA to continue or wait for the limit to reset.",
+              newsBlocked: "News search has been temporarily blocked. Complete the CAPTCHA to continue or wait for the limit to reset.",
 
               // Sidebar Menu
               menu: "Menu",
@@ -18914,8 +19116,507 @@
             },
           };
 
+          const runtimeTranslationFallbacks = {
+            es: {
+              searchImages: "Buscar imágenes",
+              bookmarkLocation: "Guardar ubicación",
+              locationBookmarkTitle: "Mapa - {lat}, {lng}",
+              locationBookmarkDescription: "Lat: {lat}, Lng: {lng} (Zoom {zoom})",
+              noBookmarksYet: "Aún no hay marcadores.",
+              bookmarksEmptyHint: "Guarda artículos, mapas y noticias.",
+              bookmarkedPrefix: "Guardado: {title}",
+              alreadyBookmarked: "Ya está guardado",
+              untitled: "Sin título",
+              searchLocations: "Buscar ubicaciones",
+              searchNews: "Buscar noticias",
+              refresh: "Actualizar",
+              save: "Guardar",
+              comments: "comentarios",
+              pointsShort: "pts",
+              hnThread: "Hilo de HN",
+              searchWikipedia: "Buscar en Wikipedia",
+              searchVideos: "Buscar videos",
+              mapLayer: "Mapa",
+              satelliteLayer: "Satélite",
+              tooManyRequests: "Demasiadas solicitudes",
+              completeCaptcha: "Completar CAPTCHA",
+              tooManyRequestsCaptcha: "Demasiadas solicitudes. Completa el CAPTCHA para continuar.",
+              failedToLoadNews: "No se pudieron cargar las noticias. Inténtalo de nuevo.",
+              noStoriesFound: "No se encontraron historias.",
+              loading: "Cargando...",
+              locationSearchUnavailable: "La búsqueda de ubicaciones no está disponible.",
+              tooManyRequestsTryAgain: "Demasiadas solicitudes. Inténtalo de nuevo en {seconds}s.",
+              unknown: "Desconocido",
+              useMyLocation: "Usar mi ubicación",
+              readAloud: "Leer en voz alta",
+              read: "Leer",
+              stop: "Detener",
+              viewOnWikipedia: "Ver en Wikipedia",
+              article: "Artículo",
+              searchingWikipedia: "Buscando en Wikipedia...",
+              noResultsFound: "No se encontraron resultados.",
+              failedToLoadResults: "No se pudieron cargar los resultados.",
+              loadingArticle: "Cargando artículo...",
+              noContentAvailable: "No hay contenido disponible.",
+              failedToLoadArticle: "No se pudo cargar el artículo.",
+              refreshCaptcha: "Actualizar CAPTCHA",
+              captchaLimitDesc: "Has alcanzado el límite de solicitudes. Completa el CAPTCHA para continuar.",
+              enterText: "Introduce texto",
+              continue: "Continuar",
+              incorrectCaptcha: "Incorrecto. Inténtalo de nuevo.",
+              autoUnblocksIn: "Se desbloquea automáticamente en {minutes}m {seconds}s",
+              limitResetUnlock: "Límite restablecido - completa el CAPTCHA para desbloquear.",
+              schoolMode: "Modo escolar",
+              schoolModeDescription:
+                "Bloquea SafeSearch en Estricto y oculta Labs. Desactívalo desde Restablecer todos los ajustes.",
+              countrySetTo: "País cambiado a {country}",
+              schoolModeEnabled: "Modo escolar activado",
+              schoolNewsBlockTitle: "Noticias no disponibles",
+              schoolNewsBlockDesc: "Las noticias no están disponibles en el modo escolar.",
+              auto: "Automático",
+              autoCountryLabel: "Automático: {country}",
+              offersIn: "Munetios ofrece en {language}",
+            },
+            fr: {
+              searchImages: "Rechercher des images",
+              bookmarkLocation: "Ajouter le lieu aux favoris",
+              locationBookmarkTitle: "Carte - {lat}, {lng}",
+              locationBookmarkDescription: "Lat. : {lat}, long. : {lng} (zoom {zoom})",
+              noBookmarksYet: "Aucun favori pour le moment.",
+              bookmarksEmptyHint: "Enregistrez des articles, des cartes et des actualités.",
+              bookmarkedPrefix: "Ajouté aux favoris : {title}",
+              alreadyBookmarked: "Déjà dans les favoris",
+              untitled: "Sans titre",
+              searchLocations: "Rechercher des lieux",
+              searchNews: "Rechercher des actualités",
+              refresh: "Actualiser",
+              save: "Enregistrer",
+              comments: "commentaires",
+              hnThread: "Fil HN",
+              searchWikipedia: "Rechercher sur Wikipedia",
+              searchVideos: "Rechercher des vidéos",
+              mapLayer: "Carte",
+              satelliteLayer: "Satellite",
+              tooManyRequests: "Trop de requêtes",
+              completeCaptcha: "Terminer le CAPTCHA",
+              tooManyRequestsCaptcha: "Trop de requêtes. Terminez le CAPTCHA pour continuer.",
+              failedToLoadNews: "Impossible de charger les actualités. Réessayez.",
+              noStoriesFound: "Aucune actualité trouvée.",
+              loading: "Chargement...",
+              locationSearchUnavailable: "Recherche de lieu indisponible.",
+              tooManyRequestsTryAgain: "Trop de requêtes. Réessayez dans {seconds}s.",
+              unknown: "Inconnu",
+              useMyLocation: "Utiliser ma position",
+              readAloud: "Lire à voix haute",
+              read: "Lire",
+              stop: "Arrêter",
+              viewOnWikipedia: "Voir sur Wikipedia",
+              article: "Article",
+              searchingWikipedia: "Recherche sur Wikipedia...",
+              noResultsFound: "Aucun résultat trouvé.",
+              failedToLoadResults: "Impossible de charger les résultats.",
+              loadingArticle: "Chargement de l'article...",
+              noContentAvailable: "Aucun contenu disponible.",
+              failedToLoadArticle: "Impossible de charger l'article.",
+              refreshCaptcha: "Actualiser le CAPTCHA",
+              captchaLimitDesc: "Vous avez atteint la limite de requêtes. Terminez le CAPTCHA pour continuer.",
+              enterText: "Saisir le texte",
+              continue: "Continuer",
+              incorrectCaptcha: "Incorrect. Réessayez.",
+              autoUnblocksIn: "Déblocage automatique dans {minutes}m {seconds}s",
+              limitResetUnlock: "Limite réinitialisée - terminez le CAPTCHA pour déverrouiller.",
+              schoolMode: "Mode scolaire",
+              schoolModeDescription:
+                "Verrouille SafeSearch sur Strict et masque Labs. Désactivez-le via Réinitialiser tous les paramètres.",
+              countrySetTo: "Pays défini sur {country}",
+              schoolModeEnabled: "Mode scolaire activé",
+              schoolNewsBlockTitle: "Actualités non disponibles",
+              schoolNewsBlockDesc: "Les actualités ne sont pas disponibles en mode scolaire.",
+              auto: "Auto",
+              autoCountryLabel: "Auto : {country}",
+              offersIn: "Munetios est proposé en {language}",
+            },
+            de: {
+              searchImages: "Bilder suchen",
+              bookmarkLocation: "Ort speichern",
+              locationBookmarkTitle: "Karte - {lat}, {lng}",
+              locationBookmarkDescription: "Breite: {lat}, Länge: {lng} (Zoom {zoom})",
+              noBookmarksYet: "Noch keine Lesezeichen.",
+              bookmarksEmptyHint: "Speichere Artikel, Karten und Nachrichten.",
+              bookmarkedPrefix: "Gespeichert: {title}",
+              alreadyBookmarked: "Bereits gespeichert",
+              untitled: "Ohne Titel",
+              searchLocations: "Orte suchen",
+              searchNews: "Nachrichten suchen",
+              refresh: "Aktualisieren",
+              save: "Speichern",
+              comments: "Kommentare",
+              hnThread: "HN-Thread",
+              searchWikipedia: "Wikipedia suchen",
+              searchVideos: "Videos suchen",
+              mapLayer: "Karte",
+              satelliteLayer: "Satellit",
+              tooManyRequests: "Zu viele Anfragen",
+              completeCaptcha: "CAPTCHA abschließen",
+              tooManyRequestsCaptcha: "Zu viele Anfragen. Schließe das CAPTCHA ab, um fortzufahren.",
+              failedToLoadNews: "Nachrichten konnten nicht geladen werden. Bitte erneut versuchen.",
+              noStoriesFound: "Keine Meldungen gefunden.",
+              loading: "Wird geladen...",
+              locationSearchUnavailable: "Ortssuche nicht verfügbar.",
+              tooManyRequestsTryAgain: "Zu viele Anfragen. In {seconds}s erneut versuchen.",
+              unknown: "Unbekannt",
+              useMyLocation: "Meinen Standort verwenden",
+              readAloud: "Vorlesen",
+              read: "Lesen",
+              stop: "Stopp",
+              viewOnWikipedia: "Auf Wikipedia ansehen",
+              article: "Artikel",
+              searchingWikipedia: "Wikipedia wird durchsucht...",
+              noResultsFound: "Keine Ergebnisse gefunden.",
+              failedToLoadResults: "Ergebnisse konnten nicht geladen werden.",
+              loadingArticle: "Artikel wird geladen...",
+              noContentAvailable: "Kein Inhalt verfügbar.",
+              failedToLoadArticle: "Artikel konnte nicht geladen werden.",
+              refreshCaptcha: "CAPTCHA aktualisieren",
+              captchaLimitDesc: "Du hast das Anfrage-Limit erreicht. Schließe das CAPTCHA ab, um fortzufahren.",
+              enterText: "Text eingeben",
+              continue: "Weiter",
+              incorrectCaptcha: "Falsch. Bitte erneut versuchen.",
+              autoUnblocksIn: "Automatische Freigabe in {minutes}m {seconds}s",
+              limitResetUnlock: "Limit zurückgesetzt - CAPTCHA zum Entsperren abschließen.",
+              schoolMode: "Schulmodus",
+              schoolModeDescription:
+                "Sperrt SafeSearch auf Strikt und blendet Labs aus. Deaktivierung über Alle Einstellungen zurücksetzen.",
+              countrySetTo: "Land auf {country} gesetzt",
+              schoolModeEnabled: "Schulmodus aktiviert",
+              schoolNewsBlockTitle: "Nachrichten nicht verfügbar",
+              schoolNewsBlockDesc: "Nachrichten sind im Schulmodus nicht verfügbar.",
+              auto: "Automatisch",
+              autoCountryLabel: "Automatisch: {country}",
+              offersIn: "Munetios wird auf {language} angeboten",
+            },
+            it: {
+              searchImages: "Cerca immagini",
+              bookmarkLocation: "Salva posizione",
+              noBookmarksYet: "Ancora nessun segnalibro.",
+              bookmarksEmptyHint: "Salva articoli, mappe e notizie.",
+              bookmarkedPrefix: "Salvato: {title}",
+              alreadyBookmarked: "Già salvato",
+              untitled: "Senza titolo",
+            },
+            pt: {
+              searchImages: "Pesquisar imagens",
+              bookmarkLocation: "Guardar localização",
+              noBookmarksYet: "Ainda não há marcadores.",
+              bookmarksEmptyHint: "Guarde artigos, mapas e notícias.",
+              bookmarkedPrefix: "Guardado: {title}",
+              alreadyBookmarked: "Já guardado",
+              untitled: "Sem título",
+            },
+            nl: {
+              searchImages: "Afbeeldingen zoeken",
+              bookmarkLocation: "Locatie opslaan",
+              noBookmarksYet: "Nog geen bladwijzers.",
+              bookmarksEmptyHint: "Bewaar artikelen, kaarten en nieuwsverhalen.",
+              bookmarkedPrefix: "Opgeslagen: {title}",
+              alreadyBookmarked: "Al opgeslagen",
+              untitled: "Naamloos",
+            },
+            pl: {
+              searchImages: "Szukaj obrazów",
+              bookmarkLocation: "Zapisz lokalizację",
+              noBookmarksYet: "Brak zakładek.",
+              bookmarksEmptyHint: "Zapisuj artykuły, mapy i wiadomości.",
+              bookmarkedPrefix: "Zapisano: {title}",
+              alreadyBookmarked: "Już zapisano",
+              untitled: "Bez tytułu",
+            },
+            tr: {
+              searchImages: "Görsel ara",
+              bookmarkLocation: "Konumu kaydet",
+              noBookmarksYet: "Henüz yer imi yok.",
+              bookmarksEmptyHint: "Makaleleri, haritaları ve haberleri kaydedin.",
+              bookmarkedPrefix: "Kaydedildi: {title}",
+              alreadyBookmarked: "Zaten kaydedildi",
+              untitled: "Başlıksız",
+            },
+            ru: {
+              searchImages: "Искать изображения",
+              bookmarkLocation: "Сохранить местоположение",
+              noBookmarksYet: "Закладок пока нет.",
+              bookmarksEmptyHint: "Сохраняйте статьи, карты и новости.",
+              bookmarkedPrefix: "Добавлено: {title}",
+              alreadyBookmarked: "Уже добавлено",
+              untitled: "Без названия",
+            },
+            ja: {
+              searchImages: "画像を検索",
+              bookmarkLocation: "場所をブックマーク",
+              noBookmarksYet: "ブックマークはまだありません。",
+              bookmarksEmptyHint: "記事、地図、ニュースを保存できます。",
+              bookmarkedPrefix: "ブックマークしました: {title}",
+              alreadyBookmarked: "すでにブックマーク済みです",
+              untitled: "無題",
+              searchLocations: "場所を検索",
+              searchNews: "ニュースを検索",
+              refresh: "更新",
+              save: "保存",
+              comments: "コメント",
+              hnThread: "HN スレッド",
+              searchWikipedia: "Wikipedia を検索",
+              searchVideos: "動画を検索",
+              mapLayer: "地図",
+              satelliteLayer: "衛星",
+              tooManyRequests: "リクエストが多すぎます",
+              completeCaptcha: "CAPTCHA を完了",
+              tooManyRequestsCaptcha: "リクエストが多すぎます。続行するには CAPTCHA を完了してください。",
+              failedToLoadNews: "ニュースを読み込めませんでした。もう一度お試しください。",
+              noStoriesFound: "記事が見つかりません。",
+              loading: "読み込み中...",
+              locationSearchUnavailable: "場所検索は利用できません。",
+              tooManyRequestsTryAgain: "リクエストが多すぎます。{seconds}秒後にもう一度お試しください。",
+              unknown: "不明",
+              useMyLocation: "現在地を使用",
+              readAloud: "読み上げ",
+              read: "読む",
+              stop: "停止",
+              viewOnWikipedia: "Wikipedia で表示",
+              article: "記事",
+              searchingWikipedia: "Wikipedia を検索中...",
+              noResultsFound: "結果が見つかりません。",
+              failedToLoadResults: "結果を読み込めませんでした。",
+              loadingArticle: "記事を読み込み中...",
+              noContentAvailable: "利用できる内容がありません。",
+              failedToLoadArticle: "記事を読み込めませんでした。",
+              refreshCaptcha: "CAPTCHA を更新",
+              captchaLimitDesc: "リクエスト制限に達しました。続行するには CAPTCHA を完了してください。",
+              enterText: "テキストを入力",
+              continue: "続行",
+              incorrectCaptcha: "正しくありません。もう一度お試しください。",
+              autoUnblocksIn: "{minutes}分 {seconds}秒後に自動解除",
+              limitResetUnlock: "制限がリセットされました - 解除するには CAPTCHA を完了してください。",
+              schoolMode: "学校モード",
+              schoolModeDescription:
+                "SafeSearch を強制的に Strict にし、Labs を非表示にします。すべての設定をリセットすると無効になります。",
+              countrySetTo: "国を {country} に設定しました",
+              schoolModeEnabled: "学校モードが有効になりました",
+              schoolNewsBlockTitle: "ニュースは利用できません",
+              schoolNewsBlockDesc: "学校モードではニュースを利用できません。",
+              auto: "自動",
+              autoCountryLabel: "自動: {country}",
+              offersIn: "Munetios は {language} で提供されます",
+            },
+            zh: {
+              searchImages: "搜索图片",
+              bookmarkLocation: "收藏位置",
+              noBookmarksYet: "还没有书签。",
+              bookmarksEmptyHint: "保存文章、地图和新闻。",
+              bookmarkedPrefix: "已收藏：{title}",
+              alreadyBookmarked: "已收藏",
+              untitled: "无标题",
+              searchLocations: "搜索地点",
+              searchNews: "搜索新闻",
+              refresh: "刷新",
+              save: "保存",
+              comments: "评论",
+              hnThread: "HN 讨论",
+              searchWikipedia: "搜索 Wikipedia",
+              searchVideos: "搜索视频",
+              mapLayer: "地图",
+              satelliteLayer: "卫星",
+              tooManyRequests: "请求过多",
+              completeCaptcha: "完成 CAPTCHA",
+              tooManyRequestsCaptcha: "请求过多。请完成 CAPTCHA 以继续。",
+              failedToLoadNews: "无法加载新闻。请重试。",
+              noStoriesFound: "未找到报道。",
+              loading: "正在加载...",
+              locationSearchUnavailable: "地点搜索不可用。",
+              tooManyRequestsTryAgain: "请求过多。请在 {seconds} 秒后重试。",
+              unknown: "未知",
+              useMyLocation: "使用我的位置",
+              readAloud: "朗读",
+              read: "阅读",
+              stop: "停止",
+              viewOnWikipedia: "在 Wikipedia 查看",
+              article: "文章",
+              searchingWikipedia: "正在搜索 Wikipedia...",
+              noResultsFound: "未找到结果。",
+              failedToLoadResults: "无法加载结果。",
+              loadingArticle: "正在加载文章...",
+              noContentAvailable: "没有可用内容。",
+              failedToLoadArticle: "无法加载文章。",
+              refreshCaptcha: "刷新 CAPTCHA",
+              captchaLimitDesc: "你已达到请求限制。请完成 CAPTCHA 以继续。",
+              enterText: "输入文本",
+              continue: "继续",
+              incorrectCaptcha: "不正确。请重试。",
+              autoUnblocksIn: "{minutes}分 {seconds}秒后自动解除",
+              limitResetUnlock: "限制已重置 - 请完成 CAPTCHA 以解锁。",
+              schoolMode: "学校模式",
+              schoolModeDescription:
+                "将 SafeSearch 锁定为严格并隐藏 Labs。可通过重置所有设置禁用。",
+              countrySetTo: "国家/地区已设为 {country}",
+              schoolModeEnabled: "学校模式已启用",
+              schoolNewsBlockTitle: "新闻不可用",
+              schoolNewsBlockDesc: "学校模式下无法使用新闻。",
+              auto: "自动",
+              autoCountryLabel: "自动：{country}",
+              offersIn: "Munetios 提供 {language} 版本",
+            },
+            "zh-TW": {
+              searchImages: "搜尋圖片",
+              bookmarkLocation: "收藏位置",
+              noBookmarksYet: "尚無書籤。",
+              bookmarksEmptyHint: "儲存文章、地圖與新聞。",
+              bookmarkedPrefix: "已收藏：{title}",
+              alreadyBookmarked: "已收藏",
+              untitled: "無標題",
+            },
+            ko: {
+              searchImages: "이미지 검색",
+              bookmarkLocation: "위치 북마크",
+              noBookmarksYet: "아직 북마크가 없습니다.",
+              bookmarksEmptyHint: "기사, 지도, 뉴스를 저장하세요.",
+              bookmarkedPrefix: "북마크됨: {title}",
+              alreadyBookmarked: "이미 북마크됨",
+              untitled: "제목 없음",
+            },
+            ar: {
+              searchImages: "البحث عن الصور",
+              bookmarkLocation: "حفظ الموقع",
+              noBookmarksYet: "لا توجد إشارات مرجعية بعد.",
+              bookmarksEmptyHint: "احفظ المقالات والخرائط والأخبار.",
+              bookmarkedPrefix: "تم الحفظ: {title}",
+              alreadyBookmarked: "محفوظ بالفعل",
+              untitled: "بدون عنوان",
+              searchLocations: "البحث عن المواقع",
+              searchNews: "البحث في الأخبار",
+              refresh: "تحديث",
+              save: "حفظ",
+              comments: "تعليقات",
+              hnThread: "مناقشة HN",
+              searchWikipedia: "البحث في Wikipedia",
+              searchVideos: "البحث عن الفيديوهات",
+              mapLayer: "الخريطة",
+              satelliteLayer: "القمر الصناعي",
+              tooManyRequests: "طلبات كثيرة جدًا",
+              completeCaptcha: "إكمال CAPTCHA",
+              tooManyRequestsCaptcha: "طلبات كثيرة جدًا. أكمل CAPTCHA للمتابعة.",
+              failedToLoadNews: "تعذر تحميل الأخبار. حاول مرة أخرى.",
+              noStoriesFound: "لم يتم العثور على أخبار.",
+              loading: "جار التحميل...",
+              locationSearchUnavailable: "بحث المواقع غير متاح.",
+              tooManyRequestsTryAgain: "طلبات كثيرة جدًا. حاول مرة أخرى خلال {seconds}ث.",
+              unknown: "غير معروف",
+              useMyLocation: "استخدام موقعي",
+              readAloud: "قراءة بصوت عال",
+              read: "قراءة",
+              stop: "إيقاف",
+              viewOnWikipedia: "عرض في Wikipedia",
+              article: "مقالة",
+              searchingWikipedia: "جار البحث في Wikipedia...",
+              noResultsFound: "لم يتم العثور على نتائج.",
+              failedToLoadResults: "تعذر تحميل النتائج.",
+              loadingArticle: "جار تحميل المقالة...",
+              noContentAvailable: "لا يوجد محتوى متاح.",
+              failedToLoadArticle: "تعذر تحميل المقالة.",
+              refreshCaptcha: "تحديث CAPTCHA",
+              captchaLimitDesc: "لقد وصلت إلى حد الطلبات. أكمل CAPTCHA للمتابعة.",
+              enterText: "أدخل النص",
+              continue: "متابعة",
+              incorrectCaptcha: "غير صحيح. حاول مرة أخرى.",
+              autoUnblocksIn: "يتم الفتح تلقائيًا خلال {minutes}د {seconds}ث",
+              limitResetUnlock: "تمت إعادة ضبط الحد - أكمل CAPTCHA لإلغاء القفل.",
+              schoolMode: "وضع المدرسة",
+              schoolModeDescription:
+                "يثبت SafeSearch على الصارم ويخفي Labs. عطله عبر إعادة تعيين كل الإعدادات.",
+              countrySetTo: "تم تعيين البلد إلى {country}",
+              schoolModeEnabled: "تم تفعيل وضع المدرسة",
+              schoolNewsBlockTitle: "الأخبار غير متاحة",
+              schoolNewsBlockDesc: "الأخبار غير متاحة في وضع المدرسة.",
+              auto: "تلقائي",
+              autoCountryLabel: "تلقائي: {country}",
+              offersIn: "Munetios متوفر باللغة {language}",
+            },
+            hi: {
+              searchImages: "छवियां खोजें",
+              bookmarkLocation: "स्थान बुकमार्क करें",
+              noBookmarksYet: "अभी कोई बुकमार्क नहीं है.",
+              bookmarksEmptyHint: "लेख, मानचित्र और समाचार सेव करें.",
+              bookmarkedPrefix: "बुकमार्क किया गया: {title}",
+              alreadyBookmarked: "पहले से बुकमार्क है",
+              untitled: "बिना शीर्षक",
+            },
+          };
+
+          function getTranslationsFor(langCode) {
+            const fallbackLang = (langCode || "en").split("-")[0];
+            return {
+              ...translations.en,
+              ...(runtimeTranslationFallbacks[fallbackLang] || {}),
+              ...(translations[fallbackLang] || {}),
+              ...(runtimeTranslationFallbacks[langCode] || {}),
+              ...(translations[langCode] || {}),
+            };
+          }
+
+          function formatTranslation(template, values) {
+            return String(template || "").replace(/\{(\w+)\}/g, function (_, key) {
+              return values && values[key] !== undefined ? values[key] : "";
+            });
+          }
+
+          function applyDocumentLanguage(langCode) {
+            const htmlLang = langCode || "en";
+            const rtlLanguages = new Set(["ar", "fa", "he", "ur"]);
+            document.documentElement.lang = htmlLang;
+            document.documentElement.dir = rtlLanguages.has(htmlLang.split("-")[0])
+              ? "rtl"
+              : "ltr";
+          }
+
+          function protectFromMachineTranslation(root) {
+            const scope = root || document;
+            const protectedText = new Set([
+              "Munetios",
+              "Munetios Search",
+              "OmniWrite",
+              "SupaNotes",
+              "ChatGPT",
+              "Google",
+              "YouTube",
+              "Facebook",
+              "Instagram",
+              "Discord",
+              "Amazon",
+              "Google Sans Flex",
+              "Google Sans",
+              "Roboto",
+              "Poppins",
+              "Lexend",
+            ]);
+            scope
+              .querySelectorAll(
+                "icon, .material-symbols-rounded, .material-icons, .notranslate, [data-notranslate], [data-brand], .brand-name, .logo-container, .shortcut:not(.add-shortcut-btn), .shortcut:not(.add-shortcut-btn) .shortcut-label, #fontFamilyButton, #fontFamilySelector, #localFontsList, #languageButton, #languageSelector .dropdown-item",
+              )
+              .forEach(function (el) {
+                el.setAttribute("translate", "no");
+                el.classList.add("notranslate");
+              });
+            scope
+              .querySelectorAll("a, button, span, div, h1, h2, h3, h4, label")
+              .forEach(function (el) {
+                if (protectedText.has(el.textContent.trim())) {
+                  el.setAttribute("translate", "no");
+                  el.classList.add("notranslate");
+                }
+              });
+          }
+
           function applyTranslations(langCode) {
-            const t = translations[langCode] || translations.en;
+            const t = getTranslationsFor(langCode);
+            applyDocumentLanguage(langCode);
+            protectFromMachineTranslation();
 
             // Search input
             const searchInput = document.getElementById("searchInput");
@@ -19011,6 +19712,112 @@
             if (searchExtractedText)
               searchExtractedText.textContent =
                 t.searchButton || translations.en.searchButton;
+
+            const mapBookmarkLabel =
+              document.getElementById("mapBookmarkLabel");
+            if (mapBookmarkLabel)
+              mapBookmarkLabel.textContent =
+                t.bookmarkLocation || translations.en.bookmarkLocation;
+
+            const translatedInputs = [
+              ["videoSearchInput", "searchVideos"],
+              ["newsSearchInput", "searchNews"],
+              ["mapSearchInput", "searchLocations"],
+              ["wikiSearchInput", "searchWikipedia"],
+            ];
+            translatedInputs.forEach(function ([id, key]) {
+              const input = document.getElementById(id);
+              if (input) input.placeholder = t[key] || translations.en[key] || input.placeholder;
+            });
+
+            const refreshText = document.querySelector("#refreshBtn .refresh-text");
+            if (refreshText)
+              refreshText.textContent = t.refresh || translations.en.refresh;
+
+            const mapLayerText = document.querySelector("#mapLayerBtn .layer-text");
+            if (mapLayerText)
+              mapLayerText.textContent = t.mapLayer || translations.en.mapLayer;
+
+            const satelliteLayerText = document.querySelector("#satelliteLayerBtn .layer-text");
+            if (satelliteLayerText)
+              satelliteLayerText.textContent =
+                t.satelliteLayer || translations.en.satelliteLayer;
+
+            const myLocationBtn = document.getElementById("myLocationBtn");
+            if (myLocationBtn)
+              myLocationBtn.title = t.useMyLocation || translations.en.useMyLocation;
+
+            const wikiReadAloudLabel =
+              document.getElementById("wikiReadAloudLabel");
+            if (wikiReadAloudLabel)
+              wikiReadAloudLabel.textContent =
+                t.readAloud || translations.en.readAloud;
+
+            const wikiReadTitle = document.getElementById("wikiReadTitle");
+            if (wikiReadTitle && wikiReadTitle.textContent === translations.en.article)
+              wikiReadTitle.textContent = t.article || translations.en.article;
+            const wikiReadWikiLink = document.getElementById("wikiReadWikiLink");
+            if (wikiReadWikiLink) {
+              const span = wikiReadWikiLink.querySelector("span");
+              if (span)
+                span.textContent =
+                  t.viewOnWikipedia || translations.en.viewOnWikipedia;
+            }
+            const wikiReadBookmarkBtn =
+              document.getElementById("wikiReadBookmarkBtn");
+            if (wikiReadBookmarkBtn) {
+              const span = wikiReadBookmarkBtn.querySelector("span");
+              if (span) span.textContent = t.save || translations.en.save;
+            }
+            document.querySelectorAll(".news-points-label").forEach(function (el) {
+              el.textContent = t.pointsShort || translations.en.pointsShort;
+            });
+            document.querySelectorAll(".news-comments-label").forEach(function (el) {
+              el.textContent = t.comments || translations.en.comments;
+            });
+            document.querySelectorAll(".news-save-label, .wiki-save-label").forEach(function (el) {
+              el.textContent = t.save || translations.en.save;
+            });
+            document.querySelectorAll(".news-thread-label").forEach(function (el) {
+              el.textContent = t.hnThread || translations.en.hnThread;
+            });
+            document.querySelectorAll(".wiki-read-label").forEach(function (el) {
+              el.textContent = t.read || translations.en.read;
+            });
+            const captchaTitle = document.querySelector("#captchaModal h3");
+            if (captchaTitle)
+              captchaTitle.textContent =
+                t.tooManyRequests || translations.en.tooManyRequests;
+            const captchaRefresh = document.getElementById("captchaRefresh");
+            if (captchaRefresh)
+              captchaRefresh.textContent =
+                "↻ " + (t.refreshCaptcha || translations.en.refreshCaptcha);
+            const captchaDesc = document.getElementById("captchaModalDesc");
+            if (captchaDesc)
+              captchaDesc.textContent =
+                t.captchaLimitDesc || translations.en.captchaLimitDesc;
+            const captchaInput = document.getElementById("captchaInput");
+            if (captchaInput)
+              captchaInput.placeholder = t.enterText || translations.en.enterText;
+            const captchaSubmit = document.getElementById("captchaSubmit");
+            if (captchaSubmit)
+              captchaSubmit.textContent = t.continue || translations.en.continue;
+
+            document.querySelectorAll(".page-block-title").forEach(function (el) {
+              el.textContent = t.tooManyRequests || translations.en.tooManyRequests;
+            });
+            document.querySelectorAll(".page-block-btn").forEach(function (el) {
+              el.textContent = t.completeCaptcha || translations.en.completeCaptcha;
+            });
+            const pageBlockText = {
+              "pageBlock-wiki": "wikiBlocked",
+              "pageBlock-news": "newsBlocked",
+              "pageBlock-maps": "mapTilesBlocked",
+            };
+            Object.entries(pageBlockText).forEach(function ([id, key]) {
+              const desc = document.querySelector("#" + id + " .page-block-desc");
+              if (desc) desc.textContent = t[key] || translations.en[key] || desc.textContent;
+            });
 
             // Apps Wrapper
             const appsTitle = document.querySelector(
@@ -19167,6 +19974,28 @@
             if (ttsSublabel)
               ttsSublabel.textContent =
                 t.ttsDescription || translations.en.ttsDescription;
+            const schoolModeLabel = document.querySelector(
+              "#schoolModeSetting .settings-label",
+            );
+            if (schoolModeLabel)
+              schoolModeLabel.textContent =
+                t.schoolMode || translations.en.schoolMode;
+            const schoolModeSubLabel =
+              document.getElementById("schoolModeSubLabel");
+            if (schoolModeSubLabel)
+              schoolModeSubLabel.textContent =
+                t.schoolModeDescription ||
+                translations.en.schoolModeDescription;
+
+            // School-mode news block overlay translations
+            const schoolNewsTitle = document.querySelector("#pageBlock-school-news .page-block-title");
+            if (schoolNewsTitle)
+              schoolNewsTitle.textContent =
+                t.schoolNewsBlockTitle || translations.en.schoolNewsBlockTitle;
+            const schoolNewsDesc = document.querySelector("#pageBlock-school-news .page-block-desc");
+            if (schoolNewsDesc)
+              schoolNewsDesc.textContent =
+                t.schoolNewsBlockDesc || translations.en.schoolNewsBlockDesc;
 
             // Appearance Settings Buttons
             const uploadImageBtn = document.getElementById("bgImageUploadBtn");
@@ -19255,6 +20084,17 @@
             if (addShortcutBtnSettings)
               addShortcutBtnSettings.textContent =
                 t.addShortcutBtn || translations.en.addShortcutBtn;
+            document
+              .querySelectorAll("#shortcutsList [data-translate='add']")
+              .forEach(function (el) {
+                el.textContent = t.add || translations.en.add;
+              });
+            document
+              .querySelectorAll("#shortcutsGrid .add-shortcut-btn-settings span")
+              .forEach(function (el) {
+                el.textContent =
+                  t.addShortcutBtn || translations.en.addShortcutBtn;
+              });
 
             // Keyboard Shortcuts
             const keyboardShortcuts = document.querySelectorAll(
@@ -19374,7 +20214,11 @@
               });
 
             // Refresh country label with translated "Country" word
+            window.applyLocalizedDropdownLabels &&
+              window.applyLocalizedDropdownLabels();
             window.refreshCountryLabel && window.refreshCountryLabel();
+            window.updateSearchModeLabels && window.updateSearchModeLabels();
+            window.renderBookmarksPage && window.renderBookmarksPage();
           }
 
           // Load saved language (with navigator.language auto-detection on first visit)
@@ -19394,16 +20238,146 @@
               savedLang = "en";
             }
           }
+          if (!localStorage.getItem("munetiosLanguage")) {
+            localStorage.setItem("munetiosLanguage", savedLang);
+          }
+          window._munetiosTranslations = translations;
+          window.formatMunetiosTranslation = formatTranslation;
+          window.protectFromMachineTranslation = protectFromMachineTranslation;
+
+          window.getCurrentTranslation = function (key) {
+            const langCode = localStorage.getItem("munetiosLanguage") || savedLang || "en";
+            const fallbackLang = langCode.split("-")[0];
+            const direct = translations[langCode]?.[key];
+            if (direct) return direct;
+            const runtimeDirect = runtimeTranslationFallbacks[langCode]?.[key];
+            if (runtimeDirect) return runtimeDirect;
+            const base = translations[fallbackLang]?.[key];
+            if (base) return base;
+            const runtimeBase = runtimeTranslationFallbacks[fallbackLang]?.[key];
+            if (runtimeBase) return runtimeBase;
+            return "";
+          };
+
+          window.getTranslation = function (key) {
+            const langCode = localStorage.getItem("munetiosLanguage") || savedLang || "en";
+            const t = getTranslationsFor(langCode);
+            return t[key] || translations.en[key] || key;
+          };
+
+          const nativeLanguageNames = {
+            en: "English",
+            es: "Español",
+            fr: "Français",
+            de: "Deutsch",
+            it: "Italiano",
+            pt: "Português",
+            ru: "Русский",
+            ja: "日本語",
+            zh: "中文",
+            "zh-TW": "繁體中文",
+            ko: "한국어",
+            ar: "العربية",
+            hi: "हिन्दी",
+            bn: "বাংলা",
+            pa: "ਪੰਜਾਬੀ",
+            id: "Indonesia",
+            vi: "Tiếng Việt",
+            th: "ไทย",
+            tr: "Türkçe",
+            pl: "Polski",
+            nl: "Nederlands",
+            sv: "Svenska",
+            no: "Norsk",
+            da: "Dansk",
+            fi: "Suomi",
+            cs: "Čeština",
+            hu: "Magyar",
+            ro: "Română",
+            he: "עברית",
+            fa: "فارسی",
+            ur: "اردو",
+          };
+
+          function displayLanguageCode(langCode) {
+            if (langCode === "jw") return "jv";
+            if (langCode === "tl") return "fil";
+            return langCode;
+          }
+
+          function makeDisplayNames(type) {
+            const langCode = localStorage.getItem("munetiosLanguage") || savedLang || "en";
+            try {
+              return new Intl.DisplayNames([langCode], { type });
+            } catch (_) {
+              try {
+                return new Intl.DisplayNames(["en"], { type });
+              } catch (__) {
+                return null;
+              }
+            }
+          }
+
+          window.getLocalizedCountryName = function (countryCode) {
+            if (countryCode === "auto") {
+              return window.getTranslation
+                ? window.getTranslation("auto")
+                : "Auto";
+            }
+            const displayNames = makeDisplayNames("region");
+            return (
+              displayNames?.of(String(countryCode || "").toUpperCase()) ||
+              String(countryCode || "").toUpperCase()
+            );
+          };
+
+          function applyLocalizedDropdownLabels() {
+            const languageNames = makeDisplayNames("language");
+            languageSelector?.querySelectorAll("[data-lang]").forEach(function (item) {
+              const langCode = item.dataset.lang;
+              if (!item.dataset.nativeName) {
+                item.dataset.nativeName =
+                  nativeLanguageNames[langCode] || item.textContent.trim();
+              }
+              const localized =
+                languageNames?.of(displayLanguageCode(langCode)) || item.textContent.trim();
+              item.textContent = localized + " (" + item.dataset.nativeName + ")";
+            });
+            document
+              .querySelectorAll("#countrySelector [data-country]")
+              .forEach(function (item) {
+                const countryCode = item.dataset.country;
+                item.textContent = window.getLocalizedCountryName(countryCode);
+              });
+          }
+          window.applyLocalizedDropdownLabels = applyLocalizedDropdownLabels;
+
           languageButton.textContent =
             translations[savedLang]?.name || "English";
           applyTranslations(savedLang);
 
           // Expose for global access
           window._munetiosTranslations = translations;
+          window.formatMunetiosTranslation = formatTranslation;
+          window.protectFromMachineTranslation = protectFromMachineTranslation;
+
+          window.getCurrentTranslation = function (key) {
+            const langCode = localStorage.getItem("munetiosLanguage") || "en";
+            const fallbackLang = langCode.split("-")[0];
+            const direct = translations[langCode]?.[key];
+            if (direct) return direct;
+            const runtimeDirect = runtimeTranslationFallbacks[langCode]?.[key];
+            if (runtimeDirect) return runtimeDirect;
+            const base = translations[fallbackLang]?.[key];
+            if (base) return base;
+            const runtimeBase = runtimeTranslationFallbacks[fallbackLang]?.[key];
+            if (runtimeBase) return runtimeBase;
+            return "";
+          };
 
           window.getTranslation = function (key) {
             const langCode = localStorage.getItem("munetiosLanguage") || "en";
-            const t = translations[langCode] || translations.en;
+            const t = getTranslationsFor(langCode);
             return t[key] || translations.en[key] || key;
           };
 
@@ -19413,15 +20387,26 @@
           };
 
           // Toggle dropdown
-          languageButton?.addEventListener("click", (e) => {
-            e.stopPropagation();
+          const openLanguageSelector = () => {
             const rect = languageButton.getBoundingClientRect();
-            languageSelector.style.display =
-              languageSelector.style.display === "block" ? "none" : "block";
+            languageSelector.style.display = "block";
             languageSelector.style.position = "fixed";
             languageSelector.style.top = rect.bottom + 5 + "px";
             languageSelector.style.left = rect.left + "px";
             languageSelector.style.zIndex = "9999999";
+            languageButton.setAttribute("aria-expanded", "true");
+          };
+          const closeLanguageSelector = () => {
+            languageSelector.style.display = "none";
+            languageButton?.setAttribute("aria-expanded", "false");
+          };
+          languageButton?.addEventListener("click", (e) => {
+            e.stopPropagation();
+            if (languageSelector.style.display === "block") {
+              closeLanguageSelector();
+            } else {
+              openLanguageSelector();
+            }
           });
 
           // Language selection via data-lang attributes
@@ -19432,12 +20417,43 @@
                 translations[langCode]?.name || item.textContent.trim();
               localStorage.setItem("munetiosLanguage", langCode);
               languageButton.textContent = langName;
-              languageSelector.style.display = "none";
+              closeLanguageSelector();
               applyTranslations(langCode);
               window.refreshVirtualKeyboard && window.refreshVirtualKeyboard();
               window.showToast &&
-                window.showToast(`Language changed to ${langName}`);
+                window.showToast(
+                  window.formatMunetiosTranslation
+                    ? window.formatMunetiosTranslation(
+                        window.getTranslation
+                          ? window.getTranslation("languageChanged")
+                          : "Language changed to {language}",
+                        { language: langName },
+                      )
+                    : "Language changed to " + langName,
+                );
             });
+          });
+
+          // Click on offerLanguageStatusLabel to directly apply the offered language
+          const offerLangLabel = document.getElementById("offerLanguageStatusLabel");
+          offerLangLabel?.addEventListener("click", () => {
+            const offerLangCode = offerLangLabel.dataset.offerLang || "en";
+            const langName = translations[offerLangCode]?.name || offerLangCode;
+            localStorage.setItem("munetiosLanguage", offerLangCode);
+            if (languageButton) languageButton.textContent = langName;
+            applyTranslations(offerLangCode);
+            window.refreshVirtualKeyboard && window.refreshVirtualKeyboard();
+            window.showToast &&
+              window.showToast(
+                window.formatMunetiosTranslation
+                  ? window.formatMunetiosTranslation(
+                      window.getTranslation
+                        ? window.getTranslation("languageChanged")
+                        : "Language changed to {language}",
+                      { language: langName },
+                    )
+                  : "Language changed to " + langName,
+              );
           });
 
           // Close dropdown on outside click
@@ -19446,9 +20462,14 @@
               !languageButton?.contains(e.target) &&
               !languageSelector?.contains(e.target)
             ) {
-              languageSelector.style.display = "none";
+              closeLanguageSelector();
             }
           });
+          window.setupMunetiosDropdownA11y &&
+            window.setupMunetiosDropdownA11y(languageButton, languageSelector, {
+              openMenu: openLanguageSelector,
+              closeMenu: closeLanguageSelector,
+            });
         })();
 
         // Default Search Mode Functionality
@@ -19482,6 +20503,19 @@
           const btn = document.getElementById("safeSearchButton");
           const selector = document.getElementById("safeSearchSelector");
           const labels = { off: "Off", moderate: "Moderate", strict: "Strict" };
+          const openSafeSearchSelector = () => {
+            const rect = btn.getBoundingClientRect();
+            selector.style.display = "block";
+            selector.style.position = "fixed";
+            selector.style.top = rect.bottom + 5 + "px";
+            selector.style.left = rect.left + "px";
+            selector.style.zIndex = "399500";
+            btn?.setAttribute("aria-expanded", "true");
+          };
+          const closeSafeSearchSelector = () => {
+            selector.style.display = "none";
+            btn?.setAttribute("aria-expanded", "false");
+          };
 
           function setSafeSearch(level, silent) {
             localStorage.setItem("safeSearchLevel", level);
@@ -19499,26 +20533,26 @@
 
           btn?.addEventListener("click", (e) => {
             e.stopPropagation();
-            const rect = btn.getBoundingClientRect();
-            selector.style.display =
-              selector.style.display === "block" ? "none" : "block";
-            selector.style.position = "fixed";
-            selector.style.top = rect.bottom + 5 + "px";
-            selector.style.left = rect.left + "px";
-            selector.style.zIndex = "399500";
+            if (selector.style.display === "block") closeSafeSearchSelector();
+            else openSafeSearchSelector();
           });
 
           selector?.querySelectorAll(".dropdown-item").forEach((item) => {
             item.addEventListener("click", () => {
               setSafeSearch(item.dataset.level);
-              selector.style.display = "none";
+              closeSafeSearchSelector();
             });
           });
 
           document.addEventListener("click", (e) => {
             if (!btn?.contains(e.target) && !selector?.contains(e.target))
-              selector.style.display = "none";
+              closeSafeSearchSelector();
           });
+          window.setupMunetiosDropdownA11y &&
+            window.setupMunetiosDropdownA11y(btn, selector, {
+              openMenu: openSafeSearchSelector,
+              closeMenu: closeSafeSearchSelector,
+            });
 
           // Expose so School Mode can call it
           window.setSafeSearchLevel = setSafeSearch;
@@ -19530,6 +20564,9 @@
           const countrySelector = document.getElementById("countrySelector");
           const countryStatusLabel =
             document.getElementById("countryStatusLabel");
+          const offerLanguageStatusLabel = document.getElementById(
+            "offerLanguageStatusLabel",
+          );
 
           const countryNames = {
             us: "United States",
@@ -19578,22 +20615,168 @@
             eg: "Egypt",
             pk: "Pakistan",
           };
+          const timezoneCountryMap = {
+            "America/New_York": "us",
+            "America/Chicago": "us",
+            "America/Denver": "us",
+            "America/Los_Angeles": "us",
+            "America/Phoenix": "us",
+            "America/Anchorage": "us",
+            "Pacific/Honolulu": "us",
+            "America/Toronto": "ca",
+            "America/Vancouver": "ca",
+            "Europe/London": "gb",
+            "Europe/Amsterdam": "nl",
+            "Europe/Paris": "fr",
+            "Europe/Berlin": "de",
+            "Europe/Madrid": "es",
+            "Europe/Rome": "it",
+            "Europe/Stockholm": "se",
+            "Europe/Oslo": "no",
+            "Europe/Helsinki": "fi",
+            "Europe/Copenhagen": "dk",
+            "Europe/Warsaw": "pl",
+            "Europe/Moscow": "ru",
+            "Asia/Kolkata": "in",
+            "Asia/Tokyo": "jp",
+            "Asia/Shanghai": "cn",
+            "Asia/Seoul": "kr",
+            "Asia/Jerusalem": "il",
+            "Asia/Dubai": "ae",
+            "Asia/Riyadh": "sa",
+            "Asia/Bangkok": "th",
+            "Asia/Ho_Chi_Minh": "vn",
+            "Asia/Kuala_Lumpur": "my",
+            "Asia/Manila": "ph",
+            "Australia/Sydney": "au",
+            "Australia/Melbourne": "au",
+            "Pacific/Auckland": "nz",
+            "America/Sao_Paulo": "br",
+            "America/Mexico_City": "mx",
+            "America/Argentina/Buenos_Aires": "ar",
+            "Africa/Johannesburg": "za",
+            "Africa/Cairo": "eg",
+            "Asia/Karachi": "pk",
+          };
+          const countryLanguageMap = {
+            us: "en",
+            gb: "en",
+            ca: "en",
+            au: "en",
+            in: "hi",
+            de: "de",
+            fr: "fr",
+            jp: "ja",
+            cn: "zh",
+            br: "pt",
+            ru: "ru",
+            za: "en",
+            nl: "nl",
+            es: "es",
+            it: "it",
+            se: "sv",
+            no: "no",
+            fi: "fi",
+            dk: "da",
+            pl: "pl",
+            mx: "es",
+            ar: "es",
+            tr: "tr",
+            id: "id",
+            kr: "ko",
+            ie: "en",
+            ch: "de",
+            at: "de",
+            be: "fr",
+            pt: "pt",
+            nz: "en",
+            sg: "en",
+            my: "ms",
+            ph: "en",
+            th: "th",
+            vn: "vi",
+            ua: "uk",
+            ro: "ro",
+            cz: "cs",
+            hu: "hu",
+            il: "he",
+            ae: "ar",
+            sa: "ar",
+            eg: "ar",
+            pk: "ur",
+          };
+
+          function getTimezoneCountry() {
+            const timezone =
+              Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+            if (timezoneCountryMap[timezone]) return timezoneCountryMap[timezone];
+            if (timezone.startsWith("Europe/Amsterdam")) return "nl";
+            if (timezone.startsWith("Europe/")) return "gb";
+            if (timezone.startsWith("America/")) return "us";
+            if (timezone.startsWith("Asia/")) return "in";
+            if (timezone.startsWith("Australia/")) return "au";
+            return "us";
+          }
+
+          function getEffectiveCountry(code) {
+            return !code || code === "auto" ? getTimezoneCountry() : code;
+          }
+
+          function getLocalizedLanguageName(langCode) {
+            try {
+              return new Intl.DisplayNames(
+                [localStorage.getItem("munetiosLanguage") || "en"],
+                { type: "language" },
+              ).of(langCode);
+            } catch (_) {
+              return langCode;
+            }
+          }
 
           function getCountryLabel() {
-            const langCode = localStorage.getItem("munetiosLanguage") || "en";
             return (
-              window._munetiosTranslations?.[langCode]?.countryLabel ||
+              (window.getTranslation && window.getTranslation("countryLabel")) ||
               "Country"
             );
           }
 
           function updateCountryDisplay(code, name) {
+            const effectiveCode = getEffectiveCountry(code);
             const displayName =
-              name || countryNames[code] || code.toUpperCase();
-            if (countryBtn) countryBtn.textContent = displayName;
+              (window.getLocalizedCountryName &&
+                window.getLocalizedCountryName(effectiveCode)) ||
+              name ||
+              countryNames[effectiveCode] ||
+              effectiveCode.toUpperCase();
+            const buttonText =
+              code === "auto" && window.formatMunetiosTranslation
+                ? window.formatMunetiosTranslation(
+                    window.getTranslation
+                      ? window.getTranslation("autoCountryLabel")
+                      : "Auto: {country}",
+                    { country: displayName },
+                  )
+                : displayName;
+            if (countryBtn) countryBtn.textContent = buttonText;
             const label = getCountryLabel();
             if (countryStatusLabel)
-              countryStatusLabel.textContent = label + ": " + displayName;
+              countryStatusLabel.textContent = label + ": " + buttonText;
+            const offerLang =
+              countryLanguageMap[effectiveCode] ||
+              localStorage.getItem("munetiosLanguage") ||
+              "en";
+            const offerLangName = getLocalizedLanguageName(offerLang);
+            if (offerLanguageStatusLabel) {
+              offerLanguageStatusLabel.textContent = window.formatMunetiosTranslation
+                ? window.formatMunetiosTranslation(
+                    window.getTranslation
+                      ? window.getTranslation("offersIn")
+                      : "Munetios offers in {language}",
+                    { language: offerLangName },
+                  )
+                : "Munetios offers in " + offerLangName;
+              offerLanguageStatusLabel.dataset.offerLang = offerLang;
+            }
             const settingLabelEl = document.getElementById(
               "countrySettingLabel",
             );
@@ -19601,18 +20784,32 @@
           }
 
           // Load saved country
-          const savedCountry = localStorage.getItem("munetiosCountry") || "us";
-          updateCountryDisplay(savedCountry, countryNames[savedCountry]);
-
-          countryBtn?.addEventListener("click", (e) => {
-            e.stopPropagation();
+          const savedCountry = localStorage.getItem("munetiosCountry") || "auto";
+          if (!localStorage.getItem("munetiosCountry")) {
+            localStorage.setItem("munetiosCountry", "auto");
+          }
+          updateCountryDisplay(savedCountry, countryNames[getEffectiveCountry(savedCountry)]);
+          const openCountrySelector = () => {
             const rect = countryBtn.getBoundingClientRect();
-            countrySelector.style.display =
-              countrySelector.style.display === "block" ? "none" : "block";
+            countrySelector.style.display = "block";
             countrySelector.style.position = "fixed";
             countrySelector.style.top = rect.bottom + 5 + "px";
             countrySelector.style.left = rect.left + "px";
             countrySelector.style.zIndex = "9999999";
+            countryBtn?.setAttribute("aria-expanded", "true");
+          };
+          const closeCountrySelector = () => {
+            countrySelector.style.display = "none";
+            countryBtn?.setAttribute("aria-expanded", "false");
+          };
+
+          countryBtn?.addEventListener("click", (e) => {
+            e.stopPropagation();
+            if (countrySelector.style.display === "block") {
+              closeCountrySelector();
+            } else {
+              openCountrySelector();
+            }
           });
 
           countrySelector
@@ -19623,23 +20820,69 @@
                 const name = item.textContent.trim();
                 localStorage.setItem("munetiosCountry", code);
                 updateCountryDisplay(code, name);
-                countrySelector.style.display = "none";
-                window.showToast && window.showToast("Country set to " + name);
+                closeCountrySelector();
+                window.showToast &&
+                  window.showToast(
+                    window.formatMunetiosTranslation
+                      ? window.formatMunetiosTranslation(
+                          window.getTranslation
+                            ? window.getTranslation("countrySetTo")
+                            : "Country set to {country}",
+                          { country: countryBtn?.textContent || name },
+                        )
+                      : "Country set to " + (countryBtn?.textContent || name),
+                  );
               });
             });
+
+          // Change country footer link
+          const changeCountryLink = document.getElementById("changeCountryLink");
+          changeCountryLink?.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const rect = changeCountryLink.getBoundingClientRect();
+            if (countrySelector.style.display === "block") {
+              closeCountrySelector();
+            } else {
+              countrySelector.style.display = "block";
+              countrySelector.style.position = "fixed";
+              countrySelector.style.top = rect.top - countrySelector.offsetHeight - 5 + "px";
+              countrySelector.style.left = rect.left + "px";
+              countrySelector.style.zIndex = "9999999";
+              countryBtn?.setAttribute("aria-expanded", "true");
+            }
+          });
 
           document.addEventListener("click", (e) => {
             if (
               !countryBtn?.contains(e.target) &&
-              !countrySelector?.contains(e.target)
+              !countrySelector?.contains(e.target) &&
+              !changeCountryLink?.contains(e.target)
             )
-              countrySelector.style.display = "none";
+              closeCountrySelector();
           });
+          window.setupMunetiosDropdownA11y &&
+            window.setupMunetiosDropdownA11y(countryBtn, countrySelector, {
+              itemSelector: "[data-country]",
+              openMenu: openCountrySelector,
+              closeMenu: closeCountrySelector,
+            });
+
+          // Expose country selector open/close for external callers (e.g. footer link)
+          window.openCountrySelectorFrom = function (rect) {
+            countrySelector.style.display = "block";
+            countrySelector.style.position = "fixed";
+            countrySelector.style.top = rect.top - countrySelector.offsetHeight - 5 + "px";
+            countrySelector.style.left = rect.left + "px";
+            countrySelector.style.zIndex = "9999999";
+            countryBtn?.setAttribute("aria-expanded", "true");
+          };
+          window.closeCountrySelectorGlobal = closeCountrySelector;
 
           // Expose so applyTranslations can refresh the country label text
           window.refreshCountryLabel = function () {
-            const code = localStorage.getItem("munetiosCountry") || "us";
-            updateCountryDisplay(code, countryNames[code]);
+            const code = localStorage.getItem("munetiosCountry") || "auto";
+            updateCountryDisplay(code, countryNames[getEffectiveCountry(code)]);
           };
         })();
 
@@ -19655,11 +20898,27 @@
             "labsLinkFooter",
           ];
 
+          const newsNavIds = [
+            "newsMoreBtn",
+          ];
+
           function applySchoolMode(on) {
             labsIds.forEach((id) => {
               const el = document.getElementById(id);
               if (el) el.style.display = on ? "none" : "";
             });
+            // Block/unblock News
+            newsNavIds.forEach((id) => {
+              const el = document.getElementById(id);
+              if (el) el.style.display = on ? "none" : "";
+            });
+            document.querySelectorAll('a[href="#/news"]').forEach((el) => {
+              el.style.display = on ? "none" : "";
+            });
+            const newsPage = document.getElementById("newsPage");
+            if (newsPage && on) {
+              newsPage.classList.remove("active");
+            }
             if (on) {
               window.setSafeSearchLevel &&
                 window.setSafeSearchLevel("strict", true);
@@ -19683,7 +20942,12 @@
             if (localStorage.getItem("schoolMode") === "true") return;
             localStorage.setItem("schoolMode", "true");
             applySchoolMode(true);
-            window.showToast && window.showToast("School Mode enabled");
+            window.showToast &&
+              window.showToast(
+                window.getTranslation
+                  ? window.getTranslation("schoolModeEnabled")
+                  : "School Mode enabled",
+              );
           });
         })();
 
@@ -19801,7 +21065,12 @@
               // Page load: only set font from theme if the user has NOT manually overridden it
               var userFontOverride =
                 localStorage.getItem("munetiosFontUserOverride") === "true";
-              if (!userFontOverride) {
+              var existingSavedFont = localStorage.getItem("munetiosFontFamily");
+              if (existingSavedFont === "Google Sans Text") {
+                localStorage.setItem("munetiosFontUserOverride", "true");
+                userFontOverride = true;
+              }
+              if (!userFontOverride && !existingSavedFont) {
                 localStorage.setItem("munetiosFontFamily", theme.font);
               }
               if (
@@ -19944,6 +21213,8 @@
             localStorage.getItem("munetiosFontFamily") || "Google Sans Flex";
           const reduceTransparency =
             localStorage.getItem("munetiosReduceTransparency") === "true";
+          let googleSansTextFontReady = false;
+          let googleSansTextFontLoading = false;
 
           // Set default values in picker (default gradient colors)
           bgColorPicker.value = savedBgColor || "#1c064e";
@@ -20079,15 +21350,26 @@
           }
 
           // Font family selector
-          fontFamilyButton?.addEventListener("click", (e) => {
-            e.stopPropagation();
+          const openFontFamilySelector = () => {
             const rect = fontFamilyButton.getBoundingClientRect();
-            fontFamilySelector.style.display =
-              fontFamilySelector.style.display === "block" ? "none" : "block";
+            fontFamilySelector.style.display = "block";
             fontFamilySelector.style.position = "fixed";
             fontFamilySelector.style.top = rect.bottom + 5 + "px";
             fontFamilySelector.style.left = rect.left + "px";
             fontFamilySelector.style.zIndex = "935090";
+            fontFamilyButton?.setAttribute("aria-expanded", "true");
+          };
+          const closeFontFamilySelector = () => {
+            fontFamilySelector.style.display = "none";
+            fontFamilyButton?.setAttribute("aria-expanded", "false");
+          };
+          fontFamilyButton?.addEventListener("click", (e) => {
+            e.stopPropagation();
+            if (fontFamilySelector.style.display === "block") {
+              closeFontFamilySelector();
+            } else {
+              openFontFamilySelector();
+            }
           });
 
           // Font selection
@@ -20099,7 +21381,7 @@
                 fontFamilyButton.textContent = font;
                 localStorage.setItem("munetiosFontFamily", font);
                 localStorage.setItem("munetiosFontUserOverride", "true");
-                fontFamilySelector.style.display = "none";
+                closeFontFamilySelector();
                 applyAppearanceSettings();
                 updateFontFeatures(font);
               });
@@ -20111,9 +21393,14 @@
               !fontFamilyButton?.contains(e.target) &&
               !fontFamilySelector?.contains(e.target)
             ) {
-              fontFamilySelector.style.display = "none";
+              closeFontFamilySelector();
             }
           });
+          window.setupMunetiosDropdownA11y &&
+            window.setupMunetiosDropdownA11y(fontFamilyButton, fontFamilySelector, {
+              openMenu: openFontFamilySelector,
+              closeMenu: closeFontFamilySelector,
+            });
 
           // Detect Local Fonts Functionality
           const detectLocalFontsBtn = document.getElementById(
@@ -20240,6 +21527,7 @@
             const bgImage = localStorage.getItem("munetiosBgImage") || "";
             const font =
               localStorage.getItem("munetiosFontFamily") || "Google Sans Flex";
+            ensureGoogleSansTextFont(font);
 
             // Apply background to body using style injection
             let bgStyleEl = document.getElementById("munetios-bg-styles");
@@ -20311,16 +21599,51 @@
                     .map((tag) => `${tag} on`)
                     .join(", ")} !important;`
                 : "";
+            const fontFamilyCSS =
+              font === "Google Sans Text"
+                ? '"Google Sans 17pt Text", "Google Sans Text", "Google Sans", sans-serif'
+                : `"${font}", sans-serif`;
+            if (font === "Google Sans Text") {
+              fontVariationCSS =
+                "font-variation-settings: 'opsz' 17 !important;";
+            }
 
             styleEl.textContent = `
             * {
               color: ${textColor};
-              font-family: "${font}", sans-serif ;
+              font-family: ${fontFamilyCSS} !important;
               ${fontFeatureCSS}
               ${opticalSizingCSS}
               ${fontVariationCSS}
             }
           `;
+          }
+
+          function ensureGoogleSansTextFont(font) {
+            if (
+              font !== "Google Sans Text" ||
+              !document.fonts ||
+              googleSansTextFontReady ||
+              googleSansTextFontLoading
+            ) {
+              return;
+            }
+
+            googleSansTextFontLoading = true;
+            Promise.allSettled([
+              document.fonts.load('400 17px "Google Sans 17pt Text"'),
+              document.fonts.load('400 17px "Google Sans Text"'),
+              document.fonts.load('400 17px "Google Sans"'),
+            ]).then(() => {
+              googleSansTextFontReady = true;
+              googleSansTextFontLoading = false;
+              if (
+                (localStorage.getItem("munetiosFontFamily") ||
+                  "Google Sans Flex") === "Google Sans Text"
+              ) {
+                applyAppearanceSettings();
+              }
+            });
           }
 
           function updateFontFeatures(font) {
@@ -20383,6 +21706,7 @@
                 { name: "Alt &", tag: "ss03" },
                 { name: "Alternative Numbers", tag: "ss04" },
               ],
+                   "Google Sans Text": [{ name: "Alt *", tag: "ss01" },{ name: "Single Story a", tag: "ss08" }, { name: "Alt 9 and 6", tag: "ss03" }],
               "Segoe UI": [{ name: "Wider 1 and I", tag: "ss01" }],
             };
             return featuresMap[font] || genericStylisticSets;
@@ -21954,6 +23278,14 @@
               localStorage.getItem("munetiosFontFamily") || "Google Sans Flex";
             const reduceTransparency =
               localStorage.getItem("munetiosReduceTransparency") === "true";
+            const fontFamilyCSS =
+              font === "Google Sans Text"
+                ? '"Google Sans 17pt Text", "Google Sans Text", "Google Sans", sans-serif'
+                : `"${font}", sans-serif`;
+            const fontVariationCSS =
+              font === "Google Sans Text"
+                ? "font-variation-settings: 'opsz' 17 !important;"
+                : "";
 
             // Apply background to body using style injection (use same ID as settings)
             let bgStyleEl = document.getElementById("munetios-bg-styles");
@@ -22016,8 +23348,9 @@
             styleEl.textContent = `
             * {
               color: ${textColor};
-              font-family: "${font}", sans-serif;
+              font-family: ${fontFamilyCSS} !important;
               ${fontFeatureCSS}
+              ${fontVariationCSS}
             }
           `;
 
@@ -24179,9 +25512,18 @@
                 if (remaining > 0) {
                   var m = Math.floor(remaining / 60000);
                   var s = Math.floor((remaining % 60000) / 1000);
-                  el.textContent = "Auto-unblocks in " + m + "m " + (s < 10 ? "0" : "") + s + "s";
+                  el.textContent = window.formatMunetiosTranslation
+                    ? window.formatMunetiosTranslation(
+                        window.getTranslation
+                          ? window.getTranslation("autoUnblocksIn")
+                          : "Auto-unblocks in {minutes}m {seconds}s",
+                        { minutes: m, seconds: (s < 10 ? "0" : "") + s },
+                      )
+                    : "Auto-unblocks in " + m + "m " + (s < 10 ? "0" : "") + s + "s";
                 } else {
-                  el.textContent = "Limit reset — complete CAPTCHA to unlock.";
+                  el.textContent = window.getTranslation
+                    ? window.getTranslation("limitResetUnlock")
+                    : "Limit reset - complete CAPTCHA to unlock.";
                 }
               }
               // Auto-hide when external block expires AND ts window has also cleared
@@ -24331,7 +25673,9 @@
                   unlockRateLimit(captchaFeature);
                   captchaCallback && captchaCallback();
                 } else {
-                  errEl.textContent = "Incorrect. Please try again.";
+                  errEl.textContent = window.getTranslation
+                    ? window.getTranslation("incorrectCaptcha")
+                    : "Incorrect. Please try again.";
                   input.value = "";
                   drawCaptcha();
                 }
@@ -24394,7 +25738,17 @@
             if (!exists) {
               bms.unshift(bm);
               saveBookmarks(bms);
-              window.showToast && window.showToast("Bookmarked: " + bm.title);
+              window.showToast &&
+                window.showToast(
+                  window.formatMunetiosTranslation
+                    ? window.formatMunetiosTranslation(
+                        window.getTranslation
+                          ? window.getTranslation("bookmarkedPrefix")
+                          : "Bookmarked: {title}",
+                        { title: bm.title },
+                      )
+                    : "Bookmarked: " + bm.title,
+                );
               if (
                 document
                   .getElementById("bookmarksPage")
@@ -24403,7 +25757,12 @@
                 renderBookmarksPage();
               }
             } else {
-              window.showToast && window.showToast("Already bookmarked");
+              window.showToast &&
+                window.showToast(
+                  window.getTranslation
+                    ? window.getTranslation("alreadyBookmarked")
+                    : "Already bookmarked",
+                );
             }
           }
 
@@ -24483,7 +25842,21 @@
               var target = document.getElementById(pageId);
               if (target) target.classList.add("active");
             }
-            if (basePath === "/news") { initNewsPage(); checkAndShowPageBlock("news"); }
+            if (basePath === "/news") {
+              var schoolNewsOverlay = document.getElementById("pageBlock-school-news");
+              if (localStorage.getItem("schoolMode") === "true") {
+                if (schoolNewsOverlay) {
+                  schoolNewsOverlay.style.display = "flex";
+                  schoolNewsOverlay.classList.add("visible");
+                }
+              } else {
+                if (schoolNewsOverlay) {
+                  schoolNewsOverlay.style.display = "none";
+                  schoolNewsOverlay.classList.remove("visible");
+                }
+                initNewsPage(); checkAndShowPageBlock("news");
+              }
+            }
             if (basePath === "/maps") {
               checkAndShowPageBlock("maps");
               initMapsPage();
@@ -24631,7 +26004,10 @@
             newsCurrentQuery = query;
             var list = document.getElementById("newsList");
             if (!list) return;
-            list.innerHTML = '<div class="news-loading">Loading…</div>';
+            list.innerHTML =
+              '<div class="news-loading">' +
+              escHtml(window.getTranslation ? window.getTranslation("loading") : "Loading...") +
+              "</div>";
 
             var url =
               "https://hn.algolia.com/api/v1/search?tags=story&hitsPerPage=30";
@@ -24642,7 +26018,14 @@
                 if (r.status === 429) {
                   var retryAfter = parseInt(r.headers.get("Retry-After") || "60", 10);
                   markExternalBlocked("news", retryAfter * 1000);
-                  list.innerHTML = '<div class="news-empty">Too many requests. Complete CAPTCHA to continue.</div>';
+                  list.innerHTML =
+                    '<div class="news-empty">' +
+                    escHtml(
+                      window.getTranslation
+                        ? window.getTranslation("tooManyRequestsCaptcha")
+                        : "Too many requests. Complete CAPTCHA to continue.",
+                    ) +
+                    "</div>";
                   showCaptchaModal("news", function () { _fetchNews(newsCurrentQuery); });
                   throw new Error("429");
                 }
@@ -24653,7 +26036,14 @@
               })
               .catch(function (err) {
                 if (err && err.message !== "429") {
-                  list.innerHTML = '<div class="news-empty">Failed to load news. Please try again.</div>';
+                  list.innerHTML =
+                    '<div class="news-empty">' +
+                    escHtml(
+                      window.getTranslation
+                        ? window.getTranslation("failedToLoadNews")
+                        : "Failed to load news. Please try again.",
+                    ) +
+                    "</div>";
                 }
               });
           }
@@ -24778,7 +26168,13 @@
             if (!list) return;
             if (!hits.length) {
               list.innerHTML =
-                '<div class="news-empty">No stories found.</div>';
+                '<div class="news-empty">' +
+                escHtml(
+                  window.getTranslation
+                    ? window.getTranslation("noStoriesFound")
+                    : "No stories found.",
+                ) +
+                "</div>";
               return;
             }
             list.innerHTML = "";
@@ -24791,7 +26187,10 @@
               if (newsUrlIsAdult(url)) return;
 
               // SafeSearch title filter
-              var filteredTitle = newsFilterTitle(hit.title || "Untitled");
+              var untitled = window.getTranslation
+                ? window.getTranslation("untitled")
+                : "Untitled";
+              var filteredTitle = newsFilterTitle(hit.title || untitled);
               if (filteredTitle === null) return; // strict: skip item
               hit = Object.assign({}, hit, { title: filteredTitle });
               var domain = "";
@@ -24807,37 +26206,51 @@
                 '<div class="news-item-title"><a href="' +
                 escHtml(url) +
                 '" target="_blank" rel="noopener noreferrer">' +
-                escHtml(hit.title || "Untitled") +
+                escHtml(hit.title || untitled) +
                 "</a></div>" +
                 '<div class="news-item-meta">' +
-                "<span><icon>thumb_up</icon>" +
+                '<span><icon translate="no" class="notranslate">thumb_up</icon>' +
                 (hit.points || 0) +
-                " pts</span>" +
-                "<span><icon>chat_bubble_outline</icon>" +
+                " " +
+                '<span class="news-points-label">' +
+                escHtml(window.getTranslation ? window.getTranslation("pointsShort") : "pts") +
+                "</span>" +
+                "</span>" +
+                '<span><icon translate="no" class="notranslate">chat_bubble_outline</icon>' +
                 (hit.num_comments || 0) +
-                " comments</span>" +
+                " " +
+                '<span class="news-comments-label">' +
+                escHtml(window.getTranslation ? window.getTranslation("comments") : "comments") +
+                "</span>" +
+                "</span>" +
                 (domain
-                  ? "<span><icon>language</icon>" + escHtml(domain) + "</span>"
+                  ? '<span><icon translate="no" class="notranslate">language</icon>' + escHtml(domain) + "</span>"
                   : "") +
                 (time
-                  ? "<span><icon>schedule</icon>" + escHtml(time) + "</span>"
+                  ? '<span><icon translate="no" class="notranslate">schedule</icon>' + escHtml(time) + "</span>"
                   : "") +
                 "</div>" +
                 '<div class="news-item-actions">' +
                 '<div class="news-action-btn hn-bookmark-btn">' +
-                "<icon>bookmark_add</icon> Save" +
+                '<icon translate="no" class="notranslate">bookmark_add</icon> ' +
+                '<span class="news-save-label">' +
+                escHtml(window.getTranslation ? window.getTranslation("save") : "Save") +
+                "</span>" +
                 "</div>" +
                 '<a class="news-action-btn" href="https://news.ycombinator.com/item?id=' +
                 escHtml(hit.objectID) +
                 '" target="_blank" rel="noopener noreferrer">' +
-                "<icon>open_in_new</icon> HN Thread" +
+                '<icon translate="no" class="notranslate">open_in_new</icon> ' +
+                '<span class="news-thread-label">' +
+                escHtml(window.getTranslation ? window.getTranslation("hnThread") : "HN Thread") +
+                "</span>" +
                 "</a>" +
                 "</div>";
 
               var bmBtn = div.querySelector(".hn-bookmark-btn");
               bmBtn.addEventListener("click", function () {
                 addBookmark({
-                  title: hit.title || "Untitled",
+                  title: hit.title || untitled,
                   description: "HN story · " + (hit.points || 0) + " pts",
                   link: url,
                   favicon: "",
@@ -24846,6 +26259,8 @@
 
               list.appendChild(div);
             });
+            window.protectFromMachineTranslation &&
+              window.protectFromMachineTranslation(list);
           }
 
           // News search bar
@@ -25172,7 +26587,18 @@
               if (now < photonBlockedUntil) {
                 var secsLeft = Math.ceil((photonBlockedUntil - now) / 1000);
                 mapResultsContainer.innerHTML =
-                  '<div class="map-result-item" style="color:#f87171">Too many requests. Try again in ' + secsLeft + 's.</div>';
+                  '<div class="map-result-item" style="color:#f87171">' +
+                  escHtml(
+                    window.formatMunetiosTranslation
+                      ? window.formatMunetiosTranslation(
+                          window.getTranslation
+                            ? window.getTranslation("tooManyRequestsTryAgain")
+                            : "Too many requests. Try again in {seconds}s.",
+                          { seconds: secsLeft },
+                        )
+                      : "Too many requests. Try again in " + secsLeft + "s.",
+                  ) +
+                  "</div>";
                 return;
               }
               fetch(
@@ -25186,7 +26612,18 @@
                     var retryAfter = parseInt(r.headers.get("Retry-After") || "60", 10);
                     photonBlockedUntil = Date.now() + retryAfter * 1000;
                     mapResultsContainer.innerHTML =
-                      '<div class="map-result-item" style="color:#f87171">Too many requests. Try again in ' + retryAfter + 's.</div>';
+                      '<div class="map-result-item" style="color:#f87171">' +
+                      escHtml(
+                        window.formatMunetiosTranslation
+                          ? window.formatMunetiosTranslation(
+                              window.getTranslation
+                                ? window.getTranslation("tooManyRequestsTryAgain")
+                                : "Too many requests. Try again in {seconds}s.",
+                              { seconds: retryAfter },
+                            )
+                          : "Too many requests. Try again in " + retryAfter + "s.",
+                      ) +
+                      "</div>";
                     throw new Error("429");
                   }
                   return r.json();
@@ -25197,7 +26634,13 @@
                 .catch(function (err) {
                   if (err && err.message !== "429") {
                     mapResultsContainer.innerHTML =
-                      '<div class="map-result-item" style="color:#f87171">Location search unavailable.</div>';
+                      '<div class="map-result-item" style="color:#f87171">' +
+                      escHtml(
+                        window.getTranslation
+                          ? window.getTranslation("locationSearchUnavailable")
+                          : "Location search unavailable.",
+                      ) +
+                      "</div>";
                   }
                 });
             }
@@ -25207,7 +26650,12 @@
               features.forEach(function (f) {
                 var props = f.properties || {};
                 var name =
-                  props.name || props.city || props.country || "Unknown";
+                  props.name ||
+                  props.city ||
+                  props.country ||
+                  (window.getTranslation
+                    ? window.getTranslation("unknown")
+                    : "Unknown");
                 var detail = [props.city, props.state, props.country]
                   .filter(Boolean)
                   .join(", ");
@@ -25252,23 +26700,36 @@
             var bmBtn = document.createElement("div");
             bmBtn.className = "map-bookmark-btn liquid-glass";
             bmBtn.innerHTML =
-              "<icon>bookmark_add</icon><span>Bookmark Location</span>";
+              "<icon translate=\"no\" class=\"notranslate\">bookmark_add</icon><span id=\"mapBookmarkLabel\">" +
+              (window.getTranslation
+                ? escHtml(window.getTranslation("bookmarkLocation"))
+                : "Bookmark Location") +
+              "</span>";
             bmBtn.addEventListener("click", function () {
               var center = mapInstance.getCenter();
               var zoom = Math.round(mapInstance.getZoom());
+              var lat = center.lat.toFixed(5);
+              var lng = center.lng.toFixed(5);
               var title =
                 (mapInput && mapInput.value.trim()) ||
-                "Map — " + center.lat.toFixed(4) + ", " + center.lng.toFixed(4);
+                (window.formatMunetiosTranslation
+                  ? window.formatMunetiosTranslation(
+                      window.getTranslation
+                        ? window.getTranslation("locationBookmarkTitle")
+                        : "Map - {lat}, {lng}",
+                      { lat: center.lat.toFixed(4), lng: center.lng.toFixed(4) },
+                    )
+                  : "Map - " + center.lat.toFixed(4) + ", " + center.lng.toFixed(4));
               addBookmark({
                 title: title,
-                description:
-                  "Lat: " +
-                  center.lat.toFixed(5) +
-                  ", Lng: " +
-                  center.lng.toFixed(5) +
-                  " (Zoom " +
-                  zoom +
-                  ")",
+                description: window.formatMunetiosTranslation
+                  ? window.formatMunetiosTranslation(
+                      window.getTranslation
+                        ? window.getTranslation("locationBookmarkDescription")
+                        : "Lat: {lat}, Lng: {lng} (Zoom {zoom})",
+                      { lat: lat, lng: lng, zoom: zoom },
+                    )
+                  : "Lat: " + lat + ", Lng: " + lng + " (Zoom " + zoom + ")",
                 link:
                   "https://www.openstreetmap.org/#map=" +
                   zoom +
@@ -25313,7 +26774,13 @@
             var results = document.getElementById("wikiResults");
             if (!results) return;
             results.innerHTML =
-              '<div class="wiki-loading">Searching Wikipedia…</div>';
+              '<div class="wiki-loading">' +
+              escHtml(
+                window.getTranslation
+                  ? window.getTranslation("searchingWikipedia")
+                  : "Searching Wikipedia...",
+              ) +
+              "</div>";
 
             var url =
               "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=" +
@@ -25325,7 +26792,14 @@
                 if (r.status === 429) {
                   var retryAfter = parseInt(r.headers.get("Retry-After") || "60", 10);
                   markExternalBlocked("wiki", retryAfter * 1000);
-                  results.innerHTML = '<div class="wiki-empty">Too many requests. Complete CAPTCHA to continue.</div>';
+                  results.innerHTML =
+                    '<div class="wiki-empty">' +
+                    escHtml(
+                      window.getTranslation
+                        ? window.getTranslation("tooManyRequestsCaptcha")
+                        : "Too many requests. Complete CAPTCHA to continue.",
+                    ) +
+                    "</div>";
                   showCaptchaModal("wiki", function () { fetchWikiSearch(q); });
                   throw new Error("429");
                 }
@@ -25335,7 +26809,13 @@
                 var items = (data.query && data.query.search) || [];
                 if (!items.length) {
                   results.innerHTML =
-                    '<div class="wiki-empty">No results found.</div>';
+                    '<div class="wiki-empty">' +
+                    escHtml(
+                      window.getTranslation
+                        ? window.getTranslation("noResultsFound")
+                        : "No results found.",
+                    ) +
+                    "</div>";
                   return;
                 }
                 // Fetch summaries for each result
@@ -25353,7 +26833,14 @@
                     if (r.status === 429) {
                       var retryAfter = parseInt(r.headers.get("Retry-After") || "60", 10);
                       markExternalBlocked("wiki", retryAfter * 1000);
-                      results.innerHTML = '<div class="wiki-empty">Too many requests. Complete CAPTCHA to continue.</div>';
+                      results.innerHTML =
+                        '<div class="wiki-empty">' +
+                        escHtml(
+                          window.getTranslation
+                            ? window.getTranslation("tooManyRequestsCaptcha")
+                            : "Too many requests. Complete CAPTCHA to continue.",
+                        ) +
+                        "</div>";
                       showCaptchaModal("wiki", function () { fetchWikiSearch(q); });
                       throw new Error("429");
                     }
@@ -25365,7 +26852,14 @@
               })
               .catch(function (err) {
                 if (err && err.message !== "429") {
-                  results.innerHTML = '<div class="wiki-empty">Failed to load results.</div>';
+                  results.innerHTML =
+                    '<div class="wiki-empty">' +
+                    escHtml(
+                      window.getTranslation
+                        ? window.getTranslation("failedToLoadResults")
+                        : "Failed to load results.",
+                    ) +
+                    "</div>";
                 }
               });
           }
@@ -25405,12 +26899,18 @@
                 '<div class="wiki-action-btn wiki-read-trigger" data-title="' +
                 escAttr(item.title) +
                 '">' +
-                "<icon>menu_book</icon> Read" +
+                '<icon translate="no" class="notranslate">menu_book</icon> ' +
+                '<span class="wiki-read-label">' +
+                escHtml(window.getTranslation ? window.getTranslation("read") : "Read") +
+                "</span>" +
                 "</div>" +
                 '<div class="wiki-action-btn wiki-bm-btn" data-title="' +
                 escAttr(item.title) +
                 '">' +
-                "<icon>bookmark_add</icon> Save" +
+                '<icon translate="no" class="notranslate">bookmark_add</icon> ' +
+                '<span class="wiki-save-label">' +
+                escHtml(window.getTranslation ? window.getTranslation("save") : "Save") +
+                "</span>" +
                 "</div>" +
                 "</div>" +
                 "</div>";
@@ -25447,7 +26947,14 @@
 
             if (!modal) return;
             titleEl.textContent = title;
-            body.innerHTML = '<div class="wiki-loading">Loading article…</div>';
+            body.innerHTML =
+              '<div class="wiki-loading">' +
+              escHtml(
+                window.getTranslation
+                  ? window.getTranslation("loadingArticle")
+                  : "Loading article...",
+              ) +
+              "</div>";
             if (wikiLink)
               wikiLink.href =
                 "https://en.wikipedia.org/wiki/" + encodeURIComponent(title);
@@ -25468,7 +26975,11 @@
                 .then(function (data) {
                   var pages = (data.query && data.query.pages) || {};
                   var page = Object.values(pages)[0] || {};
-                  var text = page.extract || "No content available.";
+                  var text =
+                    page.extract ||
+                    (window.getTranslation
+                      ? window.getTranslation("noContentAvailable")
+                      : "No content available.");
                   // Render with marked if available
                   if (window.marked) {
                     body.innerHTML = window.marked.parse(text.slice(0, 8000));
@@ -25483,7 +26994,13 @@
                 })
                 .catch(function () {
                   body.innerHTML =
-                    '<div class="wiki-empty">Failed to load article.</div>';
+                    '<div class="wiki-empty">' +
+                    escHtml(
+                      window.getTranslation
+                        ? window.getTranslation("failedToLoadArticle")
+                        : "Failed to load article.",
+                    ) +
+                    "</div>";
                 });
             });
           }
@@ -25523,7 +27040,10 @@
                   if (!text) return;
                   startWikiSpeech(text);
                   aloudBtn.classList.add("active");
-                  if (aloudLabel) aloudLabel.textContent = "Stop";
+                  if (aloudLabel)
+                    aloudLabel.textContent = window.getTranslation
+                      ? window.getTranslation("stop")
+                      : "Stop";
                 }
               });
 
@@ -25557,7 +27077,10 @@
               var btn = document.getElementById("wikiReadAloudBtn");
               var lbl = document.getElementById("wikiReadAloudLabel");
               if (btn) btn.classList.remove("active");
-              if (lbl) lbl.textContent = "Read Aloud";
+              if (lbl)
+                lbl.textContent = window.getTranslation
+                  ? window.getTranslation("readAloud")
+                  : "Read Aloud";
             };
             window.speechSynthesis.speak(wikiSpeechUtterance);
             wikiSpeaking = true;
@@ -25569,7 +27092,10 @@
             var btn = document.getElementById("wikiReadAloudBtn");
             var lbl = document.getElementById("wikiReadAloudLabel");
             if (btn) btn.classList.remove("active");
-            if (lbl) lbl.textContent = "Read Aloud";
+            if (lbl)
+              lbl.textContent = window.getTranslation
+                ? window.getTranslation("readAloud")
+                : "Read Aloud";
           }
 
           /* ══════════════════════════════════════════
@@ -25580,8 +27106,18 @@
             if (!list) return;
             var bms = getBookmarks();
             if (!bms.length) {
+              var emptyTitle = window.getTranslation
+                ? window.getTranslation("noBookmarksYet")
+                : "No bookmarks yet.";
+              var emptyHint = window.getTranslation
+                ? window.getTranslation("bookmarksEmptyHint")
+                : "Save articles, maps, and news stories.";
               list.innerHTML =
-                '<div class="bookmarks-empty"><icon>bookmark_border</icon>No bookmarks yet.<br>Save articles, maps, and news stories.</div>';
+                '<div class="bookmarks-empty"><icon translate="no" class="notranslate">bookmark_border</icon>' +
+                escHtml(emptyTitle) +
+                "<br>" +
+                escHtml(emptyHint) +
+                "</div>";
               return;
             }
             list.innerHTML = "";
@@ -25595,7 +27131,12 @@
                 '" alt="" referrerpolicy="no-referrer" onerror="this.style.visibility=\'hidden\'" />' +
                 '<div class="bookmark-info">' +
                 '<div class="bookmark-title">' +
-                escHtml(bm.title || "Untitled") +
+                escHtml(
+                  bm.title ||
+                    (window.getTranslation
+                      ? window.getTranslation("untitled")
+                      : "Untitled"),
+                ) +
                 "</div>" +
                 (bm.description
                   ? '<div class="bookmark-desc">' +
@@ -25608,7 +27149,7 @@
                 escHtml(bm.link || "") +
                 "</a>" +
                 "</div>" +
-                '<div class="bookmark-delete-btn"><icon>delete</icon></div>';
+                '<div class="bookmark-delete-btn"><icon translate="no" class="notranslate">delete</icon></div>';
 
               div
                 .querySelector(".bookmark-delete-btn")
@@ -25618,6 +27159,8 @@
 
               list.appendChild(div);
             });
+            window.protectFromMachineTranslation &&
+              window.protectFromMachineTranslation(list);
           }
 
           /* ══════════════════════════════════════════
@@ -25641,26 +27184,39 @@
             var moreBtn = document.getElementById("mobileMoreDropdownBtn");
             var dropdown = document.getElementById("moreTabsDropdownBtn");
             if (!moreBtn || !dropdown) return;
-            moreBtn.addEventListener("click", function (e) {
-              e.stopPropagation();
+            function openMoreDropdown() {
               var rect = moreBtn.getBoundingClientRect();
-              var isVisible = dropdown.style.display === "block";
-              dropdown.style.display = isVisible ? "none" : "block";
+              dropdown.style.display = "block";
               dropdown.style.position = "fixed";
               dropdown.style.top = rect.bottom + 5 + "px";
               dropdown.style.left = rect.left + "px";
               dropdown.style.zIndex = "9999999";
+              moreBtn.setAttribute("aria-expanded", "true");
+            }
+            function closeMoreDropdown() {
+              dropdown.style.display = "none";
+              moreBtn.setAttribute("aria-expanded", "false");
+            }
+            moreBtn.addEventListener("click", function (e) {
+              e.stopPropagation();
+              if (dropdown.style.display === "block") closeMoreDropdown();
+              else openMoreDropdown();
             });
             dropdown.querySelectorAll(".dropdown-item").forEach(function(item) {
               item.addEventListener("click", function() {
-                dropdown.style.display = "none";
+                closeMoreDropdown();
               });
             });
             document.addEventListener("click", function (e) {
               if (!moreBtn.contains(e.target) && !dropdown.contains(e.target)) {
-                dropdown.style.display = "none";
+                closeMoreDropdown();
               }
             });
+            window.setupMunetiosDropdownA11y &&
+              window.setupMunetiosDropdownA11y(moreBtn, dropdown, {
+                openMenu: openMoreDropdown,
+                closeMenu: closeMoreDropdown,
+              });
           })();
 
           // Expose helpers globally
