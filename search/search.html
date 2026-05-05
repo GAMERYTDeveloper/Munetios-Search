@@ -1866,6 +1866,27 @@
           footerGlobalPill: "Global-ready UI",
           footerAbout: "About",
           footerBlog: "Blog",
+          customResultsDescription: "Add your own results that appear when search keywords match. Stored locally in your browser.",
+          addCustomResult: "Add Custom Result",
+          editCustomResult: "Edit Custom Result",
+          noCustomResults: "No custom results yet.",
+          titleRequired: "Title and URL are required.",
+          urlRequired: "URL must start with http:// or https://",
+          customResultUpdated: "Custom result updated!",
+          customResultAdded: "Custom result added!",
+          customResultDeleted: "Custom result deleted.",
+          title: "Title",
+          url: "URL",
+          description: "Description",
+          keywordsOptional: "Keywords (comma-separated, optional)",
+          priorityBoost: "Priority boost:",
+          higherAppearsFirst: "(higher = appears first, max 1000)",
+          saveResult: "Save Result",
+          cancelEdit: "Cancel Edit",
+          customRankingDescription: "Boost or lower specific domains or keyword-based results. Rules are applied on top of the default ranking algorithm.",
+          addRankingRule: "Add Ranking Rule",
+          editRankingRule: "Edit Ranking Rule",
+          noCustomRankingRules: "No custom ranking rules yet.",
         },
         es: {
           noResults: "No se encontraron resultados.",
@@ -2728,6 +2749,78 @@
       },
       };
 
+      const runtimeTranslationFallbacks = {
+        es: {
+          customResultsDescription: "Agrega tus propios resultados para cuando coincidan las palabras clave. Se guardan localmente en tu navegador.",
+          addCustomResult: "Agregar resultado personalizado",
+          editCustomResult: "Editar resultado personalizado",
+          noCustomResults: "Aún no hay resultados personalizados.",
+          titleRequired: "El título y la URL son obligatorios.",
+          urlRequired: "La URL debe empezar con http:// o https://",
+          customResultUpdated: "Resultado personalizado actualizado.",
+          customResultAdded: "Resultado personalizado agregado.",
+          customResultDeleted: "Resultado personalizado eliminado.",
+          title: "Título",
+          url: "URL",
+          description: "Descripción",
+          keywordsOptional: "Palabras clave (separadas por comas, opcional)",
+          priorityBoost: "Prioridad:",
+          higherAppearsFirst: "(más alto = aparece primero, máximo 1000)",
+          saveResult: "Guardar resultado",
+          cancelEdit: "Cancelar edición",
+          customRankingDescription: "Sube o baja dominios específicos o resultados por palabra clave. Las reglas se aplican sobre el ranking predeterminado.",
+          addRankingRule: "Agregar regla de ranking",
+          editRankingRule: "Editar regla de ranking",
+          noCustomRankingRules: "Aún no hay reglas de ranking personalizadas.",
+        },
+        fr: {
+          customResultsDescription: "Ajoutez vos propres résultats quand les mots-clés correspondent. Stocké localement dans votre navigateur.",
+          addCustomResult: "Ajouter un résultat personnalisé",
+          editCustomResult: "Modifier le résultat personnalisé",
+          noCustomResults: "Aucun résultat personnalisé pour le moment.",
+          titleRequired: "Le titre et l'URL sont obligatoires.",
+          urlRequired: "L'URL doit commencer par http:// ou https://",
+          customResultUpdated: "Résultat personnalisé mis à jour.",
+          customResultAdded: "Résultat personnalisé ajouté.",
+          customResultDeleted: "Résultat personnalisé supprimé.",
+          title: "Titre",
+          url: "URL",
+          description: "Description",
+          keywordsOptional: "Mots-clés (séparés par des virgules, facultatif)",
+          priorityBoost: "Priorité :",
+          higherAppearsFirst: "(plus haut = apparaît en premier, max 1000)",
+          saveResult: "Enregistrer le résultat",
+          cancelEdit: "Annuler la modification",
+          customRankingDescription: "Augmentez ou réduisez des domaines ou résultats par mot-clé. Les règles s'ajoutent au classement par défaut.",
+          addRankingRule: "Ajouter une règle de classement",
+          editRankingRule: "Modifier la règle de classement",
+          noCustomRankingRules: "Aucune règle de classement personnalisée.",
+        },
+        de: {
+          customResultsDescription: "Füge eigene Ergebnisse hinzu, die bei passenden Suchbegriffen erscheinen. Lokal im Browser gespeichert.",
+          addCustomResult: "Benutzerdefiniertes Ergebnis hinzufügen",
+          editCustomResult: "Benutzerdefiniertes Ergebnis bearbeiten",
+          noCustomResults: "Noch keine benutzerdefinierten Ergebnisse.",
+          titleRequired: "Titel und URL sind erforderlich.",
+          urlRequired: "Die URL muss mit http:// oder https:// beginnen",
+          customResultUpdated: "Benutzerdefiniertes Ergebnis aktualisiert.",
+          customResultAdded: "Benutzerdefiniertes Ergebnis hinzugefügt.",
+          customResultDeleted: "Benutzerdefiniertes Ergebnis gelöscht.",
+          title: "Titel",
+          url: "URL",
+          description: "Beschreibung",
+          keywordsOptional: "Schlüsselwörter (kommagetrennt, optional)",
+          priorityBoost: "Prioritäts-Boost:",
+          higherAppearsFirst: "(höher = erscheint zuerst, max. 1000)",
+          saveResult: "Ergebnis speichern",
+          cancelEdit: "Bearbeitung abbrechen",
+          customRankingDescription: "Bestimmte Domains oder keywordbasierte Ergebnisse höher oder niedriger einstufen.",
+          addRankingRule: "Ranking-Regel hinzufügen",
+          editRankingRule: "Ranking-Regel bearbeiten",
+          noCustomRankingRules: "Noch keine benutzerdefinierten Ranking-Regeln.",
+        },
+      };
+
       // Language code mapping for dropdown
       const languageMap = {
         englishOption: "en",
@@ -2745,16 +2838,66 @@
         russianOption: "ru",
         turkishOption: "tr",
       };
+      const nativeLanguageNames = {
+        en: "English",
+        es: "Español",
+        fr: "Français",
+        de: "Deutsch",
+        it: "Italiano",
+        pt: "Português",
+        zh: "中文",
+        ja: "日本語",
+        ko: "한국어",
+        ar: "العربية",
+        hi: "हिन्दी",
+        bn: "বাংলা",
+        ru: "Русский",
+        tr: "Türkçe",
+      };
+
+      function getDisplayNames(type) {
+        try {
+          return new Intl.DisplayNames([window.currentLanguage || "en"], { type });
+        } catch (_) {
+          try {
+            return new Intl.DisplayNames(["en"], { type });
+          } catch (__) {
+            return null;
+          }
+        }
+      }
+
+      function getLocalizedCountryName(code) {
+        const names = getDisplayNames("region");
+        return names?.of(String(code || "").toUpperCase()) || String(code || "").toUpperCase();
+      }
+
+      function updateLocalizedDropdownLabels() {
+        const languageNames = getDisplayNames("language");
+        Object.entries(languageMap).forEach(([id, lang]) => {
+          const label = document.querySelector("#" + id + " .options-label");
+          if (!label) return;
+          const localized = languageNames?.of(lang) || lang;
+          label.textContent = localized + " (" + (nativeLanguageNames[lang] || localized) + ")";
+        });
+        document.querySelectorAll("#countryDropdown [data-country]").forEach((el) => {
+          const code = el.getAttribute("data-country");
+          const label = el.querySelector(".options-label");
+          if (label) label.textContent = getLocalizedCountryName(code);
+        });
+      }
 
       // Set current language
       function setLanguage(lang) {
-        localStorage.setItem("searchLanguage", lang);
+        localStorage.setItem("munetiosLanguage", lang);
         window.currentLanguage = lang;
         window.currentTranslations = {
           ...translations.en,
+          ...(runtimeTranslationFallbacks[lang] || {}),
           ...(translations[lang] || {}),
         };
         applyTranslations();
+        updateLocalizedDropdownLabels();
         window.refreshSearchKeyboard && window.refreshSearchKeyboard();
       }
 
@@ -2798,6 +2941,36 @@
         if (customResultsOption) customResultsOption.querySelector(".options-label").textContent = t.customResults;
         const customRankingOption = document.getElementById("customRankingOption");
         if (customRankingOption) customRankingOption.querySelector(".options-label").textContent = t.customRanking;
+        const crModal = document.getElementById("customResultsModal");
+        if (crModal) {
+          const h2 = crModal.querySelector("h2");
+          const p = crModal.querySelector("p");
+          if (h2) h2.textContent = t.customResults;
+          if (p) p.textContent = t.customResultsDescription;
+          const titleInput = document.getElementById("cr_title");
+          if (titleInput) titleInput.placeholder = t.title + " *";
+          const urlInput = document.getElementById("cr_url");
+          if (urlInput) urlInput.placeholder = t.url + " * (https://...)";
+          const descInput = document.getElementById("cr_desc");
+          if (descInput) descInput.placeholder = t.description;
+          const keywordsInput = document.getElementById("cr_keywords");
+          if (keywordsInput) keywordsInput.placeholder = t.keywordsOptional;
+          const boostLabel = crModal.querySelector("label[for='cr_boost'], #cr_boost_label");
+          if (boostLabel) boostLabel.textContent = t.priorityBoost;
+          const boostHint = document.getElementById("cr_boost_hint");
+          if (boostHint) boostHint.textContent = t.higherAppearsFirst;
+          const saveBtn = document.getElementById("cr_save_btn");
+          if (saveBtn) saveBtn.textContent = t.saveResult;
+          const cancelBtn = document.getElementById("cr_cancel_edit_btn");
+          if (cancelBtn) cancelBtn.textContent = t.cancelEdit;
+        }
+        const rrModal = document.getElementById("customRankingModal");
+        if (rrModal) {
+          const h2 = rrModal.querySelector("h2");
+          const p = rrModal.querySelector("p");
+          if (h2) h2.textContent = t.customRanking;
+          if (p) p.textContent = t.customRankingDescription;
+        }
         // Settings modal
         const settingsModalEl = document.getElementById("settingsModal");
         if (settingsModalEl) settingsModalEl.querySelector("h2").textContent = t.settings;
@@ -2867,9 +3040,9 @@
         document.getElementById("themeBlue").querySelector(".options-label").textContent = t.blue;
         document.getElementById("backgroundImageTheme").querySelector(".options-label").textContent = t.backgroundImage;
         // Language dropdown
-        // (Handled by static text)
+        updateLocalizedDropdownLabels();
         // Country dropdown
-        // (Handled by static text)
+        updateLocalizedDropdownLabels();
         // Liquid Glass dropdown
         // (Handled by static text)
         // Bookmarks modal
@@ -2933,7 +3106,7 @@
 
       // On load, restore language from localStorage
       window.addEventListener("DOMContentLoaded", function () {
-        const lang = localStorage.getItem("searchLanguage") || "en";
+        const lang = localStorage.getItem("munetiosLanguage") || "en";
         setLanguage(lang);
       });
       // --- SafeSearch Filtering ---
@@ -3485,9 +3658,10 @@
         });
         dropdown.innerHTML = sortedCodes.map((code) => `
           <div class="flex items-center gap-3 p-2 hover:bg-gray-700" data-country="${code}">
-            <div class="options-label">${countryMap[code]}</div>
+            <div class="options-label">${getLocalizedCountryName(code)}</div>
           </div>
         `).join("");
+        updateLocalizedDropdownLabels();
       }
 
       rebuildCountryDropdown();
@@ -3502,9 +3676,9 @@
         window.currentGithubLang = countryGithubLang[code] || "en";
         // Update button label
         const btn = document.getElementById("countryDropdownBtn");
-        if (btn) btn.textContent = countryMap[code] || "Choose Country";
+        if (btn) btn.textContent = getLocalizedCountryName(code) || countryMap[code] || "Choose Country";
         const quickCountryBtn = document.getElementById("CountrySelectorToggle");
-        if (quickCountryBtn) quickCountryBtn.textContent = countryMap[code] || "Global";
+        if (quickCountryBtn) quickCountryBtn.textContent = getLocalizedCountryName(code) || countryMap[code] || "Global";
         // Update UI (optional: highlight selected)
         Object.keys(countryMap).forEach((c) => {
           const el = document.querySelector(`[data-country="${c}"]`);
@@ -3806,15 +3980,23 @@
         const savedCustomResults = JSON.parse(localStorage.getItem("munetiosCustomResults") || "[]");
         if (Array.isArray(savedCustomResults)) {
           customResultsMatched = savedCustomResults.filter(cr => {
+            const crUrl = cr.url || cr.link || "";
+            const keywords = Array.isArray(cr.keywords)
+              ? cr.keywords
+              : String(cr.keywords || "").split(",");
             const titleMatch = (cr.title || "").toLowerCase().includes(query.toLowerCase());
             const descMatch = (cr.description || "").toLowerCase().includes(query.toLowerCase());
-            const urlMatch = (cr.link || "").toLowerCase().includes(query.toLowerCase());
-            const kwMatch = (cr.keywords || []).some(kw => query.toLowerCase().includes(kw.toLowerCase()));
+            const urlMatch = crUrl.toLowerCase().includes(query.toLowerCase());
+            const kwMatch = keywords.some(kw => query.toLowerCase().includes(String(kw).trim().toLowerCase()));
             return titleMatch || descMatch || urlMatch || kwMatch;
           }).map(cr => ({
-            ...cr,
+            title: cr.title || cr.url || cr.link || "Custom Result",
+            description: cr.description || "",
+            link: cr.url || cr.link || "",
+            favicon: cr.favicon || "",
+            _customResult: true,
             _customBoost: Number(cr.boost) || 300
-          }));
+          })).filter(cr => cr.link);
         }
           } catch (_) {}
 
@@ -3980,6 +4162,12 @@
             labsIcon.style.pointerEvents = "none";
             labsIcon.title = "Labs disabled in School Mode";
           }
+          // Disable Labs in More menu
+          document.querySelectorAll("#mobileLabsOption").forEach(function (el) {
+            el.style.opacity = "0.5";
+            el.style.pointerEvents = "none";
+            el.title = "Labs disabled in School Mode";
+          });
           // Disable School Mode toggle itself
           schoolModeToggle.disabled = true;
         } else {
@@ -4172,7 +4360,7 @@
           "enableVoiceMode",
           "enableAIOverview",
           "enableInstantAnswers",
-          "searchLanguage",
+          "munetiosLanguage",
           
         ];
         const data = {};
@@ -4240,7 +4428,7 @@
           "enableVoiceMode",
           "enableAIOverview",
           "enableInstantAnswers",
-          "searchLanguage",
+          "munetiosLanguage",
         ].forEach((key) => {
           try { localStorage.removeItem(key); } catch {}
         });
@@ -5066,7 +5254,7 @@
         if ("speechSynthesis" in window) {
           window.speechSynthesis.cancel();
           const utter = new SpeechSynthesisUtterance(text);
-          utter.lang = localStorage.getItem("searchLanguage") || "en";
+          utter.lang = localStorage.getItem("munetiosLanguage") || "en";
           const savedName = localStorage.getItem("ttsVoiceName") || "";
           if (savedName) {
             const voices = window.speechSynthesis.getVoices();
@@ -5091,7 +5279,7 @@
           recognition = null;
         }
         recognition = new SpeechRecognition();
-        recognition.lang = localStorage.getItem("searchLanguage") || "en";
+        recognition.lang = localStorage.getItem("munetiosLanguage") || "en";
         recognition.interimResults = false;
         recognition.continuous = true;
         isListening = true;
@@ -8662,7 +8850,7 @@
         recognition = null;
           }
           recognition = new SpeechRecognition();
-          recognition.lang = localStorage.getItem("searchLanguage") || "en";
+          recognition.lang = localStorage.getItem("munetiosLanguage") || "en";
           recognition.interimResults = false;
           recognition.continuous = false;
           isListening = true;
@@ -9628,12 +9816,26 @@
             customResultsMatched = savedCustomResults.filter(cr => {
               if (query === "@all") return true;
               const qLow = query.toLowerCase();
+              const crUrl = cr.url || cr.link || "";
+              const keywords = Array.isArray(cr.keywords)
+                ? cr.keywords
+                : String(cr.keywords || "").split(",");
               const titleMatch = (cr.title || "").toLowerCase().includes(qLow);
               const descMatch = (cr.description || "").toLowerCase().includes(qLow);
-              const urlMatch = (cr.url || "").toLowerCase().includes(qLow);
-              const kwMatch = Array.isArray(cr.keywords) && cr.keywords.some(k => qLow.includes(k.toLowerCase()) || k.toLowerCase().includes(qLow));
+              const urlMatch = crUrl.toLowerCase().includes(qLow);
+              const kwMatch = keywords.some(k => {
+                const kw = String(k).trim().toLowerCase();
+                return kw && (qLow.includes(kw) || kw.includes(qLow));
+              });
               return titleMatch || descMatch || urlMatch || kwMatch;
-            }).map(cr => ({ title: cr.title, description: cr.description || "", link: cr.url, favicon: "", _customResult: true, _customBoost: Number(cr.boost) || 300 }));
+            }).map(cr => ({
+              title: cr.title || cr.url || cr.link || "Custom Result",
+              description: cr.description || "",
+              link: cr.url || cr.link || "",
+              favicon: cr.favicon || "",
+              _customResult: true,
+              _customBoost: Number(cr.boost) || 300
+            })).filter(cr => cr.link);
           }
         } catch (_) {}
 
@@ -13422,7 +13624,7 @@ function getQueryFromURL() {
           const v = voices.find(function (vv) { return vv.name === savedName; });
           if (v) utter.voice = v;
         }
-        utter.lang = localStorage.getItem("searchLanguage") || "en";
+        utter.lang = localStorage.getItem("munetiosLanguage") || "en";
         window.speechSynthesis.speak(utter);
       };
 
@@ -13479,7 +13681,7 @@ function getQueryFromURL() {
             var v = voices.find(function (vv) { return vv.name === savedName; });
             if (v) utter.voice = v;
           }
-          utter.lang = localStorage.getItem("searchLanguage") || "en";
+          utter.lang = localStorage.getItem("munetiosLanguage") || "en";
           updateSpeakBtnState(true);
           utter.onend = function () { updateSpeakBtnState(false); };
           utter.onerror = function () { updateSpeakBtnState(false); };
@@ -13495,6 +13697,9 @@ function getQueryFromURL() {
     document.addEventListener("DOMContentLoaded", function () {
 
       // ── Helpers ──────────────────────────────────────────────────────────────
+      function tr(key, fallback) {
+        return (window.currentTranslations && window.currentTranslations[key]) || fallback || key;
+      }
       function getCustomResults() {
         try { return JSON.parse(localStorage.getItem("munetiosCustomResults") || "[]"); } catch(_){ return []; }
       }
@@ -13538,7 +13743,7 @@ function getQueryFromURL() {
         document.getElementById("cr_keywords").value = "";
         document.getElementById("cr_boost").value = "300";
         document.getElementById("cr_edit_id").value = "";
-        document.getElementById("customResultFormTitle").textContent = "Add Custom Result";
+        document.getElementById("customResultFormTitle").textContent = tr("addCustomResult", "Add Custom Result");
         document.getElementById("cr_cancel_edit_btn").style.display = "none";
       }
 
@@ -13550,9 +13755,9 @@ function getQueryFromURL() {
         var boost = parseInt(document.getElementById("cr_boost").value, 10) || 300;
         var editId = document.getElementById("cr_edit_id").value;
 
-        if (!title || !url) { showToast("Title and URL are required."); return; }
+        if (!title || !url) { showToast(tr("titleRequired", "Title and URL are required.")); return; }
         if (!url.startsWith("http://") && !url.startsWith("https://")) {
-          showToast("URL must start with http:// or https://");
+          showToast(tr("urlRequired", "URL must start with http:// or https://"));
           return;
         }
 
@@ -13564,10 +13769,10 @@ function getQueryFromURL() {
           if (idx !== -1) {
             arr[idx] = { id: editId, title: title, url: url, description: desc, keywords: keywords, boost: boost };
           }
-          showToast("Custom result updated!");
+          showToast(tr("customResultUpdated", "Custom result updated!"));
         } else {
           arr.push({ id: genId(), title: title, url: url, description: desc, keywords: keywords, boost: boost });
-          showToast("Custom result added!");
+          showToast(tr("customResultAdded", "Custom result added!"));
         }
 
         saveCustomResults(arr);
@@ -13583,7 +13788,7 @@ function getQueryFromURL() {
         var container = document.getElementById("customResultsList");
         var arr = getCustomResults();
         if (!arr.length) {
-          container.innerHTML = '<div style="color:#aaa;font-size:0.9em;text-align:center;padding:12px 0;">No custom results yet.</div>';
+          container.innerHTML = '<div style="color:#aaa;font-size:0.9em;text-align:center;padding:12px 0;">' + escapeHtml(tr("noCustomResults", "No custom results yet.")) + '</div>';
           return;
         }
         container.innerHTML = "";
@@ -13615,7 +13820,7 @@ function getQueryFromURL() {
             document.getElementById("cr_keywords").value = (cr.keywords || []).join(", ");
             document.getElementById("cr_boost").value = cr.boost || 300;
             document.getElementById("cr_edit_id").value = id;
-            document.getElementById("customResultFormTitle").textContent = "Edit Custom Result";
+            document.getElementById("customResultFormTitle").textContent = tr("editCustomResult", "Edit Custom Result");
             document.getElementById("cr_cancel_edit_btn").style.display = "";
             document.getElementById("cr_title").focus();
           });
@@ -13627,7 +13832,7 @@ function getQueryFromURL() {
             var arr = getCustomResults().filter(function(r){ return r.id !== id; });
             saveCustomResults(arr);
             renderCustomResultsList();
-            showToast("Custom result deleted.");
+            showToast(tr("customResultDeleted", "Custom result deleted."));
           });
         });
       }
@@ -13670,7 +13875,7 @@ function getQueryFromURL() {
         document.getElementById("rr_url_pattern").value = "";
         document.getElementById("rr_boost").value = "100";
         document.getElementById("rr_edit_id").value = "";
-        document.getElementById("customRankingFormTitle").textContent = "Add Ranking Rule";
+        document.getElementById("customRankingFormTitle").textContent = tr("addRankingRule", "Add Ranking Rule");
         document.getElementById("rr_cancel_edit_btn").style.display = "none";
         updateRRTypeUI();
       }
@@ -13717,7 +13922,7 @@ function getQueryFromURL() {
         var container = document.getElementById("customRankingList");
         var arr = getCustomRanking();
         if (!arr.length) {
-          container.innerHTML = '<div style="color:#aaa;font-size:0.9em;text-align:center;padding:12px 0;">No custom ranking rules yet.</div>';
+          container.innerHTML = '<div style="color:#aaa;font-size:0.9em;text-align:center;padding:12px 0;">' + escapeHtml(tr("noCustomRankingRules", "No custom ranking rules yet.")) + '</div>';
           return;
         }
         container.innerHTML = "";
@@ -13755,7 +13960,7 @@ function getQueryFromURL() {
             }
             document.getElementById("rr_boost").value = rule.boost || 100;
             document.getElementById("rr_edit_id").value = id;
-            document.getElementById("customRankingFormTitle").textContent = "Edit Ranking Rule";
+            document.getElementById("customRankingFormTitle").textContent = tr("editRankingRule", "Edit Ranking Rule");
             document.getElementById("rr_cancel_edit_btn").style.display = "";
             updateRRTypeUI();
           });
@@ -13794,9 +13999,9 @@ function getQueryFromURL() {
           <textarea id="cr_desc" placeholder="Description" rows="2" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.08);border:1px solid rgba(162,89,247,0.4);border-radius:8px;padding:8px 12px;color:#fff;font-size:0.95em;margin-bottom:8px;outline:none;resize:vertical;font-family:inherit;"></textarea>
           <input id="cr_keywords" type="text" placeholder="Keywords (comma-separated, optional)" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.08);border:1px solid rgba(162,89,247,0.4);border-radius:8px;padding:8px 12px;color:#fff;font-size:0.95em;margin-bottom:8px;outline:none;" />
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-            <label style="font-size:0.9em;flex-shrink:0;">Priority boost:</label>
+            <label id="cr_boost_label" for="cr_boost" style="font-size:0.9em;flex-shrink:0;">Priority boost:</label>
             <input id="cr_boost" type="number" min="1" max="1000" value="300" style="width:90px;background:rgba(255,255,255,0.08);border:1px solid rgba(162,89,247,0.4);border-radius:8px;padding:6px 10px;color:#fff;font-size:0.95em;outline:none;" />
-            <span style="font-size:0.8em;color:#aaa;">(higher = appears first, max 1000)</span>
+            <span id="cr_boost_hint" style="font-size:0.8em;color:#aaa;">(higher = appears first, max 1000)</span>
           </div>
           <input type="hidden" id="cr_edit_id" value="" />
           <div style="display:flex;gap:8px;">
@@ -13919,7 +14124,7 @@ function getQueryFromURL() {
       const searchInputEl = document.getElementById('searchInput');
 
       function getCurrentLang() {
-        return localStorage.getItem('searchLanguage') || 'en';
+        return localStorage.getItem('munetiosLanguage') || 'en';
       }
 
       function getLayout() {
