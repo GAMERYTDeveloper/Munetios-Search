@@ -23491,6 +23491,7 @@
           const rtToggleSeg = document.getElementById("rtToggleSeg");
           const musicToggleSeg = document.getElementById("musicToggleSeg");
           const diffSeg = document.getElementById("diffSeg");
+          const dayNightSeg = document.getElementById("dayNightSeg");
 
           /* ── Settings ── */
           let useKMH = false,
@@ -25127,6 +25128,9 @@
             difficulty = btn.dataset.diff;
             if (initiated) doRestart();
           });
+          setupSegment(dayNightSeg, (btn) =>
+            applyDayNight(btn.dataset.tod === "day"),
+          );
 
           /* ── Button wiring ── */
           if (sidebarBtn) sidebarBtn.addEventListener("click", openGame);
