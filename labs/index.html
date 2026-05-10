@@ -16,14 +16,16 @@
     />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,0..1&display=swap"
+      href="https://fonts.googleapis.com/css2family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,0..1&display=swap"
     />
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,80&display=swap");
+      @import url("https://fonts.googleapis.com/css2family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,80&display=swap");
       * {
         box-sizing: border-box;
         font-family: "Google Sans Flex", sans-serif;
-        font-variation-settings: "wght" 500, "ROND" 80;
+        font-variation-settings:
+          "wght" 500,
+          "ROND" 80;
         font-feature-settings: "ss01" on;
         scroll-behavior: smooth;
       }
@@ -265,15 +267,24 @@
           <h2>Search Labs:</h2>
           <div class="grid-list">
             <div class="box-labs liquid-glass">
-              <span class="material-symbols-rounded" style="font-size:40px;color:#a259f7;margin-bottom:8px;">calculate</span>
+              <span
+                class="material-symbols-rounded"
+                style="font-size: 40px; color: #a259f7; margin-bottom: 8px"
+                >calculate</span
+              >
               <h2>Instant Answers</h2>
-              <p>Get instant results for math expressions and quick facts right above your search results. E.g. searching <em>5*12</em> shows <em>60</em> instantly.</p>
-              <button class="btn" id="instantAnswersLabBtn">Try it in Search</button>
+              <p>
+                Get instant results for math expressions and quick facts right
+                above your search results. E.g. searching <em>5*12</em> shows
+                <em>60</em> instantly.
+              </p>
+              <button class="btn" id="instantAnswersLabBtn">
+                Try it in Search
+              </button>
             </div>
           </div>
           <h2>Other:</h2>
           <div class="grid-list">
-          
             <div class="box-labs liquid-glass">
               <h2>Secure Notes</h2>
               <p>Manage your secure, encrypted notes.</p>
@@ -299,6 +310,7 @@
         </div>
       </div>
     </div>
+    <script src="/languages/language.js" defer></script>
     <script nonce="2jSjSbegDIjwnXikejssx">
       document
         .getElementById("secureNotesBtn")
@@ -313,7 +325,7 @@
           localStorage.setItem("enableInstantAnswers", "true");
           window.location.href = "https://www.munetios.com/search/search.html";
         });
-     
+
       document
         .getElementById("munetiosHome")
         .addEventListener("click", function () {
@@ -357,7 +369,7 @@
       // Check for schoolMode in localStorage
       if (localStorage.getItem("schoolMode") === "true") {
         document.body.innerHTML =
-          '<div style="display:flex;justify-content:center;align-items:center;height:100vh;font-size:2em;font-weight:700;">Sorry, Labs is not available in school mode</div>';
+          '<div style="display:flex;justify-content:center;align-items:center;height:100vh;font-size:2em;font-weight:700;">Sorry, Labs is not available in school mode</div><br><a href="https://www.munetios.com" style="display:flex;justify-content:center;align-items:center;font-size:1.5em;font-weight:700;">Go to Munetios</a>';
       }
     </script>
   </body>
