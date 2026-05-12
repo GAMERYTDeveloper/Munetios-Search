@@ -8500,4 +8500,12 @@ window.localResults = [
     favicon: "https://clipchamp.com/favicon.ico",
     link: "https://clipchamp.com/",
   },
+    {
+    title: "Samsung",
+    description:
+      "Browse Samsung Products and more with Samsung + Galaxy AI.",
+    url: "https://samsung.com/",
+    favicon: "",
+    link: "https://samsung.com/",
+  },
 ];
