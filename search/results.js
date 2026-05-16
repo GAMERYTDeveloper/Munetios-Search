@@ -8508,4 +8508,12 @@ window.localResults = [
     favicon: "",
     link: "https://samsung.com/",
   },
+      {
+    title: "Outta Controls",
+    description:
+      "Sports, Gaming. Culture.",
+    url: "https://outtacontrols.com/",
+    favicon: "",
+    link: "https://outtacontrols.com/",
+  },
 ];
