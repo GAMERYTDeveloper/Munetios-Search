@@ -201,7 +201,7 @@
     <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' https://cdn.tailwindcss.com https://*.munetios.com https://cdn.jsdelivr.net  'nonce-IKDjefjewhCujHJeuji3jhekowdijzizkcej' 'wasm-unsafe-eval'; style-src 'self' https://*.munetios.com https://discord.com https://api.munetios.com https://cdn.jsdelivr.net 'unsafe-inline'; img-src * data:; font-src 'self' https://fonts.gstatic.com https://api.munetios.com https://cdn.jsdelivr.net; frame-src 'self' https://www.munetios.com https://games.munetios.com https://tetris.munetios.com; connect-src 'self' data: https://*.munetios.com https://api.munetios.com https://analytics.munetios.com https://discordapp.com/* https://discord.com https://*.discord.com https://*.supervidplayer.net https://supervidplayer.net https://munetios.com https://proxy.munetios.com https://cdn.jsdelivr.net https://photon.komoot.io https://hn.algolia.com https://en.wikipedia.org https://*.openfreemap.org https://tiles.openfreemap.org https://server.arcgisonline.com; object-src 'none'; base-uri 'self'; form-action 'self' https://*.munetios.com; worker-src 'self' blob:; media-src 'self' https://www.munetios.com https:;"
+      content="default-src 'self'; script-src 'self' https://cdn.tailwindcss.com https://*.munetios.com https://cdn.jsdelivr.net  'nonce-IKDjefjewhCujHJeuji3jhekowdijzizkcej' 'wasm-unsafe-eval'; style-src 'self' https://*.munetios.com https://discord.com https://api.munetios.com https://cdn.jsdelivr.net 'unsafe-inline'; img-src * data:; font-src 'self' https://fonts.gstatic.com https://api.munetios.com https://cdn.jsdelivr.net; frame-src 'self' https://www.munetios.com https://games.munetios.com https://tetris.munetios.com; connect-src 'self' data: https://*.munetios.com https://api.munetios.com https://analytics.munetios.com https://discordapp.com/* https://discord.com https://*.discord.com https://*.supervidplayer.net https://supervidplayer.net https://munetios.com https://proxy.munetios.com https://cdn.jsdelivr.net https://photon.komoot.io https://hn.algolia.com https://*.wikipedia.org https://*.openfreemap.org https://tiles.openfreemap.org https://server.arcgisonline.com; object-src 'none'; base-uri 'self'; form-action 'self' https://*.munetios.com; worker-src 'self' blob:; media-src 'self' https://www.munetios.com https:;"
     />
     <meta
       http-equiv="Content-Security-Policy"
@@ -516,6 +516,55 @@
       .search-bar input {
         all: unset;
         width: 100%;
+      }
+      .search-suggestions {
+        position: relative;
+        width: min(1000px, calc(100vw - 40px));
+        margin-top: -8px;
+        display: none;
+        overflow: hidden;
+        border-radius: 12px;
+        z-index: 50;
+      }
+      .search-suggestions.visible {
+        display: block;
+      }
+      .search-suggestion-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid rgba(162, 89, 247, 0.12);
+        background: transparent;
+        color: white;
+        cursor: pointer;
+        padding: 10px 16px;
+        text-align: left;
+      }
+      .search-suggestion-item:last-child {
+        border-bottom: 0;
+      }
+      .search-suggestion-item:hover,
+      .search-suggestion-item.active {
+        background: rgba(108, 46, 183, 0.25);
+      }
+      .search-suggestion-icon {
+        flex-shrink: 0;
+        font-size: 20px;
+        opacity: 0.78;
+      }
+      .search-suggestion-label {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .search-suggestion-type {
+        flex-shrink: 0;
+        font-size: 0.78rem;
+        opacity: 0.62;
       }
       .search-buttons {
         display: flex;
@@ -3842,7 +3891,7 @@
         </div>
         <div class="search-bar liquid-glass">
           <icon>search</icon>
-          <input type="text" placeholder="Search The Web" id="searchInput" />
+          <input type="text" placeholder="Search The Web" id="searchInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
           <icon id="micBtn" title="Use Voice Search" role="button" tabindex="0" aria-label="Use voice search">mic</icon>
           <icon id="keyboardBtn" title="Use Virtual Keyboard" role="button" tabindex="0" aria-label="Use virtual keyboard">keyboard</icon>
           <icon id="cameraBtn" title="Use Image Search" role="button" tabindex="0" aria-label="Use image search">camera_alt</icon>
@@ -3851,6 +3900,7 @@
             <div class="btn-label">Voice Mode</div>
           </button>
         </div>
+        <div id="searchSuggestions" class="search-suggestions liquid-glass" role="listbox" aria-label="Search suggestions"></div>
         <!-- Image Search Wrapper -->
         <div class="image-search-wrapper" id="imageSearchWrapper">
           <div
@@ -6308,6 +6358,204 @@
         (function () {
           const searchInput = document.getElementById("searchInput");
           const searchBtn = document.getElementById("doSearch");
+          const suggestionsBox = document.getElementById("searchSuggestions");
+          const SEARCH_HISTORY_KEY = "munetiosSearchHistory";
+          const MAX_HISTORY_ITEMS = 270;
+          let activeSuggestionIndex = -1;
+
+          const localSuggestions = [
+            "privacy search engines",
+            "munetios search",
+            "munetios apps",
+            "munetios write",
+            "munetios calendar",
+            "munetios tasks",
+            "munetios notes",
+            "google alternatives",
+            "private email apps",
+            "password manager apps",
+            "browser alternatives",
+            "open source alternatives",
+            "ai writing tools",
+            "ai coding assistants",
+            "best programming languages 2026",
+            "linux distros for beginners",
+            "self hosted apps",
+            "home server setup",
+            "budget travel tips",
+            "language learning apps",
+            "work from home productivity",
+            "space exploration news",
+            "climate change solutions",
+            "quantum computing explained",
+            "how does the internet work",
+            "history of the web",
+            "weather storms",
+            "emergency services",
+          ];
+
+          function escapeHtml(value) {
+            return String(value).replace(/[&<>"']/g, function (char) {
+              return {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;",
+              }[char];
+            });
+          }
+
+          function normalizeHistoryEntry(entry) {
+            if (typeof entry === "string") return entry;
+            if (entry && typeof entry === "object") {
+              return entry.query || entry.q || entry.text || entry.term || entry.label || "";
+            }
+            return "";
+          }
+
+          function getSearchHistory() {
+            try {
+              const raw = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || "[]");
+              if (!Array.isArray(raw)) return [];
+              return raw
+                .map(normalizeHistoryEntry)
+                .map(function (item) { return String(item || "").trim(); })
+                .filter(Boolean);
+            } catch (err) {
+              return [];
+            }
+          }
+
+          function saveSearchHistory(query) {
+            const normalized = String(query || "").trim();
+            if (!normalized || window.location.hash === "#incognito") return;
+            const seen = new Set();
+            const next = [normalized]
+              .concat(getSearchHistory())
+              .filter(function (item) {
+                const key = item.toLowerCase();
+                if (seen.has(key)) return false;
+                seen.add(key);
+                return true;
+              })
+              .slice(0, MAX_HISTORY_ITEMS);
+            localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(next));
+          }
+
+          function isProbablyUrl(value) {
+            const text = String(value || "").trim();
+            if (!text || /\s/.test(text)) return false;
+            if (/^(https?:\/\/|ftp:\/\/|mailto:)/i.test(text)) return true;
+            if (/^localhost(?::\d+)?(?:[/?#].*)?$/i.test(text)) return true;
+            if (/^(?:[a-z0-9-]+\.)+[a-z]{2,}(?::\d+)?(?:[/?#].*)?$/i.test(text)) return true;
+            return false;
+          }
+
+          function normalizeUrl(value) {
+            const text = String(value || "").trim();
+            if (/^(https?:\/\/|ftp:\/\/|mailto:)/i.test(text)) return text;
+            return "https://" + text;
+          }
+
+          function buildSuggestions(value) {
+            const typed = String(value || "").trim().toLowerCase();
+            const seen = new Set();
+            const results = [];
+
+            function add(label, type) {
+              const clean = String(label || "").trim();
+              const key = clean.toLowerCase();
+              if (!clean || seen.has(key)) return;
+              seen.add(key);
+              results.push({ label: clean, type: type });
+            }
+
+            getSearchHistory().forEach(function (item) {
+              if (!typed || item.toLowerCase().includes(typed)) add(item, "history");
+            });
+
+            localSuggestions.forEach(function (item) {
+              if (!typed || item.toLowerCase().includes(typed)) add(item, "suggestion");
+            });
+
+            if (typed && isProbablyUrl(value)) add(value, "website");
+            return results.slice(0, 10);
+          }
+
+          function hideSuggestions() {
+            if (!suggestionsBox) return;
+            suggestionsBox.classList.remove("visible");
+            suggestionsBox.innerHTML = "";
+            activeSuggestionIndex = -1;
+          }
+
+          function setActiveSuggestion(index) {
+            if (!suggestionsBox) return;
+            const items = suggestionsBox.querySelectorAll(".search-suggestion-item");
+            items.forEach(function (item) { item.classList.remove("active"); });
+            activeSuggestionIndex = index;
+            if (index >= 0 && index < items.length) {
+              items[index].classList.add("active");
+              searchInput.value = items[index].getAttribute("data-label") || searchInput.value;
+            }
+          }
+
+          function renderSuggestions() {
+            if (!suggestionsBox || !searchInput) return;
+            if (window.location.hash === "#incognito") {
+              hideSuggestions();
+              return;
+            }
+            const items = buildSuggestions(searchInput.value);
+            if (!items.length) {
+              hideSuggestions();
+              return;
+            }
+            suggestionsBox.innerHTML = items
+              .map(function (item, index) {
+                const icon =
+                  item.type === "history"
+                    ? "history"
+                    : item.type === "website"
+                      ? "public"
+                      : "tips_and_updates";
+                const type =
+                  item.type === "history"
+                    ? "Recent"
+                    : item.type === "website"
+                      ? "Website"
+                      : "Suggested";
+                return (
+                  '<button type="button" class="search-suggestion-item" role="option" data-index="' +
+                  index +
+                  '" data-label="' +
+                  escapeHtml(item.label) +
+                  '">' +
+                  '<span class="material-symbols-rounded search-suggestion-icon" translate="no">' +
+                  icon +
+                  "</span>" +
+                  '<span class="search-suggestion-label">' +
+                  escapeHtml(item.label) +
+                  "</span>" +
+                  '<span class="search-suggestion-type">' +
+                  type +
+                  "</span>" +
+                  "</button>"
+                );
+              })
+              .join("");
+            suggestionsBox.classList.add("visible");
+            activeSuggestionIndex = -1;
+            suggestionsBox.querySelectorAll(".search-suggestion-item").forEach(function (item) {
+              item.addEventListener("mousedown", function (e) {
+                e.preventDefault();
+                searchInput.value = item.getAttribute("data-label") || "";
+                hideSuggestions();
+                doSearch();
+              });
+            });
+          }
 
           // Function to get current search mode from hash
           function getCurrentMode() {
@@ -6380,8 +6628,8 @@
 
           // Function to perform search based on current mode
           function doSearch() {
-            const q = encodeURIComponent(searchInput.value.trim());
-            if (!q) {
+            const rawQuery = searchInput.value.trim();
+            if (!rawQuery) {
               window.showToast &&
                 window.showToast(
                   window.getTranslation
@@ -6391,6 +6639,14 @@
               return;
             }
 
+            hideSuggestions();
+            if (isProbablyUrl(rawQuery)) {
+              window.location.href = normalizeUrl(rawQuery);
+              return;
+            }
+
+            saveSearchHistory(rawQuery);
+            const q = encodeURIComponent(rawQuery);
             const mode = getCurrentMode();
             let url;
 
@@ -6406,7 +6662,29 @@
           // Event listeners
           searchBtn.addEventListener("click", doSearch);
           searchInput.addEventListener("keydown", function (e) {
-            if (e.key === "Enter") doSearch();
+            if (e.key === "ArrowDown" && suggestionsBox && suggestionsBox.classList.contains("visible")) {
+              e.preventDefault();
+              const items = suggestionsBox.querySelectorAll(".search-suggestion-item");
+              setActiveSuggestion(Math.min(activeSuggestionIndex + 1, items.length - 1));
+            } else if (e.key === "ArrowUp" && suggestionsBox && suggestionsBox.classList.contains("visible")) {
+              e.preventDefault();
+              setActiveSuggestion(Math.max(activeSuggestionIndex - 1, -1));
+            } else if (e.key === "Escape") {
+              hideSuggestions();
+            } else if (e.key === "Enter") {
+              doSearch();
+            }
+          });
+          searchInput.addEventListener("input", renderSuggestions);
+          searchInput.addEventListener("focus", renderSuggestions);
+          document.addEventListener("mousedown", function (e) {
+            if (
+              suggestionsBox &&
+              !suggestionsBox.contains(e.target) &&
+              e.target !== searchInput
+            ) {
+              hideSuggestions();
+            }
           });
 
           // Listen for hash changes
@@ -23358,7 +23636,7 @@
           // URL prefix → feature name mapping for fetch interception
           var _FETCH_FEATURE_MAP = [
             { prefix: "https://hn.algolia.com/",             feature: "news"  },
-            { prefix: "https://en.wikipedia.org/",           feature: "wiki"  },
+            { hostSuffix: ".wikipedia.org",                  feature: "wiki"  },
             { prefix: "https://photon.komoot.io/",           feature: "maps"  },
             { prefix: "https://tiles.openfreemap.org/",      feature: "maps"  },
             { prefix: "https://server.arcgisonline.com/",    feature: "maps"  }
@@ -23370,7 +23648,16 @@
             var url = (typeof resource === "string") ? resource : (resource && resource.url) || "";
             for (var i = 0; i < _FETCH_FEATURE_MAP.length; i++) {
               var entry = _FETCH_FEATURE_MAP[i];
-              if (url.indexOf(entry.prefix) === 0) {
+              var matchesEntry = entry.prefix
+                ? url.indexOf(entry.prefix) === 0
+                : entry.hostSuffix && (function () {
+                    try {
+                      return new URL(url).hostname.endsWith(entry.hostSuffix);
+                    } catch (err) {
+                      return false;
+                    }
+                  })();
+              if (matchesEntry) {
                 var d = getRateLimitData(entry.feature);
                 var blocked =
                   (d.externalBlockedUntil && Date.now() < d.externalBlockedUntil) ||
@@ -24751,6 +25038,34 @@
           var wikiSpeechUtterance = null;
           var wikiSpeaking = false;
 
+          function getWikiLanguageCode() {
+            var lang = (
+              localStorage.getItem("munetiosLanguage") ||
+              document.documentElement.lang ||
+              navigator.language ||
+              "en"
+            ).toLowerCase();
+            var exactMap = {
+              "zh-cn": "zh",
+              "zh-sg": "zh",
+              "zh-tw": "zh",
+              "zh-hk": "zh",
+              "pt-br": "pt",
+              "pt-pt": "pt",
+              "nb": "no",
+              "nn": "no",
+              "iw": "he",
+              "jw": "jv",
+            };
+            var wikiLang = exactMap[lang] || (lang.split("-")[0] || "en").replace(/[^a-z]/g, "") || "en";
+            window.currentWikiLang = wikiLang;
+            return wikiLang;
+          }
+
+          function getWikiBaseUrl() {
+            return "https://" + getWikiLanguageCode() + ".wikipedia.org";
+          }
+
           // Wire up search
           (function () {
             var input = document.getElementById("wikiSearchInput");
@@ -24783,8 +25098,9 @@
               ) +
               "</div>";
 
+            var wikiBaseUrl = getWikiBaseUrl();
             var url =
-              "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=" +
+              wikiBaseUrl + "/w/api.php?action=query&list=search&srsearch=" +
               encodeURIComponent(q) +
               "&srlimit=10&format=json&origin=*";
 
@@ -24826,7 +25142,7 @@
                   })
                   .join("|");
                 var summaryUrl =
-                  "https://en.wikipedia.org/w/api.php?action=query&titles=" +
+                  wikiBaseUrl + "/w/api.php?action=query&titles=" +
                   titles +
                   "&prop=pageimages|extracts&exintro=1&explaintext=1&piprop=thumbnail&pithumbsize=120&format=json&origin=*";
                 return fetch(summaryUrl)
@@ -24869,6 +25185,7 @@
             var results = document.getElementById("wikiResults");
             if (!results) return;
             results.innerHTML = "";
+            var wikiBaseUrl = getWikiBaseUrl();
             var pages = (sdata.query && sdata.query.pages) || {};
             var pageMap = {};
             Object.values(pages).forEach(function (p) {
@@ -24928,10 +25245,10 @@
                     title: item.title,
                     description: snippet.slice(0, 120),
                     link:
-                      "https://en.wikipedia.org/wiki/" +
+                      wikiBaseUrl + "/wiki/" +
                       encodeURIComponent(item.title),
                     favicon:
-                      "https://www.google.com/s2/favicons?sz=64&domain_url=https://en.wikipedia.org",
+                      "https://www.google.com/s2/favicons?sz=64&domain_url=" + encodeURIComponent(wikiBaseUrl),
                   });
                 });
 
@@ -24945,6 +25262,7 @@
             var titleEl = document.getElementById("wikiReadTitle");
             var body = document.getElementById("wikiReadBody");
             var wikiLink = document.getElementById("wikiReadWikiLink");
+            var wikiBaseUrl = getWikiBaseUrl();
 
             if (!modal) return;
             titleEl.textContent = title;
@@ -24958,7 +25276,7 @@
               "</div>";
             if (wikiLink)
               wikiLink.href =
-                "https://en.wikipedia.org/wiki/" + encodeURIComponent(title);
+                wikiBaseUrl + "/wiki/" + encodeURIComponent(title);
             modal.classList.add("show");
 
             // Stop any ongoing speech
@@ -24966,7 +25284,7 @@
 
             withRateLimit("wiki", function () {
               var url =
-                "https://en.wikipedia.org/w/api.php?action=query&titles=" +
+                wikiBaseUrl + "/w/api.php?action=query&titles=" +
                 encodeURIComponent(title) +
                 "&prop=extracts&explaintext=1&format=json&origin=*";
               fetch(url)
@@ -25061,10 +25379,10 @@
                   title: title,
                   description: snippet,
                   link:
-                    "https://en.wikipedia.org/wiki/" +
+                    getWikiBaseUrl() + "/wiki/" +
                     encodeURIComponent(title),
                   favicon:
-                    "https://www.google.com/s2/favicons?sz=64&domain_url=https://en.wikipedia.org",
+                    "https://www.google.com/s2/favicons?sz=64&domain_url=" + encodeURIComponent(getWikiBaseUrl()),
                 });
               });
           })();
@@ -25072,6 +25390,7 @@
           function startWikiSpeech(text) {
             if (!window.speechSynthesis) return;
             wikiSpeechUtterance = new SpeechSynthesisUtterance(text);
+            wikiSpeechUtterance.lang = document.documentElement.lang || getWikiLanguageCode();
             wikiSpeechUtterance.rate = 0.95;
             wikiSpeechUtterance.onend = function () {
               wikiSpeaking = false;
