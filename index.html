@@ -4270,29 +4270,29 @@
       <div class="modal" id="activitiesPickerModal" role="dialog" aria-modal="true" aria-labelledby="activitiesPickerTitle">
         <div class="modal-content" style="max-width:520px;">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-            <h2 id="activitiesPickerTitle" style="margin:0;font-size:1.3rem;">Activities</h2>
-            <button id="activitiesPickerClose" aria-label="Close activities" style="background:none;border:none;color:white;cursor:pointer;font-size:22px;line-height:1;">&#x2715;</button>
+            <h2 id="activitiesPickerTitle" data-translate="activities" style="margin:0;font-size:1.3rem;">Activities</h2>
+            <button id="activitiesPickerClose" aria-label="Close activities" data-translate-aria-label="closeActivities" style="background:none;border:none;color:white;cursor:pointer;font-size:22px;line-height:1;">&#x2715;</button>
           </div>
           <div id="activitiesGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:16px;">
-            <button class="activity-card" data-activity="racecar" data-url="https://www.munetios.com/activities/racecargame.html" data-label="Race Car Game" style="background:rgba(85,12,202,0.18);border:1.5px solid rgba(106,0,255,0.35);border-radius:14px;padding:18px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;color:white;transition:background 0.2s,transform 0.15s;">
+            <button class="activity-card" data-activity="racecar" data-url="https://www.munetios.com/activities/racecargame.html" data-label="Race Car Game" data-activity-label-key="raceCarGame" style="background:rgba(85,12,202,0.18);border:1.5px solid rgba(106,0,255,0.35);border-radius:14px;padding:18px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;color:white;transition:background 0.2s,transform 0.15s;">
               <span class="material-symbols-rounded" style="font-size:40px;">directions_car</span>
-              <span style="font-size:0.85rem;font-weight:500;text-align:center;">Race Car Game</span>
+              <span data-activity-label style="font-size:0.85rem;font-weight:500;text-align:center;">Race Car Game</span>
             </button>
-            <button class="activity-card" data-activity="tetris" data-url="https://tetris.munetios.com" data-label="Tetris" style="background:rgba(85,12,202,0.18);border:1.5px solid rgba(106,0,255,0.35);border-radius:14px;padding:18px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;color:white;transition:background 0.2s,transform 0.15s;">
+            <button class="activity-card" data-activity="tetris" data-url="https://tetris.munetios.com" data-label="Tetris" data-activity-label-key="tetris" style="background:rgba(85,12,202,0.18);border:1.5px solid rgba(106,0,255,0.35);border-radius:14px;padding:18px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;color:white;transition:background 0.2s,transform 0.15s;">
               <span class="material-symbols-rounded" style="font-size:40px;">view_quilt</span>
-              <span style="font-size:0.85rem;font-weight:500;text-align:center;">Tetris</span>
+              <span data-activity-label style="font-size:0.85rem;font-weight:500;text-align:center;">Tetris</span>
             </button>
-            <button class="activity-card" data-activity="minesweeper" data-url="https://games.munetios.com/minesweeper" data-label="Minesweeper" style="background:rgba(85,12,202,0.18);border:1.5px solid rgba(106,0,255,0.35);border-radius:14px;padding:18px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;color:white;transition:background 0.2s,transform 0.15s;">
+            <button class="activity-card" data-activity="minesweeper" data-url="https://games.munetios.com/minesweeper" data-label="Minesweeper" data-activity-label-key="minesweeper" style="background:rgba(85,12,202,0.18);border:1.5px solid rgba(106,0,255,0.35);border-radius:14px;padding:18px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;color:white;transition:background 0.2s,transform 0.15s;">
               <span class="material-symbols-rounded" style="font-size:40px;">crop_square</span>
-              <span style="font-size:0.85rem;font-weight:500;text-align:center;">Minesweeper</span>
+              <span data-activity-label style="font-size:0.85rem;font-weight:500;text-align:center;">Minesweeper</span>
             </button>
-            <button class="activity-card" data-activity="flappybird" data-url="https://games.munetios.com/flappybird" data-label="Flappy Bird" style="background:rgba(85,12,202,0.18);border:1.5px solid rgba(106,0,255,0.35);border-radius:14px;padding:18px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;color:white;transition:background 0.2s,transform 0.15s;">
+            <button class="activity-card" data-activity="flappybird" data-url="https://games.munetios.com/flappybird" data-label="Flappy Bird" data-activity-label-key="flappyBird" style="background:rgba(85,12,202,0.18);border:1.5px solid rgba(106,0,255,0.35);border-radius:14px;padding:18px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;color:white;transition:background 0.2s,transform 0.15s;">
               <span class="material-symbols-rounded" style="font-size:40px;">flutter_dash</span>
-              <span style="font-size:0.85rem;font-weight:500;text-align:center;">Flappy Bird</span>
+              <span data-activity-label style="font-size:0.85rem;font-weight:500;text-align:center;">Flappy Bird</span>
             </button>
-            <button class="activity-card" data-activity="snake" data-url="https://games.munetios.com/snake" data-label="Snake" style="background:rgba(85,12,202,0.18);border:1.5px solid rgba(106,0,255,0.35);border-radius:14px;padding:18px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;color:white;transition:background 0.2s,transform 0.15s;">
+            <button class="activity-card" data-activity="snake" data-url="https://games.munetios.com/snake" data-label="Snake" data-activity-label-key="snake" style="background:rgba(85,12,202,0.18);border:1.5px solid rgba(106,0,255,0.35);border-radius:14px;padding:18px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;color:white;transition:background 0.2s,transform 0.15s;">
               <span class="material-symbols-rounded" style="font-size:40px;">gesture</span>
-              <span style="font-size:0.85rem;font-weight:500;text-align:center;">Snake</span>
+              <span data-activity-label style="font-size:0.85rem;font-weight:500;text-align:center;">Snake</span>
             </button>
           </div>
         </div>
@@ -4301,14 +4301,14 @@
       <div class="modal" id="actMgrModal" role="dialog" aria-modal="true" aria-labelledby="actMgrTitle">
         <div class="modal-content" style="max-width:480px;">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-            <h2 id="actMgrTitle" style="margin:0;font-size:1.1rem;display:flex;align-items:center;gap:8px;"><span class="material-symbols-rounded" style="font-size:22px;color:rgba(106,0,255,0.9);">sports_esports</span>Running Activities</h2>
-            <button id="actMgrClose" aria-label="Close" style="background:none;border:none;color:white;cursor:pointer;font-size:22px;line-height:1;">&#x2715;</button>
+            <h2 id="actMgrTitle" style="margin:0;font-size:1.1rem;display:flex;align-items:center;gap:8px;"><span class="material-symbols-rounded" style="font-size:22px;color:rgba(106,0,255,0.9);">sports_esports</span><span data-translate="runningActivities">Running Activities</span></h2>
+            <button id="actMgrClose" aria-label="Close" data-translate-aria-label="close" style="background:none;border:none;color:white;cursor:pointer;font-size:22px;line-height:1;">&#x2715;</button>
           </div>
-          <p style="margin:0 0 14px;opacity:0.75;font-size:0.88rem;">You have running activities. End one or start the new one alongside.</p>
+          <p data-translate="runningActivitiesDescription" style="margin:0 0 14px;opacity:0.75;font-size:0.88rem;">You have running activities. End one or start the new one alongside.</p>
           <div id="actMgrList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px; overflow-y: auto; max-height: 500px;"></div>
           <div style="display:flex;gap:10px;justify-content:flex-end;">
-            <button id="actMgrCancel" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:white;border-radius:8px;padding:8px 18px;cursor:pointer;font-size:0.9rem;">Cancel</button>
-            <button id="actMgrStartNew" style="background:linear-gradient(135deg,rgba(85,12,202,0.6),rgba(106,0,255,0.5));border:1px solid rgba(106,0,255,0.5);color:white;border-radius:8px;padding:8px 18px;cursor:pointer;font-size:0.9rem;font-weight:500;">Start New Alongside</button>
+            <button id="actMgrCancel" data-translate="cancel" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:white;border-radius:8px;padding:8px 18px;cursor:pointer;font-size:0.9rem;">Cancel</button>
+            <button id="actMgrStartNew" data-translate="startNewAlongside" style="background:linear-gradient(135deg,rgba(85,12,202,0.6),rgba(106,0,255,0.5));border:1px solid rgba(106,0,255,0.5);color:white;border-radius:8px;padding:8px 18px;cursor:pointer;font-size:0.9rem;font-weight:500;">Start New Alongside</button>
           </div>
         </div>
       </div>
@@ -6890,6 +6890,24 @@
               auto: "Auto",
               autoCountryLabel: "Auto: {country}",
               offersIn: "Munetios offers in {language}",
+              activities: "Activities",
+              runningActivities: "Running Activities",
+              runningActivitiesDescription:
+                "You have running activities. End one or start the new one alongside.",
+              closeActivities: "Close activities",
+              closeActivity: "Close activity",
+              startNewAlongside: "Start New Alongside",
+              endActivity: "End",
+              failedToStartActivity: "Failed to start activity. Please try again.",
+              fullscreen: "Fullscreen",
+              exitFullscreen: "Exit Fullscreen",
+              toggleFullscreen: "Toggle fullscreen",
+              resize: "Resize",
+              raceCarGame: "Race Car Game",
+              tetris: "Tetris",
+              minesweeper: "Minesweeper",
+              flappyBird: "Flappy Bird",
+              snake: "Snake",
 
               // Confirmation Messages
               deleteSearchHistoryConfirm:
@@ -19036,6 +19054,202 @@
             },
           };
 
+          const runtimeActivityTranslationFallbacks = {
+            es: {
+              activities: "Actividades",
+              runningActivities: "Actividades en ejecución",
+              runningActivitiesDescription:
+                "Tienes actividades en ejecución. Finaliza una o inicia la nueva junto a las demás.",
+              closeActivities: "Cerrar actividades",
+              closeActivity: "Cerrar actividad",
+              startNewAlongside: "Iniciar junto a las demás",
+              endActivity: "Finalizar",
+              failedToStartActivity: "No se pudo iniciar la actividad. Inténtalo de nuevo.",
+              fullscreen: "Pantalla completa",
+              exitFullscreen: "Salir de pantalla completa",
+              toggleFullscreen: "Alternar pantalla completa",
+              resize: "Cambiar tamaño",
+              raceCarGame: "Juego de carreras",
+              flappyBird: "Flappy Bird",
+            },
+            fr: {
+              activities: "Activités",
+              runningActivities: "Activités en cours",
+              runningActivitiesDescription:
+                "Vous avez des activités en cours. Terminez-en une ou lancez la nouvelle à côté.",
+              closeActivities: "Fermer les activités",
+              closeActivity: "Fermer l'activité",
+              startNewAlongside: "Lancer à côté",
+              endActivity: "Terminer",
+              failedToStartActivity: "Impossible de lancer l'activité. Réessayez.",
+              fullscreen: "Plein écran",
+              exitFullscreen: "Quitter le plein écran",
+              toggleFullscreen: "Activer le plein écran",
+              resize: "Redimensionner",
+              raceCarGame: "Jeu de course",
+              flappyBird: "Flappy Bird",
+            },
+            de: {
+              activities: "Aktivitäten",
+              runningActivities: "Laufende Aktivitäten",
+              runningActivitiesDescription:
+                "Du hast laufende Aktivitäten. Beende eine oder starte die neue daneben.",
+              closeActivities: "Aktivitäten schließen",
+              closeActivity: "Aktivität schließen",
+              startNewAlongside: "Daneben starten",
+              endActivity: "Beenden",
+              failedToStartActivity: "Aktivität konnte nicht gestartet werden. Bitte erneut versuchen.",
+              fullscreen: "Vollbild",
+              exitFullscreen: "Vollbild verlassen",
+              toggleFullscreen: "Vollbild umschalten",
+              resize: "Größe ändern",
+              raceCarGame: "Rennspiel",
+              flappyBird: "Flappy Bird",
+            },
+            it: {
+              activities: "Attività",
+              runningActivities: "Attività in esecuzione",
+              runningActivitiesDescription:
+                "Hai attività in esecuzione. Terminane una o avvia la nuova insieme alle altre.",
+              closeActivities: "Chiudi attività",
+              closeActivity: "Chiudi attività",
+              startNewAlongside: "Avvia insieme alle altre",
+              endActivity: "Termina",
+              failedToStartActivity: "Impossibile avviare l'attività. Riprova.",
+              fullscreen: "Schermo intero",
+              exitFullscreen: "Esci dallo schermo intero",
+              toggleFullscreen: "Attiva/disattiva schermo intero",
+              resize: "Ridimensiona",
+              raceCarGame: "Gioco di corse",
+              flappyBird: "Flappy Bird",
+            },
+            pt: {
+              activities: "Atividades",
+              runningActivities: "Atividades em execução",
+              runningActivitiesDescription:
+                "Tem atividades em execução. Termine uma ou inicie a nova ao lado.",
+              closeActivities: "Fechar atividades",
+              closeActivity: "Fechar atividade",
+              startNewAlongside: "Iniciar ao lado",
+              endActivity: "Terminar",
+              failedToStartActivity: "Não foi possível iniciar a atividade. Tente novamente.",
+              fullscreen: "Ecrã inteiro",
+              exitFullscreen: "Sair do ecrã inteiro",
+              toggleFullscreen: "Alternar ecrã inteiro",
+              resize: "Redimensionar",
+              raceCarGame: "Jogo de corrida",
+              flappyBird: "Flappy Bird",
+            },
+            nl: {
+              activities: "Activiteiten",
+              runningActivities: "Actieve activiteiten",
+              runningActivitiesDescription:
+                "Je hebt actieve activiteiten. Beëindig er een of start de nieuwe ernaast.",
+              closeActivities: "Activiteiten sluiten",
+              closeActivity: "Activiteit sluiten",
+              startNewAlongside: "Ernaast starten",
+              endActivity: "Beëindigen",
+              failedToStartActivity: "Activiteit kon niet worden gestart. Probeer het opnieuw.",
+              fullscreen: "Volledig scherm",
+              exitFullscreen: "Volledig scherm sluiten",
+              toggleFullscreen: "Volledig scherm wisselen",
+              resize: "Formaat wijzigen",
+              raceCarGame: "Racegame",
+              flappyBird: "Flappy Bird",
+            },
+            zh: {
+              activities: "活动",
+              runningActivities: "正在运行的活动",
+              runningActivitiesDescription: "你有正在运行的活动。结束一个，或同时启动新的活动。",
+              closeActivities: "关闭活动",
+              closeActivity: "关闭活动",
+              startNewAlongside: "同时启动",
+              endActivity: "结束",
+              failedToStartActivity: "无法启动活动。请重试。",
+              fullscreen: "全屏",
+              exitFullscreen: "退出全屏",
+              toggleFullscreen: "切换全屏",
+              resize: "调整大小",
+              raceCarGame: "赛车游戏",
+              flappyBird: "Flappy Bird",
+            },
+            ja: {
+              activities: "アクティビティ",
+              runningActivities: "実行中のアクティビティ",
+              runningActivitiesDescription:
+                "実行中のアクティビティがあります。どれかを終了するか、新しいものを並行して開始してください。",
+              closeActivities: "アクティビティを閉じる",
+              closeActivity: "アクティビティを閉じる",
+              startNewAlongside: "並行して開始",
+              endActivity: "終了",
+              failedToStartActivity: "アクティビティを開始できませんでした。もう一度お試しください。",
+              fullscreen: "全画面",
+              exitFullscreen: "全画面を終了",
+              toggleFullscreen: "全画面を切り替え",
+              resize: "サイズ変更",
+              raceCarGame: "レースカーゲーム",
+              flappyBird: "Flappy Bird",
+            },
+            ko: {
+              activities: "활동",
+              runningActivities: "실행 중인 활동",
+              runningActivitiesDescription:
+                "실행 중인 활동이 있습니다. 하나를 종료하거나 새 활동을 함께 시작하세요.",
+              closeActivities: "활동 닫기",
+              closeActivity: "활동 닫기",
+              startNewAlongside: "함께 시작",
+              endActivity: "종료",
+              failedToStartActivity: "활동을 시작하지 못했습니다. 다시 시도하세요.",
+              fullscreen: "전체 화면",
+              exitFullscreen: "전체 화면 종료",
+              toggleFullscreen: "전체 화면 전환",
+              resize: "크기 조절",
+              raceCarGame: "레이스카 게임",
+              flappyBird: "Flappy Bird",
+            },
+            ar: {
+              activities: "الأنشطة",
+              runningActivities: "الأنشطة قيد التشغيل",
+              runningActivitiesDescription:
+                "لديك أنشطة قيد التشغيل. أنهِ أحدها أو ابدأ النشاط الجديد بجانبها.",
+              closeActivities: "إغلاق الأنشطة",
+              closeActivity: "إغلاق النشاط",
+              startNewAlongside: "البدء بجانبها",
+              endActivity: "إنهاء",
+              failedToStartActivity: "تعذر بدء النشاط. حاول مرة أخرى.",
+              fullscreen: "ملء الشاشة",
+              exitFullscreen: "الخروج من ملء الشاشة",
+              toggleFullscreen: "تبديل ملء الشاشة",
+              resize: "تغيير الحجم",
+              raceCarGame: "لعبة سباق السيارات",
+              flappyBird: "Flappy Bird",
+            },
+            hi: {
+              activities: "गतिविधियां",
+              runningActivities: "चल रही गतिविधियां",
+              runningActivitiesDescription:
+                "आपकी गतिविधियां चल रही हैं। एक को समाप्त करें या नई गतिविधि साथ में शुरू करें।",
+              closeActivities: "गतिविधियां बंद करें",
+              closeActivity: "गतिविधि बंद करें",
+              startNewAlongside: "साथ में शुरू करें",
+              endActivity: "समाप्त करें",
+              failedToStartActivity: "गतिविधि शुरू नहीं हो सकी। कृपया फिर से कोशिश करें।",
+              fullscreen: "पूर्ण स्क्रीन",
+              exitFullscreen: "पूर्ण स्क्रीन से बाहर निकलें",
+              toggleFullscreen: "पूर्ण स्क्रीन टॉगल करें",
+              resize: "आकार बदलें",
+              raceCarGame: "रेस कार गेम",
+              flappyBird: "Flappy Bird",
+            },
+          };
+
+          Object.entries(runtimeActivityTranslationFallbacks).forEach(function ([langCode, values]) {
+            runtimeTranslationFallbacks[langCode] = {
+              ...(runtimeTranslationFallbacks[langCode] || {}),
+              ...values,
+            };
+          });
+
           function getTranslationsFor(langCode) {
             const fallbackLang = (langCode || "en").split("-")[0];
             return {
@@ -19655,6 +19869,13 @@
                 const translation = t[key] || translations.en[key];
                 if (translation) el.textContent = translation;
               });
+            document
+              .querySelectorAll("[data-translate-aria-label]")
+              .forEach(function (el) {
+                const key = el.getAttribute("data-translate-aria-label");
+                const translation = t[key] || translations.en[key];
+                if (translation) el.setAttribute("aria-label", translation);
+              });
 
             // Confirm modal buttons
             const confirmOkBtn = document.getElementById("confirmOkBtn");
@@ -19706,6 +19927,7 @@
             window.refreshCountryLabel && window.refreshCountryLabel();
             window.updateSearchModeLabels && window.updateSearchModeLabels();
             window.renderBookmarksPage && window.renderBookmarksPage();
+            window.applyActivityTranslations && window.applyActivityTranslations();
           }
 
           // Load saved language (with navigator.language auto-detection on first visit)
@@ -24514,12 +24736,8 @@
                     )
                   : "Lat: " + lat + ", Lng: " + lng + " (Zoom " + zoom + ")",
                 link:
-                  "https://www.openstreetmap.org/#map=" +
-                  zoom +
-                  "/" +
-                  center.lat.toFixed(5) +
-                  "/" +
-                  center.lng.toFixed(5),
+                  "https://maps.munetios.com/#cord=" +
+                  lat + "," + lng + "," + zoom,
                 favicon: "",
               });
             });
@@ -25011,11 +25229,11 @@
         // Activities Feature
         (function () {
           var ACTIVITIES = [
-            { id: 'racecar',     label: 'Race Car Game', icon: 'directions_car', url: 'https://www.munetios.com/activities/racecargame.html' },
-            { id: 'tetris',      label: 'Tetris',        icon: 'view_quilt',     url: 'https://tetris.munetios.com' },
-            { id: 'minesweeper', label: 'Minesweeper',   icon: 'crop_square',       url: 'https://games.munetios.com/minesweeper' },
-            { id: 'flappybird',  label: 'Flappy Bird',   icon: 'flutter_dash',   url: 'https://games.munetios.com/flappybird' },
-            { id: 'snake',       label: 'Snake',         icon: 'gesture',        url: 'https://games.munetios.com/snake' },
+            { id: 'racecar',     labelKey: 'raceCarGame',  fallbackLabel: 'Race Car Game', icon: 'directions_car', url: 'https://www.munetios.com/activities/racecargame.html' },
+            { id: 'tetris',      labelKey: 'tetris',       fallbackLabel: 'Tetris',        icon: 'view_quilt',     url: 'https://tetris.munetios.com' },
+            { id: 'minesweeper', labelKey: 'minesweeper',  fallbackLabel: 'Minesweeper',   icon: 'crop_square',    url: 'https://games.munetios.com/minesweeper' },
+            { id: 'flappybird',  labelKey: 'flappyBird',   fallbackLabel: 'Flappy Bird',   icon: 'flutter_dash',   url: 'https://games.munetios.com/flappybird' },
+            { id: 'snake',       labelKey: 'snake',        fallbackLabel: 'Snake',         icon: 'gesture',        url: 'https://games.munetios.com/snake' },
           ];
 
           var activeWindows = [];
@@ -25033,6 +25251,68 @@
           var actMgrCancel   = document.getElementById('actMgrCancel');
           var actMgrStartNew = document.getElementById('actMgrStartNew');
           var actMgrList     = document.getElementById('actMgrList');
+
+          function t(key, fallback) {
+            return (window.getTranslation && window.getTranslation(key)) || fallback || key;
+          }
+
+          function escapeHtml(value) {
+            return String(value).replace(/[&<>"']/g, function (char) {
+              return {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;',
+              }[char];
+            });
+          }
+
+          function getActivityLabel(actDef) {
+            return t(actDef.labelKey, actDef.fallbackLabel);
+          }
+
+          function applyActivityTranslations() {
+            document.querySelectorAll('.activity-card').forEach(function (card) {
+              var actId = card.getAttribute('data-activity');
+              var actDef = ACTIVITIES.find(function (a) { return a.id === actId; });
+              if (!actDef) return;
+              var label = getActivityLabel(actDef);
+              card.setAttribute('data-label', label);
+              card.setAttribute('aria-label', label);
+              var labelEl = card.querySelector('[data-activity-label]');
+              if (labelEl) labelEl.textContent = label;
+            });
+
+            activeWindows.forEach(function (w) {
+              var label = getActivityLabel(w.actDef);
+              w.label = label;
+              var title = w.el.querySelector('.act-window-title');
+              var loadingLabel = w.el.querySelector('.act-loading-label');
+              var iframe = w.el.querySelector('.act-iframe');
+              var closeBtn = w.el.querySelector('.act-close-btn');
+              var fullscreenBtn = w.el.querySelector('.act-fullscreen-btn');
+              var resizeHandle = w.el.querySelector('.act-resize-handle');
+              if (title) title.textContent = label;
+              if (loadingLabel) loadingLabel.textContent = label;
+              if (iframe) iframe.title = label;
+              if (closeBtn) {
+                var closeActivityText = t('closeActivity', 'Close activity');
+                closeBtn.title = closeActivityText;
+                closeBtn.setAttribute('aria-label', closeActivityText);
+              }
+              if (fullscreenBtn) {
+                var isFullscreen = w.el.classList.contains('act-fullscreen');
+                fullscreenBtn.title = isFullscreen ? t('exitFullscreen', 'Exit Fullscreen') : t('fullscreen', 'Fullscreen');
+                fullscreenBtn.setAttribute('aria-label', t('toggleFullscreen', 'Toggle fullscreen'));
+              }
+              if (resizeHandle) resizeHandle.title = t('resize', 'Resize');
+            });
+
+            if (actMgrModal && actMgrModal.classList.contains('show')) {
+              renderManagerList();
+            }
+          }
 
           // ── Picker ──────────────────────────────────────────────────────────
           function openPicker()  { pickerModal.classList.add('show'); }
@@ -25065,12 +25345,13 @@
           function renderManagerList() {
             actMgrList.innerHTML = '';
             activeWindows.forEach(function (w) {
+              var label = getActivityLabel(w.actDef);
               var row = document.createElement('div');
               row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(85,12,202,0.18);border-radius:9px;border:1px solid rgba(106,0,255,0.25);';
               row.innerHTML =
-                '<span class="material-symbols-rounded" style="font-size:20px;color:rgba(180,140,255,0.9);">' + w.icon + '</span>' +
-                '<span style="flex:1;font-size:0.88rem;">' + w.label + '</span>' +
-                '<button data-wid="' + w.id + '" class="act-mgr-end-btn" style="background:rgba(220,50,50,0.18);border:1px solid rgba(220,50,50,0.35);color:#ff8080;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:0.8rem;">End</button>';
+                '<span class="material-symbols-rounded" style="font-size:20px;color:rgba(180,140,255,0.9);">' + escapeHtml(w.icon) + '</span>' +
+                '<span style="flex:1;font-size:0.88rem;">' + escapeHtml(label) + '</span>' +
+                '<button data-wid="' + escapeHtml(w.id) + '" class="act-mgr-end-btn" style="background:rgba(220,50,50,0.18);border:1px solid rgba(220,50,50,0.35);color:#ff8080;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:0.8rem;">' + escapeHtml(t('endActivity', 'End')) + '</button>';
               actMgrList.appendChild(row);
             });
             actMgrList.querySelectorAll('.act-mgr-end-btn').forEach(function (btn) {
@@ -25110,6 +25391,7 @@
 
           // ── Create floating window ───────────────────────────────────────────
           function startActivity(actDef) {
+            var label = getActivityLabel(actDef);
             var wid = 'act-win-' + (++windowCounter);
             var n   = (windowCounter - 1) % 8;
             var posX = Math.min(60 + n * 32, window.innerWidth - 720);
@@ -25132,13 +25414,13 @@
             win.innerHTML =
               '<div class="act-sheet-drag-pill" aria-hidden="true"><div class="act-sheet-drag-pill-inner"></div></div>' +
               '<div class="act-titlebar">' +
-                '<span class="material-symbols-rounded" style="font-size:20px;color:rgba(180,140,255,0.9);flex-shrink:0;">' + actDef.icon + '</span>' +
-                '<span style="font-size:0.92rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px;">' + actDef.label + '</span>' +
+                '<span class="material-symbols-rounded" style="font-size:20px;color:rgba(180,140,255,0.9);flex-shrink:0;">' + escapeHtml(actDef.icon) + '</span>' +
+                '<span class="act-window-title" style="font-size:0.92rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px;">' + escapeHtml(label) + '</span>' +
                 '<div class="act-titlebar-btns">' +
-                  '<button class="act-titlebar-btn act-fullscreen-btn" title="Fullscreen" aria-label="Toggle fullscreen">' +
+                  '<button class="act-titlebar-btn act-fullscreen-btn" title="' + escapeHtml(t('fullscreen', 'Fullscreen')) + '" aria-label="' + escapeHtml(t('toggleFullscreen', 'Toggle fullscreen')) + '">' +
                     '<span class="material-symbols-rounded" style="font-size:18px;">fullscreen</span>' +
                   '</button>' +
-                  '<button class="act-titlebar-btn act-close-btn" title="Close activity" aria-label="Close activity">' +
+                  '<button class="act-titlebar-btn act-close-btn" title="' + escapeHtml(t('closeActivity', 'Close activity')) + '" aria-label="' + escapeHtml(t('closeActivity', 'Close activity')) + '">' +
                     '<span class="material-symbols-rounded" style="font-size:18px;">close</span>' +
                   '</button>' +
                 '</div>' +
@@ -25146,11 +25428,11 @@
               '<div class="act-body">' +
                 '<div class="act-spinner">' +
                   '<span class="material-symbols-rounded" style="font-size:46px;color:rgba(106,0,255,0.8);animation:activity-spin 1s linear infinite;">progress_activity</span>' +
-                  '<span style="font-size:0.88rem;opacity:0.7;">' + actDef.label + '</span>' +
+                  '<span class="act-loading-label" style="font-size:0.88rem;opacity:0.7;">' + escapeHtml(label) + '</span>' +
                 '</div>' +
-                '<iframe class="act-iframe" title="' + actDef.label + '" sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock" allowfullscreen src="about:blank"></iframe>' +
+                '<iframe class="act-iframe" title="' + escapeHtml(label) + '" sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock" allowfullscreen src="about:blank"></iframe>' +
               '</div>' +
-              '<div class="act-resize-handle" title="Resize"></div>';
+              '<div class="act-resize-handle" title="' + escapeHtml(t('resize', 'Resize')) + '"></div>';
 
             document.body.appendChild(win);
 
@@ -25163,7 +25445,7 @@
             var dragPill     = win.querySelector('.act-sheet-drag-pill');
             var fsIcon       = fullscreenBtn.querySelector('.material-symbols-rounded');
 
-            var wObj = { id: wid, el: win, iframe: iframe, label: actDef.label, icon: actDef.icon };
+            var wObj = { id: wid, el: win, iframe: iframe, label: label, icon: actDef.icon, actDef: actDef };
             activeWindows.push(wObj);
 
             // Bring to front on click
@@ -25175,7 +25457,7 @@
               if (!loaded) {
                 spinner.classList.add('act-spinner-hidden');
                 closeActivity(wid);
-                window.showToast && window.showToast('Failed to start activity. Please try again.');
+                window.showToast && window.showToast(t('failedToStartActivity', 'Failed to start activity. Please try again.'));
               }
             }, 12000);
 
@@ -25192,7 +25474,7 @@
               clearTimeout(loadTimeout);
               spinner.classList.add('act-spinner-hidden');
               closeActivity(wid);
-              window.showToast && window.showToast('Failed to start activity. Please try again.');
+              window.showToast && window.showToast(t('failedToStartActivity', 'Failed to start activity. Please try again.'));
             });
 
             iframe.src = actDef.url;
@@ -25206,7 +25488,7 @@
               isFullscreen = !isFullscreen;
               win.classList.toggle('act-fullscreen', isFullscreen);
               fsIcon.textContent = isFullscreen ? 'fullscreen_exit' : 'fullscreen';
-              fullscreenBtn.title = isFullscreen ? 'Exit Fullscreen' : 'Fullscreen';
+              fullscreenBtn.title = isFullscreen ? t('exitFullscreen', 'Exit Fullscreen') : t('fullscreen', 'Fullscreen');
             });
 
             // ── Drag ────────────────────────────────────────────────────────
@@ -25327,6 +25609,8 @@
               if (actDef) launchActivity(actDef);
             });
           });
+          window.applyActivityTranslations = applyActivityTranslations;
+          applyActivityTranslations();
         })();
       </script>
     </div>
