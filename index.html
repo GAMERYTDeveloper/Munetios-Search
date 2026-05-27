@@ -23447,6 +23447,10 @@
             if (/MSIE|Trident/.test(ua)) {
               return true;
             }
+                // Check for Playstation
+            if (/PlayStation|Trident/.test(ua)) {
+              return true;
+            }
 
             // Check for old Edge (< 79, before Chromium-based)
             if (/Edge\/([0-9]+)/.test(ua)) {
