@@ -3643,6 +3643,64 @@
           rgba(255, 255, 255, 0.14) 100%
         ) !important;
       }
+      html.reduce-transparency .liquid-glass,
+      html.reduce-transparency [class*="glass" i],
+      html.reduce-transparency .settings-modal-content,
+      html.reduce-transparency .modal-content,
+      html.reduce-transparency .dropdown-wrapper,
+      html.reduce-transparency .dropdown-menu,
+      html.reduce-transparency .shortcut-card,
+      html.reduce-transparency .confirm-modal-content,
+      html.reduce-transparency .voice-mode-wrapper,
+      html.reduce-transparency .image-search-wrapper,
+      html.reduce-transparency .apps-container,
+      html.reduce-transparency .search-suggestions {
+        background: #140825 !important;
+        background-color: #140825 !important;
+        background-image: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: none !important;
+      }
+      html.reduce-transparency .settings-modal,
+      html.reduce-transparency .modal,
+      html.reduce-transparency .modal-backdrop,
+      html.reduce-transparency .bookmarks-overlay,
+      html.reduce-transparency .sidebar-overlay {
+        background: rgba(0, 0, 0, 0.35) !important;
+        background-image: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+      html.reduce-transparency[data-theme="light-mode"] .liquid-glass,
+      html.reduce-transparency[data-theme="light-mode"] [class*="glass" i],
+      html.reduce-transparency[data-theme="light-mode"] .settings-modal-content,
+      html.reduce-transparency[data-theme="light-mode"] .modal-content,
+      html.reduce-transparency[data-theme="light-mode"] .dropdown-wrapper,
+      html.reduce-transparency[data-theme="light-mode"] .dropdown-menu,
+      html.reduce-transparency[data-theme="light-mode"] .shortcut-card,
+      html.reduce-transparency[data-theme="light-mode"] .confirm-modal-content,
+      html.reduce-transparency[data-theme="light-mode"] .voice-mode-wrapper,
+      html.reduce-transparency[data-theme="light-mode"] .image-search-wrapper,
+      html.reduce-transparency[data-theme="light-mode"] .apps-container,
+      html.reduce-transparency[data-theme="light-mode"] .search-suggestions {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        background-image: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: none !important;
+      }
+      html.reduce-transparency[data-theme="light-mode"] .settings-modal,
+      html.reduce-transparency[data-theme="light-mode"] .modal,
+      html.reduce-transparency[data-theme="light-mode"] .modal-backdrop,
+      html.reduce-transparency[data-theme="light-mode"] .bookmarks-overlay,
+      html.reduce-transparency[data-theme="light-mode"] .sidebar-overlay {
+        background: rgba(255, 255, 255, 0.35) !important;
+        background-image: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
       @media (max-height: 600px) {
         .modal-content {
           height: 100%;
@@ -21181,39 +21239,26 @@
           });
 
           function applyReduceTransparency(isActive) {
+            document.documentElement.classList.toggle(
+              "reduce-transparency",
+              Boolean(isActive),
+            );
             const elements = document.querySelectorAll(
-              ".settings-modal, .dropdown-menu, .shortcut-card, .modal-backdrop",
+              " .dropdown-menu, .shortcut-card, .modal-content, .dropdown-wrapper,  .confirm-modal-content, .voice-mode-wrapper, .image-search-wrapper, .apps-container, .search-suggestions, .liquid-glass, [class*='glass' i]",
             );
             elements.forEach((el) => {
               if (isActive) {
                 el.style.backdropFilter = "none";
-                el.style.background = el.style.background.replace(
-                  /rgba\(([^)]+)\)/g,
-                  (match, rgba) => {
-                    const parts = rgba.split(",");
-                    if (parts.length === 4) {
-                      parts[3] = " 0.95)";
-                      return `rgba(${parts.join(",")}`;
-                    }
-                    return match;
-                  },
-                );
+                el.style.webkitBackdropFilter = "none";
+                el.style.backgroundImage = "none";
+                el.style.boxShadow = "none";
               } else {
                 el.style.backdropFilter = "";
+                el.style.webkitBackdropFilter = "";
                 el.style.background = "";
-              }
-            });
-
-            // Apply solid background to liquid-glass elements
-            const liquidGlassElements =
-              document.querySelectorAll(".liquid-glass");
-            liquidGlassElements.forEach((el) => {
-              if (isActive) {
-                el.style.backdropFilter = "none";
-                el.style.backgroundColor = "rgba(14, 10, 20, 0.95)";
-              } else {
-                el.style.backdropFilter = "";
                 el.style.backgroundColor = "";
+                el.style.backgroundImage = "";
+                el.style.boxShadow = "";
               }
             });
           }
@@ -23312,31 +23357,19 @@
           `;
 
             // Apply reduce transparency if enabled
+            document.documentElement.classList.toggle(
+              "reduce-transparency",
+              Boolean(reduceTransparency),
+            );
             if (reduceTransparency) {
               const elements = document.querySelectorAll(
-                ".settings-modal, .dropdown-menu, .shortcut-card, .modal-backdrop",
+                ".settings-modal, .dropdown-menu, .shortcut-card, .modal-backdrop, .modal, .modal-content, .dropdown-wrapper, .bookmarks-overlay, .sidebar-overlay, .confirm-modal-content, .voice-mode-wrapper, .image-search-wrapper, .apps-container, .search-suggestions, .liquid-glass, [class*='glass' i]",
               );
               elements.forEach((el) => {
                 el.style.backdropFilter = "none";
-                el.style.background = el.style.background.replace(
-                  /rgba\(([^)]+)\)/g,
-                  (match, rgba) => {
-                    const parts = rgba.split(",");
-                    if (parts.length === 4) {
-                      parts[3] = " 0.95)";
-                      return `rgba(${parts.join(",")}`;
-                    }
-                    return match;
-                  },
-                );
-              });
-
-              // Apply solid background to liquid-glass elements
-              const liquidGlassElements =
-                document.querySelectorAll(".liquid-glass");
-              liquidGlassElements.forEach((el) => {
-                el.style.backdropFilter = "none";
-                el.style.backgroundColor = "rgba(14, 10, 20, 0.95)";
+                el.style.webkitBackdropFilter = "none";
+                el.style.backgroundImage = "none";
+                el.style.boxShadow = "none";
               });
             }
           }
