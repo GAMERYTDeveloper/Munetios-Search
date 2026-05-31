@@ -723,7 +723,8 @@
     <li>Google Favicons service (site icons)</li>
     <li>Wikimedia / Wikipedia images</li>
     <li>YouTube thumbnail images</li>
-    <li>OpenFreeMap Tiles</li>
+    <li>OpenMapTiles</li>
+    <li>Esri</li>
   </ul>
 
   <p>
@@ -2146,6 +2147,14 @@ Any modification of page content, JavaScript execution, cryptographic operations
           return document.getElementById(sectionId);
         }
 
+        function getSectionIdFromHash() {
+          const hashSectionId = window.location.hash.replace(/^#\/?/, "");
+          if (window.location.hash === "#/privacy") {
+            history.replaceState(null, "", "#privacy");
+          }
+          return hashSectionId || "home";
+        }
+
         function getSectionTitle(sectionId) {
           const section = getSection(sectionId);
           return normalizeWhitespace(section?.querySelector("h1")?.textContent || sectionId);
@@ -2597,6 +2606,12 @@ Any modification of page content, JavaScript execution, cryptographic operations
           return { font: "400 16px Google Sans Flex", lineHeight: 25, color: "#222222", gapBefore: 0, gapAfter: 12 };
         }
 
+        function applyPdfTextStyle(context, style) {
+          context.font = style.font;
+          context.fillStyle = style.color;
+          context.fontFeatureSettings = "\"ss01\" 1";
+        }
+
         function createPdfPageCanvas(width, height) {
           const canvas = document.createElement("canvas");
           canvas.width = width;
@@ -2629,15 +2644,13 @@ Any modification of page content, JavaScript execution, cryptographic operations
 
           blocks.forEach((block) => {
             const style = getPdfBlockStyle(block.type);
-            page.context.font = style.font;
-            page.context.fillStyle = style.color;
+            applyPdfTextStyle(page.context, style);
             const lines = wrapCanvasText(page.context, block.text, maxTextWidth);
             const blockHeight = style.gapBefore + lines.length * style.lineHeight + style.gapAfter;
 
             if (y + blockHeight > pageHeight - marginBottom) {
               startNewPage();
-              page.context.font = style.font;
-              page.context.fillStyle = style.color;
+              applyPdfTextStyle(page.context, style);
             }
 
             y += style.gapBefore;
@@ -2652,8 +2665,7 @@ Any modification of page content, JavaScript execution, cryptographic operations
 
           pages.forEach((canvas, pageIndex) => {
             const context = canvas.getContext("2d");
-            context.fillStyle = "#666666";
-            context.font = "400 14px Google Sans Flex";
+            applyPdfTextStyle(context, { font: "400 14px Google Sans Flex", color: "#666666" });
             const label = "Page " + (pageIndex + 1) + " / " + pages.length;
             context.fillText(label, pageWidth - 112, pageHeight - 42);
           });
@@ -2975,7 +2987,7 @@ Any modification of page content, JavaScript execution, cryptographic operations
           });
 
           window.addEventListener("hashchange", () => {
-            showSection(window.location.hash.replace(/^#/, "") || "home", { skipHistory: true, instant: true });
+            showSection(getSectionIdFromHash(), { skipHistory: true, instant: true });
           });
         }
 
@@ -2995,7 +3007,7 @@ Any modification of page content, JavaScript execution, cryptographic operations
           syncSidebarForViewport();
           renderArchives();
           applyLanguage("en");
-          showSection(window.location.hash.replace(/^#/, "") || "home", { skipHistory: true, instant: true });
+          showSection(getSectionIdFromHash(), { skipHistory: true, instant: true });
           setDownloadStatus("");
         }
 
