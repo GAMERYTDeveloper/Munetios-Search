@@ -24751,11 +24751,11 @@
                 `"ss01" ${ss01On ? 1 : 0}`,
                 `"ss02" ${ss02On ? 1 : 0}`,
               ].join(", ");
-              gsfFontFaceEl.textContent = `@font-face {
+              gsfFontFaceEl.textContent = `* {  font-feature-settings: ${featureValue};}  @font-face {
   font-family: "Google Sans Flex";
   src: url("https://api.munetios.com/fonts/google-sans-flex/googlesansflex.ttf") format("truetype");
   font-weight: 100 900;
-  font-feature-settings: ${featureValue};
+
   unicode-range: U+000-5FF;
 }`;
             } else {
