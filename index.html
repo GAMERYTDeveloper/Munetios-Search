@@ -124,6 +124,14 @@
       }
     </script>
     <style>
+      @font-face {
+        font-family: "Google Sans Flex";
+        src: url("https://api.munetios.com/fonts/google-sans-flex/googlesansflex.ttf")
+          format("truetype");
+        font-weight: 100 900;
+        font-feature-settings: "ss01" 0 !important;
+        unicode-range: U+000-5FF; /* Latin glyphs */
+      }
       * {
         margin: 0;
         padding: 0;
@@ -24729,6 +24737,33 @@
             let opticalSizingCSS = "";
             let fontVariationCSS = "";
 
+            // For Google Sans Flex, manage features via @font-face injection
+            if (font === "Google Sans Flex") {
+              let gsfFontFaceEl = document.getElementById("munetios-gsf-fontface");
+              if (!gsfFontFaceEl) {
+                gsfFontFaceEl = document.createElement("style");
+                gsfFontFaceEl.id = "munetios-gsf-fontface";
+                document.head.appendChild(gsfFontFaceEl);
+              }
+              const ss01On = localStorage.getItem("munetiosFont_Google Sans Flex_ss01") === "true";
+              const ss02On = localStorage.getItem("munetiosFont_Google Sans Flex_ss02") === "true";
+              const featureValue = [
+                `"ss01" ${ss01On ? 1 : 0}`,
+                `"ss02" ${ss02On ? 1 : 0}`,
+              ].join(", ");
+              gsfFontFaceEl.textContent = `@font-face {
+  font-family: "Google Sans Flex";
+  src: url("https://api.munetios.com/fonts/google-sans-flex/googlesansflex.ttf") format("truetype");
+  font-weight: 100 900;
+  font-feature-settings: ${featureValue};
+  unicode-range: U+000-5FF;
+}`;
+            } else {
+              // Clear any GSF font-face override if switching away
+              const gsfFontFaceEl = document.getElementById("munetios-gsf-fontface");
+              if (gsfFontFaceEl) gsfFontFaceEl.textContent = "";
+            }
+
             features.forEach((feature) => {
               const isEnabled =
                 localStorage.getItem(`munetiosFont_${font}_${feature.tag}`) ===
@@ -24743,7 +24778,8 @@
                 if (isEnabled) {
                   fontVariationCSS = "font-variation-settings: 'opsz' 17;";
                 }
-              } else if (isEnabled) {
+              } else if (font !== "Google Sans Flex" && isEnabled) {
+                // For Google Sans Flex, features are handled via @font-face above
                 fontFeatureSettings.push(`"${feature.tag}"`);
               }
             });
@@ -24889,6 +24925,11 @@
             // Font features are now handled by applyAppearanceSettings
             // This function is kept for compatibility but just calls applyAppearanceSettings
             applyAppearanceSettings();
+          }
+
+          // Set default: Single-Story a (ss01) on for Google Sans Flex
+          if (localStorage.getItem("munetiosFont_Google Sans Flex_ss01") === null) {
+            localStorage.setItem("munetiosFont_Google Sans Flex_ss01", "true");
           }
 
           // Initialize font features
