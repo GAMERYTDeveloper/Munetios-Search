@@ -37,7 +37,12 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-
+    <url>
+    <loc>https://maps.munetios.com/</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
   <url>
     <loc>https://write.munetios.com/overview.html</loc>
     <lastmod>2026-01-12</lastmod>
@@ -59,12 +64,7 @@
     <priority>0.8</priority>
   </url>
 
-  <url>
-    <loc>https://maps.munetios.com/</loc>
-    <lastmod>2026-04-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
+
 
   <url>
     <loc>https://games.munetios.com/</loc>
@@ -83,6 +83,12 @@
   <url>
     <loc>https://calendar.munetios.com/new</loc>
     <lastmod>2025-09-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://calendar.munetios.com/new/meals</loc>
+    <lastmod>2026-06-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
