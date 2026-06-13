@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Munetios World Cup 2026</title>
+
+  <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Munetios Sans", "Google Sans Flex", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, #7b2cff55, transparent 35%),
+        radial-gradient(circle at bottom right, #ff2bd655, transparent 35%),
+        linear-gradient(135deg, #160020, #2b0040 55%, #120018);
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .page {
+      width: min(1150px, calc(100% - 32px));
+      margin: auto;
+      padding: 32px 0;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 70px 24px;
+      animation: fadeUp .8s ease both;
+    }
+
+    .logo {
+      width: min(520px, 90%);
+      margin-bottom: 22px;
+      filter: drop-shadow(0 18px 35px #0008);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 8vw, 6rem);
+      margin: 0;
+      letter-spacing: -4px;
+      background: linear-gradient(90deg, #a855ff, #ff3df2, #49a6ff, #52d45a);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 18px auto 0;
+      color: #eadbf5;
+      font-size: 1.15rem;
+      line-height: 1.7;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .badge {
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(2px) saturate(180%);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .card {
+      padding: 24px;
+      border-radius: 32px;
+      transition: transform .25s ease, box-shadow .25s ease;
+      animation: fadeUp .8s ease both;
+    }
+
+    .card:hover {
+      transform: translateY(-6px) scale(1.015);
+      box-shadow: 0 24px 60px #0007;
+    }
+
+    .stat {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .muted {
+      color: #d8c6e8;
+    }
+
+    .section-title {
+      margin-top: 42px;
+      font-size: 2rem;
+    }
+
+    ul {
+      line-height: 2;
+      padding-left: 22px;
+    }
+
+    .floating-ball {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      font-size: 4rem;
+      animation: floatBall 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    footer {
+      text-align: center;
+      color: #d8c6e8;
+      padding: 34px 0 10px;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes floatBall {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-14px) rotate(12deg);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="page">
+
+    <section class="hero liquid-glass">
+      <img class="logo" src="https://www.munetios.com/worldcup.png" alt="Munetios logo">
+
+      <h1>World Cup 2026</h1>
+
+      <p>
+        A Munetios information hub for the FIFA World Cup 2026 —
+        hosted across Canada, Mexico, and the United States with
+        the biggest tournament format yet.
+      </p>
+
+      <div class="badge-row">
+        <div class="badge">⚽ 48 Teams</div>
+        <div class="badge">🏟️ 16 Host Cities</div>
+        <div class="badge">🌎 3 Countries</div>
+        <div class="badge">🔒 Privacy Focused</div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card liquid-glass">
+        <div class="stat">48</div>
+        <p class="muted">National teams competing</p>
+      </div>
+
+      <div class="card liquid-glass">
+        <div class="stat">104</div>
+        <p class="muted">Total matches</p>
+      </div>
+
+      <div class="card liquid-glass">
+        <div class="stat">3</div>
+        <p class="muted">Host countries</p>
+      </div>
+
+      <div class="card liquid-glass">
+        <div class="stat">16</div>
+        <p class="muted">Host cities</p>
+      </div>
+    </section>
+
+    <h2 class="section-title">Host Countries</h2>
+
+    <section class="grid">
+      <div class="card liquid-glass">
+        <h2>🇨🇦 Canada</h2>
+        <p class="muted">One of the three host nations for World Cup 2026.</p>
+      </div>
+
+      <div class="card liquid-glass">
+        <h2>🇲🇽 Mexico</h2>
+        <p class="muted">A historic World Cup host with major football culture.</p>
+      </div>
+
+      <div class="card liquid-glass">
+        <h2>🇺🇸 United States</h2>
+        <p class="muted">Hosting many matches, including the tournament final.</p>
+      </div>
+    </section>
+
+    <section class="card liquid-glass" style="margin-top:24px;">
+      <h2>Tournament Format</h2>
+      <p class="muted">
+        The 2026 World Cup uses 12 groups of 4 teams. The top teams advance
+        into a larger knockout stage, making this the biggest FIFA World Cup format.
+      </p>
+    </section>
+
+    <section class="card liquid-glass" style="margin-top:24px;">
+      <h2>Quick Facts</h2>
+      <ul class="muted">
+        <li>First FIFA World Cup with 48 teams.</li>
+        <li>First World Cup hosted by Canada, Mexico, and the United States together.</li>
+        <li>Designed as the largest World Cup tournament yet.</li>
+        <li>Munetios-style page with liquid glass and privacy-focused branding.</li>
+      </ul>
+    </section>
+
+    <footer>
+      © 2026 Munetios • Privacy Focused • World Cup Info
+      <footer class="liquid-glass" style="
+    margin-top:32px;
+    padding:24px;
+    text-align:center;
+">
+    <p>
+        FIFA World Cup™ is a trademark of FIFA. This website is an
+        independent informational project and is not affiliated with,
+        endorsed by, sponsored by, or associated with FIFA.
+    </p>
+
+    <p style="margin-top:12px;">
+        World Cup facts and tournament information sourced from
+        <a href="https://www.fifa.com" target="_blank">
+            FIFA.com
+        </a>.
+    </p>
+
+  
+</footer>
+    </footer>
+
+  </main>
+
+  <div class="floating-ball">⚽</div>
+
+</body>
+</html>
