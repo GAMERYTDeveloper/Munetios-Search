@@ -23,17 +23,7 @@
     <meta property="og:image" content="image.png">
     <meta property="og:type" content="website">
     <meta name="robots" content="index, follow">
-    <meta http-equiv="Content-Security-Policy"
-content="
-  default-src 'self' https:;
-  img-src 'self' data:;
-        frame-ancestors 'none';
-  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.munetios.com;
-  font-src 'self' https://fonts.gstatic.com;
-  script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://api.munetios.com;
-  frame-src 'self' https://www.munetios.com;
-  connect-src 'self' https://api.munetios.com;
-">
+
  
     <link rel="stylesheet" href="https://api.munetios.com/beautiful-css/beautiful.css">
     <!-- Lexend font for modern, readable typography -->
@@ -84,9 +74,10 @@ content="
     <style>
         * {
             box-sizing: border-box;
+                  font-family: 'Google Sans Flex', sans-serif !important;
         }
         body {
-            font-family: 'Lexend', sans-serif;
+            font-family: 'Google Sans Flex', sans-serif !important;
             margin: 0;
             padding: 0;
         }
