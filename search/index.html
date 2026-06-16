@@ -64,13 +64,20 @@
   "
 />
 
-  
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded"
+    />
+
     <link
       rel="stylesheet"
       href="https://api.munetios.com/beautiful-css/beautiful.css"
     />
   
-
+    <link
+      href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,90&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
+      rel="stylesheet"
+    />
     <style>
       * {
         font-family: "Google Sans Flex", sans-serif;
@@ -192,37 +199,50 @@
 
 
       .result {
-        background: rgba(58, 28, 113, 0.116);
-        border: 1.5px solid rgba(108, 46, 183, 0.6);
-        border-radius: 18px;
-        box-shadow: 0 4px 24px rgba(25, 0, 71, 0.08);
-        backdrop-filter: blur(4px) saturate(180%) contrast(85%) brightness(115%);
-        padding: 24px 28px;
-        margin: 18px 0;
+        background:
+          linear-gradient(145deg, rgba(100, 34, 255, 0.18), rgba(25, 0, 71, 0.2)),
+          rgba(58, 28, 113, 0.14);
+        border: 1px solid rgba(162, 89, 247, 0.32);
+        border-radius: 20px;
+        box-shadow:
+          0 18px 48px rgba(8, 0, 28, 0.18),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(3px) saturate(170%) contrast(88%) brightness(112%);
+        -webkit-backdrop-filter: blur(3px) saturate(170%) contrast(88%) brightness(112%);
+        padding: clamp(18px, 3vw, 26px);
+        margin: 14px 0;
         transition:
-          transform 0.18s cubic-bezier(0.4, 2, 0.6, 1),
-          box-shadow 0.18s;
+          transform 0.18s ease,
+          border-color 0.18s ease,
+          box-shadow 0.18s ease;
         cursor: pointer;
       }
       .result:hover {
-        transform: scale(1.035);
+        transform: translateY(-2px);
         box-shadow:
-          0 8px 36px rgba(108, 46, 183, 0.18),
-          0 2px 8px rgba(25, 0, 71, 0.1);
-        border-color: #a259f7;
+          0 24px 56px rgba(108, 46, 183, 0.22),
+          inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        border-color: rgba(216, 180, 254, 0.62);
         z-index: 2;
       }
       .result-title {
-        font-size: 1.3em;
-        font-weight: 700;
+        color: #fff;
+        font-size: clamp(1.08rem, 2vw, 1.35rem);
+        font-weight: 760;
+        line-height: 1.28;
         margin-bottom: 8px;
+        overflow-wrap: anywhere;
       }
       .result-description {
+        color: rgba(245, 239, 255, 0.78);
         font-size: 1em;
+        line-height: 1.55;
+        overflow-wrap: anywhere;
       }
       .content {
-        max-width: 1500px;
-        padding: 0 12px;
+        width: min(100%, 1280px);
+        padding: 0 clamp(14px, 3vw, 28px);
+        
       }
       .tab-active {
         background: rgba(162, 89, 247, 0.2) !important;
@@ -232,12 +252,14 @@
       .search-footer {
         width: min(1200px, calc(100vw - 24px));
         margin: 24px auto 40px;
-        padding: 18px 20px;
+        padding: clamp(18px, 3vw, 26px);
         border-radius: 24px;
         border: 1px solid rgba(255, 255, 255, 0.12);
-        background: rgba(58, 28, 113, 0.14);
-        backdrop-filter: blur(4px) saturate(180%) contrast(90%) brightness(112%);
-        -webkit-backdrop-filter: blur(4px) saturate(180%) contrast(90%) brightness(112%);
+        background:
+          linear-gradient(145deg, rgba(100, 34, 255, 0.14), rgba(25, 0, 71, 0.2)),
+          rgba(58, 28, 113, 0.14);
+        backdrop-filter: blur(3px) saturate(180%) contrast(90%) brightness(112%);
+        -webkit-backdrop-filter: blur(3px) saturate(180%) contrast(90%) brightness(112%);
       }
       .search-footer-links {
         display: flex;
@@ -266,6 +288,33 @@
         padding: 9px 14px;
         border-radius: 999px;
         background: rgba(255, 255, 255, 0.06);
+      }
+      .search-how-works {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 20px;
+      }
+      .search-how-step {
+        min-width: 0;
+        padding: 14px;
+        border: 1px solid rgba(162, 89, 247, 0.24);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .search-how-step span {
+        color: #d8b4fe;
+      }
+      .search-how-step strong {
+        display: block;
+        margin: 8px 0 5px;
+        font-size: 0.98rem;
+      }
+      .search-how-step p {
+        margin: 0;
+        color: rgba(245, 239, 255, 0.7);
+        font-size: 0.9rem;
+        line-height: 1.45;
       }
       .result-link {
         color: #6c2eb7;
@@ -360,7 +409,8 @@
         right: 0;
         background: rgba(25, 0, 71, 0.226);
         border: 1px solid #6c2eb7;
-        backdrop-filter: blur(4px) saturate(180%) contrast(85%) brightness(115%);
+        backdrop-filter: blur(3px) saturate(180%) contrast(85%) brightness(115%);
+        -webkit-backdrop-filter: blur(3px) saturate(180%) contrast(85%) brightness(115%);
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         z-index: 300;
@@ -453,6 +503,11 @@
         gap: 12px;
         color: #ddd;
         text-align: center;
+        min-height: clamp(180px, 36vh, 360px);
+        padding: 28px;
+        border: 1px solid rgba(162, 89, 247, 0.22);
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.045);
       }
       .enter-a-search-query p {
         margin: 0;
@@ -489,6 +544,76 @@
         bottom: 16px;
         width: calc(100% - 30px) !important;
         max-width: none;
+        }
+      }
+      #search-topbar {
+        background: transparent;
+      }
+      #search-topbar > div {
+        min-width: 0;
+      }
+      #searchBar {
+        border: 1px solid rgba(216, 180, 254, 0.18);
+        box-shadow:
+          0 14px 38px rgba(8, 0, 28, 0.18),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+      #searchBar:focus-within {
+        border-color: rgba(216, 180, 254, 0.56);
+        box-shadow:
+          0 18px 44px rgba(108, 46, 183, 0.24),
+          inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      }
+      .type {
+        border: 1px solid rgba(216, 180, 254, 0.14);
+        white-space: nowrap;
+        flex: 0 0 auto;
+      }
+      .type:hover,
+      .search-footer-link:hover,
+      .search-footer-pill:hover {
+        background: rgba(162, 89, 247, 0.22);
+      }
+      .results {
+        width: 100%;
+        max-width: 980px;
+        margin: 0;
+        text-align: left;
+      }
+      @media (max-width: 900px) {
+        .search-how-works {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        #topbarIcons {
+          gap: 4px;
+          padding: 4px;
+        }
+      }
+      @media (max-width: 590px) {
+        #search-topbar {
+          height: auto;
+          padding: 10px;
+        }
+        #search-topbar > div {
+          flex-wrap: wrap;
+        }
+        #searchBarWrapper {
+          order: 3;
+          width: 100% !important;
+          max-width: none !important;
+        }
+        #searchBar {
+          position: static !important;
+          width: 100% !important;
+          padding: 12px 16px !important;
+        }
+        #topbarIcons {
+          margin-left: auto;
+        }
+      }
+      @media (max-width: 560px) {
+        .search-how-works {
+          grid-template-columns: 1fr;
         }
       }
       @media (max-width: 500px) {
@@ -831,6 +956,28 @@
               <span class="material-symbols-rounded" style="font-size:18px;">alternate_email</span>
               <span>Feedback</span>
             </a>
+          </div>
+        </div>
+        <div class="search-how-works" aria-labelledby="howSearchWorksTitle">
+          <div class="search-how-step">
+            <span class="material-symbols-rounded" aria-hidden="true">manage_search</span>
+            <strong id="howSearchWorksTitle">How Search Works</strong>
+            <p id="howSearchWorksIntro">Munetios checks local instant answers first so common results appear quickly.</p>
+          </div>
+          <div class="search-how-step">
+            <span class="material-symbols-rounded" aria-hidden="true">travel_explore</span>
+            <strong id="howSearchWorksApiTitle">Private API search</strong>
+            <p id="howSearchWorksApiText">Results are requested directly from privacy-friendly sources without ad tracking.</p>
+          </div>
+          <div class="search-how-step">
+            <span class="material-symbols-rounded" aria-hidden="true">tune</span>
+            <strong id="howSearchWorksRankTitle">Ranked for relevance</strong>
+            <p id="howSearchWorksRankText">Matches are scored by title, description, source quality, country, and your local rules.</p>
+          </div>
+          <div class="search-how-step">
+            <span class="material-symbols-rounded" aria-hidden="true">shield</span>
+            <strong id="howSearchWorksPrivacyTitle">Privacy stays local</strong>
+            <p id="howSearchWorksPrivacyText">Settings, bookmarks, history, custom results, and ranking rules stay in your browser.</p>
           </div>
         </div>
       </footer>
@@ -1859,6 +2006,14 @@
           footerGlobalPill: "Global-ready UI",
           footerAbout: "About",
           footerBlog: "Blog",
+          howSearchWorksTitle: "How Search Works",
+          howSearchWorksIntro: "Munetios checks local instant answers first so common results appear quickly.",
+          howSearchWorksApiTitle: "Private API search",
+          howSearchWorksApiText: "Results are requested directly from privacy-friendly sources without ad tracking.",
+          howSearchWorksRankTitle: "Ranked for relevance",
+          howSearchWorksRankText: "Matches are scored by title, description, source quality, country, and your local rules.",
+          howSearchWorksPrivacyTitle: "Privacy stays local",
+          howSearchWorksPrivacyText: "Settings, bookmarks, history, custom results, and ranking rules stay in your browser.",
           customResultsDescription: "Add your own results that appear when search keywords match. Stored locally in your browser.",
           addCustomResult: "Add Custom Result",
           editCustomResult: "Edit Custom Result",
@@ -2744,6 +2899,14 @@
 
       const runtimeTranslationFallbacks = {
         es: {
+          howSearchWorksTitle: "How Search Works",
+          howSearchWorksIntro: "Munetios checks local instant answers first so common results appear quickly.",
+          howSearchWorksApiTitle: "Private API search",
+          howSearchWorksApiText: "Results are requested directly from privacy-friendly sources without ad tracking.",
+          howSearchWorksRankTitle: "Ranked for relevance",
+          howSearchWorksRankText: "Matches are scored by title, description, source quality, country, and your local rules.",
+          howSearchWorksPrivacyTitle: "Privacy stays local",
+          howSearchWorksPrivacyText: "Settings, bookmarks, history, custom results, and ranking rules stay in your browser.",
           customResultsDescription: "Agrega tus propios resultados para cuando coincidan las palabras clave. Se guardan localmente en tu navegador.",
           addCustomResult: "Agregar resultado personalizado",
           editCustomResult: "Editar resultado personalizado",
@@ -3021,6 +3184,20 @@
         if (footerMapsLink) footerMapsLink.querySelector("span:last-child").textContent = t.maps;
         const footerFeedbackLink = document.getElementById("footerFeedbackLink");
         if (footerFeedbackLink) footerFeedbackLink.querySelector("span:last-child").textContent = t.feedback;
+        const howSearchTextMap = {
+          howSearchWorksTitle: t.howSearchWorksTitle,
+          howSearchWorksIntro: t.howSearchWorksIntro,
+          howSearchWorksApiTitle: t.howSearchWorksApiTitle,
+          howSearchWorksApiText: t.howSearchWorksApiText,
+          howSearchWorksRankTitle: t.howSearchWorksRankTitle,
+          howSearchWorksRankText: t.howSearchWorksRankText,
+          howSearchWorksPrivacyTitle: t.howSearchWorksPrivacyTitle,
+          howSearchWorksPrivacyText: t.howSearchWorksPrivacyText,
+        };
+        Object.entries(howSearchTextMap).forEach(([id, text]) => {
+          const element = document.getElementById(id);
+          if (element && text) element.textContent = text;
+        });
         // Keyboard button
         const searchKbdBtnEl = document.getElementById("searchKbdBtn");
         if (searchKbdBtnEl) searchKbdBtnEl.title = t.keyboard;
@@ -8986,6 +9163,9 @@
         } else {
           url.searchParams.delete("q");
         }
+        const tabMatch = url.hash.match(/^#\/(\w+)/);
+        const tab = tabMatch ? tabMatch[1] : "all";
+        url.hash = q ? `#/${tab}?q=${encodeURIComponent(q)}` : `#/${tab}`;
         window.history.replaceState({}, "", url);
       }
 
@@ -9052,6 +9232,20 @@
           return;
         }
         pageResults.forEach((r) => {
+          const resultLink = getResultLink(r);
+          const groupedResults = Array.isArray(r._groupedResults) ? r._groupedResults : [];
+          const groupedMarkup = groupedResults.length
+            ? `<div class="result-grouped-links" style="display:flex;flex-direction:column;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(216,180,254,0.18);">
+                ${groupedResults.slice(0, 6).map((child) => {
+                  const childLink = getResultLink(child);
+                  return `<a href="${childLink}" rel="noopener" style="display:flex;align-items:center;gap:8px;color:rgba(224,208,255,0.82);font-size:0.92em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    <span class="material-symbols-rounded" style="font-size:17px;flex:0 0 auto;">subdirectory_arrow_right</span>
+                    <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${child.title || childLink}</span>
+                  </a>`;
+                }).join("")}
+                ${groupedResults.length > 6 ? `<div style="color:rgba(245,239,255,0.58);font-size:0.88em;">+${groupedResults.length - 6} more related results</div>` : ""}
+              </div>`
+            : "";
           const div = document.createElement("div");
           div.className = "result";
           div.innerHTML = `
@@ -9059,18 +9253,19 @@
                 <img class="result-favicon" src="${
                   r.favicon ||
                   "https://www.google.com/s2/favicons?domain=" +
-                    encodeURIComponent(r.link)
+                    encodeURIComponent(resultLink)
                 }" alt="favicon" referrerpolicy="no-referrer">
-                <a class="result-link" href="${r.link}" rel="noopener">${
-                  r.link
+                <a class="result-link" href="${resultLink}" rel="noopener">${
+                  resultLink
                 }</a>
                 </div>
                 <a class="result-title" href="${
-                  r.link
+                  resultLink
                 }" rel="noopener" style="font-size:1.3em;font-weight:700;display:inline-block;text-decoration:none;color:inherit;margin-bottom:8px;">${
                   r.title
                 }</a>
                 <div class="result-description">${r.description && r.description.length > 180 ? r.description.slice(0, 180) + '…' : (r.description || '')}</div>
+                ${groupedMarkup}
                 <div class="result-more-icon" title="More">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;">
                 <circle cx="12" cy="5" r="1.5"/>
@@ -9399,6 +9594,544 @@
         resultsContainer.prepend(railWrap);
       }
 
+      const trackingParamNames = new Set([
+        "utm_source",
+        "utm_medium",
+        "utm_campaign",
+        "utm_term",
+        "utm_content",
+        "fbclid",
+        "gclid",
+        "msclkid",
+        "mc_cid",
+        "mc_eid",
+        "igshid",
+        "ref",
+        "spm",
+        "campaign",
+      ]);
+      const trackingParamPrefixes = ["utm_", "pk_", "mtm_", "sc_"];
+
+      function stripHtmlText(value) {
+        const template = document.createElement("template");
+        template.innerHTML = String(value || "");
+        return (template.content.textContent || template.content.innerText || "").trim();
+      }
+
+      function sanitizeResultUrl(value) {
+        const raw = String(value || "").trim();
+        if (!raw) return "";
+        try {
+          const parsed = new URL(raw);
+          if (parsed.protocol === "http:") parsed.protocol = "https:";
+          Array.from(parsed.searchParams.keys()).forEach((name) => {
+            const key = name.toLowerCase();
+            if (
+              trackingParamNames.has(key) ||
+              trackingParamPrefixes.some((prefix) => key.startsWith(prefix))
+            ) {
+              parsed.searchParams.delete(name);
+            }
+          });
+          parsed.hash = "";
+          return parsed.href.replace(/\/$/, "");
+        } catch (_) {
+          return raw.replace(/^http:\/\//i, "https://");
+        }
+      }
+
+      function getResultLink(result) {
+        return sanitizeResultUrl(result && (result.link || result.url || ""));
+      }
+
+      function getDomain(url) {
+        try {
+          return new URL(url).hostname.toLowerCase().replace(/^www\./, "");
+        } catch (_) {
+          return "";
+        }
+      }
+
+      function getBaseDomain(url) {
+        const domain = getDomain(url);
+        const parts = domain.split(".").filter(Boolean);
+        if (parts.length <= 2) return domain;
+        const secondLevelSuffixes = new Set(["co", "com", "org", "net", "gov", "ac", "edu"]);
+        const last = parts[parts.length - 1];
+        const previous = parts[parts.length - 2];
+        if (last.length === 2 && secondLevelSuffixes.has(previous) && parts.length >= 3) {
+          return parts.slice(-3).join(".");
+        }
+        return parts.slice(-2).join(".");
+      }
+
+      function getDomainFamilyKey(url) {
+        const domain = getDomain(url);
+        const parts = domain.split(".").filter(Boolean);
+        if (!parts.length) return "";
+        const secondLevelSuffixes = new Set(["co", "com", "org", "net", "gov", "ac", "edu"]);
+        if (
+          parts.length >= 3 &&
+          parts[parts.length - 1].length === 2 &&
+          secondLevelSuffixes.has(parts[parts.length - 2])
+        ) {
+          return parts[parts.length - 3];
+        }
+        return parts.length >= 2 ? parts[parts.length - 2] : parts[0];
+      }
+
+      function isCountryCodeDomainVariant(url) {
+        const parts = getDomain(url).split(".").filter(Boolean);
+        return parts.length >= 2 && parts[parts.length - 1].length === 2;
+      }
+
+      function hasPrimaryDotComDomain(url) {
+        const family = getDomainFamilyKey(url);
+        return Boolean(family) && getBaseDomain(url) === `${family}.com`;
+      }
+
+      function isHomepageUrl(url) {
+        try {
+          const parsed = new URL(url);
+          return parsed.pathname.replace(/\/+$/, "") === "";
+        } catch (_) {
+          return false;
+        }
+      }
+
+      function normalizeUrlKey(url) {
+        return sanitizeResultUrl(url)
+          .replace(/[#?].*$/, "")
+          .replace(/\/$/, "")
+          .toLowerCase();
+      }
+
+      function getUrlPrefixKey(url) {
+        try {
+          const parsed = new URL(url);
+          const firstSegment = parsed.pathname.split("/").filter(Boolean)[0] || "";
+          return `${parsed.origin.toLowerCase()}/${firstSegment.toLowerCase()}`;
+        } catch (_) {
+          return normalizeUrlKey(url);
+        }
+      }
+
+      function getTitleKey(title) {
+        return String(title || "").toLowerCase().replace(/[^\w]+/g, " ").trim();
+      }
+
+      function getDirectQueryUrl(query) {
+        const value = String(query || "").trim();
+        if (!value || /\s/.test(value)) return "";
+        const candidate = /^https?:\/\//i.test(value) ? value : `https://${value}`;
+        try {
+          const url = new URL(candidate);
+          if (!url.hostname.includes(".")) return "";
+          return sanitizeResultUrl(url.href);
+        } catch (_) {
+          return "";
+        }
+      }
+
+      function getDirectQueryResult(query) {
+        const directUrl = getDirectQueryUrl(query);
+        if (!directUrl) return null;
+        const domain = getDomain(directUrl);
+        return {
+          title: domain,
+          description: `Direct website result for ${domain}.`,
+          link: directUrl,
+          source: "Direct website",
+          _directQueryResult: true,
+        };
+      }
+
+      function extractDetectedUrls(text) {
+        const matches = String(text || "").match(/\bhttps?:\/\/[^\s<>"')\]]+/gi) || [];
+        const urls = matches
+          .map((url) => url.replace(/[.,;:!?]+$/, ""))
+          .filter((url) => getDomain(url));
+        return Array.from(new Set(urls));
+      }
+
+      function expandDetectedUrlResults(results) {
+        const expanded = [];
+        const knownUrls = new Set((results || []).map((result) => normalizeUrlKey(getResultLink(result))));
+        (results || []).forEach((result) => {
+          expanded.push(result);
+          const sourceText = [result.title, result.description, result.snippet].filter(Boolean).join(" ");
+          extractDetectedUrls(sourceText).forEach((url) => {
+            const key = normalizeUrlKey(url);
+            if (!key || knownUrls.has(key)) return;
+            knownUrls.add(key);
+            const domain = getDomain(url);
+            expanded.push({
+              title: `${result.title || "Detected website"} - ${domain}`,
+              description: `Website URL detected in ${result.source || "search"} result text.`,
+              link: sanitizeResultUrl(url),
+              source: `${result.source || "Search"} detected URL`,
+              _detectedUrl: true,
+            });
+          });
+        });
+        return expanded;
+      }
+
+      async function fetchJsonResult(url, signal, timeoutMs = 7000) {
+        const timeout = new AbortController();
+        const timer = setTimeout(() => timeout.abort(), timeoutMs);
+        const abort = () => timeout.abort();
+        signal?.addEventListener("abort", abort, { once: true });
+        try {
+          const response = await fetch(url, { signal: timeout.signal });
+          if (!response.ok) return null;
+          return await response.json();
+        } catch (_) {
+          return null;
+        } finally {
+          clearTimeout(timer);
+          signal?.removeEventListener("abort", abort);
+        }
+      }
+
+      async function fetchTextResult(url, signal, timeoutMs = 7000) {
+        const timeout = new AbortController();
+        const timer = setTimeout(() => timeout.abort(), timeoutMs);
+        const abort = () => timeout.abort();
+        signal?.addEventListener("abort", abort, { once: true });
+        try {
+          const response = await fetch(url, { signal: timeout.signal });
+          if (!response.ok) return null;
+          return await response.text();
+        } catch (_) {
+          return null;
+        } finally {
+          clearTimeout(timer);
+          signal?.removeEventListener("abort", abort);
+        }
+      }
+
+      async function fetchMediaWikiResults(endpoint, articleBase, query, signal) {
+        const url =
+          `${endpoint}/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query)}` +
+          "&gsrlimit=8&prop=extracts|info|extlinks|pageprops&exintro=1&explaintext=1&ellimit=30&inprop=url&format=json&origin=*";
+        const data = await fetchJsonResult(url, signal);
+        const pages = Object.values(data?.query?.pages || {});
+        const results = [];
+        const wikidataIds = pages.map((page) => page.pageprops?.wikibase_item).filter(Boolean);
+        let officialWebsiteClaims = {};
+
+        if (wikidataIds.length) {
+          const wikidataData = await fetchJsonResult(
+            `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${encodeURIComponent(wikidataIds.join("|"))}&props=claims&format=json&origin=*`,
+            signal,
+          );
+          officialWebsiteClaims = wikidataData?.entities || {};
+        }
+
+        pages.forEach((page) => {
+          const articleUrl =
+            page.fullurl ||
+            `${articleBase}${encodeURIComponent(String(page.title || "").replace(/ /g, "_"))}`;
+          results.push({
+            title: page.title,
+            description: page.extract || "Wiki result",
+            link: articleUrl,
+            source: "Wiki",
+          });
+
+          extractDetectedUrls(page.extract).forEach((cleanUrl) => {
+            const domain = getDomain(cleanUrl);
+            if (!domain) return;
+            results.push({
+              title: `${page.title} - ${domain}`,
+              description: `Website mentioned in the wiki article "${page.title}".`,
+              link: cleanUrl,
+              source: "Wiki text link",
+              _wikiExternal: true,
+            });
+          });
+
+          (page.extlinks || []).forEach((external) => {
+            const externalUrl = external["*"] || external.url;
+            if (!externalUrl || !externalUrl.startsWith("http")) return;
+            const domain = getDomain(externalUrl);
+            results.push({
+              title: `${page.title}${domain ? ` - ${domain}` : ""}`,
+              description: `Website referenced by the wiki article "${page.title}".`,
+              link: externalUrl,
+              source: "Wiki link",
+              _wikiExternal: true,
+            });
+          });
+
+          const wikidataId = page.pageprops?.wikibase_item;
+          const officialClaims = officialWebsiteClaims[wikidataId]?.claims?.P856 || [];
+          officialClaims.forEach((claim) => {
+            const officialUrl = claim.mainsnak?.datavalue?.value;
+            if (!officialUrl || !officialUrl.startsWith("http")) return;
+            const domain = getDomain(officialUrl);
+            if (!domain) return;
+            results.push({
+              title: `${page.title} - Official website`,
+              description: `Official website from Wikipedia info details for "${page.title}".`,
+              link: officialUrl,
+              source: "Wikidata official website",
+              _wikiExternal: true,
+              _officialWebsite: true,
+            });
+          });
+        });
+
+        return results;
+      }
+
+      async function fetchMunetios30ApiResults(query, signal) {
+        if (!query || query === "@all") return [];
+        const wikiSources = [
+          ["https://en.wikipedia.org/w", "https://en.wikipedia.org/wiki/"],
+          ["https://simple.wikipedia.org/w", "https://simple.wikipedia.org/wiki/"],
+          ["https://commons.wikimedia.org/w", "https://commons.wikimedia.org/wiki/"],
+          ["https://en.wiktionary.org/w", "https://en.wiktionary.org/wiki/"],
+          ["https://en.wikibooks.org/w", "https://en.wikibooks.org/wiki/"],
+          ["https://www.mediawiki.org/w", "https://www.mediawiki.org/wiki/"],
+          ["https://minecraft.wiki", "https://minecraft.wiki/w/"],
+        ];
+
+        const [
+          stackData,
+          hnData,
+          archiveData,
+          redditData,
+          githubData,
+          openLibraryData,
+          mojangText,
+          ...wikiResults
+        ] = await Promise.all([
+          fetchJsonResult(`https://api.stackexchange.com/2.3/search/advanced?order=desc&sort=relevance&q=${encodeURIComponent(query)}&site=stackoverflow&pagesize=10`, signal),
+          fetchJsonResult(`https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(query)}&hitsPerPage=10`, signal),
+          fetchJsonResult(`https://archive.org/advancedsearch.php?q=${encodeURIComponent(`title:(${query}) OR description:(${query})`)}&fl[]=title&fl[]=description&fl[]=identifier&rows=10&page=1&output=json`, signal),
+          fetchJsonResult(`https://www.reddit.com/search.json?q=${encodeURIComponent(query)}&limit=10`, signal),
+          fetchJsonResult(`https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&per_page=10`, signal),
+          fetchJsonResult(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=10`, signal),
+          fetchTextResult(`https://bugs.mojang.com/issues/?jql=text~"${encodeURIComponent(query)}"&rss=true`, signal),
+          ...wikiSources.map(([endpoint, articleBase]) => fetchMediaWikiResults(endpoint, articleBase, query, signal)),
+        ]);
+
+        const stackResults = (stackData?.items || []).map((item) => ({
+          title: stripHtmlText(item.title),
+          description: item.tags?.length ? `Stack Exchange question tagged ${item.tags.join(", ")}` : "Stack Exchange question",
+          link: item.link,
+          source: "Stack Exchange",
+        }));
+        const hnResults = (hnData?.hits || [])
+          .filter((item) => item.title && item.url)
+          .map((item) => ({
+            title: item.title,
+            description: item.author ? `Hacker News by ${item.author}` : "Hacker News result",
+            link: item.url,
+            source: "Hacker News",
+          }));
+        const archiveResults = (archiveData?.response?.docs || [])
+          .filter((item) => item.identifier)
+          .map((item) => ({
+            title: Array.isArray(item.title) ? item.title[0] : item.title || item.identifier,
+            description: Array.isArray(item.description)
+              ? stripHtmlText(item.description[0])
+              : stripHtmlText(item.description || "Internet Archive item"),
+            link: `https://archive.org/details/${encodeURIComponent(item.identifier)}`,
+            source: "Internet Archive",
+          }));
+        const redditResults = (redditData?.data?.children || []).map(({ data }) => ({
+          title: data.title,
+          description: data.selftext ? stripHtmlText(data.selftext).slice(0, 220) : `Reddit result from ${data.subreddit_name_prefixed || "Reddit"}`,
+          link: `https://www.reddit.com${data.permalink}`,
+          source: "Reddit",
+        }));
+        const githubResults = (githubData?.items || []).map((repo) => ({
+          title: repo.full_name,
+          description: repo.description || `${repo.stargazers_count || 0} stars on GitHub`,
+          link: repo.html_url,
+          source: "GitHub",
+        }));
+        const openLibraryResults = (openLibraryData?.docs || []).map((book) => ({
+          title: book.title,
+          description: [
+            (book.author_name || []).slice(0, 3).join(", ") && `By ${(book.author_name || []).slice(0, 3).join(", ")}.`,
+            book.first_publish_year && `First published ${book.first_publish_year}.`,
+          ].filter(Boolean).join(" ") || "OpenLibrary book result",
+          link: `https://openlibrary.org${book.key}`,
+          source: "OpenLibrary",
+        }));
+        let mojangBugResults = [];
+        if (mojangText) {
+          try {
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(mojangText, "text/xml");
+            mojangBugResults = Array.from(xml.querySelectorAll("item")).slice(0, 5).map((item) => ({
+              title: item.querySelector("title")?.textContent || "",
+              description: "Official Mojang Bug Tracker",
+              link: item.querySelector("link")?.textContent || "",
+              source: "Mojang Bugs",
+            }));
+          } catch (_) {}
+        }
+
+        return [
+          ...stackResults,
+          ...hnResults,
+          ...archiveResults,
+          ...redditResults,
+          ...githubResults,
+          ...openLibraryResults,
+          ...mojangBugResults,
+          ...wikiResults.flat(),
+        ];
+      }
+
+      function setGroupedResults(anchor, children) {
+        const existing = Array.isArray(anchor._groupedResults) ? anchor._groupedResults : [];
+        const seen = new Set(existing.map((result) => normalizeUrlKey(getResultLink(result))));
+        const merged = existing.slice();
+        children.forEach((child) => {
+          const key = normalizeUrlKey(getResultLink(child));
+          if (!key || seen.has(key)) return;
+          seen.add(key);
+          merged.push(child);
+        });
+        anchor._groupedResults = merged;
+      }
+
+      function groupDuplicateTitles(results) {
+        const duplicateGroups = new Map();
+        results.forEach((result) => {
+          const titleKey = getTitleKey(result.title);
+          const domainKey = getDomain(getResultLink(result));
+          if (titleKey.length < 4 || !domainKey) return;
+          const groupKey = `${domainKey}|${titleKey}`;
+          if (!duplicateGroups.has(groupKey)) duplicateGroups.set(groupKey, []);
+          duplicateGroups.get(groupKey).push(result);
+        });
+        const groupedChildren = new Set();
+        duplicateGroups.forEach((duplicateResults) => {
+          if (duplicateResults.length <= 1) return;
+          const sorted = duplicateResults.slice().sort((a, b) => (b.relevanceScore || 0) - (a.relevanceScore || 0));
+          const anchor = sorted[0];
+          const children = sorted.slice(1);
+          setGroupedResults(anchor, children);
+          children.forEach((child) => groupedChildren.add(child));
+        });
+        return results.filter((result) => !groupedChildren.has(result));
+      }
+
+      function groupLargeDomains(results) {
+        const groups = new Map();
+        results.forEach((result) => {
+          const baseDomain = getBaseDomain(getResultLink(result));
+          if (!baseDomain) return;
+          if (!groups.has(baseDomain)) groups.set(baseDomain, []);
+          groups.get(baseDomain).push(result);
+        });
+        const groupedChildren = new Set();
+        const groupAnchors = new Map();
+        groups.forEach((domainResults, baseDomain) => {
+          if (domainResults.length <= 10) return;
+          const anchor =
+            domainResults.find((result) => result._directQueryResult) ||
+            domainResults.find((result) => getDomain(getResultLink(result)) === baseDomain && isHomepageUrl(getResultLink(result))) ||
+            domainResults.find((result) => isHomepageUrl(getResultLink(result))) ||
+            domainResults[0];
+          if (isHomepageUrl(getResultLink(anchor)) || anchor._directQueryResult) {
+            anchor.relevanceScore = (anchor.relevanceScore || 0) + 5000;
+          }
+          const children = domainResults
+            .filter((result) => result !== anchor)
+            .sort((a, b) => (b.relevanceScore || 0) - (a.relevanceScore || 0));
+          setGroupedResults(anchor, children);
+          groupAnchors.set(baseDomain, anchor);
+          children.forEach((child) => groupedChildren.add(child));
+        });
+        return results
+          .filter((result) => {
+            if (groupedChildren.has(result)) return false;
+            const baseDomain = getBaseDomain(getResultLink(result));
+            return !groupAnchors.has(baseDomain) || groupAnchors.get(baseDomain) === result;
+          })
+          .sort((a, b) => (b.relevanceScore || 0) - (a.relevanceScore || 0));
+      }
+
+      function rankSearchResults(results, query) {
+        const seenUrls = new Set();
+        const duplicateCounts = new Map();
+        const prefixCounts = new Map();
+        const domainCounts = new Map();
+        const familyCounts = new Map();
+        const primaryFamilies = new Set();
+        const normalized = (results || [])
+          .map((result) => ({
+            ...result,
+            link: getResultLink(result),
+            description: stripHtmlText(result.description || result.snippet || ""),
+          }))
+          .filter((result) => result.title && result.link && /^https?:\/\//i.test(result.link));
+
+        normalized.forEach((result) => {
+          const domain = getDomain(result.link);
+          const titleKey = getTitleKey(result.title);
+          const key = `${domain}|${titleKey}`;
+          const prefixKey = getUrlPrefixKey(result.link);
+          const baseDomain = getBaseDomain(result.link);
+          const familyKey = getDomainFamilyKey(result.link);
+          duplicateCounts.set(key, (duplicateCounts.get(key) || 0) + 1);
+          prefixCounts.set(prefixKey, (prefixCounts.get(prefixKey) || 0) + 1);
+          domainCounts.set(baseDomain, (domainCounts.get(baseDomain) || 0) + 1);
+          familyCounts.set(familyKey, (familyCounts.get(familyKey) || 0) + 1);
+          if (hasPrimaryDotComDomain(result.link)) primaryFamilies.add(familyKey);
+        });
+
+        const ranked = normalized
+          .filter((result) => {
+            const key = normalizeUrlKey(result.link);
+            if (seenUrls.has(key)) return false;
+            seenUrls.add(key);
+            return true;
+          })
+          .map((result) => {
+            let relevanceScore =
+              typeof calculateRelevanceScore === "function"
+                ? calculateRelevanceScore(result, query)
+                : 0;
+            const link = result.link.toLowerCase();
+            const q = String(query || "").toLowerCase();
+            const normalizedQuery = q.replace(/[^\w]+/g, "");
+            const domain = getDomain(link);
+            const baseDomain = getBaseDomain(link);
+            const domainName = baseDomain.split(".")[0] || "";
+            const titleKey = getTitleKey(result.title);
+            relevanceScore += result._directQueryResult ? 100000 : 0;
+            relevanceScore += result._officialWebsite ? 900 : 0;
+            relevanceScore += result._localResult ? 120 : 0;
+            relevanceScore += hasPrimaryDotComDomain(link) ? 900 : 0;
+            if (normalizedQuery && domainName === normalizedQuery) relevanceScore += 2500;
+            if (normalizedQuery && isHomepageUrl(link) && domain.includes(normalizedQuery)) relevanceScore += 3500;
+            relevanceScore -= Math.max(0, (duplicateCounts.get(`${domain}|${titleKey}`) || 1) - 1) * 55;
+            relevanceScore -= Math.max(0, (prefixCounts.get(getUrlPrefixKey(link)) || 1) - 1) * 24;
+            relevanceScore -= Math.max(0, (domainCounts.get(baseDomain) || 1) - 10) * 10;
+            relevanceScore -= Math.max(0, (familyCounts.get(getDomainFamilyKey(link)) || 1) - 1) * 18;
+            if (
+              isCountryCodeDomainVariant(link) &&
+              primaryFamilies.has(getDomainFamilyKey(link)) &&
+              !hasPrimaryDotComDomain(link)
+            ) {
+              relevanceScore -= 3500;
+            }
+            return { ...result, relevanceScore };
+          })
+          .sort((a, b) => b.relevanceScore - a.relevanceScore);
+
+        return groupLargeDomains(groupDuplicateTitles(ranked));
+      }
+
       // Country-specific domain patterns to boost results from local sources
       const countryDomainBoosts = {
         us: ["nytimes.com", "cnn.com", "washingtonpost.com", "foxnews.com", "apnews.com", "usatoday.com", ".gov"],
@@ -9680,8 +10413,14 @@
       );
     }
 
-    const immediateLocalResults = filteredLocal.map(r => ({ ...r, relevanceScore: calculateRelevanceScore(r, query) }));
-    immediateLocalResults.sort((a, b) => b.relevanceScore - a.relevanceScore);
+    const directQueryResult = getDirectQueryResult(query);
+    const immediateLocalResults = rankSearchResults(
+      expandDetectedUrlResults([
+        ...(directQueryResult ? [directQueryResult] : []),
+        ...filteredLocal,
+      ]),
+      query,
+    );
 
     // Immediate render (should appear within 1ms in most cases)
     renderResults(immediateLocalResults);
@@ -9747,10 +10486,11 @@
           devto: (query !== "@all") ? fetchWithTimeout(`https://dev.to/api/articles?per_page=5&tag=${encodeURIComponent(query)}`, {}, 6000) : Promise.resolve(null),
           github: (query !== "@all") ? fetchWithTimeout(`https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&per_page=5`, {}, 6000) : Promise.resolve(null),
           ddg: (query !== "@all") ? fetchWithTimeout(`https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1`, {}, 6000) : Promise.resolve(null),
+          newSearchApis: fetchMunetios30ApiResults(query, signal),
         };
 
         const resultsObj = await Promise.all(Object.values(fetchPromises));
-        const [redditData, redditGlobalData, hnData, stackData, mojangText, wdData, wikiData, mcWikiData, devData, githubData, ddgData] = resultsObj;
+        const [redditData, redditGlobalData, hnData, stackData, mojangText, wdData, wikiData, mcWikiData, devData, githubData, ddgData, newSearchApiResults] = resultsObj;
 
         // Parse and build results (same logic as before but localized inside background task)
         let redditResults = [];
@@ -9832,12 +10572,26 @@
           }
         } catch (_) {}
 
-        let merged = [ ...customResultsMatched, ...filteredLocal, ...devtoResults, ...hnResults, ...mojangBugResults, ...redditResults, ...minecraftWikiResults, ...wikidataResults, ...wikiResults, ...ddgResults, ...stackResults, ...githubResults ];
+        let merged = [
+          ...(directQueryResult ? [directQueryResult] : []),
+          ...customResultsMatched,
+          ...filteredLocal,
+          ...(Array.isArray(newSearchApiResults) ? newSearchApiResults : []),
+          ...devtoResults,
+          ...hnResults,
+          ...mojangBugResults,
+          ...redditResults,
+          ...minecraftWikiResults,
+          ...wikidataResults,
+          ...wikiResults,
+          ...ddgResults,
+          ...stackResults,
+          ...githubResults,
+        ];
 
         if (typeof window.filterResultsByCountry === "function") merged = window.filterResultsByCountry(merged, window.currentCountry);
 
-        merged = merged.map(result => ({ ...result, relevanceScore: calculateRelevanceScore(result, query) }));
-        merged.sort((a, b) => b.relevanceScore - a.relevanceScore);
+        merged = rankSearchResults(expandDetectedUrlResults(merged), query);
 
         // Update UI with API-augmented results
         renderResults(merged);
@@ -11436,6 +12190,16 @@ function getQueryFromURL() {
     return match ? match[1] : "all";
   }
 
+  function canonicalizeSearchUrl(tab, query) {
+    if (!query) return;
+    const url = new URL(window.location);
+    url.searchParams.set("q", query);
+    url.hash = `#/${tab || "all"}?q=${encodeURIComponent(query)}`;
+    if (window.location.href !== url.href) {
+      window.history.replaceState({}, "", url);
+    }
+  }
+
   function runSearch(tab, query) {
     if (!query || query === lastQuery) return; // ✅ prevent duplicates
     lastQuery = query;
@@ -11443,6 +12207,7 @@ function getQueryFromURL() {
     const input = document.getElementById("searchInput");
     if (input) input.value = query;
 
+    canonicalizeSearchUrl(tab, query);
     updateDocumentTitle(tab, query);
 
     const tabIdMap = {
@@ -11469,11 +12234,7 @@ function getQueryFromURL() {
 
     if (query) {
       // ✅ convert ?q= → hash ONCE (prevents double run)
-      if (!window.location.hash.startsWith("#/")) {
-        window.location.hash = `#/${tab}?q=${encodeURIComponent(query)}`;
-        return; // let hashchange handle it
-      }
-
+      canonicalizeSearchUrl(tab, query);
       runSearch(tab, query);
     }
 
@@ -11481,7 +12242,7 @@ function getQueryFromURL() {
   }
 
   // run once
- 
+  boot();
 
   // handle hash navigation
   window.addEventListener("hashchange", () => {
