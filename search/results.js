@@ -1,8 +1,7 @@
 window.localResults = [
   {
-    title: "Munetios Search",
-    description:
-      "Our Search engine so you can use it privately without being tracked with a beautiful liquid glass design.",
+    title: "Munetios",
+    description: "Munetios - Your privacy-focused digital ecosystem.",
     url: "https://www.munetios.com",
     favicon: "",
     link: "https://www.munetios.com",
@@ -45,14 +44,6 @@ window.localResults = [
     favicon: "",
     link: "https://calendar.munetios.com",
   },
-    {
-    title: "Munetios Meals",
-    description:
-      "Munetios Meals: Privacy focused meal planning app.",
-    url: "https://calendar.munetios.com/new/meals",
-    favicon: "https://calendar.munetios.com/new/meals/favicon.ico",
-    link: "https://calendar.munetios.com/new/meals",
-  },
   {
     title: "Munetios Calendar Legacy",
     description: "Legacy calendar.",
@@ -71,7 +62,7 @@ window.localResults = [
   {
     title: "Munetios Meals",
     description:
-      "Munetios Meals is a productivity and privacy focused meal planning app.",
+      "Munetios Meals is a productivity and privacy-focused meal planning app.",
     url: "https://calendar.munetios.com/new/meals",
     favicon: "",
     link: "https://calendar.munetios.com/new/meals",
@@ -7041,9 +7032,9 @@ window.localResults = [
     title: "ChatGPT - Google Play",
     description:
       "ChatGPT app available on Google Play for AI-powered conversations.",
-    url: "https://play.google.com/store/apps/details?id=com.openai.chatgpt",
+    url: "https://play.google.com/store/apps/detailsid=com.openai.chatgpt",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.openai.chatgpt",
+    link: "https://play.google.com/store/apps/detailsid=com.openai.chatgpt",
   },
   {
     title: "ChatGPT - App Store",
@@ -7057,9 +7048,9 @@ window.localResults = [
     title: "Google - Google Play",
     description:
       "Google app available on Google Play for search and other services.",
-    url: "https://play.google.com/store/apps/details?id=com.google.android.googlequicksearchbox",
+    url: "https://play.google.com/store/apps/detailsid=com.google.android.googlequicksearchbox",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.google.android.googlequicksearchbox",
+    link: "https://play.google.com/store/apps/detailsid=com.google.android.googlequicksearchbox",
   },
   {
     title: "Google - App Store",
@@ -7073,9 +7064,9 @@ window.localResults = [
     title: "Microsoft Copilot - Google Play",
     description:
       "Microsoft Copilot app available on Google Play for AI-powered assistance and productivity.",
-    url: "https://play.google.com/store/apps/details?id=com.microsoft.copilot",
+    url: "https://play.google.com/store/apps/detailsid=com.microsoft.copilot",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.microsoft.copilot",
+    link: "https://play.google.com/store/apps/detailsid=com.microsoft.copilot",
   },
   {
     title: "Microsoft Copilot - App Store",
@@ -7089,9 +7080,9 @@ window.localResults = [
     title: "Google Maps - Google Play",
     description:
       "Google Maps app available on Google Play for navigation, traffic, and local discovery.",
-    url: "https://play.google.com/store/apps/details?id=com.google.android.apps.maps",
+    url: "https://play.google.com/store/apps/detailsid=com.google.android.apps.maps",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.google.android.apps.maps",
+    link: "https://play.google.com/store/apps/detailsid=com.google.android.apps.maps",
   },
   {
     title: "Google Maps - App Store",
@@ -7105,9 +7096,9 @@ window.localResults = [
     title: "YouTube - Google Play",
     description:
       "YouTube app available on Google Play for watching and sharing videos.",
-    url: "https://play.google.com/store/apps/details?id=com.google.android.youtube",
+    url: "https://play.google.com/store/apps/detailsid=com.google.android.youtube",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.google.android.youtube",
+    link: "https://play.google.com/store/apps/detailsid=com.google.android.youtube",
   },
   {
     title: "YouTube - App Store",
@@ -7121,9 +7112,9 @@ window.localResults = [
     title: "Microsoft Outlook - Google Play",
     description:
       "Microsoft Outlook app available on Google Play for email and calendar.",
-    url: "https://play.google.com/store/apps/details?id=com.microsoft.office.outlook",
+    url: "https://play.google.com/store/apps/detailsid=com.microsoft.office.outlook",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.microsoft.office.outlook",
+    link: "https://play.google.com/store/apps/detailsid=com.microsoft.office.outlook",
   },
   {
     title: "Microsoft Outlook - App Store",
@@ -7137,9 +7128,9 @@ window.localResults = [
     title: "Spotify - Google Play",
     description:
       "Spotify app available on Google Play for streaming music and podcasts.",
-    url: "https://play.google.com/store/apps/details?id=com.spotify.music",
+    url: "https://play.google.com/store/apps/detailsid=com.spotify.music",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.spotify.music",
+    link: "https://play.google.com/store/apps/detailsid=com.spotify.music",
   },
   {
     title: "Spotify - App Store",
@@ -7153,9 +7144,9 @@ window.localResults = [
     title: "Discord - Google Play",
     description:
       "Discord app available on Google Play for chat, voice, and communities.",
-    url: "https://play.google.com/store/apps/details?id=com.discord",
+    url: "https://play.google.com/store/apps/detailsid=com.discord",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.discord",
+    link: "https://play.google.com/store/apps/detailsid=com.discord",
   },
   {
     title: "Discord - App Store",
@@ -7169,9 +7160,9 @@ window.localResults = [
     title: "Reddit - Google Play",
     description:
       "Reddit app available on Google Play for browsing communities and discussions.",
-    url: "https://play.google.com/store/apps/details?id=com.reddit.frontpage",
+    url: "https://play.google.com/store/apps/detailsid=com.reddit.frontpage",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.reddit.frontpage",
+    link: "https://play.google.com/store/apps/detailsid=com.reddit.frontpage",
   },
   {
     title: "Reddit - App Store",
@@ -7185,9 +7176,9 @@ window.localResults = [
     title: "Instagram - Google Play",
     description:
       "Instagram app available on Google Play for sharing photos and videos.",
-    url: "https://play.google.com/store/apps/details?id=com.instagram.android",
+    url: "https://play.google.com/store/apps/detailsid=com.instagram.android",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.instagram.android",
+    link: "https://play.google.com/store/apps/detailsid=com.instagram.android",
   },
   {
     title: "Instagram - App Store",
@@ -7200,9 +7191,9 @@ window.localResults = [
   {
     title: "Facebook - Google Play",
     description: "Facebook app available on Google Play for social networking.",
-    url: "https://play.google.com/store/apps/details?id=com.facebook.katana",
+    url: "https://play.google.com/store/apps/detailsid=com.facebook.katana",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.facebook.katana",
+    link: "https://play.google.com/store/apps/detailsid=com.facebook.katana",
   },
   {
     title: "Facebook - App Store",
@@ -7216,9 +7207,9 @@ window.localResults = [
     title: "WhatsApp - Google Play",
     description:
       "WhatsApp Messenger app available on Google Play for messaging and calls.",
-    url: "https://play.google.com/store/apps/details?id=com.whatsapp",
+    url: "https://play.google.com/store/apps/detailsid=com.whatsapp",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.whatsapp",
+    link: "https://play.google.com/store/apps/detailsid=com.whatsapp",
   },
   {
     title: "WhatsApp - App Store",
@@ -7231,9 +7222,9 @@ window.localResults = [
   {
     title: "Telegram - Google Play",
     description: "Telegram app available on Google Play for secure messaging.",
-    url: "https://play.google.com/store/apps/details?id=org.telegram.messenger",
+    url: "https://play.google.com/store/apps/detailsid=org.telegram.messenger",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=org.telegram.messenger",
+    link: "https://play.google.com/store/apps/detailsid=org.telegram.messenger",
   },
   {
     title: "Telegram - App Store",
@@ -7247,9 +7238,9 @@ window.localResults = [
     title: "Microsoft Teams - Google Play",
     description:
       "Microsoft Teams app available on Google Play for chat, meetings, and collaboration.",
-    url: "https://play.google.com/store/apps/details?id=com.microsoft.teams",
+    url: "https://play.google.com/store/apps/detailsid=com.microsoft.teams",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.microsoft.teams",
+    link: "https://play.google.com/store/apps/detailsid=com.microsoft.teams",
   },
   {
     title: "Microsoft Teams - App Store",
@@ -7263,9 +7254,9 @@ window.localResults = [
     title: "Slack - Google Play",
     description:
       "Slack app available on Google Play for team communication and collaboration.",
-    url: "https://play.google.com/store/apps/details?id=com.Slack",
+    url: "https://play.google.com/store/apps/detailsid=com.Slack",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.Slack",
+    link: "https://play.google.com/store/apps/detailsid=com.Slack",
   },
   {
     title: "Slack - App Store",
@@ -7279,9 +7270,9 @@ window.localResults = [
     title: "Zoom - Google Play",
     description:
       "Zoom app available on Google Play for video meetings and webinars.",
-    url: "https://play.google.com/store/apps/details?id=us.zoom.videomeetings",
+    url: "https://play.google.com/store/apps/detailsid=us.zoom.videomeetings",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=us.zoom.videomeetings",
+    link: "https://play.google.com/store/apps/detailsid=us.zoom.videomeetings",
   },
   {
     title: "Zoom - App Store",
@@ -7295,9 +7286,9 @@ window.localResults = [
     title: "Twitter (X) - Google Play",
     description:
       "X (formerly Twitter) app available on Google Play for social networking and news.",
-    url: "https://play.google.com/store/apps/details?id=com.twitter.android",
+    url: "https://play.google.com/store/apps/detailsid=com.twitter.android",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.twitter.android",
+    link: "https://play.google.com/store/apps/detailsid=com.twitter.android",
   },
   {
     title: "Twitter (X) - App Store",
@@ -7310,9 +7301,9 @@ window.localResults = [
   {
     title: "Gmail - Google Play",
     description: "Gmail app available on Google Play for email.",
-    url: "https://play.google.com/store/apps/details?id=com.google.android.gm",
+    url: "https://play.google.com/store/apps/detailsid=com.google.android.gm",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.google.android.gm",
+    link: "https://play.google.com/store/apps/detailsid=com.google.android.gm",
   },
   {
     title: "Gmail - App Store",
@@ -7325,9 +7316,9 @@ window.localResults = [
     title: "Google Drive - Google Play",
     description:
       "Google Drive app available on Google Play for cloud storage and file sharing.",
-    url: "https://play.google.com/store/apps/details?id=com.google.android.apps.docs",
+    url: "https://play.google.com/store/apps/detailsid=com.google.android.apps.docs",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.google.android.apps.docs",
+    link: "https://play.google.com/store/apps/detailsid=com.google.android.apps.docs",
   },
   {
     title: "Google Drive - App Store",
@@ -7341,9 +7332,9 @@ window.localResults = [
     title: "Dropbox - Google Play",
     description:
       "Dropbox app available on Google Play for cloud storage and file sharing.",
-    url: "https://play.google.com/store/apps/details?id=com.dropbox.android",
+    url: "https://play.google.com/store/apps/detailsid=com.dropbox.android",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.dropbox.android",
+    link: "https://play.google.com/store/apps/detailsid=com.dropbox.android",
   },
   {
     title: "Dropbox - App Store",
@@ -7357,9 +7348,9 @@ window.localResults = [
     title: "Notion - Google Play",
     description:
       "Notion app available on Google Play for notes, tasks, and collaboration.",
-    url: "https://play.google.com/store/apps/details?id=notion.id",
+    url: "https://play.google.com/store/apps/detailsid=notion.id",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=notion.id",
+    link: "https://play.google.com/store/apps/detailsid=notion.id",
   },
   {
     title: "Notion - App Store",
@@ -7372,9 +7363,9 @@ window.localResults = [
   {
     title: "Duolingo - Google Play",
     description: "Duolingo app available on Google Play for language learning.",
-    url: "https://play.google.com/store/apps/details?id=com.duolingo",
+    url: "https://play.google.com/store/apps/detailsid=com.duolingo",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.duolingo",
+    link: "https://play.google.com/store/apps/detailsid=com.duolingo",
   },
   {
     title: "Duolingo - App Store",
@@ -7388,9 +7379,9 @@ window.localResults = [
     title: "Uber - Google Play",
     description:
       "Uber app available on Google Play for rides and food delivery.",
-    url: "https://play.google.com/store/apps/details?id=com.ubercab",
+    url: "https://play.google.com/store/apps/detailsid=com.ubercab",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.ubercab",
+    link: "https://play.google.com/store/apps/detailsid=com.ubercab",
   },
   {
     title: "Uber - App Store",
@@ -7404,9 +7395,9 @@ window.localResults = [
     title: "Amazon Shopping - Google Play",
     description:
       "Amazon Shopping app available on Google Play for online shopping.",
-    url: "https://play.google.com/store/apps/details?id=com.amazon.mShop.android.shopping",
+    url: "https://play.google.com/store/apps/detailsid=com.amazon.mShop.android.shopping",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.amazon.mShop.android.shopping",
+    link: "https://play.google.com/store/apps/detailsid=com.amazon.mShop.android.shopping",
   },
   {
     title: "Amazon Shopping - App Store",
@@ -7420,9 +7411,9 @@ window.localResults = [
     title: "TikTok - Google Play",
     description:
       "TikTok app available on Google Play for short videos and entertainment.",
-    url: "https://play.google.com/store/apps/details?id=com.zhiliaoapp.musically",
+    url: "https://play.google.com/store/apps/detailsid=com.zhiliaoapp.musically",
     favicon: "",
-    link: "https://play.google.com/store/apps/details?id=com.zhiliaoapp.musically",
+    link: "https://play.google.com/store/apps/detailsid=com.zhiliaoapp.musically",
   },
   {
     title: "TikTok - App Store",
@@ -7616,7 +7607,7 @@ window.localResults = [
     title: "Comparing Munetios OmniWrite with Other Document Editors",
     description:
       "A feature-by-feature comparison of OmniWrite vs. Google Docs, Microsoft Word, Notion, and Apple Pages, highlighting OmniWrite's encryption and no-account approach.",
-    link: "https://blog.munetios.com/#/post/comparing-munetios-omniwrite-with-other-document-editors:-why-choose-omniwrite?",
+    link: "https://blog.munetios.com/#/post/comparing-munetios-omniwrite-with-other-document-editors:-why-choose-omniwrite",
     favicon: "",
   },
   {
@@ -8023,7 +8014,7 @@ window.localResults = [
     favicon: "https://www.theverge.com/favicon.ico",
   },
   {
-    title: "Why is SpaceX going public?",
+    title: "Why is SpaceX going public",
     description:
       "After years of resistance, Elon Musk is now opening the door to a SpaceX IPO — but the risks around AI investment and long-term mission clarity remain.",
     link: "https://www.theverge.com/tech/887899/spacex-ipo-risks-ai",
@@ -8500,20 +8491,59 @@ window.localResults = [
     favicon: "https://clipchamp.com/favicon.ico",
     link: "https://clipchamp.com/",
   },
-    {
-    title: "Samsung",
+
+  {
+    title: "Elden Ring Wiki (Fextralife)",
     description:
-      "Browse Samsung Products and more with Samsung + Galaxy AI.",
-    url: "https://samsung.com/",
+      "Comprehensive Elden Ring wiki covering weapons, armor, spells, bosses, maps, builds, and lore.",
+    url: "https://eldenring.wiki.fextralife.com/Elden+Ring+Wiki",
     favicon: "",
-    link: "https://samsung.com/",
+    link: "https://eldenring.wiki.fextralife.com/Elden+Ring+Wiki",
   },
-      {
-    title: "Outta Controls",
+  {
+    title: "Elden Ring Wiki (Wiki.gg)",
     description:
-      "Sports, Gaming. Culture.",
-    url: "https://outtacontrols.com/",
+      "Community-driven Elden Ring wiki with guides for items, locations, NPCs, and quests.",
+    url: "https://eldenring.wiki.gg/wiki/Elden_Ring_Wiki",
     favicon: "",
-    link: "https://outtacontrols.com/",
+    link: "https://eldenring.wiki.gg/wiki/Elden_Ring_Wiki",
+  },
+  {
+    title: "Elden Ring Wiki (IGN)",
+    description:
+      "IGN's Elden Ring wiki featuring walkthroughs, boss guides, item locations, and tips.",
+    url: "https://www.ign.com/wikis/elden-ring",
+    favicon: "",
+    link: "https://www.ign.com/wikis/elden-ring",
+  },
+  {
+    title: "Munetios - X",
+    description: "Description for Munetios - X.",
+    url: "https://x.com/munetios",
+    favicon: "https://x.com/favicon.ico",
+    link: "https://x.com/munetios",
+  },
+  {
+    title: "Munetios on TikTok",
+    description: "Description for Munetios on TikTok.",
+    url: "https://www.tiktok.com/@munetios",
+    favicon: "https://www.tiktok.com/favicon.ico",
+    link: "https://www.tiktok.com/@munetios",
+  },
+  {
+    title: "Nomster Chef",
+    description:
+      "Nomster Chef is a platform for fun and healthy food recipes for kids.",
+    url: "https://www.nomsterchef.com",
+    favicon: "",
+    link: "https://www.nomsterchef.com",
+  },
+  {
+    title: "Image to Data URL Converter",
+    description:
+      "Convert images to data URLs for easy embedding in HTML or CSS.",
+    url: "https://datauri.ai/",
+    favicon: "",
+    link: "https://datauri.ai/",
   },
 ];
