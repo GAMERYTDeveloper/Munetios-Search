@@ -8538,6 +8538,14 @@ window.localResults = [
     favicon: "",
     link: "https://www.nomsterchef.com",
   },
+   {
+    title: "Outta Controls",
+    description:
+      "Sports, Gaming and Culture",
+    url: "https://outtacontrols.com",
+    favicon: "",
+    link: "https://outtacontrols.com",
+  },
   {
     title: "Image to Data URL Converter",
     description:
