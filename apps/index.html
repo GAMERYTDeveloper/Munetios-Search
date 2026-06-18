@@ -3,1815 +3,683 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="dark" />
-    <title>Munetios App Launcher</title>
+    <title>Munetios Apps Launcher</title>
     <link
       rel="stylesheet"
       href="https://api.munetios.com/beautiful-css/beautiful.css"
     />
+
+    <script>
+      // Detect if in iframe and force all <a> links to open in top window
+      if (window.top !== window.self) {
+        window.addEventListener("DOMContentLoaded", function () {
+          document.querySelectorAll("a").forEach(function (link) {
+            link.setAttribute("target", "_top");
+          });
+        });
+      }
+    </script>
     <style>
-      :root {
-        --bg: #12001f;
-        --bg-deep: #090010;
-        --panel: rgba(47, 5, 76, 0.58);
-        --panel-strong: rgba(69, 12, 111, 0.7);
-        --panel-soft: rgba(255, 255, 255, 0.08);
-        --text: #fff8ff;
-        --muted: rgba(255, 248, 255, 0.68);
-        --line: rgba(255, 255, 255, 0.13);
-        --purple: #a855f7;
-        --purple-strong: #7e22ce;
-        --purple-dark: #3b025c;
-        --shadow: 0 18px 48px rgba(5, 0, 10, 0.46);
-        --radius: 25px;
-        --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      html {
-        min-height: 100%;
-        background: var(--bg-deep);
-      }
-
       body,
       button,
       input,
       select,
       textarea {
-        font-family: "Google Sans Flex", "Google Sans", Arial, sans-serif;
         font-variation-settings:
           "wght" 480,
           "GRAD" 30,
           "ROND" 80,
           "opsz" 18;
+        font-family: "Google Sans Flex", sans-serif;
       }
-
       body {
-        min-height: 100vh;
+        background-color: #f5f5f5;
         margin: 0;
-        color: var(--text);
-        background:
-          radial-gradient(
-            circle at 16% 0%,
-            rgba(168, 85, 247, 0.28),
-            transparent 30rem
-          ),
-          radial-gradient(
-            circle at 92% 14%,
-            rgba(88, 28, 135, 0.34),
-            transparent 28rem
-          ),
-          linear-gradient(145deg, #0c0015 0%, #1d0035 48%, #090010 100%);
-        overflow-x: hidden;
-        animation: pageEnter 420ms var(--ease) both;
-      }
-
-      body.in-frame {
-        min-height: auto;
-        background:
-          linear-gradient(145deg, rgba(12, 0, 21, 0.94), rgba(29, 0, 53, 0.92)),
-          var(--bg-deep);
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      button,
-      input {
-        border: 0;
-      }
-
-      button {
-        cursor: pointer;
-      }
-
-      .launcher-shell {
-        width: min(100%, 760px);
-        min-height: 100vh;
-        margin: 0 auto;
-        padding: 14px;
-      }
-
-      .topbar {
-        position: sticky;
-        top: 0;
-        z-index: 20;
+        padding: 0;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        padding: 8px 0 14px;
-        background: transparent;
-        animation: slideDown 420ms var(--ease) both;
-      }
-
-      .topbar-left,
-      .launcher-actions,
-      .search-wrap,
-      .filter-chip,
-      .app-card,
-      .context-menu {
-        border: 1px solid var(--line);
-        box-shadow: var(--shadow);
-      }
-
-      .liquid-glass {
-        background: rgba(32, 4, 54, 0.62);
-        -webkit-backdrop-filter: blur(3px) saturate(135%);
-        backdrop-filter: blur(3px) saturate(135%);
-      }
-
-      .topbar-left {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        min-width: 0;
-        padding: 9px 11px;
-        border-radius: var(--radius);
-      }
-
-      .brand-mark {
-        display: grid;
-        place-items: center;
-        flex: 0 0 auto;
-        width: 34px;
-        height: 34px;
-        border-radius: var(--radius);
-        background: linear-gradient(145deg, #9d4edd, #3b025c);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
-      }
-
-      .brand-mark img {
-        width: 24px;
-        height: 24px;
-        border-radius: 6px;
-      }
-
-      .brand-copy {
-        min-width: 0;
-      }
-
-      .brand-title {
-        margin: 0;
-        font-size: 0.98rem;
-        line-height: 1.1;
-        font-weight: 720;
-        white-space: nowrap;
-      }
-
-      .brand-subtitle {
-        margin: 2px 0 0;
-        color: var(--muted);
-        font-size: 0.75rem;
-        white-space: nowrap;
-      }
-
-      .launcher-actions {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        padding: 7px;
-        border-radius: var(--radius);
-      }
-
-      .icon-button {
-        display: grid;
-        place-items: center;
-        width: 36px;
-        height: 36px;
-        border-radius: var(--radius);
-        color: var(--text);
-        background: rgba(255, 255, 255, 0.08);
-        transition:
-          transform 160ms ease,
-          background 160ms ease;
-      }
-
-      .icon-button:hover {
-        transform: translateY(-1px);
-        background: rgba(168, 85, 247, 0.32);
-      }
-
-      .material-symbols-rounded {
-        display: inline-flex;
-        align-items: center;
         justify-content: center;
-        font-family: "Material Symbols Rounded", "Google Sans Flex", sans-serif;
-        font-size: 1.25rem;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 1;
-        letter-spacing: 0;
-        text-transform: none;
-        white-space: nowrap;
-        direction: ltr;
-        font-feature-settings: "liga";
-        -webkit-font-feature-settings: "liga";
-        -webkit-font-smoothing: antialiased;
-      }
-
-      .search-wrap {
-        display: flex;
         align-items: center;
-        gap: 10px;
+      }
+      munetios-header {
         width: 100%;
-        margin: 2px 0 12px;
-        padding: 12px 14px;
-        border-radius: var(--radius);
+        box-sizing: border-box;
+        padding: 12px 16px;
+        margin-bottom: 10px;
+        height: 56px;
       }
-
-      .search-wrap input {
+      munetios-search-bar {
         width: 100%;
-        min-width: 0;
-        color: var(--text);
-        background: transparent;
-        outline: none;
-        font-size: 1rem;
-      }
-
-      .search-wrap input::placeholder {
-        color: rgba(255, 248, 255, 0.56);
-      }
-
-      .filter-row {
+        box-sizing: border-box;
+        padding: 10px 16px;
+        margin-top: 1px;
         display: flex;
         align-items: center;
         gap: 8px;
-        margin-bottom: 12px;
-        overflow-x: auto;
-        scrollbar-width: none;
       }
-
-      .filter-row::-webkit-scrollbar {
-        display: none;
+      munetios-search-bar input {
+        border: none;
+        outline: none;
+        background: transparent;
+        width: 100%;
+        font-size: 16px;
       }
-
-      .filter-chip {
-        flex: 0 0 auto;
-        padding: 8px 11px;
-        border-radius: var(--radius);
-        color: var(--muted);
-        background: rgba(255, 255, 255, 0.06);
-        font-size: 0.8rem;
-        transition:
-          transform 160ms ease,
-          color 160ms ease,
-          background 160ms ease;
+      munetios-app-launcher {
+        width: 500px;
+        overflow: hidden;
       }
-
-      .filter-chip:hover {
-        transform: translateY(-1px);
-      }
-
-      .filter-chip[aria-pressed="true"] {
-        color: #fff;
-        background: rgba(126, 34, 206, 0.58);
-      }
-
-      .section {
-        margin-top: 14px;
-        animation: sectionEnter 420ms var(--ease) both;
-      }
-
-      .section-header {
-        display: flex;
-        align-items: end;
-        justify-content: space-between;
-        gap: 12px;
-        padding: 0 2px 9px;
-      }
-
-      .section-title {
-        margin: 0;
-        font-size: 0.86rem;
-        font-weight: 700;
-        letter-spacing: 0;
-      }
-
-      .section-count {
-        color: var(--muted);
-        font-size: 0.75rem;
-      }
-
-      .apps-grid {
+      munetios-apps-list {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
-        gap: 10px;
-        min-height: 94px;
-        padding: 10px;
-        border-radius: var(--radius);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        background: rgba(255, 255, 255, 0.04);
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 50px;
+        padding: 16px;
+        box-sizing: border-box;
       }
-
-      .apps-grid:empty::before {
-        content: "Drop apps here";
-        display: grid;
-        place-items: center;
-        min-height: 74px;
-        color: rgba(255, 248, 255, 0.42);
-        font-size: 0.82rem;
-        border: 1px dashed rgba(255, 255, 255, 0.18);
-        border-radius: var(--radius);
-        grid-column: 1 / -1;
+      a {
+        text-decoration: none;
+        color: #ffffff;
+        font-weight: 500;
       }
-
-      .app-card {
-        position: relative;
+      munetios-app-button {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        min-height: 112px;
-        padding: 12px 8px 10px;
-        border-radius: var(--radius);
-        color: #fff;
-        background:
-          linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0.12),
-            rgba(255, 255, 255, 0.04)
-          ),
-          rgba(59, 2, 92, 0.72);
         text-align: center;
-        transition:
-          transform 170ms ease,
-          border-color 170ms ease,
-          background 170ms ease;
-        user-select: none;
-        animation: cardEnter 360ms var(--ease) both;
-        animation-delay: calc(min(var(--card-index, 0), 12) * 24ms);
+        width: 100px;
+        height: 100px;
+        padding: 20px 25px;
+        border-radius: 26px;
+        background-color: #3b025c;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: transform 0.1s ease-in-out;
       }
-
-      .app-card:hover,
-      .app-card:focus-within {
-        transform: translateY(-2px);
-        border-color: rgba(216, 180, 254, 0.42);
-        background:
-          linear-gradient(
-            180deg,
-            rgba(168, 85, 247, 0.26),
-            rgba(255, 255, 255, 0.06)
-          ),
-          rgba(59, 2, 92, 0.82);
+      munetios-app-button:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
-
-      .app-card.dragging {
-        opacity: 0.46;
-        transform: scale(0.96);
+      munetios-app-button img {
+        width: 82px;
+        height: 82px;
+        margin-bottom: 8px;
+        border-radius: 12px;
       }
-
-      .app-card.hidden,
-      .section.hidden {
-        display: none;
-      }
-
-      .app-card.custom-app::after {
-        content: "";
-        position: absolute;
-        inset: 7px;
-        border: 1px solid rgba(216, 180, 254, 0.18);
-        border-radius: 18px;
-        pointer-events: none;
-      }
-
-      .icon-frame {
-        display: grid;
-        place-items: center;
-        width: 58px;
-        height: 58px;
-        margin-bottom: 9px;
-        border-radius: var(--radius);
-        background: rgba(255, 255, 255, 0.1);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
-      }
-
-      .icon-frame img {
-        max-width: 50px;
-        max-height: 50px;
-        width: auto;
-        height: auto;
-        border-radius: 7px;
-        object-fit: contain;
-      }
-
-      .icon-frame .material-symbols-rounded {
-        color: #ffffff;
-        font-size: 2.4rem;
-      }
-
-      .app-name {
-        display: -webkit-box;
-        min-height: 2.3em;
-        max-width: 100%;
-        overflow: hidden;
-        color: #fff;
-        font-size: 0.78rem;
-        font-weight: 650;
-        line-height: 1.15;
-        overflow-wrap: normal;
-        word-break: keep-all;
-        hyphens: none;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-      }
-
-      .soon-badge {
-        position: absolute;
-        top: 7px;
-        right: 7px;
-        padding: 3px 6px;
-        border-radius: 999px;
-        color: rgba(255, 255, 255, 0.88);
-        background: rgba(12, 0, 21, 0.58);
-        font-size: 0.62rem;
-        font-weight: 700;
-      }
-
-      .empty-state {
-        display: none;
-        padding: 28px 14px;
-        color: var(--muted);
-        text-align: center;
-      }
-
-      .empty-state.visible {
-        display: block;
-      }
-
-      .context-menu {
-        position: fixed;
-        z-index: 1000;
-        min-width: 190px;
-        padding: 6px;
-        border-radius: var(--radius);
-        color: var(--text);
-      }
-
-      .context-menu button {
-        display: flex;
-        width: 100%;
-        align-items: center;
-        gap: 8px;
-        padding: 9px 10px;
-        border-radius: 7px;
-        color: inherit;
-        background: transparent;
-        text-align: left;
-        font-size: 0.88rem;
-      }
-
-      .context-menu button:hover {
-        background: rgba(255, 255, 255, 0.1);
-      }
-
-      .modal-backdrop {
-        position: fixed;
-        inset: 0;
-        z-index: 900;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: 16px;
-        background: rgba(7, 0, 12, 0.58);
-        animation: fadeIn 180ms ease both;
-      }
-
-      .modal-backdrop.visible {
-        display: flex;
-      }
-
-      .custom-app-modal {
-        width: min(100%, 420px);
-        padding: 16px;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        animation: modalEnter 260ms var(--ease) both;
-      }
-
-      .modal-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        margin-bottom: 14px;
-      }
-
-      .modal-title {
-        margin: 0;
-        font-size: 1rem;
-        font-weight: 720;
-      }
-
-      .custom-app-form {
-        display: grid;
-        gap: 12px;
-      }
-
-      .field {
-        display: grid;
-        gap: 6px;
-      }
-
-      .field span {
-        color: var(--muted);
-        font-size: 0.8rem;
-      }
-
-      .field input {
-        width: 100%;
-        padding: 11px 12px;
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        border-radius: var(--radius);
-        color: var(--text);
-        background: rgba(255, 255, 255, 0.08);
-        outline: none;
-      }
-
-      .field input:focus {
-        border-color: rgba(216, 180, 254, 0.58);
-      }
-
-      .modal-actions {
-        display: flex;
-        justify-content: flex-end;
-        gap: 8px;
-        margin-top: 4px;
-      }
-
-      .text-button,
-      .primary-button {
-        min-height: 38px;
-        padding: 0 13px;
-        border-radius: var(--radius);
-        color: var(--text);
-        font-weight: 680;
-      }
-
-      .text-button {
-        background: rgba(255, 255, 255, 0.08);
-      }
-
-      .primary-button {
-        background: linear-gradient(145deg, #9333ea, #581c87);
-      }
-
-      .footer {
-        padding: 18px 0 8px;
-        color: rgba(255, 248, 255, 0.46);
-        text-align: center;
-        font-size: 0.75rem;
-      }
-
-      .footer a {
-        color: rgba(255, 248, 255, 0.58);
-      }
-
-      @keyframes sectionEnter {
-        from {
-          opacity: 0;
-          transform: translateY(12px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #1d0035;
+          color: #e0e0e0;
         }
       }
-
-      @keyframes cardEnter {
-        from {
-          opacity: 0;
-          transform: translateY(10px) scale(0.98);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-      }
-
-      @keyframes modalEnter {
-        from {
-          opacity: 0;
-          transform: translateY(12px) scale(0.97);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        *,
-        *::before,
-        *::after {
-          animation-duration: 1ms !important;
-          animation-iteration-count: 1 !important;
-          scroll-behavior: auto !important;
-          transition-duration: 1ms !important;
-        }
-      }
-
-      @media (min-width: 620px) {
-        .launcher-shell {
-          padding: 18px;
-        }
-
-        .apps-grid {
-          grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
-          gap: 12px;
-          padding: 12px;
-        }
-
-        .app-card {
-          min-height: 122px;
-        }
-
-        .icon-frame {
-          width: 64px;
-          height: 64px;
-        }
-
-        .icon-frame img {
-          max-width: 56px;
-          max-height: 56px;
-        }
-      }
-
-      @media (max-width: 430px) {
-        .launcher-shell {
-          padding: 10px;
-        }
-
-        .topbar {
-          align-items: stretch;
-        }
-
-        .brand-subtitle {
-          display: none;
-        }
-
-        .launcher-actions {
-          flex: 0 0 auto;
-        }
-
-        .apps-grid {
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: 8px;
-          padding: 8px;
-        }
-
-        .app-card {
-          min-height: 104px;
-          padding-inline: 6px;
-        }
-
-        .app-name {
-          font-size: 0.72rem;
-        }
+      .material-symbols-rounded {
+        font-family: "Material Symbols Rounded";
       }
     </style>
     <script src="/languages/language.js" defer></script>
   </head>
   <body>
-    <main class="launcher-shell" aria-label="Munetios App Launcher">
-      <header class="topbar">
-        <div class="topbar-left liquid-glass">
-          <span class="brand-mark" aria-hidden="true">
-            <img
-              src="https://www.munetios.com/apple-touch-icon-new.png"
-              alt=""
-            />
-          </span>
-          <div class="brand-copy">
-            <h1 class="brand-title">Munetios Apps</h1>
-            <p class="brand-subtitle" id="launcherStats">Loading apps</p>
-          </div>
-        </div>
-        <div
-          class="launcher-actions liquid-glass"
-          aria-label="Launcher controls"
-        >
-          <button
-            class="icon-button"
-            id="addCustomApp"
-            type="button"
-            title="Add Custom App"
-            aria-label="Add Custom App"
+    <munetios-app-launcher id="app">
+      <munetios-header slot="header" title="Munetios Apps Launcher">
+        <munetios-search-bar class="liquid-glass">
+          <icon class="material-symbols-rounded">search</icon>
+          <input type="search" placeholder="Search apps" id="searchApps" />
+        </munetios-search-bar>
+      </munetios-header>
+      <munetios-apps-list>
+        <munetios-app-button>
+          <img
+            src="https://www.munetios.com/apple-touch-icon-new.png"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://www.munetios.com/search/search.html" slot="title"
+            >Search</a
           >
-            <span class="material-symbols-rounded" aria-hidden="true"
-              >add_circle</span
-            >
-          </button>
-          <button
-            class="icon-button"
-            id="resetLauncher"
-            type="button"
-            title="Reset launcher"
-            aria-label="Reset launcher"
+        </munetios-app-button>
+        <munetios-app-button>
+          <img
+            src="image copy 6.png"
+            style="height: 82px !important; width: 82px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://ai.munetios.com" slot="title">Munetios AI</a>
+        </munetios-app-button>
+        <munetios-app-button>
+          <img
+            src="https://write.munetios.com/apple-touch-icon.png"
+            style="height: 90px !important; width: 90px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://write.munetios.com/" target="_top" slot="title"
+            >OmniWrite</a
           >
-            <span class="material-symbols-rounded" aria-hidden="true"
-              >restart_alt</span
-            >
-          </button>
-        </div>
-      </header>
+        </munetios-app-button>
+        <munetios-app-button>
+          <img
+            src="https://notes.munetios.com/apple-touch-icon.png"
+            style="height: 90px !important; width: 90px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://notes.munetios.com">SupaNotes</a>
+        </munetios-app-button>
+        <munetios-app-button>
+          <img
+            src="https://calendar.munetios.com/new/favicon.ico"
+            style="height: 82px !important; width: 82px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://calendar.munetios.com" target="_top" slot="title"
+            >Calendar</a
+          >
+        </munetios-app-button>
+        <munetios-app-button>
+          <img
+            src="https://maps.munetios.com/apple-touch-icon-new.png"
+            style="height: 90px !important; width: 90px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://maps.munetios.com" target="_top" slot="title"
+            >Maps</a
+          >
+        </munetios-app-button>
+        <munetios-app-button>
+          <img
+            src="https://calendar.munetios.com/new/meals/apple-touch-icon.png"
+            style="height: 82px !important; width: 82px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a
+            href="https://calendar.munetios.com/new/meals"
+            target="_top"
+            slot="title"
+            >Meals</a
+          >
+        </munetios-app-button>
+        <munetios-app-button>
+          <img
+            src="image copy 17.png"
+            style="height: 82px !important; width: 82px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://photos.munetios.com" target="_top" slot="title"
+            >Photos</a
+          >
+        </munetios-app-button>
+      </munetios-apps-list>
+      <hr />
+      <munetios-apps-list>
+        <munetios-app-button>
+          <img
+            src="image3.png"
+            style="height: 90px !important; width: 60px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://notebook.munetios.com" target="_top" slot="title"
+            >Notebook</a
+          >
+        </munetios-app-button>
+        <munetios-app-button>
+          <img
+            src="image copy 41.png"
+            style="height: 82px !important; width: 82px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://games.munetios.com/">Games Hub</a>
+        </munetios-app-button>
 
-      <label class="search-wrap liquid-glass" for="searchApps">
-        <span class="material-symbols-rounded" aria-hidden="true">search</span>
-        <input
-          id="searchApps"
-          type="search"
-          autocomplete="off"
-          placeholder="Search apps"
-        />
-      </label>
-
-      <nav class="filter-row" aria-label="App groups">
-        <button
-          class="filter-chip liquid-glass"
-          type="button"
-          data-filter="all"
-          aria-pressed="true"
-        >
-          All
-        </button>
-        <button
-          class="filter-chip liquid-glass"
-          type="button"
-          data-filter="core"
-          aria-pressed="false"
-        >
-          Core
-        </button>
-        <button
-          class="filter-chip liquid-glass"
-          type="button"
-          data-filter="create"
-          aria-pressed="false"
-        >
-          Create
-        </button>
-        <button
-          class="filter-chip liquid-glass"
-          type="button"
-          data-filter="life"
-          aria-pressed="false"
-        >
-          Daily
-        </button>
-        <button
-          class="filter-chip liquid-glass"
-          type="button"
-          data-filter="more"
-          aria-pressed="false"
-        >
-          More
-        </button>
-      </nav>
-
-      <div id="sections"></div>
-      <p class="empty-state" id="emptyState">No apps match this search.</p>
-
-      <div class="modal-backdrop" id="customAppBackdrop" aria-hidden="true">
-        <section
-          class="custom-app-modal liquid-glass"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="customAppTitle"
-        >
-          <div class="modal-header">
-            <h2 class="modal-title" id="customAppTitle">Add Custom App</h2>
-            <button
-              class="icon-button"
-              id="closeCustomApp"
-              type="button"
-              title="Close Custom App Form"
-              aria-label="Close Custom App Form"
-            >
-              <span class="material-symbols-rounded" aria-hidden="true"
-                >close</span
-              >
-            </button>
-          </div>
-          <form class="custom-app-form" id="customAppForm">
-            <label class="field">
-              <span id="customNameLabel">Application Name</span>
-              <input
-                id="customAppName"
-                name="name"
-                type="text"
-                autocomplete="off"
-                required
-              />
-            </label>
-            <label class="field">
-              <span id="customUrlLabel">Application Link</span>
-              <input
-                id="customAppUrl"
-                name="url"
-                type="text"
-                autocomplete="off"
-                required
-              />
-            </label>
-            <label class="field">
-              <span id="customIconLabel">Icon Link</span>
-              <input
-                id="customAppIcon"
-                name="icon"
-                type="text"
-                autocomplete="off"
-              />
-            </label>
-            <div class="modal-actions">
-              <button class="text-button" id="cancelCustomApp" type="button">
-                Cancel Custom App
-              </button>
-              <button class="primary-button" id="saveCustomApp" type="submit">
-                Save Custom App
-              </button>
-            </div>
-          </form>
-        </section>
-      </div>
-
-      <footer class="footer">
-        &copy; 2026 Munetios&trade;.
-        <span style="display: none" id="rightsText">All rights reserved.</span>
-        <br />
-        <a href="https://www.munetios.com/policies/#/terms" id="termsLink"
-          >Terms</a
-        >
-        |
-        <a href="https://www.munetios.com/policies/#/privacy" id="privacyLink"
-          >Privacy</a
-        >
-      </footer>
-    </main>
+        <munetios-app-button>
+          <img
+            src="https://weather.munetios.com/apple-touch-icon.png"
+            alt="App Icon"
+            slot="icon"
+            style="height: 82px !important; width: 82px !important"
+          />
+          <a href="https://weather.munetios.com">Weather</a>
+        </munetios-app-button>
+        <munetios-app-button>
+          <img
+            src="image copy.png"
+            style="height: 82px !important; width: 82px !important"
+            alt="App Icon"
+            slot="icon"
+          />
+          <a href="https://tasks.munetios.com">Tasks</a>
+        </munetios-app-button>
+      </munetios-apps-list>
+    </munetios-app-launcher>
 
     <script>
-      const STORAGE_KEYS = {
-        order: "munetiosLauncherOrderV2",
-        hidden: "munetiosLauncherHiddenV2",
-        customApps: "munetiosLauncherCustomAppsV1",
-        language: "munetiosLanguage",
+      // Language support
+      const LANGUAGES = {
+        en: "English",
+        es: "Español",
+        fr: "Français",
+        de: "Deutsch",
+        it: "Italiano",
+        pt: "Português",
+        ru: "Русский",
+        zh: "中文",
+        ja: "日本語",
+        ko: "한국어",
+        ar: "العربية",
+        hi: "हिन्दी",
+        tr: "Türkçe",
+        nl: "Nederlands",
       };
-
-      const TRANSLATIONS = {
-        en: {
-          launcherTitle: "Munetios Apps",
-          loadingApps: "Loading applications",
-          addCustomApp: "Add Custom App",
-          closeCustomApp: "Close Custom App Form",
-          resetLauncher: "Reset Launcher",
-          searchPlaceholder: "Search applications",
-          allFilter: "All",
-          coreFilter: "Core",
-          createFilter: "Create",
-          lifeFilter: "Daily",
-          moreFilter: "More",
-          emptyState: "No applications match this search.",
-          customTitle: "Add Custom App",
-          customName: "Application Name",
-          customLink: "Application Link",
-          customIcon: "Icon Link",
-          cancelCustomApp: "Cancel Custom App",
-          saveCustomApp: "Save Custom App",
-          hideApp: "Hide Application",
-          removeCustomApp: "Remove Custom App",
-          showAllApps: "Show Every Application",
-          liveApps: "live applications",
-          appCountSingular: "application",
-          appCountPlural: "applications",
-          terms: "Terms",
-          privacy: "Privacy",
-          rights: "All rights reserved.",
-          sections: {
-            core: "Core Applications",
-            create: "Create and Work",
-            life: "Daily Utilities",
-            more: "More Munetios",
-          },
-          apps: {
-            search: "Search",
-            ai: "Munetios AI",
-            write: "OmniWrite",
-            notes: "SupaNotes",
-            calendar: "Calendar",
-            maps: "Maps",
-            meals: "Meals",
-            photos: "Photos",
-            notebook: "Notebook",
-            games: "Games Hub",
-            weather: "Weather",
-            tasks: "Tasks",
-            docs: "Munetios Docs",
-            calculator: "Munetios Calculator",
-            settings: "Settings",
-          },
+      // App label translations (fallback map)
+      const LABELS = {
+        searchPlaceholder: {
+          en: "Search apps...",
+          es: "Buscar aplicaciones...",
+          fr: "Rechercher des apps...",
+          de: "Apps suchen...",
+          it: "Cerca app...",
+          pt: "Pesquisar apps...",
+          ru: "Поиск приложений...",
+          zh: "搜索应用...",
+          ja: "アプリを検索...",
+          ko: "앱 검색...",
+          ar: "ابحث في التطبيقات...",
+          hi: "ऐप्स खोजें...",
+          tr: "Uygulama ara...",
+          nl: "Apps zoeken...",
         },
-        es: {
-          launcherTitle: "Apps de Munetios",
-          loadingApps: "Cargando aplicaciones",
-          addCustomApp: "Agregar aplicacion personalizada",
-          closeCustomApp: "Cerrar formulario de aplicacion personalizada",
-          resetLauncher: "Restablecer lanzador",
-          searchPlaceholder: "Buscar aplicaciones",
-          allFilter: "Todas",
-          coreFilter: "Principales",
-          createFilter: "Crear",
-          lifeFilter: "Diarias",
-          moreFilter: "Mas",
-          emptyState: "No hay aplicaciones para esta busqueda.",
-          customTitle: "Agregar aplicacion personalizada",
-          customName: "Nombre de la aplicacion",
-          customLink: "Enlace de la aplicacion",
-          customIcon: "Enlace del icono",
-          cancelCustomApp: "Cancelar aplicacion personalizada",
-          saveCustomApp: "Guardar aplicacion personalizada",
-          hideApp: "Ocultar aplicacion",
-          removeCustomApp: "Eliminar aplicacion personalizada",
-          showAllApps: "Mostrar todas las aplicaciones",
-          liveApps: "aplicaciones activas",
-          appCountSingular: "aplicacion",
-          appCountPlural: "aplicaciones",
-          terms: "Terminos",
-          privacy: "Privacidad",
-          rights: "Todos los derechos reservados.",
-          sections: {
-            core: "Aplicaciones principales",
-            create: "Crear y trabajar",
-            life: "Utilidades diarias",
-            more: "Mas Munetios",
-          },
-          apps: {
-            search: "Busqueda",
-            ai: "Munetios AI",
-            write: "OmniWrite",
-            notes: "SupaNotes",
-            calendar: "Calendario",
-            maps: "Mapas",
-            meals: "Comidas",
-            photos: "Fotos",
-            notebook: "Cuaderno",
-            games: "Centro de juegos",
-            weather: "Clima",
-            tasks: "Tareas",
-            docs: "Munetios Docs",
-            calculator: "Calculadora Munetios",
-            settings: "Configuración",
-          },
+        notebook: {
+          en: "Notebook",
+          es: "Bloc de notas",
+          fr: "Cahier",
+          de: "Notizbuch",
+          it: "Taccuino",
+          pt: "Bloco de notas",
+          ru: "Блокнот",
+          zh: "笔记本",
+          ja: "ノート",
+          ko: "노트",
+          ar: "دفتر الملاحظات",
+          hi: "नोटबुक",
+          tr: "Not Defteri",
+          nl: "Notitieboek",
         },
-        fr: {
-          launcherTitle: "Applications Munetios",
-          loadingApps: "Chargement des applications",
-          addCustomApp: "Ajouter une application personnalisee",
-          closeCustomApp: "Fermer le formulaire",
-          resetLauncher: "Reinitialiser le lanceur",
-          searchPlaceholder: "Rechercher des applications",
-          allFilter: "Toutes",
-          coreFilter: "Principales",
-          createFilter: "Creer",
-          lifeFilter: "Quotidien",
-          moreFilter: "Plus",
-          emptyState: "Aucune application ne correspond.",
-          customTitle: "Ajouter une application personnalisee",
-          customName: "Nom de l'application",
-          customLink: "Lien de l'application",
-          customIcon: "Lien de l'icone",
-          cancelCustomApp: "Annuler",
-          saveCustomApp: "Enregistrer",
-          hideApp: "Masquer l'application",
-          removeCustomApp: "Supprimer l'application personnalisee",
-          showAllApps: "Afficher toutes les applications",
-          liveApps: "applications actives",
-          appCountSingular: "application",
-          appCountPlural: "applications",
-          terms: "Conditions",
-          privacy: "Confidentialite",
-          rights: "Tous droits reserves.",
-          sections: {
-            core: "Applications principales",
-            create: "Creer et travailler",
-            life: "Utilitaires quotidiens",
-            more: "Plus de Munetios",
-          },
-          apps: {},
+        games: {
+          en: "Games Hub",
+          es: "Centro de juegos",
+          fr: "Hub de jeux",
+          de: "Spiele",
+          it: "Hub giochi",
+          pt: "Central de jogos",
+          ru: "Игры",
+          zh: "游戏中心",
+          ja: "ゲームハブ",
+          ko: "게임 허브",
+          ar: "مركز الألعاب",
+          hi: "गेम्स हब",
+          tr: "Oyun Merkezi",
+          nl: "Spelencentrum",
         },
-        de: {
-          launcherTitle: "Munetios Anwendungen",
-          loadingApps: "Anwendungen werden geladen",
-          addCustomApp: "Benutzerdefinierte Anwendung hinzufugen",
-          closeCustomApp: "Formular schliessen",
-          resetLauncher: "Launcher zurucksetzen",
-          searchPlaceholder: "Anwendungen suchen",
-          allFilter: "Alle",
-          coreFilter: "Kern",
-          createFilter: "Erstellen",
-          lifeFilter: "Taglich",
-          moreFilter: "Mehr",
-          emptyState: "Keine Anwendungen passen zur Suche.",
-          customTitle: "Benutzerdefinierte Anwendung hinzufugen",
-          customName: "Anwendungsname",
-          customLink: "Anwendungslink",
-          customIcon: "Icon Link",
-          cancelCustomApp: "Abbrechen",
-          saveCustomApp: "Speichern",
-          hideApp: "Anwendung ausblenden",
-          removeCustomApp: "Benutzerdefinierte Anwendung entfernen",
-          showAllApps: "Alle Anwendungen anzeigen",
-          liveApps: "aktive Anwendungen",
-          appCountSingular: "Anwendung",
-          appCountPlural: "Anwendungen",
-          terms: "Bedingungen",
-          privacy: "Datenschutz",
-          rights: "Alle Rechte vorbehalten.",
-          sections: {
-            core: "Kernanwendungen",
-            create: "Erstellen und Arbeiten",
-            life: "Tagliche Werkzeuge",
-            more: "Mehr Munetios",
-          },
-          apps: {},
+        weather: {
+          en: "Weather",
+          es: "Clima",
+          fr: "Météo",
+          de: "Wetter",
+          it: "Meteo",
+          pt: "Tempo",
+          ru: "Погода",
+          zh: "天气",
+          ja: "天気",
+          ko: "날씨",
+          ar: "الطقس",
+          hi: "मौसम",
+          tr: "Hava Durumu",
+          nl: "Weer",
         },
-        pt: {
-          launcherTitle: "Aplicativos Munetios",
-          loadingApps: "Carregando aplicativos",
-          addCustomApp: "Adicionar aplicativo personalizado",
-          closeCustomApp: "Fechar formulario",
-          resetLauncher: "Redefinir iniciador",
-          searchPlaceholder: "Pesquisar aplicativos",
-          allFilter: "Todos",
-          coreFilter: "Principais",
-          createFilter: "Criar",
-          lifeFilter: "Diarios",
-          moreFilter: "Mais",
-          emptyState: "Nenhum aplicativo corresponde.",
-          customTitle: "Adicionar aplicativo personalizado",
-          customName: "Nome do aplicativo",
-          customLink: "Link do aplicativo",
-          customIcon: "Link do icone",
-          cancelCustomApp: "Cancelar",
-          saveCustomApp: "Salvar",
-          hideApp: "Ocultar aplicativo",
-          removeCustomApp: "Remover aplicativo personalizado",
-          showAllApps: "Mostrar todos os aplicativos",
-          liveApps: "aplicativos ativos",
-          appCountSingular: "aplicativo",
-          appCountPlural: "aplicativos",
-          terms: "Termos",
-          privacy: "Privacidade",
-          rights: "Todos os direitos reservados.",
-          sections: {
-            core: "Aplicativos principais",
-            create: "Criar e trabalhar",
-            life: "Utilitarios diarios",
-            more: "Mais Munetios",
-          },
-          apps: {},
+        tasks: {
+          en: "Tasks",
+          es: "Tareas",
+          fr: "Tâches",
+          de: "Aufgaben",
+          it: "Attività",
+          pt: "Tarefas",
+          ru: "Задачи",
+          zh: "任务",
+          ja: "タスク",
+          ko: "작업",
+          ar: "المهام",
+          hi: "कार्य",
+          tr: "Görevler",
+          nl: "Taken",
+        },
+        calendar: {
+          en: "Calendar",
+          es: "Calendario",
+          fr: "Calendrier",
+          de: "Kalender",
+          it: "Calendario",
+          pt: "Calendário",
+          ru: "Календарь",
+          zh: "日历",
+          ja: "カレンダー",
+          ko: "캘린더",
+          ar: "التقويم",
+          hi: "कैलेंडर",
+          tr: "Takvim",
+          nl: "Agenda",
+        },
+        photos: {
+          en: "Photos",
+          es: "Fotos",
+          fr: "Photos",
+          de: "Fotos",
+          it: "Foto",
+          pt: "Fotos",
+          ru: "Фотографии",
+          zh: "照片",
+          ja: "写真",
+          ko: "사진",
+          ar: "الصور",
+          hi: "फोटो",
+          tr: "Fotoğraflar",
+          nl: "Foto's",
+        },
+        maps: {
+          en: "Maps",
+          es: "Mapas",
+          fr: "Cartes",
+          de: "Karten",
+          it: "Mappe",
+          pt: "Mapas",
+          ru: "Карты",
+          zh: "地图",
+          ja: "地図",
+          ko: "지도",
+          ar: "خرائط",
+          hi: "नक्शे",
+          tr: "Haritalar",
+          nl: "Kaarten",
+        },
+        meals: {
+          en: "Meals",
+          es: "Comidas",
+          fr: "Repas",
+          de: "Mahlzeiten",
+          it: "Pasti",
+          pt: "Refeições",
+          ru: "Питание",
+          zh: "餐食",
+          ja: "食事",
+          ko: "식사",
+          ar: "وجبات",
+          hi: "भोजन",
+          tr: "Yemekler",
+          nl: "Maaltijden",
+        },
+        search: {
+          en: "Search",
+          es: "Buscar",
+          fr: "Rechercher",
+          de: "Suchen",
+          it: "Cerca",
+          pt: "Pesquisar",
+          ru: "Поиск",
+          zh: "搜索",
+          ja: "検索",
+          ko: "검색",
+          ar: "بحث",
+          hi: "खोज",
+          tr: "Ara",
+          nl: "Zoeken",
+        },
+        ai: {
+          en: "Munetios AI",
+          es: "IA Munetios",
+          fr: "IA Munetios",
+          de: "KI Munetios",
+          it: "IA Munetios",
+          pt: "IA Munetios",
+          ru: "ИИ Munetios",
+          zh: "Munetios 人工智能",
+          ja: "Munetios AI",
+          ko: "Munetios AI",
+          ar: "Munetios الذكاء الاصطناعي",
+          hi: "Munetios एआई",
+          tr: "Munetios Yapay Zeka",
+          nl: "Munetios AI",
         },
       };
 
-      const sections = [
-        { id: "core", title: "Core Apps" },
-        { id: "create", title: "Create & Work" },
-        { id: "life", title: "Daily Tools" },
-        { id: "more", title: "More Munetios" },
-      ];
-
-      const apps = [
-        {
-          id: "search",
-          name: "Search",
-          href: "https://www.munetios.com/search/search.html",
-          icon: "https://www.munetios.com/apple-touch-icon-new.png",
-          group: "core",
-          live: true,
-        },
-        {
-          id: "ai",
-          name: "Munetios AI",
-          href: "https://ai.munetios.com",
-          icon: "image copy 6.png",
-          group: "core",
-          live: true,
-        },
-        {
-          id: "write",
-          name: "OmniWrite",
-          href: "https://write.munetios.com/",
-          icon: "https://write.munetios.com/apple-touch-icon.png",
-          group: "core",
-          live: true,
-        },
-        {
-          id: "notes",
-          name: "SupaNotes",
-          href: "https://notes.munetios.com",
-          icon: "https://notes.munetios.com/apple-touch-icon.png",
-          group: "create",
-          live: true,
-        },
-        {
-          id: "calendar",
-          name: "Calendar",
-          href: "https://calendar.munetios.com",
-          icon: "https://calendar.munetios.com/new/apple-touch-icon.png",
-          group: "core",
-          live: true,
-        },
-        {
-          id: "maps",
-          name: "Maps",
-          href: "https://maps.munetios.com",
-          icon: "https://maps.munetios.com/apple-touch-icon-new.png",
-          group: "core",
-          live: true,
-        },
-        {
-          id: "settings",
-          name: "Settings",
-          href: "https://www.munetios.com/manage-data",
-          symbol: "settings",
-          group: "core",
-          live: true,
-        },
-        {
-          id: "meals",
-          name: "Meals",
-          href: "https://calendar.munetios.com/new/meals",
-          icon: "https://calendar.munetios.com/new/meals/apple-touch-icon.png",
-          group: "life",
-          live: true,
-        },
-        {
-          id: "photos",
-          name: "Photos",
-          href: "https://photos.munetios.com",
-          icon: "image copy 17.png",
-          group: "life",
-          live: true,
-        },
-        {
-          id: "notebook",
-          name: "Notebook",
-          href: "https://notebook.munetios.com",
-          icon: "image3.png",
-          group: "more",
-          live: true,
-        },
-        {
-          id: "games",
-          name: "Games Hub",
-          href: "https://games.munetios.com/",
-          icon: "image copy 41.png",
-          group: "more",
-          live: true,
-        },
-        {
-          id: "weather",
-          name: "Weather",
-          href: "https://weather.munetios.com",
-          icon: "https://weather.munetios.com/apple-touch-icon.png",
-          group: "life",
-          live: true,
-        },
-        {
-          id: "tasks",
-          name: "Tasks",
-          href: "https://tasks.munetios.com",
-          icon: "image copy.png",
-          group: "create",
-          live: true,
-        },
-        {
-          id: "docs",
-          name: "Munetios Docs",
-          href: "https://docs.munetios.com/",
-          icon: "image1.png",
-          group: "more",
-          live: true,
-        },
-        {
-          id: "calculator",
-          name: "Munetios Calculator",
-          href: "https://calculator.munetios.com/",
-          icon: "image copy 2.png",
-          group: "life",
-          live: true,
-        },
-      ];
-
-      let appById = new Map();
-      const sectionsRoot = document.getElementById("sections");
-      const searchInput = document.getElementById("searchApps");
-      const emptyState = document.getElementById("emptyState");
-      const launcherStats = document.getElementById("launcherStats");
-      const addCustomAppButton = document.getElementById("addCustomApp");
-      const resetButton = document.getElementById("resetLauncher");
-      const filterButtons = document.querySelectorAll("[data-filter]");
-      const customAppBackdrop = document.getElementById("customAppBackdrop");
-      const customAppForm = document.getElementById("customAppForm");
-      const customAppName = document.getElementById("customAppName");
-      const customAppUrl = document.getElementById("customAppUrl");
-      const customAppIcon = document.getElementById("customAppIcon");
-      const closeCustomAppButton = document.getElementById("closeCustomApp");
-      const cancelCustomAppButton = document.getElementById("cancelCustomApp");
-      const isFramed = window.top !== window.self;
-      let activeFilter = "all";
-      let draggedCard = null;
-
-      if (isFramed) {
-        document.body.classList.add("in-frame");
-      }
-
-      function getStoredJson(key, fallback) {
-        try {
-          return JSON.parse(localStorage.getItem(key)) ?? fallback;
-        } catch {
-          return fallback;
-        }
-      }
+      // Loaded language JSON for current language (if available)
+      let LANG_DATA = null;
 
       function getLanguage() {
-        const storedLanguage = (
-          localStorage.getItem(STORAGE_KEYS.language) || "en"
-        ).toLowerCase();
-        const baseLanguage = storedLanguage.split("-")[0];
-        if (TRANSLATIONS[storedLanguage]) return storedLanguage;
-        return TRANSLATIONS[baseLanguage] ? baseLanguage : "en";
+        let lang = localStorage.getItem("munetiosLanguage");
+        if (!lang || !LANGUAGES[lang]) lang = "en";
+        return lang;
       }
 
-      function t(key) {
-        const language = getLanguage();
-        return TRANSLATIONS[language][key] || TRANSLATIONS.en[key] || key;
-      }
-
-      function translateSection(sectionId) {
-        const language = getLanguage();
-        return (
-          TRANSLATIONS[language].sections?.[sectionId] ||
-          TRANSLATIONS.en.sections[sectionId] ||
-          sectionId
-        );
-      }
-
-      function translateApp(app) {
-        const language = getLanguage();
-        return (
-          TRANSLATIONS[language].apps?.[app.id] ||
-          TRANSLATIONS.en.apps?.[app.id] ||
-          app.name
-        );
-      }
-
-      function getCustomApps() {
-        return getStoredJson(STORAGE_KEYS.customApps, []);
-      }
-
-      function saveCustomApps(customApps) {
-        localStorage.setItem(
-          STORAGE_KEYS.customApps,
-          JSON.stringify(customApps),
-        );
-      }
-
-      function normalizeUrl(url) {
-        const trimmed = url.trim();
-        if (!trimmed) return "";
-        if (/^https?:\/\//i.test(trimmed)) return trimmed;
-        return `https://${trimmed}`;
-      }
-
-      function getAllApps() {
-        const customApps = getCustomApps().map((app) => ({
-          id: app.id,
-          name: app.name,
-          href: app.href,
-          icon: app.icon || "https://www.munetios.com/apple-touch-icon-new.png",
-          group: app.group || "more",
-          live: true,
-          custom: true,
-        }));
-        return [...apps, ...customApps];
-      }
-
-      function syncAppMap() {
-        appById = new Map(getAllApps().map((app) => [app.id, app]));
-      }
-
-      function getHiddenApps() {
-        return getStoredJson(STORAGE_KEYS.hidden, {});
-      }
-
-      function saveHiddenApps(hidden) {
-        localStorage.setItem(STORAGE_KEYS.hidden, JSON.stringify(hidden));
-      }
-
-      function createSection(section) {
-        const wrapper = document.createElement("section");
-        wrapper.className = "section";
-        wrapper.dataset.section = section.id;
-
-        const header = document.createElement("div");
-        header.className = "section-header";
-
-        const title = document.createElement("h2");
-        title.className = "section-title";
-        title.textContent = translateSection(section.id);
-
-        const count = document.createElement("span");
-        count.className = "section-count";
-        count.dataset.countFor = section.id;
-
-        const grid = document.createElement("div");
-        grid.className = "apps-grid liquid-glass";
-        grid.dataset.grid = section.id;
-
-        header.append(title, count);
-        wrapper.append(header, grid);
-        return wrapper;
-      }
-
-      function createCard(app) {
-        const card = document.createElement("article");
-        card.className = "app-card liquid-glass";
-        if (app.custom) card.classList.add("custom-app");
-        card.dataset.appId = app.id;
-        card.dataset.group = app.group;
-        card.dataset.live = String(app.live);
-        card.draggable = true;
-        card.tabIndex = 0;
-        card.setAttribute(
-          "aria-label",
-          app.live ? translateApp(app) : `${translateApp(app)}, coming soon`,
-        );
-
-        const iconFrame = document.createElement("span");
-        iconFrame.className = "icon-frame";
-        iconFrame.setAttribute("aria-hidden", "true");
-
-        let icon;
-        if (app.symbol) {
-          icon = document.createElement("span");
-          icon.className = "material-symbols-rounded";
-          icon.textContent = app.symbol;
-        } else {
-          icon = document.createElement("img");
-          icon.src = app.icon;
-          icon.alt = "";
-          icon.loading = "lazy";
-          icon.decoding = "async";
+      async function loadLanguageFile(lang) {
+        try {
+          const res = await fetch(`/languages/${lang}.json`);
+          if (!res.ok) return (LANG_DATA = null);
+          LANG_DATA = await res.json();
+        } catch (e) {
+          LANG_DATA = null;
         }
+      }
 
-        const name = document.createElement("a");
-        name.className = "app-name";
-        name.href = app.href;
-        name.target = "_top";
-        name.rel = "noopener";
-        name.textContent = translateApp(app);
-
-        iconFrame.append(icon);
-        card.append(iconFrame, name);
-
-        if (!app.live) {
-          const badge = document.createElement("span");
-          badge.className = "soon-badge";
-          badge.textContent = "Soon";
-          card.append(badge);
+      function translate(labelKey) {
+        const lang = getLanguage();
+        // 1) Check explicit LABELS map (app-specific)
+        if (LABELS[labelKey]) {
+          if (LABELS[labelKey][lang]) return LABELS[labelKey][lang];
+          if (LABELS[labelKey]["en"]) return LABELS[labelKey]["en"];
         }
-
-        return card;
+        // 2) Check loaded language JSON for common places
+        if (LANG_DATA) {
+          if (LANG_DATA.apps && LANG_DATA.apps[labelKey])
+            return LANG_DATA.apps[labelKey];
+          if (LANG_DATA.labels && LANG_DATA.labels[labelKey])
+            return LANG_DATA.labels[labelKey];
+          if (LANG_DATA.attributes && LANG_DATA.attributes[labelKey])
+            return LANG_DATA.attributes[labelKey];
+        }
+        // 3) Fallback to the key
+        return labelKey;
       }
 
-      function defaultOrder() {
-        const allApps = getAllApps();
-        return sections.map((section) => ({
-          section: section.id,
-          ids: allApps
-            .filter((app) => app.group === section.id)
-            .sort((a, b) => Number(b.live) - Number(a.live))
-            .map((app) => app.id),
-        }));
-      }
-
-      function loadOrder() {
-        const stored = getStoredJson(STORAGE_KEYS.order, null);
-        if (!Array.isArray(stored)) return defaultOrder();
-
-        const seen = new Set();
-        const normalized = sections.map((section) => {
-          const found = stored.find((item) => item.section === section.id);
-          const ids = Array.isArray(found?.ids)
-            ? found.ids.filter((id) => {
-                if (!appById.has(id) || seen.has(id)) return false;
-                seen.add(id);
-                return true;
-              })
-            : [];
-          return { section: section.id, ids };
+      // Set translated labels (idempotent)
+      function setLabels() {
+        const searchInput = document.getElementById("searchApps");
+        if (searchInput)
+          searchInput.placeholder = translate("searchPlaceholder");
+        const appButtons = document.querySelectorAll("munetios-app-button");
+        appButtons.forEach((button) => {
+          const link = button.querySelector("a");
+          if (!link) return;
+          const href = link.getAttribute("href") || "";
+          if (href.includes("notebook"))
+            link.textContent = translate("notebook");
+          else if (href.includes("games"))
+            link.textContent = translate("games");
+          else if (href.includes("weather"))
+            link.textContent = translate("weather");
+          else if (href.includes("tasks"))
+            link.textContent = translate("tasks");
+          else if (
+            href.includes("calendar.munetios.com") &&
+            !href.includes("calendar.munetios.com/new/meals")
+          )
+            link.textContent = translate("calendar");
+          else if (href.includes("meals"))
+            link.textContent = translate("meals");
+          else if (href.includes("ai")) link.textContent = translate("ai");
+          else if (href.includes("search"))
+            link.textContent = translate("search");
+          else if (href.includes("photos"))
+            link.textContent = translate("photos");
+          else if (href.includes("maps")) link.textContent = translate("maps");
         });
+      }
 
-        getAllApps().forEach((app) => {
-          if (!seen.has(app.id)) {
-            const target = normalized.find(
-              (item) => item.section === app.group,
-            );
-            target.ids.push(app.id);
+      // Load language file for current language then apply labels (non-blocking fallback)
+      loadLanguageFile(getLanguage()).then(() => setLabels());
+      // Apply fallback labels immediately for snappy UI
+      setLabels();
+
+      // --- SEARCH ---
+      const searchInput = document.getElementById("searchApps");
+      const appButtons = document.querySelectorAll("munetios-app-button");
+      searchInput.addEventListener("input", () => {
+        const query = searchInput.value.toLowerCase();
+        appButtons.forEach((button) => {
+          const link = button.querySelector("a");
+          if (!link) return;
+          let matches = false;
+
+          // 1) direct text match of the rendered label
+          const labelText = (link.textContent || "").toLowerCase();
+          if (labelText.includes(query)) matches = true;
+
+          // 2) match href
+          if (!matches && link.href && link.href.toLowerCase().includes(query))
+            matches = true;
+
+          // 3) check fallback LABELS translations across languages
+          if (!matches) {
+            for (const key in LABELS) {
+              const map = LABELS[key];
+              for (const lcode in map) {
+                if (map[lcode] && map[lcode].toLowerCase().includes(query)) {
+                  matches = true;
+                  break;
+                }
+              }
+              if (matches) break;
+            }
+          }
+
+          // 4) check loaded language JSON (labels/apps/attributes)
+          if (!matches && LANG_DATA) {
+            const checkObj = (obj) => {
+              if (!obj) return false;
+              for (const k in obj) {
+                const v = obj[k];
+                if (typeof v === "string" && v.toLowerCase().includes(query))
+                  return true;
+              }
+              return false;
+            };
+            if (
+              checkObj(LANG_DATA.labels) ||
+              checkObj(LANG_DATA.apps) ||
+              checkObj(LANG_DATA.attributes)
+            )
+              matches = true;
+          }
+
+          button.style.display = matches ? "flex" : "none";
+        });
+      });
+      // Make the whole app button clickable
+      appButtons.forEach((button) => {
+        const link = button.querySelector("a");
+        button.style.cursor = "pointer";
+        button.addEventListener("click", (e) => {
+          // Prevent double navigation if the <a> is clicked directly
+          if (e.target.tagName.toLowerCase() !== "a") {
+            window.open(link.href, "_top");
           }
         });
+      });
+      // Enable drag-and-drop reordering and moving between lists
+      const appLists = document.querySelectorAll("munetios-apps-list");
 
-        return normalized;
-      }
-
-      function saveOrder() {
-        const order = sections.map((section) => {
-          const grid = document.querySelector(`[data-grid="${section.id}"]`);
-          return {
-            section: section.id,
-            ids: Array.from(grid.querySelectorAll(".app-card")).map(
-              (card) => card.dataset.appId,
-            ),
-          };
+      appLists.forEach((list) => {
+        list.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          const afterElement = getDragAfterElement(list, e.clientY);
+          const dragging = document.querySelector(".dragging");
+          if (afterElement == null) {
+            list.appendChild(dragging);
+          } else {
+            list.insertBefore(dragging, afterElement);
+          }
         });
-        localStorage.setItem(STORAGE_KEYS.order, JSON.stringify(order));
-      }
+      });
 
-      function render() {
-        syncAppMap();
-        sectionsRoot.innerHTML = "";
-        sections.forEach((section) =>
-          sectionsRoot.append(createSection(section)),
-        );
-        loadOrder().forEach(({ section, ids }) => {
-          const grid = document.querySelector(`[data-grid="${section}"]`);
-          ids.forEach((id) => {
-            const app = appById.get(id);
-            if (app) {
-              const card = createCard(app);
-              card.style.setProperty("--card-index", grid.children.length);
-              grid.append(card);
-            }
-          });
+      appButtons.forEach((button) => {
+        button.setAttribute("draggable", "true");
+        button.addEventListener("dragstart", () => {
+          button.classList.add("dragging");
         });
-        bindCards();
-        bindDropZones();
-        applyLanguage();
-        applyVisibility();
-      }
-
-      function openApp(card) {
-        const app = appById.get(card.dataset.appId);
-        if (!app || !app.live || app.href === "#") return;
-        window.open(app.href, "_top", "noopener");
-      }
-
-      function bindCards() {
-        document.querySelectorAll(".app-card").forEach((card) => {
-          card.addEventListener("click", (event) => {
-            const app = appById.get(card.dataset.appId);
-            if (event.target.closest(".app-name")) {
-              if (!app?.live || app.href === "#") {
-                event.preventDefault();
-              }
-              return;
-            }
-            openApp(card);
-          });
-
-          card.addEventListener("keydown", (event) => {
-            if (event.key === "Enter" || event.key === " ") {
-              event.preventDefault();
-              openApp(card);
-            }
-          });
-
-          card.addEventListener("dragstart", (event) => {
-            draggedCard = card;
-            card.classList.add("dragging");
-            event.dataTransfer.effectAllowed = "move";
-            event.dataTransfer.setData("text/plain", card.dataset.appId);
-          });
-
-          card.addEventListener("dragend", () => {
-            card.classList.remove("dragging");
-            draggedCard = null;
-            saveOrder();
-            applyVisibility();
-          });
+        button.addEventListener("dragend", () => {
+          button.classList.remove("dragging");
         });
-      }
+      });
 
-      function getDragTarget(grid, x, y) {
-        const cards = Array.from(
-          grid.querySelectorAll(".app-card:not(.dragging)"),
-        );
-        return cards.reduce(
-          (closest, card) => {
-            const rect = card.getBoundingClientRect();
-            const offsetY = y - rect.top - rect.height / 2;
-            const offsetX = x - rect.left - rect.width / 2;
-            const offset =
-              Math.abs(offsetY) > Math.abs(offsetX) ? offsetY : offsetX;
+      function getDragAfterElement(container, y) {
+        const draggableElements = [
+          ...container.querySelectorAll("munetios-app-button:not(.dragging)"),
+        ];
+        return draggableElements.reduce(
+          (closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
             if (offset < 0 && offset > closest.offset) {
-              return { offset, element: card };
+              return { offset: offset, element: child };
+            } else {
+              return closest;
             }
-            return closest;
           },
-          { offset: -Infinity, element: null },
+          { offset: -Infinity },
         ).element;
       }
 
-      function bindDropZones() {
-        document.querySelectorAll(".apps-grid").forEach((grid) => {
-          grid.addEventListener("dragover", (event) => {
-            event.preventDefault();
-            if (!draggedCard) return;
-            const target = getDragTarget(grid, event.clientX, event.clientY);
-            if (target) {
-              grid.insertBefore(draggedCard, target);
-            } else {
-              grid.appendChild(draggedCard);
-            }
+      // Save app order to localStorage
+      function saveAppOrder() {
+        const lists = document.querySelectorAll("munetios-apps-list");
+        const order = [];
+        lists.forEach((list, idx) => {
+          const ids = [];
+          list.querySelectorAll("munetios-app-button").forEach((btn) => {
+            ids.push(btn.querySelector("a").href);
           });
-
-          grid.addEventListener("drop", (event) => {
-            event.preventDefault();
-            saveOrder();
-            applyVisibility();
-          });
+          order.push(ids);
         });
+        localStorage.setItem("munetiosAppOrder", JSON.stringify(order));
       }
 
-      function applyVisibility() {
-        const query = searchInput.value.trim().toLowerCase();
-        const hiddenApps = getHiddenApps();
-        let visibleCount = 0;
-        let liveVisibleCount = 0;
-
-        document.querySelectorAll(".app-card").forEach((card) => {
-          const app = appById.get(card.dataset.appId);
-          const translatedName = translateApp(app).toLowerCase();
-          const matchesSearch =
-            !query ||
-            app.name.toLowerCase().includes(query) ||
-            translatedName.includes(query) ||
-            app.href.toLowerCase().includes(query) ||
-            app.group.toLowerCase().includes(query) ||
-            translateSection(app.group).toLowerCase().includes(query);
-          const matchesFilter =
-            activeFilter === "all" || app.group === activeFilter;
-          const visible = matchesSearch && matchesFilter && !hiddenApps[app.id];
-
-          card.classList.toggle("hidden", !visible);
-          if (visible) {
-            visibleCount += 1;
-            if (app.live) liveVisibleCount += 1;
-          }
-        });
-
-        sections.forEach((section) => {
-          const sectionEl = document.querySelector(
-            `[data-section="${section.id}"]`,
-          );
-          const visibleCards = sectionEl.querySelectorAll(
-            ".app-card:not(.hidden)",
-          ).length;
-          const count = sectionEl.querySelector("[data-count-for]");
-          sectionEl.classList.toggle("hidden", visibleCards === 0);
-          count.textContent = `${visibleCards} ${
-            visibleCards === 1 ? t("appCountSingular") : t("appCountPlural")
-          }`;
-        });
-
-        emptyState.classList.toggle("visible", visibleCount === 0);
-        launcherStats.textContent = `${liveVisibleCount} ${t("liveApps")}`;
-      }
-
-      function hideApp(id) {
-        const hiddenApps = getHiddenApps();
-        hiddenApps[id] = true;
-        saveHiddenApps(hiddenApps);
-        applyVisibility();
-      }
-
-      function showAllApps() {
-        saveHiddenApps({});
-        applyVisibility();
-      }
-
-      function openCustomAppModal() {
-        customAppForm.reset();
-        customAppBackdrop.classList.add("visible");
-        customAppBackdrop.setAttribute("aria-hidden", "false");
-        customAppName.focus();
-      }
-
-      function closeCustomAppModal() {
-        customAppBackdrop.classList.remove("visible");
-        customAppBackdrop.setAttribute("aria-hidden", "true");
-      }
-
-      function addCustomApp(event) {
-        event.preventDefault();
-        const name = customAppName.value.trim();
-        const href = normalizeUrl(customAppUrl.value);
-        const icon = normalizeUrl(customAppIcon.value);
-        if (!name || !href) return;
-
-        const customApps = getCustomApps();
-        const id = `custom-${Date.now().toString(36)}`;
-        customApps.push({
-          id,
-          name,
-          href,
-          icon,
-          group: "more",
-        });
-        saveCustomApps(customApps);
-        closeCustomAppModal();
-        render();
-      }
-
-      function removeCustomApp(id) {
-        saveCustomApps(getCustomApps().filter((app) => app.id !== id));
-        const hiddenApps = getHiddenApps();
-        delete hiddenApps[id];
-        saveHiddenApps(hiddenApps);
-        render();
-      }
-
-      function resetLauncher() {
-        localStorage.removeItem(STORAGE_KEYS.order);
-        localStorage.removeItem(STORAGE_KEYS.hidden);
-        localStorage.removeItem(STORAGE_KEYS.customApps);
-        render();
-      }
-
-      function applyLanguage() {
-        document.documentElement.lang = getLanguage();
-        document.querySelector(".brand-title").textContent = t("launcherTitle");
-        launcherStats.textContent = t("loadingApps");
-        addCustomAppButton.title = t("addCustomApp");
-        addCustomAppButton.setAttribute("aria-label", t("addCustomApp"));
-        resetButton.title = t("resetLauncher");
-        resetButton.setAttribute("aria-label", t("resetLauncher"));
-        searchInput.placeholder = t("searchPlaceholder");
-        emptyState.textContent = t("emptyState");
-        document.getElementById("customAppTitle").textContent =
-          t("customTitle");
-        document.getElementById("customNameLabel").textContent =
-          t("customName");
-        document.getElementById("customUrlLabel").textContent = t("customLink");
-        document.getElementById("customIconLabel").textContent =
-          t("customIcon");
-        document.getElementById("cancelCustomApp").textContent =
-          t("cancelCustomApp");
-        document.getElementById("saveCustomApp").textContent =
-          t("saveCustomApp");
-        document.getElementById("termsLink").textContent = t("terms");
-        document.getElementById("privacyLink").textContent = t("privacy");
-        closeCustomAppButton.title = t("closeCustomApp");
-        closeCustomAppButton.setAttribute("aria-label", t("closeCustomApp"));
-
-        const filterLabels = {
-          all: t("allFilter"),
-          core: t("coreFilter"),
-          create: t("createFilter"),
-          life: t("lifeFilter"),
-          more: t("moreFilter"),
-        };
-        filterButtons.forEach((button) => {
-          button.textContent = filterLabels[button.dataset.filter];
-        });
-
-        sections.forEach((section) => {
-          const sectionTitle = document.querySelector(
-            `[data-section="${section.id}"] .section-title`,
-          );
-          if (sectionTitle)
-            sectionTitle.textContent = translateSection(section.id);
-        });
-
-        document.querySelectorAll(".app-card").forEach((card) => {
-          const app = appById.get(card.dataset.appId);
-          const name = card.querySelector(".app-name");
-          if (app && name) {
-            name.textContent = translateApp(app);
-            card.setAttribute("aria-label", translateApp(app));
-          }
-        });
-      }
-
-      function closeContextMenus() {
-        document
-          .querySelectorAll(".context-menu")
-          .forEach((menu) => menu.remove());
-      }
-
-      function showContextMenu(items, x, y) {
-        closeContextMenus();
-        const menu = document.createElement("div");
-        menu.className = "context-menu liquid-glass";
-        menu.style.left = `${Math.min(x, window.innerWidth - 206)}px`;
-        menu.style.top = `${Math.min(y, window.innerHeight - 150)}px`;
-
-        items.forEach((item) => {
-          const button = document.createElement("button");
-          button.type = "button";
-          button.textContent = item.label;
-          button.addEventListener("click", () => {
-            item.action();
-            closeContextMenus();
-          });
-          menu.append(button);
-        });
-
-        document.body.append(menu);
-        requestAnimationFrame(() => {
-          document.addEventListener("mousedown", closeContextMenus, {
-            once: true,
-          });
-        });
-      }
-
-      document.addEventListener("click", (event) => {
-        const link = event.target.closest("a");
-        if (!link) return;
-        link.target = "_top";
-      });
-
-      document.addEventListener("contextmenu", (event) => {
-        const card = event.target.closest(".app-card");
-        event.preventDefault();
-        if (card) {
-          const app = appById.get(card.dataset.appId);
-          const items = [
-            { label: t("hideApp"), action: () => hideApp(app.id) },
-            { label: t("showAllApps"), action: showAllApps },
-          ];
-          if (app.custom) {
-            items.splice(1, 0, {
-              label: t("removeCustomApp"),
-              action: () => removeCustomApp(app.id),
-            });
-          }
-          items.push({ label: t("resetLauncher"), action: resetLauncher });
-          showContextMenu(items, event.clientX, event.clientY);
-          return;
-        }
-
-        showContextMenu(
-          [
-            { label: t("addCustomApp"), action: openCustomAppModal },
-            { label: t("showAllApps"), action: showAllApps },
-            { label: t("resetLauncher"), action: resetLauncher },
-          ],
-          event.clientX,
-          event.clientY,
+      // Load app order from localStorage
+      function loadAppOrder() {
+        const order = JSON.parse(
+          localStorage.getItem("munetiosAppOrder") || "null",
         );
-      });
-
-      searchInput.addEventListener("input", applyVisibility);
-
-      addCustomAppButton.addEventListener("click", openCustomAppModal);
-
-      resetButton.addEventListener("click", resetLauncher);
-      customAppForm.addEventListener("submit", addCustomApp);
-      closeCustomAppButton.addEventListener("click", closeCustomAppModal);
-      cancelCustomAppButton.addEventListener("click", closeCustomAppModal);
-      customAppBackdrop.addEventListener("click", (event) => {
-        if (event.target === customAppBackdrop) closeCustomAppModal();
-      });
-
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") closeCustomAppModal();
-      });
-
-      window.addEventListener("storage", (event) => {
-        if (event.key === STORAGE_KEYS.language) {
-          applyLanguage();
-          applyVisibility();
-        }
-      });
-
-      filterButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          activeFilter = button.dataset.filter;
-          filterButtons.forEach((filter) => {
-            filter.setAttribute("aria-pressed", String(filter === button));
+        if (!order) return;
+        const lists = document.querySelectorAll("munetios-apps-list");
+        order.forEach((ids, idx) => {
+          const list = lists[idx];
+          if (!list) return;
+          ids.forEach((href) => {
+            const btn = Array.from(
+              document.querySelectorAll("munetios-app-button"),
+            ).find((b) => b.querySelector("a").href === href);
+            if (btn) list.appendChild(btn);
           });
-          applyVisibility();
         });
+      }
+
+      // Save order after drag end
+      appButtons.forEach((button) => {
+        button.addEventListener("dragend", saveAppOrder);
       });
 
-      render();
+      // Load order on page load
+      window.addEventListener("DOMContentLoaded", loadAppOrder);
     </script>
   </body>
 </html>
