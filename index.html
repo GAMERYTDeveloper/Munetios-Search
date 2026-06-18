@@ -7000,13 +7000,42 @@ if (year === 2026 && month === 5 && day === 14 && logo) {
       "https://www.munetios.com/search/search.html?q=Flag%20Day#/all?q=Flag%20Day";
   };
 }
-     // FIFA World Cup 2026: June 13-20, 2026 (excluding June 14)
+                // Juneteenth June 19, 2026
+if (year === 2026 && month === 5 && day === 19 && logo) {
+  logo.src = "juneteenth.png";
+  logo.style.cursor = "pointer";
+  logo.onclick = function () {
+    window.location.href =
+      "https://www.munetios.com/search?q=Juneteenth";
+  };
+}
+                          // Juneteenth June 19, 2026
+if (year === 2026 && month === 5 && day === 19 && logo) {
+  logo.src = "fathers.png";
+  logo.style.cursor = "pointer";
+  logo.onclick = function () {
+    window.location.href =
+      "https://www.munetios.com/search?q=Father%27s%20Day";
+  };
+}
+// FIFA World Cup 2026: June 13 - July 19, 2026
 if (
   year === 2026 &&
-  month === 5 &&
-  day >= 13 &&
-  day <= 20 &&
-  day !== 14 &&
+  (
+    (
+      month === 5 && // June
+      day >= 13 &&
+      day <= 30 &&
+      day !== 14 &&
+      day !== 19 &&
+      day !== 21
+    ) ||
+    (
+      month === 6 && // July
+      day >= 1 &&
+      day <= 19
+    )
+  ) &&
   logo
 ) {
   logo.src = "worldcup.png";
