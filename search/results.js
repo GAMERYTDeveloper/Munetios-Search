@@ -8554,4 +8554,12 @@ window.localResults = [
     favicon: "",
     link: "https://datauri.ai/",
   },
+    {
+    title: "Runable",
+    description:
+      "Runable is a AI that can do agents and generate anything.",
+    url: "https://runable.com/",
+    favicon: "",
+    link: "https://runable.com",
+  },
 ];
