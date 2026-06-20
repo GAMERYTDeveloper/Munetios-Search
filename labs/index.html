@@ -290,6 +290,11 @@
               <p>Manage your secure, encrypted notes.</p>
               <button class="btn" id="secureNotesBtn">Try it</button>
             </div>
+            <div class="box-labs liquid-glass">
+              <h2>🔐 Experimental Notes</h2>
+              <p>E2E Encrypted Productivity App with IndexedDB</p>
+              <button class="btn" id="experimentalNotesBtn">Try it</button>
+            </div>
           </div>
         </div>
       </div>
@@ -326,6 +331,11 @@
           window.location.href = "https://www.munetios.com/search/search.html";
         });
 
+      document
+        .getElementById("experimentalNotesBtn")
+        .addEventListener("click", function () {
+          window.location.href = "/labs/experimental-notes.html";
+        });
       document
         .getElementById("munetiosHome")
         .addEventListener("click", function () {
