@@ -4867,6 +4867,12 @@
               <a class="footer-link" href="https://calendar.munetios.com"
                 >Calendar</a
               >
+              <a
+                class="footer-link"
+                href="https://calendar.munetios.com/new/meals"
+                data-translate="meals"
+                >Meals</a
+              >
               <a class="footer-link" href="https://notes.munetios.com"
                 >SupaNotes</a
               >
@@ -4876,9 +4882,6 @@
               <a class="footer-link" href="https://tasks.munetios.com">Tasks</a>
               <a class="footer-link" href="https://photos.munetios.com"
                 >Photos</a
-              >
-              <a class="footer-link" href="https://notebook.munetios.com"
-                >Notebook</a
               >
               <a class="footer-link" href="https://docs.munetios.com">Docs</a>
               <a class="footer-link" href="https://games.munetios.com">Games</a>
@@ -6087,6 +6090,13 @@
             <icon>calendar_month</icon>
             <span data-translate="calendar">Calendar</span>
           </a>
+          <a
+            href="https://calendar.munetios.com/new/meals"
+            class="sidebar-item"
+          >
+            <icon>restaurant</icon>
+            <span data-translate="meals">Meals</span>
+          </a>
           <a href="https://games.munetios.com" class="sidebar-item">
             <icon>games</icon>
             <span data-translate="games">Games</span>
@@ -6133,7 +6143,7 @@
           if (!window.Tone) {
             var script = document.createElement("script");
             script.src =
-              "https://cdn.jsdelivr.net/npm/tone@14.8.39/build/Tone.min.js";
+              "https://write.munetios.com/tone.js";
             document.head.appendChild(script);
           }
         })();
@@ -8132,6 +8142,7 @@ if (
               blog: "Blog",
               omniWrite: "OmniWrite",
               calendar: "Calendar",
+              meals: "Meals",
               games: "Games",
               maps: "Maps",
               photos: "Photos",
@@ -21684,7 +21695,7 @@ if (
             "whatsNew",
             "allProducts",
             "calculator",
-            "notebook",
+            "meals",
             "bookmark",
             "contentFrom",
             "poweredBy",
@@ -21992,10 +22003,10 @@ if (
               "What's New": "whatsNew",
               Doodles: "doodles",
               Calendar: "calendar",
+              Meals: "meals",
               Calculator: "calculator",
               Tasks: "tasks",
               Photos: "photos",
-              Notebook: "notebook",
               Docs: "docs",
               Games: "games",
               Weather: "weather",
@@ -22745,12 +22756,13 @@ if (
               "munetios.com/search": t.navSearch || translations.en.navSearch,
               "write.munetios.com": t.omniWrite || translations.en.omniWrite,
               "maps.munetios.com": t.maps || translations.en.maps,
+              "calendar.munetios.com/new/meals":
+                t.meals || translations.en.meals || "Meals",
               "calendar.munetios.com": t.calendar || translations.en.calendar,
               "notes.munetios.com": t.notes || translations.en.notes,
               "calculator.munetios.com": t.calculator || translations.en.calculator || "Calculator",
               "tasks.munetios.com": t.tasks || translations.en.tasks,
               "photos.munetios.com": t.photos || translations.en.photos,
-              "notebook.munetios.com": t.notebook || translations.en.notebook || "Notebook",
               "docs.munetios.com": t.docs || translations.en.docs,
               "games.munetios.com": t.games || translations.en.games,
               "weather.munetios.com": t.weather || translations.en.weather,
@@ -29624,4 +29636,3 @@ if (
     </div>
   </body>
 </html>
-
