@@ -1,0 +1,4271 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#241047" />
+    <title>Munetios Workflow BETA</title>
+    <link
+      rel="stylesheet"
+      href="https://api.munetios.com/beautiful-css/beautiful.css"
+    />
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #12091f;
+        --bg-deep: #090511;
+        --panel: rgba(39, 18, 73, 0.6);
+        --panel-strong: rgba(47, 22, 89, 0.78);
+        --panel-soft: rgba(255, 255, 255, 0.07);
+        --line: rgba(255, 255, 255, 0.13);
+        --line-strong: rgba(255, 255, 255, 0.24);
+        --text: #fbf8ff;
+        --muted: rgba(251, 248, 255, 0.7);
+        --faint: rgba(251, 248, 255, 0.5);
+        --primary: #a879ff;
+        --primary-strong: #7c3dff;
+        --primary-soft: rgba(168, 121, 255, 0.18);
+        --accent: #f4c2ff;
+        --green: #56e39f;
+        --yellow: #ffd166;
+        --red: #ff6b8a;
+        --blue: #83c5ff;
+        --radius: 8px;
+        --shadow: 0 22px 80px rgba(0, 0, 0, 0.38);
+        --font:
+          "Google Sans Flex", "Google Sans", "Segoe UI", Arial, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        min-height: 100%;
+        background: var(--bg-deep);
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        font-family: var(--font);
+        color: var(--text);
+        background:
+          radial-gradient(
+            circle at 18% 12%,
+            rgba(124, 61, 255, 0.32),
+            transparent 34rem
+          ),
+          radial-gradient(
+            circle at 82% 0%,
+            rgba(244, 194, 255, 0.2),
+            transparent 28rem
+          ),
+          linear-gradient(145deg, #150925 0%, #231041 47%, #0c0714 100%);
+        overflow-x: hidden;
+      }
+
+      button,
+      input,
+      textarea,
+      select {
+        font: inherit;
+      }
+
+      button {
+        border: 0;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .app-shell {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: transparent;
+        padding: 12px;
+      }
+
+      .liquid-glass {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.13),
+          rgba(255, 255, 255, 0.055)
+        );
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(3px) saturate(135%);
+        -webkit-backdrop-filter: blur(3px) saturate(135%);
+      }
+
+      .topbar-surface {
+        min-height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border-radius: 22px;
+        padding: 10px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        min-width: 0;
+        gap: 10px;
+      }
+
+      .brand-logo {
+        width: 42px;
+        height: 42px;
+        flex: 0 0 auto;
+        object-fit: contain;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid var(--line);
+        padding: 4px;
+      }
+
+      .brand-copy {
+        display: grid;
+        gap: 1px;
+        min-width: 0;
+      }
+
+      .brand-title {
+        margin: 0;
+        font-size: clamp(1rem, 4vw, 1.22rem);
+        line-height: 1.1;
+        letter-spacing: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .brand-subtitle {
+        color: var(--muted);
+        font-size: 0.78rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .topbar-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+
+      .icon-button,
+      .primary-button,
+      .secondary-button,
+      .danger-button,
+      .tab-button,
+      .chip-button {
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border-radius: var(--radius);
+        color: var(--text);
+        cursor: pointer;
+        transition:
+          transform 160ms ease,
+          border-color 160ms ease,
+          background 160ms ease,
+          opacity 160ms ease;
+      }
+
+      .icon-button {
+        width: 42px;
+        padding: 0;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid var(--line);
+      }
+
+      .icon-button:hover,
+      .primary-button:hover,
+      .secondary-button:hover,
+      .danger-button:hover,
+      .tab-button:hover,
+      .chip-button:hover {
+        transform: translateY(-1px);
+        border-color: var(--line-strong);
+      }
+
+      .icon-button:disabled,
+      .primary-button:disabled,
+      .secondary-button:disabled,
+      .danger-button:disabled,
+      .tab-button:disabled,
+      .chip-button:disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
+        transform: none;
+      }
+
+      .primary-button {
+        padding: 0 14px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-strong)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        font-weight: 700;
+      }
+
+      .secondary-button {
+        padding: 0 14px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid var(--line);
+      }
+
+      .danger-button {
+        padding: 0 14px;
+        background: rgba(255, 107, 138, 0.14);
+        border: 1px solid rgba(255, 107, 138, 0.34);
+      }
+
+      .chip-button {
+        min-height: 34px;
+        padding: 0 11px;
+        background: rgba(255, 255, 255, 0.075);
+        border: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .chip-button.active {
+        color: var(--text);
+        background: var(--primary-soft);
+        border-color: rgba(168, 121, 255, 0.48);
+      }
+
+      .app-main {
+        width: min(1520px, 100%);
+        margin: 0 auto;
+        padding: 0 12px 28px;
+        display: grid;
+        gap: 16px;
+        flex: 1;
+      }
+
+      .workspace-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        min-height: calc(100vh - 112px);
+      }
+
+      .sidebar,
+      .panel,
+      .tool-panel {
+        border-radius: 18px;
+      }
+
+      .sidebar {
+        display: grid;
+        gap: 16px;
+        align-content: start;
+        padding: 16px;
+      }
+
+      .nav-tabs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .tab-button {
+        min-height: 44px;
+        padding: 0 10px;
+        background: rgba(255, 255, 255, 0.055);
+        border: 1px solid transparent;
+        color: var(--muted);
+        justify-content: flex-start;
+      }
+
+      .tab-button.active {
+        color: var(--text);
+        background: var(--primary-soft);
+        border-color: rgba(168, 121, 255, 0.48);
+      }
+
+      .section-title {
+        margin: 0;
+        font-size: 0.86rem;
+        color: var(--muted);
+        letter-spacing: 0;
+        font-weight: 700;
+      }
+
+      .workflow-list {
+        display: grid;
+        gap: 8px;
+        max-height: 260px;
+        overflow: auto;
+        padding-right: 2px;
+      }
+
+      .workflow-item {
+        width: 100%;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 10px;
+        text-align: left;
+        padding: 11px;
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        border: 1px solid transparent;
+        cursor: pointer;
+      }
+
+      .workflow-item.active {
+        background: rgba(168, 121, 255, 0.17);
+        border-color: rgba(168, 121, 255, 0.5);
+      }
+
+      .workflow-name {
+        font-weight: 700;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .workflow-meta {
+        color: var(--faint);
+        font-size: 0.78rem;
+      }
+
+      .status-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: var(--primary);
+      }
+
+      .status-dot.planning {
+        background: var(--blue);
+      }
+
+      .status-dot.active {
+        background: var(--green);
+      }
+
+      .status-dot.paused {
+        background: var(--yellow);
+      }
+
+      .status-dot.archived {
+        background: var(--faint);
+      }
+
+      .compact-stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .stat-tile {
+        display: grid;
+        gap: 3px;
+        padding: 10px;
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--line);
+      }
+
+      .stat-value {
+        font-size: 1.15rem;
+        font-weight: 800;
+      }
+
+      .stat-label {
+        color: var(--faint);
+        font-size: 0.73rem;
+        overflow-wrap: anywhere;
+      }
+
+      .main-panel {
+        min-width: 0;
+        display: grid;
+        gap: 16px;
+        align-content: start;
+      }
+
+      .panel {
+        padding: 16px;
+      }
+
+      .view-header {
+        display: grid;
+        gap: 12px;
+        align-items: start;
+      }
+
+      .view-heading {
+        display: grid;
+        gap: 6px;
+      }
+
+      .view-title {
+        margin: 0;
+        font-size: clamp(1.35rem, 6vw, 2.35rem);
+        letter-spacing: 0;
+        line-height: 1.04;
+      }
+
+      .view-subtitle {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+        max-width: 74ch;
+      }
+
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .toolbar.end {
+        justify-content: flex-end;
+      }
+
+      .search-row {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .field {
+        display: grid;
+        gap: 8px;
+      }
+
+      .field.inline {
+        grid-template-columns: 1fr;
+        align-items: center;
+      }
+
+      .field label,
+      .field-label {
+        color: var(--muted);
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      .input,
+      .textarea,
+      .select {
+        width: 100%;
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        outline: 0;
+        transition:
+          border-color 160ms ease,
+          background 160ms ease,
+          box-shadow 160ms ease;
+      }
+
+      .input,
+      .select {
+        min-height: 44px;
+        padding: 0 12px;
+        display: flex;
+        align-items: center;
+        line-height: 44px;
+      }
+
+      .select {
+        padding-right: 38px;
+        background-image:
+          linear-gradient(
+            45deg,
+            transparent 50%,
+            rgba(251, 248, 255, 0.86) 50%
+          ),
+          linear-gradient(
+            135deg,
+            rgba(251, 248, 255, 0.86) 50%,
+            transparent 50%
+          );
+        background-position:
+          calc(100% - 20px) 19px,
+          calc(100% - 14px) 19px;
+        background-size:
+          6px 6px,
+          6px 6px;
+        background-repeat: no-repeat;
+        text-overflow: ellipsis;
+      }
+
+      .textarea {
+        min-height: 112px;
+        padding: 12px;
+        resize: vertical;
+      }
+
+      .input:focus,
+      .textarea:focus,
+      .select:focus {
+        border-color: rgba(168, 121, 255, 0.78);
+        box-shadow: 0 0 0 3px rgba(168, 121, 255, 0.17);
+        background: rgba(255, 255, 255, 0.11);
+      }
+
+      .empty-state {
+        min-height: 260px;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding: 26px 18px;
+        border-radius: 18px;
+        border: 1px dashed rgba(255, 255, 255, 0.22);
+        background: rgba(255, 255, 255, 0.045);
+      }
+
+      .empty-state-content {
+        display: grid;
+        gap: 14px;
+        justify-items: center;
+        max-width: 560px;
+      }
+
+      .empty-icon {
+        width: 64px;
+        height: 64px;
+        display: grid;
+        place-items: center;
+        border-radius: 18px;
+        color: var(--accent);
+        background: var(--primary-soft);
+        border: 1px solid rgba(168, 121, 255, 0.42);
+      }
+
+      .empty-state h2,
+      .empty-state h3 {
+        margin: 0;
+        font-size: clamp(1.25rem, 5vw, 1.8rem);
+      }
+
+      .empty-state p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .mindmap-shell {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .mindmap-stage {
+        position: relative;
+        min-height: 520px;
+        overflow: hidden;
+        border-radius: 18px;
+        background:
+          linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+          linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.045) 1px,
+            transparent 1px
+          ),
+          rgba(255, 255, 255, 0.04);
+        background-size: 34px 34px;
+        border: 1px solid var(--line);
+        touch-action: none;
+      }
+
+      .mindmap-connections {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      .mindmap-viewport {
+        position: absolute;
+        inset: 0;
+        transform-origin: 0 0;
+      }
+
+      .mind-node {
+        position: absolute;
+        width: 220px;
+        min-height: 116px;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        gap: 8px;
+        padding: 12px;
+        border-radius: 14px;
+        background: rgba(26, 12, 48, 0.82);
+        border: 1px solid var(--line-strong);
+        box-shadow: 0 18px 54px rgba(0, 0, 0, 0.28);
+        cursor: grab;
+        user-select: none;
+      }
+
+      .mind-node.selected {
+        border-color: rgba(244, 194, 255, 0.82);
+        box-shadow:
+          0 18px 54px rgba(0, 0, 0, 0.28),
+          0 0 0 3px rgba(168, 121, 255, 0.22);
+      }
+
+      .mind-node.dragging {
+        cursor: grabbing;
+      }
+
+      .mind-node-title {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+      }
+
+      .mind-node-notes {
+        color: var(--muted);
+        font-size: 0.84rem;
+        line-height: 1.35;
+        overflow-wrap: anywhere;
+      }
+
+      .node-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .node-pill {
+        min-width: 0;
+        min-height: 24px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 0 8px;
+        color: var(--text);
+        border-radius: 999px;
+        font-size: 0.72rem;
+        background: rgba(255, 255, 255, 0.09);
+        border: 1px solid var(--line);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .mindmap-side {
+        display: grid;
+        gap: 12px;
+      }
+
+      .node-list,
+      .task-list,
+      .activity-list {
+        display: grid;
+        gap: 8px;
+      }
+
+      .node-row,
+      .task-row,
+      .activity-row {
+        display: grid;
+        gap: 8px;
+        padding: 11px;
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--line);
+      }
+
+      .node-row {
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+      }
+
+      .node-row-main,
+      .task-main {
+        display: grid;
+        gap: 4px;
+        min-width: 0;
+      }
+
+      .row-title {
+        font-weight: 800;
+        overflow-wrap: anywhere;
+      }
+
+      .row-meta {
+        color: var(--faint);
+        font-size: 0.78rem;
+        overflow-wrap: anywhere;
+      }
+
+      .task-board {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .task-column {
+        min-height: 220px;
+        display: grid;
+        align-content: start;
+        gap: 10px;
+        padding: 12px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.045);
+        border: 1px solid var(--line);
+      }
+
+      .task-column-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .task-column-title {
+        margin: 0;
+        font-size: 0.95rem;
+      }
+
+      .count-badge {
+        min-width: 28px;
+        height: 28px;
+        display: inline-grid;
+        place-items: center;
+        border-radius: 999px;
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.09);
+        border: 1px solid var(--line);
+        font-size: 0.82rem;
+        font-weight: 800;
+      }
+
+      .task-card {
+        display: grid;
+        gap: 10px;
+        padding: 12px;
+        border-radius: 12px;
+        background: rgba(21, 9, 39, 0.8);
+        border: 1px solid var(--line);
+      }
+
+      .task-card.done {
+        opacity: 0.72;
+      }
+
+      .task-card-header {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .task-title {
+        margin: 0;
+        font-size: 0.98rem;
+        line-height: 1.3;
+        overflow-wrap: anywhere;
+      }
+
+      .task-desc {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.86rem;
+        line-height: 1.42;
+        overflow-wrap: anywhere;
+      }
+
+      .task-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .tag {
+        min-height: 24px;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 8px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.72rem;
+      }
+
+      .priority-high {
+        color: #ffd6df;
+        border-color: rgba(255, 107, 138, 0.36);
+        background: rgba(255, 107, 138, 0.13);
+      }
+
+      .priority-medium {
+        color: #fff0bd;
+        border-color: rgba(255, 209, 102, 0.36);
+        background: rgba(255, 209, 102, 0.12);
+      }
+
+      .priority-low {
+        color: #c7f7dd;
+        border-color: rgba(86, 227, 159, 0.34);
+        background: rgba(86, 227, 159, 0.12);
+      }
+
+      .task-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .details-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .metric-card {
+        padding: 14px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.055);
+        border: 1px solid var(--line);
+      }
+
+      .metric-card strong {
+        display: block;
+        font-size: clamp(1.45rem, 8vw, 2.25rem);
+        line-height: 1;
+      }
+
+      .metric-card span {
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      .progress-shell {
+        height: 10px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.09);
+        border: 1px solid var(--line);
+      }
+
+      .progress-bar {
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--primary), var(--green));
+      }
+
+      .settings-grid,
+      .form-grid {
+        display: grid;
+        gap: 12px;
+      }
+
+      .form-grid.two,
+      .form-grid.three {
+        grid-template-columns: 1fr;
+      }
+
+      .switch-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px;
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.055);
+        border: 1px solid var(--line);
+      }
+
+      .switch-copy {
+        display: grid;
+        gap: 3px;
+      }
+
+      .switch-copy strong {
+        font-size: 0.95rem;
+      }
+
+      .switch-copy span {
+        color: var(--muted);
+        font-size: 0.82rem;
+        line-height: 1.35;
+      }
+
+      .toggle {
+        position: relative;
+        width: 50px;
+        height: 30px;
+        flex: 0 0 auto;
+      }
+
+      .toggle input {
+        position: absolute;
+        opacity: 0;
+        inset: 0;
+      }
+
+      .toggle span {
+        position: absolute;
+        inset: 0;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.13);
+        border: 1px solid var(--line);
+        cursor: pointer;
+      }
+
+      .toggle span::after {
+        content: "";
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        left: 3px;
+        top: 3px;
+        border-radius: 50%;
+        background: #fff;
+        transition: transform 180ms ease;
+      }
+
+      .toggle input:checked + span {
+        background: var(--primary-strong);
+      }
+
+      .toggle input:checked + span::after {
+        transform: translateX(20px);
+      }
+
+      .modal-region {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        pointer-events: none;
+      }
+
+      .modal-layer {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        padding: 18px;
+        pointer-events: auto;
+      }
+
+      .modal-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(6, 3, 12, 0.46);
+      }
+
+      .modal-layer.opening .modal-backdrop {
+        animation: modalBackdropIn 180ms ease-out both;
+      }
+
+      .modal {
+        position: relative;
+        width: min(620px, 100%);
+        max-height: min(84vh, 760px);
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+        overflow: hidden;
+        border-radius: 20px;
+        color: var(--text);
+      }
+
+      .modal-layer.opening .modal {
+        animation: modalPanelIn 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+        transform-origin: center center;
+      }
+
+      .modal-header,
+      .modal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px;
+      }
+
+      .modal-title {
+        margin: 0;
+        font-size: 1.12rem;
+        line-height: 1.2;
+      }
+
+      .modal-body {
+        min-height: 0;
+        overflow: auto;
+        padding: 0 14px 14px;
+      }
+
+      .modal-footer {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        border-top: 1px solid var(--line);
+      }
+
+      .toast-region {
+        position: fixed;
+        right: 12px;
+        bottom: 12px;
+        z-index: 300;
+        display: grid;
+        gap: 8px;
+        width: min(380px, calc(100vw - 24px));
+        pointer-events: none;
+      }
+
+      .toast {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 10px;
+        align-items: start;
+        padding: 12px;
+        border-radius: 14px;
+        pointer-events: auto;
+        animation: toastIn 180ms ease-out;
+      }
+
+      .toast strong {
+        display: block;
+        font-size: 0.92rem;
+      }
+
+      .toast span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.82rem;
+        line-height: 1.35;
+      }
+
+      .toast.success {
+        border-color: rgba(86, 227, 159, 0.34);
+      }
+
+      .toast.warning {
+        border-color: rgba(255, 209, 102, 0.38);
+      }
+
+      .toast.error {
+        border-color: rgba(255, 107, 138, 0.42);
+      }
+
+      .toast.info {
+        border-color: rgba(168, 121, 255, 0.46);
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      @keyframes toastIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes modalBackdropIn {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes modalPanelIn {
+        from {
+          opacity: 0;
+          transform: translateY(14px) scale(0.975);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .modal-layer.opening .modal,
+        .modal-layer.opening .modal-backdrop,
+        .toast {
+          animation: none;
+        }
+      }
+
+      @media (min-width: 680px) {
+        .topbar {
+          padding: 14px 18px;
+        }
+
+        .topbar-surface {
+          padding: 11px 12px;
+        }
+
+        .app-main {
+          padding: 0 18px 28px;
+        }
+
+        .nav-tabs {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .view-header {
+          grid-template-columns: minmax(0, 1fr) auto;
+          align-items: center;
+        }
+
+        .search-row {
+          grid-template-columns: minmax(220px, 1fr) 180px 180px;
+          align-items: end;
+        }
+
+        .form-grid.two {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .form-grid.three {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .details-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (min-width: 980px) {
+        .workspace-grid {
+          grid-template-columns: 300px minmax(0, 1fr);
+          align-items: start;
+        }
+
+        .sidebar {
+          position: sticky;
+          top: 100px;
+          max-height: calc(100vh - 118px);
+          overflow: auto;
+        }
+
+        .nav-tabs {
+          grid-template-columns: 1fr;
+        }
+
+        .mindmap-shell {
+          grid-template-columns: minmax(0, 1fr) 320px;
+          align-items: start;
+        }
+
+        .task-board {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (min-width: 1180px) {
+        .topbar-surface {
+          border-radius: 26px;
+        }
+
+        .panel,
+        .sidebar {
+          padding: 16px;
+        }
+
+        .mindmap-stage {
+          min-height: 650px;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .brand-subtitle {
+          display: none;
+        }
+
+        .topbar-actions .secondary-button span,
+        .topbar-actions .primary-button span,
+        .toolbar .primary-button span,
+        .toolbar .secondary-button span,
+        .toolbar .danger-button span {
+          display: none;
+        }
+
+        .topbar-actions {
+          gap: 6px;
+        }
+
+        .primary-button,
+        .secondary-button,
+        .danger-button {
+          min-width: 42px;
+          padding: 0 10px;
+        }
+
+        .metric-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .modal-layer {
+          padding: 10px;
+          place-items: end center;
+        }
+
+        .modal {
+          max-height: 88vh;
+          border-radius: 18px 18px 0 0;
+        }
+      }
+      /* New customizable native select support */
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="topbar-surface liquid-glass">
+          <div class="brand">
+            <img class="brand-logo" src="logo.png" alt="Munetios" />
+            <div class="brand-copy">
+              <h1 class="brand-title" data-i18n="appName">Munetios Workflow</h1>
+              <span class="brand-subtitle" data-i18n="appSubtitle"
+                >Mindmaps, tasks, and private local planning</span
+              >
+            </div>
+          </div>
+          <div class="topbar-actions">
+            <button
+              class="secondary-button"
+              type="button"
+              data-action="open-search"
+              title="Search"
+            >
+              <svg
+                aria-hidden="true"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="m21 21-4.35-4.35m2.35-5.15a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <span data-i18n="search">Search</span>
+            </button>
+            <button
+              class="primary-button"
+              type="button"
+              data-action="new-workflow"
+            >
+              <svg
+                aria-hidden="true"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M12 5v14M5 12h14"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <span data-i18n="newWorkflow">New workflow</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main class="app-main">
+        <div class="workspace-grid">
+          <aside class="sidebar liquid-glass">
+            <nav class="nav-tabs" aria-label="Workflow views">
+              <button
+                class="tab-button active"
+                type="button"
+                data-view="mindmap"
+              >
+                <svg
+                  aria-hidden="true"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    d="M12 12h5m-5 0H7m5 0V7m0 5v5M5 5h4v4H5V5Zm10 0h4v4h-4V5ZM5 15h4v4H5v-4Zm10 0h4v4h-4v-4Z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <span data-i18n="mindmap">Mindmap</span>
+              </button>
+              <button class="tab-button" type="button" data-view="tasks">
+                <svg
+                  aria-hidden="true"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    d="M8 7h11M8 12h11M8 17h11M4.5 7l1 1 2-2M4.5 12l1 1 2-2M4.5 17l1 1 2-2"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <span data-i18n="tasks">Tasks</span>
+              </button>
+              <button class="tab-button" type="button" data-view="insights">
+                <svg
+                  aria-hidden="true"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    d="M5 19V9m7 10V5m7 14v-7"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                <span data-i18n="insights">Insights</span>
+              </button>
+              <button class="tab-button" type="button" data-view="settings">
+                <svg
+                  aria-hidden="true"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5Z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  />
+                  <path
+                    d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06a2.05 2.05 0 0 1-2.9 2.9l-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6V20a2 2 0 0 1-4 0v-.1a1.7 1.7 0 0 0-1-.6 1.7 1.7 0 0 0-1.88.34l-.06.06a2.05 2.05 0 0 1-2.9-2.9l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1H4a2 2 0 0 1 0-4h.1a1.7 1.7 0 0 0 .6-1 1.7 1.7 0 0 0-.34-1.88l-.06-.06a2.05 2.05 0 0 1 2.9-2.9l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6V4a2 2 0 0 1 4 0v.1a1.7 1.7 0 0 0 1 .6 1.7 1.7 0 0 0 1.88-.34l.06-.06a2.05 2.05 0 0 1 2.9 2.9l-.06.06A1.7 1.7 0 0 0 19.4 9c.2.37.4.74.6 1H20a2 2 0 0 1 0 4h-.1a1.7 1.7 0 0 0-.5 1Z"
+                    stroke="currentColor"
+                    stroke-width="1.35"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <span data-i18n="settings">Settings</span>
+              </button>
+            </nav>
+
+            <div class="field">
+              <label for="languageSelect" data-i18n="language">Language</label>
+              <select class="select" id="languageSelect">
+                <option value="en">English (US)</option>
+                <option value="es-US">Español (US)</option>
+                <option value="es-ES">Español (España)</option>
+              </select>
+            </div>
+
+            <section>
+              <div
+                class="toolbar"
+                style="justify-content: space-between; margin-bottom: 8px"
+              >
+                <h2 class="section-title" data-i18n="workflows">Workflows</h2>
+                <button
+                  class="icon-button"
+                  type="button"
+                  data-action="new-workflow"
+                  title="New workflow"
+                >
+                  <svg
+                    aria-hidden="true"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="M12 5v14M5 12h14"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div class="workflow-list" id="workflowList"></div>
+            </section>
+
+            <section class="compact-stats" aria-label="Workflow stats">
+              <div class="stat-tile">
+                <span class="stat-value" id="sidebarNodeCount">0</span>
+                <span class="stat-label" data-i18n="nodes">Nodes</span>
+              </div>
+              <div class="stat-tile">
+                <span class="stat-value" id="sidebarTaskCount">0</span>
+                <span class="stat-label" data-i18n="tasks">Tasks</span>
+              </div>
+              <div class="stat-tile">
+                <span class="stat-value" id="sidebarDoneCount">0</span>
+                <span class="stat-label" data-i18n="done">Done</span>
+              </div>
+            </section>
+          </aside>
+
+          <section class="main-panel">
+            <div id="viewRoot"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <div class="modal-region" id="modalRegion" aria-live="polite"></div>
+    <div
+      class="toast-region"
+      id="toastRegion"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
+
+    <template id="workflowItemTemplate">
+      <button class="workflow-item" type="button">
+        <span>
+          <span class="workflow-name"></span>
+          <span class="workflow-meta"></span>
+        </span>
+        <span class="status-dot"></span>
+      </button>
+    </template>
+
+    <script>
+      (() => {
+        const DB_NAME = "munetios-workflow-beta";
+        const DB_VERSION = 1;
+        const NODE_WIDTH = 220;
+        const NODE_HEIGHT = 116;
+
+        const translations = {
+          en: {
+            appName: "Munetios Workflow",
+            appSubtitle: "Mindmaps, tasks, and private local planning",
+            search: "Search",
+            stack: "Stack",
+            newWorkflow: "New workflow",
+            mindmap: "Mindmap",
+            tasks: "Tasks",
+            insights: "Insights",
+            settings: "Settings",
+            language: "Language",
+            workflows: "Workflows",
+            nodes: "Nodes",
+            done: "Done",
+            noWorkflowsTitle: "Create your first workflow",
+            noWorkflowsBody:
+              "Your mindmaps and tasks stay on this device through IndexedDB.",
+            createWorkflow: "Create workflow",
+            workflowName: "Workflow name",
+            workflowDescription: "Description",
+            workflowStatus: "Status",
+            color: "Color",
+            cancel: "Cancel",
+            create: "Create",
+            save: "Save",
+            delete: "Delete",
+            edit: "Edit",
+            duplicate: "Duplicate",
+            export: "Export",
+            import: "Import",
+            planning: "Planning",
+            active: "Active",
+            paused: "Paused",
+            archived: "Archived",
+            addNode: "Add node",
+            addTask: "Add task",
+            editWorkflow: "Edit workflow",
+            resetView: "Reset view",
+            fitView: "Fit view",
+            emptyMindmapTitle: "Build a mindmap",
+            emptyMindmapBody:
+              "Add nodes, connect ideas, and attach tasks to turn planning into action.",
+            nodeTitle: "Node title",
+            nodeNotes: "Notes",
+            parentNode: "Parent node",
+            noParent: "No parent",
+            nodeStatus: "Node status",
+            idea: "Idea",
+            next: "Next",
+            blocked: "Blocked",
+            complete: "Complete",
+            selectedNode: "Selected node",
+            allNodes: "All nodes",
+            linkedTasks: "Linked tasks",
+            unlink: "Unlink",
+            connect: "Connect",
+            taskTitle: "Task title",
+            taskDescription: "Task description",
+            taskStatus: "Task status",
+            todo: "To do",
+            doing: "Doing",
+            priority: "Priority",
+            low: "Low",
+            medium: "Medium",
+            high: "High",
+            dueDate: "Due date",
+            clearDate: "Clear date",
+            previousMonth: "Previous month",
+            nextMonth: "Next month",
+            selectedDate: "Selected date",
+            linkedNode: "Linked node",
+            unassigned: "Unassigned",
+            filter: "Filter",
+            all: "All",
+            sort: "Sort",
+            newest: "Newest",
+            oldest: "Oldest",
+            dueSoon: "Due soon",
+            prioritySort: "Priority",
+            taskSearchPlaceholder: "Search tasks",
+            nodeSearchPlaceholder: "Search nodes",
+            noTasksTitle: "Create task cards",
+            noTasksBody: "Tasks can stand alone or attach to mindmap nodes.",
+            today: "Today",
+            overdue: "Overdue",
+            tomorrow: "Tomorrow",
+            noDueDate: "No due date",
+            progress: "Progress",
+            completion: "Completion",
+            overdueTasks: "Overdue tasks",
+            upcomingTasks: "Upcoming tasks",
+            nodeCoverage: "Linked tasks",
+            recentActivity: "Recent activity",
+            noActivity: "Activity appears after you create or update items.",
+            dataTools: "Data tools",
+            exportJson: "Export JSON",
+            importJson: "Import JSON",
+            clearWorkflow: "Clear workflow",
+            clearAllData: "Clear all data",
+            privacyMode: "Privacy mode",
+            privacyModeText: "Hide descriptions and notes in overview cards.",
+            compactMode: "Compact mode",
+            compactModeText: "Reduce spacing in task and node lists.",
+            confirmDeleteTitle: "Confirm delete",
+            confirmDeleteWorkflow:
+              "Delete this workflow and all of its nodes and tasks?",
+            confirmDeleteNode:
+              "Delete this node? Linked tasks will stay in the workflow.",
+            confirmDeleteTask: "Delete this task?",
+            confirmClearAll: "Delete all local Munetios Workflow data?",
+            confirmClearWorkflow:
+              "Delete all nodes and tasks in this workflow?",
+            searchEverything: "Search everything",
+            searchPlaceholder: "Find workflows, nodes, and tasks",
+            results: "Results",
+            noResults: "No results",
+            open: "Open",
+            close: "Close",
+            modalStackTitle: "Stacked modal",
+            modalStackBody:
+              "This modal is independent. Click Stack again to open another layer.",
+            openAnother: "Open another",
+            saved: "Saved",
+            created: "Created",
+            updated: "Updated",
+            deleted: "Deleted",
+            imported: "Imported",
+            exported: "Exported",
+            copied: "Copied",
+            restored: "Restored",
+            error: "Error",
+            nameRequired: "Name is required.",
+            titleRequired: "Title is required.",
+            importInvalid: "Import data is not valid.",
+            workflowCreated: "Workflow created.",
+            workflowUpdated: "Workflow updated.",
+            workflowDeleted: "Workflow deleted.",
+            workflowDuplicated: "Workflow duplicated.",
+            nodeCreated: "Node created.",
+            nodeUpdated: "Node updated.",
+            nodeDeleted: "Node deleted.",
+            taskCreated: "Task created.",
+            taskUpdated: "Task updated.",
+            taskDeleted: "Task deleted.",
+            dataExported: "Data exported.",
+            dataImported: "Data imported.",
+            dataCleared: "Data cleared.",
+            viewReset: "Mindmap view reset.",
+            emptyWorkflowList: "No workflows yet.",
+            stackOpened: "Modal layer opened.",
+            searchOpened: "Search opened.",
+            settingsSaved: "Settings saved.",
+            nodeMoved: "Node moved.",
+            workflow: "Workflow",
+            node: "Node",
+            task: "Task",
+            description: "Description",
+            notes: "Notes",
+            status: "Status",
+            createdAt: "Created",
+            updatedAt: "Updated",
+            taskBoard: "Task board",
+            overview: "Overview",
+            localOnly: "Local only",
+            pasteJson: "Paste JSON",
+            importMode: "Import mode",
+            replaceAll: "Replace all data",
+            mergeData: "Merge with local data",
+            chooseWorkflow: "Choose workflow",
+            selected: "Selected",
+            dragToMove: "Drag to move",
+            taskCount: "Task count",
+            nodeCount: "Node count",
+            workflowCount: "Workflow count",
+            lastUpdated: "Last updated",
+            untitled: "Untitled",
+            none: "None",
+          },
+          es: {
+            appName: "Munetios Workflow",
+            appSubtitle: "Mapas mentales, tareas y planificación privada local",
+            search: "Buscar",
+            stack: "Pila",
+            newWorkflow: "Nuevo flujo",
+            mindmap: "Mapa mental",
+            tasks: "Tareas",
+            insights: "Resumen",
+            settings: "Configuración",
+            language: "Idioma",
+            workflows: "Flujos",
+            nodes: "Nodos",
+            done: "Hechas",
+            noWorkflowsTitle: "Crea tu primer flujo",
+            noWorkflowsBody:
+              "Tus mapas mentales y tareas se guardan en este dispositivo con IndexedDB.",
+            createWorkflow: "Crear flujo",
+            workflowName: "Nombre del flujo",
+            workflowDescription: "Descripción",
+            workflowStatus: "Estado",
+            color: "Color",
+            cancel: "Cancelar",
+            create: "Crear",
+            save: "Guardar",
+            delete: "Eliminar",
+            edit: "Editar",
+            duplicate: "Duplicar",
+            export: "Exportar",
+            import: "Importar",
+            planning: "Planificación",
+            active: "Activo",
+            paused: "Pausado",
+            archived: "Archivado",
+            addNode: "Agregar nodo",
+            addTask: "Agregar tarea",
+            editWorkflow: "Editar flujo",
+            resetView: "Reiniciar vista",
+            fitView: "Configurar vista",
+            emptyMindmapTitle: "Construye un mapa mental",
+            emptyMindmapBody:
+              "Agrega nodos, conecta ideas y vincula tareas para convertir planes en acciones.",
+            nodeTitle: "Título del nodo",
+            nodeNotes: "Notas",
+            parentNode: "Nodo padre",
+            noParent: "Sin padre",
+            nodeStatus: "Estado del nodo",
+            idea: "Idea",
+            next: "Siguiente",
+            blocked: "Bloqueado",
+            complete: "Completo",
+            selectedNode: "Nodo seleccionado",
+            allNodes: "Todos los nodos",
+            linkedTasks: "Tareas vinculadas",
+            unlink: "Desvincular",
+            connect: "Conectar",
+            taskTitle: "Título de la tarea",
+            taskDescription: "Descripción de la tarea",
+            taskStatus: "Estado de la tarea",
+            todo: "Por hacer",
+            doing: "En progreso",
+            priority: "Prioridad",
+            low: "Baja",
+            medium: "Media",
+            high: "Alta",
+            dueDate: "Fecha límite",
+            clearDate: "Borrar fecha",
+            previousMonth: "Mes anterior",
+            nextMonth: "Mes siguiente",
+            selectedDate: "Fecha seleccionada",
+            linkedNode: "Nodo vinculado",
+            unassigned: "Sin asignar",
+            filter: "Filtro",
+            all: "Todo",
+            sort: "Orden",
+            newest: "Más reciente",
+            oldest: "Más antiguo",
+            dueSoon: "Vence pronto",
+            prioritySort: "Prioridad",
+            taskSearchPlaceholder: "Buscar tareas",
+            nodeSearchPlaceholder: "Buscar nodos",
+            noTasksTitle: "Crea tarjetas de tareas",
+            noTasksBody:
+              "Las tareas pueden estar solas o vincularse a nodos del mapa mental.",
+            today: "Hoy",
+            overdue: "Vencida",
+            tomorrow: "Mañana",
+            noDueDate: "Sin fecha",
+            progress: "Progreso",
+            completion: "Finalización",
+            overdueTasks: "Tareas vencidas",
+            upcomingTasks: "Tareas próximas",
+            nodeCoverage: "Tareas vinculadas",
+            recentActivity: "Actividad reciente",
+            noActivity:
+              "La actividad aparece después de crear o actualizar elementos.",
+            dataTools: "Herramientas de datos",
+            exportJson: "Exportar JSON",
+            importJson: "Importar JSON",
+            clearWorkflow: "Vaciar flujo",
+            clearAllData: "Borrar todo",
+            privacyMode: "Modo privado",
+            privacyModeText:
+              "Oculta descripciones y notas en tarjetas de resumen.",
+            compactMode: "Modo compacto",
+            compactModeText: "Reduce el espacio en listas de tareas y nodos.",
+            confirmDeleteTitle: "Confirmar eliminación",
+            confirmDeleteWorkflow:
+              "¿Eliminar este flujo y todos sus nodos y tareas?",
+            confirmDeleteNode:
+              "¿Eliminar este nodo? Las tareas vinculadas permanecerán en el flujo.",
+            confirmDeleteTask: "¿Eliminar esta tarea?",
+            confirmClearAll:
+              "¿Eliminar todos los datos locales de Munetios Workflow?",
+            confirmClearWorkflow:
+              "¿Eliminar todos los nodos y tareas de este flujo?",
+            searchEverything: "Buscar todo",
+            searchPlaceholder: "Buscar flujos, nodos y tareas",
+            results: "Resultados",
+            noResults: "Sin resultados",
+            open: "Abrir",
+            close: "Cerrar",
+            modalStackTitle: "Modal apilado",
+            modalStackBody:
+              "Este modal es independiente. Haz clic en Pila otra vez para abrir otra capa.",
+            openAnother: "Abrir otro",
+            saved: "Guardado",
+            created: "Creado",
+            updated: "Actualizado",
+            deleted: "Eliminado",
+            imported: "Importado",
+            exported: "Exportado",
+            copied: "Copiado",
+            restored: "Restaurado",
+            error: "Error",
+            nameRequired: "El nombre es obligatorio.",
+            titleRequired: "El título es obligatorio.",
+            importInvalid: "Los datos importados no son válidos.",
+            workflowCreated: "Flujo creado.",
+            workflowUpdated: "Flujo actualizado.",
+            workflowDeleted: "Flujo eliminado.",
+            workflowDuplicated: "Flujo duplicado.",
+            nodeCreated: "Nodo creado.",
+            nodeUpdated: "Nodo actualizado.",
+            nodeDeleted: "Nodo eliminado.",
+            taskCreated: "Tarea creada.",
+            taskUpdated: "Tarea actualizada.",
+            taskDeleted: "Tarea eliminada.",
+            dataExported: "Datos exportados.",
+            dataImported: "Datos importados.",
+            dataCleared: "Datos borrados.",
+            viewReset: "Vista del mapa reiniciada.",
+            emptyWorkflowList: "Aún no hay flujos.",
+            stackOpened: "Capa modal abierta.",
+            searchOpened: "Búsqueda abierta.",
+            settingsSaved: "Configuración guardada.",
+            nodeMoved: "Nodo movido.",
+            workflow: "Flujo",
+            node: "Nodo",
+            task: "Tarea",
+            description: "Descripción",
+            notes: "Notas",
+            status: "Estado",
+            createdAt: "Creado",
+            updatedAt: "Actualizado",
+            taskBoard: "Tablero de tareas",
+            overview: "Vista general",
+            localOnly: "Solo local",
+            pasteJson: "Pegar JSON",
+            importMode: "Modo de importación",
+            replaceAll: "Reemplazar todos los datos",
+            mergeData: "Combinar con datos locales",
+            chooseWorkflow: "Elegir flujo",
+            selected: "Seleccionado",
+            dragToMove: "Arrastra para mover",
+            taskCount: "Cantidad de tareas",
+            nodeCount: "Cantidad de nodos",
+            workflowCount: "Cantidad de flujos",
+            lastUpdated: "Última actualización",
+            untitled: "Sin título",
+            none: "Ninguno",
+          },
+        };
+
+        translations["es-US"] = translations.es;
+        translations["es-ES"] = {
+          ...translations.es,
+          settings: "Ajustes",
+          settingsSaved: "Ajustes guardados.",
+        };
+
+        const state = {
+          db: null,
+          language: "en",
+          view: "mindmap",
+          workflows: [],
+          nodes: [],
+          tasks: [],
+          activeWorkflowId: null,
+          selectedNodeId: null,
+          settings: {
+            language: "en",
+            privacyMode: false,
+            compactMode: false,
+            viewport: { x: 0, y: 0, scale: 1 },
+          },
+          filters: {
+            taskSearch: "",
+            taskStatus: "all",
+            taskSort: "newest",
+            nodeSearch: "",
+          },
+          modals: [],
+          openingModalId: null,
+          toasts: [],
+          drag: null,
+          autosaveTimer: null,
+        };
+
+        const el = {
+          viewRoot: document.getElementById("viewRoot"),
+          workflowList: document.getElementById("workflowList"),
+          languageSelect: document.getElementById("languageSelect"),
+          modalRegion: document.getElementById("modalRegion"),
+          toastRegion: document.getElementById("toastRegion"),
+          sidebarNodeCount: document.getElementById("sidebarNodeCount"),
+          sidebarTaskCount: document.getElementById("sidebarTaskCount"),
+          sidebarDoneCount: document.getElementById("sidebarDoneCount"),
+        };
+
+        const uid = () => {
+          if (crypto.randomUUID) return crypto.randomUUID();
+          return `id-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+        };
+
+        const now = () => new Date().toISOString();
+
+        const t = (key) => {
+          const dict = translations[state.language] || translations.en;
+          return dict[key] || translations.en[key] || key;
+        };
+
+        const normalizeLanguage = (language) => {
+          if (language === "es") return "es-US";
+          if (language === "en-US") return "en";
+          return translations[language] ? language : "en";
+        };
+
+        const languageLocale = () => {
+          if (state.language === "es-ES") return "es-ES";
+          if (state.language === "es-US" || state.language === "es")
+            return "es-US";
+          return "en-US";
+        };
+
+        const escapeHtml = (value) =>
+          String(value ?? "")
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+
+        const parseDate = (value) => {
+          if (!value) return null;
+          const parsed = new Date(`${value}T00:00:00`);
+          return Number.isNaN(parsed.getTime()) ? null : parsed;
+        };
+
+        const formatDate = (value) => {
+          if (!value) return t("noDueDate");
+          const date = parseDate(value) || new Date(value);
+          if (Number.isNaN(date.getTime())) return t("noDueDate");
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          const target = new Date(date);
+          target.setHours(0, 0, 0, 0);
+          const diffDays = Math.round((target - today) / 86400000);
+          if (diffDays === 0) return t("today");
+          if (diffDays === 1) return t("tomorrow");
+          if (diffDays < 0) return t("overdue");
+          return date.toLocaleDateString(languageLocale(), {
+            month: "short",
+            day: "numeric",
+            year:
+              date.getFullYear() === today.getFullYear()
+                ? undefined
+                : "numeric",
+          });
+        };
+
+        const formatDateTime = (value) => {
+          if (!value) return t("none");
+          const date = new Date(value);
+          if (Number.isNaN(date.getTime())) return t("none");
+          return date.toLocaleString(languageLocale(), {
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+          });
+        };
+
+        const priorityRank = { high: 3, medium: 2, low: 1 };
+
+        const statusOptions = {
+          workflow: ["planning", "active", "paused", "archived"],
+          node: ["idea", "next", "blocked", "complete"],
+          task: ["todo", "doing", "done"],
+          priority: ["low", "medium", "high"],
+        };
+
+        const nodeColors = [
+          "#a879ff",
+          "#f4c2ff",
+          "#83c5ff",
+          "#56e39f",
+          "#ffd166",
+          "#ff6b8a",
+        ];
+
+        const openDb = () =>
+          new Promise((resolve, reject) => {
+            const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+            request.onupgradeneeded = () => {
+              const db = request.result;
+              if (!db.objectStoreNames.contains("workflows")) {
+                const store = db.createObjectStore("workflows", {
+                  keyPath: "id",
+                });
+                store.createIndex("updatedAt", "updatedAt");
+              }
+              if (!db.objectStoreNames.contains("nodes")) {
+                const store = db.createObjectStore("nodes", { keyPath: "id" });
+                store.createIndex("workflowId", "workflowId");
+                store.createIndex("parentId", "parentId");
+                store.createIndex("updatedAt", "updatedAt");
+              }
+              if (!db.objectStoreNames.contains("tasks")) {
+                const store = db.createObjectStore("tasks", { keyPath: "id" });
+                store.createIndex("workflowId", "workflowId");
+                store.createIndex("nodeId", "nodeId");
+                store.createIndex("status", "status");
+                store.createIndex("updatedAt", "updatedAt");
+              }
+              if (!db.objectStoreNames.contains("settings")) {
+                db.createObjectStore("settings", { keyPath: "key" });
+              }
+            };
+
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+          });
+
+        const tx = (stores, mode = "readonly") =>
+          state.db.transaction(stores, mode);
+
+        const getAll = (storeName) =>
+          new Promise((resolve, reject) => {
+            const request = tx([storeName]).objectStore(storeName).getAll();
+            request.onsuccess = () => resolve(request.result || []);
+            request.onerror = () => reject(request.error);
+          });
+
+        const getSetting = (key) =>
+          new Promise((resolve, reject) => {
+            const request = tx(["settings"]).objectStore("settings").get(key);
+            request.onsuccess = () => resolve(request.result?.value);
+            request.onerror = () => reject(request.error);
+          });
+
+        const putRecord = (storeName, value) =>
+          new Promise((resolve, reject) => {
+            const transaction = tx([storeName], "readwrite");
+            transaction.objectStore(storeName).put(value);
+            transaction.oncomplete = () => resolve(value);
+            transaction.onerror = () => reject(transaction.error);
+          });
+
+        const deleteRecord = (storeName, id) =>
+          new Promise((resolve, reject) => {
+            const transaction = tx([storeName], "readwrite");
+            transaction.objectStore(storeName).delete(id);
+            transaction.oncomplete = () => resolve();
+            transaction.onerror = () => reject(transaction.error);
+          });
+
+        const bulkPut = (storeName, values) =>
+          new Promise((resolve, reject) => {
+            const transaction = tx([storeName], "readwrite");
+            const store = transaction.objectStore(storeName);
+            values.forEach((value) => store.put(value));
+            transaction.oncomplete = () => resolve();
+            transaction.onerror = () => reject(transaction.error);
+          });
+
+        const bulkDelete = (storeName, ids) =>
+          new Promise((resolve, reject) => {
+            const transaction = tx([storeName], "readwrite");
+            const store = transaction.objectStore(storeName);
+            ids.forEach((id) => store.delete(id));
+            transaction.oncomplete = () => resolve();
+            transaction.onerror = () => reject(transaction.error);
+          });
+
+        const clearStores = (storeNames) =>
+          new Promise((resolve, reject) => {
+            const transaction = tx(storeNames, "readwrite");
+            storeNames.forEach((storeName) =>
+              transaction.objectStore(storeName).clear(),
+            );
+            transaction.oncomplete = () => resolve();
+            transaction.onerror = () => reject(transaction.error);
+          });
+
+        const saveSettings = async () => {
+          state.settings.language = state.language;
+          await putRecord("settings", { key: "app", value: state.settings });
+        };
+
+        const loadData = async () => {
+          const [workflows, nodes, tasks, savedSettings] = await Promise.all([
+            getAll("workflows"),
+            getAll("nodes"),
+            getAll("tasks"),
+            getSetting("app"),
+          ]);
+          state.workflows = workflows.sort(
+            (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt),
+          );
+          state.nodes = nodes;
+          state.tasks = tasks;
+          state.settings = { ...state.settings, ...(savedSettings || {}) };
+          state.language = normalizeLanguage(state.settings.language || "en");
+          state.settings.language = state.language;
+          state.activeWorkflowId =
+            state.settings.activeWorkflowId || state.workflows[0]?.id || null;
+          if (
+            state.activeWorkflowId &&
+            !state.workflows.some(
+              (workflow) => workflow.id === state.activeWorkflowId,
+            )
+          ) {
+            state.activeWorkflowId = state.workflows[0]?.id || null;
+          }
+          el.languageSelect.value = state.language;
+          document.documentElement.lang = state.language;
+        };
+
+        const activeWorkflow = () =>
+          state.workflows.find(
+            (workflow) => workflow.id === state.activeWorkflowId,
+          ) || null;
+        const workflowNodes = (workflowId = state.activeWorkflowId) =>
+          state.nodes.filter((node) => node.workflowId === workflowId);
+        const workflowTasks = (workflowId = state.activeWorkflowId) =>
+          state.tasks.filter((task) => task.workflowId === workflowId);
+        const selectedNode = () =>
+          state.nodes.find((node) => node.id === state.selectedNodeId) || null;
+
+        const touchWorkflow = async (workflowId = state.activeWorkflowId) => {
+          const workflow = state.workflows.find(
+            (item) => item.id === workflowId,
+          );
+          if (!workflow) return;
+          workflow.updatedAt = now();
+          await putRecord("workflows", workflow);
+        };
+
+        const showToast = (type, title, message = "") => {
+          const id = uid();
+          const toast = { id, type, title, message };
+          state.toasts.push(toast);
+          renderToasts();
+          window.setTimeout(() => {
+            state.toasts = state.toasts.filter((item) => item.id !== id);
+            renderToasts();
+          }, 4200);
+        };
+
+        const renderToasts = () => {
+          el.toastRegion.innerHTML = state.toasts
+            .map(
+              (toast) => `
+            <div class="toast liquid-glass ${escapeHtml(toast.type)}" role="status">
+              <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none">
+                ${
+                  toast.type === "error"
+                    ? '<path d="M12 8v5m0 3h.01M10.3 4.2 2.7 18a2 2 0 0 0 1.7 3h15.2a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />'
+                    : '<path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />'
+                }
+              </svg>
+              <span><strong>${escapeHtml(toast.title)}</strong>${toast.message ? `<span>${escapeHtml(toast.message)}</span>` : ""}</span>
+              <button class="icon-button" type="button" style="width: 30px; height: 30px; min-height: 30px;" data-toast-close="${escapeHtml(toast.id)}" aria-label="${escapeHtml(t("close"))}">
+                <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none">
+                  <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </button>
+            </div>
+          `,
+            )
+            .join("");
+        };
+
+        const openModal = ({
+          title,
+          body,
+          footer = "",
+          width = "620px",
+          onMount,
+        }) => {
+          const id = uid();
+          state.modals.push({ id, title, body, footer, width, onMount });
+          state.openingModalId = id;
+          renderModals();
+          window.setTimeout(() => {
+            if (state.openingModalId === id) state.openingModalId = null;
+          }, 280);
+          return id;
+        };
+
+        const closeModal = (id) => {
+          state.modals = state.modals.filter((modal) => modal.id !== id);
+          renderModals();
+        };
+
+        const closeTopModal = () => {
+          const top = state.modals[state.modals.length - 1];
+          if (top) closeModal(top.id);
+        };
+
+        const renderModals = () => {
+          el.modalRegion.innerHTML = state.modals
+            .map(
+              (modal, index) => `
+            <div class="modal-layer ${modal.id === state.openingModalId ? "opening" : ""}" data-modal-layer="${escapeHtml(modal.id)}" style="z-index: ${100 + index * 3};">
+              <div class="modal-backdrop" data-modal-close="${escapeHtml(modal.id)}"></div>
+              <section class="modal liquid-glass" role="dialog" aria-modal="true" aria-label="${escapeHtml(modal.title)}" style="width: min(${escapeHtml(modal.width)}, 100%);">
+                <header class="modal-header">
+                  <h2 class="modal-title">${escapeHtml(modal.title)}</h2>
+                  <button class="icon-button" type="button" data-modal-close="${escapeHtml(modal.id)}" aria-label="${escapeHtml(t("close"))}">
+                    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                      <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="modal-body">${modal.body}</div>
+                ${modal.footer ? `<footer class="modal-footer">${modal.footer}</footer>` : ""}
+              </section>
+            </div>
+          `,
+            )
+            .join("");
+          state.modals.forEach((modal) => {
+            const layer = el.modalRegion.querySelector(
+              `[data-modal-layer="${CSS.escape(modal.id)}"]`,
+            );
+            if (layer && typeof modal.onMount === "function") {
+              modal.onMount(layer, modal.id);
+            }
+          });
+        };
+
+        const setView = (view) => {
+          state.view = view;
+          document.querySelectorAll(".tab-button").forEach((button) => {
+            button.classList.toggle("active", button.dataset.view === view);
+          });
+          render();
+        };
+
+        const setActiveWorkflow = async (id) => {
+          state.activeWorkflowId = id;
+          state.selectedNodeId = null;
+          state.settings.activeWorkflowId = id;
+          await saveSettings();
+          render();
+        };
+
+        const renderStaticI18n = () => {
+          document.querySelectorAll("[data-i18n]").forEach((item) => {
+            item.textContent = t(item.dataset.i18n);
+          });
+          const searchButton = document.querySelector(
+            "[data-action='open-search']",
+          );
+          const stackButton = document.querySelector(
+            "[data-action='open-stack-demo']",
+          );
+          if (searchButton) searchButton.title = t("search");
+          if (stackButton) stackButton.title = t("stack");
+          document.documentElement.lang = state.language;
+        };
+
+        const renderWorkflowList = () => {
+          if (!state.workflows.length) {
+            el.workflowList.innerHTML = `<div class="row-meta">${escapeHtml(t("emptyWorkflowList"))}</div>`;
+            return;
+          }
+
+          el.workflowList.innerHTML = state.workflows
+            .map((workflow) => {
+              const nodes = workflowNodes(workflow.id).length;
+              const tasks = workflowTasks(workflow.id).length;
+              return `
+              <button class="workflow-item ${workflow.id === state.activeWorkflowId ? "active" : ""}" type="button" data-workflow-id="${escapeHtml(workflow.id)}">
+                <span>
+                  <span class="workflow-name">${escapeHtml(workflow.name || t("untitled"))}</span>
+                  <span class="workflow-meta">${nodes} ${escapeHtml(t("nodes"))} · ${tasks} ${escapeHtml(t("tasks"))}</span>
+                </span>
+                <span class="status-dot ${escapeHtml(workflow.status || "planning")}" style="background: ${escapeHtml(workflow.color || "#a879ff")}"></span>
+              </button>
+            `;
+            })
+            .join("");
+        };
+
+        const renderSidebarStats = () => {
+          const nodes = workflowNodes();
+          const tasks = workflowTasks();
+          el.sidebarNodeCount.textContent = String(nodes.length);
+          el.sidebarTaskCount.textContent = String(tasks.length);
+          el.sidebarDoneCount.textContent = String(
+            tasks.filter((task) => task.status === "done").length,
+          );
+        };
+
+        const render = () => {
+          renderStaticI18n();
+          renderWorkflowList();
+          renderSidebarStats();
+          if (!state.workflows.length) {
+            renderEmptyApp();
+            return;
+          }
+          if (!activeWorkflow()) {
+            state.activeWorkflowId = state.workflows[0]?.id || null;
+          }
+          if (state.view === "mindmap") renderMindmapView();
+          if (state.view === "tasks") renderTasksView();
+          if (state.view === "insights") renderInsightsView();
+          if (state.view === "settings") renderSettingsView();
+        };
+
+        const renderEmptyApp = () => {
+          el.viewRoot.innerHTML = `
+            <section class="empty-state liquid-glass">
+              <div class="empty-state-content">
+                <div class="empty-icon">
+                  <svg aria-hidden="true" width="31" height="31" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <h2>${escapeHtml(t("noWorkflowsTitle"))}</h2>
+                <p>${escapeHtml(t("noWorkflowsBody"))}</p>
+                <button class="primary-button" type="button" data-action="new-workflow">
+                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+                  </svg>
+                  <span>${escapeHtml(t("createWorkflow"))}</span>
+                </button>
+              </div>
+            </section>
+          `;
+        };
+
+        const viewHeader = (title, subtitle, actions = "") => `
+          <header class="view-header panel liquid-glass">
+            <div class="view-heading">
+              <h2 class="view-title">${escapeHtml(title)}</h2>
+              <p class="view-subtitle">${escapeHtml(subtitle)}</p>
+            </div>
+            <div class="toolbar end">${actions}</div>
+          </header>
+        `;
+
+        const renderMindmapView = () => {
+          const workflow = activeWorkflow();
+          const nodes = filteredNodes();
+          const allNodes = workflowNodes();
+          const hasNodes = allNodes.length > 0;
+          const selected = selectedNode();
+          const workflowTitle = workflow?.name || t("untitled");
+
+          el.viewRoot.innerHTML = `
+            ${viewHeader(
+              workflowTitle,
+              workflow?.description && !state.settings.privacyMode
+                ? workflow.description
+                : `${t("mindmap")} · ${t(workflow?.status || "planning")} · ${t("localOnly")}`,
+              `
+                <button class="secondary-button" type="button" data-action="edit-workflow">
+                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                  </svg>
+                  <span>${escapeHtml(t("edit"))}</span>
+                </button>
+                <button class="primary-button" type="button" data-action="new-node">
+                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+                  </svg>
+                  <span>${escapeHtml(t("addNode"))}</span>
+                </button>
+                <button class="secondary-button" type="button" data-action="new-task">
+                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M8 7h11M8 12h11M8 17h11M4.5 7l1 1 2-2M4.5 12l1 1 2-2M4.5 17l1 1 2-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span>${escapeHtml(t("addTask"))}</span>
+                </button>
+              `,
+            )}
+            <section class="panel liquid-glass">
+              <div class="search-row">
+                <div class="field">
+                  <label for="nodeSearch">${escapeHtml(t("search"))}</label>
+                  <input class="input" id="nodeSearch" data-field="node-search" type="search" value="${escapeHtml(state.filters.nodeSearch)}" placeholder="${escapeHtml(t("nodeSearchPlaceholder"))}" />
+                </div>
+                <div class="field">
+                  <label>${escapeHtml(t("overview"))}</label>
+                  <button class="secondary-button" type="button" data-action="reset-view">
+                    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                      <path d="M3 12a9 9 0 1 0 3-6.7M3 4v6h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <span>${escapeHtml(t("resetView"))}</span>
+                  </button>
+                </div>
+                <div class="field">
+                  <label>${escapeHtml(t("dragToMove"))}</label>
+                  <button class="secondary-button" type="button" data-action="fit-view">
+                    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                      <path d="M8 3H5a2 2 0 0 0-2 2v3m13-5h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3m18 0v3a2 2 0 0 1-2 2h-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <span>${escapeHtml(t("fitView"))}</span>
+                  </button>
+                </div>
+              </div>
+            </section>
+            ${
+              hasNodes
+                ? `
+              <section class="mindmap-shell">
+                <div class="mindmap-stage" id="mindmapStage">
+                  <svg class="mindmap-connections" id="mindmapConnections"></svg>
+                  <div class="mindmap-viewport" id="mindmapViewport">
+                    ${nodes.map(renderMindNode).join("")}
+                  </div>
+                </div>
+                <aside class="mindmap-side">
+                  ${renderSelectedNodePanel(selected)}
+                  <section class="panel liquid-glass">
+                    <div class="toolbar" style="justify-content: space-between; margin-bottom: 10px;">
+                      <h3 class="section-title">${escapeHtml(t("allNodes"))}</h3>
+                      <span class="count-badge">${allNodes.length}</span>
+                    </div>
+                    <div class="node-list">
+                      ${nodes.length ? nodes.map(renderNodeRow).join("") : `<div class="row-meta">${escapeHtml(t("noResults"))}</div>`}
+                    </div>
+                  </section>
+                </aside>
+              </section>
+            `
+                : `
+              <section class="empty-state liquid-glass">
+                <div class="empty-state-content">
+                  <div class="empty-icon">
+                    <svg aria-hidden="true" width="31" height="31" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 12h5m-5 0H7m5 0V7m0 5v5M5 5h4v4H5V5Zm10 0h4v4h-4V5ZM5 15h4v4H5v-4Zm10 0h4v4h-4v-4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </div>
+                  <h2>${escapeHtml(t("emptyMindmapTitle"))}</h2>
+                  <p>${escapeHtml(t("emptyMindmapBody"))}</p>
+                  <button class="primary-button" type="button" data-action="new-node">
+                    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+                    </svg>
+                    <span>${escapeHtml(t("addNode"))}</span>
+                  </button>
+                </div>
+              </section>
+            `
+            }
+          `;
+
+          if (hasNodes) {
+            requestAnimationFrame(() => {
+              applyViewport();
+              drawConnections();
+            });
+          }
+        };
+
+        const filteredNodes = () => {
+          const query = state.filters.nodeSearch.trim().toLowerCase();
+          return workflowNodes().filter((node) => {
+            if (!query) return true;
+            return `${node.title} ${node.notes}`.toLowerCase().includes(query);
+          });
+        };
+
+        const renderMindNode = (node) => {
+          const linkedTasks = workflowTasks().filter(
+            (task) => task.nodeId === node.id,
+          );
+          const doneCount = linkedTasks.filter(
+            (task) => task.status === "done",
+          ).length;
+          const notes = state.settings.privacyMode ? "" : node.notes || "";
+          return `
+            <article class="mind-node ${node.id === state.selectedNodeId ? "selected" : ""}" data-node-id="${escapeHtml(node.id)}" style="left: ${Number(node.x) || 0}px; top: ${Number(node.y) || 0}px; border-top: 4px solid ${escapeHtml(node.color || "#a879ff")}">
+              <h3 class="mind-node-title">${escapeHtml(node.title || t("untitled"))}</h3>
+              <div class="mind-node-notes">${escapeHtml(notes || t(node.status || "idea"))}</div>
+              <div class="node-footer">
+                <span class="node-pill">${escapeHtml(t(node.status || "idea"))}</span>
+                <span class="node-pill">${doneCount}/${linkedTasks.length} ${escapeHtml(t("tasks"))}</span>
+              </div>
+            </article>
+          `;
+        };
+
+        const renderNodeRow = (node) => {
+          const childCount = workflowNodes().filter(
+            (item) => item.parentId === node.id,
+          ).length;
+          const taskCount = workflowTasks().filter(
+            (task) => task.nodeId === node.id,
+          ).length;
+          return `
+            <article class="node-row">
+              <button class="workflow-item ${node.id === state.selectedNodeId ? "active" : ""}" type="button" data-select-node="${escapeHtml(node.id)}" style="padding: 0; background: transparent; border: 0;">
+                <span>
+                  <span class="workflow-name">${escapeHtml(node.title || t("untitled"))}</span>
+                  <span class="workflow-meta">${childCount} ${escapeHtml(t("nodes"))} · ${taskCount} ${escapeHtml(t("tasks"))}</span>
+                </span>
+                <span class="status-dot" style="background: ${escapeHtml(node.color || "#a879ff")}"></span>
+              </button>
+              <button class="icon-button" type="button" data-edit-node="${escapeHtml(node.id)}" aria-label="${escapeHtml(t("edit"))}">
+                <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                </svg>
+              </button>
+            </article>
+          `;
+        };
+
+        const renderSelectedNodePanel = (node) => {
+          if (!node) {
+            return `
+              <section class="panel liquid-glass">
+                <h3 class="section-title" style="margin-bottom: 8px;">${escapeHtml(t("selectedNode"))}</h3>
+                <div class="row-meta">${escapeHtml(t("none"))}</div>
+              </section>
+            `;
+          }
+          const tasks = workflowTasks().filter(
+            (task) => task.nodeId === node.id,
+          );
+          return `
+            <section class="panel liquid-glass">
+              <div class="toolbar" style="justify-content: space-between; margin-bottom: 10px;">
+                <h3 class="section-title">${escapeHtml(t("selectedNode"))}</h3>
+                <button class="icon-button" type="button" data-edit-node="${escapeHtml(node.id)}" aria-label="${escapeHtml(t("edit"))}">
+                  <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none">
+                    <path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </div>
+              <div class="node-row-main">
+                <strong class="row-title">${escapeHtml(node.title || t("untitled"))}</strong>
+                <span class="row-meta">${escapeHtml(t(node.status || "idea"))} · ${escapeHtml(formatDateTime(node.updatedAt))}</span>
+                ${node.notes && !state.settings.privacyMode ? `<span class="row-meta">${escapeHtml(node.notes)}</span>` : ""}
+              </div>
+              <div class="toolbar" style="margin-top: 12px;">
+                <button class="secondary-button" type="button" data-action="new-task" data-node-context="${escapeHtml(node.id)}">
+                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+                  </svg>
+                  <span>${escapeHtml(t("addTask"))}</span>
+                </button>
+              </div>
+              <h3 class="section-title" style="margin: 14px 0 8px;">${escapeHtml(t("linkedTasks"))}</h3>
+              <div class="task-list">
+                ${tasks.length ? tasks.map(renderCompactTask).join("") : `<div class="row-meta">${escapeHtml(t("none"))}</div>`}
+              </div>
+            </section>
+          `;
+        };
+
+        const renderCompactTask = (task) => `
+          <article class="task-row">
+            <div class="task-main">
+              <strong class="row-title">${escapeHtml(task.title || t("untitled"))}</strong>
+              <span class="row-meta">${escapeHtml(t(task.status || "todo"))} · ${escapeHtml(formatDate(task.dueDate))}</span>
+            </div>
+          </article>
+        `;
+
+        const renderTasksView = () => {
+          const workflow = activeWorkflow();
+          const tasks = filteredTasks();
+          const groups = {
+            todo: tasks.filter((task) => task.status === "todo"),
+            doing: tasks.filter((task) => task.status === "doing"),
+            done: tasks.filter((task) => task.status === "done"),
+          };
+
+          el.viewRoot.innerHTML = `
+            ${viewHeader(
+              t("taskBoard"),
+              workflow?.name || t("untitled"),
+              `
+                <button class="primary-button" type="button" data-action="new-task">
+                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+                  </svg>
+                  <span>${escapeHtml(t("addTask"))}</span>
+                </button>
+              `,
+            )}
+            <section class="panel liquid-glass">
+              <div class="search-row">
+                <div class="field">
+                  <label for="taskSearch">${escapeHtml(t("search"))}</label>
+                  <input class="input" id="taskSearch" data-field="task-search" type="search" value="${escapeHtml(state.filters.taskSearch)}" placeholder="${escapeHtml(t("taskSearchPlaceholder"))}" />
+                </div>
+                <div class="field">
+                  <label for="taskStatusFilter">${escapeHtml(t("filter"))}</label>
+                  <select class="select" id="taskStatusFilter" data-field="task-status">
+                    ${["all", "todo", "doing", "done"].map((status) => `<option value="${status}" ${state.filters.taskStatus === status ? "selected" : ""}>${escapeHtml(t(status))}</option>`).join("")}
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="taskSort">${escapeHtml(t("sort"))}</label>
+                  <select class="select" id="taskSort" data-field="task-sort">
+                    ${["newest", "oldest", "dueSoon", "prioritySort"].map((sort) => `<option value="${sort}" ${state.filters.taskSort === sort ? "selected" : ""}>${escapeHtml(t(sort))}</option>`).join("")}
+                  </select>
+                </div>
+              </div>
+            </section>
+            ${
+              workflowTasks().length
+                ? `
+              <section class="task-board">
+                ${["todo", "doing", "done"]
+                  .map(
+                    (status) => `
+                  <div class="task-column">
+                    <div class="task-column-header">
+                      <h3 class="task-column-title">${escapeHtml(t(status))}</h3>
+                      <span class="count-badge">${groups[status].length}</span>
+                    </div>
+                    ${groups[status].length ? groups[status].map(renderTaskCard).join("") : `<div class="row-meta">${escapeHtml(t("noResults"))}</div>`}
+                  </div>
+                `,
+                  )
+                  .join("")}
+              </section>
+            `
+                : `
+              <section class="empty-state liquid-glass">
+                <div class="empty-state-content">
+                  <div class="empty-icon">
+                    <svg aria-hidden="true" width="31" height="31" viewBox="0 0 24 24" fill="none">
+                      <path d="M8 7h11M8 12h11M8 17h11M4.5 7l1 1 2-2M4.5 12l1 1 2-2M4.5 17l1 1 2-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </div>
+                  <h2>${escapeHtml(t("noTasksTitle"))}</h2>
+                  <p>${escapeHtml(t("noTasksBody"))}</p>
+                  <button class="primary-button" type="button" data-action="new-task">
+                    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+                    </svg>
+                    <span>${escapeHtml(t("addTask"))}</span>
+                  </button>
+                </div>
+              </section>
+            `
+            }
+          `;
+        };
+
+        const filteredTasks = () => {
+          const query = state.filters.taskSearch.trim().toLowerCase();
+          let tasks = workflowTasks().filter((task) => {
+            const matchesQuery =
+              !query ||
+              `${task.title} ${task.description}`.toLowerCase().includes(query);
+            const matchesStatus =
+              state.filters.taskStatus === "all" ||
+              task.status === state.filters.taskStatus;
+            return matchesQuery && matchesStatus;
+          });
+
+          tasks = tasks.sort((a, b) => {
+            if (state.filters.taskSort === "oldest")
+              return new Date(a.createdAt) - new Date(b.createdAt);
+            if (state.filters.taskSort === "dueSoon") {
+              const aTime =
+                parseDate(a.dueDate)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+              const bTime =
+                parseDate(b.dueDate)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+              return aTime - bTime;
+            }
+            if (state.filters.taskSort === "prioritySort") {
+              return (
+                (priorityRank[b.priority] || 0) -
+                (priorityRank[a.priority] || 0)
+              );
+            }
+            return new Date(b.createdAt) - new Date(a.createdAt);
+          });
+
+          return tasks;
+        };
+
+        const renderTaskCard = (task) => {
+          const node = state.nodes.find((item) => item.id === task.nodeId);
+          return `
+            <article class="task-card ${task.status === "done" ? "done" : ""}">
+              <div class="task-card-header">
+                <h3 class="task-title">${escapeHtml(task.title || t("untitled"))}</h3>
+                <button class="icon-button" type="button" data-edit-task="${escapeHtml(task.id)}" aria-label="${escapeHtml(t("edit"))}" style="width: 36px; height: 36px; min-height: 36px;">
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </div>
+              ${task.description && !state.settings.privacyMode ? `<p class="task-desc">${escapeHtml(task.description)}</p>` : ""}
+              <div class="task-tags">
+                <span class="tag priority-${escapeHtml(task.priority || "medium")}">${escapeHtml(t(task.priority || "medium"))}</span>
+                <span class="tag">${escapeHtml(formatDate(task.dueDate))}</span>
+                ${node ? `<span class="tag">${escapeHtml(node.title || t("untitled"))}</span>` : ""}
+              </div>
+              <div class="task-actions">
+                ${task.status !== "todo" ? `<button class="chip-button" type="button" data-task-status="${escapeHtml(task.id)}" data-status="todo">${escapeHtml(t("todo"))}</button>` : ""}
+                ${task.status !== "doing" ? `<button class="chip-button" type="button" data-task-status="${escapeHtml(task.id)}" data-status="doing">${escapeHtml(t("doing"))}</button>` : ""}
+                ${task.status !== "done" ? `<button class="chip-button" type="button" data-task-status="${escapeHtml(task.id)}" data-status="done">${escapeHtml(t("done"))}</button>` : ""}
+              </div>
+            </article>
+          `;
+        };
+
+        const renderInsightsView = () => {
+          const workflow = activeWorkflow();
+          const nodes = workflowNodes();
+          const tasks = workflowTasks();
+          const done = tasks.filter((task) => task.status === "done").length;
+          const overdue = tasks.filter(
+            (task) =>
+              task.status !== "done" &&
+              parseDate(task.dueDate) &&
+              parseDate(task.dueDate) < startOfToday(),
+          ).length;
+          const upcoming = tasks.filter(
+            (task) =>
+              task.status !== "done" &&
+              parseDate(task.dueDate) &&
+              parseDate(task.dueDate) >= startOfToday(),
+          ).length;
+          const linked = tasks.filter((task) => task.nodeId).length;
+          const completion = tasks.length
+            ? Math.round((done / tasks.length) * 100)
+            : 0;
+          const coverage = tasks.length
+            ? Math.round((linked / tasks.length) * 100)
+            : 0;
+          const activity = [
+            ...nodes.map((node) => ({
+              type: "node",
+              title: node.title,
+              updatedAt: node.updatedAt,
+            })),
+            ...tasks.map((task) => ({
+              type: "task",
+              title: task.title,
+              updatedAt: task.updatedAt,
+            })),
+            ...(workflow
+              ? [
+                  {
+                    type: "workflow",
+                    title: workflow.name,
+                    updatedAt: workflow.updatedAt,
+                  },
+                ]
+              : []),
+          ]
+            .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+            .slice(0, 8);
+
+          el.viewRoot.innerHTML = `
+            ${viewHeader(t("insights"), workflow?.name || t("untitled"))}
+            <section class="panel liquid-glass">
+              <div class="metric-grid">
+                ${renderMetric(t("nodeCount"), nodes.length)}
+                ${renderMetric(t("taskCount"), tasks.length)}
+                ${renderMetric(t("completion"), `${completion}%`)}
+                ${renderMetric(t("nodeCoverage"), `${coverage}%`)}
+              </div>
+            </section>
+            <section class="details-grid">
+              <div class="panel liquid-glass">
+                <h3 class="section-title" style="margin-bottom: 12px;">${escapeHtml(t("progress"))}</h3>
+                <div class="field">
+                  <div class="toolbar" style="justify-content: space-between;">
+                    <span class="row-meta">${escapeHtml(t("done"))}</span>
+                    <strong>${done}/${tasks.length}</strong>
+                  </div>
+                  <div class="progress-shell"><div class="progress-bar" style="width: ${completion}%"></div></div>
+                </div>
+                <div class="form-grid two" style="margin-top: 12px;">
+                  ${renderMetric(t("overdueTasks"), overdue)}
+                  ${renderMetric(t("upcomingTasks"), upcoming)}
+                </div>
+              </div>
+              <div class="panel liquid-glass">
+                <h3 class="section-title" style="margin-bottom: 12px;">${escapeHtml(t("recentActivity"))}</h3>
+                <div class="activity-list">
+                  ${
+                    activity.length
+                      ? activity
+                          .map(
+                            (item) => `
+                    <article class="activity-row">
+                      <strong class="row-title">${escapeHtml(item.title || t("untitled"))}</strong>
+                      <span class="row-meta">${escapeHtml(t(item.type))} · ${escapeHtml(formatDateTime(item.updatedAt))}</span>
+                    </article>
+                  `,
+                          )
+                          .join("")
+                      : `<div class="row-meta">${escapeHtml(t("noActivity"))}</div>`
+                  }
+                </div>
+              </div>
+            </section>
+          `;
+        };
+
+        const startOfToday = () => {
+          const date = new Date();
+          date.setHours(0, 0, 0, 0);
+          return date;
+        };
+
+        const renderMetric = (label, value) => `
+          <div class="metric-card">
+            <strong>${escapeHtml(value)}</strong>
+            <span>${escapeHtml(label)}</span>
+          </div>
+        `;
+
+        const renderSettingsView = () => {
+          el.viewRoot.innerHTML = `
+            ${viewHeader(
+              t("settings"),
+              t("localOnly"),
+              `
+              <button class="secondary-button" type="button" data-action="export-json">
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span>${escapeHtml(t("export"))}</span>
+              </button>
+              <button class="secondary-button" type="button" data-action="import-json">
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 21V9m0 0 4 4m-4-4-4 4M5 3h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span>${escapeHtml(t("import"))}</span>
+              </button>
+            `,
+            )}
+            <section class="details-grid">
+              <div class="panel liquid-glass">
+                <h3 class="section-title" style="margin-bottom: 12px;">${escapeHtml(t("settings"))}</h3>
+                <div class="settings-grid">
+                  <label class="switch-row">
+                    <span class="switch-copy">
+                      <strong>${escapeHtml(t("privacyMode"))}</strong>
+                      <span>${escapeHtml(t("privacyModeText"))}</span>
+                    </span>
+                    <span class="toggle">
+                      <input type="checkbox" data-setting="privacyMode" ${state.settings.privacyMode ? "checked" : ""} />
+                      <span></span>
+                    </span>
+                  </label>
+                  <label class="switch-row">
+                    <span class="switch-copy">
+                      <strong>${escapeHtml(t("compactMode"))}</strong>
+                      <span>${escapeHtml(t("compactModeText"))}</span>
+                    </span>
+                    <span class="toggle">
+                      <input type="checkbox" data-setting="compactMode" ${state.settings.compactMode ? "checked" : ""} />
+                      <span></span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div class="panel liquid-glass">
+                <h3 class="section-title" style="margin-bottom: 12px;">${escapeHtml(t("dataTools"))}</h3>
+                <div class="settings-grid">
+                  <button class="secondary-button" type="button" data-action="export-json">${escapeHtml(t("exportJson"))}</button>
+                  <button class="secondary-button" type="button" data-action="import-json">${escapeHtml(t("importJson"))}</button>
+                  <button class="danger-button" type="button" data-action="clear-workflow">${escapeHtml(t("clearWorkflow"))}</button>
+                  <button class="danger-button" type="button" data-action="clear-all">${escapeHtml(t("clearAllData"))}</button>
+                </div>
+              </div>
+            </section>
+          `;
+        };
+
+        const workflowForm = (workflow = {}) => {
+          const color = workflow.color || nodeColors[0];
+          return `
+            <form id="workflowForm" class="form-grid">
+              <div class="field">
+                <label for="workflowName">${escapeHtml(t("workflowName"))}</label>
+                <input class="input" id="workflowName" name="name" required value="${escapeHtml(workflow.name || "")}" maxlength="90" />
+              </div>
+              <div class="field">
+                <label for="workflowDescription">${escapeHtml(t("workflowDescription"))}</label>
+                <textarea class="textarea" id="workflowDescription" name="description" maxlength="800">${escapeHtml(workflow.description || "")}</textarea>
+              </div>
+              <div class="form-grid two">
+                <div class="field">
+                  <label for="workflowStatus">${escapeHtml(t("workflowStatus"))}</label>
+                  <select class="select" id="workflowStatus" name="status">
+                    ${statusOptions.workflow.map((status) => `<option value="${status}" ${workflow.status === status ? "selected" : ""}>${escapeHtml(t(status))}</option>`).join("")}
+                  </select>
+                </div>
+                <div class="field">
+                  <span class="field-label">${escapeHtml(t("color"))}</span>
+                  <div class="toolbar">
+                    ${nodeColors
+                      .map(
+                        (item) => `
+                      <label class="icon-button" style="background: ${escapeHtml(item)}; border-color: ${item === color ? "#fff" : "transparent"};">
+                        <input class="sr-only" type="radio" name="color" value="${escapeHtml(item)}" ${item === color ? "checked" : ""} />
+                        <span class="sr-only">${escapeHtml(item)}</span>
+                      </label>
+                    `,
+                      )
+                      .join("")}
+                  </div>
+                </div>
+              </div>
+            </form>
+          `;
+        };
+
+        const openWorkflowModal = (workflow = null) => {
+          const editing = Boolean(workflow);
+          const id = openModal({
+            title: editing ? t("editWorkflow") : t("createWorkflow"),
+            body: workflowForm(workflow || {}),
+            footer: `
+              ${editing ? `<button class="danger-button" type="button" data-confirm-delete-workflow="${escapeHtml(workflow.id)}">${escapeHtml(t("delete"))}</button>` : ""}
+              ${editing ? `<button class="secondary-button" type="button" data-duplicate-workflow="${escapeHtml(workflow.id)}">${escapeHtml(t("duplicate"))}</button>` : ""}
+              <button class="secondary-button" type="button" data-modal-close="${idMarker()}">${escapeHtml(t("cancel"))}</button>
+              <button class="primary-button" type="submit" form="workflowForm">${escapeHtml(editing ? t("save") : t("create"))}</button>
+            `,
+            onMount: (layer, modalId) => {
+              layer
+                .querySelector("[data-modal-close='__MODAL__']")
+                ?.setAttribute("data-modal-close", modalId);
+              layer
+                .querySelector("#workflowForm")
+                .addEventListener("submit", async (event) => {
+                  event.preventDefault();
+                  const data = new FormData(event.currentTarget);
+                  const name = String(data.get("name") || "").trim();
+                  if (!name) {
+                    showToast("error", t("error"), t("nameRequired"));
+                    return;
+                  }
+                  const timestamp = now();
+                  if (editing) {
+                    Object.assign(workflow, {
+                      name,
+                      description: String(data.get("description") || "").trim(),
+                      status: String(data.get("status") || "planning"),
+                      color: String(data.get("color") || nodeColors[0]),
+                      updatedAt: timestamp,
+                    });
+                    await putRecord("workflows", workflow);
+                    showToast("success", t("updated"), t("workflowUpdated"));
+                  } else {
+                    const created = {
+                      id: uid(),
+                      name,
+                      description: String(data.get("description") || "").trim(),
+                      status: String(data.get("status") || "planning"),
+                      color: String(data.get("color") || nodeColors[0]),
+                      createdAt: timestamp,
+                      updatedAt: timestamp,
+                    };
+                    await putRecord("workflows", created);
+                    state.activeWorkflowId = created.id;
+                    state.settings.activeWorkflowId = created.id;
+                    await saveSettings();
+                    showToast("success", t("created"), t("workflowCreated"));
+                  }
+                  await loadData();
+                  closeModal(modalId);
+                  render();
+                });
+            },
+          });
+          return id;
+        };
+
+        const idMarker = () => "__MODAL__";
+
+        const nodeForm = (node = {}, contextNodeId = "") => {
+          const nodes = workflowNodes().filter((item) => item.id !== node.id);
+          const color =
+            node.color ||
+            nodeColors[nodes.length % nodeColors.length] ||
+            nodeColors[0];
+          return `
+            <form id="nodeForm" class="form-grid">
+              <div class="field">
+                <label for="nodeTitle">${escapeHtml(t("nodeTitle"))}</label>
+                <input class="input" id="nodeTitle" name="title" required value="${escapeHtml(node.title || "")}" maxlength="90" />
+              </div>
+              <div class="field">
+                <label for="nodeNotes">${escapeHtml(t("nodeNotes"))}</label>
+                <textarea class="textarea" id="nodeNotes" name="notes" maxlength="900">${escapeHtml(node.notes || "")}</textarea>
+              </div>
+              <div class="form-grid two">
+                <div class="field">
+                  <label for="parentNode">${escapeHtml(t("parentNode"))}</label>
+                  <select class="select" id="parentNode" name="parentId">
+                    <option value="">${escapeHtml(t("noParent"))}</option>
+                    ${nodes.map((item) => `<option value="${escapeHtml(item.id)}" ${(node.parentId || contextNodeId) === item.id ? "selected" : ""}>${escapeHtml(item.title || t("untitled"))}</option>`).join("")}
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="nodeStatus">${escapeHtml(t("nodeStatus"))}</label>
+                  <select class="select" id="nodeStatus" name="status">
+                    ${statusOptions.node.map((status) => `<option value="${status}" ${node.status === status ? "selected" : ""}>${escapeHtml(t(status))}</option>`).join("")}
+                  </select>
+                </div>
+              </div>
+              <div class="field">
+                <span class="field-label">${escapeHtml(t("color"))}</span>
+                <div class="toolbar">
+                  ${nodeColors
+                    .map(
+                      (item) => `
+                    <label class="icon-button" style="background: ${escapeHtml(item)}; border-color: ${item === color ? "#fff" : "transparent"};">
+                      <input class="sr-only" type="radio" name="color" value="${escapeHtml(item)}" ${item === color ? "checked" : ""} />
+                      <span class="sr-only">${escapeHtml(item)}</span>
+                    </label>
+                  `,
+                    )
+                    .join("")}
+                </div>
+              </div>
+            </form>
+          `;
+        };
+
+        const openNodeModal = (node = null, contextNodeId = "") => {
+          if (!activeWorkflow()) {
+            showToast("warning", t("error"), t("noWorkflowsTitle"));
+            return;
+          }
+          const editing = Boolean(node);
+          openModal({
+            title: editing ? t("edit") : t("addNode"),
+            body: nodeForm(node || {}, contextNodeId),
+            footer: `
+              ${editing ? `<button class="danger-button" type="button" data-delete-node="${escapeHtml(node.id)}">${escapeHtml(t("delete"))}</button>` : ""}
+              <button class="secondary-button" type="button" data-modal-close="__MODAL__">${escapeHtml(t("cancel"))}</button>
+              <button class="primary-button" type="submit" form="nodeForm">${escapeHtml(editing ? t("save") : t("create"))}</button>
+            `,
+            onMount: (layer, modalId) => {
+              layer
+                .querySelector("[data-modal-close='__MODAL__']")
+                ?.setAttribute("data-modal-close", modalId);
+              layer
+                .querySelector("#nodeForm")
+                .addEventListener("submit", async (event) => {
+                  event.preventDefault();
+                  const data = new FormData(event.currentTarget);
+                  const title = String(data.get("title") || "").trim();
+                  if (!title) {
+                    showToast("error", t("error"), t("titleRequired"));
+                    return;
+                  }
+                  const timestamp = now();
+                  if (editing) {
+                    Object.assign(node, {
+                      title,
+                      notes: String(data.get("notes") || "").trim(),
+                      parentId: String(data.get("parentId") || ""),
+                      status: String(data.get("status") || "idea"),
+                      color: String(data.get("color") || nodeColors[0]),
+                      updatedAt: timestamp,
+                    });
+                    await putRecord("nodes", node);
+                    showToast("success", t("updated"), t("nodeUpdated"));
+                  } else {
+                    const position = nextNodePosition();
+                    const created = {
+                      id: uid(),
+                      workflowId: state.activeWorkflowId,
+                      parentId: String(data.get("parentId") || ""),
+                      title,
+                      notes: String(data.get("notes") || "").trim(),
+                      status: String(data.get("status") || "idea"),
+                      color: String(data.get("color") || nodeColors[0]),
+                      x: position.x,
+                      y: position.y,
+                      createdAt: timestamp,
+                      updatedAt: timestamp,
+                    };
+                    await putRecord("nodes", created);
+                    state.selectedNodeId = created.id;
+                    showToast("success", t("created"), t("nodeCreated"));
+                  }
+                  await touchWorkflow();
+                  await loadData();
+                  closeModal(modalId);
+                  render();
+                });
+            },
+          });
+        };
+
+        const nextNodePosition = () => {
+          const nodes = workflowNodes();
+          if (!nodes.length) return { x: 80, y: 80 };
+          const index = nodes.length;
+          const angle = index * 0.85;
+          const radius = 190 + Math.floor(index / 7) * 130;
+          return {
+            x: Math.round(420 + Math.cos(angle) * radius),
+            y: Math.round(260 + Math.sin(angle) * radius),
+          };
+        };
+
+        const padDatePart = (value) => String(value).padStart(2, "0");
+
+        const toDateValue = (date) =>
+          `${date.getFullYear()}-${padDatePart(date.getMonth() + 1)}-${padDatePart(date.getDate())}`;
+
+        const toMonthValue = (date) =>
+          `${date.getFullYear()}-${padDatePart(date.getMonth() + 1)}`;
+
+        const parseMonthValue = (value) => {
+          const [year, month] = String(value || "")
+            .split("-")
+            .map(Number);
+          if (!year || !month) return null;
+          return new Date(year, month - 1, 1);
+        };
+
+        const locale = () => languageLocale();
+
+        const formatCalendarDateLabel = (value) => {
+          const date = parseDate(value);
+          if (!date) return t("noDueDate");
+          return date.toLocaleDateString(locale(), {
+            weekday: "short",
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          });
+        };
+
+        const renderDatePicker = (selectedValue = "") => {
+          const selectedDate = parseDate(selectedValue);
+          const monthDate = selectedDate || new Date();
+          return `
+            <div class="date-field" data-date-picker data-month="${escapeHtml(toMonthValue(monthDate))}">
+              <input id="taskDueDate" name="dueDate" type="hidden" value="${escapeHtml(selectedValue)}" />
+              <button class="date-trigger" id="taskDueDateButton" type="button" data-date-toggle aria-expanded="false">
+                <span data-date-label>${escapeHtml(formatCalendarDateLabel(selectedValue))}</span>
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M7 3v3m10-3v3M4 9h16M6 5h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <div class="date-popover liquid-glass hidden" data-date-popover>
+                ${renderDatePickerCalendar(monthDate, selectedValue)}
+              </div>
+            </div>
+          `;
+        };
+
+        const renderDatePickerCalendar = (monthDate, selectedValue = "") => {
+          const first = new Date(
+            monthDate.getFullYear(),
+            monthDate.getMonth(),
+            1,
+          );
+          const startOffset = first.getDay();
+          const todayValue = toDateValue(new Date());
+          const weekdayLabels = Array.from({ length: 7 }, (_, index) =>
+            new Date(2026, 5, 28 + index).toLocaleDateString(locale(), {
+              weekday: "short",
+            }),
+          );
+          const days = Array.from({ length: 42 }, (_, index) => {
+            const date = new Date(
+              first.getFullYear(),
+              first.getMonth(),
+              index - startOffset + 1,
+            );
+            const value = toDateValue(date);
+            const outside = date.getMonth() !== first.getMonth();
+            return `
+              <button class="calendar-day ${outside ? "outside" : ""} ${value === todayValue ? "today" : ""} ${value === selectedValue ? "selected" : ""}" type="button" data-date-select="${escapeHtml(value)}" aria-label="${escapeHtml(formatCalendarDateLabel(value))}">
+                ${date.getDate()}
+              </button>
+            `;
+          });
+          return `
+            <div class="calendar-header">
+              <button class="icon-button" type="button" data-date-prev aria-label="${escapeHtml(t("previousMonth"))}" style="width: 34px; height: 34px; min-height: 34px;">
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="m15 18-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <span class="calendar-title">${escapeHtml(
+                first.toLocaleDateString(locale(), {
+                  month: "long",
+                  year: "numeric",
+                }),
+              )}</span>
+              <button class="icon-button" type="button" data-date-next aria-label="${escapeHtml(t("nextMonth"))}" style="width: 34px; height: 34px; min-height: 34px;">
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+            </div>
+            <div class="calendar-grid">
+              ${weekdayLabels.map((label) => `<span class="calendar-weekday">${escapeHtml(label)}</span>`).join("")}
+              ${days.join("")}
+            </div>
+            <div class="calendar-footer">
+              <button class="chip-button" type="button" data-date-clear>${escapeHtml(t("clearDate"))}</button>
+            </div>
+          `;
+        };
+
+        const updateDatePicker = (picker, monthDate = null) => {
+          if (!picker) return;
+          const hiddenInput = picker.querySelector("input[name='dueDate']");
+          const popover = picker.querySelector("[data-date-popover]");
+          const label = picker.querySelector("[data-date-label]");
+          const selectedValue = hiddenInput?.value || "";
+          const nextMonth =
+            monthDate ||
+            parseMonthValue(picker.dataset.month) ||
+            parseDate(selectedValue) ||
+            new Date();
+          picker.dataset.month = toMonthValue(nextMonth);
+          if (popover) {
+            popover.innerHTML = renderDatePickerCalendar(
+              nextMonth,
+              selectedValue,
+            );
+          }
+          if (label) {
+            label.textContent = formatCalendarDateLabel(selectedValue);
+          }
+        };
+
+        const closeDatePickers = (except = null) => {
+          document.querySelectorAll("[data-date-picker]").forEach((picker) => {
+            if (picker === except) return;
+            picker
+              .querySelector("[data-date-popover]")
+              ?.classList.add("hidden");
+            picker
+              .querySelector("[data-date-toggle]")
+              ?.setAttribute("aria-expanded", "false");
+          });
+        };
+
+        const toggleDatePicker = (picker) => {
+          if (!picker) return;
+          const popover = picker.querySelector("[data-date-popover]");
+          const trigger = picker.querySelector("[data-date-toggle]");
+          if (!popover || !trigger) return;
+          const shouldOpen = popover.classList.contains("hidden");
+          closeDatePickers(picker);
+          popover.classList.toggle("hidden", !shouldOpen);
+          trigger.setAttribute("aria-expanded", String(shouldOpen));
+        };
+
+        const shiftDatePickerMonth = (picker, direction) => {
+          const current =
+            parseMonthValue(picker?.dataset.month) ||
+            parseDate(picker?.querySelector("input[name='dueDate']")?.value) ||
+            new Date();
+          updateDatePicker(
+            picker,
+            new Date(current.getFullYear(), current.getMonth() + direction, 1),
+          );
+        };
+
+        const setDatePickerValue = (picker, value) => {
+          const hiddenInput = picker?.querySelector("input[name='dueDate']");
+          if (!hiddenInput) return;
+          hiddenInput.value = value;
+          updateDatePicker(
+            picker,
+            parseDate(value) || parseMonthValue(picker.dataset.month),
+          );
+          closeDatePickers();
+        };
+
+        const taskForm = (task = {}, nodeContext = "") => {
+          const nodes = workflowNodes();
+          return `
+            <form id="taskForm" class="form-grid">
+              <div class="field">
+                <label for="taskTitle">${escapeHtml(t("taskTitle"))}</label>
+                <input class="input" id="taskTitle" name="title" required value="${escapeHtml(task.title || "")}" maxlength="120" />
+              </div>
+              <div class="field">
+                <label for="taskDescription">${escapeHtml(t("taskDescription"))}</label>
+                <textarea class="textarea" id="taskDescription" name="description" maxlength="1000">${escapeHtml(task.description || "")}</textarea>
+              </div>
+              <div class="form-grid three">
+                <div class="field">
+                  <label for="taskStatus">${escapeHtml(t("taskStatus"))}</label>
+                  <select class="select" id="taskStatus" name="status">
+                    ${statusOptions.task.map((status) => `<option value="${status}" ${task.status === status ? "selected" : ""}>${escapeHtml(t(status))}</option>`).join("")}
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="taskPriority">${escapeHtml(t("priority"))}</label>
+                  <select class="select" id="taskPriority" name="priority">
+                    ${statusOptions.priority.map((priority) => `<option value="${priority}" ${(task.priority || "medium") === priority ? "selected" : ""}>${escapeHtml(t(priority))}</option>`).join("")}
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="taskDueDateButton">${escapeHtml(t("dueDate"))}</label>
+                  ${renderDatePicker(task.dueDate || "")}
+                </div>
+              </div>
+              <div class="field">
+                <label for="linkedNode">${escapeHtml(t("linkedNode"))}</label>
+                <select class="select" id="linkedNode" name="nodeId">
+                  <option value="">${escapeHtml(t("unassigned"))}</option>
+                  ${nodes.map((node) => `<option value="${escapeHtml(node.id)}" ${(task.nodeId || nodeContext) === node.id ? "selected" : ""}>${escapeHtml(node.title || t("untitled"))}</option>`).join("")}
+                </select>
+              </div>
+            </form>
+          `;
+        };
+
+        const openTaskModal = (task = null, nodeContext = "") => {
+          if (!activeWorkflow()) {
+            showToast("warning", t("error"), t("noWorkflowsTitle"));
+            return;
+          }
+          const editing = Boolean(task);
+          openModal({
+            title: editing ? t("edit") : t("addTask"),
+            body: taskForm(task || {}, nodeContext),
+            footer: `
+              ${editing ? `<button class="danger-button" type="button" data-delete-task="${escapeHtml(task.id)}">${escapeHtml(t("delete"))}</button>` : ""}
+              <button class="secondary-button" type="button" data-modal-close="__MODAL__">${escapeHtml(t("cancel"))}</button>
+              <button class="primary-button" type="submit" form="taskForm">${escapeHtml(editing ? t("save") : t("create"))}</button>
+            `,
+            onMount: (layer, modalId) => {
+              layer
+                .querySelector("[data-modal-close='__MODAL__']")
+                ?.setAttribute("data-modal-close", modalId);
+              layer
+                .querySelector("#taskForm")
+                .addEventListener("submit", async (event) => {
+                  event.preventDefault();
+                  const data = new FormData(event.currentTarget);
+                  const title = String(data.get("title") || "").trim();
+                  if (!title) {
+                    showToast("error", t("error"), t("titleRequired"));
+                    return;
+                  }
+                  const timestamp = now();
+                  if (editing) {
+                    Object.assign(task, {
+                      title,
+                      description: String(data.get("description") || "").trim(),
+                      status: String(data.get("status") || "todo"),
+                      priority: String(data.get("priority") || "medium"),
+                      dueDate: String(data.get("dueDate") || ""),
+                      nodeId: String(data.get("nodeId") || ""),
+                      updatedAt: timestamp,
+                    });
+                    await putRecord("tasks", task);
+                    showToast("success", t("updated"), t("taskUpdated"));
+                  } else {
+                    const created = {
+                      id: uid(),
+                      workflowId: state.activeWorkflowId,
+                      nodeId: String(data.get("nodeId") || ""),
+                      title,
+                      description: String(data.get("description") || "").trim(),
+                      status: String(data.get("status") || "todo"),
+                      priority: String(data.get("priority") || "medium"),
+                      dueDate: String(data.get("dueDate") || ""),
+                      createdAt: timestamp,
+                      updatedAt: timestamp,
+                    };
+                    await putRecord("tasks", created);
+                    showToast("success", t("created"), t("taskCreated"));
+                  }
+                  await touchWorkflow();
+                  await loadData();
+                  closeModal(modalId);
+                  render();
+                });
+            },
+          });
+        };
+
+        const openConfirmModal = ({ message, onConfirm }) => {
+          openModal({
+            title: t("confirmDeleteTitle"),
+            body: `<p class="view-subtitle">${escapeHtml(message)}</p>`,
+            footer: `
+              <button class="secondary-button" type="button" data-modal-close="__MODAL__">${escapeHtml(t("cancel"))}</button>
+              <button class="danger-button" type="button" data-confirm-action>${escapeHtml(t("delete"))}</button>
+            `,
+            onMount: (layer, modalId) => {
+              layer
+                .querySelector("[data-modal-close='__MODAL__']")
+                ?.setAttribute("data-modal-close", modalId);
+              layer
+                .querySelector("[data-confirm-action]")
+                .addEventListener("click", async () => {
+                  await onConfirm();
+                  closeModal(modalId);
+                });
+            },
+          });
+        };
+
+        const openSearchModal = () => {
+          const body = `
+            <div class="form-grid">
+              <div class="field">
+                <label for="globalSearch">${escapeHtml(t("searchEverything"))}</label>
+                <input class="input" id="globalSearch" type="search" placeholder="${escapeHtml(t("searchPlaceholder"))}" autofocus />
+              </div>
+              <div>
+                <h3 class="section-title" style="margin-bottom: 8px;">${escapeHtml(t("results"))}</h3>
+                <div class="activity-list" id="globalSearchResults"><div class="row-meta">${escapeHtml(t("noResults"))}</div></div>
+              </div>
+            </div>
+          `;
+          openModal({
+            title: t("search"),
+            body,
+            width: "720px",
+            onMount: (layer) => {
+              const input = layer.querySelector("#globalSearch");
+              const results = layer.querySelector("#globalSearchResults");
+              const renderResults = () => {
+                const query = input.value.trim().toLowerCase();
+                if (!query) {
+                  results.innerHTML = `<div class="row-meta">${escapeHtml(t("noResults"))}</div>`;
+                  return;
+                }
+                const matches = [
+                  ...state.workflows.map((workflow) => ({
+                    type: "workflow",
+                    id: workflow.id,
+                    title: workflow.name,
+                    body: workflow.description,
+                  })),
+                  ...state.nodes.map((node) => ({
+                    type: "node",
+                    id: node.id,
+                    workflowId: node.workflowId,
+                    title: node.title,
+                    body: node.notes,
+                  })),
+                  ...state.tasks.map((task) => ({
+                    type: "task",
+                    id: task.id,
+                    workflowId: task.workflowId,
+                    title: task.title,
+                    body: task.description,
+                  })),
+                ]
+                  .filter((item) =>
+                    `${item.title} ${item.body}`.toLowerCase().includes(query),
+                  )
+                  .slice(0, 20);
+                results.innerHTML = matches.length
+                  ? matches
+                      .map(
+                        (item) => `
+                  <article class="activity-row">
+                    <strong class="row-title">${escapeHtml(item.title || t("untitled"))}</strong>
+                    <span class="row-meta">${escapeHtml(t(item.type))}</span>
+                    <button class="chip-button" type="button" data-open-result="${escapeHtml(item.type)}" data-result-id="${escapeHtml(item.id)}" data-workflow-id="${escapeHtml(item.workflowId || item.id)}">${escapeHtml(t("open"))}</button>
+                  </article>
+                `,
+                      )
+                      .join("")
+                  : `<div class="row-meta">${escapeHtml(t("noResults"))}</div>`;
+              };
+              input.addEventListener("input", renderResults);
+              input.focus();
+            },
+          });
+          showToast("info", t("search"), t("searchOpened"));
+        };
+
+        const openStackDemo = () => {
+          openModal({
+            title: `${t("modalStackTitle")} ${state.modals.length + 1}`,
+            body: `<p class="view-subtitle">${escapeHtml(t("modalStackBody"))}</p>`,
+            footer: `
+              <button class="secondary-button" type="button" data-modal-close="__MODAL__">${escapeHtml(t("close"))}</button>
+              <button class="primary-button" type="button" data-action="open-stack-demo">${escapeHtml(t("openAnother"))}</button>
+            `,
+            onMount: (layer, modalId) => {
+              layer
+                .querySelector("[data-modal-close='__MODAL__']")
+                ?.setAttribute("data-modal-close", modalId);
+            },
+          });
+          showToast("info", t("stack"), t("stackOpened"));
+        };
+
+        const exportData = async () => {
+          const payload = {
+            app: "Munetios Workflow BETA",
+            version: 1,
+            exportedAt: now(),
+            workflows: state.workflows,
+            nodes: state.nodes,
+            tasks: state.tasks,
+            settings: state.settings,
+          };
+          const text = JSON.stringify(payload, null, 2);
+          await navigator.clipboard?.writeText(text).catch(() => null);
+          const blob = new Blob([text], { type: "application/json" });
+          const url = URL.createObjectURL(blob);
+          const anchor = document.createElement("a");
+          anchor.href = url;
+          anchor.download = `munetios-workflow-${new Date().toISOString().slice(0, 10)}.json`;
+          anchor.click();
+          URL.revokeObjectURL(url);
+          showToast("success", t("exported"), t("dataExported"));
+        };
+
+        const openImportModal = () => {
+          openModal({
+            title: t("importJson"),
+            body: `
+              <form id="importForm" class="form-grid">
+                <div class="field">
+                  <label for="importJson">${escapeHtml(t("pasteJson"))}</label>
+                  <textarea class="textarea" id="importJson" name="json" required style="min-height: 240px;"></textarea>
+                </div>
+                <div class="field">
+                  <label for="importMode">${escapeHtml(t("importMode"))}</label>
+                  <select class="select" id="importMode" name="mode">
+                    <option value="merge">${escapeHtml(t("mergeData"))}</option>
+                    <option value="replace">${escapeHtml(t("replaceAll"))}</option>
+                  </select>
+                </div>
+              </form>
+            `,
+            footer: `
+              <button class="secondary-button" type="button" data-modal-close="__MODAL__">${escapeHtml(t("cancel"))}</button>
+              <button class="primary-button" type="submit" form="importForm">${escapeHtml(t("import"))}</button>
+            `,
+            onMount: (layer, modalId) => {
+              layer
+                .querySelector("[data-modal-close='__MODAL__']")
+                ?.setAttribute("data-modal-close", modalId);
+              layer
+                .querySelector("#importForm")
+                .addEventListener("submit", async (event) => {
+                  event.preventDefault();
+                  const data = new FormData(event.currentTarget);
+                  try {
+                    const payload = JSON.parse(String(data.get("json") || ""));
+                    await importData(
+                      payload,
+                      String(data.get("mode") || "merge"),
+                    );
+                    closeModal(modalId);
+                    showToast("success", t("imported"), t("dataImported"));
+                  } catch (error) {
+                    showToast("error", t("error"), t("importInvalid"));
+                  }
+                });
+            },
+          });
+        };
+
+        const importData = async (payload, mode) => {
+          if (
+            !payload ||
+            !Array.isArray(payload.workflows) ||
+            !Array.isArray(payload.nodes) ||
+            !Array.isArray(payload.tasks)
+          ) {
+            throw new Error("Invalid import");
+          }
+          const stamp = now();
+          const workflows = payload.workflows.map((workflow) => ({
+            id: String(workflow.id || uid()),
+            name: String(workflow.name || t("untitled")),
+            description: String(workflow.description || ""),
+            status: statusOptions.workflow.includes(workflow.status)
+              ? workflow.status
+              : "planning",
+            color: String(workflow.color || nodeColors[0]),
+            createdAt: workflow.createdAt || stamp,
+            updatedAt: workflow.updatedAt || stamp,
+          }));
+          const workflowIds = new Set(workflows.map((workflow) => workflow.id));
+          const nodes = payload.nodes
+            .filter((node) => workflowIds.has(node.workflowId))
+            .map((node) => ({
+              id: String(node.id || uid()),
+              workflowId: String(node.workflowId),
+              parentId: String(node.parentId || ""),
+              title: String(node.title || t("untitled")),
+              notes: String(node.notes || ""),
+              status: statusOptions.node.includes(node.status)
+                ? node.status
+                : "idea",
+              color: String(node.color || nodeColors[0]),
+              x: Number(node.x) || 80,
+              y: Number(node.y) || 80,
+              createdAt: node.createdAt || stamp,
+              updatedAt: node.updatedAt || stamp,
+            }));
+          const nodeIds = new Set(nodes.map((node) => node.id));
+          const tasks = payload.tasks
+            .filter((task) => workflowIds.has(task.workflowId))
+            .map((task) => ({
+              id: String(task.id || uid()),
+              workflowId: String(task.workflowId),
+              nodeId: nodeIds.has(task.nodeId) ? String(task.nodeId) : "",
+              title: String(task.title || t("untitled")),
+              description: String(task.description || ""),
+              status: statusOptions.task.includes(task.status)
+                ? task.status
+                : "todo",
+              priority: statusOptions.priority.includes(task.priority)
+                ? task.priority
+                : "medium",
+              dueDate: String(task.dueDate || ""),
+              createdAt: task.createdAt || stamp,
+              updatedAt: task.updatedAt || stamp,
+            }));
+
+          if (mode === "replace") {
+            await clearStores(["workflows", "nodes", "tasks"]);
+          }
+          await bulkPut("workflows", workflows);
+          await bulkPut("nodes", nodes);
+          await bulkPut("tasks", tasks);
+          state.settings.activeWorkflowId =
+            workflows[0]?.id || state.activeWorkflowId;
+          await saveSettings();
+          await loadData();
+          render();
+        };
+
+        const deleteWorkflow = async (workflowId) => {
+          await bulkDelete(
+            "tasks",
+            state.tasks
+              .filter((task) => task.workflowId === workflowId)
+              .map((task) => task.id),
+          );
+          await bulkDelete(
+            "nodes",
+            state.nodes
+              .filter((node) => node.workflowId === workflowId)
+              .map((node) => node.id),
+          );
+          await deleteRecord("workflows", workflowId);
+          if (state.activeWorkflowId === workflowId) {
+            state.activeWorkflowId =
+              state.workflows.find((workflow) => workflow.id !== workflowId)
+                ?.id || null;
+            state.settings.activeWorkflowId = state.activeWorkflowId;
+            await saveSettings();
+          }
+          await loadData();
+          render();
+          showToast("success", t("deleted"), t("workflowDeleted"));
+        };
+
+        const duplicateWorkflow = async (workflowId) => {
+          const workflow = state.workflows.find(
+            (item) => item.id === workflowId,
+          );
+          if (!workflow) return;
+          const timestamp = now();
+          const newWorkflowId = uid();
+          const nodeMap = new Map();
+          const sourceNodes = state.nodes.filter(
+            (node) => node.workflowId === workflowId,
+          );
+          const newNodes = sourceNodes
+            .map((node) => {
+              const newId = uid();
+              nodeMap.set(node.id, newId);
+              return {
+                ...node,
+                id: newId,
+                workflowId: newWorkflowId,
+                parentId: "",
+                x: (Number(node.x) || 0) + 40,
+                y: (Number(node.y) || 0) + 40,
+                createdAt: timestamp,
+                updatedAt: timestamp,
+              };
+            })
+            .map((node, index) => ({
+              ...node,
+              parentId: nodeMap.get(sourceNodes[index].parentId) || "",
+            }));
+          const newTasks = state.tasks
+            .filter((task) => task.workflowId === workflowId)
+            .map((task) => ({
+              ...task,
+              id: uid(),
+              workflowId: newWorkflowId,
+              nodeId: nodeMap.get(task.nodeId) || "",
+              createdAt: timestamp,
+              updatedAt: timestamp,
+            }));
+          const created = {
+            ...workflow,
+            id: newWorkflowId,
+            name: `${workflow.name} Copy`,
+            createdAt: timestamp,
+            updatedAt: timestamp,
+          };
+          await putRecord("workflows", created);
+          await bulkPut("nodes", newNodes);
+          await bulkPut("tasks", newTasks);
+          state.activeWorkflowId = newWorkflowId;
+          state.settings.activeWorkflowId = newWorkflowId;
+          await saveSettings();
+          await loadData();
+          closeTopModal();
+          render();
+          showToast("success", t("created"), t("workflowDuplicated"));
+        };
+
+        const deleteNode = async (nodeId) => {
+          const childUpdates = state.nodes
+            .filter((node) => node.parentId === nodeId)
+            .map((node) => ({ ...node, parentId: "", updatedAt: now() }));
+          const taskUpdates = state.tasks
+            .filter((task) => task.nodeId === nodeId)
+            .map((task) => ({ ...task, nodeId: "", updatedAt: now() }));
+          await bulkPut("nodes", childUpdates);
+          await bulkPut("tasks", taskUpdates);
+          await deleteRecord("nodes", nodeId);
+          if (state.selectedNodeId === nodeId) state.selectedNodeId = null;
+          await touchWorkflow();
+          await loadData();
+          closeTopModal();
+          render();
+          showToast("success", t("deleted"), t("nodeDeleted"));
+        };
+
+        const deleteTask = async (taskId) => {
+          await deleteRecord("tasks", taskId);
+          await touchWorkflow();
+          await loadData();
+          closeTopModal();
+          render();
+          showToast("success", t("deleted"), t("taskDeleted"));
+        };
+
+        const updateTaskStatus = async (taskId, status) => {
+          const task = state.tasks.find((item) => item.id === taskId);
+          if (!task) return;
+          task.status = status;
+          task.updatedAt = now();
+          await putRecord("tasks", task);
+          await touchWorkflow();
+          await loadData();
+          render();
+          showToast("success", t("updated"), t("taskUpdated"));
+        };
+
+        const clearWorkflow = async () => {
+          const workflowId = state.activeWorkflowId;
+          await bulkDelete(
+            "tasks",
+            state.tasks
+              .filter((task) => task.workflowId === workflowId)
+              .map((task) => task.id),
+          );
+          await bulkDelete(
+            "nodes",
+            state.nodes
+              .filter((node) => node.workflowId === workflowId)
+              .map((node) => node.id),
+          );
+          state.selectedNodeId = null;
+          await touchWorkflow();
+          await loadData();
+          render();
+          showToast("success", t("deleted"), t("dataCleared"));
+        };
+
+        const clearAllData = async () => {
+          await clearStores(["workflows", "nodes", "tasks"]);
+          state.activeWorkflowId = null;
+          state.selectedNodeId = null;
+          state.settings.activeWorkflowId = null;
+          await saveSettings();
+          await loadData();
+          render();
+          showToast("success", t("deleted"), t("dataCleared"));
+        };
+
+        const applyViewport = () => {
+          const viewport = document.getElementById("mindmapViewport");
+          if (!viewport) return;
+          const { x, y, scale } = state.settings.viewport || {
+            x: 0,
+            y: 0,
+            scale: 1,
+          };
+          viewport.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+        };
+
+        const drawConnections = () => {
+          const svg = document.getElementById("mindmapConnections");
+          const stage = document.getElementById("mindmapStage");
+          if (!svg || !stage) return;
+          const nodes = filteredNodes();
+          const visibleIds = new Set(nodes.map((node) => node.id));
+          const { x, y, scale } = state.settings.viewport || {
+            x: 0,
+            y: 0,
+            scale: 1,
+          };
+          svg.setAttribute(
+            "viewBox",
+            `0 0 ${stage.clientWidth} ${stage.clientHeight}`,
+          );
+          svg.innerHTML = nodes
+            .filter((node) => node.parentId && visibleIds.has(node.parentId))
+            .map((node) => {
+              const parent = state.nodes.find(
+                (item) => item.id === node.parentId,
+              );
+              if (!parent) return "";
+              const startX = x + (Number(parent.x) + NODE_WIDTH / 2) * scale;
+              const startY = y + (Number(parent.y) + NODE_HEIGHT / 2) * scale;
+              const endX = x + (Number(node.x) + NODE_WIDTH / 2) * scale;
+              const endY = y + (Number(node.y) + NODE_HEIGHT / 2) * scale;
+              const midX = (startX + endX) / 2;
+              return `<path d="M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}" stroke="rgba(244,194,255,.56)" stroke-width="2" fill="none" stroke-linecap="round" />`;
+            })
+            .join("");
+        };
+
+        const resetView = async () => {
+          state.settings.viewport = { x: 0, y: 0, scale: 1 };
+          await saveSettings();
+          applyViewport();
+          drawConnections();
+          showToast("info", t("overview"), t("viewReset"));
+        };
+
+        const fitView = async () => {
+          const stage = document.getElementById("mindmapStage");
+          const nodes = workflowNodes();
+          if (!stage || !nodes.length) return;
+          const minX = Math.min(...nodes.map((node) => Number(node.x) || 0));
+          const minY = Math.min(...nodes.map((node) => Number(node.y) || 0));
+          const maxX = Math.max(
+            ...nodes.map((node) => (Number(node.x) || 0) + NODE_WIDTH),
+          );
+          const maxY = Math.max(
+            ...nodes.map((node) => (Number(node.y) || 0) + NODE_HEIGHT),
+          );
+          const width = Math.max(maxX - minX, NODE_WIDTH);
+          const height = Math.max(maxY - minY, NODE_HEIGHT);
+          const scale = Math.min(
+            1.25,
+            Math.max(
+              0.45,
+              Math.min(
+                (stage.clientWidth - 80) / width,
+                (stage.clientHeight - 80) / height,
+              ),
+            ),
+          );
+          state.settings.viewport = {
+            x: Math.round(
+              (stage.clientWidth - width * scale) / 2 - minX * scale,
+            ),
+            y: Math.round(
+              (stage.clientHeight - height * scale) / 2 - minY * scale,
+            ),
+            scale,
+          };
+          await saveSettings();
+          applyViewport();
+          drawConnections();
+          showToast("info", t("overview"), t("saved"));
+        };
+
+        const startNodeDrag = (event, nodeId, targetElement) => {
+          const node = state.nodes.find((item) => item.id === nodeId);
+          if (!node) return;
+          const target =
+            targetElement || event.target.closest("[data-node-id]");
+          target?.setPointerCapture?.(event.pointerId);
+          target?.classList.add("dragging");
+          const viewport = state.settings.viewport || { x: 0, y: 0, scale: 1 };
+          state.drag = {
+            type: "node",
+            nodeId,
+            pointerId: event.pointerId,
+            startClientX: event.clientX,
+            startClientY: event.clientY,
+            startX: Number(node.x) || 0,
+            startY: Number(node.y) || 0,
+            scale: viewport.scale || 1,
+          };
+        };
+
+        const moveNodeDrag = (event) => {
+          if (!state.drag || state.drag.type !== "node") return;
+          const node = state.nodes.find(
+            (item) => item.id === state.drag.nodeId,
+          );
+          if (!node) return;
+          node.x = Math.round(
+            state.drag.startX +
+              (event.clientX - state.drag.startClientX) / state.drag.scale,
+          );
+          node.y = Math.round(
+            state.drag.startY +
+              (event.clientY - state.drag.startClientY) / state.drag.scale,
+          );
+          const element = document.querySelector(
+            `[data-node-id="${CSS.escape(node.id)}"]`,
+          );
+          if (element) {
+            element.style.left = `${node.x}px`;
+            element.style.top = `${node.y}px`;
+          }
+          drawConnections();
+        };
+
+        const endNodeDrag = async (event) => {
+          if (!state.drag || state.drag.type !== "node") return;
+          const node = state.nodes.find(
+            (item) => item.id === state.drag.nodeId,
+          );
+          document
+            .querySelector(`[data-node-id="${CSS.escape(state.drag.nodeId)}"]`)
+            ?.classList.remove("dragging");
+          state.drag = null;
+          if (node) {
+            node.updatedAt = now();
+            await putRecord("nodes", node);
+            await touchWorkflow();
+            await loadData();
+            renderSidebarStats();
+            showToast("success", t("saved"), t("nodeMoved"));
+          }
+          event.preventDefault();
+        };
+
+        const handleClick = async (event) => {
+          const modalClose = event.target.closest("[data-modal-close]");
+          if (modalClose) {
+            closeModal(modalClose.dataset.modalClose);
+            return;
+          }
+
+          const toastClose = event.target.closest("[data-toast-close]");
+          if (toastClose) {
+            state.toasts = state.toasts.filter(
+              (toast) => toast.id !== toastClose.dataset.toastClose,
+            );
+            renderToasts();
+            return;
+          }
+
+          const datePicker = event.target.closest("[data-date-picker]");
+          const dateToggle = event.target.closest("[data-date-toggle]");
+          const datePrevious = event.target.closest("[data-date-prev]");
+          const dateNext = event.target.closest("[data-date-next]");
+          const dateSelect = event.target.closest("[data-date-select]");
+          const dateClear = event.target.closest("[data-date-clear]");
+
+          if (dateToggle) {
+            toggleDatePicker(dateToggle.closest("[data-date-picker]"));
+            return;
+          }
+
+          if (datePrevious) {
+            shiftDatePickerMonth(
+              datePrevious.closest("[data-date-picker]"),
+              -1,
+            );
+            return;
+          }
+
+          if (dateNext) {
+            shiftDatePickerMonth(dateNext.closest("[data-date-picker]"), 1);
+            return;
+          }
+
+          if (dateSelect) {
+            setDatePickerValue(
+              dateSelect.closest("[data-date-picker]"),
+              dateSelect.dataset.dateSelect,
+            );
+            return;
+          }
+
+          if (dateClear) {
+            setDatePickerValue(dateClear.closest("[data-date-picker]"), "");
+            return;
+          }
+
+          if (!datePicker) closeDatePickers();
+
+          const action = event.target.closest("[data-action]")?.dataset.action;
+          const viewButton = event.target.closest("[data-view]");
+          const workflowId =
+            event.target.closest("[data-workflow-id]")?.dataset.workflowId;
+          const selectNodeId =
+            event.target.closest("[data-select-node]")?.dataset.selectNode;
+          const editNodeId =
+            event.target.closest("[data-edit-node]")?.dataset.editNode;
+          const editTaskId =
+            event.target.closest("[data-edit-task]")?.dataset.editTask;
+          const taskStatusButton = event.target.closest("[data-task-status]");
+          const deleteWorkflowButton = event.target.closest(
+            "[data-confirm-delete-workflow]",
+          );
+          const duplicateWorkflowButton = event.target.closest(
+            "[data-duplicate-workflow]",
+          );
+          const deleteNodeButton = event.target.closest("[data-delete-node]");
+          const deleteTaskButton = event.target.closest("[data-delete-task]");
+          const resultButton = event.target.closest("[data-open-result]");
+
+          if (workflowId) {
+            await setActiveWorkflow(workflowId);
+            return;
+          }
+
+          if (selectNodeId) {
+            state.selectedNodeId = selectNodeId;
+            render();
+            return;
+          }
+
+          if (editNodeId) {
+            openNodeModal(state.nodes.find((node) => node.id === editNodeId));
+            return;
+          }
+
+          if (editTaskId) {
+            openTaskModal(state.tasks.find((task) => task.id === editTaskId));
+            return;
+          }
+
+          if (taskStatusButton) {
+            await updateTaskStatus(
+              taskStatusButton.dataset.taskStatus,
+              taskStatusButton.dataset.status,
+            );
+            return;
+          }
+
+          if (deleteWorkflowButton) {
+            const id = deleteWorkflowButton.dataset.confirmDeleteWorkflow;
+            openConfirmModal({
+              message: t("confirmDeleteWorkflow"),
+              onConfirm: () => deleteWorkflow(id),
+            });
+            return;
+          }
+
+          if (duplicateWorkflowButton) {
+            await duplicateWorkflow(
+              duplicateWorkflowButton.dataset.duplicateWorkflow,
+            );
+            return;
+          }
+
+          if (deleteNodeButton) {
+            const id = deleteNodeButton.dataset.deleteNode;
+            openConfirmModal({
+              message: t("confirmDeleteNode"),
+              onConfirm: () => deleteNode(id),
+            });
+            return;
+          }
+
+          if (deleteTaskButton) {
+            const id = deleteTaskButton.dataset.deleteTask;
+            openConfirmModal({
+              message: t("confirmDeleteTask"),
+              onConfirm: () => deleteTask(id),
+            });
+            return;
+          }
+
+          if (resultButton) {
+            const type = resultButton.dataset.openResult;
+            const id = resultButton.dataset.resultId;
+            await setActiveWorkflow(resultButton.dataset.workflowId);
+            if (type === "node") {
+              state.view = "mindmap";
+              state.selectedNodeId = id;
+            }
+            if (type === "task") {
+              state.view = "tasks";
+            }
+            closeTopModal();
+            render();
+            return;
+          }
+
+          if (viewButton) {
+            setView(viewButton.dataset.view);
+            return;
+          }
+
+          if (!action) return;
+
+          if (action === "new-workflow") openWorkflowModal();
+          if (action === "edit-workflow") openWorkflowModal(activeWorkflow());
+          if (action === "new-node")
+            openNodeModal(
+              null,
+              event.target.closest("[data-node-context]")?.dataset
+                .nodeContext || "",
+            );
+          if (action === "new-task")
+            openTaskModal(
+              null,
+              event.target.closest("[data-node-context]")?.dataset
+                .nodeContext ||
+                state.selectedNodeId ||
+                "",
+            );
+          if (action === "open-search") openSearchModal();
+          if (action === "open-stack-demo") openStackDemo();
+          if (action === "reset-view") await resetView();
+          if (action === "fit-view") await fitView();
+          if (action === "export-json") await exportData();
+          if (action === "import-json") openImportModal();
+          if (action === "clear-workflow") {
+            openConfirmModal({
+              message: t("confirmClearWorkflow"),
+              onConfirm: clearWorkflow,
+            });
+          }
+          if (action === "clear-all") {
+            openConfirmModal({
+              message: t("confirmClearAll"),
+              onConfirm: clearAllData,
+            });
+          }
+        };
+
+        const handleInput = (event) => {
+          const field = event.target.closest("[data-field]");
+          if (!field) return;
+          if (field.dataset.field === "task-search")
+            state.filters.taskSearch = field.value;
+          if (field.dataset.field === "node-search")
+            state.filters.nodeSearch = field.value;
+          clearTimeout(state.autosaveTimer);
+          state.autosaveTimer = setTimeout(render, 100);
+        };
+
+        const handleChange = async (event) => {
+          const tab = event.target.closest(".tab-button");
+          if (tab?.dataset.view) {
+            setView(tab.dataset.view);
+            return;
+          }
+
+          if (event.target === el.languageSelect) {
+            state.language = normalizeLanguage(event.target.value);
+            state.settings.language = state.language;
+            await saveSettings();
+            render();
+            renderModals();
+            showToast("success", t("saved"), t("settingsSaved"));
+            return;
+          }
+
+          const field = event.target.closest("[data-field]");
+          if (field) {
+            if (field.dataset.field === "task-status")
+              state.filters.taskStatus = field.value;
+            if (field.dataset.field === "task-sort")
+              state.filters.taskSort = field.value;
+            render();
+            return;
+          }
+
+          const setting = event.target.closest("[data-setting]");
+          if (setting) {
+            state.settings[setting.dataset.setting] = setting.checked;
+            await saveSettings();
+            render();
+            showToast("success", t("saved"), t("settingsSaved"));
+          }
+        };
+
+        const handlePointerDown = (event) => {
+          const nodeEl = event.target.closest("[data-node-id]");
+          if (!nodeEl) return;
+          state.selectedNodeId = nodeEl.dataset.nodeId;
+          startNodeDrag(event, nodeEl.dataset.nodeId, nodeEl);
+          renderSidebarStats();
+          nodeEl.classList.add("selected");
+        };
+
+        const handleKeydown = (event) => {
+          if (event.key === "Escape") closeTopModal();
+          if (
+            (event.ctrlKey || event.metaKey) &&
+            event.key.toLowerCase() === "k"
+          ) {
+            event.preventDefault();
+            openSearchModal();
+          }
+        };
+
+        const attachEvents = () => {
+          document.addEventListener("click", handleClick);
+          document.addEventListener("input", handleInput);
+          document.addEventListener("change", handleChange);
+          document.addEventListener("pointerdown", handlePointerDown);
+          document.addEventListener("pointermove", moveNodeDrag);
+          document.addEventListener("pointerup", endNodeDrag);
+          document.addEventListener("pointercancel", endNodeDrag);
+          document.addEventListener("keydown", handleKeydown);
+          window.addEventListener("resize", drawConnections);
+        };
+
+        const init = async () => {
+          try {
+            state.db = await openDb();
+            await loadData();
+            attachEvents();
+            render();
+          } catch (error) {
+            console.error(error);
+            el.viewRoot.innerHTML = `
+              <section class="empty-state liquid-glass">
+                <div class="empty-state-content">
+                  <h2>${escapeHtml(t("error"))}</h2>
+                  <p>We couldn't able to load the workflows right now. Please try again or reload the page.</p>
+                </div>
+              </section>
+            `;
+            showToast(
+              "error",
+              t("error"),
+              error?.message ||
+                "We couldn't able to load the workflows right now.",
+            );
+          }
+        };
+
+        init();
+      })();
+    </script>
+  </body>
+</html>
