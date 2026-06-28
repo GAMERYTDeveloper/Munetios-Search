@@ -8,7 +8,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon-new.png" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; style-src 'self' 'unsafe-inline' https://api.munetios.com https://fonts.googleapis.com; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://api.munetios.com; img-src 'self' data:; script-src 'self' 'nonce-2jSjSbegDIjwnXikejssx';"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline' https://api.munetios.com; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://api.munetios.com; img-src 'self' data:; script-src 'self' 'nonce-2jSjSbegDIjwnXikejssx';"
     />
     <link
       rel="stylesheet"
@@ -19,7 +19,7 @@
       href="https://fonts.googleapis.com/css2family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,0..1&display=swap"
     />
     <style>
-      @import url("https://fonts.googleapis.com/css2family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,80&display=swap");
+
       * {
         box-sizing: border-box;
         font-family: "Google Sans Flex", sans-serif;
@@ -290,6 +290,11 @@
               <p>Manage your secure, encrypted notes.</p>
               <button class="btn" id="secureNotesBtn">Try it</button>
             </div>
+                   <div class="box-labs liquid-glass">
+              <h2>Workflow</h2>
+              <p>Mindmap, Tasks and more</p>
+              <button class="btn" id="workflowBtn">Try it</button>
+            </div>
           </div>
         </div>
       </div>
@@ -316,6 +321,11 @@
         .getElementById("secureNotesBtn")
         .addEventListener("click", function () {
           window.location.href = "https://www.munetios.com/labs/notes";
+        });
+      document
+        .getElementById("workflowBtn")
+        .addEventListener("click", function () {
+          window.location.href = "https://www.munetios.com/labs/workflow";
         });
 
       document
