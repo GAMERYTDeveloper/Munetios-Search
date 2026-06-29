@@ -157,6 +157,7 @@
       }
       .content-container {
         flex: 1;
+        margin-top: 80px;
       }
 
       @keyframes gradientMove {
@@ -927,7 +928,7 @@
             display: flex;
     align-items: center;
     gap: 10px;
-        bottom: 63px;
+        bottom: 20px;
         right: 20px;
         z-index: 2500;
       }
@@ -1154,9 +1155,10 @@
       }
 
       .topbar-container {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
+            position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
         animation: slideInDown 0.6s ease-out;
       }
 
@@ -5000,6 +5002,7 @@
         </div>
       </div>
       <!-- Activities Picker Modal -->
+      <template id="activitiesPickerModalTemplate" data-munetios-modal-template data-modal-id="activitiesPickerModal">
       <div class="modal" id="activitiesPickerModal" role="dialog" aria-modal="true" aria-labelledby="activitiesPickerTitle">
         <div class="modal-content" style="max-width:520px;">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
@@ -5030,7 +5033,9 @@
           </div>
         </div>
       </div>
+      </template>
       <!-- Activity Manager Modal (shown when another activity is already running) -->
+      <template id="actMgrModalTemplate" data-munetios-modal-template data-modal-id="actMgrModal">
       <div class="modal" id="actMgrModal" role="dialog" aria-modal="true" aria-labelledby="actMgrTitle">
         <div class="modal-content" style="max-width:480px;">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
@@ -5045,6 +5050,7 @@
           </div>
         </div>
       </div>
+      </template>
       <style>
         @keyframes activity-spin { to { transform: rotate(360deg); } }
         .activity-card:hover { background: rgba(106,0,255,0.32) !important; transform: translateY(-3px) scale(1.04); }
@@ -5182,6 +5188,7 @@
         }
       </style>
       <!-- Voice Search Modal -->
+      <template id="voiceSearchModalTemplate" data-munetios-modal-template data-modal-id="voiceSearchModal">
       <div class="modal" id="voiceSearchModal" role="dialog" aria-modal="true" aria-labelledby="voiceSearchTitle">
         <div class="modal-content" style="max-width: 400px; text-align: center">
           <h2 id="voiceSearchTitle">Voice Search</h2>
@@ -5244,6 +5251,8 @@
           </div>
         </div>
       </div>
+      </template>
+      <template id="settingsModalTemplate" data-munetios-modal-template data-modal-id="settingsModal">
       <div class="settings-modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
         <div class="settings-modal-content">
           <div class="settings-modal-header">
@@ -5327,7 +5336,7 @@
                           <span class="color-swatch-preview" id="bgColorSwatch"></span>
                         </button>
                         <div class="color-picker-popover">
-                          <p class="color-picker-title">Swatch</p>
+                          <p class="color-picker-title" data-translate="swatch">Swatch</p>
                           <div class="color-preset-row" aria-label="Color presets" data-translate-aria-label="colorPresetsTooltip"></div>
                           <div class="color-picker-field" id="bgColorField" tabindex="0" role="slider" aria-label="Adjust background color" data-translate-aria-label="bgColorPickerTooltip" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
                             <span class="color-picker-dot" id="bgColorDot"></span>
@@ -5355,7 +5364,7 @@
                           <span class="color-swatch-preview" id="textColorSwatch"></span>
                         </button>
                         <div class="color-picker-popover">
-                          <p class="color-picker-title">Swatch</p>
+                          <p class="color-picker-title" data-translate="swatch">Swatch</p>
                           <div class="color-preset-row" aria-label="Color presets" data-translate-aria-label="colorPresetsTooltip"></div>
                           <div class="color-picker-field" id="textColorField" tabindex="0" role="slider" aria-label="Adjust text color" data-translate-aria-label="textColorPickerTooltip" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
                             <span class="color-picker-dot" id="textColorDot"></span>
@@ -5653,6 +5662,7 @@
           </div>
         </div>
       </div>
+      </template>
       <div class="dropdown-wrapper liquid-glass" id="safeSearchSelector">
         <div class="dropdown-item" data-level="off" data-translate="safeSearchOff">Off</div>
         <div class="dropdown-item" data-level="moderate" data-translate="safeSearchModerate">Moderate</div>
@@ -5672,7 +5682,7 @@
         <div class="dropdown-item" data-lang="en-ZA">English (South Africa)</div>
         <div class="dropdown-item" data-lang="es-ES">Spanish (Spain)</div>
         <div class="dropdown-item" data-lang="es-MX">Spanish (Mexico)</div>
-        <div class="dropdown-item" data-lang="es-US">Spanish (United States)</div>
+        <div class="dropdown-item" data-lang="es-US">American Spanish (Español)</div>
         <div class="dropdown-item" data-lang="es-AR">Spanish (Argentina)</div>
         <div class="dropdown-item" data-lang="es-CO">Spanish (Colombia)</div>
         <div class="dropdown-item" data-lang="fr-FR">French (France)</div>
@@ -5827,7 +5837,8 @@
         <div class="dropdown-item" data-font="Segoe UI">Segoe UI (Windows)</div>
                 <div class="dropdown-item" data-font="Google Sans Text">Google Sans Text</div>
       </div>
-      <div class="confirm-modal" id="confirmModal">
+      <template id="confirmModalTemplate" data-munetios-modal-template data-modal-id="confirmModal">
+      <div class="confirm-modal" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle">
         <div class="confirm-modal-content">
           <h3 id="confirmModalTitle" data-translate="confirmAction">Confirm Action</h3>
           <p id="confirmModalMessage" data-translate="confirmProceed">Are you sure you want to proceed?</p>
@@ -5845,15 +5856,17 @@
           </div>
         </div>
       </div>
+      </template>
       <input
         type="file"
         id="importSettingsInput"
         accept=".json"
         style="display: none"
       />
-      <div class="modal" id="addShortcutModal">
+      <template id="addShortcutModalTemplate" data-munetios-modal-template data-modal-id="addShortcutModal">
+      <div class="modal" id="addShortcutModal" role="dialog" aria-modal="true" aria-labelledby="addShortcutTitle">
         <div class="modal-content">
-          <h2>Add Shortcut</h2>
+          <h2 id="addShortcutTitle">Add Shortcut</h2>
           <p>Enter the details for your new shortcut below:</p>
           <form id="shortcutForm">
             <div>
@@ -5877,14 +5890,17 @@
           </form>
         </div>
       </div>
+      </template>
       <!-- Pi Day Modal -->
-      <div class="modal" id="piDayModal">
+      <template id="piDayModalTemplate" data-munetios-modal-template data-modal-id="piDayModal">
+      <div class="modal" id="piDayModal" role="dialog" aria-modal="true" aria-labelledby="piDayTitle">
         <div class="modal-content" style="max-width: 420px; text-align: center">
-          <h2 style="font-size: 32px; margin-bottom: 10px">
+          <h2 id="piDayTitle" style="font-size: 32px; margin-bottom: 10px" data-translate="piDayTitle">
             &#960; Happy Pi Day! &#960;
           </h2>
           <p style="font-size: 64px; margin: 10px 0">3.141592&#8230;</p>
           <p
+            data-translate="piDayMessage"
             style="
               color: rgba(255, 255, 255, 0.85);
               line-height: 1.6;
@@ -5895,24 +5911,26 @@
             irrational number in mathematics.
           </p>
           <div class="modal-buttons" style="justify-content: center">
-            <button class="modal-button confirm" id="closePiDayModal">
+            <button class="modal-button confirm" id="closePiDayModal" data-translate="close">
               Close
             </button>
           </div>
         </div>
       </div>
+      </template>
       <div id="toast-container">
         <div id="toast"></div>
       </div>
       <!-- Wiki Article Read Modal -->
-      <div class="wiki-read-modal-overlay" id="wikiReadModal">
+      <template id="wikiReadModalTemplate" data-munetios-modal-template data-modal-id="wikiReadModal">
+      <div class="wiki-read-modal-overlay" id="wikiReadModal" role="dialog" aria-modal="true" aria-labelledby="wikiReadTitle">
         <div class="wiki-read-modal">
           <div class="wiki-read-header">
-            <h3 id="wikiReadTitle">Article</h3>
+            <h3 id="wikiReadTitle" data-translate="article">Article</h3>
             <div class="wiki-read-actions">
               <button class="wiki-read-btn" id="wikiReadAloudBtn">
                 <icon>record_voice_over</icon>
-                <span id="wikiReadAloudLabel">Read Aloud</span>
+                <span id="wikiReadAloudLabel" data-translate="readAloud">Read Aloud</span>
               </button>
               <a
                 class="wiki-read-btn"
@@ -5922,26 +5940,26 @@
                 rel="noopener noreferrer"
               >
                 <icon>open_in_new</icon>
-                <span>View on Wikipedia</span>
+                <span data-translate="viewOnWikipedia">View on Wikipedia</span>
               </a>
               <button class="wiki-read-btn" id="wikiReadBookmarkBtn">
                 <icon>bookmark_add</icon>
-                <span>Favorite</span>
+                <span data-translate="bookmark">Favorite</span>
               </button>
             </div>
-            <div class="wiki-read-close" id="wikiReadClose">
+            <div class="wiki-read-close" id="wikiReadClose" role="button" tabindex="0" aria-label="Close" data-translate-aria-label="close">
               <icon>close</icon>
             </div>
           </div>
           <div class="wiki-read-body" id="wikiReadBody"></div>
           <div class="wiki-read-attribution">
-            Content from
+            <span data-translate="contentFrom">Content from</span>
             <a
               href="https://www.wikipedia.org"
               target="_blank"
               rel="noopener noreferrer"
               >Wikipedia</a
-            >, the free encyclopedia. Available under
+            ><span data-translate="wikipediaAttributionSuffix">, the free encyclopedia. Available under</span>
             <a
               href="https://creativecommons.org/licenses/by-sa/4.0/"
               target="_blank"
@@ -5951,12 +5969,14 @@
           </div>
         </div>
       </div>
+      </template>
       <!-- CAPTCHA / Rate-limit Modal -->
-      <div class="captcha-modal-overlay" id="captchaModal">
+      <template id="captchaModalTemplate" data-munetios-modal-template data-modal-id="captchaModal">
+      <div class="captcha-modal-overlay" id="captchaModal" role="dialog" aria-modal="true" aria-labelledby="captchaTitle">
         <div class="captcha-modal">
-          <button class="captcha-modal-close" id="captchaClose" aria-label="Close">&times;</button>
-          <h3>Too Many Requests</h3>
-          <p id="captchaModalDesc">
+          <button class="captcha-modal-close" id="captchaClose" aria-label="Close" data-translate-aria-label="close">&times;</button>
+          <h3 id="captchaTitle" data-translate="tooManyRequests">Too Many Requests</h3>
+          <p id="captchaModalDesc" data-translate="captchaLimitDesc">
             You've reached the request limit. Complete the CAPTCHA below to
             continue.
           </p>
@@ -5972,13 +5992,581 @@
             type="text"
             maxlength="6"
             placeholder="Enter text"
+            data-translate-placeholder="enterText"
             autocomplete="off"
             spellcheck="false"
           />
-          <button class="captcha-submit" id="captchaSubmit">Continue</button>
+          <button class="captcha-submit" id="captchaSubmit" data-translate="continue">Continue</button>
           <div class="captcha-error" id="captchaError"></div>
         </div>
       </div>
+      </template>
+      <template id="unsupportedBrowserModalTemplate" data-munetios-modal-template data-modal-id="unsupportedBrowserModal">
+      <div class="modal" id="unsupportedBrowserModal" role="dialog" aria-modal="true" aria-labelledby="unsupportedBrowserTitle">
+        <div class="modal-content" style="max-width: 420px; text-align: center">
+          <h2 id="unsupportedBrowserTitle" data-translate="unsupportedBrowserTitle">Unsupported Browser</h2>
+          <p data-translate="unsupportedBrowserMessage">
+            Your browser is outdated. Please upgrade for the best experience.
+          </p>
+          <div class="modal-buttons" style="justify-content: center">
+            <button class="modal-button confirm" id="unsupportedBrowserLiteBtn" data-translate="goToSupportedVersion">
+              Go to Supported Version
+            </button>
+            <button class="modal-button cancel" id="unsupportedBrowserTryBtn" data-translate="tryAnyway">
+              Try Anyway
+            </button>
+          </div>
+        </div>
+      </div>
+      </template>
+      <script nonce="IKDjefjewhCujHJeuji3jhekowdijzizkcej">
+        (function () {
+          const modalSelector =
+            ".modal, .settings-modal, .confirm-modal, .wiki-read-modal-overlay, .captcha-modal-overlay, [data-munetios-modal]";
+          const modalStack = [];
+          const observers = new WeakMap();
+          const wiredModals = new WeakSet();
+          let modalInstanceCounter = 0;
+          const openClassBySelector = [
+            [".settings-modal", "active"],
+            [".confirm-modal", "active"],
+          ];
+
+          function getModal(target) {
+            if (!target) return null;
+            if (typeof target === "string") return document.getElementById(target);
+            return target.nodeType === 1 ? target : null;
+          }
+
+          function getBaseModalId(modal) {
+            return modal?.dataset?.modalBaseId || modal?.id || "";
+          }
+
+          function getTemplateForBaseId(baseId) {
+            if (!baseId || !window.CSS || !CSS.escape) {
+              return Array.from(
+                document.querySelectorAll("template[data-munetios-modal-template]"),
+              ).find(function (template) {
+                return template.getAttribute("data-modal-id") === baseId;
+              });
+            }
+            return document.querySelector(
+              'template[data-modal-id="' + CSS.escape(baseId) + '"]',
+            );
+          }
+
+          function getBaseModal(baseId) {
+            return (
+              Array.from(document.querySelectorAll(modalSelector)).find(function (modal) {
+                return (
+                  getBaseModalId(modal) === baseId &&
+                  modal.dataset.modalInstance === "base"
+                );
+              }) || document.getElementById(baseId)
+            );
+          }
+
+          function isModalOpen(modal) {
+            return (
+              modal &&
+              (modal.classList.contains("show") || modal.classList.contains("active"))
+            );
+          }
+
+          function getOpenClass(modal) {
+            const match = openClassBySelector.find(function ([selector]) {
+              return modal.matches(selector);
+            });
+            return match ? match[1] : "show";
+          }
+
+          function showSettingsPageIn(modal, pageId) {
+            if (!modal || getBaseModalId(modal) !== "settingsModal") return;
+            const sidebarMap = {
+              searchSettingsBtn: "generalSettingsPage",
+              appearanceSettingsBtn: "appearanceSettingsPage",
+              shortcutsSettingsBtn: "shortcutsSettingsPage",
+              privacySettingsBtn: "privacySettingsPage",
+              advancedSettingsBtn: "advancedSettingsPage",
+            };
+            modal.querySelectorAll(".settings-sidebar-item").forEach(function (item) {
+              item.classList.toggle("active", sidebarMap[originalIdOf(item)] === pageId);
+            });
+            modal.querySelectorAll(".settings-page").forEach(function (page) {
+              page.classList.toggle("active", originalIdOf(page) === pageId);
+            });
+          }
+
+          function createModalInstanceFrom(baseModal) {
+            if (!baseModal) return null;
+            const baseId = getBaseModalId(baseModal);
+            const clone = baseModal.cloneNode(true);
+            modalInstanceCounter += 1;
+            const cloneId = baseId + "-" + modalInstanceCounter;
+            clone.dataset.munetiosModal = "true";
+            clone.dataset.modalBaseId = baseId;
+            clone.dataset.modalTemplate =
+              baseModal.dataset.modalTemplate || getTemplateForBaseId(baseId)?.id || "";
+            clone.dataset.modalInstance = "clone";
+            clone.dataset.modalCloneId = cloneId;
+            clone.classList.remove("show", "active");
+            clone.style.removeProperty("z-index");
+            clone.removeAttribute("data-modal-stack-index");
+            clone.setAttribute("aria-hidden", "true");
+            uniquifyCloneIds(clone, cloneId);
+            const anchor =
+              Array.from(document.querySelectorAll(modalSelector))
+                .filter(function (modal) {
+                  return getBaseModalId(modal) === baseId;
+                })
+                .pop() || baseModal;
+            anchor.parentNode.insertBefore(clone, anchor.nextSibling);
+            registerModal(clone);
+            window.protectFromMachineTranslation &&
+              window.protectFromMachineTranslation(clone);
+            window.reapplyTranslations && window.reapplyTranslations();
+            syncSettingsControlState(clone);
+            return clone;
+          }
+
+          function uniquifyCloneIds(modal, cloneId) {
+            const idMap = new Map();
+            if (modal.id) {
+              idMap.set(modal.id, modal.id + "__" + cloneId);
+              modal.dataset.originalId = modal.id;
+              modal.id = idMap.get(modal.dataset.originalId);
+            }
+            modal.querySelectorAll("[id]").forEach(function (el) {
+              const originalId = el.id;
+              const uniqueId = originalId + "__" + cloneId;
+              idMap.set(originalId, uniqueId);
+              el.dataset.originalId = originalId;
+              el.id = uniqueId;
+            });
+            const idRefAttrs = [
+              "for",
+              "aria-labelledby",
+              "aria-describedby",
+              "aria-controls",
+              "list",
+              "form",
+            ];
+            modal.querySelectorAll("*").forEach(function (el) {
+              idRefAttrs.forEach(function (attrName) {
+                if (!el.hasAttribute(attrName)) return;
+                const nextValue = el
+                  .getAttribute(attrName)
+                  .split(/\s+/)
+                  .map(function (token) {
+                    return idMap.get(token) || token;
+                  })
+                  .join(" ");
+                el.setAttribute(attrName, nextValue);
+              });
+            });
+          }
+
+          function originalIdOf(el) {
+            return el?.dataset?.originalId || el?.id || "";
+          }
+
+          function scopedByOriginalId(root, id) {
+            return root?.querySelector(
+              "#" + id + ', [data-original-id="' + id + '"]',
+            );
+          }
+
+          function updateSearchModeButtons(mode) {
+            document
+              .querySelectorAll('[id="webOptionButton"], [data-original-id="webOptionButton"]')
+              .forEach(function (btn) {
+              if (mode === "web") btn.setAttribute("selected", "");
+              else btn.removeAttribute("selected");
+            });
+            document
+              .querySelectorAll('[id="imageOptionButton"], [data-original-id="imageOptionButton"]')
+              .forEach(function (btn) {
+              if (mode === "images") btn.setAttribute("selected", "");
+              else btn.removeAttribute("selected");
+            });
+          }
+
+          function handleAddShortcutSubmit(modal, form) {
+            const nameInput = scopedByOriginalId(modal, "shortcutName");
+            const urlInput = scopedByOriginalId(modal, "shortcutURL");
+            const name = (nameInput?.value || "").trim();
+            const url = (urlInput?.value || "").trim();
+            if (!name || !url) {
+              window.showToast &&
+                window.showToast(
+                  window.getTranslation
+                    ? window.getTranslation("pleaseFillFields")
+                    : "Please fill in both the Name and URL fields.",
+                );
+              return;
+            }
+            const shortcuts = window.loadShortcuts
+              ? window.loadShortcuts()
+              : JSON.parse(localStorage.getItem("shortcuts") || "[]");
+            shortcuts.push({ name, url });
+            localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
+            window.renderShortcuts && window.renderShortcuts();
+            window.dispatchEvent(new Event("shortcutsChanged"));
+            closeModal(modal);
+            form.reset();
+          }
+
+          function allByOriginalId(id) {
+            return document.querySelectorAll(
+              "#" + id + ', [data-original-id="' + id + '"]',
+            );
+          }
+
+          function setToggleStateForAll(id, isActive) {
+            allByOriginalId(id).forEach(function (toggle) {
+              toggle.classList.toggle("active", Boolean(isActive));
+              toggle.setAttribute("aria-checked", String(Boolean(isActive)));
+            });
+          }
+
+          function copyBaseTextToClones(id) {
+            const base = document.getElementById(id);
+            if (!base) return;
+            allByOriginalId(id).forEach(function (el) {
+              if (el !== base) el.textContent = base.textContent;
+            });
+          }
+
+          function syncSettingsControlState(modal) {
+            if (modal && getBaseModalId(modal) !== "settingsModal") return;
+            updateSearchModeButtons(
+              localStorage.getItem("munetiosDefaultSearchMode") || "web",
+            );
+            [
+              "safeSearchButton",
+              "countryButton",
+              "fontFamilyButton",
+              "bgImageFileName",
+            ].forEach(copyBaseTextToClones);
+            setToggleStateForAll(
+              "reduceTransparencyToggle",
+              localStorage.getItem("munetiosReduceTransparency") === "true",
+            );
+            const schoolMode = localStorage.getItem("schoolMode") === "true";
+            setToggleStateForAll("schoolModeToggle", schoolMode);
+            setToggleStateForAll(
+              "searchHistoryPersonalizationToggle",
+              !schoolMode &&
+                localStorage.getItem("munetiosSearchHistoryPersonalization") !==
+                  "false",
+            );
+            setToggleStateForAll(
+              "ttsToggle",
+              localStorage.getItem("munetiosTTS") === "true",
+            );
+          }
+
+          function proxyCloneButtonClick(modal, target) {
+            if (modal.dataset.modalInstance !== "clone") return false;
+            const clickable = target.closest("button, [role='button'], .action-button, .toggle-switch, .dropdown-item, .theme-card, icon");
+            const originalId = originalIdOf(clickable);
+            if (!clickable || !modal.contains(clickable) || !originalId) return false;
+            const original = document.getElementById(originalId);
+            if (!original || original === clickable || original.closest('[data-modal-instance="clone"]')) {
+              return false;
+            }
+            original.click();
+            if (getBaseModalId(modal) === "settingsModal") {
+              window.setTimeout(function () {
+                syncSettingsControlState();
+              }, 0);
+            }
+            return true;
+          }
+
+          function wireModalInstance(modal) {
+            if (!modal || wiredModals.has(modal)) return;
+            wiredModals.add(modal);
+
+            modal.addEventListener("click", function (e) {
+              const target = e.target;
+              const baseId = getBaseModalId(modal);
+
+              if (target === modal) {
+                closeModal(modal);
+                return;
+              }
+
+              const closeTarget = target.closest(
+                ".settings-modal-close, #activitiesPickerClose, [data-original-id='activitiesPickerClose'], #actMgrClose, [data-original-id='actMgrClose'], #actMgrCancel, [data-original-id='actMgrCancel'], #closeVoiceModal, [data-original-id='closeVoiceModal'], #closePiDayModal, [data-original-id='closePiDayModal'], #wikiReadClose, [data-original-id='wikiReadClose'], #captchaClose, [data-original-id='captchaClose'], #unsupportedBrowserTryBtn, [data-original-id='unsupportedBrowserTryBtn'], #cancelShortcut, [data-original-id='cancelShortcut']",
+              );
+              if (closeTarget && modal.contains(closeTarget)) {
+                if (baseId === "voiceSearchModal" && modal.dataset.modalInstance === "base") return;
+                closeModal(modal);
+                return;
+              }
+
+              if (baseId === "unsupportedBrowserModal") {
+                const liteBtn = target.closest("#unsupportedBrowserLiteBtn, [data-original-id='unsupportedBrowserLiteBtn']");
+                if (liteBtn && modal.contains(liteBtn)) {
+                  window.location.href = "old.html";
+                  return;
+                }
+              }
+
+              if (baseId === "activitiesPickerModal") {
+                const activityCard = target.closest(".activity-card[data-activity]");
+                if (activityCard && modal.contains(activityCard)) {
+                  const originalCard = document.querySelector(
+                    '#activitiesPickerModal[data-modal-instance="base"] .activity-card[data-activity="' +
+                      activityCard.dataset.activity +
+                      '"]',
+                  );
+                  if (originalCard && originalCard !== activityCard) {
+                    originalCard.click();
+                    closeModal(modal);
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }
+                  return;
+                }
+              }
+
+              if (baseId === "actMgrModal") {
+                const startNew = target.closest("#actMgrStartNew, [data-original-id='actMgrStartNew']");
+                if (startNew && modal.contains(startNew) && modal.dataset.modalInstance === "clone") {
+                  const original = document.querySelector(
+                    '#actMgrModal[data-modal-instance="base"] #actMgrStartNew',
+                  );
+                  original?.click();
+                  closeModal(modal);
+                  e.preventDefault();
+                  e.stopPropagation();
+                  return;
+                }
+                const endBtn = target.closest(".act-mgr-end-btn[data-wid]");
+                if (endBtn && modal.contains(endBtn) && modal.dataset.modalInstance === "clone") {
+                  const original = document.querySelector(
+                    '#actMgrModal[data-modal-instance="base"] .act-mgr-end-btn[data-wid="' +
+                      endBtn.dataset.wid +
+                      '"]',
+                  );
+                  original?.click();
+                  closeModal(modal);
+                  e.preventDefault();
+                  e.stopPropagation();
+                  return;
+                }
+              }
+
+              if (baseId === "settingsModal") {
+                const sidebarItem = target.closest(".settings-sidebar-item");
+                if (sidebarItem && modal.contains(sidebarItem)) {
+                  const pages = {
+                    searchSettingsBtn: "generalSettingsPage",
+                    appearanceSettingsBtn: "appearanceSettingsPage",
+                    shortcutsSettingsBtn: "shortcutsSettingsPage",
+                    privacySettingsBtn: "privacySettingsPage",
+                    advancedSettingsBtn: "advancedSettingsPage",
+                  };
+                  const sidebarKey = originalIdOf(sidebarItem);
+                  if (pages[sidebarKey]) {
+                    e.preventDefault();
+                    showSettingsPageIn(modal, pages[sidebarKey]);
+                    return;
+                  }
+                }
+
+                const webBtn = target.closest("#webOptionButton, [data-original-id='webOptionButton']");
+                if (webBtn && modal.contains(webBtn)) {
+                  localStorage.setItem("munetiosDefaultSearchMode", "web");
+                  updateSearchModeButtons("web");
+                  return;
+                }
+                const imageBtn = target.closest("#imageOptionButton, [data-original-id='imageOptionButton']");
+                if (imageBtn && modal.contains(imageBtn)) {
+                  localStorage.setItem("munetiosDefaultSearchMode", "images");
+                  updateSearchModeButtons("images");
+                  return;
+                }
+
+                const themeCard = target.closest(".theme-card[data-theme-id]");
+                if (themeCard && modal.contains(themeCard)) {
+                  window.munetiosApplyTheme &&
+                    window.munetiosApplyTheme(themeCard.dataset.themeId, true);
+                  return;
+                }
+
+                const addShortcut = target.closest("#addShortcutBtnSettings, [data-original-id='addShortcutBtnSettings'], .add-shortcut-btn-settings");
+                if (addShortcut && modal.contains(addShortcut)) {
+                  window.openMunetiosModal("addShortcutModal", { newInstance: true });
+                  return;
+                }
+
+                const dropdownTrigger = target.closest(
+                  "#languageButton, [data-original-id='languageButton'], #safeSearchButton, [data-original-id='safeSearchButton'], #countryButton, [data-original-id='countryButton'], #fontFamilyButton, [data-original-id='fontFamilyButton']",
+                );
+                if (dropdownTrigger && modal.contains(dropdownTrigger)) {
+                  const openerById = {
+                    languageButton: "openMunetiosLanguageSelectorFrom",
+                    safeSearchButton: "openMunetiosSafeSearchSelectorFrom",
+                    countryButton: "openMunetiosCountrySelectorFrom",
+                    fontFamilyButton: "openMunetiosFontFamilySelectorFrom",
+                  };
+                  const opener = window[openerById[originalIdOf(dropdownTrigger)]];
+                  if (typeof opener === "function") {
+                    opener(dropdownTrigger);
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                  }
+                }
+              }
+
+              if (proxyCloneButtonClick(modal, target)) {
+                e.preventDefault();
+                e.stopPropagation();
+              }
+            });
+
+            modal.addEventListener("submit", function (e) {
+              if (
+                getBaseModalId(modal) === "addShortcutModal" &&
+                modal.dataset.modalInstance === "clone" &&
+                originalIdOf(e.target) === "shortcutForm"
+              ) {
+                e.preventDefault();
+                handleAddShortcutSubmit(modal, e.target);
+              }
+            });
+          }
+
+          function applyStackOrder() {
+            const baseZIndex = 10000;
+            modalStack.forEach(function (modal, index) {
+              modal.style.zIndex = String(baseZIndex + index * 20);
+              modal.dataset.modalStackIndex = String(index + 1);
+              modal.setAttribute("aria-hidden", "false");
+            });
+            document.querySelectorAll(modalSelector).forEach(function (modal) {
+              if (!isModalOpen(modal)) {
+                modal.style.removeProperty("z-index");
+                delete modal.dataset.modalStackIndex;
+                modal.setAttribute("aria-hidden", "true");
+              }
+            });
+            document.body.classList.toggle("has-open-modal", modalStack.length > 0);
+          }
+
+          function syncModal(modal) {
+            if (!modal) return;
+            const index = modalStack.indexOf(modal);
+            if (isModalOpen(modal)) {
+              if (index !== -1) modalStack.splice(index, 1);
+              modalStack.push(modal);
+            } else if (index !== -1) {
+              modalStack.splice(index, 1);
+            }
+            applyStackOrder();
+          }
+
+          function registerModal(modal) {
+            if (!modal || observers.has(modal)) return;
+            modal.dataset.munetiosModal = modal.dataset.munetiosModal || "true";
+            modal.dataset.modalBaseId = modal.dataset.modalBaseId || modal.id;
+            modal.dataset.modalInstance = modal.dataset.modalInstance || "base";
+            modal.setAttribute("aria-hidden", isModalOpen(modal) ? "false" : "true");
+            modal.addEventListener(
+              "pointerdown",
+              function () {
+                if (isModalOpen(modal)) syncModal(modal);
+              },
+              true,
+            );
+            const observer = new MutationObserver(function (records) {
+              records.forEach(function (record) {
+                if (record.attributeName === "class") syncModal(modal);
+              });
+            });
+            observer.observe(modal, { attributes: true, attributeFilter: ["class"] });
+            observers.set(modal, observer);
+            wireModalInstance(modal);
+            syncModal(modal);
+          }
+
+          function mountModalTemplates() {
+            document
+              .querySelectorAll("template[data-munetios-modal-template]")
+              .forEach(function (template) {
+                const targetId = template.getAttribute("data-modal-id");
+                if (targetId && document.getElementById(targetId)) return;
+                const fragment = template.content.cloneNode(true);
+                const modal = fragment.querySelector(modalSelector);
+                if (modal) {
+                  modal.dataset.munetiosModal = "true";
+                  modal.dataset.modalTemplate = template.id || targetId || "";
+                  modal.dataset.modalBaseId = targetId || modal.id;
+                  modal.dataset.modalInstance = "base";
+                }
+                template.parentNode.insertBefore(fragment, template.nextSibling);
+              });
+            document.querySelectorAll(modalSelector).forEach(registerModal);
+          }
+
+          function openModal(target, options) {
+            let modal = getModal(target);
+            if (!modal) return null;
+            const baseId = getBaseModalId(modal);
+            const template = getTemplateForBaseId(baseId);
+            if (template && (options?.newInstance || isModalOpen(modal))) {
+              modal = createModalInstanceFrom(getBaseModal(baseId) || modal) || modal;
+            }
+            registerModal(modal);
+            modal.classList.add(getOpenClass(modal));
+            if (getBaseModalId(modal) === "settingsModal") {
+              showSettingsPageIn(modal, "generalSettingsPage");
+              syncSettingsControlState(modal);
+            }
+            syncModal(modal);
+            return modal;
+          }
+
+          function closeModal(target) {
+            const modal = getModal(target);
+            if (!modal) return null;
+            modal.classList.remove("show", "active");
+            syncModal(modal);
+            if (modal.dataset.modalInstance === "clone") {
+              window.setTimeout(function () {
+                if (!isModalOpen(modal)) {
+                  observers.get(modal)?.disconnect();
+                  observers.delete(modal);
+                  const index = modalStack.indexOf(modal);
+                  if (index !== -1) modalStack.splice(index, 1);
+                  modal.remove();
+                  applyStackOrder();
+                }
+              }, 280);
+            }
+            return modal;
+          }
+
+          function closeTopModal() {
+            const topModal = modalStack[modalStack.length - 1];
+            if (topModal) closeModal(topModal);
+          }
+
+          window.mountMunetiosModalTemplates = mountModalTemplates;
+          window.openMunetiosModal = openModal;
+          window.closeMunetiosModal = closeModal;
+          window.closeTopMunetiosModal = closeTopModal;
+          window.getMunetiosModalStack = function () {
+            return modalStack.slice();
+          };
+
+          mountModalTemplates();
+        })();
+      </script>
       <!-- Apps Wrapper -->
       <div class="apps-wrapper" id="appsWrapper">
         <div class="apps-container">
@@ -6186,7 +6774,7 @@
           }
 
           function showModal() {
-            modal.classList.add("show");
+            window.openMunetiosModal(modal);
             spokenWords.textContent = window.getTranslation
               ? window.getTranslation("clickMicToStart")
               : "Click the microphone to start";
@@ -6194,7 +6782,7 @@
           }
 
           function hideModal() {
-            modal.classList.remove("show");
+            window.closeMunetiosModal(modal);
             stopListening();
           }
 
@@ -6936,13 +7524,13 @@
             const closeBtn = document.getElementById("closePiDayModal");
             if (closeBtn) {
               closeBtn.onclick = function () {
-                document.getElementById("piDayModal").classList.remove("show");
+                window.closeMunetiosModal("piDayModal");
               };
             }
             const piModal = document.getElementById("piDayModal");
             if (piModal) {
               piModal.addEventListener("click", function (e) {
-                if (e.target === piModal) piModal.classList.remove("show");
+                if (e.target === piModal) window.closeMunetiosModal(piModal);
               });
             }
           }
@@ -7667,7 +8255,7 @@ if (
               addShortcutBtn.querySelector(".shortcut-label");
             if (addShortcutLabel) addShortcutLabel.dataset.translate = "add";
             addShortcutBtn.onclick = () => {
-              document.getElementById("addShortcutModal").classList.add("show");
+              window.openMunetiosModal("addShortcutModal");
             };
             shortcutsList.appendChild(addShortcutBtn);
             window.protectFromMachineTranslation &&
@@ -7702,18 +8290,14 @@ if (
               // Trigger event for settings page to update
               window.dispatchEvent(new Event("shortcutsChanged"));
 
-              document
-                .getElementById("addShortcutModal")
-                .classList.remove("show");
+              window.closeMunetiosModal("addShortcutModal");
               e.target.reset();
             });
 
           document
             .getElementById("cancelShortcut")
             .addEventListener("click", () => {
-              document
-                .getElementById("addShortcutModal")
-                .classList.remove("show");
+              window.closeMunetiosModal("addShortcutModal");
             });
 
           // Initial render
@@ -7830,37 +8414,42 @@ if (
 
           // Open settings modal
           settingsBtn?.addEventListener("click", () => {
-            settingsModal.classList.add("active");
-            showPage("generalSettingsPage");
+            const openedSettingsModal = window.openMunetiosModal(settingsModal);
+            showPage("generalSettingsPage", openedSettingsModal);
           });
 
           // Close settings modal
           closeBtn?.addEventListener("click", () => {
-            settingsModal.classList.remove("active");
+            window.closeMunetiosModal(settingsModal);
           });
 
           // Sidebar navigation
           Object.keys(sidebarItems).forEach((btnId) => {
             const btn = document.getElementById(btnId);
             btn?.addEventListener("click", () => {
+              const activeModal = btn.closest(".settings-modal") || settingsModal;
               // Remove active class from all sidebar items
-              document
-                .querySelectorAll(".settings-sidebar-item")
+              activeModal
+                ?.querySelectorAll(".settings-sidebar-item")
                 .forEach((item) => {
                   item.classList.remove("active");
                 });
               // Add active class to clicked item
               btn.classList.add("active");
               // Show corresponding page
-              showPage(sidebarItems[btnId]);
+              showPage(sidebarItems[btnId], activeModal);
             });
           });
 
-          function showPage(pageId) {
-            document.querySelectorAll(".settings-page").forEach((page) => {
+          function showPage(pageId, root) {
+            const scope = root || settingsModal || document;
+            scope.querySelectorAll(".settings-page").forEach((page) => {
               page.classList.remove("active");
             });
-            document.getElementById(pageId)?.classList.add("active");
+            const page =
+              scope.querySelector("#" + pageId) ||
+              scope.querySelector('[data-original-id="' + pageId + '"]');
+            page?.classList.add("active");
           }
 
           // Initialize with general page active
@@ -8091,8 +8680,17 @@ if (
               bookmark: "Favorite",
               contentFrom: "Content from",
               poweredBy: "Powered by",
+              swatch: "Swatch",
+              piDayTitle: "π Happy Pi Day! π",
               piDayMessage:
                 "Today is March 14 - Pi Day! Celebrate the most famous irrational number in mathematics.",
+              wikipediaAttributionSuffix:
+                ", the free encyclopedia. Available under",
+              unsupportedBrowserTitle: "Unsupported Browser",
+              unsupportedBrowserMessage:
+                "Your browser is outdated. Please upgrade for the best experience.",
+              goToSupportedVersion: "Go to Supported Version",
+              tryAnyway: "Try Anyway",
               searchLocations: "Search Locations",
               searchNews: "Search News",
               refresh: "Refresh",
@@ -8223,6 +8821,9 @@ if (
               audioErrorText: "Audio capture error: ",
               voiceNotSupportedFull:
                 "Voice search not supported in this browser.",
+              unsupportedBrowserShort: "Unsupported browser",
+              unsupportedBrowserFull:
+                "Voice search is not supported in your operating system or browser.",
               voiceNotSupportedModeFull:
                 "Voice mode is not supported in this browser.",
               unableToStartFull:
@@ -8378,7 +8979,7 @@ if (
               timeline: "Cronología",
               whatsNew: "Novedades",
               docs: "Documentos",
-              weather: "Tiempo",
+              weather: "Clima",
               youtubeChannel: "Canal de YouTube",
               keyboardBtn: "Teclado",
 
@@ -9058,10 +9659,10 @@ if (
             pt: {
               name: "Portuguese",
               // Search & Main UI
-              searchPlaceholder: "Buscar na Web",
-              settingsBtn: "Configurações",
+              searchPlaceholder: "Pesquisar na Web",
+              settingsBtn: "Defenições",
               voiceModeBtn: "Modo de Voz",
-              searchButton: "Buscar",
+              searchButton: "Pesquisar",
               luckyButton: "Estou com sorte",
               addShortcut: "Adicionar",
 
@@ -9155,7 +9756,7 @@ if (
 
               // Voice Mode
               voiceMode: "Modo de voz",
-              voiceModePrompt: 'Diga "Buscar [sua consulta]" para pesquisar',
+              voiceModePrompt: 'Diga "Pesquisar [sua consulta]" para pesquisar',
 
               // Add Shortcut Modal
               addShortcutTitle: "Adicionar atalho",
@@ -9228,7 +9829,7 @@ if (
                 "Erro de captura de áudio: Impossível iniciar reconhecimento de voz.",
               unableToStartVoice: "Impossível iniciar o reconhecimento de voz",
               searchingFor: "Pesquisando: ",
-              saySearchQuery: 'Diga "Pesquisar [sua consulta]" para pesquisar',
+              saySearchQuery: 'Diga "Buscar [sua consulta]" para pesquisar',
               enableMicAccessToast:
                 "Por favor, ative o acesso ao microfone para usar o modo de voz.",
               connectMicrophoneToast:
@@ -13224,10 +13825,10 @@ if (
             },
             "pt-BR": {
               name: "Portuguese (Brazil)",
-              searchPlaceholder: "Pesquisar na web",
+              searchPlaceholder: "Buscar na web",
               settingsBtn: "Configurações",
               voiceModeBtn: "Modo de Voz",
-              searchButton: "Pesquisar",
+              searchButton: "Buscar",
               luckyButton: "Estou com sorte",
               addShortcut: "Adicionar",
               generalSettings: "Geral",
@@ -13665,7 +14266,7 @@ if (
               timeline: "Cronología",
               whatsNew: "Novedades",
               docs: "Documentos",
-              weather: "Tiempo",
+              weather: "Clima",
               youtubeChannel: "Canal de YouTube",
               keyboardBtn: "Teclado",
               footerTagline:
@@ -20556,6 +21157,7 @@ if (
               schoolModeDescription:
                 "Bloquea SafeSearch en Estricto y oculta Labs. Desactívalo desde Restablecer todos los ajustes.",
               failedImportSettings: "No se pudieron importar los ajustes",
+              weather: "Tiempo",
             },
             "es-US": {
               name: "Español (Estados Unidos)",
@@ -21256,6 +21858,98 @@ if (
             };
           });
 
+          const modalTranslationKeys = [
+            "swatch",
+            "piDayTitle",
+            "piDayMessage",
+            "wikipediaAttributionSuffix",
+            "unsupportedBrowserTitle",
+            "unsupportedBrowserMessage",
+            "goToSupportedVersion",
+            "tryAnyway",
+            "unsupportedBrowserShort",
+            "unsupportedBrowserFull",
+            "activities",
+            "runningActivities",
+            "runningActivitiesDescription",
+            "closeActivities",
+            "closeActivity",
+            "startNewAlongside",
+            "endActivity",
+            "failedToStartActivity",
+            "fullscreen",
+            "exitFullscreen",
+            "toggleFullscreen",
+            "resize",
+            "raceCarGame",
+            "minesweeper",
+            "flappyBird",
+            "snake",
+          ];
+
+          const modalTranslationAdditions = {
+            en: ["Swatch", "π Happy Pi Day! π", "Today is March 14 - Pi Day! Celebrate the most famous irrational number in mathematics.", ", the free encyclopedia. Available under", "Unsupported Browser", "Your browser is outdated. Please upgrade for the best experience.", "Go to Supported Version", "Try Anyway", "Unsupported browser", "Voice search is not supported in your operating system or browser.", "Activities", "Running Activities", "You have running activities. End one or start the new one alongside.", "Close activities", "Close activity", "Start New Alongside", "End", "Failed to start activity. Please try again.", "Fullscreen", "Exit Fullscreen", "Toggle fullscreen", "Resize", "Race Car Game", "Minesweeper", "Flappy Bird", "Snake"],
+            es: ["Muestra", "π ¡Feliz Día de Pi! π", "Hoy es 14 de marzo: Día de Pi. Celebra el número irracional más famoso de las matemáticas.", ", la enciclopedia libre. Disponible bajo", "Navegador no compatible", "Tu navegador está desactualizado. Actualízalo para obtener la mejor experiencia.", "Ir a la versión compatible", "Intentar de todos modos", "Navegador no compatible", "La búsqueda por voz no es compatible con tu sistema operativo o navegador.", "Actividades", "Actividades en ejecución", "Tienes actividades en ejecución. Finaliza una o inicia la nueva junto a las demás.", "Cerrar actividades", "Cerrar actividad", "Iniciar junto a las demás", "Finalizar", "No se pudo iniciar la actividad. Inténtalo de nuevo.", "Pantalla completa", "Salir de pantalla completa", "Alternar pantalla completa", "Cambiar tamaño", "Juego de carreras", "Buscaminas", "Flappy Bird", "Serpiente"],
+            fr: ["Échantillon", "π Bonne journée de Pi ! π", "Nous sommes le 14 mars : la journée de Pi. Célébrez le nombre irrationnel le plus célèbre des mathématiques.", ", l'encyclopédie libre. Disponible sous", "Navigateur non compatible", "Votre navigateur est obsolète. Mettez-le à jour pour une meilleure expérience.", "Aller à la version compatible", "Essayer quand même", "Navigateur non compatible", "La recherche vocale n'est pas compatible avec votre système d'exploitation ou votre navigateur.", "Activités", "Activités en cours", "Vous avez des activités en cours. Terminez-en une ou lancez la nouvelle à côté.", "Fermer les activités", "Fermer l'activité", "Lancer à côté", "Terminer", "Impossible de lancer l'activité. Réessayez.", "Plein écran", "Quitter le plein écran", "Activer le plein écran", "Redimensionner", "Jeu de course", "Démineur", "Flappy Bird", "Serpent"],
+            de: ["Feld", "π Alles Gute zum Pi-Tag! π", "Heute ist der 14. März: Pi-Tag. Feiere die berühmteste irrationale Zahl der Mathematik.", ", die freie Enzyklopädie. Verfügbar unter", "Browser nicht unterstützt", "Dein Browser ist veraltet. Aktualisiere ihn für die beste Erfahrung.", "Zur unterstützten Version", "Trotzdem versuchen", "Browser nicht unterstützt", "Die Sprachsuche wird von deinem Betriebssystem oder Browser nicht unterstützt.", "Aktivitäten", "Laufende Aktivitäten", "Du hast laufende Aktivitäten. Beende eine oder starte die neue daneben.", "Aktivitäten schließen", "Aktivität schließen", "Daneben starten", "Beenden", "Aktivität konnte nicht gestartet werden. Bitte erneut versuchen.", "Vollbild", "Vollbild verlassen", "Vollbild umschalten", "Größe ändern", "Rennspiel", "Minesweeper", "Flappy Bird", "Snake"],
+            it: ["Campione", "π Buon Pi Day! π", "Oggi è 14 marzo: il giorno del Pi greco. Celebra il numero irrazionale più famoso della matematica.", ", l'enciclopedia libera. Disponibile con licenza", "Browser non supportato", "Il tuo browser non è aggiornato. Aggiornalo per la migliore esperienza.", "Vai alla versione supportata", "Prova comunque", "Browser non supportato", "La ricerca vocale non è supportata dal tuo sistema operativo o browser.", "Attività", "Attività in esecuzione", "Hai attività in esecuzione. Terminane una o avvia la nuova insieme alle altre.", "Chiudi attività", "Chiudi attività", "Avvia insieme alle altre", "Termina", "Impossibile avviare l'attività. Riprova.", "Schermo intero", "Esci dallo schermo intero", "Attiva/disattiva schermo intero", "Ridimensiona", "Gioco di corse", "Campo minato", "Flappy Bird", "Serpente"],
+            pt: ["Amostra", "π Feliz Dia do Pi! π", "Hoje é 14 de março: Dia do Pi. Celebre o número irracional mais famoso da matemática.", ", a enciclopédia livre. Disponível sob", "Navegador não suportado", "O seu navegador está desatualizado. Atualize-o para a melhor experiência.", "Ir para a versão suportada", "Tentar mesmo assim", "Navegador não suportado", "A pesquisa por voz não é suportada no seu sistema operativo ou navegador.", "Atividades", "Atividades em execução", "Tem atividades em execução. Termine uma ou inicie a nova ao lado.", "Fechar atividades", "Fechar atividade", "Iniciar ao lado", "Terminar", "Não foi possível iniciar a atividade. Tente novamente.", "Ecrã inteiro", "Sair do ecrã inteiro", "Alternar ecrã inteiro", "Redimensionar", "Jogo de corrida", "Campo minado", "Flappy Bird", "Cobra"],
+            nl: ["Kleurstaal", "π Fijne Pi-dag! π", "Vandaag is het 14 maart: Pi-dag. Vier het beroemdste irrationale getal in de wiskunde.", ", de vrije encyclopedie. Beschikbaar onder", "Browser niet ondersteund", "Je browser is verouderd. Werk hem bij voor de beste ervaring.", "Ga naar ondersteunde versie", "Toch proberen", "Browser niet ondersteund", "Spraakzoekopdracht wordt niet ondersteund door je besturingssysteem of browser.", "Activiteiten", "Actieve activiteiten", "Je hebt actieve activiteiten. Beëindig er een of start de nieuwe ernaast.", "Activiteiten sluiten", "Activiteit sluiten", "Ernaast starten", "Beëindigen", "Activiteit kon niet worden gestart. Probeer het opnieuw.", "Volledig scherm", "Volledig scherm sluiten", "Volledig scherm wisselen", "Formaat wijzigen", "Racegame", "Mijnenveger", "Flappy Bird", "Slang"],
+            pl: ["Próbka", "π Szczęśliwego Dnia Pi! π", "Dziś jest 14 marca: Dzień Pi. Świętuj najsłynniejszą liczbę niewymierną w matematyce.", ", wolna encyklopedia. Dostępne na licencji", "Nieobsługiwana przeglądarka", "Twoja przeglądarka jest przestarzała. Zaktualizuj ją, aby uzyskać najlepsze wrażenia.", "Przejdź do obsługiwanej wersji", "Spróbuj mimo to", "Nieobsługiwana przeglądarka", "Wyszukiwanie głosowe nie jest obsługiwane w tym systemie operacyjnym lub przeglądarce.", "Aktywności", "Działające aktywności", "Masz działające aktywności. Zakończ jedną albo uruchom nową obok.", "Zamknij aktywności", "Zamknij aktywność", "Uruchom obok", "Zakończ", "Nie udało się uruchomić aktywności. Spróbuj ponownie.", "Pełny ekran", "Opuść pełny ekran", "Przełącz pełny ekran", "Zmień rozmiar", "Gra wyścigowa", "Saper", "Flappy Bird", "Wąż"],
+            tr: ["Örnek", "π Mutlu Pi Günü! π", "Bugün 14 Mart: Pi Günü. Matematiğin en ünlü irrasyonel sayısını kutlayın.", ", özgür ansiklopedi. Şu lisansla kullanılabilir:", "Desteklenmeyen tarayıcı", "Tarayıcınız güncel değil. En iyi deneyim için güncelleyin.", "Desteklenen sürüme git", "Yine de dene", "Desteklenmeyen tarayıcı", "Sesli arama işletim sisteminizde veya tarayıcınızda desteklenmiyor.", "Etkinlikler", "Çalışan etkinlikler", "Çalışan etkinlikleriniz var. Birini bitirin veya yenisini yanında başlatın.", "Etkinlikleri kapat", "Etkinliği kapat", "Yanında başlat", "Bitir", "Etkinlik başlatılamadı. Lütfen tekrar deneyin.", "Tam ekran", "Tam ekrandan çık", "Tam ekranı değiştir", "Yeniden boyutlandır", "Yarış arabası oyunu", "Mayın Tarlası", "Flappy Bird", "Yılan"],
+            sv: ["Prov", "π Glad Pi-dag! π", "I dag är det 14 mars: Pi-dagen. Fira matematikens mest kända irrationella tal.", ", den fria encyklopedin. Tillgänglig under", "Webbläsaren stöds inte", "Din webbläsare är föråldrad. Uppdatera för bästa upplevelse.", "Gå till stödd version", "Försök ändå", "Webbläsaren stöds inte", "Röstsökning stöds inte i ditt operativsystem eller din webbläsare.", "Aktiviteter", "Aktiviteter som körs", "Du har aktiviteter som körs. Avsluta en eller starta den nya bredvid.", "Stäng aktiviteter", "Stäng aktivitet", "Starta bredvid", "Avsluta", "Det gick inte att starta aktiviteten. Försök igen.", "Helskärm", "Avsluta helskärm", "Växla helskärm", "Ändra storlek", "Racerbilsspel", "Minsvepare", "Flappy Bird", "Orm"],
+            no: ["Prøve", "π Gratulerer med Pi-dagen! π", "I dag er det 14. mars: Pi-dagen. Feir matematikkens mest kjente irrasjonale tall.", ", det frie leksikonet. Tilgjengelig under", "Nettleseren støttes ikke", "Nettleseren din er utdatert. Oppdater for best opplevelse.", "Gå til støttet versjon", "Prøv likevel", "Nettleseren støttes ikke", "Stemmesøk støttes ikke i operativsystemet eller nettleseren din.", "Aktiviteter", "Aktiviteter som kjører", "Du har aktiviteter som kjører. Avslutt en eller start den nye ved siden av.", "Lukk aktiviteter", "Lukk aktivitet", "Start ved siden av", "Avslutt", "Kunne ikke starte aktiviteten. Prøv igjen.", "Fullskjerm", "Avslutt fullskjerm", "Veksle fullskjerm", "Endre størrelse", "Racerbilspill", "Minesveiper", "Flappy Bird", "Slange"],
+            da: ["Prøve", "π Glædelig Pi-dag! π", "I dag er det 14. marts: Pi-dag. Fejr matematikkens mest berømte irrationale tal.", ", den frie encyklopædi. Tilgængelig under", "Browser understøttes ikke", "Din browser er forældet. Opdater den for den bedste oplevelse.", "Gå til understøttet version", "Prøv alligevel", "Browser understøttes ikke", "Stemmesøgning understøttes ikke af dit operativsystem eller din browser.", "Aktiviteter", "Aktiviteter i gang", "Du har aktiviteter i gang. Afslut en eller start den nye ved siden af.", "Luk aktiviteter", "Luk aktivitet", "Start ved siden af", "Afslut", "Aktiviteten kunne ikke startes. Prøv igen.", "Fuld skærm", "Afslut fuld skærm", "Skift fuld skærm", "Tilpas størrelse", "Racerbilspil", "Minestryger", "Flappy Bird", "Slange"],
+            fi: ["Malli", "π Hyvää Piin päivää! π", "Tänään on 14. maaliskuuta: piin päivä. Juhli matematiikan kuuluisinta irrationaalilukua.", ", vapaa tietosanakirja. Saatavilla lisenssillä", "Selainta ei tueta", "Selaimesi on vanhentunut. Päivitä se parhaan käyttökokemuksen saamiseksi.", "Siirry tuettuun versioon", "Yritä silti", "Selainta ei tueta", "Äänihakua ei tueta käyttöjärjestelmässäsi tai selaimessasi.", "Aktiviteetit", "Käynnissä olevat aktiviteetit", "Sinulla on käynnissä olevia aktiviteetteja. Lopeta yksi tai käynnistä uusi rinnalle.", "Sulje aktiviteetit", "Sulje aktiviteetti", "Käynnistä rinnalle", "Lopeta", "Aktiviteetin käynnistäminen epäonnistui. Yritä uudelleen.", "Koko näyttö", "Poistu koko näytöstä", "Vaihda koko näyttö", "Muuta kokoa", "Kilpa-autopeli", "Miinaharava", "Flappy Bird", "Käärme"],
+            ru: ["Образец", "π С Днем числа пи! π", "Сегодня 14 марта: День числа пи. Отметьте самое известное иррациональное число в математике.", ", свободная энциклопедия. Доступно по лицензии", "Браузер не поддерживается", "Ваш браузер устарел. Обновите его для лучшей работы.", "Перейти к поддерживаемой версии", "Все равно попробовать", "Браузер не поддерживается", "Голосовой поиск не поддерживается вашей операционной системой или браузером.", "Активности", "Запущенные активности", "У вас есть запущенные активности. Завершите одну или запустите новую рядом.", "Закрыть активности", "Закрыть активность", "Запустить рядом", "Завершить", "Не удалось запустить активность. Повторите попытку.", "Полный экран", "Выйти из полного экрана", "Переключить полный экран", "Изменить размер", "Гонки", "Сапер", "Flappy Bird", "Змейка"],
+            zh: ["色块", "π 圆周率日快乐！π", "今天是 3 月 14 日：圆周率日。庆祝数学中最著名的无理数。", "，自由的百科全书。可根据以下许可使用：", "不支持的浏览器", "您的浏览器已过时。请升级以获得最佳体验。", "前往支持的版本", "仍要尝试", "不支持的浏览器", "您的操作系统或浏览器不支持语音搜索。", "活动", "正在运行的活动", "你有正在运行的活动。结束一个，或同时启动新的活动。", "关闭活动", "关闭活动", "同时启动", "结束", "无法启动活动。请重试。", "全屏", "退出全屏", "切换全屏", "调整大小", "赛车游戏", "扫雷", "Flappy Bird", "贪吃蛇"],
+            "zh-TW": ["色塊", "π 圓周率日快樂！π", "今天是 3 月 14 日：圓周率日。慶祝數學中最著名的無理數。", "，自由的百科全書。可依以下授權使用：", "不支援的瀏覽器", "您的瀏覽器已過時。請升級以獲得最佳體驗。", "前往支援的版本", "仍要嘗試", "不支援的瀏覽器", "您的作業系統或瀏覽器不支援語音搜尋。", "活動", "正在執行的活動", "您有正在執行的活動。結束一個，或同時啟動新的活動。", "關閉活動", "關閉活動", "同時啟動", "結束", "無法啟動活動。請再試一次。", "全螢幕", "離開全螢幕", "切換全螢幕", "調整大小", "賽車遊戲", "踩地雷", "Flappy Bird", "貪食蛇"],
+            "zh-HK": ["色塊", "π 圓周率日快樂！π", "今日係 3 月 14 日：圓周率日。慶祝數學中最出名嘅無理數。", "，自由百科全書。可根據以下授權使用：", "不支援嘅瀏覽器", "你嘅瀏覽器已過時。請升級以獲得最佳體驗。", "前往支援版本", "仍然嘗試", "不支援嘅瀏覽器", "你嘅作業系統或瀏覽器不支援語音搜尋。", "活動", "執行中嘅活動", "你有活動正在執行。結束一個，或者同時啟動新活動。", "關閉活動", "關閉活動", "同時啟動", "結束", "無法啟動活動。請再試一次。", "全螢幕", "離開全螢幕", "切換全螢幕", "調整大小", "賽車遊戲", "踩地雷", "Flappy Bird", "貪食蛇"],
+            ja: ["スウォッチ", "π 円周率の日おめでとう！ π", "今日は3月14日、円周率の日です。数学で最も有名な無理数を祝いましょう。", "、フリー百科事典。次のライセンスで利用できます:", "未対応のブラウザ", "お使いのブラウザは古くなっています。最適な体験のため更新してください。", "対応版へ移動", "このまま試す", "未対応のブラウザ", "お使いのOSまたはブラウザでは音声検索を利用できません。", "アクティビティ", "実行中のアクティビティ", "実行中のアクティビティがあります。どれかを終了するか、新しいものを並行して開始してください。", "アクティビティを閉じる", "アクティビティを閉じる", "並行して開始", "終了", "アクティビティを開始できませんでした。もう一度お試しください。", "全画面", "全画面を終了", "全画面を切り替え", "サイズ変更", "レースカーゲーム", "マインスイーパー", "Flappy Bird", "スネーク"],
+            ko: ["견본", "π 파이 데이 축하합니다! π", "오늘은 3월 14일, 파이 데이입니다. 수학에서 가장 유명한 무리수를 기념하세요.", ", 자유 백과사전. 다음 라이선스로 제공됩니다:", "지원되지 않는 브라우저", "브라우저가 오래되었습니다. 최상의 환경을 위해 업데이트하세요.", "지원 버전으로 이동", "그래도 시도", "지원되지 않는 브라우저", "운영 체제 또는 브라우저에서 음성 검색을 지원하지 않습니다.", "활동", "실행 중인 활동", "실행 중인 활동이 있습니다. 하나를 종료하거나 새 활동을 함께 시작하세요.", "활동 닫기", "활동 닫기", "함께 시작", "종료", "활동을 시작하지 못했습니다. 다시 시도하세요.", "전체 화면", "전체 화면 종료", "전체 화면 전환", "크기 조절", "레이스카 게임", "지뢰찾기", "Flappy Bird", "스네이크"],
+            ar: ["عينة", "π يوم باي سعيد! π", "اليوم هو 14 مارس: يوم باي. احتفل بأشهر عدد غير نسبي في الرياضيات.", "، الموسوعة الحرة. متاح بموجب", "متصفح غير مدعوم", "متصفحك قديم. يرجى تحديثه للحصول على أفضل تجربة.", "الانتقال إلى الإصدار المدعوم", "المحاولة على أي حال", "متصفح غير مدعوم", "البحث الصوتي غير مدعوم في نظام التشغيل أو المتصفح لديك.", "الأنشطة", "الأنشطة قيد التشغيل", "لديك أنشطة قيد التشغيل. أنهِ أحدها أو ابدأ النشاط الجديد بجانبها.", "إغلاق الأنشطة", "إغلاق النشاط", "البدء بجانبها", "إنهاء", "تعذر بدء النشاط. حاول مرة أخرى.", "ملء الشاشة", "الخروج من ملء الشاشة", "تبديل ملء الشاشة", "تغيير الحجم", "لعبة سباق السيارات", "كانسة الألغام", "Flappy Bird", "الثعبان"],
+            hi: ["नमूना", "π पाई दिवस की शुभकामनाएं! π", "आज 14 मार्च है: पाई दिवस। गणित की सबसे प्रसिद्ध अपरिमेय संख्या का जश्न मनाएं।", ", मुक्त विश्वकोश। इसके अंतर्गत उपलब्ध:", "असमर्थित ब्राउज़र", "आपका ब्राउज़र पुराना है। बेहतर अनुभव के लिए इसे अपडेट करें।", "समर्थित संस्करण पर जाएं", "फिर भी आजमाएं", "असमर्थित ब्राउज़र", "आपके ऑपरेटिंग सिस्टम या ब्राउज़र में वॉइस खोज समर्थित नहीं है।", "गतिविधियां", "चल रही गतिविधियां", "आपकी गतिविधियां चल रही हैं। एक को समाप्त करें या नई गतिविधि साथ में शुरू करें।", "गतिविधियां बंद करें", "गतिविधि बंद करें", "साथ में शुरू करें", "समाप्त करें", "गतिविधि शुरू नहीं हो सकी। कृपया फिर से कोशिश करें।", "पूर्ण स्क्रीन", "पूर्ण स्क्रीन से बाहर निकलें", "पूर्ण स्क्रीन टॉगल करें", "आकार बदलें", "रेस कार गेम", "माइनस्वीपर", "Flappy Bird", "सांप"],
+            he: ["דוגמית", "π יום פאי שמח! π", "היום 14 במרץ: יום פאי. חוגגים את המספר האי-רציונלי המפורסם ביותר במתמטיקה.", ", האנציקלופדיה החופשית. זמין תחת", "דפדפן לא נתמך", "הדפדפן שלך מיושן. עדכן אותו לחוויה הטובה ביותר.", "עבור לגרסה נתמכת", "נסה בכל זאת", "דפדפן לא נתמך", "חיפוש קולי אינו נתמך במערכת ההפעלה או בדפדפן שלך.", "פעילויות", "פעילויות פועלות", "יש לך פעילויות פועלות. סיים אחת או הפעל את החדשה לצידה.", "סגור פעילויות", "סגור פעילות", "הפעל לצד", "סיים", "לא ניתן להפעיל את הפעילות. נסה שוב.", "מסך מלא", "צא ממסך מלא", "החלף מסך מלא", "שנה גודל", "משחק מרוץ מכוניות", "שולה מוקשים", "Flappy Bird", "נחש"],
+            vi: ["Mẫu màu", "π Chúc mừng Ngày Pi! π", "Hôm nay là ngày 14 tháng 3: Ngày số Pi. Hãy kỷ niệm số vô tỉ nổi tiếng nhất trong toán học.", ", bách khoa toàn thư mở. Có sẵn theo", "Trình duyệt không được hỗ trợ", "Trình duyệt của bạn đã lỗi thời. Hãy nâng cấp để có trải nghiệm tốt nhất.", "Đến phiên bản được hỗ trợ", "Vẫn thử", "Trình duyệt không được hỗ trợ", "Tìm kiếm bằng giọng nói không được hỗ trợ trên hệ điều hành hoặc trình duyệt của bạn.", "Hoạt động", "Hoạt động đang chạy", "Bạn có hoạt động đang chạy. Hãy kết thúc một hoạt động hoặc bắt đầu hoạt động mới song song.", "Đóng hoạt động", "Đóng hoạt động", "Bắt đầu song song", "Kết thúc", "Không thể bắt đầu hoạt động. Vui lòng thử lại.", "Toàn màn hình", "Thoát toàn màn hình", "Chuyển toàn màn hình", "Đổi kích thước", "Trò chơi xe đua", "Dò mìn", "Flappy Bird", "Rắn săn mồi"],
+            id: ["Sampel", "π Selamat Hari Pi! π", "Hari ini 14 Maret: Hari Pi. Rayakan bilangan irasional paling terkenal dalam matematika.", ", ensiklopedia bebas. Tersedia di bawah", "Browser tidak didukung", "Browser Anda sudah usang. Perbarui untuk pengalaman terbaik.", "Buka versi yang didukung", "Tetap coba", "Browser tidak didukung", "Pencarian suara tidak didukung di sistem operasi atau browser Anda.", "Aktivitas", "Aktivitas berjalan", "Anda memiliki aktivitas yang berjalan. Akhiri satu atau mulai yang baru berdampingan.", "Tutup aktivitas", "Tutup aktivitas", "Mulai berdampingan", "Akhiri", "Gagal memulai aktivitas. Coba lagi.", "Layar penuh", "Keluar layar penuh", "Alihkan layar penuh", "Ubah ukuran", "Game mobil balap", "Minesweeper", "Flappy Bird", "Ular"],
+            cs: ["Vzorek", "π Šťastný Den pí! π", "Dnes je 14. března: Den pí. Oslavte nejslavnější iracionální číslo v matematice.", ", svobodná encyklopedie. Dostupné pod", "Nepodporovaný prohlížeč", "Váš prohlížeč je zastaralý. Aktualizujte ho pro nejlepší zážitek.", "Přejít na podporovanou verzi", "Přesto zkusit", "Nepodporovaný prohlížeč", "Hlasové vyhledávání není podporováno vaším operačním systémem nebo prohlížečem.", "Aktivity", "Běžící aktivity", "Máte spuštěné aktivity. Ukončete jednu nebo spusťte novou vedle ní.", "Zavřít aktivity", "Zavřít aktivitu", "Spustit vedle", "Ukončit", "Aktivitu se nepodařilo spustit. Zkuste to znovu.", "Celá obrazovka", "Ukončit celou obrazovku", "Přepnout celou obrazovku", "Změnit velikost", "Závodní hra", "Miny", "Flappy Bird", "Had"],
+            ro: ["Mostră", "π La mulți ani de Ziua Pi! π", "Astăzi este 14 martie: Ziua Pi. Sărbătorește cel mai cunoscut număr irațional din matematică.", ", enciclopedia liberă. Disponibil sub", "Browser neacceptat", "Browserul tău este învechit. Actualizează-l pentru cea mai bună experiență.", "Mergi la versiunea acceptată", "Încearcă oricum", "Browser neacceptat", "Căutarea vocală nu este acceptată de sistemul tău de operare sau browser.", "Activități", "Activități în desfășurare", "Ai activități în desfășurare. Încheie una sau pornește-o pe cea nouă alături.", "Închide activitățile", "Închide activitatea", "Pornește alături", "Încheie", "Activitatea nu a putut porni. Încearcă din nou.", "Ecran complet", "Ieși din ecran complet", "Comută ecran complet", "Redimensionează", "Joc cu mașini de curse", "Minesweeper", "Flappy Bird", "Șarpe"],
+            hu: ["Minta", "π Boldog Pi-napot! π", "Ma március 14-e van: Pi-nap. Ünnepeld a matematika leghíresebb irracionális számát.", ", a szabad enciklopédia. Elérhető a következő licenc alatt:", "Nem támogatott böngésző", "A böngésződ elavult. Frissítsd a legjobb élményért.", "Ugrás a támogatott verzióra", "Próbálkozás így is", "Nem támogatott böngésző", "A hangalapú keresést az operációs rendszered vagy böngésződ nem támogatja.", "Tevékenységek", "Futó tevékenységek", "Futó tevékenységeid vannak. Fejezz be egyet, vagy indítsd el az újat mellette.", "Tevékenységek bezárása", "Tevékenység bezárása", "Indítás mellette", "Befejezés", "A tevékenység indítása sikertelen. Próbáld újra.", "Teljes képernyő", "Kilépés teljes képernyőből", "Teljes képernyő váltása", "Átméretezés", "Versenyautós játék", "Aknakereső", "Flappy Bird", "Kígyó"],
+            uk: ["Зразок", "π З Днем числа пі! π", "Сьогодні 14 березня: День числа пі. Відзначте найвідоміше ірраціональне число в математиці.", ", вільна енциклопедія. Доступно за ліцензією", "Браузер не підтримується", "Ваш браузер застарів. Оновіть його для найкращої роботи.", "Перейти до підтримуваної версії", "Все одно спробувати", "Браузер не підтримується", "Голосовий пошук не підтримується вашою операційною системою або браузером.", "Активності", "Запущені активності", "У вас є запущені активності. Завершіть одну або запустіть нову поруч.", "Закрити активності", "Закрити активність", "Запустити поруч", "Завершити", "Не вдалося запустити активність. Спробуйте ще раз.", "На весь екран", "Вийти з повного екрана", "Перемкнути повний екран", "Змінити розмір", "Перегони", "Сапер", "Flappy Bird", "Змійка"],
+            el: ["Δείγμα", "π Χαρούμενη Ημέρα του π! π", "Σήμερα είναι 14 Μαρτίου: Ημέρα του π. Γιορτάστε τον πιο διάσημο άρρητο αριθμό των μαθηματικών.", ", η ελεύθερη εγκυκλοπαίδεια. Διαθέσιμο με", "Μη υποστηριζόμενο πρόγραμμα περιήγησης", "Το πρόγραμμα περιήγησής σας είναι παλιό. Ενημερώστε το για την καλύτερη εμπειρία.", "Μετάβαση στην υποστηριζόμενη έκδοση", "Δοκιμή ούτως ή άλλως", "Μη υποστηριζόμενο πρόγραμμα περιήγησης", "Η φωνητική αναζήτηση δεν υποστηρίζεται από το λειτουργικό σύστημα ή το πρόγραμμα περιήγησής σας.", "Δραστηριότητες", "Ενεργές δραστηριότητες", "Έχετε ενεργές δραστηριότητες. Τερματίστε μία ή ξεκινήστε τη νέα παράλληλα.", "Κλείσιμο δραστηριοτήτων", "Κλείσιμο δραστηριότητας", "Έναρξη παράλληλα", "Τέλος", "Δεν ήταν δυνατή η εκκίνηση της δραστηριότητας. Δοκιμάστε ξανά.", "Πλήρης οθόνη", "Έξοδος από πλήρη οθόνη", "Εναλλαγή πλήρους οθόνης", "Αλλαγή μεγέθους", "Παιχνίδι αγωνιστικού αυτοκινήτου", "Ναρκαλιευτής", "Flappy Bird", "Φίδι"],
+            th: ["ตัวอย่างสี", "π สุขสันต์วันพาย! π", "วันนี้คือวันที่ 14 มีนาคม: วันพาย ร่วมฉลองจำนวนอตรรกยะที่มีชื่อเสียงที่สุดในคณิตศาสตร์", ", สารานุกรมเสรี ใช้ได้ภายใต้", "เบราว์เซอร์ไม่รองรับ", "เบราว์เซอร์ของคุณล้าสมัย โปรดอัปเกรดเพื่อประสบการณ์ที่ดีที่สุด", "ไปยังเวอร์ชันที่รองรับ", "ลองต่อไป", "เบราว์เซอร์ไม่รองรับ", "ระบบปฏิบัติการหรือเบราว์เซอร์ของคุณไม่รองรับการค้นหาด้วยเสียง", "กิจกรรม", "กิจกรรมที่กำลังทำงาน", "คุณมีกิจกรรมที่กำลังทำงานอยู่ จบกิจกรรมหนึ่งหรือเริ่มกิจกรรมใหม่ควบคู่กัน", "ปิดกิจกรรม", "ปิดกิจกรรม", "เริ่มควบคู่กัน", "จบ", "ไม่สามารถเริ่มกิจกรรมได้ โปรดลองอีกครั้ง", "เต็มหน้าจอ", "ออกจากเต็มหน้าจอ", "สลับเต็มหน้าจอ", "ปรับขนาด", "เกมรถแข่ง", "กู้ระเบิด", "Flappy Bird", "งู"],
+            ms: ["Sampel", "π Selamat Hari Pi! π", "Hari ini 14 Mac: Hari Pi. Raikan nombor tak nisbah paling terkenal dalam matematik.", ", ensiklopedia bebas. Tersedia di bawah", "Pelayar tidak disokong", "Pelayar anda sudah lapuk. Kemas kini untuk pengalaman terbaik.", "Pergi ke versi disokong", "Cuba juga", "Pelayar tidak disokong", "Carian suara tidak disokong pada sistem pengendalian atau pelayar anda.", "Aktiviti", "Aktiviti sedang berjalan", "Anda mempunyai aktiviti sedang berjalan. Tamatkan satu atau mulakan yang baharu bersama.", "Tutup aktiviti", "Tutup aktiviti", "Mula bersama", "Tamat", "Gagal memulakan aktiviti. Sila cuba lagi.", "Skrin penuh", "Keluar skrin penuh", "Togol skrin penuh", "Ubah saiz", "Permainan kereta lumba", "Minesweeper", "Flappy Bird", "Ular"],
+            fa: ["نمونه", "π روز پی مبارک! π", "امروز ۱۴ مارس است: روز پی. مشهورترین عدد گنگ ریاضیات را جشن بگیرید.", "، دانشنامه آزاد. در دسترس تحت", "مرورگر پشتیبانی نمی‌شود", "مرورگر شما قدیمی است. برای بهترین تجربه آن را به‌روزرسانی کنید.", "رفتن به نسخه پشتیبانی‌شده", "به هر حال امتحان کن", "مرورگر پشتیبانی نمی‌شود", "جستجوی صوتی در سیستم‌عامل یا مرورگر شما پشتیبانی نمی‌شود.", "فعالیت‌ها", "فعالیت‌های در حال اجرا", "فعالیت‌هایی در حال اجرا دارید. یکی را پایان دهید یا فعالیت جدید را در کنار آن شروع کنید.", "بستن فعالیت‌ها", "بستن فعالیت", "شروع در کنار آن", "پایان", "شروع فعالیت ناموفق بود. دوباره تلاش کنید.", "تمام‌صفحه", "خروج از تمام‌صفحه", "تغییر حالت تمام‌صفحه", "تغییر اندازه", "بازی ماشین مسابقه", "مین‌روب", "Flappy Bird", "مار"],
+            ur: ["نمونہ", "π یوم پائی مبارک! π", "آج 14 مارچ ہے: یوم پائی۔ ریاضی کے سب سے مشہور غیر ناطق عدد کا جشن منائیں۔", "، آزاد انسائیکلوپیڈیا۔ دستیاب تحت", "غیر معاون براؤزر", "آپ کا براؤزر پرانا ہے۔ بہترین تجربے کے لیے اسے اپ گریڈ کریں۔", "معاون ورژن پر جائیں", "پھر بھی آزمائیں", "غیر معاون براؤزر", "آپ کے آپریٹنگ سسٹم یا براؤزر میں وائس تلاش معاون نہیں ہے۔", "سرگرمیاں", "چلتی سرگرمیاں", "آپ کی سرگرمیاں چل رہی ہیں۔ ایک کو ختم کریں یا نئی کو ساتھ شروع کریں۔", "سرگرمیاں بند کریں", "سرگرمی بند کریں", "ساتھ شروع کریں", "ختم کریں", "سرگرمی شروع نہیں ہو سکی۔ دوبارہ کوشش کریں۔", "فل سکرین", "فل سکرین سے باہر نکلیں", "فل سکرین تبدیل کریں", "سائز بدلیں", "ریس کار گیم", "مائن سویپر", "Flappy Bird", "سانپ"],
+            sw: ["Sampuli", "π Heri ya Siku ya Pi! π", "Leo ni Machi 14: Siku ya Pi. Sherehekea nambari isiyowiano maarufu zaidi katika hisabati.", ", ensaiklopidia huru. Inapatikana chini ya", "Kivinjari hakitumiki", "Kivinjari chako kimepitwa na wakati. Kisasishe kwa matumizi bora.", "Nenda kwenye toleo linalotumika", "Jaribu hata hivyo", "Kivinjari hakitumiki", "Utafutaji wa sauti hautumiki kwenye mfumo wako wa uendeshaji au kivinjari.", "Shughuli", "Shughuli zinazoendelea", "Una shughuli zinazoendelea. Maliza moja au anza mpya kando yake.", "Funga shughuli", "Funga shughuli", "Anza kando yake", "Maliza", "Imeshindwa kuanza shughuli. Jaribu tena.", "Skrini nzima", "Ondoka skrini nzima", "Badilisha skrini nzima", "Badilisha ukubwa", "Mchezo wa gari la mbio", "Minesweeper", "Flappy Bird", "Nyoka"],
+            af: ["Monster", "π Gelukkige Pi-dag! π", "Vandag is 14 Maart: Pi-dag. Vier die bekendste irrasionale getal in wiskunde.", ", die vrye ensiklopedie. Beskikbaar onder", "Blaaier word nie ondersteun nie", "Jou blaaier is verouderd. Werk dit op vir die beste ervaring.", "Gaan na ondersteunde weergawe", "Probeer tog", "Blaaier word nie ondersteun nie", "Stemsoektog word nie deur jou bedryfstelsel of blaaier ondersteun nie.", "Aktiwiteite", "Lopende aktiwiteite", "Jy het aktiwiteite wat loop. Eindig een of begin die nuwe een langsaan.", "Sluit aktiwiteite", "Sluit aktiwiteit", "Begin langsaan", "Eindig", "Kon nie aktiwiteit begin nie. Probeer weer.", "Volskerm", "Verlaat volskerm", "Wissel volskerm", "Verander grootte", "Renmotorspeletjie", "Mynveër", "Flappy Bird", "Slang"],
+            ca: ["Mostra", "π Bon Dia de Pi! π", "Avui és 14 de març: Dia de Pi. Celebra el nombre irracional més famós de les matemàtiques.", ", l'enciclopèdia lliure. Disponible sota", "Navegador no compatible", "El teu navegador està obsolet. Actualitza'l per obtenir la millor experiència.", "Ves a la versió compatible", "Prova igualment", "Navegador no compatible", "La cerca per veu no és compatible amb el teu sistema operatiu o navegador.", "Activitats", "Activitats en execució", "Tens activitats en execució. Acaba'n una o inicia la nova al costat.", "Tanca activitats", "Tanca activitat", "Inicia al costat", "Finalitza", "No s'ha pogut iniciar l'activitat. Torna-ho a provar.", "Pantalla completa", "Surt de pantalla completa", "Commuta pantalla completa", "Canvia la mida", "Joc de cotxes de carreres", "Buscamines", "Flappy Bird", "Serp"],
+            hr: ["Uzorak", "π Sretan Dan broja pi! π", "Danas je 14. ožujka: Dan broja pi. Proslavite najpoznatiji iracionalni broj u matematici.", ", slobodna enciklopedija. Dostupno pod", "Preglednik nije podržan", "Vaš je preglednik zastario. Ažurirajte ga za najbolje iskustvo.", "Idi na podržanu verziju", "Ipak pokušaj", "Preglednik nije podržan", "Glasovno pretraživanje nije podržano na vašem operacijskom sustavu ili pregledniku.", "Aktivnosti", "Aktivnosti u tijeku", "Imate aktivnosti u tijeku. Završite jednu ili pokrenite novu uz nju.", "Zatvori aktivnosti", "Zatvori aktivnost", "Pokreni uz nju", "Završi", "Pokretanje aktivnosti nije uspjelo. Pokušajte ponovno.", "Cijeli zaslon", "Izađi iz cijelog zaslona", "Prebaci cijeli zaslon", "Promijeni veličinu", "Igra trkaćih automobila", "Minesweeper", "Flappy Bird", "Zmija"],
+            bg: ["Мостра", "π Честит Ден на пи! π", "Днес е 14 март: Денят на пи. Отпразнувайте най-известното ирационално число в математиката.", ", свободната енциклопедия. Достъпно под", "Неподдържан браузър", "Вашият браузър е остарял. Актуализирайте го за най-добро изживяване.", "Към поддържаната версия", "Опитай въпреки това", "Неподдържан браузър", "Гласовото търсене не се поддържа от вашата операционна система или браузър.", "Дейности", "Изпълняващи се дейности", "Имате изпълняващи се дейности. Завършете една или стартирайте новата успоредно.", "Затвори дейностите", "Затвори дейност", "Стартирай успоредно", "Край", "Неуспешно стартиране на дейността. Опитайте отново.", "Цял екран", "Изход от цял екран", "Превключване на цял екран", "Преоразмеряване", "Състезателна игра", "Миночистач", "Flappy Bird", "Змия"],
+            lt: ["Pavyzdys", "π Laimingos Pi dienos! π", "Šiandien kovo 14-oji: Pi diena. Švęskite garsiausią matematikos iracionalųjį skaičių.", ", laisvoji enciklopedija. Prieinama pagal", "Naršyklė nepalaikoma", "Jūsų naršyklė pasenusi. Atnaujinkite ją, kad patirtis būtų geriausia.", "Eiti į palaikomą versiją", "Vis tiek bandyti", "Naršyklė nepalaikoma", "Balso paieška nepalaikoma jūsų operacinėje sistemoje arba naršyklėje.", "Veiklos", "Vykdomos veiklos", "Turite vykdomų veiklų. Užbaikite vieną arba paleiskite naują šalia.", "Uždaryti veiklas", "Uždaryti veiklą", "Paleisti šalia", "Baigti", "Nepavyko paleisti veiklos. Bandykite dar kartą.", "Visas ekranas", "Išeiti iš viso ekrano", "Perjungti visą ekraną", "Keisti dydį", "Lenktyninio automobilio žaidimas", "Minų ieškotojas", "Flappy Bird", "Gyvatėlė"],
+            lv: ["Paraugs", "π Priecīgu Pi dienu! π", "Šodien ir 14. marts: Pi diena. Atzīmējiet matemātikas slavenāko iracionālo skaitli.", ", brīvā enciklopēdija. Pieejams ar", "Pārlūks netiek atbalstīts", "Jūsu pārlūks ir novecojis. Atjauniniet to labākai pieredzei.", "Doties uz atbalstīto versiju", "Tomēr mēģināt", "Pārlūks netiek atbalstīts", "Balss meklēšana netiek atbalstīta jūsu operētājsistēmā vai pārlūkā.", "Aktivitātes", "Aktīvās aktivitātes", "Jums ir aktīvas aktivitātes. Pabeidziet vienu vai sāciet jauno blakus.", "Aizvērt aktivitātes", "Aizvērt aktivitāti", "Sākt blakus", "Beigt", "Neizdevās sākt aktivitāti. Mēģiniet vēlreiz.", "Pilnekrāns", "Iziet no pilnekrāna", "Pārslēgt pilnekrānu", "Mainīt izmēru", "Sacīkšu auto spēle", "Mīnu meklētājs", "Flappy Bird", "Čūska"],
+            et: ["Näidis", "π Head piipäeva! π", "Täna on 14. märts: piipäev. Tähista matemaatika kuulsaimat irratsionaalarvu.", ", vaba entsüklopeedia. Saadaval litsentsi alusel", "Brauserit ei toetata", "Sinu brauser on aegunud. Parima kogemuse jaoks uuenda seda.", "Mine toetatud versiooni", "Proovi siiski", "Brauserit ei toetata", "Häälotsingut ei toetata sinu operatsioonisüsteemis või brauseris.", "Tegevused", "Töötavad tegevused", "Sul on töötavaid tegevusi. Lõpeta üks või käivita uus selle kõrvale.", "Sulge tegevused", "Sulge tegevus", "Käivita kõrvale", "Lõpeta", "Tegevuse käivitamine ebaõnnestus. Proovi uuesti.", "Täisekraan", "Välju täisekraanilt", "Lülita täisekraan", "Muuda suurust", "Võidusõiduauto mäng", "Miinijahtija", "Flappy Bird", "Uss"],
+            sl: ["Vzorec", "π Vesel dan števila pi! π", "Danes je 14. marec: dan števila pi. Praznujte najbolj znano iracionalno število v matematiki.", ", prosta enciklopedija. Na voljo pod", "Brskalnik ni podprt", "Vaš brskalnik je zastarel. Posodobite ga za najboljšo izkušnjo.", "Pojdi na podprto različico", "Vseeno poskusi", "Brskalnik ni podprt", "Glasovno iskanje ni podprto v vašem operacijskem sistemu ali brskalniku.", "Dejavnosti", "Dejavnosti v teku", "Imate dejavnosti v teku. Končajte eno ali zaženite novo poleg nje.", "Zapri dejavnosti", "Zapri dejavnost", "Zaženi poleg", "Končaj", "Dejavnosti ni bilo mogoče zagnati. Poskusite znova.", "Celoten zaslon", "Zapusti celoten zaslon", "Preklopi celoten zaslon", "Spremeni velikost", "Igra dirkalnega avtomobila", "Minolovec", "Flappy Bird", "Kača"],
+            sr: ["Узорак", "π Срећан Дан броја пи! π", "Данас је 14. март: Дан броја пи. Прославите најпознатији ирационални број у математици.", ", слободна енциклопедија. Доступно под", "Прегледач није подржан", "Ваш прегледач је застарео. Ажурирајте га за најбоље искуство.", "Иди на подржану верзију", "Ипак покушај", "Прегледач није подржан", "Гласовна претрага није подржана у вашем оперативном систему или прегледачу.", "Активности", "Активности у току", "Имате активности у току. Завршите једну или покрените нову поред ње.", "Затвори активности", "Затвори активност", "Покрени поред", "Заврши", "Није могуће покренути активност. Покушајте поново.", "Цео екран", "Изађи из целог екрана", "Пребаци цео екран", "Промени величину", "Игра тркачког аутомобила", "Миноловац", "Flappy Bird", "Змија"],
+            sk: ["Vzorka", "π Šťastný Deň pí! π", "Dnes je 14. marec: Deň pí. Oslávte najznámejšie iracionálne číslo v matematike.", ", slobodná encyklopédia. Dostupné pod", "Nepodporovaný prehliadač", "Váš prehliadač je zastaraný. Aktualizujte ho pre najlepší zážitok.", "Prejsť na podporovanú verziu", "Skúsiť aj tak", "Nepodporovaný prehliadač", "Hlasové vyhľadávanie nie je podporované vaším operačným systémom alebo prehliadačom.", "Aktivity", "Spustené aktivity", "Máte spustené aktivity. Ukončite jednu alebo spustite novú vedľa nej.", "Zavrieť aktivity", "Zavrieť aktivitu", "Spustiť vedľa", "Ukončiť", "Aktivitu sa nepodarilo spustiť. Skúste znova.", "Celá obrazovka", "Ukončiť celú obrazovku", "Prepnúť celú obrazovku", "Zmeniť veľkosť", "Závodná hra", "Míny", "Flappy Bird", "Had"],
+            ta: ["மாதிரி", "π இனிய பை நாள்! π", "இன்று மார்ச் 14: பை நாள். கணிதத்தில் மிகவும் பிரபலமான பகுத்தறிவற்ற எண்ணை கொண்டாடுங்கள்.", ", இலவச கலைக்களஞ்சியம். இதன் கீழ் கிடைக்கிறது:", "ஆதரிக்கப்படாத உலாவி", "உங்கள் உலாவி பழையது. சிறந்த அனுபவத்திற்காக புதுப்பிக்கவும்.", "ஆதரிக்கப்படும் பதிப்புக்கு செல்லவும்", "எப்படியும் முயற்சி செய்", "ஆதரிக்கப்படாத உலாவி", "உங்கள் இயக்க முறைமை அல்லது உலாவியில் குரல் தேடல் ஆதரிக்கப்படவில்லை.", "செயல்பாடுகள்", "நடந்து கொண்டிருக்கும் செயல்பாடுகள்", "உங்களிடம் செயல்பாடுகள் நடக்கின்றன. ஒன்றை முடிக்கவும் அல்லது புதியதை இணையாக தொடங்கவும்.", "செயல்பாடுகளை மூடு", "செயல்பாட்டை மூடு", "இணையாக தொடங்கு", "முடி", "செயல்பாட்டை தொடங்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்.", "முழுத்திரை", "முழுத்திரையிலிருந்து வெளியேறு", "முழுத்திரை மாற்று", "அளவை மாற்று", "பந்தய கார் விளையாட்டு", "மைன்ஸ்வீப்பர்", "Flappy Bird", "பாம்பு"],
+            te: ["నమూనా", "π పై దినోత్సవ శుభాకాంక్షలు! π", "ఈ రోజు మార్చి 14: పై దినోత్సవం. గణితంలో అత్యంత ప్రసిద్ధ అవాస్తవ సంఖ్యను జరుపుకోండి.", ", స్వేచ్ఛా విజ్ఞానసర్వస్వం. క్రింది లైసెన్స్‌లో అందుబాటులో ఉంది:", "మద్దతు లేని బ్రౌజర్", "మీ బ్రౌజర్ పాతది. ఉత్తమ అనుభవం కోసం దాన్ని అప్‌గ్రేడ్ చేయండి.", "మద్దతు ఉన్న సంస్కరణకు వెళ్లండి", "ఏమైనా ప్రయత్నించండి", "మద్దతు లేని బ్రౌజర్", "మీ ఆపరేటింగ్ సిస్టమ్ లేదా బ్రౌజర్‌లో వాయిస్ సెర్చ్‌కు మద్దతు లేదు.", "కార్యకలాపాలు", "నడుస్తున్న కార్యకలాపాలు", "మీకు కార్యకలాపాలు నడుస్తున్నాయి. ఒకదాన్ని ముగించండి లేదా కొత్తదాన్ని పక్కన ప్రారంభించండి.", "కార్యకలాపాలను మూసివేయండి", "కార్యకలాపాన్ని మూసివేయండి", "పక్కన ప్రారంభించండి", "ముగించు", "కార్యకలాపం ప్రారంభం కాలేదు. మళ్లీ ప్రయత్నించండి.", "పూర్తి తెర", "పూర్తి తెరనుంచి నిష్క్రమించు", "పూర్తి తెరను మార్చు", "పరిమాణం మార్చు", "రేస్ కార్ గేమ్", "మైన్స్వీపర్", "Flappy Bird", "పాము"],
+            mr: ["नमुना", "π पाई दिनाच्या शुभेच्छा! π", "आज 14 मार्च आहे: पाई दिवस. गणितातील सर्वात प्रसिद्ध अपरिमेय संख्येचा उत्सव साजरा करा.", ", मुक्त विश्वकोश. या अंतर्गत उपलब्ध:", "असमर्थित ब्राउझर", "तुमचा ब्राउझर जुना आहे. सर्वोत्तम अनुभवासाठी तो अपडेट करा.", "समर्थित आवृत्तीवर जा", "तरीही प्रयत्न करा", "असमर्थित ब्राउझर", "तुमच्या ऑपरेटिंग सिस्टीम किंवा ब्राउझरमध्ये व्हॉइस शोध समर्थित नाही.", "क्रियाकलाप", "चालू क्रियाकलाप", "तुमचे क्रियाकलाप चालू आहेत. एक समाप्त करा किंवा नवीन बाजूला सुरू करा.", "क्रियाकलाप बंद करा", "क्रियाकलाप बंद करा", "बाजूला सुरू करा", "समाप्त", "क्रियाकलाप सुरू होऊ शकला नाही. पुन्हा प्रयत्न करा.", "पूर्ण स्क्रीन", "पूर्ण स्क्रीनमधून बाहेर पडा", "पूर्ण स्क्रीन टॉगल करा", "आकार बदला", "रेस कार गेम", "माइन्सवीपर", "Flappy Bird", "साप"],
+            bn: ["নমুনা", "π শুভ পাই দিবস! π", "আজ ১৪ মার্চ: পাই দিবস। গণিতের সবচেয়ে বিখ্যাত অমূলদ সংখ্যাটি উদযাপন করুন।", ", মুক্ত বিশ্বকোষ। উপলব্ধ লাইসেন্স:", "অসমর্থিত ব্রাউজার", "আপনার ব্রাউজার পুরোনো। সেরা অভিজ্ঞতার জন্য আপগ্রেড করুন।", "সমর্থিত সংস্করণে যান", "তবুও চেষ্টা করুন", "অসমর্থিত ব্রাউজার", "আপনার অপারেটিং সিস্টেম বা ব্রাউজারে ভয়েস অনুসন্ধান সমর্থিত নয়।", "কার্যকলাপ", "চলমান কার্যকলাপ", "আপনার কার্যকলাপ চলছে। একটি শেষ করুন বা নতুনটি পাশাপাশি শুরু করুন।", "কার্যকলাপ বন্ধ করুন", "কার্যকলাপ বন্ধ করুন", "পাশাপাশি শুরু করুন", "শেষ", "কার্যকলাপ শুরু করা যায়নি। আবার চেষ্টা করুন।", "পূর্ণস্ক্রিন", "পূর্ণস্ক্রিন থেকে বের হন", "পূর্ণস্ক্রিন টগল করুন", "আকার পরিবর্তন করুন", "রেস কার গেম", "মাইনসুইপার", "Flappy Bird", "সাপ"],
+            pa: ["ਨਮੂਨਾ", "π ਪਾਈ ਦਿਵਸ ਮੁਬਾਰਕ! π", "ਅੱਜ 14 ਮਾਰਚ ਹੈ: ਪਾਈ ਦਿਵਸ। ਗਣਿਤ ਦੇ ਸਭ ਤੋਂ ਪ੍ਰਸਿੱਧ ਅਪਰਿਮੇਯ ਅੰਕ ਦਾ ਜਸ਼ਨ ਮਨਾਓ।", ", ਮੁਫ਼ਤ ਵਿਸ਼ਵਕੋਸ਼। ਇਸ ਹੇਠ ਉਪਲਬਧ:", "ਅਸਮਰਥਿਤ ਬ੍ਰਾਊਜ਼ਰ", "ਤੁਹਾਡਾ ਬ੍ਰਾਊਜ਼ਰ ਪੁਰਾਣਾ ਹੈ। ਸਭ ਤੋਂ ਵਧੀਆ ਤਜਰਬੇ ਲਈ ਅੱਪਡੇਟ ਕਰੋ।", "ਸਮਰਥਿਤ ਵਰਜਨ ਤੇ ਜਾਓ", "ਫਿਰ ਵੀ ਕੋਸ਼ਿਸ਼ ਕਰੋ", "ਅਸਮਰਥਿਤ ਬ੍ਰਾਊਜ਼ਰ", "ਤੁਹਾਡੇ ਓਪਰੇਟਿੰਗ ਸਿਸਟਮ ਜਾਂ ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਵੌਇਸ ਖੋਜ ਸਮਰਥਿਤ ਨਹੀਂ ਹੈ।", "ਗਤੀਵਿਧੀਆਂ", "ਚੱਲ ਰਹੀਆਂ ਗਤੀਵਿਧੀਆਂ", "ਤੁਹਾਡੀਆਂ ਗਤੀਵਿਧੀਆਂ ਚੱਲ ਰਹੀਆਂ ਹਨ। ਇੱਕ ਖਤਮ ਕਰੋ ਜਾਂ ਨਵੀਂ ਨਾਲ ਨਾਲ ਸ਼ੁਰੂ ਕਰੋ।", "ਗਤੀਵਿਧੀਆਂ ਬੰਦ ਕਰੋ", "ਗਤੀਵਿਧੀ ਬੰਦ ਕਰੋ", "ਨਾਲ ਨਾਲ ਸ਼ੁਰੂ ਕਰੋ", "ਖਤਮ", "ਗਤੀਵਿਧੀ ਸ਼ੁਰੂ ਨਹੀਂ ਹੋ ਸਕੀ। ਫਿਰ ਕੋਸ਼ਿਸ਼ ਕਰੋ।", "ਪੂਰੀ ਸਕ੍ਰੀਨ", "ਪੂਰੀ ਸਕ੍ਰੀਨ ਤੋਂ ਬਾਹਰ", "ਪੂਰੀ ਸਕ੍ਰੀਨ ਬਦਲੋ", "ਆਕਾਰ ਬਦਲੋ", "ਰੇਸ ਕਾਰ ਗੇਮ", "ਮਾਈਨਸਵੀਪਰ", "Flappy Bird", "ਸੱਪ"],
+          };
+
+          Object.entries(modalTranslationAdditions).forEach(function ([langCode, values]) {
+            const additions = {};
+            modalTranslationKeys.forEach(function (key, index) {
+              if (values[index] !== undefined) additions[key] = values[index];
+            });
+            scannedUiTranslations[langCode] = {
+              ...(scannedUiTranslations[langCode] || {}),
+              ...additions,
+            };
+          });
+
           const cjkCriticalUiTranslations = {
             zh: {
               name: "中文（简体）",
@@ -21706,6 +22400,7 @@ if (
             "web",
             "images",
             "keyboardBtn",
+            ...modalTranslationKeys,
           ];
 
           function hasCompleteUiLanguageCoverage(langCode) {
@@ -22726,6 +23421,12 @@ if (
               languageButton.textContent =
                 t.name || translations[normalizedLang]?.name || translations.en.name;
             }
+            document
+              .querySelectorAll('[id="languageButton"], [data-original-id="languageButton"]')
+              .forEach(function (btn) {
+                btn.textContent =
+                  t.name || translations[normalizedLang]?.name || translations.en.name;
+              });
             applyScannedUiTranslations(normalizedLang);
 
             // Confirm modal buttons
@@ -22896,6 +23597,39 @@ if (
             }
           }
 
+          const americanSpanishDisplayNameOverrides = {
+            en: "American Spanish (Español)",
+            es: "Español (Estados Unidos)",
+          };
+
+          function capitalizeLocalizedLabel(label) {
+            const value = String(label || "").trim();
+            if (!value) return value;
+            const langCode = resolveSupportedLanguageCode(
+              localStorage.getItem("munetiosLanguage") || savedLang || "en",
+            );
+            return value.charAt(0).toLocaleUpperCase(langCode) + value.slice(1);
+          }
+
+          function getAmericanSpanishDisplayName() {
+            const langCode = resolveSupportedLanguageCode(
+              localStorage.getItem("munetiosLanguage") || savedLang || "en",
+            );
+            const baseLang = langCode.split("-")[0];
+            if (americanSpanishDisplayNameOverrides[langCode]) {
+              return americanSpanishDisplayNameOverrides[langCode];
+            }
+            if (americanSpanishDisplayNameOverrides[baseLang]) {
+              return americanSpanishDisplayNameOverrides[baseLang];
+            }
+            const languageNames = makeDisplayNames("language");
+            return capitalizeLocalizedLabel(
+              languageNames?.of("es-US") ||
+                getTranslationsFor("es-US").name ||
+                "Español (Estados Unidos)",
+            );
+          }
+
           window.getLocalizedCountryName = function (countryCode) {
             if (countryCode === "auto") {
               return window.getTranslation
@@ -22913,6 +23647,11 @@ if (
             const languageNames = makeDisplayNames("language");
             languageSelector?.querySelectorAll("[data-lang]").forEach(function (item) {
               const langCode = canonicalLanguageCode(item.dataset.lang);
+              if (langCode === "es-US") {
+                item.dataset.nativeName = "Español";
+                item.textContent = getAmericanSpanishDisplayName();
+                return;
+              }
               if (!item.dataset.nativeName) {
                 item.dataset.nativeName =
                   nativeLanguageNames[langCode] ||
@@ -22937,6 +23676,12 @@ if (
           renderSupportedLanguageSelector();
           languageButton.textContent =
             getTranslationsFor(savedLang).name || translations.en.name || "English";
+          document
+            .querySelectorAll('[id="languageButton"], [data-original-id="languageButton"]')
+            .forEach(function (btn) {
+              btn.textContent =
+                getTranslationsFor(savedLang).name || translations.en.name || "English";
+            });
           applyTranslations(savedLang);
 
           // Expose for global access
@@ -23101,28 +23846,49 @@ if (
             connectScannedTranslationObserver();
           }
 
+          const getLanguageButtons = () =>
+            Array.from(
+              document.querySelectorAll(
+                '[id="languageButton"], [data-original-id="languageButton"]',
+              ),
+            );
+          let activeLanguageButton = languageButton;
+
           // Toggle dropdown
-          const openLanguageSelector = () => {
-            const rect = languageButton.getBoundingClientRect();
+          const openLanguageSelector = (anchorButton = languageButton) => {
+            activeLanguageButton = anchorButton || languageButton;
+            const rect = activeLanguageButton.getBoundingClientRect();
             languageSelector.style.display = "block";
             languageSelector.style.position = "fixed";
             languageSelector.style.top = rect.bottom + 5 + "px";
             languageSelector.style.left = rect.left + "px";
             languageSelector.style.zIndex = "9999999";
-            languageButton.setAttribute("aria-expanded", "true");
+            activeLanguageButton.setAttribute("aria-expanded", "true");
           };
           const closeLanguageSelector = () => {
             languageSelector.style.display = "none";
-            languageButton?.setAttribute("aria-expanded", "false");
+            getLanguageButtons().forEach(function (button) {
+              button.setAttribute("aria-expanded", "false");
+            });
           };
           languageButton?.addEventListener("click", (e) => {
             e.stopPropagation();
             if (languageSelector.style.display === "block") {
               closeLanguageSelector();
             } else {
-              openLanguageSelector();
+              openLanguageSelector(languageButton);
             }
           });
+          window.openMunetiosLanguageSelectorFrom = function (anchorButton) {
+            if (
+              languageSelector.style.display === "block" &&
+              activeLanguageButton === anchorButton
+            ) {
+              closeLanguageSelector();
+            } else {
+              openLanguageSelector(anchorButton);
+            }
+          };
 
           // Language selection via data-lang attributes
           languageSelector.querySelectorAll("[data-lang]").forEach((item) => {
@@ -23131,7 +23897,9 @@ if (
               const langName =
                 getTranslationsFor(langCode).name || item.textContent.trim();
               localStorage.setItem("munetiosLanguage", langCode);
-              languageButton.textContent = langName;
+              getLanguageButtons().forEach(function (button) {
+                button.textContent = langName;
+              });
               closeLanguageSelector();
               applyTranslations(langCode);
               if (isNonEnglishLanguageActive()) {
@@ -23163,7 +23931,9 @@ if (
             const offerLangCode = resolveSupportedLanguageCode(offerLangLabel.dataset.offerLang || "en");
             const langName = getTranslationsFor(offerLangCode).name || offerLangCode;
             localStorage.setItem("munetiosLanguage", offerLangCode);
-            if (languageButton) languageButton.textContent = langName;
+            getLanguageButtons().forEach(function (button) {
+              button.textContent = langName;
+            });
             applyTranslations(offerLangCode);
             if (isNonEnglishLanguageActive()) {
               connectScannedTranslationObserver();
@@ -23190,7 +23960,9 @@ if (
           // Close dropdown on outside click
           document.addEventListener("click", (e) => {
             if (
-              !languageButton?.contains(e.target) &&
+              !getLanguageButtons().some(function (button) {
+                return button.contains(e.target);
+              }) &&
               !languageSelector?.contains(e.target)
             ) {
               closeLanguageSelector();
@@ -23233,6 +24005,13 @@ if (
         (function () {
           const btn = document.getElementById("safeSearchButton");
           const selector = document.getElementById("safeSearchSelector");
+          const getSafeSearchButtons = () =>
+            Array.from(
+              document.querySelectorAll(
+                '[id="safeSearchButton"], [data-original-id="safeSearchButton"]',
+              ),
+            );
+          let activeSafeSearchButton = btn;
           const getSafeSearchLabels = function () {
             return {
               off:
@@ -23246,24 +24025,29 @@ if (
                 "Strict",
             };
           };
-          const openSafeSearchSelector = () => {
-            const rect = btn.getBoundingClientRect();
+          const openSafeSearchSelector = (anchorButton = btn) => {
+            activeSafeSearchButton = anchorButton || btn;
+            const rect = activeSafeSearchButton.getBoundingClientRect();
             selector.style.display = "block";
             selector.style.position = "fixed";
             selector.style.top = rect.bottom + 5 + "px";
             selector.style.left = rect.left + "px";
             selector.style.zIndex = "399500";
-            btn?.setAttribute("aria-expanded", "true");
+            activeSafeSearchButton?.setAttribute("aria-expanded", "true");
           };
           const closeSafeSearchSelector = () => {
             selector.style.display = "none";
-            btn?.setAttribute("aria-expanded", "false");
+            getSafeSearchButtons().forEach(function (button) {
+              button.setAttribute("aria-expanded", "false");
+            });
           };
 
           function setSafeSearch(level, silent) {
             localStorage.setItem("safeSearchLevel", level);
             const labels = getSafeSearchLabels();
-            if (btn) btn.textContent = labels[level] || "Moderate";
+            getSafeSearchButtons().forEach(function (button) {
+              button.textContent = labels[level] || "Moderate";
+            });
             window.munetiosRefreshBooksSafeSearch &&
               window.munetiosRefreshBooksSafeSearch();
             if (!silent && window.showToast)
@@ -23281,7 +24065,9 @@ if (
 
           // Strict is the default — never off
           const saved = localStorage.getItem("safeSearchLevel") || "moderate";
-          if (btn) btn.textContent = getSafeSearchLabels()[saved] || "Moderate";
+          getSafeSearchButtons().forEach(function (button) {
+            button.textContent = getSafeSearchLabels()[saved] || "Moderate";
+          });
           // Ensure it's stored
           if (!localStorage.getItem("safeSearchLevel"))
             localStorage.setItem("safeSearchLevel", "moderate");
@@ -23289,8 +24075,18 @@ if (
           btn?.addEventListener("click", (e) => {
             e.stopPropagation();
             if (selector.style.display === "block") closeSafeSearchSelector();
-            else openSafeSearchSelector();
+            else openSafeSearchSelector(btn);
           });
+          window.openMunetiosSafeSearchSelectorFrom = function (anchorButton) {
+            if (
+              selector.style.display === "block" &&
+              activeSafeSearchButton === anchorButton
+            ) {
+              closeSafeSearchSelector();
+            } else {
+              openSafeSearchSelector(anchorButton);
+            }
+          };
 
           selector?.querySelectorAll(".dropdown-item").forEach((item) => {
             item.addEventListener("click", () => {
@@ -23300,7 +24096,12 @@ if (
           });
 
           document.addEventListener("click", (e) => {
-            if (!btn?.contains(e.target) && !selector?.contains(e.target))
+            if (
+              !getSafeSearchButtons().some(function (button) {
+                return button.contains(e.target);
+              }) &&
+              !selector?.contains(e.target)
+            )
               closeSafeSearchSelector();
           });
           window.setupMunetiosDropdownA11y &&
@@ -23313,7 +24114,9 @@ if (
           window.setSafeSearchLevel = setSafeSearch;
           window.refreshSafeSearchLabel = function () {
             const savedLevel = localStorage.getItem("safeSearchLevel") || "moderate";
-            if (btn) btn.textContent = getSafeSearchLabels()[savedLevel] || "Moderate";
+            getSafeSearchButtons().forEach(function (button) {
+              button.textContent = getSafeSearchLabels()[savedLevel] || "Moderate";
+            });
           };
         })();
 
@@ -23321,6 +24124,13 @@ if (
         (function () {
           const countryBtn = document.getElementById("countryButton");
           const countrySelector = document.getElementById("countrySelector");
+          const getCountryButtons = () =>
+            Array.from(
+              document.querySelectorAll(
+                '[id="countryButton"], [data-original-id="countryButton"]',
+              ),
+            );
+          let activeCountryButton = countryBtn;
           const countryStatusLabel =
             document.getElementById("countryStatusLabel");
           const offerLanguageStatusLabel = document.getElementById(
@@ -23516,7 +24326,9 @@ if (
                     { country: displayName },
                   )
                 : displayName;
-            if (countryBtn) countryBtn.textContent = buttonText;
+            getCountryButtons().forEach(function (button) {
+              button.textContent = buttonText;
+            });
             const label = getCountryLabel();
             if (countryStatusLabel)
               countryStatusLabel.textContent = label + ": " + buttonText;
@@ -23548,18 +24360,21 @@ if (
             localStorage.setItem("munetiosCountry", "auto");
           }
           updateCountryDisplay(savedCountry, countryNames[getEffectiveCountry(savedCountry)]);
-          const openCountrySelector = () => {
-            const rect = countryBtn.getBoundingClientRect();
+          const openCountrySelector = (anchorButton = countryBtn) => {
+            activeCountryButton = anchorButton || countryBtn;
+            const rect = activeCountryButton.getBoundingClientRect();
             countrySelector.style.display = "block";
             countrySelector.style.position = "fixed";
             countrySelector.style.top = rect.bottom + 5 + "px";
             countrySelector.style.left = rect.left + "px";
             countrySelector.style.zIndex = "9999999";
-            countryBtn?.setAttribute("aria-expanded", "true");
+            activeCountryButton?.setAttribute("aria-expanded", "true");
           };
           const closeCountrySelector = () => {
             countrySelector.style.display = "none";
-            countryBtn?.setAttribute("aria-expanded", "false");
+            getCountryButtons().forEach(function (button) {
+              button.setAttribute("aria-expanded", "false");
+            });
           };
 
           countryBtn?.addEventListener("click", (e) => {
@@ -23567,9 +24382,19 @@ if (
             if (countrySelector.style.display === "block") {
               closeCountrySelector();
             } else {
-              openCountrySelector();
+              openCountrySelector(countryBtn);
             }
           });
+          window.openMunetiosCountrySelectorFrom = function (anchorButton) {
+            if (
+              countrySelector.style.display === "block" &&
+              activeCountryButton === anchorButton
+            ) {
+              closeCountrySelector();
+            } else {
+              openCountrySelector(anchorButton);
+            }
+          };
 
           countrySelector
             ?.querySelectorAll("[data-country]")
@@ -23614,7 +24439,9 @@ if (
 
           document.addEventListener("click", (e) => {
             if (
-              !countryBtn?.contains(e.target) &&
+              !getCountryButtons().some(function (button) {
+                return button.contains(e.target);
+              }) &&
               !countrySelector?.contains(e.target) &&
               !changeCountryLink?.contains(e.target)
             )
@@ -24584,27 +25411,47 @@ if (
           }
 
           // Font family selector
-          const openFontFamilySelector = () => {
-            const rect = fontFamilyButton.getBoundingClientRect();
+          const getFontFamilyButtons = () =>
+            Array.from(
+              document.querySelectorAll(
+                '[id="fontFamilyButton"], [data-original-id="fontFamilyButton"]',
+              ),
+            );
+          let activeFontFamilyButton = fontFamilyButton;
+          const openFontFamilySelector = (anchorButton = fontFamilyButton) => {
+            activeFontFamilyButton = anchorButton || fontFamilyButton;
+            const rect = activeFontFamilyButton.getBoundingClientRect();
             fontFamilySelector.style.display = "block";
             fontFamilySelector.style.position = "fixed";
             fontFamilySelector.style.top = rect.bottom + 5 + "px";
             fontFamilySelector.style.left = rect.left + "px";
             fontFamilySelector.style.zIndex = "935090";
-            fontFamilyButton?.setAttribute("aria-expanded", "true");
+            activeFontFamilyButton?.setAttribute("aria-expanded", "true");
           };
           const closeFontFamilySelector = () => {
             fontFamilySelector.style.display = "none";
-            fontFamilyButton?.setAttribute("aria-expanded", "false");
+            getFontFamilyButtons().forEach(function (button) {
+              button.setAttribute("aria-expanded", "false");
+            });
           };
           fontFamilyButton?.addEventListener("click", (e) => {
             e.stopPropagation();
             if (fontFamilySelector.style.display === "block") {
               closeFontFamilySelector();
             } else {
-              openFontFamilySelector();
+              openFontFamilySelector(fontFamilyButton);
             }
           });
+          window.openMunetiosFontFamilySelectorFrom = function (anchorButton) {
+            if (
+              fontFamilySelector.style.display === "block" &&
+              activeFontFamilyButton === anchorButton
+            ) {
+              closeFontFamilySelector();
+            } else {
+              openFontFamilySelector(anchorButton);
+            }
+          };
 
           // Font selection
           fontFamilySelector
@@ -24612,7 +25459,9 @@ if (
             .forEach((item) => {
               item.addEventListener("click", () => {
                 const font = item.getAttribute("data-font");
-                fontFamilyButton.textContent = font;
+                getFontFamilyButtons().forEach(function (button) {
+                  button.textContent = font;
+                });
                 localStorage.setItem("munetiosFontFamily", font);
                 localStorage.setItem("munetiosFontUserOverride", "true");
                 closeFontFamilySelector();
@@ -24624,7 +25473,9 @@ if (
           // Close dropdown on outside click
           document.addEventListener("click", (e) => {
             if (
-              !fontFamilyButton?.contains(e.target) &&
+              !getFontFamilyButtons().some(function (button) {
+                return button.contains(e.target);
+              }) &&
               !fontFamilySelector?.contains(e.target)
             ) {
               closeFontFamilySelector();
@@ -25031,7 +25882,7 @@ if (
                 "Add Shortcut") +
               "</span>";
             addBtn.addEventListener("click", () => {
-              document.getElementById("addShortcutModal").classList.add("show");
+              window.openMunetiosModal("addShortcutModal");
             });
             shortcutsGrid.appendChild(addBtn);
 
@@ -25117,18 +25968,29 @@ if (
         // Custom Confirm Modal
         function showConfirmModal(title, message) {
           return new Promise((resolve) => {
-            const modal = document.getElementById("confirmModal");
-            const titleEl = document.getElementById("confirmModalTitle");
-            const messageEl = document.getElementById("confirmModalMessage");
-            const okBtn = document.getElementById("confirmOkBtn");
-            const cancelBtn = document.getElementById("confirmCancelBtn");
+            const modal = window.openMunetiosModal("confirmModal");
+            const titleEl = modal?.querySelector(
+              "#confirmModalTitle, [data-original-id='confirmModalTitle']",
+            );
+            const messageEl = modal?.querySelector(
+              "#confirmModalMessage, [data-original-id='confirmModalMessage']",
+            );
+            const okBtn = modal?.querySelector(
+              "#confirmOkBtn, [data-original-id='confirmOkBtn']",
+            );
+            const cancelBtn = modal?.querySelector(
+              "#confirmCancelBtn, [data-original-id='confirmCancelBtn']",
+            );
+            if (!modal || !titleEl || !messageEl || !okBtn || !cancelBtn) {
+              resolve(false);
+              return;
+            }
 
             titleEl.textContent = title;
             messageEl.textContent = message;
-            modal.classList.add("active");
 
             function cleanup() {
-              modal.classList.remove("active");
+              window.closeMunetiosModal(modal);
               okBtn.removeEventListener("click", onOk);
               cancelBtn.removeEventListener("click", onCancel);
             }
@@ -26519,7 +27381,7 @@ if (
           function ttsClickHandler(e) {
             if (localStorage.getItem("munetiosTTS") !== "true") return;
             // Don't self-echo the TTS toggle itself
-            if (e.target.closest("#ttsToggle")) return;
+            if (e.target.closest("#ttsToggle, [data-original-id='ttsToggle']")) return;
             // Never speak when clicking directly on an icon element
             if (isIconElement(e.target)) return;
 
@@ -26815,78 +27677,28 @@ if (
 
           // Use DOMContentLoaded for modern browsers, fallback to window.onload for IE
           function showModal() {
-            var modal = document.createElement("div");
-            modal.style.cssText =
-              "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:10000;";
-
-            // IE fallback for flex
-            if (typeof document.documentMode === "number") {
-              modal.style.display = "block";
-              modal.style.textAlign = "center";
-            }
-
-            var modalContent = document.createElement("div");
-            modalContent.style.cssText =
-              "background:white;padding:30px;border-radius:8px;text-align:center;max-width:400px;box-shadow:0 4px 6px rgba(0,0,0,0.1);margin:auto;";
-
-            var title = document.createElement("h2");
-            title.appendChild(document.createTextNode("Unsupported Browser"));
-            title.style.cssText = "margin:0 0 10px 0;color:#333;";
-
-            var message = document.createElement("p");
-            message.appendChild(
-              document.createTextNode(
-                "Your browser is outdated. Please upgrade for the best experience.",
-              ),
-            );
-            message.style.cssText =
-              "margin:0 0 20px 0;color:#666;font-size:14px;";
-
-            var buttonContainer = document.createElement("div");
-            buttonContainer.style.cssText =
-              "display:flex;gap:10px;justify-content:center;";
-            // IE fallback for flex
-            if (typeof document.documentMode === "number") {
-              buttonContainer.style.display = "block";
-              buttonContainer.style.textAlign = "center";
-            }
-
-            var liteBtn = document.createElement("button");
-            liteBtn.appendChild(
-              document.createTextNode("Go to Supported Version"),
-            );
-            liteBtn.style.cssText =
-              "padding:10px 20px;background:#007bff;color:white;border:none;border-radius:4px;cursor:pointer;font-weight:bold;margin:5px;";
+            var modal = document.getElementById("unsupportedBrowserModal");
+            var liteBtn = document.getElementById("unsupportedBrowserLiteBtn");
+            var tryBtn = document.getElementById("unsupportedBrowserTryBtn");
+            if (!modal || !liteBtn || !tryBtn) return;
             liteBtn.onclick = function () {
               window.location.href = "old.html";
             };
-
-            var tryBtn = document.createElement("button");
-            tryBtn.appendChild(document.createTextNode("Try Anyway"));
-            tryBtn.style.cssText =
-              "padding:10px 20px;background:#6c757d;color:white;border:none;border-radius:4px;cursor:pointer;font-weight:bold;margin:5px;";
             tryBtn.onclick = function () {
-              if (modal.parentNode) modal.parentNode.removeChild(modal);
+              window.closeMunetiosModal(modal);
             };
-
-            buttonContainer.appendChild(liteBtn);
-            buttonContainer.appendChild(tryBtn);
-            modalContent.appendChild(title);
-            modalContent.appendChild(message);
-            modalContent.appendChild(buttonContainer);
-            modal.appendChild(modalContent);
 
             // For IE, append to body after window.onload to ensure body exists
             if (typeof document.documentMode === "number") {
               window.attachEvent
                 ? window.attachEvent("onload", function () {
-                    document.body.appendChild(modal);
+                    window.openMunetiosModal(modal);
                   })
                 : (window.onload = function () {
-                    document.body.appendChild(modal);
+                    window.openMunetiosModal(modal);
                   });
             } else {
-              document.body.appendChild(modal);
+              window.openMunetiosModal(modal);
             }
           }
 
@@ -27266,13 +28078,13 @@ if (
             if (!modal) return;
             input.value = "";
             err.textContent = "";
-            modal.classList.add("show");
+            window.openMunetiosModal(modal);
             drawCaptcha();
           }
 
           function hideCaptchaModal() {
             var modal = document.getElementById("captchaModal");
-            if (modal) modal.classList.remove("show");
+            if (modal) window.closeMunetiosModal(modal);
           }
 
           (function initCaptcha() {
@@ -28815,7 +29627,7 @@ if (
             if (wikiLink)
               wikiLink.href =
                 wikiBaseUrl + "/wiki/" + encodeURIComponent(title);
-            modal.classList.add("show");
+            window.openMunetiosModal(modal);
 
             // Stop any ongoing speech
             stopWikiSpeech();
@@ -28872,14 +29684,14 @@ if (
 
             if (closeBtn)
               closeBtn.addEventListener("click", function () {
-                modal.classList.remove("show");
+                window.closeMunetiosModal(modal);
                 stopWikiSpeech();
               });
 
             if (modal)
               modal.addEventListener("click", function (e) {
                 if (e.target === modal) {
-                  modal.classList.remove("show");
+                  window.closeMunetiosModal(modal);
                   stopWikiSpeech();
                 }
               });
@@ -29190,8 +30002,8 @@ if (
           }
 
           // ── Picker ──────────────────────────────────────────────────────────
-          function openPicker()  { pickerModal.classList.add('show'); }
-          function closePicker() { pickerModal.classList.remove('show'); }
+          function openPicker()  { window.openMunetiosModal(pickerModal); }
+          function closePicker() { window.closeMunetiosModal(pickerModal); }
 
           activitiesBtn && activitiesBtn.addEventListener('click', openPicker);
           pickerClose   && pickerClose.addEventListener('click', closePicker);
@@ -29214,7 +30026,7 @@ if (
           // ── Activity Manager modal ──────────────────────────────────────────
           function openActivityManager() {
             renderManagerList();
-            actMgrModal.classList.add('show');
+            window.openMunetiosModal(actMgrModal);
           }
 
           function renderManagerList() {
@@ -29233,7 +30045,7 @@ if (
               btn.addEventListener('click', function () {
                 closeActivity(btn.getAttribute('data-wid'));
                 if (activeWindows.length === 0) {
-                  actMgrModal.classList.remove('show');
+                  window.closeMunetiosModal(actMgrModal);
                   if (pendingActivity) {
                     closePicker();
                     startActivity(pendingActivity);
@@ -29247,15 +30059,15 @@ if (
           }
 
           actMgrClose  && actMgrClose.addEventListener('click', function () {
-            actMgrModal.classList.remove('show');
+            window.closeMunetiosModal(actMgrModal);
             pendingActivity = null;
           });
           actMgrCancel && actMgrCancel.addEventListener('click', function () {
-            actMgrModal.classList.remove('show');
+            window.closeMunetiosModal(actMgrModal);
             pendingActivity = null;
           });
           actMgrStartNew && actMgrStartNew.addEventListener('click', function () {
-            actMgrModal.classList.remove('show');
+            window.closeMunetiosModal(actMgrModal);
             if (pendingActivity) {
               var act = pendingActivity;
               pendingActivity = null;
