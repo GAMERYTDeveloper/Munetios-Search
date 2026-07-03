@@ -7631,7 +7631,9 @@ if (
     (
       month === 6 && // July
       day >= 1 &&
-      day <= 19
+      day <= 19 &&
+      day !== 3 &&
+      day !== 4
     )
   ) &&
   logo
@@ -7639,11 +7641,120 @@ if (
   logo.src = "worldcup.png";
   logo.style.cursor = "pointer";
   logo.onclick = function () {
-    window.location.href =
-      "https://www.munetios.com/worldcup.html";
+    window.location.href = "https://www.munetios.com/worldcup.html";
   };
 }
-          
+// America 250: July 3-4, 2026
+if (
+  year === 2026 &&
+  month === 6 && // July
+  (day === 3 || day === 4) &&
+  logo
+) {
+  const america250Url = "https://www.munetios.com/america250.html";
+
+  // Doodle
+  logo.src = "america250.png";
+  logo.style.cursor = "pointer";
+  logo.onclick = function () {
+    const bubbleContainer = document.querySelector(".america250-bubble-container");
+    if (bubbleContainer) {
+      bubbleContainer.style.display = "block";
+    }
+  };
+
+  if (!document.getElementById("america250-style")) {
+    const style = document.createElement("style");
+    style.id = "america250-style";
+    style.textContent = `
+      .america250-bubble-container {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 9999;
+        display: none;
+      }
+
+      .america250-bubble {
+        position: absolute;
+        bottom: -70px;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255,255,255,.22);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        border: 1px solid rgba(255,255,255,.3);
+        box-shadow: 0 4px 18px rgba(0,0,0,.15);
+        font-size: 26px;
+        user-select: none;
+        cursor: pointer;
+        pointer-events: auto;
+        animation: america250Float linear infinite;
+      }
+
+      @keyframes america250Float {
+        0% {
+          transform: translateY(0) scale(.9);
+          opacity: 0;
+        }
+
+        10% {
+          opacity: 1;
+        }
+
+        90% {
+          opacity: 1;
+        }
+
+        100% {
+          transform: translateY(-115vh) scale(1.15);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    const container = document.createElement("div");
+    container.className = "america250-bubble-container";
+
+    const items = [
+      "🇺🇸",
+      "🇺🇸",
+      "🇺🇸",
+      "⭐",
+      "🎆",
+      "🎇"
+    ];
+
+    for (let i = 0; i < 28; i++) {
+      const bubble = document.createElement("div");
+      bubble.className = "america250-bubble";
+      bubble.textContent =
+        items[Math.floor(Math.random() * items.length)];
+
+      bubble.style.left = Math.random() * 100 + "vw";
+      bubble.style.animationDuration =
+        8 + Math.random() * 8 + "s";
+      bubble.style.animationDelay =
+        Math.random() * 6 + "s";
+      bubble.style.fontSize =
+        22 + Math.random() * 10 + "px";
+
+      bubble.onclick = function () {
+        window.location.href = america250Url;
+      };
+
+      container.appendChild(bubble);
+    }
+
+    document.body.appendChild(container);
+  }
+}
                // Memorial Day: May 25, 2026
           if (year === 2026 && month === 4 && day === 25 && logo) {
             logo.src = "memorial.png";
