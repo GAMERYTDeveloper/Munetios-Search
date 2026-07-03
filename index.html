@@ -7645,25 +7645,93 @@ if (
   };
 }
 // America 250: July 3-4, 2026
-if (
+const isAmerica250Date =
   year === 2026 &&
   month === 6 && // July
-  (day === 3 || day === 4) &&
-  logo
-) {
-  const america250Url = "https://www.munetios.com/america250.html";
+  (day === 3 || day === 4);
 
-  // Doodle
-  logo.src = "america250.png";
-  logo.style.cursor = "pointer";
-  logo.onclick = function () {
-    const bubbleContainer = document.querySelector(".america250-bubble-container");
-    if (bubbleContainer) {
-      bubbleContainer.style.display = "block";
-    }
+if (isAmerica250Date && logo) {
+  const america250Url = "https://www.munetios.com/america250.html";
+  const america250DefaultLogoState = {
+    src: logo.getAttribute("src") || "munetios-logo.png",
+    cursor: logo.style.cursor || "",
+    onclick: logo.onclick,
   };
 
-  if (!document.getElementById("america250-style")) {
+  function getAmerica250TimezoneCountry() {
+    const timezone =
+      Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+    const timezoneCountryMap = {
+      "America/New_York": "us",
+      "America/Chicago": "us",
+      "America/Denver": "us",
+      "America/Los_Angeles": "us",
+      "America/Phoenix": "us",
+      "America/Anchorage": "us",
+      "Pacific/Honolulu": "us",
+      "America/Toronto": "ca",
+      "America/Vancouver": "ca",
+      "Europe/London": "gb",
+      "Europe/Amsterdam": "nl",
+      "Europe/Paris": "fr",
+      "Europe/Berlin": "de",
+      "Europe/Madrid": "es",
+      "Europe/Rome": "it",
+      "Europe/Stockholm": "se",
+      "Europe/Oslo": "no",
+      "Europe/Helsinki": "fi",
+      "Europe/Copenhagen": "dk",
+      "Europe/Warsaw": "pl",
+      "Europe/Moscow": "ru",
+      "Asia/Kolkata": "in",
+      "Asia/Tokyo": "jp",
+      "Asia/Shanghai": "cn",
+      "Asia/Seoul": "kr",
+      "Asia/Jerusalem": "il",
+      "Asia/Dubai": "ae",
+      "Asia/Riyadh": "sa",
+      "Asia/Bangkok": "th",
+      "Asia/Ho_Chi_Minh": "vn",
+      "Asia/Kuala_Lumpur": "my",
+      "Asia/Manila": "ph",
+      "Australia/Sydney": "au",
+      "Australia/Melbourne": "au",
+      "Pacific/Auckland": "nz",
+      "America/Sao_Paulo": "br",
+      "America/Mexico_City": "mx",
+      "America/Argentina/Buenos_Aires": "ar",
+    };
+    if (timezoneCountryMap[timezone]) return timezoneCountryMap[timezone];
+    if (timezone.startsWith("Europe/Amsterdam")) return "nl";
+    if (timezone.startsWith("Europe/")) return "gb";
+    if (timezone.startsWith("America/")) return "us";
+    if (timezone.startsWith("Asia/")) return "in";
+    if (timezone.startsWith("Australia/")) return "au";
+    return "us";
+  }
+
+  function getAmerica250EffectiveCountry() {
+    const selectedCountry = localStorage.getItem("munetiosCountry") || "auto";
+    if (selectedCountry && selectedCountry !== "auto") return selectedCountry;
+    if (typeof window.getMunetiosEffectiveCountry === "function") {
+      return window.getMunetiosEffectiveCountry(selectedCountry);
+    }
+    return getAmerica250TimezoneCountry();
+  }
+
+  function shouldShowAmerica250Doodle() {
+    return getAmerica250EffectiveCountry() === "us";
+  }
+
+  function hideAmerica250Bubbles() {
+    const bubbleContainer = document.querySelector(".america250-bubble-container");
+    if (bubbleContainer) {
+      bubbleContainer.style.display = "none";
+    }
+  }
+
+  function ensureAmerica250Bubbles() {
+    if (document.getElementById("america250-style")) return;
     const style = document.createElement("style");
     style.id = "america250-style";
     style.textContent = `
@@ -7754,6 +7822,29 @@ if (
 
     document.body.appendChild(container);
   }
+
+  window.refreshAmerica250Doodle = function () {
+    if (!shouldShowAmerica250Doodle()) {
+      logo.src = america250DefaultLogoState.src;
+      logo.style.cursor = america250DefaultLogoState.cursor;
+      logo.onclick = america250DefaultLogoState.onclick;
+      hideAmerica250Bubbles();
+      return;
+    }
+
+    logo.src = "america250.png";
+    logo.style.cursor = "pointer";
+    logo.onclick = function () {
+      ensureAmerica250Bubbles();
+      const bubbleContainer = document.querySelector(".america250-bubble-container");
+      if (bubbleContainer) {
+        bubbleContainer.style.display = "block";
+      }
+    };
+    ensureAmerica250Bubbles();
+  };
+
+  window.refreshAmerica250Doodle();
 }
                // Memorial Day: May 25, 2026
           if (year === 2026 && month === 4 && day === 25 && logo) {
@@ -24401,6 +24492,7 @@ if (
           function getEffectiveCountry(code) {
             return !code || code === "auto" ? getTimezoneCountry() : code;
           }
+          window.getMunetiosEffectiveCountry = getEffectiveCountry;
 
           function getLocalizedLanguageName(langCode) {
             try {
@@ -24463,6 +24555,7 @@ if (
               "countrySettingLabel",
             );
             if (settingLabelEl) settingLabelEl.textContent = label;
+            window.refreshAmerica250Doodle && window.refreshAmerica250Doodle();
           }
 
           // Load saved country
