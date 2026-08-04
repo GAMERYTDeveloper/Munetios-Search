@@ -27,11 +27,7 @@ window.MUNETIOS_VIDEOS = [
     "FLEE THE FACILITY with ADMIN COMMANDS",
     "Trending on YouTube Gaming · Flamingo",
   ],
-  [
-    "MGtAiqD0FUU",
-    "PLAYING GTA V UNTIL I BEAT IT DAY 3",
-    "Trending on YouTube Gaming · Jynxzi",
-  ],
+
   [
     "GDjRSH7uYVc",
     "Yeah.. Roblox is mad..",
