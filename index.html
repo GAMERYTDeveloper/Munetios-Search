@@ -7119,7 +7119,7 @@
                 searchExtractedTextBtn.textContent = "Find more similar images";
                 searchExtractedTextBtn.onclick = () => window.open(`https://openverse.org/search/image?q=${encodeURIComponent(query)}`, "_blank", "noopener,noreferrer");
                 imageStatus.textContent = results.length ? "Similar images from Wikimedia Commons and Openverse." : "No similar images found.";
-              } catch (_) { imageStatus.textContent = "Could not load visual search results. Please try again."; }
+              } catch (_) { imageStatus.textContent = "Couldn't load visual search results. Please try again."; }
             };
             image.src = imageSrc;
           }
@@ -7290,13 +7290,13 @@
                   addToHistory(
                     gt
                       ? gt("sorryMicrophone")
-                      : "Sorry, I could not get your Microphone.",
+                      : "Sorry, I couldn't get your Microphone.",
                     "system",
                   );
                   speak(
                     gt
                       ? gt("sorryMicrophone")
-                      : "Sorry, I could not get your Microphone.",
+                      : "Sorry, I couldn't get your Microphone.",
                   );
                   playSound("denied");
                 } else if (e.error === "audio-capture") {
@@ -7306,13 +7306,13 @@
                   addToHistory(
                     gt
                       ? gt("sorryMicrophone")
-                      : "Sorry, I could not get your Microphone.",
+                      : "Sorry, I couldn't get your Microphone.",
                     "system",
                   );
                   speak(
                     gt
                       ? gt("sorryMicrophone")
-                      : "Sorry, I could not get your Microphone.",
+                      : "Sorry, I couldn't get your Microphone.",
                   );
                   showToast(
                     gt
@@ -7353,18 +7353,18 @@
               addToHistory(
                 gt
                   ? gt("sorryMicrophone")
-                  : "Sorry, I could not get your Microphone.",
+                  : "Sorry, I couldn't get your Microphone.",
                 "system",
               );
               showToast(
                 gt
                   ? gt("unableToStartVoice")
-                  : "Unable to start voice recognition",
+                  : "Failed to start voice recognition",
               );
               speak(
                 gt
                   ? gt("sorryMicrophone")
-                  : "Sorry, I could not get your Microphone.",
+                  : "Sorry, I couldn't get your Microphone.",
               );
               playSound("denied");
             }
@@ -8937,7 +8937,7 @@ if (isAmerica250Date && logo) {
               networkErrorShort: "Network error",
               unableToStartShort: "Unable to start",
               errorPrefix: "Error: ",
-              sorryMicrophone: "Sorry, I could not get your microphone, please try again.",
+              sorryMicrophone: "Sorry, I couldn't get your microphone, please try again.",
               micAccessDeniedFull:
                 "Microphone access denied. Please allow microphone permissions.",
               micNotConnectedFull:
@@ -8958,7 +8958,7 @@ if (isAmerica250Date && logo) {
               searchingFor: "Searching for: ",
               saySearchQuery: 'Say "Search [your query]" to search',
               enableMicAccessToast:
-                "Please enable microphone access to use voice mode.",
+                "Failed to start voice mode because the microphone was denied.",
               connectMicrophoneToast:
                 "Please connect a microphone to use voice mode.",
 
